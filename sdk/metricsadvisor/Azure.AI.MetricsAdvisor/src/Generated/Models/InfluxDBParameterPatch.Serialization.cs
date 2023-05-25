@@ -7,10 +7,42 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.AI.MetricsAdvisor.Models
 {
     internal partial class InfluxDBParameterPatch : IUtf8JsonSerializable
     {
+
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer, SerializableOptions options)
+        {
+            writer.WriteStartObject();
+            if (Optional.IsDefined(ConnectionString))
+            {
+                writer.WritePropertyName("connectionString"u8);
+                writer.WriteStringValue(ConnectionString);
+            }
+            if (Optional.IsDefined(Database))
+            {
+                writer.WritePropertyName("database"u8);
+                writer.WriteStringValue(Database);
+            }
+            if (Optional.IsDefined(UserName))
+            {
+                writer.WritePropertyName("userName"u8);
+                writer.WriteStringValue(UserName);
+            }
+            if (Optional.IsDefined(Password))
+            {
+                writer.WritePropertyName("password"u8);
+                writer.WriteStringValue(Password);
+            }
+            if (Optional.IsDefined(Query))
+            {
+                writer.WritePropertyName("query"u8);
+                writer.WriteStringValue(Query);
+            }
+            writer.WriteEndObject();
+        }
     }
 }

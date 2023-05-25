@@ -8,12 +8,15 @@
 using System.Text.Json;
 using Azure.AI.MetricsAdvisor.Models;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.AI.MetricsAdvisor.Administration
 {
     public partial class SqlConnectionStringCredentialEntity : IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IUtf8JsonSerializable)this).Write(writer, new SerializableOptions());
+
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer, SerializableOptions options)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("parameters"u8);
@@ -30,7 +33,7 @@ namespace Azure.AI.MetricsAdvisor.Administration
             writer.WriteEndObject();
         }
 
-        internal static SqlConnectionStringCredentialEntity DeserializeSqlConnectionStringCredentialEntity(JsonElement element)
+        internal static SqlConnectionStringCredentialEntity DeserializeSqlConnectionStringCredentialEntity(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

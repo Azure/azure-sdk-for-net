@@ -8,12 +8,13 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Marketplace.Models
 {
     public partial class NewPlanNotificationListResult
     {
-        internal static NewPlanNotificationListResult DeserializeNewPlanNotificationListResult(JsonElement element)
+        internal static NewPlanNotificationListResult DeserializeNewPlanNotificationListResult(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

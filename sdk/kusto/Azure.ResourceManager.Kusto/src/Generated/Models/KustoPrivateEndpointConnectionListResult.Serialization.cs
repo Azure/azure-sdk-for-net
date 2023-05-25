@@ -8,13 +8,14 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.Kusto;
 
 namespace Azure.ResourceManager.Kusto.Models
 {
     internal partial class KustoPrivateEndpointConnectionListResult
     {
-        internal static KustoPrivateEndpointConnectionListResult DeserializeKustoPrivateEndpointConnectionListResult(JsonElement element)
+        internal static KustoPrivateEndpointConnectionListResult DeserializeKustoPrivateEndpointConnectionListResult(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

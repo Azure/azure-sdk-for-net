@@ -7,12 +7,13 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
     public partial class MachineLearningSkuCapacity
     {
-        internal static MachineLearningSkuCapacity DeserializeMachineLearningSkuCapacity(JsonElement element)
+        internal static MachineLearningSkuCapacity DeserializeMachineLearningSkuCapacity(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

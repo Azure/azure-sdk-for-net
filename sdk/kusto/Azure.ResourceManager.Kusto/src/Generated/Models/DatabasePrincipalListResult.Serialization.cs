@@ -8,12 +8,13 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Kusto.Models
 {
     internal partial class DatabasePrincipalListResult
     {
-        internal static DatabasePrincipalListResult DeserializeDatabasePrincipalListResult(JsonElement element)
+        internal static DatabasePrincipalListResult DeserializeDatabasePrincipalListResult(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

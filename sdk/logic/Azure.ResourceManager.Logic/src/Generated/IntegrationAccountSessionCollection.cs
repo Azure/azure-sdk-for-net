@@ -229,7 +229,7 @@ namespace Azure.ResourceManager.Logic
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _integrationAccountSessionRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, top, filter);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _integrationAccountSessionRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, top, filter);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new IntegrationAccountSessionResource(Client, IntegrationAccountSessionData.DeserializeIntegrationAccountSessionData(e)), _integrationAccountSessionClientDiagnostics, Pipeline, "IntegrationAccountSessionCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, (e, o) => new IntegrationAccountSessionResource(Client, IntegrationAccountSessionData.DeserializeIntegrationAccountSessionData(e)), _integrationAccountSessionClientDiagnostics, Pipeline, "IntegrationAccountSessionCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -253,7 +253,7 @@ namespace Azure.ResourceManager.Logic
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _integrationAccountSessionRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, top, filter);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _integrationAccountSessionRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, top, filter);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new IntegrationAccountSessionResource(Client, IntegrationAccountSessionData.DeserializeIntegrationAccountSessionData(e)), _integrationAccountSessionClientDiagnostics, Pipeline, "IntegrationAccountSessionCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, (e, o) => new IntegrationAccountSessionResource(Client, IntegrationAccountSessionData.DeserializeIntegrationAccountSessionData(e)), _integrationAccountSessionClientDiagnostics, Pipeline, "IntegrationAccountSessionCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

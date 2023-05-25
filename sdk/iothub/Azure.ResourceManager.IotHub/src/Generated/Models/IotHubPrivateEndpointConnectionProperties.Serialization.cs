@@ -7,13 +7,16 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.IotHub.Models
 {
     public partial class IotHubPrivateEndpointConnectionProperties : IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IUtf8JsonSerializable)this).Write(writer, new SerializableOptions());
+
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer, SerializableOptions options)
         {
             writer.WriteStartObject();
             if (Optional.IsDefined(PrivateEndpoint))
@@ -26,7 +29,7 @@ namespace Azure.ResourceManager.IotHub.Models
             writer.WriteEndObject();
         }
 
-        internal static IotHubPrivateEndpointConnectionProperties DeserializeIotHubPrivateEndpointConnectionProperties(JsonElement element)
+        internal static IotHubPrivateEndpointConnectionProperties DeserializeIotHubPrivateEndpointConnectionProperties(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

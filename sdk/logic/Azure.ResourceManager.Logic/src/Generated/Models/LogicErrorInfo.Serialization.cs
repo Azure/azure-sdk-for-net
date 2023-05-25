@@ -7,12 +7,13 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Logic.Models
 {
     public partial class LogicErrorInfo
     {
-        internal static LogicErrorInfo DeserializeLogicErrorInfo(JsonElement element)
+        internal static LogicErrorInfo DeserializeLogicErrorInfo(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

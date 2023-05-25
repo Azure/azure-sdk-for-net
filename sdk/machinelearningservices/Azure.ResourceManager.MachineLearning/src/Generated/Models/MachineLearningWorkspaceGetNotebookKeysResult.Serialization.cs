@@ -7,12 +7,13 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
     public partial class MachineLearningWorkspaceGetNotebookKeysResult
     {
-        internal static MachineLearningWorkspaceGetNotebookKeysResult DeserializeMachineLearningWorkspaceGetNotebookKeysResult(JsonElement element)
+        internal static MachineLearningWorkspaceGetNotebookKeysResult DeserializeMachineLearningWorkspaceGetNotebookKeysResult(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

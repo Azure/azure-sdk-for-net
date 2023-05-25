@@ -7,12 +7,15 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Kusto.Models
 {
     public partial class KustoLanguageExtension : IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IUtf8JsonSerializable)this).Write(writer, new SerializableOptions());
+
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer, SerializableOptions options)
         {
             writer.WriteStartObject();
             if (Optional.IsDefined(LanguageExtensionName))
@@ -28,7 +31,7 @@ namespace Azure.ResourceManager.Kusto.Models
             writer.WriteEndObject();
         }
 
-        internal static KustoLanguageExtension DeserializeKustoLanguageExtension(JsonElement element)
+        internal static KustoLanguageExtension DeserializeKustoLanguageExtension(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

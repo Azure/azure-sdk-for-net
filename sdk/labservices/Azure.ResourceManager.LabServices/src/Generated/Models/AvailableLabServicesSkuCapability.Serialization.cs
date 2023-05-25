@@ -7,12 +7,13 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.LabServices.Models
 {
     public partial class AvailableLabServicesSkuCapability
     {
-        internal static AvailableLabServicesSkuCapability DeserializeAvailableLabServicesSkuCapability(JsonElement element)
+        internal static AvailableLabServicesSkuCapability DeserializeAvailableLabServicesSkuCapability(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

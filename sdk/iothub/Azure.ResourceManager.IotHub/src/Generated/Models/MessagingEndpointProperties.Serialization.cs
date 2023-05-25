@@ -8,12 +8,15 @@
 using System;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.IotHub.Models
 {
     public partial class MessagingEndpointProperties : IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IUtf8JsonSerializable)this).Write(writer, new SerializableOptions());
+
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer, SerializableOptions options)
         {
             writer.WriteStartObject();
             if (Optional.IsDefined(LockDurationAsIso8601))
@@ -34,7 +37,7 @@ namespace Azure.ResourceManager.IotHub.Models
             writer.WriteEndObject();
         }
 
-        internal static MessagingEndpointProperties DeserializeMessagingEndpointProperties(JsonElement element)
+        internal static MessagingEndpointProperties DeserializeMessagingEndpointProperties(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

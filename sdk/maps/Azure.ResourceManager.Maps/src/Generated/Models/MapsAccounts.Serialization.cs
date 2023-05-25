@@ -8,13 +8,14 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.Maps;
 
 namespace Azure.ResourceManager.Maps.Models
 {
     internal partial class MapsAccounts
     {
-        internal static MapsAccounts DeserializeMapsAccounts(JsonElement element)
+        internal static MapsAccounts DeserializeMapsAccounts(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

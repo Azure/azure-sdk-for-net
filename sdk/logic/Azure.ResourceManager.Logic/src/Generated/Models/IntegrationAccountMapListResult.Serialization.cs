@@ -8,13 +8,14 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.Logic;
 
 namespace Azure.ResourceManager.Logic.Models
 {
     internal partial class IntegrationAccountMapListResult
     {
-        internal static IntegrationAccountMapListResult DeserializeIntegrationAccountMapListResult(JsonElement element)
+        internal static IntegrationAccountMapListResult DeserializeIntegrationAccountMapListResult(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

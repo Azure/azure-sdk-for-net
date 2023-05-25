@@ -8,13 +8,14 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.MachineLearning;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
     internal partial class WorkspaceConnectionPropertiesV2BasicResourceArmPaginatedResult
     {
-        internal static WorkspaceConnectionPropertiesV2BasicResourceArmPaginatedResult DeserializeWorkspaceConnectionPropertiesV2BasicResourceArmPaginatedResult(JsonElement element)
+        internal static WorkspaceConnectionPropertiesV2BasicResourceArmPaginatedResult DeserializeWorkspaceConnectionPropertiesV2BasicResourceArmPaginatedResult(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

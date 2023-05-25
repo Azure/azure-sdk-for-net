@@ -8,12 +8,13 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.AI.MetricsAdvisor.Models
 {
     internal partial class IngestionStatusList
     {
-        internal static IngestionStatusList DeserializeIngestionStatusList(JsonElement element)
+        internal static IngestionStatusList DeserializeIngestionStatusList(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

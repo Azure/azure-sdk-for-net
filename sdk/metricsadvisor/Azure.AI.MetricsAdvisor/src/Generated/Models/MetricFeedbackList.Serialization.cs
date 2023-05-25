@@ -9,12 +9,13 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure.AI.MetricsAdvisor;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.AI.MetricsAdvisor.Models
 {
     internal partial class MetricFeedbackList
     {
-        internal static MetricFeedbackList DeserializeMetricFeedbackList(JsonElement element)
+        internal static MetricFeedbackList DeserializeMetricFeedbackList(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

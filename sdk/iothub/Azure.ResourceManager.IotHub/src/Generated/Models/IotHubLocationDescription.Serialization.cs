@@ -7,12 +7,13 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.IotHub.Models
 {
     public partial class IotHubLocationDescription
     {
-        internal static IotHubLocationDescription DeserializeIotHubLocationDescription(JsonElement element)
+        internal static IotHubLocationDescription DeserializeIotHubLocationDescription(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

@@ -8,13 +8,14 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.MachineLearning;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
     internal partial class CodeContainerResourceArmPaginatedResult
     {
-        internal static CodeContainerResourceArmPaginatedResult DeserializeCodeContainerResourceArmPaginatedResult(JsonElement element)
+        internal static CodeContainerResourceArmPaginatedResult DeserializeCodeContainerResourceArmPaginatedResult(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

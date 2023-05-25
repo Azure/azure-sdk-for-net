@@ -8,12 +8,13 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
     internal partial class VirtualMachineSizeListResult
     {
-        internal static VirtualMachineSizeListResult DeserializeVirtualMachineSizeListResult(JsonElement element)
+        internal static VirtualMachineSizeListResult DeserializeVirtualMachineSizeListResult(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

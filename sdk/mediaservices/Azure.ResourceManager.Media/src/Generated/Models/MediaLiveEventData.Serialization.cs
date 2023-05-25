@@ -9,6 +9,7 @@ using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.Media.Models;
 using Azure.ResourceManager.Models;
 
@@ -16,7 +17,9 @@ namespace Azure.ResourceManager.Media
 {
     public partial class MediaLiveEventData : IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IUtf8JsonSerializable)this).Write(writer, new SerializableOptions());
+
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer, SerializableOptions options)
         {
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(Tags))
@@ -93,7 +96,7 @@ namespace Azure.ResourceManager.Media
             writer.WriteEndObject();
         }
 
-        internal static MediaLiveEventData DeserializeMediaLiveEventData(JsonElement element)
+        internal static MediaLiveEventData DeserializeMediaLiveEventData(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

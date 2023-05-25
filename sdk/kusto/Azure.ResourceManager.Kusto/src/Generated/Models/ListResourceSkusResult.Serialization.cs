@@ -8,12 +8,13 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Kusto.Models
 {
     internal partial class ListResourceSkusResult
     {
-        internal static ListResourceSkusResult DeserializeListResourceSkusResult(JsonElement element)
+        internal static ListResourceSkusResult DeserializeListResourceSkusResult(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

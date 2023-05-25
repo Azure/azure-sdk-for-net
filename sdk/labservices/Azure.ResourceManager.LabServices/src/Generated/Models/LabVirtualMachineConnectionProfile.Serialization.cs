@@ -9,12 +9,13 @@ using System;
 using System.Net;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.LabServices.Models
 {
     public partial class LabVirtualMachineConnectionProfile
     {
-        internal static LabVirtualMachineConnectionProfile DeserializeLabVirtualMachineConnectionProfile(JsonElement element)
+        internal static LabVirtualMachineConnectionProfile DeserializeLabVirtualMachineConnectionProfile(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

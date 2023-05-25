@@ -8,12 +8,13 @@
 using System;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Media.Models
 {
     public partial class MediaAssetStreamingLocator
     {
-        internal static MediaAssetStreamingLocator DeserializeMediaAssetStreamingLocator(JsonElement element)
+        internal static MediaAssetStreamingLocator DeserializeMediaAssetStreamingLocator(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

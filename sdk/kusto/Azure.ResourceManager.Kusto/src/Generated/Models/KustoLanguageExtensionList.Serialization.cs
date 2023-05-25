@@ -8,12 +8,15 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Kusto.Models
 {
     public partial class KustoLanguageExtensionList : IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IUtf8JsonSerializable)this).Write(writer, new SerializableOptions());
+
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer, SerializableOptions options)
         {
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(Value))
@@ -29,7 +32,7 @@ namespace Azure.ResourceManager.Kusto.Models
             writer.WriteEndObject();
         }
 
-        internal static KustoLanguageExtensionList DeserializeKustoLanguageExtensionList(JsonElement element)
+        internal static KustoLanguageExtensionList DeserializeKustoLanguageExtensionList(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

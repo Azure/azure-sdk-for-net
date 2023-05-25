@@ -7,12 +7,13 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Kubernetes.Models
 {
     public partial class HybridConnectionConfig
     {
-        internal static HybridConnectionConfig DeserializeHybridConnectionConfig(JsonElement element)
+        internal static HybridConnectionConfig DeserializeHybridConnectionConfig(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

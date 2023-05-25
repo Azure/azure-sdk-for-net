@@ -7,10 +7,37 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.AI.MetricsAdvisor.Models
 {
     internal partial class WholeMetricConfigurationPatch : IUtf8JsonSerializable
     {
+
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer, SerializableOptions options)
+        {
+            writer.WriteStartObject();
+            if (Optional.IsDefined(ConditionOperator))
+            {
+                writer.WritePropertyName("conditionOperator"u8);
+                writer.WriteStringValue(ConditionOperator.Value.ToString());
+            }
+            if (Optional.IsDefined(SmartDetectionCondition))
+            {
+                writer.WritePropertyName("smartDetectionCondition"u8);
+                writer.WriteObjectValue(SmartDetectionCondition);
+            }
+            if (Optional.IsDefined(HardThresholdCondition))
+            {
+                writer.WritePropertyName("hardThresholdCondition"u8);
+                writer.WriteObjectValue(HardThresholdCondition);
+            }
+            if (Optional.IsDefined(ChangeThresholdCondition))
+            {
+                writer.WritePropertyName("changeThresholdCondition"u8);
+                writer.WriteObjectValue(ChangeThresholdCondition);
+            }
+            writer.WriteEndObject();
+        }
     }
 }

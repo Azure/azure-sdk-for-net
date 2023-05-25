@@ -7,12 +7,13 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.Maps.Search.Models
 {
     public partial class MapsDataSource
     {
-        internal static MapsDataSource DeserializeMapsDataSource(JsonElement element)
+        internal static MapsDataSource DeserializeMapsDataSource(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

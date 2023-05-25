@@ -8,13 +8,14 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.ManagedNetwork;
 
 namespace Azure.ResourceManager.ManagedNetwork.Models
 {
     internal partial class ScopeAssignmentListResult
     {
-        internal static ScopeAssignmentListResult DeserializeScopeAssignmentListResult(JsonElement element)
+        internal static ScopeAssignmentListResult DeserializeScopeAssignmentListResult(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

@@ -7,12 +7,15 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.MachineLearningCompute.Models
 {
     public partial class ServiceAuthConfiguration : IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IUtf8JsonSerializable)this).Write(writer, new SerializableOptions());
+
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer, SerializableOptions options)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("primaryAuthKeyHash"u8);
@@ -22,7 +25,7 @@ namespace Azure.ResourceManager.MachineLearningCompute.Models
             writer.WriteEndObject();
         }
 
-        internal static ServiceAuthConfiguration DeserializeServiceAuthConfiguration(JsonElement element)
+        internal static ServiceAuthConfiguration DeserializeServiceAuthConfiguration(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

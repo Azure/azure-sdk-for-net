@@ -228,7 +228,7 @@ namespace Azure.ResourceManager.LabServices
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _labServicesScheduleSchedulesRestClient.CreateListByLabRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _labServicesScheduleSchedulesRestClient.CreateListByLabNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new LabServicesScheduleResource(Client, LabServicesScheduleData.DeserializeLabServicesScheduleData(e)), _labServicesScheduleSchedulesClientDiagnostics, Pipeline, "LabServicesScheduleCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, (e, o) => new LabServicesScheduleResource(Client, LabServicesScheduleData.DeserializeLabServicesScheduleData(e)), _labServicesScheduleSchedulesClientDiagnostics, Pipeline, "LabServicesScheduleCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -251,7 +251,7 @@ namespace Azure.ResourceManager.LabServices
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _labServicesScheduleSchedulesRestClient.CreateListByLabRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _labServicesScheduleSchedulesRestClient.CreateListByLabNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new LabServicesScheduleResource(Client, LabServicesScheduleData.DeserializeLabServicesScheduleData(e)), _labServicesScheduleSchedulesClientDiagnostics, Pipeline, "LabServicesScheduleCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, (e, o) => new LabServicesScheduleResource(Client, LabServicesScheduleData.DeserializeLabServicesScheduleData(e)), _labServicesScheduleSchedulesClientDiagnostics, Pipeline, "LabServicesScheduleCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

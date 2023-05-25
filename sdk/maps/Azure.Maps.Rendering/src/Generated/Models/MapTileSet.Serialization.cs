@@ -8,12 +8,13 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.Maps.Rendering
 {
     public partial class MapTileSet
     {
-        internal static MapTileSet DeserializeMapTileSet(JsonElement element)
+        internal static MapTileSet DeserializeMapTileSet(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

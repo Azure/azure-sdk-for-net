@@ -7,12 +7,13 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
     internal partial class UnknownComputeSecrets
     {
-        internal static UnknownComputeSecrets DeserializeUnknownComputeSecrets(JsonElement element)
+        internal static UnknownComputeSecrets DeserializeUnknownComputeSecrets(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

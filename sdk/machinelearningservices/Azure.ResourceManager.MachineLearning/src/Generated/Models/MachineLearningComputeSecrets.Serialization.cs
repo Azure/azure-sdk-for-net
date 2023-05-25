@@ -6,12 +6,13 @@
 #nullable disable
 
 using System.Text.Json;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
     public partial class MachineLearningComputeSecrets
     {
-        internal static MachineLearningComputeSecrets DeserializeMachineLearningComputeSecrets(JsonElement element)
+        internal static MachineLearningComputeSecrets DeserializeMachineLearningComputeSecrets(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

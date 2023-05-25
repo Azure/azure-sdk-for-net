@@ -7,12 +7,13 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.Maps.Search.Models
 {
     public partial class AddressRanges
     {
-        internal static AddressRanges DeserializeAddressRanges(JsonElement element)
+        internal static AddressRanges DeserializeAddressRanges(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

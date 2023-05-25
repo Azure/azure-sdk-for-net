@@ -8,12 +8,13 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Maintenance.Models
 {
     internal partial class MaintenanceConfigurationAssignmentListResult
     {
-        internal static MaintenanceConfigurationAssignmentListResult DeserializeMaintenanceConfigurationAssignmentListResult(JsonElement element)
+        internal static MaintenanceConfigurationAssignmentListResult DeserializeMaintenanceConfigurationAssignmentListResult(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

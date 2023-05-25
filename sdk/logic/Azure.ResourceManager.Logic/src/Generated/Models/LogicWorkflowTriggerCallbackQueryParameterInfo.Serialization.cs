@@ -7,12 +7,13 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Logic.Models
 {
     public partial class LogicWorkflowTriggerCallbackQueryParameterInfo
     {
-        internal static LogicWorkflowTriggerCallbackQueryParameterInfo DeserializeLogicWorkflowTriggerCallbackQueryParameterInfo(JsonElement element)
+        internal static LogicWorkflowTriggerCallbackQueryParameterInfo DeserializeLogicWorkflowTriggerCallbackQueryParameterInfo(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

@@ -8,13 +8,14 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.Logic;
 
 namespace Azure.ResourceManager.Logic.Models
 {
     internal partial class IntegrationAccountPartnerListResult
     {
-        internal static IntegrationAccountPartnerListResult DeserializeIntegrationAccountPartnerListResult(JsonElement element)
+        internal static IntegrationAccountPartnerListResult DeserializeIntegrationAccountPartnerListResult(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

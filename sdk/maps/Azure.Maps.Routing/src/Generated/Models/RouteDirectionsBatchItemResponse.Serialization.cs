@@ -8,12 +8,13 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.Maps.Routing.Models
 {
     public partial class RouteDirectionsBatchItemResponse
     {
-        internal static RouteDirectionsBatchItemResponse DeserializeRouteDirectionsBatchItemResponse(JsonElement element)
+        internal static RouteDirectionsBatchItemResponse DeserializeRouteDirectionsBatchItemResponse(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

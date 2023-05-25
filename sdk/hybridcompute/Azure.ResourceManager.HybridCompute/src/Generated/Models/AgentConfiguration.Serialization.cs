@@ -9,12 +9,13 @@ using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.HybridCompute.Models
 {
     public partial class AgentConfiguration
     {
-        internal static AgentConfiguration DeserializeAgentConfiguration(JsonElement element)
+        internal static AgentConfiguration DeserializeAgentConfiguration(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

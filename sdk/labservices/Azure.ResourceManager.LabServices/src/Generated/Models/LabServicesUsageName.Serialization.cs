@@ -8,12 +8,13 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.LabServices.Models
 {
     public partial class LabServicesUsageName
     {
-        internal static LabServicesUsageName DeserializeLabServicesUsageName(JsonElement element)
+        internal static LabServicesUsageName DeserializeLabServicesUsageName(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

@@ -8,12 +8,13 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.KubernetesConfiguration.Models
 {
     public partial class KubernetesObjectStatus
     {
-        internal static KubernetesObjectStatus DeserializeKubernetesObjectStatus(JsonElement element)
+        internal static KubernetesObjectStatus DeserializeKubernetesObjectStatus(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

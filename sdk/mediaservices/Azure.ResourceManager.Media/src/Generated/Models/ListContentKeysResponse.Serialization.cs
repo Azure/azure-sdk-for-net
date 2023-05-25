@@ -8,12 +8,13 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Media.Models
 {
     internal partial class ListContentKeysResponse
     {
-        internal static ListContentKeysResponse DeserializeListContentKeysResponse(JsonElement element)
+        internal static ListContentKeysResponse DeserializeListContentKeysResponse(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

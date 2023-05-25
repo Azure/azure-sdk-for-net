@@ -8,12 +8,15 @@
 using System.Text.Json;
 using Azure.AI.MetricsAdvisor.Models;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.AI.MetricsAdvisor
 {
     public partial class MetricFeedback : IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IUtf8JsonSerializable)this).Write(writer, new SerializableOptions());
+
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer, SerializableOptions options)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("feedbackType"u8);
@@ -23,6 +26,25 @@ namespace Azure.AI.MetricsAdvisor
             writer.WritePropertyName("dimensionFilter"u8);
             writer.WriteObjectValue(DimensionFilter);
             writer.WriteEndObject();
+        }
+
+        internal static MetricFeedback DeserializeMetricFeedback(JsonElement element, SerializableOptions options = default)
+        {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            if (element.TryGetProperty("feedbackType", out JsonElement discriminator))
+            {
+                switch (discriminator.GetString())
+                {
+                    case "Anomaly": return MetricAnomalyFeedback.DeserializeMetricAnomalyFeedback(element);
+                    case "ChangePoint": return MetricChangePointFeedback.DeserializeMetricChangePointFeedback(element);
+                    case "Comment": return MetricCommentFeedback.DeserializeMetricCommentFeedback(element);
+                    case "Period": return MetricPeriodFeedback.DeserializeMetricPeriodFeedback(element);
+                }
+            }
+            return Models.UnknownMetricFeedback.DeserializeUnknownMetricFeedback(element);
         }
     }
 }

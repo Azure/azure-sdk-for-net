@@ -8,12 +8,13 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Marketplace.Models
 {
     public partial class QueryApprovedPlansResult
     {
-        internal static QueryApprovedPlansResult DeserializeQueryApprovedPlansResult(JsonElement element)
+        internal static QueryApprovedPlansResult DeserializeQueryApprovedPlansResult(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

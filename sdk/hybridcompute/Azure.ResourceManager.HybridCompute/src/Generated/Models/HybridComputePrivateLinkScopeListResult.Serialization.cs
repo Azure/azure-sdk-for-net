@@ -8,13 +8,14 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.HybridCompute;
 
 namespace Azure.ResourceManager.HybridCompute.Models
 {
     internal partial class HybridComputePrivateLinkScopeListResult
     {
-        internal static HybridComputePrivateLinkScopeListResult DeserializeHybridComputePrivateLinkScopeListResult(JsonElement element)
+        internal static HybridComputePrivateLinkScopeListResult DeserializeHybridComputePrivateLinkScopeListResult(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

@@ -8,6 +8,7 @@
 using System;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.Logic.Models;
 using Azure.ResourceManager.Models;
 
@@ -15,7 +16,7 @@ namespace Azure.ResourceManager.Logic
 {
     public partial class LogicWorkflowTriggerHistoryData
     {
-        internal static LogicWorkflowTriggerHistoryData DeserializeLogicWorkflowTriggerHistoryData(JsonElement element)
+        internal static LogicWorkflowTriggerHistoryData DeserializeLogicWorkflowTriggerHistoryData(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

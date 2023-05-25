@@ -8,12 +8,13 @@
 using System;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Logic.Models
 {
     internal partial class LogicApiResourceBackendService
     {
-        internal static LogicApiResourceBackendService DeserializeLogicApiResourceBackendService(JsonElement element)
+        internal static LogicApiResourceBackendService DeserializeLogicApiResourceBackendService(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

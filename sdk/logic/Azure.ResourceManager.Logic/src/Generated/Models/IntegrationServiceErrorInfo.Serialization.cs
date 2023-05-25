@@ -9,12 +9,13 @@ using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Logic.Models
 {
     public partial class IntegrationServiceErrorInfo
     {
-        internal static IntegrationServiceErrorInfo DeserializeIntegrationServiceErrorInfo(JsonElement element)
+        internal static IntegrationServiceErrorInfo DeserializeIntegrationServiceErrorInfo(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

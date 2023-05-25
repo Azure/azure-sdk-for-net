@@ -7,12 +7,13 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
     public partial class MachineLearningFqdnEndpointDetail
     {
-        internal static MachineLearningFqdnEndpointDetail DeserializeMachineLearningFqdnEndpointDetail(JsonElement element)
+        internal static MachineLearningFqdnEndpointDetail DeserializeMachineLearningFqdnEndpointDetail(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

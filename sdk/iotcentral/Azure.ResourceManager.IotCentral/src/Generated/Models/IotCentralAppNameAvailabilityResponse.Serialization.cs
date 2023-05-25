@@ -7,12 +7,13 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.IotCentral.Models
 {
     public partial class IotCentralAppNameAvailabilityResponse
     {
-        internal static IotCentralAppNameAvailabilityResponse DeserializeIotCentralAppNameAvailabilityResponse(JsonElement element)
+        internal static IotCentralAppNameAvailabilityResponse DeserializeIotCentralAppNameAvailabilityResponse(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

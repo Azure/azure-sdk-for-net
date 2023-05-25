@@ -7,12 +7,13 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Media.Models
 {
     public partial class StreamingEndpointSkuInfo
     {
-        internal static StreamingEndpointSkuInfo DeserializeStreamingEndpointSkuInfo(JsonElement element)
+        internal static StreamingEndpointSkuInfo DeserializeStreamingEndpointSkuInfo(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

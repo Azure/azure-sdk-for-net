@@ -8,12 +8,13 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.IoT.Hub.Service.Models
 {
     public partial class BulkRegistryOperationResponse
     {
-        internal static BulkRegistryOperationResponse DeserializeBulkRegistryOperationResponse(JsonElement element)
+        internal static BulkRegistryOperationResponse DeserializeBulkRegistryOperationResponse(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

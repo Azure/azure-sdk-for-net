@@ -7,12 +7,13 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.LabServices.Models
 {
     public partial class AvailableLabServicesSkuCost
     {
-        internal static AvailableLabServicesSkuCost DeserializeAvailableLabServicesSkuCost(JsonElement element)
+        internal static AvailableLabServicesSkuCost DeserializeAvailableLabServicesSkuCost(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

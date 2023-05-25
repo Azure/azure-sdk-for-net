@@ -7,12 +7,13 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Logic.Models
 {
     public partial class IntegrationServiceEnvironmentSkuDefinitionSku
     {
-        internal static IntegrationServiceEnvironmentSkuDefinitionSku DeserializeIntegrationServiceEnvironmentSkuDefinitionSku(JsonElement element)
+        internal static IntegrationServiceEnvironmentSkuDefinitionSku DeserializeIntegrationServiceEnvironmentSkuDefinitionSku(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

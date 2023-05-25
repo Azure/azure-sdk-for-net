@@ -7,12 +7,13 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.KubernetesConfiguration.Models
 {
     public partial class HelmReleaseProperties
     {
-        internal static HelmReleaseProperties DeserializeHelmReleaseProperties(JsonElement element)
+        internal static HelmReleaseProperties DeserializeHelmReleaseProperties(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

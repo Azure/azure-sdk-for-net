@@ -7,12 +7,15 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.KubernetesConfiguration.Models
 {
     internal partial class ScopeNamespace : IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IUtf8JsonSerializable)this).Write(writer, new SerializableOptions());
+
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer, SerializableOptions options)
         {
             writer.WriteStartObject();
             if (Optional.IsDefined(TargetNamespace))
@@ -23,7 +26,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
             writer.WriteEndObject();
         }
 
-        internal static ScopeNamespace DeserializeScopeNamespace(JsonElement element)
+        internal static ScopeNamespace DeserializeScopeNamespace(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

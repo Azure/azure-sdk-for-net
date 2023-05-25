@@ -7,12 +7,13 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Kusto.Models
 {
     public partial class KustoAvailableSkuDetails
     {
-        internal static KustoAvailableSkuDetails DeserializeKustoAvailableSkuDetails(JsonElement element)
+        internal static KustoAvailableSkuDetails DeserializeKustoAvailableSkuDetails(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

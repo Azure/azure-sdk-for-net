@@ -8,12 +8,13 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.Security.KeyVault.Storage.Models
 {
     public partial class StorageAccountItem
     {
-        internal static StorageAccountItem DeserializeStorageAccountItem(JsonElement element)
+        internal static StorageAccountItem DeserializeStorageAccountItem(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

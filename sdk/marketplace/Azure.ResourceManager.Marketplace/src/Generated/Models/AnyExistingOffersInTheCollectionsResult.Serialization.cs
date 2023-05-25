@@ -7,12 +7,13 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Marketplace.Models
 {
     public partial class AnyExistingOffersInTheCollectionsResult
     {
-        internal static AnyExistingOffersInTheCollectionsResult DeserializeAnyExistingOffersInTheCollectionsResult(JsonElement element)
+        internal static AnyExistingOffersInTheCollectionsResult DeserializeAnyExistingOffersInTheCollectionsResult(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

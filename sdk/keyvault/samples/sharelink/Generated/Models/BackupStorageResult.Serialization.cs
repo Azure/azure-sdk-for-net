@@ -8,12 +8,13 @@
 using System;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.Security.KeyVault.Storage.Models
 {
     public partial class BackupStorageResult
     {
-        internal static BackupStorageResult DeserializeBackupStorageResult(JsonElement element)
+        internal static BackupStorageResult DeserializeBackupStorageResult(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

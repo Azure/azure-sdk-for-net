@@ -8,12 +8,13 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.AI.MetricsAdvisor.Models
 {
     public partial class MetricSeriesDefinition
     {
-        internal static MetricSeriesDefinition DeserializeMetricSeriesDefinition(JsonElement element)
+        internal static MetricSeriesDefinition DeserializeMetricSeriesDefinition(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

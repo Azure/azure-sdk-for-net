@@ -7,12 +7,13 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
     public partial class MachineLearningWorkspaceGetStorageAccountKeysResult
     {
-        internal static MachineLearningWorkspaceGetStorageAccountKeysResult DeserializeMachineLearningWorkspaceGetStorageAccountKeysResult(JsonElement element)
+        internal static MachineLearningWorkspaceGetStorageAccountKeysResult DeserializeMachineLearningWorkspaceGetStorageAccountKeysResult(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

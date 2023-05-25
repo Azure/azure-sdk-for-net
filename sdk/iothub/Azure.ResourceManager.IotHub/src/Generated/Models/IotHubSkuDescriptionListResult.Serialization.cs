@@ -8,12 +8,13 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.IotHub.Models
 {
     internal partial class IotHubSkuDescriptionListResult
     {
-        internal static IotHubSkuDescriptionListResult DeserializeIotHubSkuDescriptionListResult(JsonElement element)
+        internal static IotHubSkuDescriptionListResult DeserializeIotHubSkuDescriptionListResult(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

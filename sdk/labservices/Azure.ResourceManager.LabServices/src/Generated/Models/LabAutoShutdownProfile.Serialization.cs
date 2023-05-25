@@ -8,12 +8,15 @@
 using System;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.LabServices.Models
 {
     public partial class LabAutoShutdownProfile : IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IUtf8JsonSerializable)this).Write(writer, new SerializableOptions());
+
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer, SerializableOptions options)
         {
             writer.WriteStartObject();
             if (Optional.IsDefined(ShutdownOnDisconnect))
@@ -49,7 +52,7 @@ namespace Azure.ResourceManager.LabServices.Models
             writer.WriteEndObject();
         }
 
-        internal static LabAutoShutdownProfile DeserializeLabAutoShutdownProfile(JsonElement element)
+        internal static LabAutoShutdownProfile DeserializeLabAutoShutdownProfile(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

@@ -7,12 +7,13 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
     public partial class MachineLearningComputeInstanceDataDisk
     {
-        internal static MachineLearningComputeInstanceDataDisk DeserializeMachineLearningComputeInstanceDataDisk(JsonElement element)
+        internal static MachineLearningComputeInstanceDataDisk DeserializeMachineLearningComputeInstanceDataDisk(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

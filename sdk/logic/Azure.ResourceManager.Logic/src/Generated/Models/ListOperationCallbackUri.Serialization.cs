@@ -8,12 +8,13 @@
 using System;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Logic.Models
 {
     public partial class ListOperationCallbackUri
     {
-        internal static ListOperationCallbackUri DeserializeListOperationCallbackUri(JsonElement element)
+        internal static ListOperationCallbackUri DeserializeListOperationCallbackUri(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

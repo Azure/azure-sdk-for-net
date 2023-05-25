@@ -8,12 +8,13 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Kusto.Models
 {
     public partial class KustoResourceSkuZoneDetails
     {
-        internal static KustoResourceSkuZoneDetails DeserializeKustoResourceSkuZoneDetails(JsonElement element)
+        internal static KustoResourceSkuZoneDetails DeserializeKustoResourceSkuZoneDetails(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

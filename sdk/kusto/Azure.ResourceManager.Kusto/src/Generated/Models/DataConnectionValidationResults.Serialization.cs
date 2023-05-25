@@ -8,12 +8,13 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Kusto.Models
 {
     public partial class DataConnectionValidationResults
     {
-        internal static DataConnectionValidationResults DeserializeDataConnectionValidationResults(JsonElement element)
+        internal static DataConnectionValidationResults DeserializeDataConnectionValidationResults(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

@@ -8,12 +8,13 @@
 using System;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.IoT.Hub.Service.Models
 {
     public partial class JobResponse
     {
-        internal static JobResponse DeserializeJobResponse(JsonElement element)
+        internal static JobResponse DeserializeJobResponse(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

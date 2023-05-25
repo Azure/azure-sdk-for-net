@@ -8,12 +8,13 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Logic.Models
 {
     internal partial class ExpressionTraces
     {
-        internal static ExpressionTraces DeserializeExpressionTraces(JsonElement element)
+        internal static ExpressionTraces DeserializeExpressionTraces(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

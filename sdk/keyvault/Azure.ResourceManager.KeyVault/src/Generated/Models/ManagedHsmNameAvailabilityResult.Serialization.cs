@@ -7,12 +7,13 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.KeyVault.Models
 {
     public partial class ManagedHsmNameAvailabilityResult
     {
-        internal static ManagedHsmNameAvailabilityResult DeserializeManagedHsmNameAvailabilityResult(JsonElement element)
+        internal static ManagedHsmNameAvailabilityResult DeserializeManagedHsmNameAvailabilityResult(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

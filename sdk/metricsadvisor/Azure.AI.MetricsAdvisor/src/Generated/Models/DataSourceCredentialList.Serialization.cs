@@ -9,12 +9,13 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure.AI.MetricsAdvisor.Administration;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.AI.MetricsAdvisor.Models
 {
     internal partial class DataSourceCredentialList
     {
-        internal static DataSourceCredentialList DeserializeDataSourceCredentialList(JsonElement element)
+        internal static DataSourceCredentialList DeserializeDataSourceCredentialList(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

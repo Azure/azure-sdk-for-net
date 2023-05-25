@@ -7,6 +7,7 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.KeyVault.Models;
 using Azure.ResourceManager.Models;
 
@@ -14,7 +15,7 @@ namespace Azure.ResourceManager.KeyVault
 {
     public partial class DeletedManagedHsmData
     {
-        internal static DeletedManagedHsmData DeserializeDeletedManagedHsmData(JsonElement element)
+        internal static DeletedManagedHsmData DeserializeDeletedManagedHsmData(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

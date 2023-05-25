@@ -9,12 +9,13 @@ using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Media.Models
 {
     public partial class StorageEncryptedAssetDecryptionInfo
     {
-        internal static StorageEncryptedAssetDecryptionInfo DeserializeStorageEncryptedAssetDecryptionInfo(JsonElement element)
+        internal static StorageEncryptedAssetDecryptionInfo DeserializeStorageEncryptedAssetDecryptionInfo(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

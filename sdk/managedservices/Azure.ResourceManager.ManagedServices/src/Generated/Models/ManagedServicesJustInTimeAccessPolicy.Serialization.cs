@@ -9,12 +9,15 @@ using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.ManagedServices.Models
 {
     public partial class ManagedServicesJustInTimeAccessPolicy : IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IUtf8JsonSerializable)this).Write(writer, new SerializableOptions());
+
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer, SerializableOptions options)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("multiFactorAuthProvider"u8);
@@ -37,7 +40,7 @@ namespace Azure.ResourceManager.ManagedServices.Models
             writer.WriteEndObject();
         }
 
-        internal static ManagedServicesJustInTimeAccessPolicy DeserializeManagedServicesJustInTimeAccessPolicy(JsonElement element)
+        internal static ManagedServicesJustInTimeAccessPolicy DeserializeManagedServicesJustInTimeAccessPolicy(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

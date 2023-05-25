@@ -7,12 +7,13 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.Maps.Rendering
 {
     public partial class CopyrightCaption
     {
-        internal static CopyrightCaption DeserializeCopyrightCaption(JsonElement element)
+        internal static CopyrightCaption DeserializeCopyrightCaption(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

@@ -8,12 +8,13 @@
 using System;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Kubernetes.Models
 {
     public partial class CredentialResult
     {
-        internal static CredentialResult DeserializeCredentialResult(JsonElement element)
+        internal static CredentialResult DeserializeCredentialResult(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

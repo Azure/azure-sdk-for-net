@@ -415,7 +415,7 @@ namespace Azure.ResourceManager.Media
             Argument.AssertNotNull(content, nameof(content));
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => _mediaAssetAssetsRestClient.CreateListContainerSasRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, content);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new Uri(e.GetString()), _mediaAssetAssetsClientDiagnostics, Pipeline, "MediaAssetResource.GetStorageContainerUris", "assetContainerSasUrls", null, cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, (e, o) => new Uri(e.GetString()), _mediaAssetAssetsClientDiagnostics, Pipeline, "MediaAssetResource.GetStorageContainerUris", "assetContainerSasUrls", null, cancellationToken);
         }
 
         /// <summary>
@@ -440,7 +440,7 @@ namespace Azure.ResourceManager.Media
             Argument.AssertNotNull(content, nameof(content));
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => _mediaAssetAssetsRestClient.CreateListContainerSasRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, content);
-            return PageableHelpers.CreatePageable(FirstPageRequest, null, e => new Uri(e.GetString()), _mediaAssetAssetsClientDiagnostics, Pipeline, "MediaAssetResource.GetStorageContainerUris", "assetContainerSasUrls", null, cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, null, (e, o) => new Uri(e.GetString()), _mediaAssetAssetsClientDiagnostics, Pipeline, "MediaAssetResource.GetStorageContainerUris", "assetContainerSasUrls", null, cancellationToken);
         }
 
         /// <summary>

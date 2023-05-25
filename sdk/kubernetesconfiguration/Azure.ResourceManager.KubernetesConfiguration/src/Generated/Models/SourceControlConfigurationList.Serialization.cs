@@ -8,13 +8,14 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.KubernetesConfiguration;
 
 namespace Azure.ResourceManager.KubernetesConfiguration.Models
 {
     internal partial class SourceControlConfigurationList
     {
-        internal static SourceControlConfigurationList DeserializeSourceControlConfigurationList(JsonElement element)
+        internal static SourceControlConfigurationList DeserializeSourceControlConfigurationList(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

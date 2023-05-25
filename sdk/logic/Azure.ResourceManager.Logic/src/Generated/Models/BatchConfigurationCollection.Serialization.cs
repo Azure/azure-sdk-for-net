@@ -8,13 +8,14 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.Logic;
 
 namespace Azure.ResourceManager.Logic.Models
 {
     internal partial class BatchConfigurationCollection
     {
-        internal static BatchConfigurationCollection DeserializeBatchConfigurationCollection(JsonElement element)
+        internal static BatchConfigurationCollection DeserializeBatchConfigurationCollection(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

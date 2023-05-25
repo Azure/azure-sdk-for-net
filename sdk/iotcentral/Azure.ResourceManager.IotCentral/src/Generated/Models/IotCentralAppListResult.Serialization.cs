@@ -8,13 +8,14 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.IotCentral;
 
 namespace Azure.ResourceManager.IotCentral.Models
 {
     internal partial class IotCentralAppListResult
     {
-        internal static IotCentralAppListResult DeserializeIotCentralAppListResult(JsonElement element)
+        internal static IotCentralAppListResult DeserializeIotCentralAppListResult(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

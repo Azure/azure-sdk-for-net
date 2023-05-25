@@ -7,12 +7,13 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.MixedReality.Authentication
 {
     internal partial class StsTokenResponseMessage
     {
-        internal static StsTokenResponseMessage DeserializeStsTokenResponseMessage(JsonElement element)
+        internal static StsTokenResponseMessage DeserializeStsTokenResponseMessage(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

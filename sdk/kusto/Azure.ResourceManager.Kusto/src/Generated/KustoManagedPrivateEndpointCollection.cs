@@ -226,7 +226,7 @@ namespace Azure.ResourceManager.Kusto
         public virtual AsyncPageable<KustoManagedPrivateEndpointResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _kustoManagedPrivateEndpointManagedPrivateEndpointsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new KustoManagedPrivateEndpointResource(Client, KustoManagedPrivateEndpointData.DeserializeKustoManagedPrivateEndpointData(e)), _kustoManagedPrivateEndpointManagedPrivateEndpointsClientDiagnostics, Pipeline, "KustoManagedPrivateEndpointCollection.GetAll", "value", null, cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, (e, o) => new KustoManagedPrivateEndpointResource(Client, KustoManagedPrivateEndpointData.DeserializeKustoManagedPrivateEndpointData(e)), _kustoManagedPrivateEndpointManagedPrivateEndpointsClientDiagnostics, Pipeline, "KustoManagedPrivateEndpointCollection.GetAll", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -247,7 +247,7 @@ namespace Azure.ResourceManager.Kusto
         public virtual Pageable<KustoManagedPrivateEndpointResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _kustoManagedPrivateEndpointManagedPrivateEndpointsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, null, e => new KustoManagedPrivateEndpointResource(Client, KustoManagedPrivateEndpointData.DeserializeKustoManagedPrivateEndpointData(e)), _kustoManagedPrivateEndpointManagedPrivateEndpointsClientDiagnostics, Pipeline, "KustoManagedPrivateEndpointCollection.GetAll", "value", null, cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, null, (e, o) => new KustoManagedPrivateEndpointResource(Client, KustoManagedPrivateEndpointData.DeserializeKustoManagedPrivateEndpointData(e)), _kustoManagedPrivateEndpointManagedPrivateEndpointsClientDiagnostics, Pipeline, "KustoManagedPrivateEndpointCollection.GetAll", "value", null, cancellationToken);
         }
 
         /// <summary>

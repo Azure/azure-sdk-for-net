@@ -8,13 +8,14 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.HybridData;
 
 namespace Azure.ResourceManager.HybridData.Models
 {
     internal partial class JobDefinitionList
     {
-        internal static JobDefinitionList DeserializeJobDefinitionList(JsonElement element)
+        internal static JobDefinitionList DeserializeJobDefinitionList(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

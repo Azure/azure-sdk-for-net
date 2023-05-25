@@ -8,13 +8,14 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.HybridData;
 
 namespace Azure.ResourceManager.HybridData.Models
 {
     internal partial class PublicKeyList
     {
-        internal static PublicKeyList DeserializePublicKeyList(JsonElement element)
+        internal static PublicKeyList DeserializePublicKeyList(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

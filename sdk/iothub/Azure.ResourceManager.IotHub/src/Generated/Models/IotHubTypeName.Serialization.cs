@@ -7,12 +7,13 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.IotHub.Models
 {
     public partial class IotHubTypeName
     {
-        internal static IotHubTypeName DeserializeIotHubTypeName(JsonElement element)
+        internal static IotHubTypeName DeserializeIotHubTypeName(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

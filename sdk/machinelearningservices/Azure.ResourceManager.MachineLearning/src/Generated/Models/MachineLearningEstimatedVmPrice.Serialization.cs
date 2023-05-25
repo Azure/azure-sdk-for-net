@@ -7,12 +7,13 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
     public partial class MachineLearningEstimatedVmPrice
     {
-        internal static MachineLearningEstimatedVmPrice DeserializeMachineLearningEstimatedVmPrice(JsonElement element)
+        internal static MachineLearningEstimatedVmPrice DeserializeMachineLearningEstimatedVmPrice(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

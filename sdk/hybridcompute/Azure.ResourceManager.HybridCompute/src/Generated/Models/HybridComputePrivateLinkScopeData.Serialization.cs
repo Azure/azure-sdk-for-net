@@ -8,6 +8,7 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.HybridCompute.Models;
 using Azure.ResourceManager.Models;
 
@@ -15,7 +16,9 @@ namespace Azure.ResourceManager.HybridCompute
 {
     public partial class HybridComputePrivateLinkScopeData : IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IUtf8JsonSerializable)this).Write(writer, new SerializableOptions());
+
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer, SerializableOptions options)
         {
             writer.WriteStartObject();
             if (Optional.IsDefined(Properties))
@@ -39,7 +42,7 @@ namespace Azure.ResourceManager.HybridCompute
             writer.WriteEndObject();
         }
 
-        internal static HybridComputePrivateLinkScopeData DeserializeHybridComputePrivateLinkScopeData(JsonElement element)
+        internal static HybridComputePrivateLinkScopeData DeserializeHybridComputePrivateLinkScopeData(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

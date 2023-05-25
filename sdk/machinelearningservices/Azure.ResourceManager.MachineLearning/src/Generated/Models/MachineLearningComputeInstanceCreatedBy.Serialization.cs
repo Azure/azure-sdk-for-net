@@ -7,12 +7,13 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
     public partial class MachineLearningComputeInstanceCreatedBy
     {
-        internal static MachineLearningComputeInstanceCreatedBy DeserializeMachineLearningComputeInstanceCreatedBy(JsonElement element)
+        internal static MachineLearningComputeInstanceCreatedBy DeserializeMachineLearningComputeInstanceCreatedBy(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

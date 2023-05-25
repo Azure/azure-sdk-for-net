@@ -7,12 +7,13 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.Maps.Search.Models
 {
     internal partial class BatchResultItem
     {
-        internal static BatchResultItem DeserializeBatchResultItem(JsonElement element)
+        internal static BatchResultItem DeserializeBatchResultItem(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

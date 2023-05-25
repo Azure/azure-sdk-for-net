@@ -8,13 +8,14 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.IotCentral;
 
 namespace Azure.ResourceManager.IotCentral.Models
 {
     internal partial class IotCentralPrivateLinkResourceListResult
     {
-        internal static IotCentralPrivateLinkResourceListResult DeserializeIotCentralPrivateLinkResourceListResult(JsonElement element)
+        internal static IotCentralPrivateLinkResourceListResult DeserializeIotCentralPrivateLinkResourceListResult(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

@@ -8,13 +8,14 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.LoadTesting;
 
 namespace Azure.ResourceManager.LoadTesting.Models
 {
     internal partial class LoadTestResourcePageList
     {
-        internal static LoadTestResourcePageList DeserializeLoadTestResourcePageList(JsonElement element)
+        internal static LoadTestResourcePageList DeserializeLoadTestResourcePageList(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

@@ -8,13 +8,14 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.IotHub;
 
 namespace Azure.ResourceManager.IotHub.Models
 {
     internal partial class IotHubPrivateEndpointConnectionsList
     {
-        internal static IotHubPrivateEndpointConnectionsList DeserializeIotHubPrivateEndpointConnectionsList(JsonElement element)
+        internal static IotHubPrivateEndpointConnectionsList DeserializeIotHubPrivateEndpointConnectionsList(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

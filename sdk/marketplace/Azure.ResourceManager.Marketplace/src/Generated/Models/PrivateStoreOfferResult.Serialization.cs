@@ -10,12 +10,13 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Marketplace.Models
 {
     public partial class PrivateStoreOfferResult
     {
-        internal static PrivateStoreOfferResult DeserializePrivateStoreOfferResult(JsonElement element)
+        internal static PrivateStoreOfferResult DeserializePrivateStoreOfferResult(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

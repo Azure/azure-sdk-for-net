@@ -7,10 +7,34 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.AI.MetricsAdvisor.Models
 {
     internal partial class AzureSQLConnectionStringCredentialPatch : IUtf8JsonSerializable
     {
+
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer, SerializableOptions options)
+        {
+            writer.WriteStartObject();
+            if (Optional.IsDefined(Parameters))
+            {
+                writer.WritePropertyName("parameters"u8);
+                writer.WriteObjectValue(Parameters);
+            }
+            writer.WritePropertyName("dataSourceCredentialType"u8);
+            writer.WriteStringValue(DataSourceCredentialType.ToString());
+            if (Optional.IsDefined(DataSourceCredentialName))
+            {
+                writer.WritePropertyName("dataSourceCredentialName"u8);
+                writer.WriteStringValue(DataSourceCredentialName);
+            }
+            if (Optional.IsDefined(DataSourceCredentialDescription))
+            {
+                writer.WritePropertyName("dataSourceCredentialDescription"u8);
+                writer.WriteStringValue(DataSourceCredentialDescription);
+            }
+            writer.WriteEndObject();
+        }
     }
 }

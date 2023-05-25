@@ -9,12 +9,13 @@ using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.ManagedServices.Models
 {
     public partial class ManagedServicesRegistrationAssignmentRegistrationProperties
     {
-        internal static ManagedServicesRegistrationAssignmentRegistrationProperties DeserializeManagedServicesRegistrationAssignmentRegistrationProperties(JsonElement element)
+        internal static ManagedServicesRegistrationAssignmentRegistrationProperties DeserializeManagedServicesRegistrationAssignmentRegistrationProperties(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

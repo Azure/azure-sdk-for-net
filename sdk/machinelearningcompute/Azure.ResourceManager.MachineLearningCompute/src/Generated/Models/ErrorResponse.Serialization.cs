@@ -8,12 +8,13 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.MachineLearningCompute.Models
 {
     public partial class ErrorResponse
     {
-        internal static ErrorResponse DeserializeErrorResponse(JsonElement element)
+        internal static ErrorResponse DeserializeErrorResponse(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

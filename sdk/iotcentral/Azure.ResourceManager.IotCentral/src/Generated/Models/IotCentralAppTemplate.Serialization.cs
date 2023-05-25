@@ -8,12 +8,13 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.IotCentral.Models
 {
     public partial class IotCentralAppTemplate
     {
-        internal static IotCentralAppTemplate DeserializeIotCentralAppTemplate(JsonElement element)
+        internal static IotCentralAppTemplate DeserializeIotCentralAppTemplate(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

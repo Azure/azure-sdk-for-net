@@ -8,12 +8,15 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.AI.MetricsAdvisor
 {
     public partial class FeedbackFilter : IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IUtf8JsonSerializable)this).Write(writer, new SerializableOptions());
+
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer, SerializableOptions options)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("dimension"u8);
@@ -27,7 +30,7 @@ namespace Azure.AI.MetricsAdvisor
             writer.WriteEndObject();
         }
 
-        internal static FeedbackFilter DeserializeFeedbackFilter(JsonElement element)
+        internal static FeedbackFilter DeserializeFeedbackFilter(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

@@ -8,12 +8,13 @@
 using System;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.Maps.Routing.Models
 {
     public partial class RouteLegSummary
     {
-        internal static RouteLegSummary DeserializeRouteLegSummary(JsonElement element)
+        internal static RouteLegSummary DeserializeRouteLegSummary(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

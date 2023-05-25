@@ -9,12 +9,15 @@ using System;
 using System.Text.Json;
 using Azure.AI.MetricsAdvisor;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.AI.MetricsAdvisor.Models
 {
     internal partial class UnknownMetricFeedback : IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IUtf8JsonSerializable)this).Write(writer, new SerializableOptions());
+
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer, SerializableOptions options)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("feedbackType"u8);
@@ -26,7 +29,7 @@ namespace Azure.AI.MetricsAdvisor.Models
             writer.WriteEndObject();
         }
 
-        internal static UnknownMetricFeedback DeserializeUnknownMetricFeedback(JsonElement element)
+        internal static UnknownMetricFeedback DeserializeUnknownMetricFeedback(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

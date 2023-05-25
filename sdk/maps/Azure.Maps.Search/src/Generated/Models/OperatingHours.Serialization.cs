@@ -8,12 +8,13 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.Maps.Search.Models
 {
     public partial class OperatingHours
     {
-        internal static OperatingHours DeserializeOperatingHours(JsonElement element)
+        internal static OperatingHours DeserializeOperatingHours(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

@@ -8,12 +8,13 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
     public partial class MachineLearningDiagnoseResultValue
     {
-        internal static MachineLearningDiagnoseResultValue DeserializeMachineLearningDiagnoseResultValue(JsonElement element)
+        internal static MachineLearningDiagnoseResultValue DeserializeMachineLearningDiagnoseResultValue(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

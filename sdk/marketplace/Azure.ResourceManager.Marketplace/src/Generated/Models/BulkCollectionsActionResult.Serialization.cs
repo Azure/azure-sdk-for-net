@@ -8,12 +8,13 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Marketplace.Models
 {
     public partial class BulkCollectionsActionResult
     {
-        internal static BulkCollectionsActionResult DeserializeBulkCollectionsActionResult(JsonElement element)
+        internal static BulkCollectionsActionResult DeserializeBulkCollectionsActionResult(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

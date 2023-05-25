@@ -8,12 +8,13 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.IotHub.Models
 {
     internal partial class IotHubJobInfoListResult
     {
-        internal static IotHubJobInfoListResult DeserializeIotHubJobInfoListResult(JsonElement element)
+        internal static IotHubJobInfoListResult DeserializeIotHubJobInfoListResult(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

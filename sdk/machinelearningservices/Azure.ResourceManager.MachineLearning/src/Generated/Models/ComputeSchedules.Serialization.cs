@@ -8,12 +8,13 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
     internal partial class ComputeSchedules
     {
-        internal static ComputeSchedules DeserializeComputeSchedules(JsonElement element)
+        internal static ComputeSchedules DeserializeComputeSchedules(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

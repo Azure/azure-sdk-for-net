@@ -7,12 +7,13 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Media.Models
 {
     public partial class MediaServicesNameAvailabilityResult
     {
-        internal static MediaServicesNameAvailabilityResult DeserializeMediaServicesNameAvailabilityResult(JsonElement element)
+        internal static MediaServicesNameAvailabilityResult DeserializeMediaServicesNameAvailabilityResult(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

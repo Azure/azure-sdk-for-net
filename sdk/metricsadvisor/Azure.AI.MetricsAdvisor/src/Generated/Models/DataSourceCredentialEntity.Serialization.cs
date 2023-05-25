@@ -8,12 +8,15 @@
 using System.Text.Json;
 using Azure.AI.MetricsAdvisor.Models;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.AI.MetricsAdvisor.Administration
 {
     public partial class DataSourceCredentialEntity : IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IUtf8JsonSerializable)this).Write(writer, new SerializableOptions());
+
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer, SerializableOptions options)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("dataSourceCredentialType"u8);
@@ -26,6 +29,25 @@ namespace Azure.AI.MetricsAdvisor.Administration
                 writer.WriteStringValue(Description);
             }
             writer.WriteEndObject();
+        }
+
+        internal static DataSourceCredentialEntity DeserializeDataSourceCredentialEntity(JsonElement element, SerializableOptions options = default)
+        {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            if (element.TryGetProperty("dataSourceCredentialType", out JsonElement discriminator))
+            {
+                switch (discriminator.GetString())
+                {
+                    case "AzureSQLConnectionString": return SqlConnectionStringCredentialEntity.DeserializeSqlConnectionStringCredentialEntity(element);
+                    case "DataLakeGen2SharedKey": return DataLakeSharedKeyCredentialEntity.DeserializeDataLakeSharedKeyCredentialEntity(element);
+                    case "ServicePrincipal": return ServicePrincipalCredentialEntity.DeserializeServicePrincipalCredentialEntity(element);
+                    case "ServicePrincipalInKV": return ServicePrincipalInKeyVaultCredentialEntity.DeserializeServicePrincipalInKeyVaultCredentialEntity(element);
+                }
+            }
+            return UnknownDataSourceCredential.DeserializeUnknownDataSourceCredential(element);
         }
     }
 }

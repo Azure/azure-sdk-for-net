@@ -7,13 +7,16 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Maintenance.Models
 {
     public partial class MaintenanceConfigurationAssignmentData : IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IUtf8JsonSerializable)this).Write(writer, new SerializableOptions());
+
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer, SerializableOptions options)
         {
             writer.WriteStartObject();
             if (Optional.IsDefined(Location))
@@ -37,7 +40,7 @@ namespace Azure.ResourceManager.Maintenance.Models
             writer.WriteEndObject();
         }
 
-        internal static MaintenanceConfigurationAssignmentData DeserializeMaintenanceConfigurationAssignmentData(JsonElement element)
+        internal static MaintenanceConfigurationAssignmentData DeserializeMaintenanceConfigurationAssignmentData(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

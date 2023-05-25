@@ -8,12 +8,13 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.IotHub.Models
 {
     public partial class IotHubTestAllRoutesResult
     {
-        internal static IotHubTestAllRoutesResult DeserializeIotHubTestAllRoutesResult(JsonElement element)
+        internal static IotHubTestAllRoutesResult DeserializeIotHubTestAllRoutesResult(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

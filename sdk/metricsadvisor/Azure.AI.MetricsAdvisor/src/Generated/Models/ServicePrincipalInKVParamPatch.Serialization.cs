@@ -7,10 +7,47 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.AI.MetricsAdvisor.Models
 {
     internal partial class ServicePrincipalInKVParamPatch : IUtf8JsonSerializable
     {
+
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer, SerializableOptions options)
+        {
+            writer.WriteStartObject();
+            if (Optional.IsDefined(KeyVaultEndpoint))
+            {
+                writer.WritePropertyName("keyVaultEndpoint"u8);
+                writer.WriteStringValue(KeyVaultEndpoint);
+            }
+            if (Optional.IsDefined(KeyVaultClientId))
+            {
+                writer.WritePropertyName("keyVaultClientId"u8);
+                writer.WriteStringValue(KeyVaultClientId);
+            }
+            if (Optional.IsDefined(KeyVaultClientSecret))
+            {
+                writer.WritePropertyName("keyVaultClientSecret"u8);
+                writer.WriteStringValue(KeyVaultClientSecret);
+            }
+            if (Optional.IsDefined(ServicePrincipalIdNameInKV))
+            {
+                writer.WritePropertyName("servicePrincipalIdNameInKV"u8);
+                writer.WriteStringValue(ServicePrincipalIdNameInKV);
+            }
+            if (Optional.IsDefined(ServicePrincipalSecretNameInKV))
+            {
+                writer.WritePropertyName("servicePrincipalSecretNameInKV"u8);
+                writer.WriteStringValue(ServicePrincipalSecretNameInKV);
+            }
+            if (Optional.IsDefined(TenantId))
+            {
+                writer.WritePropertyName("tenantId"u8);
+                writer.WriteStringValue(TenantId);
+            }
+            writer.WriteEndObject();
+        }
     }
 }

@@ -8,12 +8,13 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
     internal partial class MachineLearningPrivateLinkResourceListResult
     {
-        internal static MachineLearningPrivateLinkResourceListResult DeserializeMachineLearningPrivateLinkResourceListResult(JsonElement element)
+        internal static MachineLearningPrivateLinkResourceListResult DeserializeMachineLearningPrivateLinkResourceListResult(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

@@ -7,12 +7,13 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.Maps.Search.Models
 {
     internal partial class ReverseSearchAddressBatchItem
     {
-        internal static ReverseSearchAddressBatchItem DeserializeReverseSearchAddressBatchItem(JsonElement element)
+        internal static ReverseSearchAddressBatchItem DeserializeReverseSearchAddressBatchItem(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

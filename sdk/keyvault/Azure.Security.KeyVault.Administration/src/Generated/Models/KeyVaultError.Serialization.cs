@@ -7,12 +7,13 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.Security.KeyVault.Administration.Models
 {
     internal partial class KeyVaultError
     {
-        internal static KeyVaultError DeserializeKeyVaultError(JsonElement element)
+        internal static KeyVaultError DeserializeKeyVaultError(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

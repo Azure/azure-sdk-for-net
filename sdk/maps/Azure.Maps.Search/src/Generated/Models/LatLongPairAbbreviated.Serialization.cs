@@ -7,12 +7,13 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.Maps.Search.Models
 {
     internal partial class LatLongPairAbbreviated
     {
-        internal static LatLongPairAbbreviated DeserializeLatLongPairAbbreviated(JsonElement element)
+        internal static LatLongPairAbbreviated DeserializeLatLongPairAbbreviated(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

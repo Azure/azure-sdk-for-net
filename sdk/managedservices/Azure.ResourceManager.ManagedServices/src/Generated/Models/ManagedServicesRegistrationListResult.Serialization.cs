@@ -8,13 +8,14 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.ManagedServices;
 
 namespace Azure.ResourceManager.ManagedServices.Models
 {
     internal partial class ManagedServicesRegistrationListResult
     {
-        internal static ManagedServicesRegistrationListResult DeserializeManagedServicesRegistrationListResult(JsonElement element)
+        internal static ManagedServicesRegistrationListResult DeserializeManagedServicesRegistrationListResult(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

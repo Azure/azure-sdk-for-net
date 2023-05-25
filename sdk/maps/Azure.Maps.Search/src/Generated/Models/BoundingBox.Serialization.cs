@@ -7,12 +7,13 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.Maps.Search.Models
 {
     internal partial class BoundingBox
     {
-        internal static BoundingBox DeserializeBoundingBox(JsonElement element)
+        internal static BoundingBox DeserializeBoundingBox(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

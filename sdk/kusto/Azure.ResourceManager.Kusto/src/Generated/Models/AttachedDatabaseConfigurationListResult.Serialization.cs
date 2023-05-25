@@ -8,13 +8,14 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.Kusto;
 
 namespace Azure.ResourceManager.Kusto.Models
 {
     internal partial class AttachedDatabaseConfigurationListResult
     {
-        internal static AttachedDatabaseConfigurationListResult DeserializeAttachedDatabaseConfigurationListResult(JsonElement element)
+        internal static AttachedDatabaseConfigurationListResult DeserializeAttachedDatabaseConfigurationListResult(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

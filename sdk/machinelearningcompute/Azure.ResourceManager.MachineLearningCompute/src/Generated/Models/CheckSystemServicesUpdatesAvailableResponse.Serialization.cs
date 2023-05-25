@@ -7,12 +7,13 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.MachineLearningCompute.Models
 {
     public partial class CheckSystemServicesUpdatesAvailableResponse
     {
-        internal static CheckSystemServicesUpdatesAvailableResponse DeserializeCheckSystemServicesUpdatesAvailableResponse(JsonElement element)
+        internal static CheckSystemServicesUpdatesAvailableResponse DeserializeCheckSystemServicesUpdatesAvailableResponse(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

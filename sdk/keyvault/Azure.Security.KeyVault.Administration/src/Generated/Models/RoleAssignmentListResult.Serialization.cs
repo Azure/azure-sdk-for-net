@@ -8,13 +8,14 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.Security.KeyVault.Administration;
 
 namespace Azure.Security.KeyVault.Administration.Models
 {
     internal partial class RoleAssignmentListResult
     {
-        internal static RoleAssignmentListResult DeserializeRoleAssignmentListResult(JsonElement element)
+        internal static RoleAssignmentListResult DeserializeRoleAssignmentListResult(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

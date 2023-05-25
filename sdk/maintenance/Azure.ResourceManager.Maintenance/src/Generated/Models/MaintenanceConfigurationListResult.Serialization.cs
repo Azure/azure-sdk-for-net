@@ -8,13 +8,14 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.Maintenance;
 
 namespace Azure.ResourceManager.Maintenance.Models
 {
     internal partial class MaintenanceConfigurationListResult
     {
-        internal static MaintenanceConfigurationListResult DeserializeMaintenanceConfigurationListResult(JsonElement element)
+        internal static MaintenanceConfigurationListResult DeserializeMaintenanceConfigurationListResult(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

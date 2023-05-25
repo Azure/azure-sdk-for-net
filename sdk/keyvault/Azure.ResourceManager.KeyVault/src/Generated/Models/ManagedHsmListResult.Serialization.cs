@@ -8,13 +8,14 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.KeyVault;
 
 namespace Azure.ResourceManager.KeyVault.Models
 {
     internal partial class ManagedHsmListResult
     {
-        internal static ManagedHsmListResult DeserializeManagedHsmListResult(JsonElement element)
+        internal static ManagedHsmListResult DeserializeManagedHsmListResult(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

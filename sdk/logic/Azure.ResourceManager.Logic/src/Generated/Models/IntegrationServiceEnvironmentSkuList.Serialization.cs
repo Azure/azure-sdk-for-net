@@ -8,12 +8,13 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Logic.Models
 {
     internal partial class IntegrationServiceEnvironmentSkuList
     {
-        internal static IntegrationServiceEnvironmentSkuList DeserializeIntegrationServiceEnvironmentSkuList(JsonElement element)
+        internal static IntegrationServiceEnvironmentSkuList DeserializeIntegrationServiceEnvironmentSkuList(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

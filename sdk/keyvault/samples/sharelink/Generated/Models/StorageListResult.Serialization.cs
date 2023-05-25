@@ -8,12 +8,13 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.Security.KeyVault.Storage.Models
 {
     internal partial class StorageListResult
     {
-        internal static StorageListResult DeserializeStorageListResult(JsonElement element)
+        internal static StorageListResult DeserializeStorageListResult(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

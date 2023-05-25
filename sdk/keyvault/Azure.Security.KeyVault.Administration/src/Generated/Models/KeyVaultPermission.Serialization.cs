@@ -8,12 +8,15 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.Security.KeyVault.Administration
 {
     public partial class KeyVaultPermission : IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IUtf8JsonSerializable)this).Write(writer, new SerializableOptions());
+
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer, SerializableOptions options)
         {
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(Actions))
@@ -59,7 +62,7 @@ namespace Azure.Security.KeyVault.Administration
             writer.WriteEndObject();
         }
 
-        internal static KeyVaultPermission DeserializeKeyVaultPermission(JsonElement element)
+        internal static KeyVaultPermission DeserializeKeyVaultPermission(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

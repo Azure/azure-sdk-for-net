@@ -7,6 +7,7 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.IotHub.Models;
 using Azure.ResourceManager.Models;
 
@@ -14,7 +15,7 @@ namespace Azure.ResourceManager.IotHub
 {
     public partial class IotHubPrivateEndpointGroupInformationData
     {
-        internal static IotHubPrivateEndpointGroupInformationData DeserializeIotHubPrivateEndpointGroupInformationData(JsonElement element)
+        internal static IotHubPrivateEndpointGroupInformationData DeserializeIotHubPrivateEndpointGroupInformationData(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

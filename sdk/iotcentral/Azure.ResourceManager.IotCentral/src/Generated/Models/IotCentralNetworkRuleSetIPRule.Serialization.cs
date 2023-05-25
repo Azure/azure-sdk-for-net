@@ -7,12 +7,15 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.IotCentral.Models
 {
     public partial class IotCentralNetworkRuleSetIPRule : IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IUtf8JsonSerializable)this).Write(writer, new SerializableOptions());
+
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer, SerializableOptions options)
         {
             writer.WriteStartObject();
             if (Optional.IsDefined(FilterName))
@@ -28,7 +31,7 @@ namespace Azure.ResourceManager.IotCentral.Models
             writer.WriteEndObject();
         }
 
-        internal static IotCentralNetworkRuleSetIPRule DeserializeIotCentralNetworkRuleSetIPRule(JsonElement element)
+        internal static IotCentralNetworkRuleSetIPRule DeserializeIotCentralNetworkRuleSetIPRule(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

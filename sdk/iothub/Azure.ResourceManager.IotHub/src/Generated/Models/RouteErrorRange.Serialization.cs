@@ -7,12 +7,13 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.IotHub.Models
 {
     public partial class RouteErrorRange
     {
-        internal static RouteErrorRange DeserializeRouteErrorRange(JsonElement element)
+        internal static RouteErrorRange DeserializeRouteErrorRange(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

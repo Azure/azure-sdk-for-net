@@ -8,12 +8,13 @@
 using System.Net;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.Maps.Geolocation
 {
     public partial class CountryRegionResult
     {
-        internal static CountryRegionResult DeserializeCountryRegionResult(JsonElement element)
+        internal static CountryRegionResult DeserializeCountryRegionResult(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

@@ -7,10 +7,37 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.AI.MetricsAdvisor.Models
 {
     internal partial class AzureApplicationInsightsParameterPatch : IUtf8JsonSerializable
     {
+
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer, SerializableOptions options)
+        {
+            writer.WriteStartObject();
+            if (Optional.IsDefined(AzureCloud))
+            {
+                writer.WritePropertyName("azureCloud"u8);
+                writer.WriteStringValue(AzureCloud);
+            }
+            if (Optional.IsDefined(ApplicationId))
+            {
+                writer.WritePropertyName("applicationId"u8);
+                writer.WriteStringValue(ApplicationId);
+            }
+            if (Optional.IsDefined(ApiKey))
+            {
+                writer.WritePropertyName("apiKey"u8);
+                writer.WriteStringValue(ApiKey);
+            }
+            if (Optional.IsDefined(Query))
+            {
+                writer.WritePropertyName("query"u8);
+                writer.WriteStringValue(Query);
+            }
+            writer.WriteEndObject();
+        }
     }
 }

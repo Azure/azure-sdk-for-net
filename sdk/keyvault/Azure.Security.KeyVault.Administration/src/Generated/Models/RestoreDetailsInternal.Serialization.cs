@@ -8,12 +8,13 @@
 using System;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.Security.KeyVault.Administration.Models
 {
     internal partial class RestoreDetailsInternal
     {
-        internal static RestoreDetailsInternal DeserializeRestoreDetailsInternal(JsonElement element)
+        internal static RestoreDetailsInternal DeserializeRestoreDetailsInternal(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

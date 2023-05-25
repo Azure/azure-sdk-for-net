@@ -8,12 +8,13 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Logic.Models
 {
     public partial class LogicApiResourceMetadata
     {
-        internal static LogicApiResourceMetadata DeserializeLogicApiResourceMetadata(JsonElement element)
+        internal static LogicApiResourceMetadata DeserializeLogicApiResourceMetadata(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

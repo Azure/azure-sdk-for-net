@@ -7,12 +7,13 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.HybridConnectivity.Models
 {
     public partial class TargetResourceEndpointAccess
     {
-        internal static TargetResourceEndpointAccess DeserializeTargetResourceEndpointAccess(JsonElement element)
+        internal static TargetResourceEndpointAccess DeserializeTargetResourceEndpointAccess(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

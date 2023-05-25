@@ -9,12 +9,13 @@ using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.AI.MetricsAdvisor.Models
 {
     public partial class MetricEnrichedSeriesData
     {
-        internal static MetricEnrichedSeriesData DeserializeMetricEnrichedSeriesData(JsonElement element)
+        internal static MetricEnrichedSeriesData DeserializeMetricEnrichedSeriesData(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

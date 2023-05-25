@@ -8,12 +8,13 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Logic.Models
 {
     internal partial class IntegrationAccountKeyVaultKeyList
     {
-        internal static IntegrationAccountKeyVaultKeyList DeserializeIntegrationAccountKeyVaultKeyList(JsonElement element)
+        internal static IntegrationAccountKeyVaultKeyList DeserializeIntegrationAccountKeyVaultKeyList(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

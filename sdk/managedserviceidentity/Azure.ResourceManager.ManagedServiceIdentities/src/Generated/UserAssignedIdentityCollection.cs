@@ -228,7 +228,7 @@ namespace Azure.ResourceManager.ManagedServiceIdentities
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _userAssignedIdentityRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _userAssignedIdentityRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new UserAssignedIdentityResource(Client, UserAssignedIdentityData.DeserializeUserAssignedIdentityData(e)), _userAssignedIdentityClientDiagnostics, Pipeline, "UserAssignedIdentityCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, (e, o) => new UserAssignedIdentityResource(Client, UserAssignedIdentityData.DeserializeUserAssignedIdentityData(e)), _userAssignedIdentityClientDiagnostics, Pipeline, "UserAssignedIdentityCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -250,7 +250,7 @@ namespace Azure.ResourceManager.ManagedServiceIdentities
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _userAssignedIdentityRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _userAssignedIdentityRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new UserAssignedIdentityResource(Client, UserAssignedIdentityData.DeserializeUserAssignedIdentityData(e)), _userAssignedIdentityClientDiagnostics, Pipeline, "UserAssignedIdentityCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, (e, o) => new UserAssignedIdentityResource(Client, UserAssignedIdentityData.DeserializeUserAssignedIdentityData(e)), _userAssignedIdentityClientDiagnostics, Pipeline, "UserAssignedIdentityCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

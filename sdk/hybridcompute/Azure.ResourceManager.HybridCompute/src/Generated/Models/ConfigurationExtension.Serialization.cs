@@ -7,12 +7,13 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.HybridCompute.Models
 {
     public partial class ConfigurationExtension
     {
-        internal static ConfigurationExtension DeserializeConfigurationExtension(JsonElement element)
+        internal static ConfigurationExtension DeserializeConfigurationExtension(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

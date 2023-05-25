@@ -8,12 +8,13 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.Maps.Routing.Models
 {
     public partial class RouteSectionTec
     {
-        internal static RouteSectionTec DeserializeRouteSectionTec(JsonElement element)
+        internal static RouteSectionTec DeserializeRouteSectionTec(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

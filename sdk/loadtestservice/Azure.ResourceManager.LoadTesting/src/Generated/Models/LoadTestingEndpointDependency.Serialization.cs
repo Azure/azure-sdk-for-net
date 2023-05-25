@@ -8,12 +8,13 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.LoadTesting.Models
 {
     public partial class LoadTestingEndpointDependency
     {
-        internal static LoadTestingEndpointDependency DeserializeLoadTestingEndpointDependency(JsonElement element)
+        internal static LoadTestingEndpointDependency DeserializeLoadTestingEndpointDependency(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

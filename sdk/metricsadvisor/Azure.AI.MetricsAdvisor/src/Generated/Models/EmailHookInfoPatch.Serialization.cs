@@ -7,10 +7,49 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.AI.MetricsAdvisor.Models
 {
     internal partial class EmailHookInfoPatch : IUtf8JsonSerializable
     {
+
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer, SerializableOptions options)
+        {
+            writer.WriteStartObject();
+            if (Optional.IsDefined(HookParameter))
+            {
+                writer.WritePropertyName("hookParameter"u8);
+                writer.WriteObjectValue(HookParameter);
+            }
+            writer.WritePropertyName("hookType"u8);
+            writer.WriteStringValue(HookType.ToString());
+            if (Optional.IsDefined(HookName))
+            {
+                writer.WritePropertyName("hookName"u8);
+                writer.WriteStringValue(HookName);
+            }
+            if (Optional.IsDefined(Description))
+            {
+                writer.WritePropertyName("description"u8);
+                writer.WriteStringValue(Description);
+            }
+            if (Optional.IsDefined(ExternalLink))
+            {
+                writer.WritePropertyName("externalLink"u8);
+                writer.WriteStringValue(ExternalLink);
+            }
+            if (Optional.IsCollectionDefined(Admins))
+            {
+                writer.WritePropertyName("admins"u8);
+                writer.WriteStartArray();
+                foreach (var item in Admins)
+                {
+                    writer.WriteStringValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            writer.WriteEndObject();
+        }
     }
 }

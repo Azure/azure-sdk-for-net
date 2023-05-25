@@ -7,12 +7,13 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.IoT.Hub.Service.Models
 {
     public partial class PurgeMessageQueueResult
     {
-        internal static PurgeMessageQueueResult DeserializePurgeMessageQueueResult(JsonElement element)
+        internal static PurgeMessageQueueResult DeserializePurgeMessageQueueResult(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

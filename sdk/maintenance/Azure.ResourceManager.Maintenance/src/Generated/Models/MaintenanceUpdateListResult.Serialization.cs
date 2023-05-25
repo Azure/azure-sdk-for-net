@@ -8,12 +8,13 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Maintenance.Models
 {
     internal partial class MaintenanceUpdateListResult
     {
-        internal static MaintenanceUpdateListResult DeserializeMaintenanceUpdateListResult(JsonElement element)
+        internal static MaintenanceUpdateListResult DeserializeMaintenanceUpdateListResult(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

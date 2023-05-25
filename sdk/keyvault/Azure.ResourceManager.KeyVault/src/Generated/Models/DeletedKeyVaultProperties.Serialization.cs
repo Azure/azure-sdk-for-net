@@ -9,12 +9,13 @@ using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.KeyVault.Models
 {
     public partial class DeletedKeyVaultProperties
     {
-        internal static DeletedKeyVaultProperties DeserializeDeletedKeyVaultProperties(JsonElement element)
+        internal static DeletedKeyVaultProperties DeserializeDeletedKeyVaultProperties(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

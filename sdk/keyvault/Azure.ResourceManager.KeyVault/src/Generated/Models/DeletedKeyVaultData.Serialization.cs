@@ -7,6 +7,7 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.KeyVault.Models;
 using Azure.ResourceManager.Models;
 
@@ -14,7 +15,7 @@ namespace Azure.ResourceManager.KeyVault
 {
     public partial class DeletedKeyVaultData
     {
-        internal static DeletedKeyVaultData DeserializeDeletedKeyVaultData(JsonElement element)
+        internal static DeletedKeyVaultData DeserializeDeletedKeyVaultData(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

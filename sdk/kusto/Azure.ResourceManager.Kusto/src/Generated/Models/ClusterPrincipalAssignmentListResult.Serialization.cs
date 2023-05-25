@@ -8,13 +8,14 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.Kusto;
 
 namespace Azure.ResourceManager.Kusto.Models
 {
     internal partial class ClusterPrincipalAssignmentListResult
     {
-        internal static ClusterPrincipalAssignmentListResult DeserializeClusterPrincipalAssignmentListResult(JsonElement element)
+        internal static ClusterPrincipalAssignmentListResult DeserializeClusterPrincipalAssignmentListResult(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

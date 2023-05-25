@@ -7,12 +7,13 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.Maps.Search.Models
 {
     internal partial class SearchSummary
     {
-        internal static SearchSummary DeserializeSearchSummary(JsonElement element)
+        internal static SearchSummary DeserializeSearchSummary(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

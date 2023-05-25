@@ -9,12 +9,13 @@ using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.Security.KeyVault.Storage.Models
 {
     public partial class DeletedStorageBundle
     {
-        internal static DeletedStorageBundle DeserializeDeletedStorageBundle(JsonElement element)
+        internal static DeletedStorageBundle DeserializeDeletedStorageBundle(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

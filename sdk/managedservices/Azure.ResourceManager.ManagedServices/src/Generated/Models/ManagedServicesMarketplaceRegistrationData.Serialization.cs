@@ -7,6 +7,7 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.ManagedServices.Models;
 using Azure.ResourceManager.Models;
 
@@ -14,7 +15,7 @@ namespace Azure.ResourceManager.ManagedServices
 {
     public partial class ManagedServicesMarketplaceRegistrationData
     {
-        internal static ManagedServicesMarketplaceRegistrationData DeserializeManagedServicesMarketplaceRegistrationData(JsonElement element)
+        internal static ManagedServicesMarketplaceRegistrationData DeserializeManagedServicesMarketplaceRegistrationData(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

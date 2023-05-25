@@ -8,12 +8,13 @@
 using System;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
     public partial class MachineLearningComputeInstanceLastOperation
     {
-        internal static MachineLearningComputeInstanceLastOperation DeserializeMachineLearningComputeInstanceLastOperation(JsonElement element)
+        internal static MachineLearningComputeInstanceLastOperation DeserializeMachineLearningComputeInstanceLastOperation(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

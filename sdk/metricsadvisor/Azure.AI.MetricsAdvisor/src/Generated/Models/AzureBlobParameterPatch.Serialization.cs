@@ -7,10 +7,32 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.AI.MetricsAdvisor.Models
 {
     internal partial class AzureBlobParameterPatch : IUtf8JsonSerializable
     {
+
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer, SerializableOptions options)
+        {
+            writer.WriteStartObject();
+            if (Optional.IsDefined(ConnectionString))
+            {
+                writer.WritePropertyName("connectionString"u8);
+                writer.WriteStringValue(ConnectionString);
+            }
+            if (Optional.IsDefined(Container))
+            {
+                writer.WritePropertyName("container"u8);
+                writer.WriteStringValue(Container);
+            }
+            if (Optional.IsDefined(BlobTemplate))
+            {
+                writer.WritePropertyName("blobTemplate"u8);
+                writer.WriteStringValue(BlobTemplate);
+            }
+            writer.WriteEndObject();
+        }
     }
 }

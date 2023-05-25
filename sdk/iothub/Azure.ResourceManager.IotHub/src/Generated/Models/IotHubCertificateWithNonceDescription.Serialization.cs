@@ -8,13 +8,14 @@
 using System.Text.Json;
 using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.IotHub.Models
 {
     public partial class IotHubCertificateWithNonceDescription
     {
-        internal static IotHubCertificateWithNonceDescription DeserializeIotHubCertificateWithNonceDescription(JsonElement element)
+        internal static IotHubCertificateWithNonceDescription DeserializeIotHubCertificateWithNonceDescription(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

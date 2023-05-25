@@ -9,6 +9,7 @@ using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.Logic.Models;
 using Azure.ResourceManager.Models;
 
@@ -16,7 +17,7 @@ namespace Azure.ResourceManager.Logic
 {
     public partial class LogicWorkflowRunActionData
     {
-        internal static LogicWorkflowRunActionData DeserializeLogicWorkflowRunActionData(JsonElement element)
+        internal static LogicWorkflowRunActionData DeserializeLogicWorkflowRunActionData(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

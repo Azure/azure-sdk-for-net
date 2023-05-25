@@ -9,12 +9,13 @@ using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Marketplace.Models
 {
     public partial class StopSellOffersPlansNotificationsResult
     {
-        internal static StopSellOffersPlansNotificationsResult DeserializeStopSellOffersPlansNotificationsResult(JsonElement element)
+        internal static StopSellOffersPlansNotificationsResult DeserializeStopSellOffersPlansNotificationsResult(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

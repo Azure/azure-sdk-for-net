@@ -7,12 +7,13 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Media.Models
 {
     public partial class EdgeUsageDataEventHub
     {
-        internal static EdgeUsageDataEventHub DeserializeEdgeUsageDataEventHub(JsonElement element)
+        internal static EdgeUsageDataEventHub DeserializeEdgeUsageDataEventHub(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

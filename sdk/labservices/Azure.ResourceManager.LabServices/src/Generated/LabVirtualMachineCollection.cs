@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.LabServices
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _labVirtualMachineVirtualMachinesRestClient.CreateListByLabRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _labVirtualMachineVirtualMachinesRestClient.CreateListByLabNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new LabVirtualMachineResource(Client, LabVirtualMachineData.DeserializeLabVirtualMachineData(e)), _labVirtualMachineVirtualMachinesClientDiagnostics, Pipeline, "LabVirtualMachineCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, (e, o) => new LabVirtualMachineResource(Client, LabVirtualMachineData.DeserializeLabVirtualMachineData(e)), _labVirtualMachineVirtualMachinesClientDiagnostics, Pipeline, "LabVirtualMachineCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -169,7 +169,7 @@ namespace Azure.ResourceManager.LabServices
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _labVirtualMachineVirtualMachinesRestClient.CreateListByLabRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _labVirtualMachineVirtualMachinesRestClient.CreateListByLabNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new LabVirtualMachineResource(Client, LabVirtualMachineData.DeserializeLabVirtualMachineData(e)), _labVirtualMachineVirtualMachinesClientDiagnostics, Pipeline, "LabVirtualMachineCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, (e, o) => new LabVirtualMachineResource(Client, LabVirtualMachineData.DeserializeLabVirtualMachineData(e)), _labVirtualMachineVirtualMachinesClientDiagnostics, Pipeline, "LabVirtualMachineCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

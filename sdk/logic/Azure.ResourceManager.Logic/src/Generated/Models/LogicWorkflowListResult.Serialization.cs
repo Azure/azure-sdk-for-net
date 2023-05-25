@@ -8,13 +8,14 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.Logic;
 
 namespace Azure.ResourceManager.Logic.Models
 {
     internal partial class LogicWorkflowListResult
     {
-        internal static LogicWorkflowListResult DeserializeLogicWorkflowListResult(JsonElement element)
+        internal static LogicWorkflowListResult DeserializeLogicWorkflowListResult(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

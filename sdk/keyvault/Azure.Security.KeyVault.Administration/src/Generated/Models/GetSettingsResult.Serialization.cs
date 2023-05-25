@@ -8,12 +8,13 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.Security.KeyVault.Administration
 {
     public partial class GetSettingsResult
     {
-        internal static GetSettingsResult DeserializeGetSettingsResult(JsonElement element)
+        internal static GetSettingsResult DeserializeGetSettingsResult(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

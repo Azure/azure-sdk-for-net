@@ -7,12 +7,13 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.Maps.Rendering
 {
     public partial class RegionalCopyrightCountry
     {
-        internal static RegionalCopyrightCountry DeserializeRegionalCopyrightCountry(JsonElement element)
+        internal static RegionalCopyrightCountry DeserializeRegionalCopyrightCountry(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

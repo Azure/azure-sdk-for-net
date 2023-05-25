@@ -7,12 +7,13 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.Maps.Routing.Models
 {
     internal partial class LatLongPair
     {
-        internal static LatLongPair DeserializeLatLongPair(JsonElement element)
+        internal static LatLongPair DeserializeLatLongPair(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

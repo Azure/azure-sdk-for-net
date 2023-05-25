@@ -7,12 +7,13 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Media.Models
 {
     public partial class StreamingEndpointCapacity
     {
-        internal static StreamingEndpointCapacity DeserializeStreamingEndpointCapacity(JsonElement element)
+        internal static StreamingEndpointCapacity DeserializeStreamingEndpointCapacity(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

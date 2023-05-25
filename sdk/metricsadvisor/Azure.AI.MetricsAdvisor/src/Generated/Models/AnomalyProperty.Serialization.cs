@@ -7,12 +7,13 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.AI.MetricsAdvisor.Models
 {
     internal partial class AnomalyProperty
     {
-        internal static AnomalyProperty DeserializeAnomalyProperty(JsonElement element)
+        internal static AnomalyProperty DeserializeAnomalyProperty(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

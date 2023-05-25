@@ -8,12 +8,13 @@
 using System.Net;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
     public partial class AmlComputeNodeInformation
     {
-        internal static AmlComputeNodeInformation DeserializeAmlComputeNodeInformation(JsonElement element)
+        internal static AmlComputeNodeInformation DeserializeAmlComputeNodeInformation(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

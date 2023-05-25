@@ -8,12 +8,13 @@
 using System;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.AI.MetricsAdvisor.Models
 {
     public partial class EnrichmentStatus
     {
-        internal static EnrichmentStatus DeserializeEnrichmentStatus(JsonElement element)
+        internal static EnrichmentStatus DeserializeEnrichmentStatus(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

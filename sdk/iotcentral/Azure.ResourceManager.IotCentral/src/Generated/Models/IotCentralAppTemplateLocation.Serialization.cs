@@ -7,12 +7,13 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.IotCentral.Models
 {
     public partial class IotCentralAppTemplateLocation
     {
-        internal static IotCentralAppTemplateLocation DeserializeIotCentralAppTemplateLocation(JsonElement element)
+        internal static IotCentralAppTemplateLocation DeserializeIotCentralAppTemplateLocation(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

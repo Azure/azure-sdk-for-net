@@ -9,12 +9,13 @@ using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Marketplace.Models
 {
     public partial class NewPlanNotification
     {
-        internal static NewPlanNotification DeserializeNewPlanNotification(JsonElement element)
+        internal static NewPlanNotification DeserializeNewPlanNotification(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

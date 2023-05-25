@@ -8,12 +8,13 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
     public partial class MachineLearningFqdnEndpoint
     {
-        internal static MachineLearningFqdnEndpoint DeserializeMachineLearningFqdnEndpoint(JsonElement element)
+        internal static MachineLearningFqdnEndpoint DeserializeMachineLearningFqdnEndpoint(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

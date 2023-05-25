@@ -8,13 +8,14 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.Marketplace;
 
 namespace Azure.ResourceManager.Marketplace.Models
 {
     internal partial class MarketplaceAdminApprovalRequestList
     {
-        internal static MarketplaceAdminApprovalRequestList DeserializeMarketplaceAdminApprovalRequestList(JsonElement element)
+        internal static MarketplaceAdminApprovalRequestList DeserializeMarketplaceAdminApprovalRequestList(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

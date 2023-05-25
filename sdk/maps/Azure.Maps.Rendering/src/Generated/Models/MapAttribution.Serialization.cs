@@ -8,12 +8,13 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.Maps.Rendering
 {
     internal partial class MapAttribution
     {
-        internal static MapAttribution DeserializeMapAttribution(JsonElement element)
+        internal static MapAttribution DeserializeMapAttribution(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

@@ -7,10 +7,32 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.AI.MetricsAdvisor.Models
 {
     internal partial class ServicePrincipalParamPatch : IUtf8JsonSerializable
     {
+
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer, SerializableOptions options)
+        {
+            writer.WriteStartObject();
+            if (Optional.IsDefined(ClientId))
+            {
+                writer.WritePropertyName("clientId"u8);
+                writer.WriteStringValue(ClientId);
+            }
+            if (Optional.IsDefined(ClientSecret))
+            {
+                writer.WritePropertyName("clientSecret"u8);
+                writer.WriteStringValue(ClientSecret);
+            }
+            if (Optional.IsDefined(TenantId))
+            {
+                writer.WritePropertyName("tenantId"u8);
+                writer.WriteStringValue(TenantId);
+            }
+            writer.WriteEndObject();
+        }
     }
 }

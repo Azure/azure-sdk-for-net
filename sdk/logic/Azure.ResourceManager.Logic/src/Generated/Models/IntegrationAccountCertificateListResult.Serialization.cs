@@ -8,13 +8,14 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.Logic;
 
 namespace Azure.ResourceManager.Logic.Models
 {
     internal partial class IntegrationAccountCertificateListResult
     {
-        internal static IntegrationAccountCertificateListResult DeserializeIntegrationAccountCertificateListResult(JsonElement element)
+        internal static IntegrationAccountCertificateListResult DeserializeIntegrationAccountCertificateListResult(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

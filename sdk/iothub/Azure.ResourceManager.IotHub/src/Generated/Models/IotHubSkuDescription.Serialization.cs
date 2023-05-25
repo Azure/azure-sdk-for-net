@@ -7,12 +7,13 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.IotHub.Models
 {
     public partial class IotHubSkuDescription
     {
-        internal static IotHubSkuDescription DeserializeIotHubSkuDescription(JsonElement element)
+        internal static IotHubSkuDescription DeserializeIotHubSkuDescription(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

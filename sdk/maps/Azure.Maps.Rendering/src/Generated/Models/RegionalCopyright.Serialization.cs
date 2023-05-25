@@ -8,12 +8,13 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.Maps.Rendering
 {
     public partial class RegionalCopyright
     {
-        internal static RegionalCopyright DeserializeRegionalCopyright(JsonElement element)
+        internal static RegionalCopyright DeserializeRegionalCopyright(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

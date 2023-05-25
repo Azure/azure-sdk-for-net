@@ -8,12 +8,15 @@
 using System;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Maps.Models
 {
     public partial class MapsAccountProperties : IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IUtf8JsonSerializable)this).Write(writer, new SerializableOptions());
+
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer, SerializableOptions options)
         {
             writer.WriteStartObject();
             if (Optional.IsDefined(DisableLocalAuth))
@@ -24,7 +27,7 @@ namespace Azure.ResourceManager.Maps.Models
             writer.WriteEndObject();
         }
 
-        internal static MapsAccountProperties DeserializeMapsAccountProperties(JsonElement element)
+        internal static MapsAccountProperties DeserializeMapsAccountProperties(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

@@ -7,12 +7,13 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Logic.Models
 {
     public partial class LogicApiDeploymentParameterMetadata
     {
-        internal static LogicApiDeploymentParameterMetadata DeserializeLogicApiDeploymentParameterMetadata(JsonElement element)
+        internal static LogicApiDeploymentParameterMetadata DeserializeLogicApiDeploymentParameterMetadata(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

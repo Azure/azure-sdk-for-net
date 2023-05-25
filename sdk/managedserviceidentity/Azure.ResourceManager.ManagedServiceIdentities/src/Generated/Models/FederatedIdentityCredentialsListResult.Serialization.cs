@@ -8,13 +8,14 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.ManagedServiceIdentities;
 
 namespace Azure.ResourceManager.ManagedServiceIdentities.Models
 {
     internal partial class FederatedIdentityCredentialsListResult
     {
-        internal static FederatedIdentityCredentialsListResult DeserializeFederatedIdentityCredentialsListResult(JsonElement element)
+        internal static FederatedIdentityCredentialsListResult DeserializeFederatedIdentityCredentialsListResult(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

@@ -8,12 +8,13 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.KeyVault.Models
 {
     internal partial class ManagedHsmRegionsListResult
     {
-        internal static ManagedHsmRegionsListResult DeserializeManagedHsmRegionsListResult(JsonElement element)
+        internal static ManagedHsmRegionsListResult DeserializeManagedHsmRegionsListResult(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

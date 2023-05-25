@@ -7,12 +7,13 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.Maps.Search.Models
 {
     internal partial class OperatingHoursTime
     {
-        internal static OperatingHoursTime DeserializeOperatingHoursTime(JsonElement element)
+        internal static OperatingHoursTime DeserializeOperatingHoursTime(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

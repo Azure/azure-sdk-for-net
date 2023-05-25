@@ -8,13 +8,14 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.KeyVault;
 
 namespace Azure.ResourceManager.KeyVault.Models
 {
     internal partial class DeletedVaultListResult
     {
-        internal static DeletedVaultListResult DeserializeDeletedVaultListResult(JsonElement element)
+        internal static DeletedVaultListResult DeserializeDeletedVaultListResult(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

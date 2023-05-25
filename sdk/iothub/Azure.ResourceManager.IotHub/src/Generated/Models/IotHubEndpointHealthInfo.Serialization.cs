@@ -8,12 +8,13 @@
 using System;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.IotHub.Models
 {
     public partial class IotHubEndpointHealthInfo
     {
-        internal static IotHubEndpointHealthInfo DeserializeIotHubEndpointHealthInfo(JsonElement element)
+        internal static IotHubEndpointHealthInfo DeserializeIotHubEndpointHealthInfo(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

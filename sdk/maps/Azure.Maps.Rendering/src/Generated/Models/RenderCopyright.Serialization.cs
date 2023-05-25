@@ -8,12 +8,13 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.Maps.Rendering
 {
     public partial class RenderCopyright
     {
-        internal static RenderCopyright DeserializeRenderCopyright(JsonElement element)
+        internal static RenderCopyright DeserializeRenderCopyright(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

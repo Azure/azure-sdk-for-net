@@ -7,12 +7,13 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.MachineLearningCompute.Models
 {
     public partial class ErrorDetail
     {
-        internal static ErrorDetail DeserializeErrorDetail(JsonElement element)
+        internal static ErrorDetail DeserializeErrorDetail(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

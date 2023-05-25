@@ -7,12 +7,13 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.Maps.Routing.Models
 {
     internal partial class RouteDirectionsBatchItem
     {
-        internal static RouteDirectionsBatchItem DeserializeRouteDirectionsBatchItem(JsonElement element)
+        internal static RouteDirectionsBatchItem DeserializeRouteDirectionsBatchItem(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

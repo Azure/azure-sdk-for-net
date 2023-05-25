@@ -8,12 +8,13 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.Security.KeyVault.Storage.Models
 {
     public partial class SasDefinitionBundle
     {
-        internal static SasDefinitionBundle DeserializeSasDefinitionBundle(JsonElement element)
+        internal static SasDefinitionBundle DeserializeSasDefinitionBundle(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

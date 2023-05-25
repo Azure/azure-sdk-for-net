@@ -7,10 +7,144 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.AI.MetricsAdvisor.Models
 {
     internal partial class AzureDataExplorerDataFeedPatch : IUtf8JsonSerializable
     {
+
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer, SerializableOptions options)
+        {
+            writer.WriteStartObject();
+            if (Optional.IsDefined(DataSourceParameter))
+            {
+                writer.WritePropertyName("dataSourceParameter"u8);
+                writer.WriteObjectValue(DataSourceParameter);
+            }
+            writer.WritePropertyName("dataSourceType"u8);
+            writer.WriteStringValue(DataSourceType.ToString());
+            if (Optional.IsDefined(DataFeedName))
+            {
+                writer.WritePropertyName("dataFeedName"u8);
+                writer.WriteStringValue(DataFeedName);
+            }
+            if (Optional.IsDefined(DataFeedDescription))
+            {
+                writer.WritePropertyName("dataFeedDescription"u8);
+                writer.WriteStringValue(DataFeedDescription);
+            }
+            if (Optional.IsDefined(TimestampColumn))
+            {
+                writer.WritePropertyName("timestampColumn"u8);
+                writer.WriteStringValue(TimestampColumn);
+            }
+            if (Optional.IsDefined(DataStartFrom))
+            {
+                writer.WritePropertyName("dataStartFrom"u8);
+                writer.WriteStringValue(DataStartFrom.Value, "O");
+            }
+            if (Optional.IsDefined(StartOffsetInSeconds))
+            {
+                writer.WritePropertyName("startOffsetInSeconds"u8);
+                writer.WriteNumberValue(StartOffsetInSeconds.Value);
+            }
+            if (Optional.IsDefined(MaxConcurrency))
+            {
+                writer.WritePropertyName("maxConcurrency"u8);
+                writer.WriteNumberValue(MaxConcurrency.Value);
+            }
+            if (Optional.IsDefined(MinRetryIntervalInSeconds))
+            {
+                writer.WritePropertyName("minRetryIntervalInSeconds"u8);
+                writer.WriteNumberValue(MinRetryIntervalInSeconds.Value);
+            }
+            if (Optional.IsDefined(StopRetryAfterInSeconds))
+            {
+                writer.WritePropertyName("stopRetryAfterInSeconds"u8);
+                writer.WriteNumberValue(StopRetryAfterInSeconds.Value);
+            }
+            if (Optional.IsDefined(NeedRollup))
+            {
+                writer.WritePropertyName("needRollup"u8);
+                writer.WriteStringValue(NeedRollup.Value.ToString());
+            }
+            if (Optional.IsDefined(RollUpMethod))
+            {
+                writer.WritePropertyName("rollUpMethod"u8);
+                writer.WriteStringValue(RollUpMethod.Value.ToString());
+            }
+            if (Optional.IsCollectionDefined(RollUpColumns))
+            {
+                writer.WritePropertyName("rollUpColumns"u8);
+                writer.WriteStartArray();
+                foreach (var item in RollUpColumns)
+                {
+                    writer.WriteStringValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsDefined(AllUpIdentification))
+            {
+                writer.WritePropertyName("allUpIdentification"u8);
+                writer.WriteStringValue(AllUpIdentification);
+            }
+            if (Optional.IsDefined(FillMissingPointType))
+            {
+                writer.WritePropertyName("fillMissingPointType"u8);
+                writer.WriteStringValue(FillMissingPointType.Value.ToString());
+            }
+            if (Optional.IsDefined(FillMissingPointValue))
+            {
+                writer.WritePropertyName("fillMissingPointValue"u8);
+                writer.WriteNumberValue(FillMissingPointValue.Value);
+            }
+            if (Optional.IsDefined(ViewMode))
+            {
+                writer.WritePropertyName("viewMode"u8);
+                writer.WriteStringValue(ViewMode.Value.ToString());
+            }
+            if (Optional.IsCollectionDefined(Admins))
+            {
+                writer.WritePropertyName("admins"u8);
+                writer.WriteStartArray();
+                foreach (var item in Admins)
+                {
+                    writer.WriteStringValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsCollectionDefined(Viewers))
+            {
+                writer.WritePropertyName("viewers"u8);
+                writer.WriteStartArray();
+                foreach (var item in Viewers)
+                {
+                    writer.WriteStringValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsDefined(Status))
+            {
+                writer.WritePropertyName("status"u8);
+                writer.WriteStringValue(Status.Value.ToString());
+            }
+            if (Optional.IsDefined(ActionLinkTemplate))
+            {
+                writer.WritePropertyName("actionLinkTemplate"u8);
+                writer.WriteStringValue(ActionLinkTemplate);
+            }
+            if (Optional.IsDefined(AuthenticationType))
+            {
+                writer.WritePropertyName("authenticationType"u8);
+                writer.WriteStringValue(AuthenticationType.Value.ToString());
+            }
+            if (Optional.IsDefined(CredentialId))
+            {
+                writer.WritePropertyName("credentialId"u8);
+                writer.WriteStringValue(CredentialId);
+            }
+            writer.WriteEndObject();
+        }
     }
 }

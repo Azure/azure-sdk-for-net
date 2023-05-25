@@ -227,7 +227,7 @@ namespace Azure.ResourceManager.Logic
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _integrationServiceEnvironmentManagedApiRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _integrationServiceEnvironmentManagedApiRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new IntegrationServiceEnvironmentManagedApiResource(Client, IntegrationServiceEnvironmentManagedApiData.DeserializeIntegrationServiceEnvironmentManagedApiData(e)), _integrationServiceEnvironmentManagedApiClientDiagnostics, Pipeline, "IntegrationServiceEnvironmentManagedApiCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, (e, o) => new IntegrationServiceEnvironmentManagedApiResource(Client, IntegrationServiceEnvironmentManagedApiData.DeserializeIntegrationServiceEnvironmentManagedApiData(e)), _integrationServiceEnvironmentManagedApiClientDiagnostics, Pipeline, "IntegrationServiceEnvironmentManagedApiCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -249,7 +249,7 @@ namespace Azure.ResourceManager.Logic
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _integrationServiceEnvironmentManagedApiRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _integrationServiceEnvironmentManagedApiRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new IntegrationServiceEnvironmentManagedApiResource(Client, IntegrationServiceEnvironmentManagedApiData.DeserializeIntegrationServiceEnvironmentManagedApiData(e)), _integrationServiceEnvironmentManagedApiClientDiagnostics, Pipeline, "IntegrationServiceEnvironmentManagedApiCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, (e, o) => new IntegrationServiceEnvironmentManagedApiResource(Client, IntegrationServiceEnvironmentManagedApiData.DeserializeIntegrationServiceEnvironmentManagedApiData(e)), _integrationServiceEnvironmentManagedApiClientDiagnostics, Pipeline, "IntegrationServiceEnvironmentManagedApiCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

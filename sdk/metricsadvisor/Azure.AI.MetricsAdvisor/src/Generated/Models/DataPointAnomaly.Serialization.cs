@@ -9,12 +9,13 @@ using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.AI.MetricsAdvisor.Models
 {
     public partial class DataPointAnomaly
     {
-        internal static DataPointAnomaly DeserializeDataPointAnomaly(JsonElement element)
+        internal static DataPointAnomaly DeserializeDataPointAnomaly(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

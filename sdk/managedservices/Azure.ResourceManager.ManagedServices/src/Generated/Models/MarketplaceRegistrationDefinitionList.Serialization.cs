@@ -8,13 +8,14 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.ManagedServices;
 
 namespace Azure.ResourceManager.ManagedServices.Models
 {
     internal partial class MarketplaceRegistrationDefinitionList
     {
-        internal static MarketplaceRegistrationDefinitionList DeserializeMarketplaceRegistrationDefinitionList(JsonElement element)
+        internal static MarketplaceRegistrationDefinitionList DeserializeMarketplaceRegistrationDefinitionList(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

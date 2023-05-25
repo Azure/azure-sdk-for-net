@@ -8,13 +8,14 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.Media;
 
 namespace Azure.ResourceManager.Media.Models
 {
     internal partial class MediaAssetFilterListResult
     {
-        internal static MediaAssetFilterListResult DeserializeMediaAssetFilterListResult(JsonElement element)
+        internal static MediaAssetFilterListResult DeserializeMediaAssetFilterListResult(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

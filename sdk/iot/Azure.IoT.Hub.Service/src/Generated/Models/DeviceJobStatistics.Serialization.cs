@@ -7,12 +7,13 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.IoT.Hub.Service.Models
 {
     public partial class DeviceJobStatistics
     {
-        internal static DeviceJobStatistics DeserializeDeviceJobStatistics(JsonElement element)
+        internal static DeviceJobStatistics DeserializeDeviceJobStatistics(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

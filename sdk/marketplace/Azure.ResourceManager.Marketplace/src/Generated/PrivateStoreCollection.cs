@@ -217,7 +217,7 @@ namespace Azure.ResourceManager.Marketplace
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _privateStoreRestClient.CreateListRequest(useCache);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _privateStoreRestClient.CreateListNextPageRequest(nextLink, useCache);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new PrivateStoreResource(Client, PrivateStoreData.DeserializePrivateStoreData(e)), _privateStoreClientDiagnostics, Pipeline, "PrivateStoreCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, (e, o) => new PrivateStoreResource(Client, PrivateStoreData.DeserializePrivateStoreData(e)), _privateStoreClientDiagnostics, Pipeline, "PrivateStoreCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -240,7 +240,7 @@ namespace Azure.ResourceManager.Marketplace
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _privateStoreRestClient.CreateListRequest(useCache);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _privateStoreRestClient.CreateListNextPageRequest(nextLink, useCache);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new PrivateStoreResource(Client, PrivateStoreData.DeserializePrivateStoreData(e)), _privateStoreClientDiagnostics, Pipeline, "PrivateStoreCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, (e, o) => new PrivateStoreResource(Client, PrivateStoreData.DeserializePrivateStoreData(e)), _privateStoreClientDiagnostics, Pipeline, "PrivateStoreCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

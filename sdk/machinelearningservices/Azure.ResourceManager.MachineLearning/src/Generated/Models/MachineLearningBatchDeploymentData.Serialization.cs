@@ -8,6 +8,7 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.MachineLearning.Models;
 using Azure.ResourceManager.Models;
 
@@ -15,7 +16,9 @@ namespace Azure.ResourceManager.MachineLearning
 {
     public partial class MachineLearningBatchDeploymentData : IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IUtf8JsonSerializable)this).Write(writer, new SerializableOptions());
+
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer, SerializableOptions options)
         {
             writer.WriteStartObject();
             if (Optional.IsDefined(Identity))
@@ -52,7 +55,7 @@ namespace Azure.ResourceManager.MachineLearning
             writer.WriteEndObject();
         }
 
-        internal static MachineLearningBatchDeploymentData DeserializeMachineLearningBatchDeploymentData(JsonElement element)
+        internal static MachineLearningBatchDeploymentData DeserializeMachineLearningBatchDeploymentData(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

@@ -7,12 +7,13 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.Security.KeyVault.Administration
 {
     public partial class KeyVaultRoleAssignment
     {
-        internal static KeyVaultRoleAssignment DeserializeKeyVaultRoleAssignment(JsonElement element)
+        internal static KeyVaultRoleAssignment DeserializeKeyVaultRoleAssignment(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

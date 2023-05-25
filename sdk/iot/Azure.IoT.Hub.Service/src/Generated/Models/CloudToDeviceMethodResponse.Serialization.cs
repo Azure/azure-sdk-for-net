@@ -7,12 +7,13 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.IoT.Hub.Service.Models
 {
     public partial class CloudToDeviceMethodResponse
     {
-        internal static CloudToDeviceMethodResponse DeserializeCloudToDeviceMethodResponse(JsonElement element)
+        internal static CloudToDeviceMethodResponse DeserializeCloudToDeviceMethodResponse(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

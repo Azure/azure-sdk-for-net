@@ -8,12 +8,13 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Kusto.Models
 {
     public partial class KustoSkuLocationInfoItem
     {
-        internal static KustoSkuLocationInfoItem DeserializeKustoSkuLocationInfoItem(JsonElement element)
+        internal static KustoSkuLocationInfoItem DeserializeKustoSkuLocationInfoItem(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

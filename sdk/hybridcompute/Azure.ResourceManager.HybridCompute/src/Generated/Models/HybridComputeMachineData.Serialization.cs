@@ -8,6 +8,7 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.HybridCompute.Models;
 using Azure.ResourceManager.Models;
 
@@ -15,7 +16,9 @@ namespace Azure.ResourceManager.HybridCompute
 {
     public partial class HybridComputeMachineData : IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IUtf8JsonSerializable)this).Write(writer, new SerializableOptions());
+
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer, SerializableOptions options)
         {
             writer.WriteStartObject();
             if (Optional.IsDefined(Properties))
@@ -44,7 +47,7 @@ namespace Azure.ResourceManager.HybridCompute
             writer.WriteEndObject();
         }
 
-        internal static HybridComputeMachineData DeserializeHybridComputeMachineData(JsonElement element)
+        internal static HybridComputeMachineData DeserializeHybridComputeMachineData(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

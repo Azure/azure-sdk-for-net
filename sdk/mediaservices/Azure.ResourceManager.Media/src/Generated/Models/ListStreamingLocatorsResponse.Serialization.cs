@@ -8,12 +8,13 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Media.Models
 {
     internal partial class ListStreamingLocatorsResponse
     {
-        internal static ListStreamingLocatorsResponse DeserializeListStreamingLocatorsResponse(JsonElement element)
+        internal static ListStreamingLocatorsResponse DeserializeListStreamingLocatorsResponse(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

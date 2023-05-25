@@ -7,10 +7,32 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.AI.MetricsAdvisor.Models
 {
     internal partial class MongoDBParameterPatch : IUtf8JsonSerializable
     {
+
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer, SerializableOptions options)
+        {
+            writer.WriteStartObject();
+            if (Optional.IsDefined(ConnectionString))
+            {
+                writer.WritePropertyName("connectionString"u8);
+                writer.WriteStringValue(ConnectionString);
+            }
+            if (Optional.IsDefined(Database))
+            {
+                writer.WritePropertyName("database"u8);
+                writer.WriteStringValue(Database);
+            }
+            if (Optional.IsDefined(Command))
+            {
+                writer.WritePropertyName("command"u8);
+                writer.WriteStringValue(Command);
+            }
+            writer.WriteEndObject();
+        }
     }
 }

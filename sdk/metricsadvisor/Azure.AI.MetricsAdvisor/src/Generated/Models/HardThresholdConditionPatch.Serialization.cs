@@ -7,10 +7,37 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.AI.MetricsAdvisor.Models
 {
     internal partial class HardThresholdConditionPatch : IUtf8JsonSerializable
     {
+
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer, SerializableOptions options)
+        {
+            writer.WriteStartObject();
+            if (Optional.IsDefined(LowerBound))
+            {
+                writer.WritePropertyName("lowerBound"u8);
+                writer.WriteNumberValue(LowerBound.Value);
+            }
+            if (Optional.IsDefined(UpperBound))
+            {
+                writer.WritePropertyName("upperBound"u8);
+                writer.WriteNumberValue(UpperBound.Value);
+            }
+            if (Optional.IsDefined(AnomalyDetectorDirection))
+            {
+                writer.WritePropertyName("anomalyDetectorDirection"u8);
+                writer.WriteStringValue(AnomalyDetectorDirection.Value.ToString());
+            }
+            if (Optional.IsDefined(SuppressCondition))
+            {
+                writer.WritePropertyName("suppressCondition"u8);
+                writer.WriteObjectValue(SuppressCondition);
+            }
+            writer.WriteEndObject();
+        }
     }
 }

@@ -8,12 +8,13 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.AI.MetricsAdvisor.Models
 {
     internal partial class AnomalyResultList
     {
-        internal static AnomalyResultList DeserializeAnomalyResultList(JsonElement element)
+        internal static AnomalyResultList DeserializeAnomalyResultList(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

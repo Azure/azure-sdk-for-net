@@ -8,12 +8,13 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Marketplace.Models
 {
     public partial class CollectionsSubscriptionsMappingDetails
     {
-        internal static CollectionsSubscriptionsMappingDetails DeserializeCollectionsSubscriptionsMappingDetails(JsonElement element)
+        internal static CollectionsSubscriptionsMappingDetails DeserializeCollectionsSubscriptionsMappingDetails(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

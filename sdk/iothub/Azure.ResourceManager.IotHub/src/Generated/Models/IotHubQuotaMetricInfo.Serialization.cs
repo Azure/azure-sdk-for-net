@@ -7,12 +7,13 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.IotHub.Models
 {
     public partial class IotHubQuotaMetricInfo
     {
-        internal static IotHubQuotaMetricInfo DeserializeIotHubQuotaMetricInfo(JsonElement element)
+        internal static IotHubQuotaMetricInfo DeserializeIotHubQuotaMetricInfo(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

@@ -7,10 +7,52 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.AI.MetricsAdvisor.Models
 {
     internal partial class AnomalyDetectionConfigurationPatch : IUtf8JsonSerializable
     {
+
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer, SerializableOptions options)
+        {
+            writer.WriteStartObject();
+            if (Optional.IsDefined(Name))
+            {
+                writer.WritePropertyName("name"u8);
+                writer.WriteStringValue(Name);
+            }
+            if (Optional.IsDefined(Description))
+            {
+                writer.WritePropertyName("description"u8);
+                writer.WriteStringValue(Description);
+            }
+            if (Optional.IsDefined(WholeMetricConfiguration))
+            {
+                writer.WritePropertyName("wholeMetricConfiguration"u8);
+                writer.WriteObjectValue(WholeMetricConfiguration);
+            }
+            if (Optional.IsCollectionDefined(DimensionGroupOverrideConfigurations))
+            {
+                writer.WritePropertyName("dimensionGroupOverrideConfigurations"u8);
+                writer.WriteStartArray();
+                foreach (var item in DimensionGroupOverrideConfigurations)
+                {
+                    writer.WriteObjectValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsCollectionDefined(SeriesOverrideConfigurations))
+            {
+                writer.WritePropertyName("seriesOverrideConfigurations"u8);
+                writer.WriteStartArray();
+                foreach (var item in SeriesOverrideConfigurations)
+                {
+                    writer.WriteObjectValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            writer.WriteEndObject();
+        }
     }
 }

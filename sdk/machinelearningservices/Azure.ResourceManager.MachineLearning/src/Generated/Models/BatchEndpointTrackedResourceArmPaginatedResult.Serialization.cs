@@ -8,13 +8,14 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.MachineLearning;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
     internal partial class BatchEndpointTrackedResourceArmPaginatedResult
     {
-        internal static BatchEndpointTrackedResourceArmPaginatedResult DeserializeBatchEndpointTrackedResourceArmPaginatedResult(JsonElement element)
+        internal static BatchEndpointTrackedResourceArmPaginatedResult DeserializeBatchEndpointTrackedResourceArmPaginatedResult(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

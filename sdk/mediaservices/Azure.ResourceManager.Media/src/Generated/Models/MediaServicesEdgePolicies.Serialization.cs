@@ -7,12 +7,13 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Media.Models
 {
     public partial class MediaServicesEdgePolicies
     {
-        internal static MediaServicesEdgePolicies DeserializeMediaServicesEdgePolicies(JsonElement element)
+        internal static MediaServicesEdgePolicies DeserializeMediaServicesEdgePolicies(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

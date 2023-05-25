@@ -7,10 +7,42 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.AI.MetricsAdvisor.Models
 {
     internal partial class AzureDataLakeStorageGen2ParameterPatch : IUtf8JsonSerializable
     {
+
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer, SerializableOptions options)
+        {
+            writer.WriteStartObject();
+            if (Optional.IsDefined(AccountName))
+            {
+                writer.WritePropertyName("accountName"u8);
+                writer.WriteStringValue(AccountName);
+            }
+            if (Optional.IsDefined(AccountKey))
+            {
+                writer.WritePropertyName("accountKey"u8);
+                writer.WriteStringValue(AccountKey);
+            }
+            if (Optional.IsDefined(FileSystemName))
+            {
+                writer.WritePropertyName("fileSystemName"u8);
+                writer.WriteStringValue(FileSystemName);
+            }
+            if (Optional.IsDefined(DirectoryTemplate))
+            {
+                writer.WritePropertyName("directoryTemplate"u8);
+                writer.WriteStringValue(DirectoryTemplate);
+            }
+            if (Optional.IsDefined(FileTemplate))
+            {
+                writer.WritePropertyName("fileTemplate"u8);
+                writer.WriteStringValue(FileTemplate);
+            }
+            writer.WriteEndObject();
+        }
     }
 }

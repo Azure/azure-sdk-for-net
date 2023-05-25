@@ -8,6 +8,7 @@
 using System.Text.Json;
 using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.IotHub.Models;
 using Azure.ResourceManager.Models;
 
@@ -15,7 +16,9 @@ namespace Azure.ResourceManager.IotHub
 {
     public partial class IotHubCertificateDescriptionData : IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IUtf8JsonSerializable)this).Write(writer, new SerializableOptions());
+
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer, SerializableOptions options)
         {
             writer.WriteStartObject();
             if (Optional.IsDefined(Properties))
@@ -26,7 +29,7 @@ namespace Azure.ResourceManager.IotHub
             writer.WriteEndObject();
         }
 
-        internal static IotHubCertificateDescriptionData DeserializeIotHubCertificateDescriptionData(JsonElement element)
+        internal static IotHubCertificateDescriptionData DeserializeIotHubCertificateDescriptionData(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

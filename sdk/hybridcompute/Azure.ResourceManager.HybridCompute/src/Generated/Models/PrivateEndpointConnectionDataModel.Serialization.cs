@@ -7,13 +7,14 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.HybridCompute.Models
 {
     public partial class PrivateEndpointConnectionDataModel
     {
-        internal static PrivateEndpointConnectionDataModel DeserializePrivateEndpointConnectionDataModel(JsonElement element)
+        internal static PrivateEndpointConnectionDataModel DeserializePrivateEndpointConnectionDataModel(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

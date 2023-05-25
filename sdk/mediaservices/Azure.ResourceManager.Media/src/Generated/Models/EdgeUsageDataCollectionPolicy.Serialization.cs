@@ -8,12 +8,13 @@
 using System;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Media.Models
 {
     public partial class EdgeUsageDataCollectionPolicy
     {
-        internal static EdgeUsageDataCollectionPolicy DeserializeEdgeUsageDataCollectionPolicy(JsonElement element)
+        internal static EdgeUsageDataCollectionPolicy DeserializeEdgeUsageDataCollectionPolicy(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

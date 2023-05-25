@@ -9,6 +9,7 @@ using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.Kubernetes.Models;
 using Azure.ResourceManager.Models;
 
@@ -16,7 +17,9 @@ namespace Azure.ResourceManager.Kubernetes
 {
     public partial class ConnectedClusterData : IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IUtf8JsonSerializable)this).Write(writer, new SerializableOptions());
+
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer, SerializableOptions options)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("identity"u8);
@@ -66,7 +69,7 @@ namespace Azure.ResourceManager.Kubernetes
             writer.WriteEndObject();
         }
 
-        internal static ConnectedClusterData DeserializeConnectedClusterData(JsonElement element)
+        internal static ConnectedClusterData DeserializeConnectedClusterData(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

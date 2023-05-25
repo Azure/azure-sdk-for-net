@@ -8,12 +8,13 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
     internal partial class SkuResourceArmPaginatedResult
     {
-        internal static SkuResourceArmPaginatedResult DeserializeSkuResourceArmPaginatedResult(JsonElement element)
+        internal static SkuResourceArmPaginatedResult DeserializeSkuResourceArmPaginatedResult(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

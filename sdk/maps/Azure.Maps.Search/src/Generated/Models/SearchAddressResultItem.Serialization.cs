@@ -8,13 +8,14 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.Maps.Search;
 
 namespace Azure.Maps.Search.Models
 {
     public partial class SearchAddressResultItem
     {
-        internal static SearchAddressResultItem DeserializeSearchAddressResultItem(JsonElement element)
+        internal static SearchAddressResultItem DeserializeSearchAddressResultItem(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

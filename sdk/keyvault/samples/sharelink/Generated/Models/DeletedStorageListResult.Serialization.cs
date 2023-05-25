@@ -8,12 +8,13 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.Security.KeyVault.Storage.Models
 {
     internal partial class DeletedStorageListResult
     {
-        internal static DeletedStorageListResult DeserializeDeletedStorageListResult(JsonElement element)
+        internal static DeletedStorageListResult DeserializeDeletedStorageListResult(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

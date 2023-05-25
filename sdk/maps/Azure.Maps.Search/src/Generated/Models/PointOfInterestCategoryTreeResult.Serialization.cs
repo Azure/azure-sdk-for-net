@@ -8,12 +8,13 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.Maps.Search.Models
 {
     public partial class PointOfInterestCategoryTreeResult
     {
-        internal static PointOfInterestCategoryTreeResult DeserializePointOfInterestCategoryTreeResult(JsonElement element)
+        internal static PointOfInterestCategoryTreeResult DeserializePointOfInterestCategoryTreeResult(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

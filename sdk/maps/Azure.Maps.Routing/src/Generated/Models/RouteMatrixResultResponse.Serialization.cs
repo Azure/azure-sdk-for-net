@@ -7,12 +7,13 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.Maps.Routing.Models
 {
     internal partial class RouteMatrixResultResponse
     {
-        internal static RouteMatrixResultResponse DeserializeRouteMatrixResultResponse(JsonElement element)
+        internal static RouteMatrixResultResponse DeserializeRouteMatrixResultResponse(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

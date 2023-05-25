@@ -7,10 +7,62 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.AI.MetricsAdvisor.Models
 {
     internal partial class AnomalyAlertingConfigurationPatch : IUtf8JsonSerializable
     {
+
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer, SerializableOptions options)
+        {
+            writer.WriteStartObject();
+            if (Optional.IsDefined(Name))
+            {
+                writer.WritePropertyName("name"u8);
+                writer.WriteStringValue(Name);
+            }
+            if (Optional.IsDefined(Description))
+            {
+                writer.WritePropertyName("description"u8);
+                writer.WriteStringValue(Description);
+            }
+            if (Optional.IsDefined(CrossMetricsOperator))
+            {
+                writer.WritePropertyName("crossMetricsOperator"u8);
+                writer.WriteStringValue(CrossMetricsOperator.Value.ToString());
+            }
+            if (Optional.IsCollectionDefined(SplitAlertByDimensions))
+            {
+                writer.WritePropertyName("splitAlertByDimensions"u8);
+                writer.WriteStartArray();
+                foreach (var item in SplitAlertByDimensions)
+                {
+                    writer.WriteStringValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsCollectionDefined(HookIds))
+            {
+                writer.WritePropertyName("hookIds"u8);
+                writer.WriteStartArray();
+                foreach (var item in HookIds)
+                {
+                    writer.WriteStringValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsCollectionDefined(MetricAlertingConfigurations))
+            {
+                writer.WritePropertyName("metricAlertingConfigurations"u8);
+                writer.WriteStartArray();
+                foreach (var item in MetricAlertingConfigurations)
+                {
+                    writer.WriteObjectValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            writer.WriteEndObject();
+        }
     }
 }

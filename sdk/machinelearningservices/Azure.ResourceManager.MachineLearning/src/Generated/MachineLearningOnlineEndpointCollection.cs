@@ -231,7 +231,7 @@ namespace Azure.ResourceManager.MachineLearning
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => _machineLearningOnlineEndpointOnlineEndpointsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, options.Name, options.Count, options.ComputeType, options.Skip, options.Tags, options.Properties, options.OrderBy);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _machineLearningOnlineEndpointOnlineEndpointsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, options.Name, options.Count, options.ComputeType, options.Skip, options.Tags, options.Properties, options.OrderBy);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new MachineLearningOnlineEndpointResource(Client, MachineLearningOnlineEndpointData.DeserializeMachineLearningOnlineEndpointData(e)), _machineLearningOnlineEndpointOnlineEndpointsClientDiagnostics, Pipeline, "MachineLearningOnlineEndpointCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, (e, o) => new MachineLearningOnlineEndpointResource(Client, MachineLearningOnlineEndpointData.DeserializeMachineLearningOnlineEndpointData(e)), _machineLearningOnlineEndpointOnlineEndpointsClientDiagnostics, Pipeline, "MachineLearningOnlineEndpointCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -256,7 +256,7 @@ namespace Azure.ResourceManager.MachineLearning
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => _machineLearningOnlineEndpointOnlineEndpointsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, options.Name, options.Count, options.ComputeType, options.Skip, options.Tags, options.Properties, options.OrderBy);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _machineLearningOnlineEndpointOnlineEndpointsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, options.Name, options.Count, options.ComputeType, options.Skip, options.Tags, options.Properties, options.OrderBy);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new MachineLearningOnlineEndpointResource(Client, MachineLearningOnlineEndpointData.DeserializeMachineLearningOnlineEndpointData(e)), _machineLearningOnlineEndpointOnlineEndpointsClientDiagnostics, Pipeline, "MachineLearningOnlineEndpointCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, (e, o) => new MachineLearningOnlineEndpointResource(Client, MachineLearningOnlineEndpointData.DeserializeMachineLearningOnlineEndpointData(e)), _machineLearningOnlineEndpointOnlineEndpointsClientDiagnostics, Pipeline, "MachineLearningOnlineEndpointCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

@@ -8,13 +8,14 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.Kubernetes;
 
 namespace Azure.ResourceManager.Kubernetes.Models
 {
     internal partial class ConnectedClusterList
     {
-        internal static ConnectedClusterList DeserializeConnectedClusterList(JsonElement element)
+        internal static ConnectedClusterList DeserializeConnectedClusterList(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

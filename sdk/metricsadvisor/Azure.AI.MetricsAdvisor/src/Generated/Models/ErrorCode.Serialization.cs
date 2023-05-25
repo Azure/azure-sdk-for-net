@@ -7,12 +7,13 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.AI.MetricsAdvisor.Models
 {
     internal partial class ErrorCode
     {
-        internal static ErrorCode DeserializeErrorCode(JsonElement element)
+        internal static ErrorCode DeserializeErrorCode(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
