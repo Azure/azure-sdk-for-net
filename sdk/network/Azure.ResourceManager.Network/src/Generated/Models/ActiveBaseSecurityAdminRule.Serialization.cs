@@ -6,12 +6,13 @@
 #nullable disable
 
 using System.Text.Json;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Network.Models
 {
     public partial class ActiveBaseSecurityAdminRule
     {
-        internal static ActiveBaseSecurityAdminRule DeserializeActiveBaseSecurityAdminRule(JsonElement element)
+        internal static ActiveBaseSecurityAdminRule DeserializeActiveBaseSecurityAdminRule(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

@@ -10,6 +10,7 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Monitor.Models;
 
@@ -17,7 +18,9 @@ namespace Azure.ResourceManager.Monitor
 {
     public partial class ScheduledQueryRuleData : IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IUtf8JsonSerializable)this).Write(writer, new SerializableOptions());
+
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer, SerializableOptions options)
         {
             writer.WriteStartObject();
             if (Optional.IsDefined(Kind))
@@ -129,7 +132,7 @@ namespace Azure.ResourceManager.Monitor
             writer.WriteEndObject();
         }
 
-        internal static ScheduledQueryRuleData DeserializeScheduledQueryRuleData(JsonElement element)
+        internal static ScheduledQueryRuleData DeserializeScheduledQueryRuleData(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

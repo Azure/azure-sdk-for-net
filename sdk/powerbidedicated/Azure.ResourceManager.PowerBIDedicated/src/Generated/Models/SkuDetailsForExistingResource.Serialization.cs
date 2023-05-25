@@ -7,12 +7,13 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.PowerBIDedicated.Models
 {
     public partial class SkuDetailsForExistingResource
     {
-        internal static SkuDetailsForExistingResource DeserializeSkuDetailsForExistingResource(JsonElement element)
+        internal static SkuDetailsForExistingResource DeserializeSkuDetailsForExistingResource(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

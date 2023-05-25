@@ -8,12 +8,13 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Network.Models
 {
     public partial class LearnedIPPrefixesListResult
     {
-        internal static LearnedIPPrefixesListResult DeserializeLearnedIPPrefixesListResult(JsonElement element)
+        internal static LearnedIPPrefixesListResult DeserializeLearnedIPPrefixesListResult(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

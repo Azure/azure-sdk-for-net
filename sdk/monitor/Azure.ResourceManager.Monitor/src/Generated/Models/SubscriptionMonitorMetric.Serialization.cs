@@ -8,12 +8,13 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
     public partial class SubscriptionMonitorMetric
     {
-        internal static SubscriptionMonitorMetric DeserializeSubscriptionMonitorMetric(JsonElement element)
+        internal static SubscriptionMonitorMetric DeserializeSubscriptionMonitorMetric(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

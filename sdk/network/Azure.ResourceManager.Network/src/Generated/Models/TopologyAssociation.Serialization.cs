@@ -7,12 +7,13 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Network.Models
 {
     public partial class TopologyAssociation
     {
-        internal static TopologyAssociation DeserializeTopologyAssociation(JsonElement element)
+        internal static TopologyAssociation DeserializeTopologyAssociation(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

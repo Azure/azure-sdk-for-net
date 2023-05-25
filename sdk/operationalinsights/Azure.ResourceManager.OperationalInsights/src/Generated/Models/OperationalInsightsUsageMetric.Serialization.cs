@@ -8,12 +8,13 @@
 using System;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.OperationalInsights.Models
 {
     public partial class OperationalInsightsUsageMetric
     {
-        internal static OperationalInsightsUsageMetric DeserializeOperationalInsightsUsageMetric(JsonElement element)
+        internal static OperationalInsightsUsageMetric DeserializeOperationalInsightsUsageMetric(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

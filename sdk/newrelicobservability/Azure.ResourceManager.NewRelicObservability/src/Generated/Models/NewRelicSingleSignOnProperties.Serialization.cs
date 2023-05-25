@@ -8,12 +8,15 @@
 using System;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.NewRelicObservability.Models
 {
     public partial class NewRelicSingleSignOnProperties : IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IUtf8JsonSerializable)this).Write(writer, new SerializableOptions());
+
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer, SerializableOptions options)
         {
             writer.WriteStartObject();
             if (Optional.IsDefined(SingleSignOnState))
@@ -39,7 +42,7 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
             writer.WriteEndObject();
         }
 
-        internal static NewRelicSingleSignOnProperties DeserializeNewRelicSingleSignOnProperties(JsonElement element)
+        internal static NewRelicSingleSignOnProperties DeserializeNewRelicSingleSignOnProperties(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

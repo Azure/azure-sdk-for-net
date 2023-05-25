@@ -7,13 +7,14 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
     public partial class MetricAlertStatus
     {
-        internal static MetricAlertStatus DeserializeMetricAlertStatus(JsonElement element)
+        internal static MetricAlertStatus DeserializeMetricAlertStatus(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

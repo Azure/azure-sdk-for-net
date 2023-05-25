@@ -7,12 +7,13 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.MixedReality.Models
 {
     public partial class MixedRealityNameAvailabilityResult
     {
-        internal static MixedRealityNameAvailabilityResult DeserializeMixedRealityNameAvailabilityResult(JsonElement element)
+        internal static MixedRealityNameAvailabilityResult DeserializeMixedRealityNameAvailabilityResult(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

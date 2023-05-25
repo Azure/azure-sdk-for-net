@@ -8,13 +8,14 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
     internal partial class AzureWebCategoryListResult
     {
-        internal static AzureWebCategoryListResult DeserializeAzureWebCategoryListResult(JsonElement element)
+        internal static AzureWebCategoryListResult DeserializeAzureWebCategoryListResult(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

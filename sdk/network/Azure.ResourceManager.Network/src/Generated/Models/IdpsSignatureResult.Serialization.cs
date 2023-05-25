@@ -8,12 +8,13 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Network.Models
 {
     public partial class IdpsSignatureResult
     {
-        internal static IdpsSignatureResult DeserializeIdpsSignatureResult(JsonElement element)
+        internal static IdpsSignatureResult DeserializeIdpsSignatureResult(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

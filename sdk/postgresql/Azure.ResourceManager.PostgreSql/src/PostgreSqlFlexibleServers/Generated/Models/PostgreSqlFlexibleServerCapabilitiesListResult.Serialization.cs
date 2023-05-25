@@ -8,12 +8,13 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 {
     internal partial class PostgreSqlFlexibleServerCapabilitiesListResult
     {
-        internal static PostgreSqlFlexibleServerCapabilitiesListResult DeserializePostgreSqlFlexibleServerCapabilitiesListResult(JsonElement element)
+        internal static PostgreSqlFlexibleServerCapabilitiesListResult DeserializePostgreSqlFlexibleServerCapabilitiesListResult(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

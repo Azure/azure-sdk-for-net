@@ -8,12 +8,13 @@
 using System.Text.Json;
 using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Network.Models
 {
     public partial class ContainerNetworkInterfaceIPConfiguration
     {
-        internal static ContainerNetworkInterfaceIPConfiguration DeserializeContainerNetworkInterfaceIPConfiguration(JsonElement element)
+        internal static ContainerNetworkInterfaceIPConfiguration DeserializeContainerNetworkInterfaceIPConfiguration(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

@@ -7,12 +7,15 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.MixedReality.ObjectAnchors.Conversion.Models
 {
     internal partial class Vector4 : IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IUtf8JsonSerializable)this).Write(writer, new SerializableOptions());
+
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer, SerializableOptions options)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("x"u8);
@@ -26,7 +29,7 @@ namespace Azure.MixedReality.ObjectAnchors.Conversion.Models
             writer.WriteEndObject();
         }
 
-        internal static Vector4 DeserializeVector4(JsonElement element)
+        internal static Vector4 DeserializeVector4(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

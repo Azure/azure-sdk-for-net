@@ -227,7 +227,7 @@ namespace Azure.ResourceManager.Network
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _vpnConnectionRestClient.CreateListByVpnGatewayRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _vpnConnectionRestClient.CreateListByVpnGatewayNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new VpnConnectionResource(Client, VpnConnectionData.DeserializeVpnConnectionData(e)), _vpnConnectionClientDiagnostics, Pipeline, "VpnConnectionCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, (e, o) => new VpnConnectionResource(Client, VpnConnectionData.DeserializeVpnConnectionData(e)), _vpnConnectionClientDiagnostics, Pipeline, "VpnConnectionCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -249,7 +249,7 @@ namespace Azure.ResourceManager.Network
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _vpnConnectionRestClient.CreateListByVpnGatewayRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _vpnConnectionRestClient.CreateListByVpnGatewayNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new VpnConnectionResource(Client, VpnConnectionData.DeserializeVpnConnectionData(e)), _vpnConnectionClientDiagnostics, Pipeline, "VpnConnectionCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, (e, o) => new VpnConnectionResource(Client, VpnConnectionData.DeserializeVpnConnectionData(e)), _vpnConnectionClientDiagnostics, Pipeline, "VpnConnectionCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

@@ -8,13 +8,14 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.MySql;
 
 namespace Azure.ResourceManager.MySql.Models
 {
     internal partial class MySqlAdvisorListResult
     {
-        internal static MySqlAdvisorListResult DeserializeMySqlAdvisorListResult(JsonElement element)
+        internal static MySqlAdvisorListResult DeserializeMySqlAdvisorListResult(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

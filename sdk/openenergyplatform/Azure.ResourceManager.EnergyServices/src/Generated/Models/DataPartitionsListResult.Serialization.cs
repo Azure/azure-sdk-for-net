@@ -8,12 +8,13 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.EnergyServices.Models
 {
     public partial class DataPartitionsListResult
     {
-        internal static DataPartitionsListResult DeserializeDataPartitionsListResult(JsonElement element)
+        internal static DataPartitionsListResult DeserializeDataPartitionsListResult(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

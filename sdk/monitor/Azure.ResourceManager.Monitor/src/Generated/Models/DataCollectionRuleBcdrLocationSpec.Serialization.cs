@@ -7,12 +7,13 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
     public partial class DataCollectionRuleBcdrLocationSpec
     {
-        internal static DataCollectionRuleBcdrLocationSpec DeserializeDataCollectionRuleBcdrLocationSpec(JsonElement element)
+        internal static DataCollectionRuleBcdrLocationSpec DeserializeDataCollectionRuleBcdrLocationSpec(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

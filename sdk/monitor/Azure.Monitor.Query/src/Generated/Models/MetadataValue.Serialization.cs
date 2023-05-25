@@ -7,12 +7,13 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.Monitor.Query.Models
 {
     internal partial class MetadataValue
     {
-        internal static MetadataValue DeserializeMetadataValue(JsonElement element)
+        internal static MetadataValue DeserializeMetadataValue(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

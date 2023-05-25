@@ -8,12 +8,13 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
     internal partial class MetricDefinitionCollection
     {
-        internal static MetricDefinitionCollection DeserializeMetricDefinitionCollection(JsonElement element)
+        internal static MetricDefinitionCollection DeserializeMetricDefinitionCollection(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

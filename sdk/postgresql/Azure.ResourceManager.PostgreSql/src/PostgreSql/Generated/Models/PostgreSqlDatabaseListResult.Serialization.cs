@@ -8,13 +8,14 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.PostgreSql;
 
 namespace Azure.ResourceManager.PostgreSql.Models
 {
     internal partial class PostgreSqlDatabaseListResult
     {
-        internal static PostgreSqlDatabaseListResult DeserializePostgreSqlDatabaseListResult(JsonElement element)
+        internal static PostgreSqlDatabaseListResult DeserializePostgreSqlDatabaseListResult(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

@@ -8,12 +8,13 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Network.Models
 {
     public partial class BackendAddressInboundNatRulePortMappings
     {
-        internal static BackendAddressInboundNatRulePortMappings DeserializeBackendAddressInboundNatRulePortMappings(JsonElement element)
+        internal static BackendAddressInboundNatRulePortMappings DeserializeBackendAddressInboundNatRulePortMappings(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

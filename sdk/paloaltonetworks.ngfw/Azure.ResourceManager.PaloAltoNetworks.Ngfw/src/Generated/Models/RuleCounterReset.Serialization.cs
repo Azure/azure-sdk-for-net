@@ -7,12 +7,13 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
 {
     public partial class RuleCounterReset
     {
-        internal static RuleCounterReset DeserializeRuleCounterReset(JsonElement element)
+        internal static RuleCounterReset DeserializeRuleCounterReset(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

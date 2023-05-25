@@ -226,7 +226,7 @@ namespace Azure.ResourceManager.PostgreSql
         public virtual AsyncPageable<PostgreSqlDatabaseResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _postgreSqlDatabaseDatabasesRestClient.CreateListByServerRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new PostgreSqlDatabaseResource(Client, PostgreSqlDatabaseData.DeserializePostgreSqlDatabaseData(e)), _postgreSqlDatabaseDatabasesClientDiagnostics, Pipeline, "PostgreSqlDatabaseCollection.GetAll", "value", null, cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, (e, o) => new PostgreSqlDatabaseResource(Client, PostgreSqlDatabaseData.DeserializePostgreSqlDatabaseData(e)), _postgreSqlDatabaseDatabasesClientDiagnostics, Pipeline, "PostgreSqlDatabaseCollection.GetAll", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -247,7 +247,7 @@ namespace Azure.ResourceManager.PostgreSql
         public virtual Pageable<PostgreSqlDatabaseResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _postgreSqlDatabaseDatabasesRestClient.CreateListByServerRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, null, e => new PostgreSqlDatabaseResource(Client, PostgreSqlDatabaseData.DeserializePostgreSqlDatabaseData(e)), _postgreSqlDatabaseDatabasesClientDiagnostics, Pipeline, "PostgreSqlDatabaseCollection.GetAll", "value", null, cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, null, (e, o) => new PostgreSqlDatabaseResource(Client, PostgreSqlDatabaseData.DeserializePostgreSqlDatabaseData(e)), _postgreSqlDatabaseDatabasesClientDiagnostics, Pipeline, "PostgreSqlDatabaseCollection.GetAll", "value", null, cancellationToken);
         }
 
         /// <summary>

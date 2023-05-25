@@ -8,12 +8,13 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
     public partial class MonitorMetricDefinition
     {
-        internal static MonitorMetricDefinition DeserializeMonitorMetricDefinition(JsonElement element)
+        internal static MonitorMetricDefinition DeserializeMonitorMetricDefinition(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

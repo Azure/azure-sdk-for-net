@@ -7,12 +7,13 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
     public partial class MonitorBaselineMetadata
     {
-        internal static MonitorBaselineMetadata DeserializeMonitorBaselineMetadata(JsonElement element)
+        internal static MonitorBaselineMetadata DeserializeMonitorBaselineMetadata(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

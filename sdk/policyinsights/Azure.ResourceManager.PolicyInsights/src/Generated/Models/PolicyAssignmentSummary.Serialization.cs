@@ -8,12 +8,13 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.PolicyInsights.Models
 {
     public partial class PolicyAssignmentSummary
     {
-        internal static PolicyAssignmentSummary DeserializePolicyAssignmentSummary(JsonElement element)
+        internal static PolicyAssignmentSummary DeserializePolicyAssignmentSummary(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

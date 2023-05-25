@@ -7,12 +7,13 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.PolicyInsights.Models
 {
     public partial class ComplianceDetail
     {
-        internal static ComplianceDetail DeserializeComplianceDetail(JsonElement element)
+        internal static ComplianceDetail DeserializeComplianceDetail(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

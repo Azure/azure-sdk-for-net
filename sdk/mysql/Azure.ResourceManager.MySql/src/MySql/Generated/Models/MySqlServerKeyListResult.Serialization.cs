@@ -8,13 +8,14 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.MySql;
 
 namespace Azure.ResourceManager.MySql.Models
 {
     internal partial class MySqlServerKeyListResult
     {
-        internal static MySqlServerKeyListResult DeserializeMySqlServerKeyListResult(JsonElement element)
+        internal static MySqlServerKeyListResult DeserializeMySqlServerKeyListResult(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

@@ -7,12 +7,13 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.MySql.FlexibleServers.Models
 {
     public partial class MySqlFlexibleServerDelegatedSubnetUsage
     {
-        internal static MySqlFlexibleServerDelegatedSubnetUsage DeserializeMySqlFlexibleServerDelegatedSubnetUsage(JsonElement element)
+        internal static MySqlFlexibleServerDelegatedSubnetUsage DeserializeMySqlFlexibleServerDelegatedSubnetUsage(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

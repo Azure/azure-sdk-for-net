@@ -7,12 +7,13 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.EnergyServices.Models
 {
     public partial class DataPartition
     {
-        internal static DataPartition DeserializeDataPartition(JsonElement element)
+        internal static DataPartition DeserializeDataPartition(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

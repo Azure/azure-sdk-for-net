@@ -8,12 +8,13 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.MySql.Models
 {
     public partial class MySqlPerformanceTier
     {
-        internal static MySqlPerformanceTier DeserializeMySqlPerformanceTier(JsonElement element)
+        internal static MySqlPerformanceTier DeserializeMySqlPerformanceTier(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

@@ -7,12 +7,13 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.MySql.Models
 {
     public partial class MySqlServerPrivateEndpointConnection
     {
-        internal static MySqlServerPrivateEndpointConnection DeserializeMySqlServerPrivateEndpointConnection(JsonElement element)
+        internal static MySqlServerPrivateEndpointConnection DeserializeMySqlServerPrivateEndpointConnection(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

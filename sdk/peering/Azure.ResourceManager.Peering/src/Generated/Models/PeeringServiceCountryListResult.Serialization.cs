@@ -8,12 +8,13 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Peering.Models
 {
     internal partial class PeeringServiceCountryListResult
     {
-        internal static PeeringServiceCountryListResult DeserializePeeringServiceCountryListResult(JsonElement element)
+        internal static PeeringServiceCountryListResult DeserializePeeringServiceCountryListResult(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

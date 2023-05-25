@@ -8,13 +8,14 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.Peering;
 
 namespace Azure.ResourceManager.Peering.Models
 {
     internal partial class PeerAsnListResult
     {
-        internal static PeerAsnListResult DeserializePeerAsnListResult(JsonElement element)
+        internal static PeerAsnListResult DeserializePeerAsnListResult(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

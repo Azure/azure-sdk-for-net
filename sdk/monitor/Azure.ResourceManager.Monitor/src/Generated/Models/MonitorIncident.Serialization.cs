@@ -8,12 +8,13 @@
 using System;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
     public partial class MonitorIncident
     {
-        internal static MonitorIncident DeserializeMonitorIncident(JsonElement element)
+        internal static MonitorIncident DeserializeMonitorIncident(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

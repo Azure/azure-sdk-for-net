@@ -8,13 +8,14 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.EnergyServices;
 
 namespace Azure.ResourceManager.EnergyServices.Models
 {
     internal partial class EnergyServiceList
     {
-        internal static EnergyServiceList DeserializeEnergyServiceList(JsonElement element)
+        internal static EnergyServiceList DeserializeEnergyServiceList(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

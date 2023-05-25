@@ -9,12 +9,13 @@ using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
     internal partial class SubscriptionScopeMetricResponse
     {
-        internal static SubscriptionScopeMetricResponse DeserializeSubscriptionScopeMetricResponse(JsonElement element)
+        internal static SubscriptionScopeMetricResponse DeserializeSubscriptionScopeMetricResponse(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

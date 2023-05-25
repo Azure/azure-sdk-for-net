@@ -7,13 +7,16 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.MixedReality.ObjectAnchors.Conversion.Models;
 
 namespace Azure.MixedReality.ObjectAnchors.Conversion
 {
     public partial struct TrajectoryPose : IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IUtf8JsonSerializable)this).Write(writer, new SerializableOptions());
+
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer, SerializableOptions options)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("rotation"u8);
@@ -23,7 +26,7 @@ namespace Azure.MixedReality.ObjectAnchors.Conversion
             writer.WriteEndObject();
         }
 
-        internal static TrajectoryPose DeserializeTrajectoryPose(JsonElement element)
+        internal static TrajectoryPose DeserializeTrajectoryPose(JsonElement element, SerializableOptions options = default)
         {
             Quaternion rotation = default;
             Vector3 translation = default;

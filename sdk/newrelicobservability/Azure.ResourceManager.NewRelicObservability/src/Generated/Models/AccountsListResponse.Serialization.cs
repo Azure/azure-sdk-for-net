@@ -9,12 +9,13 @@ using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.NewRelicObservability.Models
 {
     internal partial class AccountsListResponse
     {
-        internal static AccountsListResponse DeserializeAccountsListResponse(JsonElement element)
+        internal static AccountsListResponse DeserializeAccountsListResponse(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

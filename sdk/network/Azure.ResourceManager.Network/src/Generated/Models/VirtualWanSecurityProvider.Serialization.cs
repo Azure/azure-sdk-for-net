@@ -8,12 +8,13 @@
 using System;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Network.Models
 {
     public partial class VirtualWanSecurityProvider
     {
-        internal static VirtualWanSecurityProvider DeserializeVirtualWanSecurityProvider(JsonElement element)
+        internal static VirtualWanSecurityProvider DeserializeVirtualWanSecurityProvider(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

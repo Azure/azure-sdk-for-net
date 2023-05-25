@@ -8,12 +8,13 @@
 using System;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.Monitor.Query.Models
 {
     public partial class MetricValue
     {
-        internal static MetricValue DeserializeMetricValue(JsonElement element)
+        internal static MetricValue DeserializeMetricValue(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

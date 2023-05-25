@@ -7,12 +7,13 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.MixedReality.Models
 {
     public partial class MixedRealityAccountKeys
     {
-        internal static MixedRealityAccountKeys DeserializeMixedRealityAccountKeys(JsonElement element)
+        internal static MixedRealityAccountKeys DeserializeMixedRealityAccountKeys(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

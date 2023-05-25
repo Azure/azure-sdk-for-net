@@ -8,12 +8,13 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
 {
     internal partial class PredefinedUrlCategoriesResponse
     {
-        internal static PredefinedUrlCategoriesResponse DeserializePredefinedUrlCategoriesResponse(JsonElement element)
+        internal static PredefinedUrlCategoriesResponse DeserializePredefinedUrlCategoriesResponse(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

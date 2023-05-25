@@ -8,12 +8,13 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.NetApp.Models
 {
     internal partial class VolumeGroupList
     {
-        internal static VolumeGroupList DeserializeVolumeGroupList(JsonElement element)
+        internal static VolumeGroupList DeserializeVolumeGroupList(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

@@ -8,12 +8,13 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.Monitor.Query.Models
 {
     internal partial class ErrorInfo
     {
-        internal static ErrorInfo DeserializeErrorInfo(JsonElement element)
+        internal static ErrorInfo DeserializeErrorInfo(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

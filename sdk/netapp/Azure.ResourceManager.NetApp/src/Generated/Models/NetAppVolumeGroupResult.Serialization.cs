@@ -7,13 +7,14 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.NetApp.Models
 {
     public partial class NetAppVolumeGroupResult
     {
-        internal static NetAppVolumeGroupResult DeserializeNetAppVolumeGroupResult(JsonElement element)
+        internal static NetAppVolumeGroupResult DeserializeNetAppVolumeGroupResult(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

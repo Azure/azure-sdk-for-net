@@ -8,12 +8,13 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.MySql.Models
 {
     public partial class MySqlPrivateLinkResourceProperties
     {
-        internal static MySqlPrivateLinkResourceProperties DeserializeMySqlPrivateLinkResourceProperties(JsonElement element)
+        internal static MySqlPrivateLinkResourceProperties DeserializeMySqlPrivateLinkResourceProperties(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

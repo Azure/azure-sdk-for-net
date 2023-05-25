@@ -7,12 +7,13 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
 {
     public partial class AdvSecurityObjectListResponse
     {
-        internal static AdvSecurityObjectListResponse DeserializeAdvSecurityObjectListResponse(JsonElement element)
+        internal static AdvSecurityObjectListResponse DeserializeAdvSecurityObjectListResponse(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

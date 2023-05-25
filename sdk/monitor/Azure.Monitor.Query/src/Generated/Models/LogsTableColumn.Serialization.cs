@@ -7,12 +7,13 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.Monitor.Query.Models
 {
     public partial class LogsTableColumn
     {
-        internal static LogsTableColumn DeserializeLogsTableColumn(JsonElement element)
+        internal static LogsTableColumn DeserializeLogsTableColumn(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

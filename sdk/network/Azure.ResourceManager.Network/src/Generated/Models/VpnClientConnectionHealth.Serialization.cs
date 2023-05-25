@@ -8,12 +8,13 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Network.Models
 {
     public partial class VpnClientConnectionHealth
     {
-        internal static VpnClientConnectionHealth DeserializeVpnClientConnectionHealth(JsonElement element)
+        internal static VpnClientConnectionHealth DeserializeVpnClientConnectionHealth(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

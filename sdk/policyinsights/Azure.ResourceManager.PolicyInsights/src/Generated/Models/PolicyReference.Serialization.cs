@@ -7,12 +7,13 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.PolicyInsights.Models
 {
     public partial class PolicyReference
     {
-        internal static PolicyReference DeserializePolicyReference(JsonElement element)
+        internal static PolicyReference DeserializePolicyReference(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

@@ -7,12 +7,15 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.MySql.Models
 {
     public partial class MySqlStorageProfile : IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IUtf8JsonSerializable)this).Write(writer, new SerializableOptions());
+
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer, SerializableOptions options)
         {
             writer.WriteStartObject();
             if (Optional.IsDefined(BackupRetentionDays))
@@ -38,7 +41,7 @@ namespace Azure.ResourceManager.MySql.Models
             writer.WriteEndObject();
         }
 
-        internal static MySqlStorageProfile DeserializeMySqlStorageProfile(JsonElement element)
+        internal static MySqlStorageProfile DeserializeMySqlStorageProfile(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

@@ -8,12 +8,13 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
     internal partial class IncidentListResult
     {
-        internal static IncidentListResult DeserializeIncidentListResult(JsonElement element)
+        internal static IncidentListResult DeserializeIncidentListResult(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

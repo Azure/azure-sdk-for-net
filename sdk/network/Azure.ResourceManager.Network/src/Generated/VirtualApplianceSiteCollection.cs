@@ -227,7 +227,7 @@ namespace Azure.ResourceManager.Network
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _virtualApplianceSiteRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _virtualApplianceSiteRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new VirtualApplianceSiteResource(Client, VirtualApplianceSiteData.DeserializeVirtualApplianceSiteData(e)), _virtualApplianceSiteClientDiagnostics, Pipeline, "VirtualApplianceSiteCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, (e, o) => new VirtualApplianceSiteResource(Client, VirtualApplianceSiteData.DeserializeVirtualApplianceSiteData(e)), _virtualApplianceSiteClientDiagnostics, Pipeline, "VirtualApplianceSiteCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -249,7 +249,7 @@ namespace Azure.ResourceManager.Network
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _virtualApplianceSiteRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _virtualApplianceSiteRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new VirtualApplianceSiteResource(Client, VirtualApplianceSiteData.DeserializeVirtualApplianceSiteData(e)), _virtualApplianceSiteClientDiagnostics, Pipeline, "VirtualApplianceSiteCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, (e, o) => new VirtualApplianceSiteResource(Client, VirtualApplianceSiteData.DeserializeVirtualApplianceSiteData(e)), _virtualApplianceSiteClientDiagnostics, Pipeline, "VirtualApplianceSiteCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

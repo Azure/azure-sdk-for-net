@@ -7,12 +7,13 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.NetApp.Models
 {
     public partial class NetAppRestoreStatus
     {
-        internal static NetAppRestoreStatus DeserializeNetAppRestoreStatus(JsonElement element)
+        internal static NetAppRestoreStatus DeserializeNetAppRestoreStatus(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

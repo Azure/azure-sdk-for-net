@@ -9,13 +9,14 @@ using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.NewRelicObservability;
 
 namespace Azure.ResourceManager.NewRelicObservability.Models
 {
     internal partial class NewRelicMonitorResourceListResult
     {
-        internal static NewRelicMonitorResourceListResult DeserializeNewRelicMonitorResourceListResult(JsonElement element)
+        internal static NewRelicMonitorResourceListResult DeserializeNewRelicMonitorResourceListResult(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

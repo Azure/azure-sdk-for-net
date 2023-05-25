@@ -7,12 +7,13 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Network.Models
 {
     public partial class MatchedRule
     {
-        internal static MatchedRule DeserializeMatchedRule(JsonElement element)
+        internal static MatchedRule DeserializeMatchedRule(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

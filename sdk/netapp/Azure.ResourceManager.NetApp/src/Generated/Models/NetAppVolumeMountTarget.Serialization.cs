@@ -9,12 +9,13 @@ using System;
 using System.Net;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.NetApp.Models
 {
     public partial class NetAppVolumeMountTarget
     {
-        internal static NetAppVolumeMountTarget DeserializeNetAppVolumeMountTarget(JsonElement element)
+        internal static NetAppVolumeMountTarget DeserializeNetAppVolumeMountTarget(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

@@ -7,13 +7,14 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.PostgreSql.Models
 {
     public partial class PostgreSqlServerPrivateEndpointConnectionProperties
     {
-        internal static PostgreSqlServerPrivateEndpointConnectionProperties DeserializePostgreSqlServerPrivateEndpointConnectionProperties(JsonElement element)
+        internal static PostgreSqlServerPrivateEndpointConnectionProperties DeserializePostgreSqlServerPrivateEndpointConnectionProperties(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

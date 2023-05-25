@@ -9,6 +9,7 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models;
 
@@ -16,7 +17,9 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
 {
     public partial class FqdnListGlobalRulestackResourceData : IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IUtf8JsonSerializable)this).Write(writer, new SerializableOptions());
+
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer, SerializableOptions options)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
@@ -47,7 +50,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
             writer.WriteEndObject();
         }
 
-        internal static FqdnListGlobalRulestackResourceData DeserializeFqdnListGlobalRulestackResourceData(JsonElement element)
+        internal static FqdnListGlobalRulestackResourceData DeserializeFqdnListGlobalRulestackResourceData(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

@@ -9,12 +9,13 @@ using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.PolicyInsights.Models
 {
     public partial class PolicySummaryResults
     {
-        internal static PolicySummaryResults DeserializePolicySummaryResults(JsonElement element)
+        internal static PolicySummaryResults DeserializePolicySummaryResults(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

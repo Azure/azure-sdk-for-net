@@ -7,12 +7,15 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.PrivateDns.Models
 {
     public partial class PrivateDnsPtrRecordInfo : IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IUtf8JsonSerializable)this).Write(writer, new SerializableOptions());
+
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer, SerializableOptions options)
         {
             writer.WriteStartObject();
             if (Optional.IsDefined(PtrDomainName))
@@ -23,7 +26,7 @@ namespace Azure.ResourceManager.PrivateDns.Models
             writer.WriteEndObject();
         }
 
-        internal static PrivateDnsPtrRecordInfo DeserializePrivateDnsPtrRecordInfo(JsonElement element)
+        internal static PrivateDnsPtrRecordInfo DeserializePrivateDnsPtrRecordInfo(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

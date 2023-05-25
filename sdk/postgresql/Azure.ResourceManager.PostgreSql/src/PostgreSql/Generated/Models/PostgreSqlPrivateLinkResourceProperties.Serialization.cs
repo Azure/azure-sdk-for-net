@@ -8,12 +8,13 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.PostgreSql.Models
 {
     public partial class PostgreSqlPrivateLinkResourceProperties
     {
-        internal static PostgreSqlPrivateLinkResourceProperties DeserializePostgreSqlPrivateLinkResourceProperties(JsonElement element)
+        internal static PostgreSqlPrivateLinkResourceProperties DeserializePostgreSqlPrivateLinkResourceProperties(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

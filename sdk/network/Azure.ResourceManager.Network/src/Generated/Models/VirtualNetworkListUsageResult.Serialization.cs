@@ -8,12 +8,13 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Network.Models
 {
     internal partial class VirtualNetworkListUsageResult
     {
-        internal static VirtualNetworkListUsageResult DeserializeVirtualNetworkListUsageResult(JsonElement element)
+        internal static VirtualNetworkListUsageResult DeserializeVirtualNetworkListUsageResult(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

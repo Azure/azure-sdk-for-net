@@ -7,12 +7,13 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Peering.Models
 {
     public partial class LookingGlassOutput
     {
-        internal static LookingGlassOutput DeserializeLookingGlassOutput(JsonElement element)
+        internal static LookingGlassOutput DeserializeLookingGlassOutput(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

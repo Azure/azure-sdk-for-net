@@ -8,13 +8,14 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.PaloAltoNetworks.Ngfw;
 
 namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
 {
     internal partial class PostRulesResourceListResult
     {
-        internal static PostRulesResourceListResult DeserializePostRulesResourceListResult(JsonElement element)
+        internal static PostRulesResourceListResult DeserializePostRulesResourceListResult(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

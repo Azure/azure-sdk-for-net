@@ -7,12 +7,13 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Network.Models
 {
     public partial class SecurityGroupNetworkInterface
     {
-        internal static SecurityGroupNetworkInterface DeserializeSecurityGroupNetworkInterface(JsonElement element)
+        internal static SecurityGroupNetworkInterface DeserializeSecurityGroupNetworkInterface(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

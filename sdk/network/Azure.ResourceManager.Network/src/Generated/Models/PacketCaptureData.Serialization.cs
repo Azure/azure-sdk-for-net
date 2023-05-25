@@ -9,6 +9,7 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Network.Models;
 
@@ -16,7 +17,7 @@ namespace Azure.ResourceManager.Network
 {
     public partial class PacketCaptureData
     {
-        internal static PacketCaptureData DeserializePacketCaptureData(JsonElement element)
+        internal static PacketCaptureData DeserializePacketCaptureData(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

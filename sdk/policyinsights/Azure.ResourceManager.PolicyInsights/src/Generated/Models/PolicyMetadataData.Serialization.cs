@@ -8,13 +8,14 @@
 using System;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.PolicyInsights
 {
     public partial class PolicyMetadataData
     {
-        internal static PolicyMetadataData DeserializePolicyMetadataData(JsonElement element)
+        internal static PolicyMetadataData DeserializePolicyMetadataData(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

@@ -9,6 +9,7 @@ using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.MobileNetwork.Models;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Resources.Models;
@@ -17,7 +18,9 @@ namespace Azure.ResourceManager.MobileNetwork
 {
     public partial class PacketCoreControlPlaneData : IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IUtf8JsonSerializable)this).Write(writer, new SerializableOptions());
+
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer, SerializableOptions options)
         {
             writer.WriteStartObject();
             if (Optional.IsDefined(Identity))
@@ -84,7 +87,7 @@ namespace Azure.ResourceManager.MobileNetwork
             writer.WriteEndObject();
         }
 
-        internal static PacketCoreControlPlaneData DeserializePacketCoreControlPlaneData(JsonElement element)
+        internal static PacketCoreControlPlaneData DeserializePacketCoreControlPlaneData(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

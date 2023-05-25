@@ -7,12 +7,13 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.OperationalInsights.Models
 {
     public partial class OperationalInsightsWorkspacePurgeStatusResult
     {
-        internal static OperationalInsightsWorkspacePurgeStatusResult DeserializeOperationalInsightsWorkspacePurgeStatusResult(JsonElement element)
+        internal static OperationalInsightsWorkspacePurgeStatusResult DeserializeOperationalInsightsWorkspacePurgeStatusResult(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

@@ -8,12 +8,13 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.MySql.FlexibleServers.Models
 {
     public partial class MySqlFlexibleServerServerVersionCapability
     {
-        internal static MySqlFlexibleServerServerVersionCapability DeserializeMySqlFlexibleServerServerVersionCapability(JsonElement element)
+        internal static MySqlFlexibleServerServerVersionCapability DeserializeMySqlFlexibleServerServerVersionCapability(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

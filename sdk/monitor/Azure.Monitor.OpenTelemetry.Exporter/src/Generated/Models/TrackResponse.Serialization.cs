@@ -8,12 +8,13 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.Monitor.OpenTelemetry.Exporter.Models
 {
     internal partial class TrackResponse
     {
-        internal static TrackResponse DeserializeTrackResponse(JsonElement element)
+        internal static TrackResponse DeserializeTrackResponse(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

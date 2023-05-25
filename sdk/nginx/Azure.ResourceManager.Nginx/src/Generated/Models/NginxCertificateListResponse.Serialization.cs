@@ -8,13 +8,14 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.Nginx;
 
 namespace Azure.ResourceManager.Nginx.Models
 {
     internal partial class NginxCertificateListResponse
     {
-        internal static NginxCertificateListResponse DeserializeNginxCertificateListResponse(JsonElement element)
+        internal static NginxCertificateListResponse DeserializeNginxCertificateListResponse(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

@@ -7,12 +7,13 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.NotificationHubs.Models
 {
     public partial class NotificationHubResourceKeys
     {
-        internal static NotificationHubResourceKeys DeserializeNotificationHubResourceKeys(JsonElement element)
+        internal static NotificationHubResourceKeys DeserializeNotificationHubResourceKeys(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

@@ -8,12 +8,13 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.Monitor.Query.Models
 {
     internal partial class MetricNamespaceCollection
     {
-        internal static MetricNamespaceCollection DeserializeMetricNamespaceCollection(JsonElement element)
+        internal static MetricNamespaceCollection DeserializeMetricNamespaceCollection(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

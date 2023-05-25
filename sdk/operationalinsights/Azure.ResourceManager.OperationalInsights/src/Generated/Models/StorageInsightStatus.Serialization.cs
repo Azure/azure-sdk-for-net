@@ -7,12 +7,13 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.OperationalInsights.Models
 {
     public partial class StorageInsightStatus
     {
-        internal static StorageInsightStatus DeserializeStorageInsightStatus(JsonElement element)
+        internal static StorageInsightStatus DeserializeStorageInsightStatus(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

@@ -7,12 +7,13 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.ProviderHub.Models
 {
     public partial class CheckinManifestInfo
     {
-        internal static CheckinManifestInfo DeserializeCheckinManifestInfo(JsonElement element)
+        internal static CheckinManifestInfo DeserializeCheckinManifestInfo(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

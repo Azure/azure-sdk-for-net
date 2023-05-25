@@ -8,11 +8,55 @@
 using System.Text.Json;
 using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.AI.OpenAI
 {
     public partial class Choice
     {
+        internal static Choice DeserializeChoice(JsonElement element, SerializableOptions options = default)
+        {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            Optional<string> text = default;
+            Optional<int> index = default;
+            Optional<CompletionsLogProbability> logprobs = default;
+            Optional<string> finishReason = default;
+            foreach (var property in element.EnumerateObject())
+            {
+                if (property.NameEquals("text"u8))
+                {
+                    text = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("index"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    index = property.Value.GetInt32();
+                    continue;
+                }
+                if (property.NameEquals("logprobs"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    logprobs = CompletionsLogProbability.DeserializeCompletionsLogProbability(property.Value);
+                    continue;
+                }
+                if (property.NameEquals("finish_reason"u8))
+                {
+                    finishReason = property.Value.GetString();
+                    continue;
+                }
+            }
+            return new Choice(text, Optional.ToNullable(index), logprobs, finishReason);
+        }
 
         /// <summary> Deserializes the model from a raw response. </summary>
         /// <param name="response"> The response to deserialize the model from. </param>

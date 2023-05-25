@@ -9,6 +9,7 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.NetworkFunction.Models;
 using Azure.ResourceManager.Resources.Models;
@@ -17,7 +18,9 @@ namespace Azure.ResourceManager.NetworkFunction
 {
     public partial class AzureTrafficCollectorData : IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IUtf8JsonSerializable)this).Write(writer, new SerializableOptions());
+
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer, SerializableOptions options)
         {
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(Tags))
@@ -44,7 +47,7 @@ namespace Azure.ResourceManager.NetworkFunction
             writer.WriteEndObject();
         }
 
-        internal static AzureTrafficCollectorData DeserializeAzureTrafficCollectorData(JsonElement element)
+        internal static AzureTrafficCollectorData DeserializeAzureTrafficCollectorData(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

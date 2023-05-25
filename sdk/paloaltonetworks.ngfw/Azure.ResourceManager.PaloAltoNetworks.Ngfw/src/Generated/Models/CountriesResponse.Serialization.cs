@@ -8,12 +8,13 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
 {
     internal partial class CountriesResponse
     {
-        internal static CountriesResponse DeserializeCountriesResponse(JsonElement element)
+        internal static CountriesResponse DeserializeCountriesResponse(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

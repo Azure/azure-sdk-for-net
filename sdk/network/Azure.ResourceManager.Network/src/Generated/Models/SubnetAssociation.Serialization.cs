@@ -8,13 +8,14 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
     public partial class SubnetAssociation
     {
-        internal static SubnetAssociation DeserializeSubnetAssociation(JsonElement element)
+        internal static SubnetAssociation DeserializeSubnetAssociation(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

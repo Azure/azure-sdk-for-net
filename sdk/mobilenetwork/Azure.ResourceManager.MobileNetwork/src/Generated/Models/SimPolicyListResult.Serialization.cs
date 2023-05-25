@@ -8,13 +8,14 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.MobileNetwork;
 
 namespace Azure.ResourceManager.MobileNetwork.Models
 {
     internal partial class SimPolicyListResult
     {
-        internal static SimPolicyListResult DeserializeSimPolicyListResult(JsonElement element)
+        internal static SimPolicyListResult DeserializeSimPolicyListResult(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

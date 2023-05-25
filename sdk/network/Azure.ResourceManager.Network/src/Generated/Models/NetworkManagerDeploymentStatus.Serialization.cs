@@ -9,12 +9,13 @@ using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Network.Models
 {
     public partial class NetworkManagerDeploymentStatus
     {
-        internal static NetworkManagerDeploymentStatus DeserializeNetworkManagerDeploymentStatus(JsonElement element)
+        internal static NetworkManagerDeploymentStatus DeserializeNetworkManagerDeploymentStatus(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

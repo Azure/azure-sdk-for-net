@@ -9,13 +9,14 @@ using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.PolicyInsights.Models
 {
     public partial class ComponentEventDetails
     {
-        internal static ComponentEventDetails DeserializeComponentEventDetails(JsonElement element)
+        internal static ComponentEventDetails DeserializeComponentEventDetails(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

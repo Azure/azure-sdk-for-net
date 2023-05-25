@@ -7,12 +7,13 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.MixedReality.ObjectAnchors.Conversion
 {
     public partial class AssetUploadUriResult
     {
-        internal static AssetUploadUriResult DeserializeAssetUploadUriResult(JsonElement element)
+        internal static AssetUploadUriResult DeserializeAssetUploadUriResult(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

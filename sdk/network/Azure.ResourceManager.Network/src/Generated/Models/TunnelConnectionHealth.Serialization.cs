@@ -7,12 +7,13 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Network.Models
 {
     public partial class TunnelConnectionHealth
     {
-        internal static TunnelConnectionHealth DeserializeTunnelConnectionHealth(JsonElement element)
+        internal static TunnelConnectionHealth DeserializeTunnelConnectionHealth(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

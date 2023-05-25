@@ -8,13 +8,14 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.PrivateDns;
 
 namespace Azure.ResourceManager.PrivateDns.Models
 {
     internal partial class PrivateDnsRecordListResult
     {
-        internal static PrivateDnsRecordListResult DeserializePrivateDnsRecordListResult(JsonElement element)
+        internal static PrivateDnsRecordListResult DeserializePrivateDnsRecordListResult(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

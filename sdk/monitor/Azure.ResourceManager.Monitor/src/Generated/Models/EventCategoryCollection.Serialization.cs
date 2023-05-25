@@ -8,12 +8,13 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
     internal partial class EventCategoryCollection
     {
-        internal static EventCategoryCollection DeserializeEventCategoryCollection(JsonElement element)
+        internal static EventCategoryCollection DeserializeEventCategoryCollection(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

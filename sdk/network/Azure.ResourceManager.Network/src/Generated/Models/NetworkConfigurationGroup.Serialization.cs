@@ -7,12 +7,13 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Network.Models
 {
     public partial class NetworkConfigurationGroup
     {
-        internal static NetworkConfigurationGroup DeserializeNetworkConfigurationGroup(JsonElement element)
+        internal static NetworkConfigurationGroup DeserializeNetworkConfigurationGroup(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

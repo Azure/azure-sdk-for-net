@@ -7,6 +7,7 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Purview.Models;
 
@@ -14,7 +15,7 @@ namespace Azure.ResourceManager.Purview
 {
     public partial class PurviewPrivateLinkResourceData
     {
-        internal static PurviewPrivateLinkResourceData DeserializePurviewPrivateLinkResourceData(JsonElement element)
+        internal static PurviewPrivateLinkResourceData DeserializePurviewPrivateLinkResourceData(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

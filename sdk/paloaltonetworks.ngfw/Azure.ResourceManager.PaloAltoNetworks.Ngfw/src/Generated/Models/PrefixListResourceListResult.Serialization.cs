@@ -8,13 +8,14 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.PaloAltoNetworks.Ngfw;
 
 namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
 {
     internal partial class PrefixListResourceListResult
     {
-        internal static PrefixListResourceListResult DeserializePrefixListResourceListResult(JsonElement element)
+        internal static PrefixListResourceListResult DeserializePrefixListResourceListResult(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

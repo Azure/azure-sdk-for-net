@@ -216,7 +216,7 @@ namespace Azure.ResourceManager.Monitor
         public virtual AsyncPageable<DiagnosticSettingResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _diagnosticSettingRestClient.CreateListRequest(Id);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new DiagnosticSettingResource(Client, DiagnosticSettingData.DeserializeDiagnosticSettingData(e)), _diagnosticSettingClientDiagnostics, Pipeline, "DiagnosticSettingCollection.GetAll", "value", null, cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, (e, o) => new DiagnosticSettingResource(Client, DiagnosticSettingData.DeserializeDiagnosticSettingData(e)), _diagnosticSettingClientDiagnostics, Pipeline, "DiagnosticSettingCollection.GetAll", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -237,7 +237,7 @@ namespace Azure.ResourceManager.Monitor
         public virtual Pageable<DiagnosticSettingResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _diagnosticSettingRestClient.CreateListRequest(Id);
-            return PageableHelpers.CreatePageable(FirstPageRequest, null, e => new DiagnosticSettingResource(Client, DiagnosticSettingData.DeserializeDiagnosticSettingData(e)), _diagnosticSettingClientDiagnostics, Pipeline, "DiagnosticSettingCollection.GetAll", "value", null, cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, null, (e, o) => new DiagnosticSettingResource(Client, DiagnosticSettingData.DeserializeDiagnosticSettingData(e)), _diagnosticSettingClientDiagnostics, Pipeline, "DiagnosticSettingCollection.GetAll", "value", null, cancellationToken);
         }
 
         /// <summary>

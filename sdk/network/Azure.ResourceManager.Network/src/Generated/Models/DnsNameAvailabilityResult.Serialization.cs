@@ -7,12 +7,13 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Network.Models
 {
     public partial class DnsNameAvailabilityResult
     {
-        internal static DnsNameAvailabilityResult DeserializeDnsNameAvailabilityResult(JsonElement element)
+        internal static DnsNameAvailabilityResult DeserializeDnsNameAvailabilityResult(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

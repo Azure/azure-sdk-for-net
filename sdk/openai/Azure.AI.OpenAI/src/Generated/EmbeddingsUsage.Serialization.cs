@@ -8,12 +8,13 @@
 using System.Text.Json;
 using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.AI.OpenAI
 {
     public partial class EmbeddingsUsage
     {
-        internal static EmbeddingsUsage DeserializeEmbeddingsUsage(JsonElement element)
+        internal static EmbeddingsUsage DeserializeEmbeddingsUsage(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

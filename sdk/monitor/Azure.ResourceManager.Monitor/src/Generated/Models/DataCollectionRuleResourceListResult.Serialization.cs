@@ -8,13 +8,14 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.Monitor;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
     internal partial class DataCollectionRuleResourceListResult
     {
-        internal static DataCollectionRuleResourceListResult DeserializeDataCollectionRuleResourceListResult(JsonElement element)
+        internal static DataCollectionRuleResourceListResult DeserializeDataCollectionRuleResourceListResult(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

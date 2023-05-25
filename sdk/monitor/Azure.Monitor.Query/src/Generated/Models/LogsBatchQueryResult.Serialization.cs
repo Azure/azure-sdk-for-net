@@ -8,10 +8,51 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.Monitor.Query.Models
 {
     public partial class LogsBatchQueryResult
     {
+        internal static LogsBatchQueryResult DeserializeLogsBatchQueryResult(JsonElement element, SerializableOptions options = default)
+        {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            IReadOnlyList<LogsTable> tables = default;
+            Optional<JsonElement> statistics = default;
+            Optional<JsonElement> render = default;
+            Optional<JsonElement> error = default;
+            foreach (var property in element.EnumerateObject())
+            {
+                if (property.NameEquals("tables"u8))
+                {
+                    List<LogsTable> array = new List<LogsTable>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(LogsTable.DeserializeLogsTable(item));
+                    }
+                    tables = array;
+                    continue;
+                }
+                if (property.NameEquals("statistics"u8))
+                {
+                    statistics = property.Value.Clone();
+                    continue;
+                }
+                if (property.NameEquals("render"u8))
+                {
+                    render = property.Value.Clone();
+                    continue;
+                }
+                if (property.NameEquals("error"u8))
+                {
+                    error = property.Value.Clone();
+                    continue;
+                }
+            }
+            return new LogsBatchQueryResult(tables, statistics, render, error);
+        }
     }
 }

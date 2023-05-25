@@ -9,12 +9,13 @@ using System;
 using System.Text.Json;
 using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.PolicyInsights.Models
 {
     public partial class RemediationDeployment
     {
-        internal static RemediationDeployment DeserializeRemediationDeployment(JsonElement element)
+        internal static RemediationDeployment DeserializeRemediationDeployment(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

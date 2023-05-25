@@ -8,12 +8,13 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.PolicyInsights.Models
 {
     internal partial class SummarizeResults
     {
-        internal static SummarizeResults DeserializeSummarizeResults(JsonElement element)
+        internal static SummarizeResults DeserializeSummarizeResults(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

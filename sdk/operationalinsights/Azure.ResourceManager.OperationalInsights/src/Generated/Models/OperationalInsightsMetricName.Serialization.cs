@@ -7,12 +7,13 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.OperationalInsights.Models
 {
     public partial class OperationalInsightsMetricName
     {
-        internal static OperationalInsightsMetricName DeserializeOperationalInsightsMetricName(JsonElement element)
+        internal static OperationalInsightsMetricName DeserializeOperationalInsightsMetricName(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

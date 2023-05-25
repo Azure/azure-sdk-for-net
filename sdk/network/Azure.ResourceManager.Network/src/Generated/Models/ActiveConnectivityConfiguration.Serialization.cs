@@ -9,12 +9,13 @@ using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Network.Models
 {
     public partial class ActiveConnectivityConfiguration
     {
-        internal static ActiveConnectivityConfiguration DeserializeActiveConnectivityConfiguration(JsonElement element)
+        internal static ActiveConnectivityConfiguration DeserializeActiveConnectivityConfiguration(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

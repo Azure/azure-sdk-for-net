@@ -8,12 +8,13 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Network.Models
 {
     public partial class NetworkSecurityGroupResult
     {
-        internal static NetworkSecurityGroupResult DeserializeNetworkSecurityGroupResult(JsonElement element)
+        internal static NetworkSecurityGroupResult DeserializeNetworkSecurityGroupResult(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

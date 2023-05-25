@@ -8,13 +8,14 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.PaloAltoNetworks.Ngfw;
 
 namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
 {
     internal partial class FqdnListGlobalRulestackResourceListResult
     {
-        internal static FqdnListGlobalRulestackResourceListResult DeserializeFqdnListGlobalRulestackResourceListResult(JsonElement element)
+        internal static FqdnListGlobalRulestackResourceListResult DeserializeFqdnListGlobalRulestackResourceListResult(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

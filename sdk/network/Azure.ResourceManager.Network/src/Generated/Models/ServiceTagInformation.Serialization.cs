@@ -7,12 +7,13 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Network.Models
 {
     public partial class ServiceTagInformation
     {
-        internal static ServiceTagInformation DeserializeServiceTagInformation(JsonElement element)
+        internal static ServiceTagInformation DeserializeServiceTagInformation(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

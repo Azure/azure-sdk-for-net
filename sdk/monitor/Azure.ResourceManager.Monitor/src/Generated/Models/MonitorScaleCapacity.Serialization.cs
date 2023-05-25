@@ -7,10 +7,53 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
     public partial class MonitorScaleCapacity : IUtf8JsonSerializable
     {
+
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer, SerializableOptions options)
+        {
+            writer.WriteStartObject();
+            writer.WritePropertyName("minimum"u8);
+            writer.WriteNumberValue(Minimum);
+            writer.WritePropertyName("maximum"u8);
+            writer.WriteNumberValue(Maximum);
+            writer.WritePropertyName("default"u8);
+            writer.WriteNumberValue(Default);
+            writer.WriteEndObject();
+        }
+
+        internal static MonitorScaleCapacity DeserializeMonitorScaleCapacity(JsonElement element, SerializableOptions options = default)
+        {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            int minimum = default;
+            int maximum = default;
+            int @default = default;
+            foreach (var property in element.EnumerateObject())
+            {
+                if (property.NameEquals("minimum"u8))
+                {
+                    minimum = property.Value.GetInt32();
+                    continue;
+                }
+                if (property.NameEquals("maximum"u8))
+                {
+                    maximum = property.Value.GetInt32();
+                    continue;
+                }
+                if (property.NameEquals("default"u8))
+                {
+                    @default = property.Value.GetInt32();
+                    continue;
+                }
+            }
+            return new MonitorScaleCapacity(minimum, maximum, @default);
+        }
     }
 }

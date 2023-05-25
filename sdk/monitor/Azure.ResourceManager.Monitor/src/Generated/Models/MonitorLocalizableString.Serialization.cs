@@ -7,12 +7,13 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
     public partial class MonitorLocalizableString
     {
-        internal static MonitorLocalizableString DeserializeMonitorLocalizableString(JsonElement element)
+        internal static MonitorLocalizableString DeserializeMonitorLocalizableString(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

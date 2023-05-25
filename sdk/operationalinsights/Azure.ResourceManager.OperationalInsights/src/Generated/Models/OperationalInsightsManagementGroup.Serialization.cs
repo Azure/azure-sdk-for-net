@@ -8,12 +8,13 @@
 using System;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.OperationalInsights.Models
 {
     public partial class OperationalInsightsManagementGroup
     {
-        internal static OperationalInsightsManagementGroup DeserializeOperationalInsightsManagementGroup(JsonElement element)
+        internal static OperationalInsightsManagementGroup DeserializeOperationalInsightsManagementGroup(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

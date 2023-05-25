@@ -8,12 +8,13 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Network.Models
 {
     public partial class ConnectivityHopInfo
     {
-        internal static ConnectivityHopInfo DeserializeConnectivityHopInfo(JsonElement element)
+        internal static ConnectivityHopInfo DeserializeConnectivityHopInfo(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

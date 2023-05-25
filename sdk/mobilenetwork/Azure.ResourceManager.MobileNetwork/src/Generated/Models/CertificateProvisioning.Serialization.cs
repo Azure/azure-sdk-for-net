@@ -7,12 +7,13 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.MobileNetwork.Models
 {
     public partial class CertificateProvisioning
     {
-        internal static CertificateProvisioning DeserializeCertificateProvisioning(JsonElement element)
+        internal static CertificateProvisioning DeserializeCertificateProvisioning(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

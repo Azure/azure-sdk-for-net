@@ -7,13 +7,14 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
     public partial class MonitorMetricNamespace
     {
-        internal static MonitorMetricNamespace DeserializeMonitorMetricNamespace(JsonElement element)
+        internal static MonitorMetricNamespace DeserializeMonitorMetricNamespace(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

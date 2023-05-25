@@ -7,12 +7,13 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
 {
     public partial class SecurityServicesResponse
     {
-        internal static SecurityServicesResponse DeserializeSecurityServicesResponse(JsonElement element)
+        internal static SecurityServicesResponse DeserializeSecurityServicesResponse(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

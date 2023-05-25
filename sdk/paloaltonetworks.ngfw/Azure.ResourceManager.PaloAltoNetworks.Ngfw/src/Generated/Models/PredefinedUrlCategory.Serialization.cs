@@ -7,12 +7,13 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
 {
     public partial class PredefinedUrlCategory
     {
-        internal static PredefinedUrlCategory DeserializePredefinedUrlCategory(JsonElement element)
+        internal static PredefinedUrlCategory DeserializePredefinedUrlCategory(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

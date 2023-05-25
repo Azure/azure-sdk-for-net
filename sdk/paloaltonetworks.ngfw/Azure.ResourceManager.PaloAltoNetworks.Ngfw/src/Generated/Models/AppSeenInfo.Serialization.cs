@@ -7,12 +7,13 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
 {
     public partial class AppSeenInfo
     {
-        internal static AppSeenInfo DeserializeAppSeenInfo(JsonElement element)
+        internal static AppSeenInfo DeserializeAppSeenInfo(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

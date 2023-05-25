@@ -7,13 +7,14 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Network.Models
 {
     public partial class AvailablePrivateEndpointType
     {
-        internal static AvailablePrivateEndpointType DeserializeAvailablePrivateEndpointType(JsonElement element)
+        internal static AvailablePrivateEndpointType DeserializeAvailablePrivateEndpointType(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

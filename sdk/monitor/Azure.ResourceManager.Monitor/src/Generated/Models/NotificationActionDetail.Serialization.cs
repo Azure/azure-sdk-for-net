@@ -8,12 +8,13 @@
 using System;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
     public partial class NotificationActionDetail
     {
-        internal static NotificationActionDetail DeserializeNotificationActionDetail(JsonElement element)
+        internal static NotificationActionDetail DeserializeNotificationActionDetail(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

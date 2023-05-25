@@ -8,12 +8,13 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.OperationalInsights.Models
 {
     internal partial class SearchGetSchemaResponse
     {
-        internal static SearchGetSchemaResponse DeserializeSearchGetSchemaResponse(JsonElement element)
+        internal static SearchGetSchemaResponse DeserializeSearchGetSchemaResponse(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

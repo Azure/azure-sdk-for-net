@@ -7,12 +7,13 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
     public partial class DataCollectionEndpointMetadata
     {
-        internal static DataCollectionEndpointMetadata DeserializeDataCollectionEndpointMetadata(JsonElement element)
+        internal static DataCollectionEndpointMetadata DeserializeDataCollectionEndpointMetadata(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

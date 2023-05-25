@@ -7,12 +7,13 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Peering.Models
 {
     public partial class PeeringReceivedRoute
     {
-        internal static PeeringReceivedRoute DeserializePeeringReceivedRoute(JsonElement element)
+        internal static PeeringReceivedRoute DeserializePeeringReceivedRoute(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

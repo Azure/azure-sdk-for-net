@@ -8,12 +8,13 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.OperationalInsights.Models
 {
     internal partial class WorkspaceListUsagesResult
     {
-        internal static WorkspaceListUsagesResult DeserializeWorkspaceListUsagesResult(JsonElement element)
+        internal static WorkspaceListUsagesResult DeserializeWorkspaceListUsagesResult(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

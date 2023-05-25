@@ -8,12 +8,13 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.PolicyInsights.Models
 {
     public partial class FieldRestriction
     {
-        internal static FieldRestriction DeserializeFieldRestriction(JsonElement element)
+        internal static FieldRestriction DeserializeFieldRestriction(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

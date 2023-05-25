@@ -8,13 +8,14 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.NetApp;
 
 namespace Azure.ResourceManager.NetApp.Models
 {
     internal partial class SnapshotPoliciesList
     {
-        internal static SnapshotPoliciesList DeserializeSnapshotPoliciesList(JsonElement element)
+        internal static SnapshotPoliciesList DeserializeSnapshotPoliciesList(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

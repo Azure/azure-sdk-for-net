@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.Network
         public virtual AsyncPageable<ExpressRouteProviderPortResource> GetAllAsync(string filter = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _expressRouteProviderPortExpressRouteProviderPortsLocationRestClient.CreateListRequest(Id.SubscriptionId, filter);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new ExpressRouteProviderPortResource(Client, ExpressRouteProviderPortData.DeserializeExpressRouteProviderPortData(e)), _expressRouteProviderPortExpressRouteProviderPortsLocationClientDiagnostics, Pipeline, "ExpressRouteProviderPortCollection.GetAll", "value", null, cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, (e, o) => new ExpressRouteProviderPortResource(Client, ExpressRouteProviderPortData.DeserializeExpressRouteProviderPortData(e)), _expressRouteProviderPortExpressRouteProviderPortsLocationClientDiagnostics, Pipeline, "ExpressRouteProviderPortCollection.GetAll", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -173,7 +173,7 @@ namespace Azure.ResourceManager.Network
         public virtual Pageable<ExpressRouteProviderPortResource> GetAll(string filter = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _expressRouteProviderPortExpressRouteProviderPortsLocationRestClient.CreateListRequest(Id.SubscriptionId, filter);
-            return PageableHelpers.CreatePageable(FirstPageRequest, null, e => new ExpressRouteProviderPortResource(Client, ExpressRouteProviderPortData.DeserializeExpressRouteProviderPortData(e)), _expressRouteProviderPortExpressRouteProviderPortsLocationClientDiagnostics, Pipeline, "ExpressRouteProviderPortCollection.GetAll", "value", null, cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, null, (e, o) => new ExpressRouteProviderPortResource(Client, ExpressRouteProviderPortData.DeserializeExpressRouteProviderPortData(e)), _expressRouteProviderPortExpressRouteProviderPortsLocationClientDiagnostics, Pipeline, "ExpressRouteProviderPortCollection.GetAll", "value", null, cancellationToken);
         }
 
         /// <summary>

@@ -8,12 +8,13 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.MySql.Models
 {
     internal partial class MySqlLogFileListResult
     {
-        internal static MySqlLogFileListResult DeserializeMySqlLogFileListResult(JsonElement element)
+        internal static MySqlLogFileListResult DeserializeMySqlLogFileListResult(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

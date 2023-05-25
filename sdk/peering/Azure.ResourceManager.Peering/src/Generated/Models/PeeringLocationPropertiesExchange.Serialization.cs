@@ -8,12 +8,15 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Peering.Models
 {
     internal partial class PeeringLocationPropertiesExchange : IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IUtf8JsonSerializable)this).Write(writer, new SerializableOptions());
+
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer, SerializableOptions options)
         {
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(PeeringFacilities))
@@ -29,7 +32,7 @@ namespace Azure.ResourceManager.Peering.Models
             writer.WriteEndObject();
         }
 
-        internal static PeeringLocationPropertiesExchange DeserializePeeringLocationPropertiesExchange(JsonElement element)
+        internal static PeeringLocationPropertiesExchange DeserializePeeringLocationPropertiesExchange(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

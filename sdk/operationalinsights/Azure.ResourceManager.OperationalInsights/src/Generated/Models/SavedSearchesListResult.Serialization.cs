@@ -8,13 +8,14 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.OperationalInsights;
 
 namespace Azure.ResourceManager.OperationalInsights.Models
 {
     internal partial class SavedSearchesListResult
     {
-        internal static SavedSearchesListResult DeserializeSavedSearchesListResult(JsonElement element)
+        internal static SavedSearchesListResult DeserializeSavedSearchesListResult(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

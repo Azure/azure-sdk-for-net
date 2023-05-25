@@ -8,12 +8,13 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.Monitor.Query.Models
 {
     public partial class LogsTable
     {
-        internal static LogsTable DeserializeLogsTable(JsonElement element)
+        internal static LogsTable DeserializeLogsTable(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

@@ -8,12 +8,13 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.PostgreSql.Models
 {
     internal partial class PostgreSqlPerformanceTierListResult
     {
-        internal static PostgreSqlPerformanceTierListResult DeserializePostgreSqlPerformanceTierListResult(JsonElement element)
+        internal static PostgreSqlPerformanceTierListResult DeserializePostgreSqlPerformanceTierListResult(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

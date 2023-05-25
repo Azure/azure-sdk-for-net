@@ -227,7 +227,7 @@ namespace Azure.ResourceManager.MobileNetwork
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _attachedDataNetworkRestClient.CreateListByPacketCoreDataPlaneRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _attachedDataNetworkRestClient.CreateListByPacketCoreDataPlaneNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new AttachedDataNetworkResource(Client, AttachedDataNetworkData.DeserializeAttachedDataNetworkData(e)), _attachedDataNetworkClientDiagnostics, Pipeline, "AttachedDataNetworkCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, (e, o) => new AttachedDataNetworkResource(Client, AttachedDataNetworkData.DeserializeAttachedDataNetworkData(e)), _attachedDataNetworkClientDiagnostics, Pipeline, "AttachedDataNetworkCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -249,7 +249,7 @@ namespace Azure.ResourceManager.MobileNetwork
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _attachedDataNetworkRestClient.CreateListByPacketCoreDataPlaneRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _attachedDataNetworkRestClient.CreateListByPacketCoreDataPlaneNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new AttachedDataNetworkResource(Client, AttachedDataNetworkData.DeserializeAttachedDataNetworkData(e)), _attachedDataNetworkClientDiagnostics, Pipeline, "AttachedDataNetworkCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, (e, o) => new AttachedDataNetworkResource(Client, AttachedDataNetworkData.DeserializeAttachedDataNetworkData(e)), _attachedDataNetworkClientDiagnostics, Pipeline, "AttachedDataNetworkCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

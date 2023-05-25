@@ -7,12 +7,13 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.NetApp.Models
 {
     public partial class AvailabilityZoneMapping
     {
-        internal static AvailabilityZoneMapping DeserializeAvailabilityZoneMapping(JsonElement element)
+        internal static AvailabilityZoneMapping DeserializeAvailabilityZoneMapping(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

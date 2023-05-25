@@ -7,6 +7,7 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Orbital.Models;
 
@@ -14,7 +15,7 @@ namespace Azure.ResourceManager.Orbital
 {
     public partial class AvailableGroundStationData
     {
-        internal static AvailableGroundStationData DeserializeAvailableGroundStationData(JsonElement element)
+        internal static AvailableGroundStationData DeserializeAvailableGroundStationData(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

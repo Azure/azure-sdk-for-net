@@ -8,12 +8,13 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.PolicyInsights.Models
 {
     internal partial class CheckRestrictionsResultContentEvaluationResult
     {
-        internal static CheckRestrictionsResultContentEvaluationResult DeserializeCheckRestrictionsResultContentEvaluationResult(JsonElement element)
+        internal static CheckRestrictionsResultContentEvaluationResult DeserializeCheckRestrictionsResultContentEvaluationResult(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

@@ -8,12 +8,13 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.PolicyInsights.Models
 {
     public partial class PolicyEvaluationDetails
     {
-        internal static PolicyEvaluationDetails DeserializePolicyEvaluationDetails(JsonElement element)
+        internal static PolicyEvaluationDetails DeserializePolicyEvaluationDetails(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

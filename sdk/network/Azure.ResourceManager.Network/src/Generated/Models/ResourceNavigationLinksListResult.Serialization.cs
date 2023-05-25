@@ -8,12 +8,13 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Network.Models
 {
     internal partial class ResourceNavigationLinksListResult
     {
-        internal static ResourceNavigationLinksListResult DeserializeResourceNavigationLinksListResult(JsonElement element)
+        internal static ResourceNavigationLinksListResult DeserializeResourceNavigationLinksListResult(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

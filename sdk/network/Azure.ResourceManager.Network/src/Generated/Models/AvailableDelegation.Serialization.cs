@@ -8,13 +8,14 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Network.Models
 {
     public partial class AvailableDelegation
     {
-        internal static AvailableDelegation DeserializeAvailableDelegation(JsonElement element)
+        internal static AvailableDelegation DeserializeAvailableDelegation(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

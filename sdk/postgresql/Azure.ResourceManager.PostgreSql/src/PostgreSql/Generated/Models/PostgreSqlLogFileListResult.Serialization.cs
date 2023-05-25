@@ -8,12 +8,13 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.PostgreSql.Models
 {
     internal partial class PostgreSqlLogFileListResult
     {
-        internal static PostgreSqlLogFileListResult DeserializePostgreSqlLogFileListResult(JsonElement element)
+        internal static PostgreSqlLogFileListResult DeserializePostgreSqlLogFileListResult(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

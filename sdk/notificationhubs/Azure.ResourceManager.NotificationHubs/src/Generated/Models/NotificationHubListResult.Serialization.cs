@@ -8,13 +8,14 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.NotificationHubs;
 
 namespace Azure.ResourceManager.NotificationHubs.Models
 {
     internal partial class NotificationHubListResult
     {
-        internal static NotificationHubListResult DeserializeNotificationHubListResult(JsonElement element)
+        internal static NotificationHubListResult DeserializeNotificationHubListResult(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

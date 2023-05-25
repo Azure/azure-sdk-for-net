@@ -8,12 +8,13 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.Monitor.Query.Models
 {
     internal partial class BatchQueryResponse
     {
-        internal static BatchQueryResponse DeserializeBatchQueryResponse(JsonElement element)
+        internal static BatchQueryResponse DeserializeBatchQueryResponse(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

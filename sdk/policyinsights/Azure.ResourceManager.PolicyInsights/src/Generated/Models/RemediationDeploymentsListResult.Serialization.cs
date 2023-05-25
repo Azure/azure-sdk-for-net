@@ -8,12 +8,13 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.PolicyInsights.Models
 {
     internal partial class RemediationDeploymentsListResult
     {
-        internal static RemediationDeploymentsListResult DeserializeRemediationDeploymentsListResult(JsonElement element)
+        internal static RemediationDeploymentsListResult DeserializeRemediationDeploymentsListResult(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

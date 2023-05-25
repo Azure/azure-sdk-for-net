@@ -9,12 +9,13 @@ using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.Monitor.Query.Models
 {
     public partial class MetricsQueryResult
     {
-        internal static MetricsQueryResult DeserializeMetricsQueryResult(JsonElement element)
+        internal static MetricsQueryResult DeserializeMetricsQueryResult(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

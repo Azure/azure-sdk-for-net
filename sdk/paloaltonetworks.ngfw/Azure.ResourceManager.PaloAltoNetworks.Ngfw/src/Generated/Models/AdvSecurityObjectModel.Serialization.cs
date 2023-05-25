@@ -8,12 +8,13 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
 {
     public partial class AdvSecurityObjectModel
     {
-        internal static AdvSecurityObjectModel DeserializeAdvSecurityObjectModel(JsonElement element)
+        internal static AdvSecurityObjectModel DeserializeAdvSecurityObjectModel(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

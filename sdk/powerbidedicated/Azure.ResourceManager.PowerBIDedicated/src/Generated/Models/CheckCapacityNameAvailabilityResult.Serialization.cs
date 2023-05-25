@@ -7,12 +7,13 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.PowerBIDedicated.Models
 {
     public partial class CheckCapacityNameAvailabilityResult
     {
-        internal static CheckCapacityNameAvailabilityResult DeserializeCheckCapacityNameAvailabilityResult(JsonElement element)
+        internal static CheckCapacityNameAvailabilityResult DeserializeCheckCapacityNameAvailabilityResult(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

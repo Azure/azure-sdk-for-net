@@ -9,6 +9,7 @@ using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.OperationalInsights.Models;
 
@@ -16,7 +17,9 @@ namespace Azure.ResourceManager.OperationalInsights
 {
     public partial class OperationalInsightsDataExportData : IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IUtf8JsonSerializable)this).Write(writer, new SerializableOptions());
+
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer, SerializableOptions options)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
@@ -71,7 +74,7 @@ namespace Azure.ResourceManager.OperationalInsights
             writer.WriteEndObject();
         }
 
-        internal static OperationalInsightsDataExportData DeserializeOperationalInsightsDataExportData(JsonElement element)
+        internal static OperationalInsightsDataExportData DeserializeOperationalInsightsDataExportData(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

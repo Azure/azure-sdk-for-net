@@ -8,12 +8,13 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Network.Models
 {
     public partial class EffectiveSecurityAdminRule
     {
-        internal static EffectiveSecurityAdminRule DeserializeEffectiveSecurityAdminRule(JsonElement element)
+        internal static EffectiveSecurityAdminRule DeserializeEffectiveSecurityAdminRule(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

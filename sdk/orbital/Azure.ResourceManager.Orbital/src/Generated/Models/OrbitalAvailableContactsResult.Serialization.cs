@@ -8,12 +8,13 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Orbital.Models
 {
     public partial class OrbitalAvailableContactsResult
     {
-        internal static OrbitalAvailableContactsResult DeserializeOrbitalAvailableContactsResult(JsonElement element)
+        internal static OrbitalAvailableContactsResult DeserializeOrbitalAvailableContactsResult(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

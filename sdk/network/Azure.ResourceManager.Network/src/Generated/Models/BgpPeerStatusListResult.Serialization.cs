@@ -8,12 +8,13 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Network.Models
 {
     public partial class BgpPeerStatusListResult
     {
-        internal static BgpPeerStatusListResult DeserializeBgpPeerStatusListResult(JsonElement element)
+        internal static BgpPeerStatusListResult DeserializeBgpPeerStatusListResult(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

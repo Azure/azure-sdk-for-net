@@ -7,12 +7,13 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.Monitor.OpenTelemetry.Exporter.Models
 {
     internal partial class TelemetryErrorDetails
     {
-        internal static TelemetryErrorDetails DeserializeTelemetryErrorDetails(JsonElement element)
+        internal static TelemetryErrorDetails DeserializeTelemetryErrorDetails(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

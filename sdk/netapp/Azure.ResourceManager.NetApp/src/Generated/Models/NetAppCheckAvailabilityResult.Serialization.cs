@@ -7,12 +7,13 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.NetApp.Models
 {
     public partial class NetAppCheckAvailabilityResult
     {
-        internal static NetAppCheckAvailabilityResult DeserializeNetAppCheckAvailabilityResult(JsonElement element)
+        internal static NetAppCheckAvailabilityResult DeserializeNetAppCheckAvailabilityResult(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

@@ -7,12 +7,13 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.MySql.Models
 {
     public partial class MySqlQueryPerformanceInsightResetDataResult
     {
-        internal static MySqlQueryPerformanceInsightResetDataResult DeserializeMySqlQueryPerformanceInsightResetDataResult(JsonElement element)
+        internal static MySqlQueryPerformanceInsightResetDataResult DeserializeMySqlQueryPerformanceInsightResetDataResult(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

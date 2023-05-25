@@ -8,12 +8,13 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Peering.Models
 {
     internal partial class PeeringLocationListResult
     {
-        internal static PeeringLocationListResult DeserializePeeringLocationListResult(JsonElement element)
+        internal static PeeringLocationListResult DeserializePeeringLocationListResult(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

@@ -8,13 +8,14 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.Monitor;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
     internal partial class AlertRuleResourceCollection
     {
-        internal static AlertRuleResourceCollection DeserializeAlertRuleResourceCollection(JsonElement element)
+        internal static AlertRuleResourceCollection DeserializeAlertRuleResourceCollection(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

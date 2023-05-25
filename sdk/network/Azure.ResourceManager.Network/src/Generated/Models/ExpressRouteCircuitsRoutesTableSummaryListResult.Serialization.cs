@@ -8,12 +8,13 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Network.Models
 {
     public partial class ExpressRouteCircuitsRoutesTableSummaryListResult
     {
-        internal static ExpressRouteCircuitsRoutesTableSummaryListResult DeserializeExpressRouteCircuitsRoutesTableSummaryListResult(JsonElement element)
+        internal static ExpressRouteCircuitsRoutesTableSummaryListResult DeserializeExpressRouteCircuitsRoutesTableSummaryListResult(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

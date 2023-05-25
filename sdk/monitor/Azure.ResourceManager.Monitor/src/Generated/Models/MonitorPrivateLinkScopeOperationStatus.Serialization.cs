@@ -9,12 +9,13 @@ using System;
 using System.Text.Json;
 using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
     public partial class MonitorPrivateLinkScopeOperationStatus
     {
-        internal static MonitorPrivateLinkScopeOperationStatus DeserializeMonitorPrivateLinkScopeOperationStatus(JsonElement element)
+        internal static MonitorPrivateLinkScopeOperationStatus DeserializeMonitorPrivateLinkScopeOperationStatus(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

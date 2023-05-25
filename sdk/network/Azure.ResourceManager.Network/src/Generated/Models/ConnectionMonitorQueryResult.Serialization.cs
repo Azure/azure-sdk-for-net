@@ -8,12 +8,13 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Network.Models
 {
     public partial class ConnectionMonitorQueryResult
     {
-        internal static ConnectionMonitorQueryResult DeserializeConnectionMonitorQueryResult(JsonElement element)
+        internal static ConnectionMonitorQueryResult DeserializeConnectionMonitorQueryResult(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

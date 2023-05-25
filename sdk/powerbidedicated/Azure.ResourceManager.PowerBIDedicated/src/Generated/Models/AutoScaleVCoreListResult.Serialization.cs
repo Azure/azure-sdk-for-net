@@ -8,13 +8,14 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.PowerBIDedicated;
 
 namespace Azure.ResourceManager.PowerBIDedicated.Models
 {
     internal partial class AutoScaleVCoreListResult
     {
-        internal static AutoScaleVCoreListResult DeserializeAutoScaleVCoreListResult(JsonElement element)
+        internal static AutoScaleVCoreListResult DeserializeAutoScaleVCoreListResult(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

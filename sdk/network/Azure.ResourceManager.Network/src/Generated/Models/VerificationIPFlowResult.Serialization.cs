@@ -7,12 +7,13 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Network.Models
 {
     public partial class VerificationIPFlowResult
     {
-        internal static VerificationIPFlowResult DeserializeVerificationIPFlowResult(JsonElement element)
+        internal static VerificationIPFlowResult DeserializeVerificationIPFlowResult(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

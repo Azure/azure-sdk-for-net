@@ -7,12 +7,13 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Purview.Models
 {
     public partial class PurviewAccountEndpoint
     {
-        internal static PurviewAccountEndpoint DeserializePurviewAccountEndpoint(JsonElement element)
+        internal static PurviewAccountEndpoint DeserializePurviewAccountEndpoint(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

@@ -7,12 +7,13 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Network.Models
 {
     public partial class NetworkUsage
     {
-        internal static NetworkUsage DeserializeNetworkUsage(JsonElement element)
+        internal static NetworkUsage DeserializeNetworkUsage(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

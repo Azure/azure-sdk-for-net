@@ -8,13 +8,14 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.NotificationHubs;
 
 namespace Azure.ResourceManager.NotificationHubs.Models
 {
     internal partial class SharedAccessAuthorizationRuleListResult
     {
-        internal static SharedAccessAuthorizationRuleListResult DeserializeSharedAccessAuthorizationRuleListResult(JsonElement element)
+        internal static SharedAccessAuthorizationRuleListResult DeserializeSharedAccessAuthorizationRuleListResult(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

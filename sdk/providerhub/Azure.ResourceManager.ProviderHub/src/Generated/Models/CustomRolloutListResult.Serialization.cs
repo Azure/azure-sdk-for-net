@@ -8,13 +8,14 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.ProviderHub;
 
 namespace Azure.ResourceManager.ProviderHub.Models
 {
     internal partial class CustomRolloutListResult
     {
-        internal static CustomRolloutListResult DeserializeCustomRolloutListResult(JsonElement element)
+        internal static CustomRolloutListResult DeserializeCustomRolloutListResult(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

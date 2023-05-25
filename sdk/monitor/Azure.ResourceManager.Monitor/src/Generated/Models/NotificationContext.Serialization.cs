@@ -7,12 +7,13 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
     public partial class NotificationContext
     {
-        internal static NotificationContext DeserializeNotificationContext(JsonElement element)
+        internal static NotificationContext DeserializeNotificationContext(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

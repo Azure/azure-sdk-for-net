@@ -8,11 +8,41 @@
 using System.Text.Json;
 using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.AI.OpenAI
 {
     public partial class CompletionsUsage
     {
+        internal static CompletionsUsage DeserializeCompletionsUsage(JsonElement element, SerializableOptions options = default)
+        {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            int completionTokens = default;
+            int promptTokens = default;
+            int totalTokens = default;
+            foreach (var property in element.EnumerateObject())
+            {
+                if (property.NameEquals("completion_tokens"u8))
+                {
+                    completionTokens = property.Value.GetInt32();
+                    continue;
+                }
+                if (property.NameEquals("prompt_tokens"u8))
+                {
+                    promptTokens = property.Value.GetInt32();
+                    continue;
+                }
+                if (property.NameEquals("total_tokens"u8))
+                {
+                    totalTokens = property.Value.GetInt32();
+                    continue;
+                }
+            }
+            return new CompletionsUsage(completionTokens, promptTokens, totalTokens);
+        }
 
         /// <summary> Deserializes the model from a raw response. </summary>
         /// <param name="response"> The response to deserialize the model from. </param>

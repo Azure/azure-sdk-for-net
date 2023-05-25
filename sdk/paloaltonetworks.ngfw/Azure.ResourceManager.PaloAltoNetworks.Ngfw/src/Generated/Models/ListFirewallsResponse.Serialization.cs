@@ -8,12 +8,13 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
 {
     internal partial class ListFirewallsResponse
     {
-        internal static ListFirewallsResponse DeserializeListFirewallsResponse(JsonElement element)
+        internal static ListFirewallsResponse DeserializeListFirewallsResponse(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

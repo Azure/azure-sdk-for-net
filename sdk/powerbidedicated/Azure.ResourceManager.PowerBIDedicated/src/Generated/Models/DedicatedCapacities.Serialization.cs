@@ -8,13 +8,14 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.PowerBIDedicated;
 
 namespace Azure.ResourceManager.PowerBIDedicated.Models
 {
     internal partial class DedicatedCapacities
     {
-        internal static DedicatedCapacities DeserializeDedicatedCapacities(JsonElement element)
+        internal static DedicatedCapacities DeserializeDedicatedCapacities(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

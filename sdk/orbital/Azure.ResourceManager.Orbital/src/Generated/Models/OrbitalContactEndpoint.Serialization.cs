@@ -8,12 +8,15 @@
 using System.Net;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Orbital.Models
 {
     public partial class OrbitalContactEndpoint : IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IUtf8JsonSerializable)this).Write(writer, new SerializableOptions());
+
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer, SerializableOptions options)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("ipAddress"u8);
@@ -27,7 +30,7 @@ namespace Azure.ResourceManager.Orbital.Models
             writer.WriteEndObject();
         }
 
-        internal static OrbitalContactEndpoint DeserializeOrbitalContactEndpoint(JsonElement element)
+        internal static OrbitalContactEndpoint DeserializeOrbitalContactEndpoint(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

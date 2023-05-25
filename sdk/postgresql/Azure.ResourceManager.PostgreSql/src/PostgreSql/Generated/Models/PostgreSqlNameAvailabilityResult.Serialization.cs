@@ -7,12 +7,13 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.PostgreSql.Models
 {
     public partial class PostgreSqlNameAvailabilityResult
     {
-        internal static PostgreSqlNameAvailabilityResult DeserializePostgreSqlNameAvailabilityResult(JsonElement element)
+        internal static PostgreSqlNameAvailabilityResult DeserializePostgreSqlNameAvailabilityResult(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
