@@ -8,11 +8,11 @@
         "Authorization": "Sanitized",
         "Content-Length": "54",
         "Content-Type": "application/json",
-        "traceparent": "00-edb351c6eb2c3a49bb498e827ad61179-e89677206540b44e-00",
-        "User-Agent": "azsdk-net-Communication.PhoneNumbers/1.2.0-alpha.20230519.1 (.NET Framework 4.8.9139.0; Microsoft Windows 10.0.22621 )",
-        "x-ms-client-request-id": "a43dfa96eb8ac1383cba0acc7f3a5613",
+        "traceparent": "00-5fd5f58174f5dba8d4a35c5c47736976-70031bc94f5648f5-00",
+        "User-Agent": "azsdk-net-Communication.PhoneNumbers/1.2.0-alpha.20230525.1 (.NET 7.0.5; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "b8ed1bc51ff45990937b0acb9f69f401",
         "x-ms-content-sha256": "Sanitized",
-        "x-ms-date": "Wed, 24 May 2023 23:03:39 GMT",
+        "x-ms-date": "Thu, 25 May 2023 17:57:35 GMT",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
@@ -25,13 +25,13 @@
       "ResponseHeaders": {
         "api-supported-versions": "2023-05-01-preview",
         "Content-Type": "application/json",
-        "Date": "Wed, 24 May 2023 23:03:39 GMT",
-        "MS-CV": "eufXs9gQ6UOI/JRQnnDVxA.0",
+        "Date": "Thu, 25 May 2023 17:57:35 GMT",
+        "MS-CV": "aEeKiFbjuEK1I2WPdparzQ.0",
         "Strict-Transport-Security": "max-age=2592000",
         "Transfer-Encoding": "chunked",
-        "X-Azure-Ref": "0y5duZAAAAACZmHl\u002B5YNdRLqczjLBpkePV1NURURHRTAxMTkAOWZjN2I1MTktYThjYy00Zjg5LTkzNWUtYzkxNDhhZTA5ZTgx",
+        "X-Azure-Ref": "0j6FvZAAAAABHC39oWRd\u002BTI6YRQLVpPgOV1NURURHRTA4MDcAOWZjN2I1MTktYThjYy00Zjg5LTkzNWUtYzkxNDhhZTA5ZTgx",
         "X-Cache": "CONFIG_NOCACHE",
-        "X-Processing-Time": "11ms"
+        "X-Processing-Time": "35ms"
       },
       "ResponseBody": {
         "error": {
@@ -43,6 +43,6 @@
   ],
   "Variables": {
     "COMMUNICATION_LIVETEST_STATIC_CONNECTION_STRING": "endpoint=https://smstestapp.communication.azure.com/;accesskey=Kg==",
-    "RandomSeed": "1316062678"
+    "RandomSeed": "1858912015"
   }
 }

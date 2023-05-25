@@ -93,7 +93,7 @@ namespace Azure.Communication.PhoneNumbers
         /// <param name="apiVersion"> Api Version. </param>
         private PhoneNumbersClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string endpoint, string acceptedLanguage, string apiVersion = "2021-03-07")
         {
-            InternalClient = new InternalPhoneNumbersClient(clientDiagnostics, pipeline, endpoint, apiVersion);
+            InternalClient = new InternalPhoneNumbersClient(clientDiagnostics, pipeline, new Uri(endpoint), apiVersion);
             _clientDiagnostics = clientDiagnostics;
             _pipeline = pipeline;
             _acceptedLanguage = acceptedLanguage;
@@ -552,7 +552,7 @@ namespace Azure.Communication.PhoneNumbers
             scope.Start();
             try
             {
-                var response = await RestClient.OperatorInformationSearchAsync(phoneNumbers, cancellationToken).ConfigureAwait(false);
+                var response = await InternalClient.OperatorInformationSearchAsync(phoneNumbers, cancellationToken).ConfigureAwait(false);
                 return response;
             }
             catch (Exception e)
@@ -573,7 +573,7 @@ namespace Azure.Communication.PhoneNumbers
             scope.Start();
             try
             {
-                var response = RestClient.OperatorInformationSearch(phoneNumbers, cancellationToken);
+                var response = InternalClient.OperatorInformationSearch(phoneNumbers, cancellationToken);
                 return response;
             }
             catch (Exception e)
