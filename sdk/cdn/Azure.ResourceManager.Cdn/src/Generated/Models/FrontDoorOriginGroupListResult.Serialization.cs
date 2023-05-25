@@ -8,13 +8,14 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.Cdn;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
     internal partial class FrontDoorOriginGroupListResult
     {
-        internal static FrontDoorOriginGroupListResult DeserializeFrontDoorOriginGroupListResult(JsonElement element)
+        internal static FrontDoorOriginGroupListResult DeserializeFrontDoorOriginGroupListResult(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

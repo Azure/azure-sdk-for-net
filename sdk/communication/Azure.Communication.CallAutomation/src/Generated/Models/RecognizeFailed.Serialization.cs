@@ -7,12 +7,13 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.Communication.CallAutomation
 {
     public partial class RecognizeFailed
     {
-        internal static RecognizeFailed DeserializeRecognizeFailed(JsonElement element)
+        internal static RecognizeFailed DeserializeRecognizeFailed(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

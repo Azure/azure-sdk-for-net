@@ -9,6 +9,7 @@ using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.Automation.Models;
 using Azure.ResourceManager.Models;
 
@@ -16,7 +17,7 @@ namespace Azure.ResourceManager.Automation
 {
     public partial class AutomationConnectionTypeData
     {
-        internal static AutomationConnectionTypeData DeserializeAutomationConnectionTypeData(JsonElement element)
+        internal static AutomationConnectionTypeData DeserializeAutomationConnectionTypeData(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

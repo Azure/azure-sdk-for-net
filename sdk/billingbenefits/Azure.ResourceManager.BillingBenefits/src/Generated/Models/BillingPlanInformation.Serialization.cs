@@ -9,12 +9,15 @@ using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.BillingBenefits.Models
 {
     public partial class BillingPlanInformation : IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IUtf8JsonSerializable)this).Write(writer, new SerializableOptions());
+
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer, SerializableOptions options)
         {
             writer.WriteStartObject();
             if (Optional.IsDefined(PricingCurrencyTotal))
@@ -45,7 +48,7 @@ namespace Azure.ResourceManager.BillingBenefits.Models
             writer.WriteEndObject();
         }
 
-        internal static BillingPlanInformation DeserializeBillingPlanInformation(JsonElement element)
+        internal static BillingPlanInformation DeserializeBillingPlanInformation(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

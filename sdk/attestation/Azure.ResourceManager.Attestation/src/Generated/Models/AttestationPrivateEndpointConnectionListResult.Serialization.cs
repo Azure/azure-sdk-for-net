@@ -8,13 +8,14 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.Attestation;
 
 namespace Azure.ResourceManager.Attestation.Models
 {
     internal partial class AttestationPrivateEndpointConnectionListResult
     {
-        internal static AttestationPrivateEndpointConnectionListResult DeserializeAttestationPrivateEndpointConnectionListResult(JsonElement element)
+        internal static AttestationPrivateEndpointConnectionListResult DeserializeAttestationPrivateEndpointConnectionListResult(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

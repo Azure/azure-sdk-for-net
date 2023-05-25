@@ -7,12 +7,13 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Batch.Models
 {
     public partial class BatchNameAvailabilityResult
     {
-        internal static BatchNameAvailabilityResult DeserializeBatchNameAvailabilityResult(JsonElement element)
+        internal static BatchNameAvailabilityResult DeserializeBatchNameAvailabilityResult(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

@@ -8,13 +8,14 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.ApiManagement;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
     internal partial class ApiReleaseListResult
     {
-        internal static ApiReleaseListResult DeserializeApiReleaseListResult(JsonElement element)
+        internal static ApiReleaseListResult DeserializeApiReleaseListResult(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

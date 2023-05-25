@@ -8,12 +8,13 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.ApplicationInsights.Models
 {
     internal partial class AnnotationsListResult
     {
-        internal static AnnotationsListResult DeserializeAnnotationsListResult(JsonElement element)
+        internal static AnnotationsListResult DeserializeAnnotationsListResult(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

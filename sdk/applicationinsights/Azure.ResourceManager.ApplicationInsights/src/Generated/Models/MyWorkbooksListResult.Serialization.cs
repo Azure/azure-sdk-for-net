@@ -8,13 +8,14 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.ApplicationInsights;
 
 namespace Azure.ResourceManager.ApplicationInsights.Models
 {
     internal partial class MyWorkbooksListResult
     {
-        internal static MyWorkbooksListResult DeserializeMyWorkbooksListResult(JsonElement element)
+        internal static MyWorkbooksListResult DeserializeMyWorkbooksListResult(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

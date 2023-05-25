@@ -8,12 +8,13 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
     internal partial class EdgenodeResult
     {
-        internal static EdgenodeResult DeserializeEdgenodeResult(JsonElement element)
+        internal static EdgenodeResult DeserializeEdgenodeResult(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

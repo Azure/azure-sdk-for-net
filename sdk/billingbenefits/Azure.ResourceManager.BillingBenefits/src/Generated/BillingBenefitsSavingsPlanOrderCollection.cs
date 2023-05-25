@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.BillingBenefits
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _billingBenefitsSavingsPlanOrderSavingsPlanOrderRestClient.CreateListRequest();
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _billingBenefitsSavingsPlanOrderSavingsPlanOrderRestClient.CreateListNextPageRequest(nextLink);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new BillingBenefitsSavingsPlanOrderResource(Client, BillingBenefitsSavingsPlanOrderData.DeserializeBillingBenefitsSavingsPlanOrderData(e)), _billingBenefitsSavingsPlanOrderSavingsPlanOrderClientDiagnostics, Pipeline, "BillingBenefitsSavingsPlanOrderCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, (e, o) => new BillingBenefitsSavingsPlanOrderResource(Client, BillingBenefitsSavingsPlanOrderData.DeserializeBillingBenefitsSavingsPlanOrderData(e)), _billingBenefitsSavingsPlanOrderSavingsPlanOrderClientDiagnostics, Pipeline, "BillingBenefitsSavingsPlanOrderCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.BillingBenefits
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _billingBenefitsSavingsPlanOrderSavingsPlanOrderRestClient.CreateListRequest();
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _billingBenefitsSavingsPlanOrderSavingsPlanOrderRestClient.CreateListNextPageRequest(nextLink);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new BillingBenefitsSavingsPlanOrderResource(Client, BillingBenefitsSavingsPlanOrderData.DeserializeBillingBenefitsSavingsPlanOrderData(e)), _billingBenefitsSavingsPlanOrderSavingsPlanOrderClientDiagnostics, Pipeline, "BillingBenefitsSavingsPlanOrderCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, (e, o) => new BillingBenefitsSavingsPlanOrderResource(Client, BillingBenefitsSavingsPlanOrderData.DeserializeBillingBenefitsSavingsPlanOrderData(e)), _billingBenefitsSavingsPlanOrderSavingsPlanOrderClientDiagnostics, Pipeline, "BillingBenefitsSavingsPlanOrderCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

@@ -8,13 +8,14 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.Automation;
 
 namespace Azure.ResourceManager.Automation.Models
 {
     internal partial class AutomationCredentialListResult
     {
-        internal static AutomationCredentialListResult DeserializeAutomationCredentialListResult(JsonElement element)
+        internal static AutomationCredentialListResult DeserializeAutomationCredentialListResult(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

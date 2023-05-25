@@ -8,13 +8,14 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.Automanage;
 
 namespace Azure.ResourceManager.Automanage.Models
 {
     internal partial class ReportList
     {
-        internal static ReportList DeserializeReportList(JsonElement element)
+        internal static ReportList DeserializeReportList(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

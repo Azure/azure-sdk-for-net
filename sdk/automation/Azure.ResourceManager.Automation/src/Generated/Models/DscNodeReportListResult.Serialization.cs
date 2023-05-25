@@ -8,12 +8,13 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Automation.Models
 {
     internal partial class DscNodeReportListResult
     {
-        internal static DscNodeReportListResult DeserializeDscNodeReportListResult(JsonElement element)
+        internal static DscNodeReportListResult DeserializeDscNodeReportListResult(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

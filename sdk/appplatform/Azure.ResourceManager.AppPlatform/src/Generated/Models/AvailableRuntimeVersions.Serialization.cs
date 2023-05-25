@@ -8,12 +8,13 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.AppPlatform.Models
 {
     internal partial class AvailableRuntimeVersions
     {
-        internal static AvailableRuntimeVersions DeserializeAvailableRuntimeVersions(JsonElement element)
+        internal static AvailableRuntimeVersions DeserializeAvailableRuntimeVersions(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

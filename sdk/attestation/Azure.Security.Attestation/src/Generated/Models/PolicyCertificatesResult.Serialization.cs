@@ -9,13 +9,14 @@ using System;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.Security.Attestation
 {
     [JsonConverter(typeof(PolicyCertificatesResultConverter))]
     internal partial class PolicyCertificatesResult
     {
-        internal static PolicyCertificatesResult DeserializePolicyCertificatesResult(JsonElement element)
+        internal static PolicyCertificatesResult DeserializePolicyCertificatesResult(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

@@ -8,12 +8,13 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.Communication.CallAutomation
 {
     public partial class CollectTonesResult
     {
-        internal static CollectTonesResult DeserializeCollectTonesResult(JsonElement element)
+        internal static CollectTonesResult DeserializeCollectTonesResult(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

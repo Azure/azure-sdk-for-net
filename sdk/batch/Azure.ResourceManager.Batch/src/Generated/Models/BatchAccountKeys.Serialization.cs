@@ -7,12 +7,13 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Batch.Models
 {
     public partial class BatchAccountKeys
     {
-        internal static BatchAccountKeys DeserializeBatchAccountKeys(JsonElement element)
+        internal static BatchAccountKeys DeserializeBatchAccountKeys(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

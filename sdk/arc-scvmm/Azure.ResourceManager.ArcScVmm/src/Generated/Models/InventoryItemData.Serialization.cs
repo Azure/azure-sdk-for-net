@@ -7,6 +7,7 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.ArcScVmm.Models;
 using Azure.ResourceManager.Models;
 
@@ -14,7 +15,9 @@ namespace Azure.ResourceManager.ArcScVmm
 {
     public partial class InventoryItemData : IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IUtf8JsonSerializable)this).Write(writer, new SerializableOptions());
+
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer, SerializableOptions options)
         {
             writer.WriteStartObject();
             if (Optional.IsDefined(Kind))
@@ -30,7 +33,7 @@ namespace Azure.ResourceManager.ArcScVmm
             writer.WriteEndObject();
         }
 
-        internal static InventoryItemData DeserializeInventoryItemData(JsonElement element)
+        internal static InventoryItemData DeserializeInventoryItemData(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

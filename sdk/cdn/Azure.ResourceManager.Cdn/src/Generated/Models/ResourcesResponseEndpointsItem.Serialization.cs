@@ -8,12 +8,13 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
     public partial class ResourcesResponseEndpointsItem
     {
-        internal static ResourcesResponseEndpointsItem DeserializeResourcesResponseEndpointsItem(JsonElement element)
+        internal static ResourcesResponseEndpointsItem DeserializeResourcesResponseEndpointsItem(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

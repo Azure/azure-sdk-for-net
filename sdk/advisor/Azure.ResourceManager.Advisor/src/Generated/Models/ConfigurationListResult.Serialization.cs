@@ -8,12 +8,13 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Advisor.Models
 {
     internal partial class ConfigurationListResult
     {
-        internal static ConfigurationListResult DeserializeConfigurationListResult(JsonElement element)
+        internal static ConfigurationListResult DeserializeConfigurationListResult(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

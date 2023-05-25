@@ -8,12 +8,15 @@
 using System.Text.Json;
 using Azure.Communication;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.Communication.CallingServer
 {
     internal partial class CallSourceInternal : IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IUtf8JsonSerializable)this).Write(writer, new SerializableOptions());
+
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer, SerializableOptions options)
         {
             writer.WriteStartObject();
             if (Optional.IsDefined(CallerId))
@@ -31,7 +34,7 @@ namespace Azure.Communication.CallingServer
             writer.WriteEndObject();
         }
 
-        internal static CallSourceInternal DeserializeCallSourceInternal(JsonElement element)
+        internal static CallSourceInternal DeserializeCallSourceInternal(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

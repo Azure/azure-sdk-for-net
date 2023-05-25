@@ -8,12 +8,15 @@
 using System;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.ApplicationInsights.Models
 {
     public partial class Annotation : IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IUtf8JsonSerializable)this).Write(writer, new SerializableOptions());
+
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer, SerializableOptions options)
         {
             writer.WriteStartObject();
             if (Optional.IsDefined(AnnotationName))
@@ -49,7 +52,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
             writer.WriteEndObject();
         }
 
-        internal static Annotation DeserializeAnnotation(JsonElement element)
+        internal static Annotation DeserializeAnnotation(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

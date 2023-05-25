@@ -8,12 +8,13 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.AppComplianceAutomation.Models
 {
     public partial class ComplianceResult
     {
-        internal static ComplianceResult DeserializeComplianceResult(JsonElement element)
+        internal static ComplianceResult DeserializeComplianceResult(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

@@ -7,12 +7,15 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Batch.Models
 {
     internal partial class BatchWindowsUserConfiguration : IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IUtf8JsonSerializable)this).Write(writer, new SerializableOptions());
+
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer, SerializableOptions options)
         {
             writer.WriteStartObject();
             if (Optional.IsDefined(LoginMode))
@@ -23,7 +26,7 @@ namespace Azure.ResourceManager.Batch.Models
             writer.WriteEndObject();
         }
 
-        internal static BatchWindowsUserConfiguration DeserializeBatchWindowsUserConfiguration(JsonElement element)
+        internal static BatchWindowsUserConfiguration DeserializeBatchWindowsUserConfiguration(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

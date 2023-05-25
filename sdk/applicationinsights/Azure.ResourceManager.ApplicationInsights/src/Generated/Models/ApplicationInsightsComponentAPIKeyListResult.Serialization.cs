@@ -8,12 +8,13 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.ApplicationInsights.Models
 {
     internal partial class ApplicationInsightsComponentAPIKeyListResult
     {
-        internal static ApplicationInsightsComponentAPIKeyListResult DeserializeApplicationInsightsComponentAPIKeyListResult(JsonElement element)
+        internal static ApplicationInsightsComponentAPIKeyListResult DeserializeApplicationInsightsComponentAPIKeyListResult(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

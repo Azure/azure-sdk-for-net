@@ -7,13 +7,14 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.ChangeAnalysis.Models
 {
     public partial class DetectedChangeData
     {
-        internal static DetectedChangeData DeserializeDetectedChangeData(JsonElement element)
+        internal static DetectedChangeData DeserializeDetectedChangeData(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

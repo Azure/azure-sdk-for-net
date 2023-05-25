@@ -9,12 +9,15 @@ using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Advisor.Models
 {
     public partial class ResourceMetadata : IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IUtf8JsonSerializable)this).Write(writer, new SerializableOptions());
+
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer, SerializableOptions options)
         {
             writer.WriteStartObject();
             if (Optional.IsDefined(ResourceId))
@@ -60,7 +63,7 @@ namespace Azure.ResourceManager.Advisor.Models
             writer.WriteEndObject();
         }
 
-        internal static ResourceMetadata DeserializeResourceMetadata(JsonElement element)
+        internal static ResourceMetadata DeserializeResourceMetadata(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

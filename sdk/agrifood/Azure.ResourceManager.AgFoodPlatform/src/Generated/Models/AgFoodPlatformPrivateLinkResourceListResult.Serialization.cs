@@ -8,13 +8,14 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.AgFoodPlatform;
 
 namespace Azure.ResourceManager.AgFoodPlatform.Models
 {
     internal partial class AgFoodPlatformPrivateLinkResourceListResult
     {
-        internal static AgFoodPlatformPrivateLinkResourceListResult DeserializeAgFoodPlatformPrivateLinkResourceListResult(JsonElement element)
+        internal static AgFoodPlatformPrivateLinkResourceListResult DeserializeAgFoodPlatformPrivateLinkResourceListResult(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

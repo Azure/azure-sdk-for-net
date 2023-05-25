@@ -10,12 +10,13 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Batch.Models
 {
     public partial class BatchResizeOperationStatus
     {
-        internal static BatchResizeOperationStatus DeserializeBatchResizeOperationStatus(JsonElement element)
+        internal static BatchResizeOperationStatus DeserializeBatchResizeOperationStatus(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

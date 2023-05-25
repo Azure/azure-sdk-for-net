@@ -7,12 +7,13 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.Communication.CallAutomation
 {
     public partial class ContinuousDtmfRecognitionToneReceived
     {
-        internal static ContinuousDtmfRecognitionToneReceived DeserializeContinuousDtmfRecognitionToneReceived(JsonElement element)
+        internal static ContinuousDtmfRecognitionToneReceived DeserializeContinuousDtmfRecognitionToneReceived(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

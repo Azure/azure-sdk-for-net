@@ -8,13 +8,14 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.Automation;
 
 namespace Azure.ResourceManager.Automation.Models
 {
     internal partial class AutomationSourceControlListResult
     {
-        internal static AutomationSourceControlListResult DeserializeAutomationSourceControlListResult(JsonElement element)
+        internal static AutomationSourceControlListResult DeserializeAutomationSourceControlListResult(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

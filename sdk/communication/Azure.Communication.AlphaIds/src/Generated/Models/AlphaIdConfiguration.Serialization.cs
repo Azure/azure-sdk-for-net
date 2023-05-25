@@ -7,12 +7,15 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.Communication.AlphaIds.Models
 {
     public partial class AlphaIdConfiguration : IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IUtf8JsonSerializable)this).Write(writer, new SerializableOptions());
+
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer, SerializableOptions options)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("enabled"u8);
@@ -20,7 +23,7 @@ namespace Azure.Communication.AlphaIds.Models
             writer.WriteEndObject();
         }
 
-        internal static AlphaIdConfiguration DeserializeAlphaIdConfiguration(JsonElement element)
+        internal static AlphaIdConfiguration DeserializeAlphaIdConfiguration(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

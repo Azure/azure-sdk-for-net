@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.ApiManagement
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => ApiManagementDeletedServiceDeletedServicesRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => ApiManagementDeletedServiceDeletedServicesRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ApiManagementDeletedServiceResource(Client, ApiManagementDeletedServiceData.DeserializeApiManagementDeletedServiceData(e)), ApiManagementDeletedServiceDeletedServicesClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetApiManagementDeletedServices", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, (e, o) => new ApiManagementDeletedServiceResource(Client, ApiManagementDeletedServiceData.DeserializeApiManagementDeletedServiceData(e)), ApiManagementDeletedServiceDeletedServicesClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetApiManagementDeletedServices", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.ApiManagement
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => ApiManagementDeletedServiceDeletedServicesRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => ApiManagementDeletedServiceDeletedServicesRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ApiManagementDeletedServiceResource(Client, ApiManagementDeletedServiceData.DeserializeApiManagementDeletedServiceData(e)), ApiManagementDeletedServiceDeletedServicesClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetApiManagementDeletedServices", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, (e, o) => new ApiManagementDeletedServiceResource(Client, ApiManagementDeletedServiceData.DeserializeApiManagementDeletedServiceData(e)), ApiManagementDeletedServiceDeletedServicesClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetApiManagementDeletedServices", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.ApiManagement
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => ApiManagementServiceRestClient.CreateListRequest(Id.SubscriptionId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => ApiManagementServiceRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ApiManagementServiceResource(Client, ApiManagementServiceData.DeserializeApiManagementServiceData(e)), ApiManagementServiceClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetApiManagementServices", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, (e, o) => new ApiManagementServiceResource(Client, ApiManagementServiceData.DeserializeApiManagementServiceData(e)), ApiManagementServiceClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetApiManagementServices", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.ApiManagement
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => ApiManagementServiceRestClient.CreateListRequest(Id.SubscriptionId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => ApiManagementServiceRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ApiManagementServiceResource(Client, ApiManagementServiceData.DeserializeApiManagementServiceData(e)), ApiManagementServiceClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetApiManagementServices", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, (e, o) => new ApiManagementServiceResource(Client, ApiManagementServiceData.DeserializeApiManagementServiceData(e)), ApiManagementServiceClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetApiManagementServices", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

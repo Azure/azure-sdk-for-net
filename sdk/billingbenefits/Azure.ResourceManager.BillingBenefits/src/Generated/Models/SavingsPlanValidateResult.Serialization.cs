@@ -7,12 +7,13 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.BillingBenefits.Models
 {
     public partial class SavingsPlanValidateResult
     {
-        internal static SavingsPlanValidateResult DeserializeSavingsPlanValidateResult(JsonElement element)
+        internal static SavingsPlanValidateResult DeserializeSavingsPlanValidateResult(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

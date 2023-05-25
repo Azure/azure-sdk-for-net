@@ -8,12 +8,13 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.CognitiveServices.Models
 {
     internal partial class CommitmentTierListResult
     {
-        internal static CommitmentTierListResult DeserializeCommitmentTierListResult(JsonElement element)
+        internal static CommitmentTierListResult DeserializeCommitmentTierListResult(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

@@ -9,13 +9,14 @@ using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.AppConfiguration
 {
     public partial class DeletedAppConfigurationStoreData
     {
-        internal static DeletedAppConfigurationStoreData DeserializeDeletedAppConfigurationStoreData(JsonElement element)
+        internal static DeletedAppConfigurationStoreData DeserializeDeletedAppConfigurationStoreData(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

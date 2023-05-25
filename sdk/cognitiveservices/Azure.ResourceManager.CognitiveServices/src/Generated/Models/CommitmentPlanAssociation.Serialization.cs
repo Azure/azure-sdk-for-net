@@ -7,12 +7,13 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.CognitiveServices.Models
 {
     public partial class CommitmentPlanAssociation
     {
-        internal static CommitmentPlanAssociation DeserializeCommitmentPlanAssociation(JsonElement element)
+        internal static CommitmentPlanAssociation DeserializeCommitmentPlanAssociation(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

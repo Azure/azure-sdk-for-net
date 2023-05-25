@@ -228,7 +228,7 @@ namespace Azure.ResourceManager.ArcScVmm
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _scVmmVirtualNetworkVirtualNetworksRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _scVmmVirtualNetworkVirtualNetworksRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ScVmmVirtualNetworkResource(Client, ScVmmVirtualNetworkData.DeserializeScVmmVirtualNetworkData(e)), _scVmmVirtualNetworkVirtualNetworksClientDiagnostics, Pipeline, "ScVmmVirtualNetworkCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, (e, o) => new ScVmmVirtualNetworkResource(Client, ScVmmVirtualNetworkData.DeserializeScVmmVirtualNetworkData(e)), _scVmmVirtualNetworkVirtualNetworksClientDiagnostics, Pipeline, "ScVmmVirtualNetworkCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -250,7 +250,7 @@ namespace Azure.ResourceManager.ArcScVmm
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _scVmmVirtualNetworkVirtualNetworksRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _scVmmVirtualNetworkVirtualNetworksRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ScVmmVirtualNetworkResource(Client, ScVmmVirtualNetworkData.DeserializeScVmmVirtualNetworkData(e)), _scVmmVirtualNetworkVirtualNetworksClientDiagnostics, Pipeline, "ScVmmVirtualNetworkCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, (e, o) => new ScVmmVirtualNetworkResource(Client, ScVmmVirtualNetworkData.DeserializeScVmmVirtualNetworkData(e)), _scVmmVirtualNetworkVirtualNetworksClientDiagnostics, Pipeline, "ScVmmVirtualNetworkCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

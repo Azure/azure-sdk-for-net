@@ -7,12 +7,13 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.ChangeAnalysis.Models
 {
     public partial class PropertyChange
     {
-        internal static PropertyChange DeserializePropertyChange(JsonElement element)
+        internal static PropertyChange DeserializePropertyChange(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

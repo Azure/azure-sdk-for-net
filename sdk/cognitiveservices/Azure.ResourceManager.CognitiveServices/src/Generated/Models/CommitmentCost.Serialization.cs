@@ -7,12 +7,13 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.CognitiveServices.Models
 {
     public partial class CommitmentCost
     {
-        internal static CommitmentCost DeserializeCommitmentCost(JsonElement element)
+        internal static CommitmentCost DeserializeCommitmentCost(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

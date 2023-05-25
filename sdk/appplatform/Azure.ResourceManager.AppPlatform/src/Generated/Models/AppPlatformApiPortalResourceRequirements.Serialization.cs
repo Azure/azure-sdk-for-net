@@ -7,12 +7,13 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.AppPlatform.Models
 {
     public partial class AppPlatformApiPortalResourceRequirements
     {
-        internal static AppPlatformApiPortalResourceRequirements DeserializeAppPlatformApiPortalResourceRequirements(JsonElement element)
+        internal static AppPlatformApiPortalResourceRequirements DeserializeAppPlatformApiPortalResourceRequirements(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

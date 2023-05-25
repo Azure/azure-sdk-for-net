@@ -6,12 +6,13 @@
 #nullable disable
 
 using System.Text.Json;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.AlertsManagement.Models
 {
     public partial class ServiceAlertMetadataProperties
     {
-        internal static ServiceAlertMetadataProperties DeserializeServiceAlertMetadataProperties(JsonElement element)
+        internal static ServiceAlertMetadataProperties DeserializeServiceAlertMetadataProperties(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

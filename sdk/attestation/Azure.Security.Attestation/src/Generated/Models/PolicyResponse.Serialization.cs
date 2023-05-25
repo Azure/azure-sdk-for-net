@@ -7,12 +7,13 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.Security.Attestation
 {
     internal partial class PolicyResponse
     {
-        internal static PolicyResponse DeserializePolicyResponse(JsonElement element)
+        internal static PolicyResponse DeserializePolicyResponse(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

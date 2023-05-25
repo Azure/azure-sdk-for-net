@@ -8,13 +8,14 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.ApiManagement;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
     internal partial class TenantSettingsListResult
     {
-        internal static TenantSettingsListResult DeserializeTenantSettingsListResult(JsonElement element)
+        internal static TenantSettingsListResult DeserializeTenantSettingsListResult(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

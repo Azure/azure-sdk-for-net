@@ -8,12 +8,13 @@
 using System;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Billing.Models
 {
     public partial class SubscriptionRenewalTermDetails
     {
-        internal static SubscriptionRenewalTermDetails DeserializeSubscriptionRenewalTermDetails(JsonElement element)
+        internal static SubscriptionRenewalTermDetails DeserializeSubscriptionRenewalTermDetails(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

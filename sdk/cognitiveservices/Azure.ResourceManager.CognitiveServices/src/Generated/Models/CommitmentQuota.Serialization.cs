@@ -7,12 +7,13 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.CognitiveServices.Models
 {
     public partial class CommitmentQuota
     {
-        internal static CommitmentQuota DeserializeCommitmentQuota(JsonElement element)
+        internal static CommitmentQuota DeserializeCommitmentQuota(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

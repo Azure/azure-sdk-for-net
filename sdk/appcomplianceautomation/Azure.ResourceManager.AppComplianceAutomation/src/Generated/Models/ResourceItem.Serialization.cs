@@ -7,12 +7,13 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.AppComplianceAutomation.Models
 {
     public partial class ResourceItem
     {
-        internal static ResourceItem DeserializeResourceItem(JsonElement element)
+        internal static ResourceItem DeserializeResourceItem(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

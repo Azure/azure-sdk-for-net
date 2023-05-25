@@ -7,12 +7,13 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Hci.Models
 {
     public partial class PerNodeArcState
     {
-        internal static PerNodeArcState DeserializePerNodeArcState(JsonElement element)
+        internal static PerNodeArcState DeserializePerNodeArcState(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

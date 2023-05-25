@@ -8,13 +8,14 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.AgFoodPlatform;
 
 namespace Azure.ResourceManager.AgFoodPlatform.Models
 {
     internal partial class FarmBeatsListResponse
     {
-        internal static FarmBeatsListResponse DeserializeFarmBeatsListResponse(JsonElement element)
+        internal static FarmBeatsListResponse DeserializeFarmBeatsListResponse(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

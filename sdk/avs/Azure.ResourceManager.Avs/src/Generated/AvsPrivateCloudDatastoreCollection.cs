@@ -227,7 +227,7 @@ namespace Azure.ResourceManager.Avs
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _avsPrivateCloudDatastoreDatastoresRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _avsPrivateCloudDatastoreDatastoresRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new AvsPrivateCloudDatastoreResource(Client, AvsPrivateCloudDatastoreData.DeserializeAvsPrivateCloudDatastoreData(e)), _avsPrivateCloudDatastoreDatastoresClientDiagnostics, Pipeline, "AvsPrivateCloudDatastoreCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, (e, o) => new AvsPrivateCloudDatastoreResource(Client, AvsPrivateCloudDatastoreData.DeserializeAvsPrivateCloudDatastoreData(e)), _avsPrivateCloudDatastoreDatastoresClientDiagnostics, Pipeline, "AvsPrivateCloudDatastoreCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -249,7 +249,7 @@ namespace Azure.ResourceManager.Avs
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _avsPrivateCloudDatastoreDatastoresRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _avsPrivateCloudDatastoreDatastoresRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new AvsPrivateCloudDatastoreResource(Client, AvsPrivateCloudDatastoreData.DeserializeAvsPrivateCloudDatastoreData(e)), _avsPrivateCloudDatastoreDatastoresClientDiagnostics, Pipeline, "AvsPrivateCloudDatastoreCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, (e, o) => new AvsPrivateCloudDatastoreResource(Client, AvsPrivateCloudDatastoreData.DeserializeAvsPrivateCloudDatastoreData(e)), _avsPrivateCloudDatastoreDatastoresClientDiagnostics, Pipeline, "AvsPrivateCloudDatastoreCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

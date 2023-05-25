@@ -8,13 +8,14 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.Hci;
 
 namespace Azure.ResourceManager.Hci.Models
 {
     internal partial class ArcSettingList
     {
-        internal static ArcSettingList DeserializeArcSettingList(JsonElement element)
+        internal static ArcSettingList DeserializeArcSettingList(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

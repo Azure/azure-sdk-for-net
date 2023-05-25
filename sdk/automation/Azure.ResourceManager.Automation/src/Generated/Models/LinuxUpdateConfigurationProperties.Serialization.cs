@@ -8,12 +8,15 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Automation.Models
 {
     public partial class LinuxUpdateConfigurationProperties : IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IUtf8JsonSerializable)this).Write(writer, new SerializableOptions());
+
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer, SerializableOptions options)
         {
             writer.WriteStartObject();
             if (Optional.IsDefined(IncludedPackageClassifications))
@@ -49,7 +52,7 @@ namespace Azure.ResourceManager.Automation.Models
             writer.WriteEndObject();
         }
 
-        internal static LinuxUpdateConfigurationProperties DeserializeLinuxUpdateConfigurationProperties(JsonElement element)
+        internal static LinuxUpdateConfigurationProperties DeserializeLinuxUpdateConfigurationProperties(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

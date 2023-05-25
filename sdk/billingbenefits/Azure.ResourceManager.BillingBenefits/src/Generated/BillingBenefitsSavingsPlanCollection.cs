@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.BillingBenefits
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _billingBenefitsSavingsPlanSavingsPlanRestClient.CreateListRequest(Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _billingBenefitsSavingsPlanSavingsPlanRestClient.CreateListNextPageRequest(nextLink, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new BillingBenefitsSavingsPlanResource(Client, BillingBenefitsSavingsPlanData.DeserializeBillingBenefitsSavingsPlanData(e)), _billingBenefitsSavingsPlanSavingsPlanClientDiagnostics, Pipeline, "BillingBenefitsSavingsPlanCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, (e, o) => new BillingBenefitsSavingsPlanResource(Client, BillingBenefitsSavingsPlanData.DeserializeBillingBenefitsSavingsPlanData(e)), _billingBenefitsSavingsPlanSavingsPlanClientDiagnostics, Pipeline, "BillingBenefitsSavingsPlanCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -169,7 +169,7 @@ namespace Azure.ResourceManager.BillingBenefits
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _billingBenefitsSavingsPlanSavingsPlanRestClient.CreateListRequest(Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _billingBenefitsSavingsPlanSavingsPlanRestClient.CreateListNextPageRequest(nextLink, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new BillingBenefitsSavingsPlanResource(Client, BillingBenefitsSavingsPlanData.DeserializeBillingBenefitsSavingsPlanData(e)), _billingBenefitsSavingsPlanSavingsPlanClientDiagnostics, Pipeline, "BillingBenefitsSavingsPlanCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, (e, o) => new BillingBenefitsSavingsPlanResource(Client, BillingBenefitsSavingsPlanData.DeserializeBillingBenefitsSavingsPlanData(e)), _billingBenefitsSavingsPlanSavingsPlanClientDiagnostics, Pipeline, "BillingBenefitsSavingsPlanCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

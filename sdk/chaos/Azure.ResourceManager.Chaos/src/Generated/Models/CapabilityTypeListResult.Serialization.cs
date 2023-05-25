@@ -8,13 +8,14 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.Chaos;
 
 namespace Azure.ResourceManager.Chaos.Models
 {
     internal partial class CapabilityTypeListResult
     {
-        internal static CapabilityTypeListResult DeserializeCapabilityTypeListResult(JsonElement element)
+        internal static CapabilityTypeListResult DeserializeCapabilityTypeListResult(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

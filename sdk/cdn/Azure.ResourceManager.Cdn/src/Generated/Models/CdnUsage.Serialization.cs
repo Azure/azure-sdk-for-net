@@ -7,12 +7,13 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
     public partial class CdnUsage
     {
-        internal static CdnUsage DeserializeCdnUsage(JsonElement element)
+        internal static CdnUsage DeserializeCdnUsage(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

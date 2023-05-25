@@ -7,12 +7,13 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.Communication.CallAutomation
 {
     public partial class SpeechResult
     {
-        internal static SpeechResult DeserializeSpeechResult(JsonElement element)
+        internal static SpeechResult DeserializeSpeechResult(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

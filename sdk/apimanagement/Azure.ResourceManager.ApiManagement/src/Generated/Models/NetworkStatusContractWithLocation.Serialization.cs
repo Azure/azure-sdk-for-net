@@ -7,12 +7,13 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
     public partial class NetworkStatusContractWithLocation
     {
-        internal static NetworkStatusContractWithLocation DeserializeNetworkStatusContractWithLocation(JsonElement element)
+        internal static NetworkStatusContractWithLocation DeserializeNetworkStatusContractWithLocation(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

@@ -7,12 +7,15 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Automation.Models
 {
     public partial class AutomationAdvancedScheduleMonthlyOccurrence : IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IUtf8JsonSerializable)this).Write(writer, new SerializableOptions());
+
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer, SerializableOptions options)
         {
             writer.WriteStartObject();
             if (Optional.IsDefined(Occurrence))
@@ -28,7 +31,7 @@ namespace Azure.ResourceManager.Automation.Models
             writer.WriteEndObject();
         }
 
-        internal static AutomationAdvancedScheduleMonthlyOccurrence DeserializeAutomationAdvancedScheduleMonthlyOccurrence(JsonElement element)
+        internal static AutomationAdvancedScheduleMonthlyOccurrence DeserializeAutomationAdvancedScheduleMonthlyOccurrence(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

@@ -7,12 +7,15 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Automanage.Models
 {
     public partial class AutomanageConfigurationProfileAssignmentProperties : IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IUtf8JsonSerializable)this).Write(writer, new SerializableOptions());
+
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer, SerializableOptions options)
         {
             writer.WriteStartObject();
             if (Optional.IsDefined(ConfigurationProfile))
@@ -23,7 +26,7 @@ namespace Azure.ResourceManager.Automanage.Models
             writer.WriteEndObject();
         }
 
-        internal static AutomanageConfigurationProfileAssignmentProperties DeserializeAutomanageConfigurationProfileAssignmentProperties(JsonElement element)
+        internal static AutomanageConfigurationProfileAssignmentProperties DeserializeAutomanageConfigurationProfileAssignmentProperties(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

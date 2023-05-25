@@ -8,6 +8,7 @@
 using System;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.Chaos.Models;
 using Azure.ResourceManager.Models;
 
@@ -15,7 +16,7 @@ namespace Azure.ResourceManager.Chaos
 {
     public partial class ExperimentExecutionDetailData
     {
-        internal static ExperimentExecutionDetailData DeserializeExperimentExecutionDetailData(JsonElement element)
+        internal static ExperimentExecutionDetailData DeserializeExperimentExecutionDetailData(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

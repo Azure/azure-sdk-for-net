@@ -7,12 +7,13 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
     public partial class AvailableApiManagementServiceSkuResult
     {
-        internal static AvailableApiManagementServiceSkuResult DeserializeAvailableApiManagementServiceSkuResult(JsonElement element)
+        internal static AvailableApiManagementServiceSkuResult DeserializeAvailableApiManagementServiceSkuResult(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

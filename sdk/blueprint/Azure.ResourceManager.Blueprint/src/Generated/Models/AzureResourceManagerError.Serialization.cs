@@ -7,12 +7,15 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Blueprint.Models
 {
     public partial class AzureResourceManagerError : IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IUtf8JsonSerializable)this).Write(writer, new SerializableOptions());
+
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer, SerializableOptions options)
         {
             writer.WriteStartObject();
             if (Optional.IsDefined(Code))
@@ -28,7 +31,7 @@ namespace Azure.ResourceManager.Blueprint.Models
             writer.WriteEndObject();
         }
 
-        internal static AzureResourceManagerError DeserializeAzureResourceManagerError(JsonElement element)
+        internal static AzureResourceManagerError DeserializeAzureResourceManagerError(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

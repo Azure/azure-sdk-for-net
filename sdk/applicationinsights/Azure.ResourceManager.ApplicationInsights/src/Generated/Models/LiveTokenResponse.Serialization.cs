@@ -7,12 +7,13 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.ApplicationInsights.Models
 {
     public partial class LiveTokenResponse
     {
-        internal static LiveTokenResponse DeserializeLiveTokenResponse(JsonElement element)
+        internal static LiveTokenResponse DeserializeLiveTokenResponse(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

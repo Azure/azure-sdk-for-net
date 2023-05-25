@@ -7,12 +7,13 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.BillingBenefits.Models
 {
     public partial class BillingBenefitsExtendedStatusInfo
     {
-        internal static BillingBenefitsExtendedStatusInfo DeserializeBillingBenefitsExtendedStatusInfo(JsonElement element)
+        internal static BillingBenefitsExtendedStatusInfo DeserializeBillingBenefitsExtendedStatusInfo(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

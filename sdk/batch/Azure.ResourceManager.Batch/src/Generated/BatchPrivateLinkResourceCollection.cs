@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.Batch
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _batchPrivateLinkResourcePrivateLinkResourceRestClient.CreateListByBatchAccountRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, maxresults);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _batchPrivateLinkResourcePrivateLinkResourceRestClient.CreateListByBatchAccountNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, maxresults);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new BatchPrivateLinkResource(Client, BatchPrivateLinkResourceData.DeserializeBatchPrivateLinkResourceData(e)), _batchPrivateLinkResourcePrivateLinkResourceClientDiagnostics, Pipeline, "BatchPrivateLinkResourceCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, (e, o) => new BatchPrivateLinkResource(Client, BatchPrivateLinkResourceData.DeserializeBatchPrivateLinkResourceData(e)), _batchPrivateLinkResourcePrivateLinkResourceClientDiagnostics, Pipeline, "BatchPrivateLinkResourceCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -169,7 +169,7 @@ namespace Azure.ResourceManager.Batch
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _batchPrivateLinkResourcePrivateLinkResourceRestClient.CreateListByBatchAccountRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, maxresults);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _batchPrivateLinkResourcePrivateLinkResourceRestClient.CreateListByBatchAccountNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, maxresults);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new BatchPrivateLinkResource(Client, BatchPrivateLinkResourceData.DeserializeBatchPrivateLinkResourceData(e)), _batchPrivateLinkResourcePrivateLinkResourceClientDiagnostics, Pipeline, "BatchPrivateLinkResourceCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, (e, o) => new BatchPrivateLinkResource(Client, BatchPrivateLinkResourceData.DeserializeBatchPrivateLinkResourceData(e)), _batchPrivateLinkResourcePrivateLinkResourceClientDiagnostics, Pipeline, "BatchPrivateLinkResourceCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

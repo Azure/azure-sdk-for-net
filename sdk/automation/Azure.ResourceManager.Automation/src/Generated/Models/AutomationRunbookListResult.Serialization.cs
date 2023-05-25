@@ -8,13 +8,14 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.Automation;
 
 namespace Azure.ResourceManager.Automation.Models
 {
     internal partial class AutomationRunbookListResult
     {
-        internal static AutomationRunbookListResult DeserializeAutomationRunbookListResult(JsonElement element)
+        internal static AutomationRunbookListResult DeserializeAutomationRunbookListResult(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

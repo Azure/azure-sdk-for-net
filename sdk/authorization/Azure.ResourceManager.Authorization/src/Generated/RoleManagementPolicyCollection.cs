@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.Authorization
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _roleManagementPolicyRestClient.CreateListForScopeRequest(Id);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _roleManagementPolicyRestClient.CreateListForScopeNextPageRequest(nextLink, Id);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new RoleManagementPolicyResource(Client, RoleManagementPolicyData.DeserializeRoleManagementPolicyData(e)), _roleManagementPolicyClientDiagnostics, Pipeline, "RoleManagementPolicyCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, (e, o) => new RoleManagementPolicyResource(Client, RoleManagementPolicyData.DeserializeRoleManagementPolicyData(e)), _roleManagementPolicyClientDiagnostics, Pipeline, "RoleManagementPolicyCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -157,7 +157,7 @@ namespace Azure.ResourceManager.Authorization
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _roleManagementPolicyRestClient.CreateListForScopeRequest(Id);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _roleManagementPolicyRestClient.CreateListForScopeNextPageRequest(nextLink, Id);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new RoleManagementPolicyResource(Client, RoleManagementPolicyData.DeserializeRoleManagementPolicyData(e)), _roleManagementPolicyClientDiagnostics, Pipeline, "RoleManagementPolicyCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, (e, o) => new RoleManagementPolicyResource(Client, RoleManagementPolicyData.DeserializeRoleManagementPolicyData(e)), _roleManagementPolicyClientDiagnostics, Pipeline, "RoleManagementPolicyCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

@@ -8,13 +8,16 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
     public partial class RemotePrivateEndpointConnectionWrapper : IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IUtf8JsonSerializable)this).Write(writer, new SerializableOptions());
+
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer, SerializableOptions options)
         {
             writer.WriteStartObject();
             if (Optional.IsDefined(Id))
@@ -48,7 +51,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
             writer.WriteEndObject();
         }
 
-        internal static RemotePrivateEndpointConnectionWrapper DeserializeRemotePrivateEndpointConnectionWrapper(JsonElement element)
+        internal static RemotePrivateEndpointConnectionWrapper DeserializeRemotePrivateEndpointConnectionWrapper(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

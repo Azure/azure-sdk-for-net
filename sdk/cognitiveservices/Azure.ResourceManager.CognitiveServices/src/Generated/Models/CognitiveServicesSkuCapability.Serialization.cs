@@ -7,12 +7,13 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.CognitiveServices.Models
 {
     public partial class CognitiveServicesSkuCapability
     {
-        internal static CognitiveServicesSkuCapability DeserializeCognitiveServicesSkuCapability(JsonElement element)
+        internal static CognitiveServicesSkuCapability DeserializeCognitiveServicesSkuCapability(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

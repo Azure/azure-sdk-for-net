@@ -7,12 +7,15 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Batch.Models
 {
     public partial class BatchVmContainerRegistry : IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IUtf8JsonSerializable)this).Write(writer, new SerializableOptions());
+
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer, SerializableOptions options)
         {
             writer.WriteStartObject();
             if (Optional.IsDefined(UserName))
@@ -38,7 +41,7 @@ namespace Azure.ResourceManager.Batch.Models
             writer.WriteEndObject();
         }
 
-        internal static BatchVmContainerRegistry DeserializeBatchVmContainerRegistry(JsonElement element)
+        internal static BatchVmContainerRegistry DeserializeBatchVmContainerRegistry(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

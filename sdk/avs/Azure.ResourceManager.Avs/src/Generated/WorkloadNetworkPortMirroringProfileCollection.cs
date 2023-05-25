@@ -227,7 +227,7 @@ namespace Azure.ResourceManager.Avs
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _workloadNetworkPortMirroringProfileWorkloadNetworksRestClient.CreateListPortMirroringRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _workloadNetworkPortMirroringProfileWorkloadNetworksRestClient.CreateListPortMirroringNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new WorkloadNetworkPortMirroringProfileResource(Client, WorkloadNetworkPortMirroringProfileData.DeserializeWorkloadNetworkPortMirroringProfileData(e)), _workloadNetworkPortMirroringProfileWorkloadNetworksClientDiagnostics, Pipeline, "WorkloadNetworkPortMirroringProfileCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, (e, o) => new WorkloadNetworkPortMirroringProfileResource(Client, WorkloadNetworkPortMirroringProfileData.DeserializeWorkloadNetworkPortMirroringProfileData(e)), _workloadNetworkPortMirroringProfileWorkloadNetworksClientDiagnostics, Pipeline, "WorkloadNetworkPortMirroringProfileCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -249,7 +249,7 @@ namespace Azure.ResourceManager.Avs
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _workloadNetworkPortMirroringProfileWorkloadNetworksRestClient.CreateListPortMirroringRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _workloadNetworkPortMirroringProfileWorkloadNetworksRestClient.CreateListPortMirroringNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new WorkloadNetworkPortMirroringProfileResource(Client, WorkloadNetworkPortMirroringProfileData.DeserializeWorkloadNetworkPortMirroringProfileData(e)), _workloadNetworkPortMirroringProfileWorkloadNetworksClientDiagnostics, Pipeline, "WorkloadNetworkPortMirroringProfileCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, (e, o) => new WorkloadNetworkPortMirroringProfileResource(Client, WorkloadNetworkPortMirroringProfileData.DeserializeWorkloadNetworkPortMirroringProfileData(e)), _workloadNetworkPortMirroringProfileWorkloadNetworksClientDiagnostics, Pipeline, "WorkloadNetworkPortMirroringProfileCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

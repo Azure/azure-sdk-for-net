@@ -8,12 +8,13 @@
 using System;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.AppConfiguration.Models
 {
     public partial class AppConfigurationStoreApiKey
     {
-        internal static AppConfigurationStoreApiKey DeserializeAppConfigurationStoreApiKey(JsonElement element)
+        internal static AppConfigurationStoreApiKey DeserializeAppConfigurationStoreApiKey(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

@@ -7,12 +7,13 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Authorization.Models
 {
     public partial class RoleManagementPrincipal
     {
-        internal static RoleManagementPrincipal DeserializeRoleManagementPrincipal(JsonElement element)
+        internal static RoleManagementPrincipal DeserializeRoleManagementPrincipal(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

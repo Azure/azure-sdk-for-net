@@ -7,12 +7,13 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.AppPlatform.Models
 {
     public partial class AppPlatformBuildStageProperties
     {
-        internal static AppPlatformBuildStageProperties DeserializeAppPlatformBuildStageProperties(JsonElement element)
+        internal static AppPlatformBuildStageProperties DeserializeAppPlatformBuildStageProperties(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

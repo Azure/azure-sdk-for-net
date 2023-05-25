@@ -7,12 +7,13 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.AI.Language.QuestionAnswering
 {
     public partial class AnswerSpan
     {
-        internal static AnswerSpan DeserializeAnswerSpan(JsonElement element)
+        internal static AnswerSpan DeserializeAnswerSpan(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

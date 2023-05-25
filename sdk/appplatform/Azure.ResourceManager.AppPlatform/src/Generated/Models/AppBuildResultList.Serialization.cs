@@ -8,13 +8,14 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.AppPlatform;
 
 namespace Azure.ResourceManager.AppPlatform.Models
 {
     internal partial class AppBuildResultList
     {
-        internal static AppBuildResultList DeserializeAppBuildResultList(JsonElement element)
+        internal static AppBuildResultList DeserializeAppBuildResultList(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

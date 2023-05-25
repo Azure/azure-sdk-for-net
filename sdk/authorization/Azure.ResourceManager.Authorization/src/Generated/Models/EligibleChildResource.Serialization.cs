@@ -7,12 +7,13 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Authorization.Models
 {
     public partial class EligibleChildResource
     {
-        internal static EligibleChildResource DeserializeEligibleChildResource(JsonElement element)
+        internal static EligibleChildResource DeserializeEligibleChildResource(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

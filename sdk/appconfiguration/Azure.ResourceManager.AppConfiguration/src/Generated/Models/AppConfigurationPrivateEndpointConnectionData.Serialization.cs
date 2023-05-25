@@ -7,6 +7,7 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.AppConfiguration.Models;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Resources.Models;
@@ -15,7 +16,9 @@ namespace Azure.ResourceManager.AppConfiguration
 {
     public partial class AppConfigurationPrivateEndpointConnectionData : IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IUtf8JsonSerializable)this).Write(writer, new SerializableOptions());
+
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer, SerializableOptions options)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
@@ -34,7 +37,7 @@ namespace Azure.ResourceManager.AppConfiguration
             writer.WriteEndObject();
         }
 
-        internal static AppConfigurationPrivateEndpointConnectionData DeserializeAppConfigurationPrivateEndpointConnectionData(JsonElement element)
+        internal static AppConfigurationPrivateEndpointConnectionData DeserializeAppConfigurationPrivateEndpointConnectionData(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

@@ -8,12 +8,13 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.AppComplianceAutomation.Models
 {
     public partial class Assessment
     {
-        internal static Assessment DeserializeAssessment(JsonElement element)
+        internal static Assessment DeserializeAssessment(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

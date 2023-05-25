@@ -8,12 +8,13 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Chaos.Models
 {
     public partial class BranchStatus
     {
-        internal static BranchStatus DeserializeBranchStatus(JsonElement element)
+        internal static BranchStatus DeserializeBranchStatus(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

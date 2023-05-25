@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.AppConfiguration
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => AppConfigurationStoreConfigurationStoresRestClient.CreateListRequest(Id.SubscriptionId, skipToken);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => AppConfigurationStoreConfigurationStoresRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, skipToken);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new AppConfigurationStoreResource(Client, AppConfigurationStoreData.DeserializeAppConfigurationStoreData(e)), AppConfigurationStoreConfigurationStoresClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetAppConfigurationStores", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, (e, o) => new AppConfigurationStoreResource(Client, AppConfigurationStoreData.DeserializeAppConfigurationStoreData(e)), AppConfigurationStoreConfigurationStoresClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetAppConfigurationStores", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.AppConfiguration
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => AppConfigurationStoreConfigurationStoresRestClient.CreateListRequest(Id.SubscriptionId, skipToken);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => AppConfigurationStoreConfigurationStoresRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, skipToken);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new AppConfigurationStoreResource(Client, AppConfigurationStoreData.DeserializeAppConfigurationStoreData(e)), AppConfigurationStoreConfigurationStoresClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetAppConfigurationStores", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, (e, o) => new AppConfigurationStoreResource(Client, AppConfigurationStoreData.DeserializeAppConfigurationStoreData(e)), AppConfigurationStoreConfigurationStoresClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetAppConfigurationStores", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

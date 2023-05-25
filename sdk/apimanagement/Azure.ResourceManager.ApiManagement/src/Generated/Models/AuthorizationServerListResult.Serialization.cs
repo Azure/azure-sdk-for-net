@@ -8,13 +8,14 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.ApiManagement;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
     internal partial class AuthorizationServerListResult
     {
-        internal static AuthorizationServerListResult DeserializeAuthorizationServerListResult(JsonElement element)
+        internal static AuthorizationServerListResult DeserializeAuthorizationServerListResult(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

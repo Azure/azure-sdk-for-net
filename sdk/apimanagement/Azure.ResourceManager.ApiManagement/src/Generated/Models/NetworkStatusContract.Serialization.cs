@@ -8,12 +8,13 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
     public partial class NetworkStatusContract
     {
-        internal static NetworkStatusContract DeserializeNetworkStatusContract(JsonElement element)
+        internal static NetworkStatusContract DeserializeNetworkStatusContract(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

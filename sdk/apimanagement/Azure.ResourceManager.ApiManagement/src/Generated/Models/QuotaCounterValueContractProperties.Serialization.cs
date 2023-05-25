@@ -7,12 +7,13 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
     public partial class QuotaCounterValueContractProperties
     {
-        internal static QuotaCounterValueContractProperties DeserializeQuotaCounterValueContractProperties(JsonElement element)
+        internal static QuotaCounterValueContractProperties DeserializeQuotaCounterValueContractProperties(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

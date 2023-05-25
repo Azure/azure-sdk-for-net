@@ -8,13 +8,14 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.Authorization;
 
 namespace Azure.ResourceManager.Authorization.Models
 {
     internal partial class RoleAssignmentScheduleInstanceListResult
     {
-        internal static RoleAssignmentScheduleInstanceListResult DeserializeRoleAssignmentScheduleInstanceListResult(JsonElement element)
+        internal static RoleAssignmentScheduleInstanceListResult DeserializeRoleAssignmentScheduleInstanceListResult(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

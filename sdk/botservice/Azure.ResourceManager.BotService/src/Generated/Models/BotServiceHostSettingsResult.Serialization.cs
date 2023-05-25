@@ -8,12 +8,13 @@
 using System;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.BotService.Models
 {
     public partial class BotServiceHostSettingsResult
     {
-        internal static BotServiceHostSettingsResult DeserializeBotServiceHostSettingsResult(JsonElement element)
+        internal static BotServiceHostSettingsResult DeserializeBotServiceHostSettingsResult(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

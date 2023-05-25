@@ -7,12 +7,13 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.AlertsManagement.Models
 {
     public partial class ServiceAlertMetadata
     {
-        internal static ServiceAlertMetadata DeserializeServiceAlertMetadata(JsonElement element)
+        internal static ServiceAlertMetadata DeserializeServiceAlertMetadata(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

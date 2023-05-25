@@ -7,12 +7,13 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Automation.Models
 {
     internal partial class DscNodeCountProperties
     {
-        internal static DscNodeCountProperties DeserializeDscNodeCountProperties(JsonElement element)
+        internal static DscNodeCountProperties DeserializeDscNodeCountProperties(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

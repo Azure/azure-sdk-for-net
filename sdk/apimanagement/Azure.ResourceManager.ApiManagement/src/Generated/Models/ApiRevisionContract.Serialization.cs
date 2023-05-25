@@ -8,12 +8,13 @@
 using System;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
     public partial class ApiRevisionContract
     {
-        internal static ApiRevisionContract DeserializeApiRevisionContract(JsonElement element)
+        internal static ApiRevisionContract DeserializeApiRevisionContract(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

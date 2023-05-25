@@ -8,12 +8,13 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.BotService.Models
 {
     internal partial class BotServicePrivateLinkResourceListResult
     {
-        internal static BotServicePrivateLinkResourceListResult DeserializeBotServicePrivateLinkResourceListResult(JsonElement element)
+        internal static BotServicePrivateLinkResourceListResult DeserializeBotServicePrivateLinkResourceListResult(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

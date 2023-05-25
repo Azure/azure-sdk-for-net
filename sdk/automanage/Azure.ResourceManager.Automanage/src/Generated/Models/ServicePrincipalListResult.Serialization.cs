@@ -8,12 +8,13 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Automanage.Models
 {
     internal partial class ServicePrincipalListResult
     {
-        internal static ServicePrincipalListResult DeserializeServicePrincipalListResult(JsonElement element)
+        internal static ServicePrincipalListResult DeserializeServicePrincipalListResult(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

@@ -8,13 +8,14 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.Batch;
 
 namespace Azure.ResourceManager.Batch.Models
 {
     internal partial class ListApplicationsResult
     {
-        internal static ListApplicationsResult DeserializeListApplicationsResult(JsonElement element)
+        internal static ListApplicationsResult DeserializeListApplicationsResult(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

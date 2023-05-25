@@ -7,12 +7,13 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.BotService.Models
 {
     public partial class BotServiceProvider
     {
-        internal static BotServiceProvider DeserializeBotServiceProvider(JsonElement element)
+        internal static BotServiceProvider DeserializeBotServiceProvider(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

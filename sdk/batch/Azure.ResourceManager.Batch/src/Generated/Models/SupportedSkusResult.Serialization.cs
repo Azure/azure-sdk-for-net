@@ -8,12 +8,13 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Batch.Models
 {
     internal partial class SupportedSkusResult
     {
-        internal static SupportedSkusResult DeserializeSupportedSkusResult(JsonElement element)
+        internal static SupportedSkusResult DeserializeSupportedSkusResult(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

@@ -8,12 +8,13 @@
 using System;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
     public partial class ApiEntityBaseContract
     {
-        internal static ApiEntityBaseContract DeserializeApiEntityBaseContract(JsonElement element)
+        internal static ApiEntityBaseContract DeserializeApiEntityBaseContract(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

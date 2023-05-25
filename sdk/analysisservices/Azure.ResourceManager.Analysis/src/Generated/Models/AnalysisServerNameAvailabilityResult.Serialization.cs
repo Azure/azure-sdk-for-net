@@ -7,12 +7,13 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Analysis.Models
 {
     public partial class AnalysisServerNameAvailabilityResult
     {
-        internal static AnalysisServerNameAvailabilityResult DeserializeAnalysisServerNameAvailabilityResult(JsonElement element)
+        internal static AnalysisServerNameAvailabilityResult DeserializeAnalysisServerNameAvailabilityResult(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

@@ -7,12 +7,13 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
     public partial class TenantAccessInfoSecretsDetails
     {
-        internal static TenantAccessInfoSecretsDetails DeserializeTenantAccessInfoSecretsDetails(JsonElement element)
+        internal static TenantAccessInfoSecretsDetails DeserializeTenantAccessInfoSecretsDetails(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

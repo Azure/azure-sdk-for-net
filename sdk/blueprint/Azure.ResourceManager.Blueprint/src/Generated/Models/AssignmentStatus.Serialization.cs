@@ -9,12 +9,13 @@ using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Blueprint.Models
 {
     public partial class AssignmentStatus
     {
-        internal static AssignmentStatus DeserializeAssignmentStatus(JsonElement element)
+        internal static AssignmentStatus DeserializeAssignmentStatus(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

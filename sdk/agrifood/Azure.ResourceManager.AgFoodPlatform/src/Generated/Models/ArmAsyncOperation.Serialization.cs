@@ -7,12 +7,13 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.AgFoodPlatform.Models
 {
     public partial class ArmAsyncOperation
     {
-        internal static ArmAsyncOperation DeserializeArmAsyncOperation(JsonElement element)
+        internal static ArmAsyncOperation DeserializeArmAsyncOperation(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

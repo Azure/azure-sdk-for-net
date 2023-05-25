@@ -9,12 +9,13 @@ using System.Collections.Generic;
 using System.Net;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.AppPlatform.Models
 {
     public partial class AppPlatformServiceRequiredTraffic
     {
-        internal static AppPlatformServiceRequiredTraffic DeserializeAppPlatformServiceRequiredTraffic(JsonElement element)
+        internal static AppPlatformServiceRequiredTraffic DeserializeAppPlatformServiceRequiredTraffic(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

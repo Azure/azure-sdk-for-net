@@ -8,12 +8,13 @@
 using System;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.CognitiveServices.Models
 {
     public partial class CognitiveServicesSkuChangeInfo
     {
-        internal static CognitiveServicesSkuChangeInfo DeserializeCognitiveServicesSkuChangeInfo(JsonElement element)
+        internal static CognitiveServicesSkuChangeInfo DeserializeCognitiveServicesSkuChangeInfo(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

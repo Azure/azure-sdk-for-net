@@ -7,12 +7,15 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.AppPlatform.Models
 {
     public partial class NetCoreZipUploadedUserSourceInfo : IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IUtf8JsonSerializable)this).Write(writer, new SerializableOptions());
+
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer, SerializableOptions options)
         {
             writer.WriteStartObject();
             if (Optional.IsDefined(NetCoreMainEntryPath))
@@ -40,7 +43,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
             writer.WriteEndObject();
         }
 
-        internal static NetCoreZipUploadedUserSourceInfo DeserializeNetCoreZipUploadedUserSourceInfo(JsonElement element)
+        internal static NetCoreZipUploadedUserSourceInfo DeserializeNetCoreZipUploadedUserSourceInfo(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

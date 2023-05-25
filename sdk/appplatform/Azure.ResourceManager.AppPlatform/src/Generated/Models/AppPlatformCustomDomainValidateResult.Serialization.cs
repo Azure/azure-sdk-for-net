@@ -7,12 +7,13 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.AppPlatform.Models
 {
     public partial class AppPlatformCustomDomainValidateResult
     {
-        internal static AppPlatformCustomDomainValidateResult DeserializeAppPlatformCustomDomainValidateResult(JsonElement element)
+        internal static AppPlatformCustomDomainValidateResult DeserializeAppPlatformCustomDomainValidateResult(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

@@ -8,13 +8,14 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.Automanage;
 
 namespace Azure.ResourceManager.Automanage.Models
 {
     internal partial class ConfigurationProfileList
     {
-        internal static ConfigurationProfileList DeserializeConfigurationProfileList(JsonElement element)
+        internal static ConfigurationProfileList DeserializeConfigurationProfileList(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

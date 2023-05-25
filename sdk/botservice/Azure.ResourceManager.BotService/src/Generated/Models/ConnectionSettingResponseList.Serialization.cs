@@ -8,13 +8,14 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.BotService;
 
 namespace Azure.ResourceManager.BotService.Models
 {
     internal partial class ConnectionSettingResponseList
     {
-        internal static ConnectionSettingResponseList DeserializeConnectionSettingResponseList(JsonElement element)
+        internal static ConnectionSettingResponseList DeserializeConnectionSettingResponseList(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

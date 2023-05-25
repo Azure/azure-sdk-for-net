@@ -7,12 +7,13 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.Communication.CallAutomation
 {
     internal partial class AddParticipantResponseInternal
     {
-        internal static AddParticipantResponseInternal DeserializeAddParticipantResponseInternal(JsonElement element)
+        internal static AddParticipantResponseInternal DeserializeAddParticipantResponseInternal(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

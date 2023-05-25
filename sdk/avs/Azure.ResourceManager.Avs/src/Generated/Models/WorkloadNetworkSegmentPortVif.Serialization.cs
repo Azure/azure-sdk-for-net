@@ -7,12 +7,13 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Avs.Models
 {
     public partial class WorkloadNetworkSegmentPortVif
     {
-        internal static WorkloadNetworkSegmentPortVif DeserializeWorkloadNetworkSegmentPortVif(JsonElement element)
+        internal static WorkloadNetworkSegmentPortVif DeserializeWorkloadNetworkSegmentPortVif(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

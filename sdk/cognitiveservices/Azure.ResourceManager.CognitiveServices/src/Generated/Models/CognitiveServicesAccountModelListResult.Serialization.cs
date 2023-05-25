@@ -8,12 +8,13 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.CognitiveServices.Models
 {
     internal partial class CognitiveServicesAccountModelListResult
     {
-        internal static CognitiveServicesAccountModelListResult DeserializeCognitiveServicesAccountModelListResult(JsonElement element)
+        internal static CognitiveServicesAccountModelListResult DeserializeCognitiveServicesAccountModelListResult(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

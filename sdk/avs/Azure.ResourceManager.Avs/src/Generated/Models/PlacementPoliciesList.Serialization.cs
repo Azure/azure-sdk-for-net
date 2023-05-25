@@ -8,13 +8,14 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.Avs;
 
 namespace Azure.ResourceManager.Avs.Models
 {
     internal partial class PlacementPoliciesList
     {
-        internal static PlacementPoliciesList DeserializePlacementPoliciesList(JsonElement element)
+        internal static PlacementPoliciesList DeserializePlacementPoliciesList(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

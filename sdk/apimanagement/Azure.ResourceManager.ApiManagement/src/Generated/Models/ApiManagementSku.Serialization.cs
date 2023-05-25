@@ -8,12 +8,13 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
     public partial class ApiManagementSku
     {
-        internal static ApiManagementSku DeserializeApiManagementSku(JsonElement element)
+        internal static ApiManagementSku DeserializeApiManagementSku(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

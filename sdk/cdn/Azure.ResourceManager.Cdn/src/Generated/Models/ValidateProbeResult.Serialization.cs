@@ -7,12 +7,13 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
     public partial class ValidateProbeResult
     {
-        internal static ValidateProbeResult DeserializeValidateProbeResult(JsonElement element)
+        internal static ValidateProbeResult DeserializeValidateProbeResult(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

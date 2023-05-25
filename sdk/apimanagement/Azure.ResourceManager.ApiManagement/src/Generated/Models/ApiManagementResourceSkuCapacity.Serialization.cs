@@ -7,12 +7,13 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
     public partial class ApiManagementResourceSkuCapacity
     {
-        internal static ApiManagementResourceSkuCapacity DeserializeApiManagementResourceSkuCapacity(JsonElement element)
+        internal static ApiManagementResourceSkuCapacity DeserializeApiManagementResourceSkuCapacity(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

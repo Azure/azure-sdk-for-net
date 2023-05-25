@@ -7,12 +7,13 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.Security.Attestation.Models
 {
     internal partial class CloudError
     {
-        internal static CloudError DeserializeCloudError(JsonElement element)
+        internal static CloudError DeserializeCloudError(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

@@ -7,12 +7,13 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.CognitiveServices.Models
 {
     public partial class ServiceAccountUsage
     {
-        internal static ServiceAccountUsage DeserializeServiceAccountUsage(JsonElement element)
+        internal static ServiceAccountUsage DeserializeServiceAccountUsage(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

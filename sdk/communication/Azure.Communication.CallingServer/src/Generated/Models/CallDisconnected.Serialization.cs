@@ -7,12 +7,13 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.Communication.CallingServer
 {
     public partial class CallDisconnected
     {
-        internal static CallDisconnected DeserializeCallDisconnected(JsonElement element)
+        internal static CallDisconnected DeserializeCallDisconnected(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

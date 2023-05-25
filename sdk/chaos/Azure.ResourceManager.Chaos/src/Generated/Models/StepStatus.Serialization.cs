@@ -8,12 +8,13 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Chaos.Models
 {
     public partial class StepStatus
     {
-        internal static StepStatus DeserializeStepStatus(JsonElement element)
+        internal static StepStatus DeserializeStepStatus(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

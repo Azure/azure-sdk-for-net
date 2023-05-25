@@ -7,12 +7,13 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Hci.Models
 {
     public partial class HciClusterNode
     {
-        internal static HciClusterNode DeserializeHciClusterNode(JsonElement element)
+        internal static HciClusterNode DeserializeHciClusterNode(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

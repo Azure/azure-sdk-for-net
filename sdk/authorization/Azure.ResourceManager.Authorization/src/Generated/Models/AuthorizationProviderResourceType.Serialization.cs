@@ -8,12 +8,13 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Authorization.Models
 {
     public partial class AuthorizationProviderResourceType
     {
-        internal static AuthorizationProviderResourceType DeserializeAuthorizationProviderResourceType(JsonElement element)
+        internal static AuthorizationProviderResourceType DeserializeAuthorizationProviderResourceType(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

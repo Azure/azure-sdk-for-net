@@ -7,12 +7,13 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Analysis.Models
 {
     public partial class AnalysisGatewayStatus
     {
-        internal static AnalysisGatewayStatus DeserializeAnalysisGatewayStatus(JsonElement element)
+        internal static AnalysisGatewayStatus DeserializeAnalysisGatewayStatus(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

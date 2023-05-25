@@ -8,12 +8,13 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.AppPlatform.Models
 {
     public partial class AppPlatformGatewayOperatorProperties
     {
-        internal static AppPlatformGatewayOperatorProperties DeserializeAppPlatformGatewayOperatorProperties(JsonElement element)
+        internal static AppPlatformGatewayOperatorProperties DeserializeAppPlatformGatewayOperatorProperties(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

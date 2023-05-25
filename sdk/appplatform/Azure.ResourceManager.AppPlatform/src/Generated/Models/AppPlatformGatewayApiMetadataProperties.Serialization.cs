@@ -8,12 +8,15 @@
 using System;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.AppPlatform.Models
 {
     public partial class AppPlatformGatewayApiMetadataProperties : IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IUtf8JsonSerializable)this).Write(writer, new SerializableOptions());
+
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer, SerializableOptions options)
         {
             writer.WriteStartObject();
             if (Optional.IsDefined(Title))
@@ -44,7 +47,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
             writer.WriteEndObject();
         }
 
-        internal static AppPlatformGatewayApiMetadataProperties DeserializeAppPlatformGatewayApiMetadataProperties(JsonElement element)
+        internal static AppPlatformGatewayApiMetadataProperties DeserializeAppPlatformGatewayApiMetadataProperties(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

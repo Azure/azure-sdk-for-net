@@ -8,13 +8,14 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.Analysis;
 
 namespace Azure.ResourceManager.Analysis.Models
 {
     internal partial class AnalysisServers
     {
-        internal static AnalysisServers DeserializeAnalysisServers(JsonElement element)
+        internal static AnalysisServers DeserializeAnalysisServers(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

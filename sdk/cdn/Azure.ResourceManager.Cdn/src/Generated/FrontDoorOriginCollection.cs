@@ -227,7 +227,7 @@ namespace Azure.ResourceManager.Cdn
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _frontDoorOriginRestClient.CreateListByOriginGroupRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _frontDoorOriginRestClient.CreateListByOriginGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new FrontDoorOriginResource(Client, FrontDoorOriginData.DeserializeFrontDoorOriginData(e)), _frontDoorOriginClientDiagnostics, Pipeline, "FrontDoorOriginCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, (e, o) => new FrontDoorOriginResource(Client, FrontDoorOriginData.DeserializeFrontDoorOriginData(e)), _frontDoorOriginClientDiagnostics, Pipeline, "FrontDoorOriginCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -249,7 +249,7 @@ namespace Azure.ResourceManager.Cdn
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _frontDoorOriginRestClient.CreateListByOriginGroupRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _frontDoorOriginRestClient.CreateListByOriginGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new FrontDoorOriginResource(Client, FrontDoorOriginData.DeserializeFrontDoorOriginData(e)), _frontDoorOriginClientDiagnostics, Pipeline, "FrontDoorOriginCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, (e, o) => new FrontDoorOriginResource(Client, FrontDoorOriginData.DeserializeFrontDoorOriginData(e)), _frontDoorOriginClientDiagnostics, Pipeline, "FrontDoorOriginCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

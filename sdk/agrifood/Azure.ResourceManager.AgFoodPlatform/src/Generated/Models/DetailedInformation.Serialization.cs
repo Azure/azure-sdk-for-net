@@ -8,12 +8,13 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.AgFoodPlatform.Models
 {
     public partial class DetailedInformation
     {
-        internal static DetailedInformation DeserializeDetailedInformation(JsonElement element)
+        internal static DetailedInformation DeserializeDetailedInformation(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

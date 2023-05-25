@@ -8,12 +8,13 @@
 using System;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Automation.Models
 {
     public partial class SourceControlSyncJobStream
     {
-        internal static SourceControlSyncJobStream DeserializeSourceControlSyncJobStream(JsonElement element)
+        internal static SourceControlSyncJobStream DeserializeSourceControlSyncJobStream(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

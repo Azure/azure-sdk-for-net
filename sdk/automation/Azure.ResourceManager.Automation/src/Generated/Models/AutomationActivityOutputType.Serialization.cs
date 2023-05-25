@@ -7,12 +7,13 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Automation.Models
 {
     public partial class AutomationActivityOutputType
     {
-        internal static AutomationActivityOutputType DeserializeAutomationActivityOutputType(JsonElement element)
+        internal static AutomationActivityOutputType DeserializeAutomationActivityOutputType(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

@@ -8,12 +8,13 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Attestation.Models
 {
     internal partial class AttestationPrivateLinkResourceListResult
     {
-        internal static AttestationPrivateLinkResourceListResult DeserializeAttestationPrivateLinkResourceListResult(JsonElement element)
+        internal static AttestationPrivateLinkResourceListResult DeserializeAttestationPrivateLinkResourceListResult(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

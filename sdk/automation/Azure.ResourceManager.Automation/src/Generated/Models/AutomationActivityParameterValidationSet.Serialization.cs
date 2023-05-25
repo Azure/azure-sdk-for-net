@@ -7,12 +7,13 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Automation.Models
 {
     public partial class AutomationActivityParameterValidationSet
     {
-        internal static AutomationActivityParameterValidationSet DeserializeAutomationActivityParameterValidationSet(JsonElement element)
+        internal static AutomationActivityParameterValidationSet DeserializeAutomationActivityParameterValidationSet(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

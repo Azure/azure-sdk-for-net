@@ -8,12 +8,13 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
     public partial class ConnectivityCheckResult
     {
-        internal static ConnectivityCheckResult DeserializeConnectivityCheckResult(JsonElement element)
+        internal static ConnectivityCheckResult DeserializeConnectivityCheckResult(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

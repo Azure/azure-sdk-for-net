@@ -8,12 +8,13 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Authorization.Models
 {
     internal partial class EligibleChildResourcesListResult
     {
-        internal static EligibleChildResourcesListResult DeserializeEligibleChildResourcesListResult(JsonElement element)
+        internal static EligibleChildResourcesListResult DeserializeEligibleChildResourcesListResult(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

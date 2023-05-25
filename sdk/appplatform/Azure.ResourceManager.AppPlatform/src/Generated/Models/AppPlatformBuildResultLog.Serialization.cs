@@ -8,12 +8,13 @@
 using System;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.AppPlatform.Models
 {
     public partial class AppPlatformBuildResultLog
     {
-        internal static AppPlatformBuildResultLog DeserializeAppPlatformBuildResultLog(JsonElement element)
+        internal static AppPlatformBuildResultLog DeserializeAppPlatformBuildResultLog(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

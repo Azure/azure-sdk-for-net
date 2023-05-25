@@ -10,12 +10,15 @@ using System.Collections.Generic;
 using System.Net;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
     public partial class AdditionalLocation : IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IUtf8JsonSerializable)this).Write(writer, new SerializableOptions());
+
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer, SerializableOptions options)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("location"u8);
@@ -50,7 +53,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
             writer.WriteEndObject();
         }
 
-        internal static AdditionalLocation DeserializeAdditionalLocation(JsonElement element)
+        internal static AdditionalLocation DeserializeAdditionalLocation(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

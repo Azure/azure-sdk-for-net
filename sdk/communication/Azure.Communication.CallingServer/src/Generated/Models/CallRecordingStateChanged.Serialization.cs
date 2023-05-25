@@ -8,12 +8,13 @@
 using System;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.Communication.CallingServer
 {
     public partial class CallRecordingStateChanged
     {
-        internal static CallRecordingStateChanged DeserializeCallRecordingStateChanged(JsonElement element)
+        internal static CallRecordingStateChanged DeserializeCallRecordingStateChanged(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

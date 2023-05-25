@@ -227,7 +227,7 @@ namespace Azure.ResourceManager.Avs
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _workloadNetworkDhcpWorkloadNetworksRestClient.CreateListDhcpRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _workloadNetworkDhcpWorkloadNetworksRestClient.CreateListDhcpNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new WorkloadNetworkDhcpResource(Client, WorkloadNetworkDhcpData.DeserializeWorkloadNetworkDhcpData(e)), _workloadNetworkDhcpWorkloadNetworksClientDiagnostics, Pipeline, "WorkloadNetworkDhcpCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, (e, o) => new WorkloadNetworkDhcpResource(Client, WorkloadNetworkDhcpData.DeserializeWorkloadNetworkDhcpData(e)), _workloadNetworkDhcpWorkloadNetworksClientDiagnostics, Pipeline, "WorkloadNetworkDhcpCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -249,7 +249,7 @@ namespace Azure.ResourceManager.Avs
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _workloadNetworkDhcpWorkloadNetworksRestClient.CreateListDhcpRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _workloadNetworkDhcpWorkloadNetworksRestClient.CreateListDhcpNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new WorkloadNetworkDhcpResource(Client, WorkloadNetworkDhcpData.DeserializeWorkloadNetworkDhcpData(e)), _workloadNetworkDhcpWorkloadNetworksClientDiagnostics, Pipeline, "WorkloadNetworkDhcpCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, (e, o) => new WorkloadNetworkDhcpResource(Client, WorkloadNetworkDhcpData.DeserializeWorkloadNetworkDhcpData(e)), _workloadNetworkDhcpWorkloadNetworksClientDiagnostics, Pipeline, "WorkloadNetworkDhcpCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

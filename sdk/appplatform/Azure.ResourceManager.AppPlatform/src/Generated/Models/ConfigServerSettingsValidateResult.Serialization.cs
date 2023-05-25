@@ -8,12 +8,13 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.AppPlatform.Models
 {
     public partial class ConfigServerSettingsValidateResult
     {
-        internal static ConfigServerSettingsValidateResult DeserializeConfigServerSettingsValidateResult(JsonElement element)
+        internal static ConfigServerSettingsValidateResult DeserializeConfigServerSettingsValidateResult(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

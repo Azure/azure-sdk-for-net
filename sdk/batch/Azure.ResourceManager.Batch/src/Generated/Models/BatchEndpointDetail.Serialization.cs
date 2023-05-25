@@ -7,12 +7,13 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Batch.Models
 {
     public partial class BatchEndpointDetail
     {
-        internal static BatchEndpointDetail DeserializeBatchEndpointDetail(JsonElement element)
+        internal static BatchEndpointDetail DeserializeBatchEndpointDetail(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

@@ -7,12 +7,13 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Automation.Models
 {
     public partial class RunbookDraftUndoEditResult
     {
-        internal static RunbookDraftUndoEditResult DeserializeRunbookDraftUndoEditResult(JsonElement element)
+        internal static RunbookDraftUndoEditResult DeserializeRunbookDraftUndoEditResult(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

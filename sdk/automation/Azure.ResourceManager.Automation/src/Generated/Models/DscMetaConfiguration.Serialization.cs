@@ -7,12 +7,13 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Automation.Models
 {
     public partial class DscMetaConfiguration
     {
-        internal static DscMetaConfiguration DeserializeDscMetaConfiguration(JsonElement element)
+        internal static DscMetaConfiguration DeserializeDscMetaConfiguration(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

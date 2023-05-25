@@ -7,12 +7,15 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.AgFoodPlatform.Models
 {
     public partial class SensorIntegration : IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IUtf8JsonSerializable)this).Write(writer, new SerializableOptions());
+
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer, SerializableOptions options)
         {
             writer.WriteStartObject();
             if (Optional.IsDefined(Enabled))
@@ -28,7 +31,7 @@ namespace Azure.ResourceManager.AgFoodPlatform.Models
             writer.WriteEndObject();
         }
 
-        internal static SensorIntegration DeserializeSensorIntegration(JsonElement element)
+        internal static SensorIntegration DeserializeSensorIntegration(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

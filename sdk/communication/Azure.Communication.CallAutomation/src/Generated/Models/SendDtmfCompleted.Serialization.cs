@@ -7,12 +7,13 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.Communication.CallAutomation
 {
     public partial class SendDtmfCompleted
     {
-        internal static SendDtmfCompleted DeserializeSendDtmfCompleted(JsonElement element)
+        internal static SendDtmfCompleted DeserializeSendDtmfCompleted(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

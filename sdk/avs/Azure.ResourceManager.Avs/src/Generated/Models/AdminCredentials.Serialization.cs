@@ -7,12 +7,13 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Avs.Models
 {
     public partial class AdminCredentials
     {
-        internal static AdminCredentials DeserializeAdminCredentials(JsonElement element)
+        internal static AdminCredentials DeserializeAdminCredentials(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

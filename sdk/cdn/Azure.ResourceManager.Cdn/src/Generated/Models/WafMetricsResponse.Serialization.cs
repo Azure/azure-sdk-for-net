@@ -9,12 +9,13 @@ using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
     public partial class WafMetricsResponse
     {
-        internal static WafMetricsResponse DeserializeWafMetricsResponse(JsonElement element)
+        internal static WafMetricsResponse DeserializeWafMetricsResponse(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

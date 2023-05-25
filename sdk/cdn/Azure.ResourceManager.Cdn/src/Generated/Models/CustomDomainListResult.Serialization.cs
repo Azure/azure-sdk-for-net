@@ -8,13 +8,14 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.Cdn;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
     internal partial class CustomDomainListResult
     {
-        internal static CustomDomainListResult DeserializeCustomDomainListResult(JsonElement element)
+        internal static CustomDomainListResult DeserializeCustomDomainListResult(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

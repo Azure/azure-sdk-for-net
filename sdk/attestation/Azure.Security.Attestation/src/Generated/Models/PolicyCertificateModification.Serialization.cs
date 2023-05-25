@@ -9,13 +9,16 @@ using System;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.Security.Attestation
 {
     [JsonConverter(typeof(PolicyCertificateModificationConverter))]
     internal partial class PolicyCertificateModification : IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IUtf8JsonSerializable)this).Write(writer, new SerializableOptions());
+
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer, SerializableOptions options)
         {
             writer.WriteStartObject();
             if (Optional.IsDefined(InternalPolicyCertificate))
@@ -26,7 +29,7 @@ namespace Azure.Security.Attestation
             writer.WriteEndObject();
         }
 
-        internal static PolicyCertificateModification DeserializePolicyCertificateModification(JsonElement element)
+        internal static PolicyCertificateModification DeserializePolicyCertificateModification(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

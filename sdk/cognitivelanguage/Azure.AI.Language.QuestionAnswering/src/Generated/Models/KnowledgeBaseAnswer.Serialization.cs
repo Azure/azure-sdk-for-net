@@ -8,12 +8,13 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.AI.Language.QuestionAnswering
 {
     public partial class KnowledgeBaseAnswer
     {
-        internal static KnowledgeBaseAnswer DeserializeKnowledgeBaseAnswer(JsonElement element)
+        internal static KnowledgeBaseAnswer DeserializeKnowledgeBaseAnswer(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

@@ -7,12 +7,13 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.Communication.CallAutomation
 {
     public partial class RecognizeCanceled
     {
-        internal static RecognizeCanceled DeserializeRecognizeCanceled(JsonElement element)
+        internal static RecognizeCanceled DeserializeRecognizeCanceled(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

@@ -8,13 +8,14 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.AlertsManagement;
 
 namespace Azure.ResourceManager.AlertsManagement.Models
 {
     internal partial class AlertProcessingRulesList
     {
-        internal static AlertProcessingRulesList DeserializeAlertProcessingRulesList(JsonElement element)
+        internal static AlertProcessingRulesList DeserializeAlertProcessingRulesList(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

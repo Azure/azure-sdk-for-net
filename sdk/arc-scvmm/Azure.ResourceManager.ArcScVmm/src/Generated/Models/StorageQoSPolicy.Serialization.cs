@@ -7,12 +7,13 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.ArcScVmm.Models
 {
     public partial class StorageQoSPolicy
     {
-        internal static StorageQoSPolicy DeserializeStorageQoSPolicy(JsonElement element)
+        internal static StorageQoSPolicy DeserializeStorageQoSPolicy(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

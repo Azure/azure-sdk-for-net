@@ -7,12 +7,13 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.Communication.CallAutomation
 {
     public partial class UnmuteParticipantsResponse
     {
-        internal static UnmuteParticipantsResponse DeserializeUnmuteParticipantsResponse(JsonElement element)
+        internal static UnmuteParticipantsResponse DeserializeUnmuteParticipantsResponse(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

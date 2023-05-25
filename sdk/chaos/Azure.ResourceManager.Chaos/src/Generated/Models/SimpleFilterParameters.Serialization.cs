@@ -8,12 +8,15 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Chaos.Models
 {
     internal partial class SimpleFilterParameters : IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IUtf8JsonSerializable)this).Write(writer, new SerializableOptions());
+
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer, SerializableOptions options)
         {
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(Zones))
@@ -29,7 +32,7 @@ namespace Azure.ResourceManager.Chaos.Models
             writer.WriteEndObject();
         }
 
-        internal static SimpleFilterParameters DeserializeSimpleFilterParameters(JsonElement element)
+        internal static SimpleFilterParameters DeserializeSimpleFilterParameters(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

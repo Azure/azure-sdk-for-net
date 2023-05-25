@@ -7,6 +7,7 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.Cdn.Models;
 using Azure.ResourceManager.Models;
 
@@ -14,7 +15,9 @@ namespace Azure.ResourceManager.Cdn
 {
     public partial class CdnCustomDomainData : IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IUtf8JsonSerializable)this).Write(writer, new SerializableOptions());
+
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer, SerializableOptions options)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
@@ -45,7 +48,7 @@ namespace Azure.ResourceManager.Cdn
             writer.WriteEndObject();
         }
 
-        internal static CdnCustomDomainData DeserializeCdnCustomDomainData(JsonElement element)
+        internal static CdnCustomDomainData DeserializeCdnCustomDomainData(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

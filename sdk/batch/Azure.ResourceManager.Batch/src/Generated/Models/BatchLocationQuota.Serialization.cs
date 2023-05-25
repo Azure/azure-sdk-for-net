@@ -7,12 +7,13 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Batch.Models
 {
     public partial class BatchLocationQuota
     {
-        internal static BatchLocationQuota DeserializeBatchLocationQuota(JsonElement element)
+        internal static BatchLocationQuota DeserializeBatchLocationQuota(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

@@ -8,12 +8,13 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.ChangeAnalysis.Models
 {
     internal partial class ChangeList
     {
-        internal static ChangeList DeserializeChangeList(JsonElement element)
+        internal static ChangeList DeserializeChangeList(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

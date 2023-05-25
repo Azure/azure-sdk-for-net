@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.Automation
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _dscNodeRestClient.CreateListByAutomationAccountRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, skip, top, inlinecount);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _dscNodeRestClient.CreateListByAutomationAccountNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, skip, top, inlinecount);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new DscNodeResource(Client, DscNodeData.DeserializeDscNodeData(e)), _dscNodeClientDiagnostics, Pipeline, "DscNodeCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, (e, o) => new DscNodeResource(Client, DscNodeData.DeserializeDscNodeData(e)), _dscNodeClientDiagnostics, Pipeline, "DscNodeCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -175,7 +175,7 @@ namespace Azure.ResourceManager.Automation
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _dscNodeRestClient.CreateListByAutomationAccountRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, skip, top, inlinecount);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _dscNodeRestClient.CreateListByAutomationAccountNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, skip, top, inlinecount);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new DscNodeResource(Client, DscNodeData.DeserializeDscNodeData(e)), _dscNodeClientDiagnostics, Pipeline, "DscNodeCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, (e, o) => new DscNodeResource(Client, DscNodeData.DeserializeDscNodeData(e)), _dscNodeClientDiagnostics, Pipeline, "DscNodeCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

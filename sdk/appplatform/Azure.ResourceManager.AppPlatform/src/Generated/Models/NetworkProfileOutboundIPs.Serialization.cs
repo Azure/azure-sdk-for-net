@@ -9,12 +9,13 @@ using System.Collections.Generic;
 using System.Net;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.AppPlatform.Models
 {
     internal partial class NetworkProfileOutboundIPs
     {
-        internal static NetworkProfileOutboundIPs DeserializeNetworkProfileOutboundIPs(JsonElement element)
+        internal static NetworkProfileOutboundIPs DeserializeNetworkProfileOutboundIPs(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

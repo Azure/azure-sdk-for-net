@@ -8,13 +8,14 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.Avs;
 
 namespace Azure.ResourceManager.Avs.Models
 {
     internal partial class WorkloadNetworkPublicIPsList
     {
-        internal static WorkloadNetworkPublicIPsList DeserializeWorkloadNetworkPublicIPsList(JsonElement element)
+        internal static WorkloadNetworkPublicIPsList DeserializeWorkloadNetworkPublicIPsList(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

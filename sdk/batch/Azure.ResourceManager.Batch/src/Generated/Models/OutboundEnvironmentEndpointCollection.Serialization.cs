@@ -8,12 +8,13 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Batch.Models
 {
     internal partial class OutboundEnvironmentEndpointCollection
     {
-        internal static OutboundEnvironmentEndpointCollection DeserializeOutboundEnvironmentEndpointCollection(JsonElement element)
+        internal static OutboundEnvironmentEndpointCollection DeserializeOutboundEnvironmentEndpointCollection(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

@@ -7,12 +7,13 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.AppComplianceAutomation.Models
 {
     public partial class OverviewStatus
     {
-        internal static OverviewStatus DeserializeOverviewStatus(JsonElement element)
+        internal static OverviewStatus DeserializeOverviewStatus(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

@@ -7,12 +7,13 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
     public partial class WafMetricsResponseSeriesPropertiesItemsItem
     {
-        internal static WafMetricsResponseSeriesPropertiesItemsItem DeserializeWafMetricsResponseSeriesPropertiesItemsItem(JsonElement element)
+        internal static WafMetricsResponseSeriesPropertiesItemsItem DeserializeWafMetricsResponseSeriesPropertiesItemsItem(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

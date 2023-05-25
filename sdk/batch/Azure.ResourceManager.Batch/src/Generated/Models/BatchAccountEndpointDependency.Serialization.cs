@@ -8,12 +8,13 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Batch.Models
 {
     public partial class BatchAccountEndpointDependency
     {
-        internal static BatchAccountEndpointDependency DeserializeBatchAccountEndpointDependency(JsonElement element)
+        internal static BatchAccountEndpointDependency DeserializeBatchAccountEndpointDependency(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

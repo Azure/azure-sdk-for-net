@@ -7,12 +7,13 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Automation.Models
 {
     public partial class SoftwareUpdateConfigurationRunTasks
     {
-        internal static SoftwareUpdateConfigurationRunTasks DeserializeSoftwareUpdateConfigurationRunTasks(JsonElement element)
+        internal static SoftwareUpdateConfigurationRunTasks DeserializeSoftwareUpdateConfigurationRunTasks(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

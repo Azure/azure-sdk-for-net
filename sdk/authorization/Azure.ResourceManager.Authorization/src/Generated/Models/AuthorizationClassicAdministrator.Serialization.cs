@@ -7,13 +7,14 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Authorization.Models
 {
     public partial class AuthorizationClassicAdministrator
     {
-        internal static AuthorizationClassicAdministrator DeserializeAuthorizationClassicAdministrator(JsonElement element)
+        internal static AuthorizationClassicAdministrator DeserializeAuthorizationClassicAdministrator(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

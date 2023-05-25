@@ -8,12 +8,15 @@
 using System;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Analysis.Models
 {
     public partial class AnalysisGatewayDetails : IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IUtf8JsonSerializable)this).Write(writer, new SerializableOptions());
+
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer, SerializableOptions options)
         {
             writer.WriteStartObject();
             if (Optional.IsDefined(GatewayResourceId))
@@ -24,7 +27,7 @@ namespace Azure.ResourceManager.Analysis.Models
             writer.WriteEndObject();
         }
 
-        internal static AnalysisGatewayDetails DeserializeAnalysisGatewayDetails(JsonElement element)
+        internal static AnalysisGatewayDetails DeserializeAnalysisGatewayDetails(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

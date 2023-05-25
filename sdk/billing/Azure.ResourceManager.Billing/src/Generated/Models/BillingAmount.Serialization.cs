@@ -7,12 +7,13 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Billing.Models
 {
     public partial class BillingAmount
     {
-        internal static BillingAmount DeserializeBillingAmount(JsonElement element)
+        internal static BillingAmount DeserializeBillingAmount(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

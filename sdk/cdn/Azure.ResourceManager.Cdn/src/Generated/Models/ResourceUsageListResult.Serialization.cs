@@ -8,12 +8,13 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
     internal partial class ResourceUsageListResult
     {
-        internal static ResourceUsageListResult DeserializeResourceUsageListResult(JsonElement element)
+        internal static ResourceUsageListResult DeserializeResourceUsageListResult(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

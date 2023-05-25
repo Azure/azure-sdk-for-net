@@ -8,12 +8,15 @@
 using System;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
     public partial class VirtualNetworkConfiguration : IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IUtf8JsonSerializable)this).Write(writer, new SerializableOptions());
+
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer, SerializableOptions options)
         {
             writer.WriteStartObject();
             if (Optional.IsDefined(SubnetResourceId))
@@ -24,7 +27,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
             writer.WriteEndObject();
         }
 
-        internal static VirtualNetworkConfiguration DeserializeVirtualNetworkConfiguration(JsonElement element)
+        internal static VirtualNetworkConfiguration DeserializeVirtualNetworkConfiguration(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

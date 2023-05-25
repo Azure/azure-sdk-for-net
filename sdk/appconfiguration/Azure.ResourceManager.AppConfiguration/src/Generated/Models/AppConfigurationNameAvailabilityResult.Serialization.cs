@@ -7,12 +7,13 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.AppConfiguration.Models
 {
     public partial class AppConfigurationNameAvailabilityResult
     {
-        internal static AppConfigurationNameAvailabilityResult DeserializeAppConfigurationNameAvailabilityResult(JsonElement element)
+        internal static AppConfigurationNameAvailabilityResult DeserializeAppConfigurationNameAvailabilityResult(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

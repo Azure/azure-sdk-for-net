@@ -8,13 +8,14 @@
 using System;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Automation.Models
 {
     public partial class DeletedAutomationAccount
     {
-        internal static DeletedAutomationAccount DeserializeDeletedAutomationAccount(JsonElement element)
+        internal static DeletedAutomationAccount DeserializeDeletedAutomationAccount(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

@@ -8,12 +8,13 @@
 using System;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Hci.Models
 {
     public partial class HciClusterIdentityResult
     {
-        internal static HciClusterIdentityResult DeserializeHciClusterIdentityResult(JsonElement element)
+        internal static HciClusterIdentityResult DeserializeHciClusterIdentityResult(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

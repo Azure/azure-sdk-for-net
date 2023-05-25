@@ -144,7 +144,7 @@ namespace Azure.ResourceManager.AppPlatform
         public virtual AsyncPageable<AppPlatformSupportedBuildpackResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _appPlatformSupportedBuildpackBuildServiceRestClient.CreateListSupportedBuildpacksRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new AppPlatformSupportedBuildpackResource(Client, AppPlatformSupportedBuildpackData.DeserializeAppPlatformSupportedBuildpackData(e)), _appPlatformSupportedBuildpackBuildServiceClientDiagnostics, Pipeline, "AppPlatformSupportedBuildpackCollection.GetAll", "value", null, cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, (e, o) => new AppPlatformSupportedBuildpackResource(Client, AppPlatformSupportedBuildpackData.DeserializeAppPlatformSupportedBuildpackData(e)), _appPlatformSupportedBuildpackBuildServiceClientDiagnostics, Pipeline, "AppPlatformSupportedBuildpackCollection.GetAll", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -165,7 +165,7 @@ namespace Azure.ResourceManager.AppPlatform
         public virtual Pageable<AppPlatformSupportedBuildpackResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _appPlatformSupportedBuildpackBuildServiceRestClient.CreateListSupportedBuildpacksRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, null, e => new AppPlatformSupportedBuildpackResource(Client, AppPlatformSupportedBuildpackData.DeserializeAppPlatformSupportedBuildpackData(e)), _appPlatformSupportedBuildpackBuildServiceClientDiagnostics, Pipeline, "AppPlatformSupportedBuildpackCollection.GetAll", "value", null, cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, null, (e, o) => new AppPlatformSupportedBuildpackResource(Client, AppPlatformSupportedBuildpackData.DeserializeAppPlatformSupportedBuildpackData(e)), _appPlatformSupportedBuildpackBuildServiceClientDiagnostics, Pipeline, "AppPlatformSupportedBuildpackCollection.GetAll", "value", null, cancellationToken);
         }
 
         /// <summary>

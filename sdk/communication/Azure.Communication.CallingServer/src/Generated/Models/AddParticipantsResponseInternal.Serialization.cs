@@ -8,12 +8,13 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.Communication.CallingServer
 {
     internal partial class AddParticipantsResponseInternal
     {
-        internal static AddParticipantsResponseInternal DeserializeAddParticipantsResponseInternal(JsonElement element)
+        internal static AddParticipantsResponseInternal DeserializeAddParticipantsResponseInternal(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

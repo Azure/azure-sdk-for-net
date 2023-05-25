@@ -8,12 +8,13 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Avs.Models
 {
     public partial class AvsSubscriptionQuotaAvailabilityResult
     {
-        internal static AvsSubscriptionQuotaAvailabilityResult DeserializeAvsSubscriptionQuotaAvailabilityResult(JsonElement element)
+        internal static AvsSubscriptionQuotaAvailabilityResult DeserializeAvsSubscriptionQuotaAvailabilityResult(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

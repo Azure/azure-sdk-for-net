@@ -8,13 +8,14 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.Avs;
 
 namespace Azure.ResourceManager.Avs.Models
 {
     internal partial class WorkloadNetworkPortMirroringList
     {
-        internal static WorkloadNetworkPortMirroringList DeserializeWorkloadNetworkPortMirroringList(JsonElement element)
+        internal static WorkloadNetworkPortMirroringList DeserializeWorkloadNetworkPortMirroringList(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

@@ -7,6 +7,7 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Resources.Models;
 
@@ -14,7 +15,7 @@ namespace Azure.ResourceManager.AppConfiguration.Models
 {
     public partial class AppConfigurationPrivateEndpointConnectionReference
     {
-        internal static AppConfigurationPrivateEndpointConnectionReference DeserializeAppConfigurationPrivateEndpointConnectionReference(JsonElement element)
+        internal static AppConfigurationPrivateEndpointConnectionReference DeserializeAppConfigurationPrivateEndpointConnectionReference(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

@@ -8,12 +8,13 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.AppPlatform.Models
 {
     public partial class AppPlatformSkuLocationInfo
     {
-        internal static AppPlatformSkuLocationInfo DeserializeAppPlatformSkuLocationInfo(JsonElement element)
+        internal static AppPlatformSkuLocationInfo DeserializeAppPlatformSkuLocationInfo(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

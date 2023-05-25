@@ -8,12 +8,13 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Authorization.Models
 {
     internal partial class AuthorizationClassicAdministratorListResult
     {
-        internal static AuthorizationClassicAdministratorListResult DeserializeAuthorizationClassicAdministratorListResult(JsonElement element)
+        internal static AuthorizationClassicAdministratorListResult DeserializeAuthorizationClassicAdministratorListResult(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

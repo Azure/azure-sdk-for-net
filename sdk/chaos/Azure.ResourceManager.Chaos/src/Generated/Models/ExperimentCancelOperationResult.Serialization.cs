@@ -7,12 +7,13 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Chaos.Models
 {
     public partial class ExperimentCancelOperationResult
     {
-        internal static ExperimentCancelOperationResult DeserializeExperimentCancelOperationResult(JsonElement element)
+        internal static ExperimentCancelOperationResult DeserializeExperimentCancelOperationResult(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

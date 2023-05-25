@@ -7,12 +7,13 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
     public partial class GatewayTokenContract
     {
-        internal static GatewayTokenContract DeserializeGatewayTokenContract(JsonElement element)
+        internal static GatewayTokenContract DeserializeGatewayTokenContract(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

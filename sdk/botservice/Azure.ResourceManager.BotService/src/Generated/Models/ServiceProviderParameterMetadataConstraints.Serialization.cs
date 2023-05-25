@@ -7,12 +7,13 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.BotService.Models
 {
     internal partial class ServiceProviderParameterMetadataConstraints
     {
-        internal static ServiceProviderParameterMetadataConstraints DeserializeServiceProviderParameterMetadataConstraints(JsonElement element)
+        internal static ServiceProviderParameterMetadataConstraints DeserializeServiceProviderParameterMetadataConstraints(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

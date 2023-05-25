@@ -7,12 +7,13 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Blueprint.Models
 {
     public partial class WhoIsBlueprintContract
     {
-        internal static WhoIsBlueprintContract DeserializeWhoIsBlueprintContract(JsonElement element)
+        internal static WhoIsBlueprintContract DeserializeWhoIsBlueprintContract(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

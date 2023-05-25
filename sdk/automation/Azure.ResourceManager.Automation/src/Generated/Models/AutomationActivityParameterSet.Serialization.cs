@@ -8,12 +8,13 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Automation.Models
 {
     public partial class AutomationActivityParameterSet
     {
-        internal static AutomationActivityParameterSet DeserializeAutomationActivityParameterSet(JsonElement element)
+        internal static AutomationActivityParameterSet DeserializeAutomationActivityParameterSet(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

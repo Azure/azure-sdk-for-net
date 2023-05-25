@@ -7,13 +7,16 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
     public partial class OriginGroupOverrideActionProperties : IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IUtf8JsonSerializable)this).Write(writer, new SerializableOptions());
+
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer, SerializableOptions options)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("typeName"u8);
@@ -22,7 +25,7 @@ namespace Azure.ResourceManager.Cdn.Models
             JsonSerializer.Serialize(writer, OriginGroup); writer.WriteEndObject();
         }
 
-        internal static OriginGroupOverrideActionProperties DeserializeOriginGroupOverrideActionProperties(JsonElement element)
+        internal static OriginGroupOverrideActionProperties DeserializeOriginGroupOverrideActionProperties(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

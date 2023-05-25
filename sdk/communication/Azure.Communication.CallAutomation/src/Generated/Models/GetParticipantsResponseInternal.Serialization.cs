@@ -8,12 +8,13 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.Communication.CallAutomation
 {
     internal partial class GetParticipantsResponseInternal
     {
-        internal static GetParticipantsResponseInternal DeserializeGetParticipantsResponseInternal(JsonElement element)
+        internal static GetParticipantsResponseInternal DeserializeGetParticipantsResponseInternal(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

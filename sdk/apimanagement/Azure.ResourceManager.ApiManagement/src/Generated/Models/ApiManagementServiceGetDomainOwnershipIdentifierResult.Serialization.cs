@@ -7,12 +7,13 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
     public partial class ApiManagementServiceGetDomainOwnershipIdentifierResult
     {
-        internal static ApiManagementServiceGetDomainOwnershipIdentifierResult DeserializeApiManagementServiceGetDomainOwnershipIdentifierResult(JsonElement element)
+        internal static ApiManagementServiceGetDomainOwnershipIdentifierResult DeserializeApiManagementServiceGetDomainOwnershipIdentifierResult(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

@@ -7,12 +7,13 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.BotService.Models
 {
     public partial class BotServiceNameAvailabilityResult
     {
-        internal static BotServiceNameAvailabilityResult DeserializeBotServiceNameAvailabilityResult(JsonElement element)
+        internal static BotServiceNameAvailabilityResult DeserializeBotServiceNameAvailabilityResult(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

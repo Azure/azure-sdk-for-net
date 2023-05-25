@@ -8,12 +8,13 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
     public partial class ApiManagementSkuLocationInfo
     {
-        internal static ApiManagementSkuLocationInfo DeserializeApiManagementSkuLocationInfo(JsonElement element)
+        internal static ApiManagementSkuLocationInfo DeserializeApiManagementSkuLocationInfo(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

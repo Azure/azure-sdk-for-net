@@ -7,12 +7,13 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.AppComplianceAutomation.Models
 {
     public partial class ComplianceReportItem
     {
-        internal static ComplianceReportItem DeserializeComplianceReportItem(JsonElement element)
+        internal static ComplianceReportItem DeserializeComplianceReportItem(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

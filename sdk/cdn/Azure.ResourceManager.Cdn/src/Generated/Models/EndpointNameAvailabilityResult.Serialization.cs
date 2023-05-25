@@ -7,12 +7,13 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
     public partial class EndpointNameAvailabilityResult
     {
-        internal static EndpointNameAvailabilityResult DeserializeEndpointNameAvailabilityResult(JsonElement element)
+        internal static EndpointNameAvailabilityResult DeserializeEndpointNameAvailabilityResult(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

@@ -7,12 +7,15 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.AgFoodPlatform.Models
 {
     public partial class AgFoodPlatformPrivateLinkServiceConnectionState : IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IUtf8JsonSerializable)this).Write(writer, new SerializableOptions());
+
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer, SerializableOptions options)
         {
             writer.WriteStartObject();
             if (Optional.IsDefined(Status))
@@ -33,7 +36,7 @@ namespace Azure.ResourceManager.AgFoodPlatform.Models
             writer.WriteEndObject();
         }
 
-        internal static AgFoodPlatformPrivateLinkServiceConnectionState DeserializeAgFoodPlatformPrivateLinkServiceConnectionState(JsonElement element)
+        internal static AgFoodPlatformPrivateLinkServiceConnectionState DeserializeAgFoodPlatformPrivateLinkServiceConnectionState(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

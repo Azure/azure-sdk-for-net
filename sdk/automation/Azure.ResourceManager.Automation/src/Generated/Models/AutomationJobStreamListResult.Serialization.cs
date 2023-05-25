@@ -8,12 +8,13 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Automation.Models
 {
     internal partial class AutomationJobStreamListResult
     {
-        internal static AutomationJobStreamListResult DeserializeAutomationJobStreamListResult(JsonElement element)
+        internal static AutomationJobStreamListResult DeserializeAutomationJobStreamListResult(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

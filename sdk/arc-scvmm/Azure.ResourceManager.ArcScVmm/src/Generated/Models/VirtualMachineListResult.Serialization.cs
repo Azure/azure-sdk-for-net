@@ -8,13 +8,14 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.ArcScVmm;
 
 namespace Azure.ResourceManager.ArcScVmm.Models
 {
     internal partial class VirtualMachineListResult
     {
-        internal static VirtualMachineListResult DeserializeVirtualMachineListResult(JsonElement element)
+        internal static VirtualMachineListResult DeserializeVirtualMachineListResult(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

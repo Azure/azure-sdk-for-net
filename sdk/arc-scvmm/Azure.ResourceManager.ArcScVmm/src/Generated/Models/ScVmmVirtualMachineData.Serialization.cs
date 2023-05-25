@@ -8,6 +8,7 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.ArcScVmm.Models;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Resources.Models;
@@ -16,7 +17,9 @@ namespace Azure.ResourceManager.ArcScVmm
 {
     public partial class ScVmmVirtualMachineData : IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IUtf8JsonSerializable)this).Write(writer, new SerializableOptions());
+
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer, SerializableOptions options)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("extendedLocation"u8);
@@ -119,7 +122,7 @@ namespace Azure.ResourceManager.ArcScVmm
             writer.WriteEndObject();
         }
 
-        internal static ScVmmVirtualMachineData DeserializeScVmmVirtualMachineData(JsonElement element)
+        internal static ScVmmVirtualMachineData DeserializeScVmmVirtualMachineData(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

@@ -7,12 +7,13 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
     public partial class PortalSettingValidationKeyContract
     {
-        internal static PortalSettingValidationKeyContract DeserializePortalSettingValidationKeyContract(JsonElement element)
+        internal static PortalSettingValidationKeyContract DeserializePortalSettingValidationKeyContract(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

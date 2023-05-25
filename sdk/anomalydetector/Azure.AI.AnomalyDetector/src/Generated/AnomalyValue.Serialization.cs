@@ -9,12 +9,13 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.AI.AnomalyDetector
 {
     public partial class AnomalyValue
     {
-        internal static AnomalyValue DeserializeAnomalyValue(JsonElement element)
+        internal static AnomalyValue DeserializeAnomalyValue(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

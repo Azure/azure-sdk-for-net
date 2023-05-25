@@ -7,12 +7,13 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.CognitiveServices.Models
 {
     public partial class CognitiveServicesDomainAvailabilityList
     {
-        internal static CognitiveServicesDomainAvailabilityList DeserializeCognitiveServicesDomainAvailabilityList(JsonElement element)
+        internal static CognitiveServicesDomainAvailabilityList DeserializeCognitiveServicesDomainAvailabilityList(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

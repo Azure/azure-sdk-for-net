@@ -8,12 +8,13 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.AppPlatform.Models
 {
     internal partial class DeploymentList
     {
-        internal static DeploymentList DeserializeDeploymentList(JsonElement element)
+        internal static DeploymentList DeserializeDeploymentList(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

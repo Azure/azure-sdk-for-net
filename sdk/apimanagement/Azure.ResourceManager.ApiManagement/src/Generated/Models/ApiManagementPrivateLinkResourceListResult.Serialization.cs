@@ -8,13 +8,14 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.ApiManagement;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
     internal partial class ApiManagementPrivateLinkResourceListResult
     {
-        internal static ApiManagementPrivateLinkResourceListResult DeserializeApiManagementPrivateLinkResourceListResult(JsonElement element)
+        internal static ApiManagementPrivateLinkResourceListResult DeserializeApiManagementPrivateLinkResourceListResult(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

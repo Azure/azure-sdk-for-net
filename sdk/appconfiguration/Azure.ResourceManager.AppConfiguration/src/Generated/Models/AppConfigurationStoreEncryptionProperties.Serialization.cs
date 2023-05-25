@@ -7,12 +7,15 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.AppConfiguration.Models
 {
     internal partial class AppConfigurationStoreEncryptionProperties : IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IUtf8JsonSerializable)this).Write(writer, new SerializableOptions());
+
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer, SerializableOptions options)
         {
             writer.WriteStartObject();
             if (Optional.IsDefined(KeyVaultProperties))
@@ -30,7 +33,7 @@ namespace Azure.ResourceManager.AppConfiguration.Models
             writer.WriteEndObject();
         }
 
-        internal static AppConfigurationStoreEncryptionProperties DeserializeAppConfigurationStoreEncryptionProperties(JsonElement element)
+        internal static AppConfigurationStoreEncryptionProperties DeserializeAppConfigurationStoreEncryptionProperties(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

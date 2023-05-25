@@ -8,13 +8,14 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.Billing;
 
 namespace Azure.ResourceManager.Billing.Models
 {
     internal partial class PaymentMethodsListResult
     {
-        internal static PaymentMethodsListResult DeserializePaymentMethodsListResult(JsonElement element)
+        internal static PaymentMethodsListResult DeserializePaymentMethodsListResult(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

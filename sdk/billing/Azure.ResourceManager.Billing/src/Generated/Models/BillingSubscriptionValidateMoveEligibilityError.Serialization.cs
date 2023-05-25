@@ -7,12 +7,13 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Billing.Models
 {
     public partial class BillingSubscriptionValidateMoveEligibilityError
     {
-        internal static BillingSubscriptionValidateMoveEligibilityError DeserializeBillingSubscriptionValidateMoveEligibilityError(JsonElement element)
+        internal static BillingSubscriptionValidateMoveEligibilityError DeserializeBillingSubscriptionValidateMoveEligibilityError(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

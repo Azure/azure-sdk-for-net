@@ -9,12 +9,13 @@ using System.Collections.Generic;
 using System.Net;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
     public partial class ConnectivityHop
     {
-        internal static ConnectivityHop DeserializeConnectivityHop(JsonElement element)
+        internal static ConnectivityHop DeserializeConnectivityHop(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

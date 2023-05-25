@@ -7,12 +7,13 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
     public partial class TagResourceContractDetails
     {
-        internal static TagResourceContractDetails DeserializeTagResourceContractDetails(JsonElement element)
+        internal static TagResourceContractDetails DeserializeTagResourceContractDetails(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

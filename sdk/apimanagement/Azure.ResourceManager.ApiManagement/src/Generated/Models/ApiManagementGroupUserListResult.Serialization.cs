@@ -8,12 +8,13 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
     internal partial class ApiManagementGroupUserListResult
     {
-        internal static ApiManagementGroupUserListResult DeserializeApiManagementGroupUserListResult(JsonElement element)
+        internal static ApiManagementGroupUserListResult DeserializeApiManagementGroupUserListResult(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

@@ -9,12 +9,13 @@ using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.BotService.Models
 {
     public partial class BotServiceProviderProperties
     {
-        internal static BotServiceProviderProperties DeserializeBotServiceProviderProperties(JsonElement element)
+        internal static BotServiceProviderProperties DeserializeBotServiceProviderProperties(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

@@ -8,13 +8,14 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.Cdn;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
     internal partial class OriginGroupListResult
     {
-        internal static OriginGroupListResult DeserializeOriginGroupListResult(JsonElement element)
+        internal static OriginGroupListResult DeserializeOriginGroupListResult(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

@@ -8,6 +8,7 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.Authorization.Models;
 using Azure.ResourceManager.Models;
 
@@ -15,7 +16,7 @@ namespace Azure.ResourceManager.Authorization
 {
     public partial class DenyAssignmentData
     {
-        internal static DenyAssignmentData DeserializeDenyAssignmentData(JsonElement element)
+        internal static DenyAssignmentData DeserializeDenyAssignmentData(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

@@ -7,12 +7,13 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.Communication.CallAutomation
 {
     public partial class ContinuousDtmfRecognitionStopped
     {
-        internal static ContinuousDtmfRecognitionStopped DeserializeContinuousDtmfRecognitionStopped(JsonElement element)
+        internal static ContinuousDtmfRecognitionStopped DeserializeContinuousDtmfRecognitionStopped(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

@@ -7,12 +7,13 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Billing.Models
 {
     public partial class CreatedSubscriptionReseller
     {
-        internal static CreatedSubscriptionReseller DeserializeCreatedSubscriptionReseller(JsonElement element)
+        internal static CreatedSubscriptionReseller DeserializeCreatedSubscriptionReseller(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

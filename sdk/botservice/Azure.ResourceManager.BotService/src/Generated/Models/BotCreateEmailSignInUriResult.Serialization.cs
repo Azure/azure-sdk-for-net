@@ -7,12 +7,13 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.BotService.Models
 {
     public partial class BotCreateEmailSignInUriResult
     {
-        internal static BotCreateEmailSignInUriResult DeserializeBotCreateEmailSignInUriResult(JsonElement element)
+        internal static BotCreateEmailSignInUriResult DeserializeBotCreateEmailSignInUriResult(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

@@ -8,13 +8,14 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.Avs;
 
 namespace Azure.ResourceManager.Avs.Models
 {
     internal partial class HcxEnterpriseSiteList
     {
-        internal static HcxEnterpriseSiteList DeserializeHcxEnterpriseSiteList(JsonElement element)
+        internal static HcxEnterpriseSiteList DeserializeHcxEnterpriseSiteList(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

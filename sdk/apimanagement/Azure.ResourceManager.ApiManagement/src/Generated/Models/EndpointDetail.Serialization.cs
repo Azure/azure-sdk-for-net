@@ -7,12 +7,13 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
     public partial class EndpointDetail
     {
-        internal static EndpointDetail DeserializeEndpointDetail(JsonElement element)
+        internal static EndpointDetail DeserializeEndpointDetail(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

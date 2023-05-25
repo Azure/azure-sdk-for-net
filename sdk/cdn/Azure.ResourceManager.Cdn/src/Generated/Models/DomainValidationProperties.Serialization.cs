@@ -8,12 +8,13 @@
 using System;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
     public partial class DomainValidationProperties
     {
-        internal static DomainValidationProperties DeserializeDomainValidationProperties(JsonElement element)
+        internal static DomainValidationProperties DeserializeDomainValidationProperties(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

@@ -8,13 +8,14 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.Avs;
 
 namespace Azure.ResourceManager.Avs.Models
 {
     internal partial class WorkloadNetworkVirtualMachinesList
     {
-        internal static WorkloadNetworkVirtualMachinesList DeserializeWorkloadNetworkVirtualMachinesList(JsonElement element)
+        internal static WorkloadNetworkVirtualMachinesList DeserializeWorkloadNetworkVirtualMachinesList(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

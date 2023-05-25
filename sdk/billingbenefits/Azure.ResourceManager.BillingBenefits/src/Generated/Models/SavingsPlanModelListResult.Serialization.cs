@@ -8,13 +8,14 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.BillingBenefits;
 
 namespace Azure.ResourceManager.BillingBenefits.Models
 {
     internal partial class SavingsPlanModelListResult
     {
-        internal static SavingsPlanModelListResult DeserializeSavingsPlanModelListResult(JsonElement element)
+        internal static SavingsPlanModelListResult DeserializeSavingsPlanModelListResult(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

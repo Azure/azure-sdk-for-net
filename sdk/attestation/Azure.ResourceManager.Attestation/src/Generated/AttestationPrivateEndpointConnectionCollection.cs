@@ -226,7 +226,7 @@ namespace Azure.ResourceManager.Attestation
         public virtual AsyncPageable<AttestationPrivateEndpointConnectionResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _attestationPrivateEndpointConnectionPrivateEndpointConnectionsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new AttestationPrivateEndpointConnectionResource(Client, AttestationPrivateEndpointConnectionData.DeserializeAttestationPrivateEndpointConnectionData(e)), _attestationPrivateEndpointConnectionPrivateEndpointConnectionsClientDiagnostics, Pipeline, "AttestationPrivateEndpointConnectionCollection.GetAll", "value", null, cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, (e, o) => new AttestationPrivateEndpointConnectionResource(Client, AttestationPrivateEndpointConnectionData.DeserializeAttestationPrivateEndpointConnectionData(e)), _attestationPrivateEndpointConnectionPrivateEndpointConnectionsClientDiagnostics, Pipeline, "AttestationPrivateEndpointConnectionCollection.GetAll", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -247,7 +247,7 @@ namespace Azure.ResourceManager.Attestation
         public virtual Pageable<AttestationPrivateEndpointConnectionResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _attestationPrivateEndpointConnectionPrivateEndpointConnectionsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, null, e => new AttestationPrivateEndpointConnectionResource(Client, AttestationPrivateEndpointConnectionData.DeserializeAttestationPrivateEndpointConnectionData(e)), _attestationPrivateEndpointConnectionPrivateEndpointConnectionsClientDiagnostics, Pipeline, "AttestationPrivateEndpointConnectionCollection.GetAll", "value", null, cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, null, (e, o) => new AttestationPrivateEndpointConnectionResource(Client, AttestationPrivateEndpointConnectionData.DeserializeAttestationPrivateEndpointConnectionData(e)), _attestationPrivateEndpointConnectionPrivateEndpointConnectionsClientDiagnostics, Pipeline, "AttestationPrivateEndpointConnectionCollection.GetAll", "value", null, cancellationToken);
         }
 
         /// <summary>

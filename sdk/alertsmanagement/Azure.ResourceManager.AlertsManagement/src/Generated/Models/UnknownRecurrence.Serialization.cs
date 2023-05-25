@@ -8,12 +8,15 @@
 using System;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.AlertsManagement.Models
 {
     internal partial class UnknownRecurrence : IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IUtf8JsonSerializable)this).Write(writer, new SerializableOptions());
+
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer, SerializableOptions options)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("recurrenceType"u8);
@@ -31,7 +34,7 @@ namespace Azure.ResourceManager.AlertsManagement.Models
             writer.WriteEndObject();
         }
 
-        internal static UnknownRecurrence DeserializeUnknownRecurrence(JsonElement element)
+        internal static UnknownRecurrence DeserializeUnknownRecurrence(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

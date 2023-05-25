@@ -8,12 +8,13 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
     internal partial class ResourceSkuResults
     {
-        internal static ResourceSkuResults DeserializeResourceSkuResults(JsonElement element)
+        internal static ResourceSkuResults DeserializeResourceSkuResults(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

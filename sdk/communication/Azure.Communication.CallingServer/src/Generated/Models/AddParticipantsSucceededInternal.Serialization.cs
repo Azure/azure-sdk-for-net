@@ -9,12 +9,13 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Communication;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.Communication.CallingServer
 {
     internal partial class AddParticipantsSucceededInternal
     {
-        internal static AddParticipantsSucceededInternal DeserializeAddParticipantsSucceededInternal(JsonElement element)
+        internal static AddParticipantsSucceededInternal DeserializeAddParticipantsSucceededInternal(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

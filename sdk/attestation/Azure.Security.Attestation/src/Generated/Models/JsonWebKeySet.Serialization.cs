@@ -8,12 +8,13 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.Security.Attestation
 {
     internal partial class JsonWebKeySet
     {
-        internal static JsonWebKeySet DeserializeJsonWebKeySet(JsonElement element)
+        internal static JsonWebKeySet DeserializeJsonWebKeySet(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

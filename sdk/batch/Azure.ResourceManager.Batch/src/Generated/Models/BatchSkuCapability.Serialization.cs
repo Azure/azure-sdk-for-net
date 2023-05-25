@@ -7,12 +7,13 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Batch.Models
 {
     public partial class BatchSkuCapability
     {
-        internal static BatchSkuCapability DeserializeBatchSkuCapability(JsonElement element)
+        internal static BatchSkuCapability DeserializeBatchSkuCapability(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

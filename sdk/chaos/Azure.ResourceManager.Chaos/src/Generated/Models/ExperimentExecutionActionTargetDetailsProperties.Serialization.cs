@@ -8,12 +8,13 @@
 using System;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Chaos.Models
 {
     public partial class ExperimentExecutionActionTargetDetailsProperties
     {
-        internal static ExperimentExecutionActionTargetDetailsProperties DeserializeExperimentExecutionActionTargetDetailsProperties(JsonElement element)
+        internal static ExperimentExecutionActionTargetDetailsProperties DeserializeExperimentExecutionActionTargetDetailsProperties(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

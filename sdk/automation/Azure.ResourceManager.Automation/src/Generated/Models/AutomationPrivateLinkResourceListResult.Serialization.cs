@@ -8,12 +8,13 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Automation.Models
 {
     internal partial class AutomationPrivateLinkResourceListResult
     {
-        internal static AutomationPrivateLinkResourceListResult DeserializeAutomationPrivateLinkResourceListResult(JsonElement element)
+        internal static AutomationPrivateLinkResourceListResult DeserializeAutomationPrivateLinkResourceListResult(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

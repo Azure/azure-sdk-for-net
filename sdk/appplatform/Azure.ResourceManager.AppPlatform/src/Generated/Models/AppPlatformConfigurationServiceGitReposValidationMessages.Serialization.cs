@@ -8,12 +8,13 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.AppPlatform.Models
 {
     public partial class AppPlatformConfigurationServiceGitReposValidationMessages
     {
-        internal static AppPlatformConfigurationServiceGitReposValidationMessages DeserializeAppPlatformConfigurationServiceGitReposValidationMessages(JsonElement element)
+        internal static AppPlatformConfigurationServiceGitReposValidationMessages DeserializeAppPlatformConfigurationServiceGitReposValidationMessages(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

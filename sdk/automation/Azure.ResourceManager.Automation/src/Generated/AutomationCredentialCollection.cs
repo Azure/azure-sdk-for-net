@@ -228,7 +228,7 @@ namespace Azure.ResourceManager.Automation
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _automationCredentialCredentialRestClient.CreateListByAutomationAccountRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _automationCredentialCredentialRestClient.CreateListByAutomationAccountNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new AutomationCredentialResource(Client, AutomationCredentialData.DeserializeAutomationCredentialData(e)), _automationCredentialCredentialClientDiagnostics, Pipeline, "AutomationCredentialCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, (e, o) => new AutomationCredentialResource(Client, AutomationCredentialData.DeserializeAutomationCredentialData(e)), _automationCredentialCredentialClientDiagnostics, Pipeline, "AutomationCredentialCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -250,7 +250,7 @@ namespace Azure.ResourceManager.Automation
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _automationCredentialCredentialRestClient.CreateListByAutomationAccountRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _automationCredentialCredentialRestClient.CreateListByAutomationAccountNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new AutomationCredentialResource(Client, AutomationCredentialData.DeserializeAutomationCredentialData(e)), _automationCredentialCredentialClientDiagnostics, Pipeline, "AutomationCredentialCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, (e, o) => new AutomationCredentialResource(Client, AutomationCredentialData.DeserializeAutomationCredentialData(e)), _automationCredentialCredentialClientDiagnostics, Pipeline, "AutomationCredentialCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

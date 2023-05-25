@@ -7,12 +7,13 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
     public partial class AssociatedOperationProperties
     {
-        internal static AssociatedOperationProperties DeserializeAssociatedOperationProperties(JsonElement element)
+        internal static AssociatedOperationProperties DeserializeAssociatedOperationProperties(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

@@ -7,12 +7,15 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.BotService.Models
 {
     public partial class TelephonyChannelResourceApiConfiguration : IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IUtf8JsonSerializable)this).Write(writer, new SerializableOptions());
+
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer, SerializableOptions options)
         {
             writer.WriteStartObject();
             if (Optional.IsDefined(Id))
@@ -83,7 +86,7 @@ namespace Azure.ResourceManager.BotService.Models
             writer.WriteEndObject();
         }
 
-        internal static TelephonyChannelResourceApiConfiguration DeserializeTelephonyChannelResourceApiConfiguration(JsonElement element)
+        internal static TelephonyChannelResourceApiConfiguration DeserializeTelephonyChannelResourceApiConfiguration(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

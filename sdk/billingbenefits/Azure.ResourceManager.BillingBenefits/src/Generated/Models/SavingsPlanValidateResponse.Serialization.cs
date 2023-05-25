@@ -8,12 +8,13 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.BillingBenefits.Models
 {
     internal partial class SavingsPlanValidateResponse
     {
-        internal static SavingsPlanValidateResponse DeserializeSavingsPlanValidateResponse(JsonElement element)
+        internal static SavingsPlanValidateResponse DeserializeSavingsPlanValidateResponse(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

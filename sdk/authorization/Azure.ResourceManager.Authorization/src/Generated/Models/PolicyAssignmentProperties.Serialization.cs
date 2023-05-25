@@ -8,13 +8,14 @@
 using System;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Authorization.Models
 {
     public partial class PolicyAssignmentProperties
     {
-        internal static PolicyAssignmentProperties DeserializePolicyAssignmentProperties(JsonElement element)
+        internal static PolicyAssignmentProperties DeserializePolicyAssignmentProperties(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

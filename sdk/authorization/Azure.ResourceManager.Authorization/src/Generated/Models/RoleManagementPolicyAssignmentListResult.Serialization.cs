@@ -8,13 +8,14 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.Authorization;
 
 namespace Azure.ResourceManager.Authorization.Models
 {
     internal partial class RoleManagementPolicyAssignmentListResult
     {
-        internal static RoleManagementPolicyAssignmentListResult DeserializeRoleManagementPolicyAssignmentListResult(JsonElement element)
+        internal static RoleManagementPolicyAssignmentListResult DeserializeRoleManagementPolicyAssignmentListResult(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

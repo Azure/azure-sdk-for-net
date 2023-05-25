@@ -8,12 +8,15 @@
 using System.Text.Json;
 using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.BotService.Models
 {
     internal partial class UnknownChannel : IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IUtf8JsonSerializable)this).Write(writer, new SerializableOptions());
+
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer, SerializableOptions options)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("channelName"u8);
@@ -38,7 +41,7 @@ namespace Azure.ResourceManager.BotService.Models
             writer.WriteEndObject();
         }
 
-        internal static UnknownChannel DeserializeUnknownChannel(JsonElement element)
+        internal static UnknownChannel DeserializeUnknownChannel(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

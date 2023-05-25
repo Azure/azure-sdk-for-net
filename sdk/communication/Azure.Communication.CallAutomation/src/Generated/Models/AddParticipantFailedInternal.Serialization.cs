@@ -8,12 +8,13 @@
 using System.Text.Json;
 using Azure.Communication;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.Communication.CallAutomation
 {
     internal partial class AddParticipantFailedInternal
     {
-        internal static AddParticipantFailedInternal DeserializeAddParticipantFailedInternal(JsonElement element)
+        internal static AddParticipantFailedInternal DeserializeAddParticipantFailedInternal(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

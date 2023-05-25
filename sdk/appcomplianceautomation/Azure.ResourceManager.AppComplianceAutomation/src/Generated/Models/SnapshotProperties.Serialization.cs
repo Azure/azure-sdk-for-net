@@ -9,13 +9,14 @@ using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.AppComplianceAutomation.Models
 {
     public partial class SnapshotProperties
     {
-        internal static SnapshotProperties DeserializeSnapshotProperties(JsonElement element)
+        internal static SnapshotProperties DeserializeSnapshotProperties(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

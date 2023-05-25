@@ -8,13 +8,14 @@
 using System.Text.Json;
 using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Automanage.Models
 {
     public partial class ConfigurationProfileAssignmentReportResourceDetails
     {
-        internal static ConfigurationProfileAssignmentReportResourceDetails DeserializeConfigurationProfileAssignmentReportResourceDetails(JsonElement element)
+        internal static ConfigurationProfileAssignmentReportResourceDetails DeserializeConfigurationProfileAssignmentReportResourceDetails(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

@@ -7,12 +7,13 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.AppPlatform.Models
 {
     public partial class AppPlatformServiceRegistryInstance
     {
-        internal static AppPlatformServiceRegistryInstance DeserializeAppPlatformServiceRegistryInstance(JsonElement element)
+        internal static AppPlatformServiceRegistryInstance DeserializeAppPlatformServiceRegistryInstance(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

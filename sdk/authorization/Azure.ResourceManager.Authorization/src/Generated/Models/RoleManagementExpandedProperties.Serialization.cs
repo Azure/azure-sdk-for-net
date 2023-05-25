@@ -8,12 +8,13 @@
 using System;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Authorization.Models
 {
     public partial class RoleManagementExpandedProperties
     {
-        internal static RoleManagementExpandedProperties DeserializeRoleManagementExpandedProperties(JsonElement element)
+        internal static RoleManagementExpandedProperties DeserializeRoleManagementExpandedProperties(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

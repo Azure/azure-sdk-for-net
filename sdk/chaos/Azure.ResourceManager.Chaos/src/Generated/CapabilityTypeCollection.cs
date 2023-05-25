@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.Chaos
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _capabilityTypeRestClient.CreateListRequest(Id.SubscriptionId, Id.Parent.Name, Id.Name, continuationToken);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _capabilityTypeRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.Parent.Name, Id.Name, continuationToken);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new CapabilityTypeResource(Client, CapabilityTypeData.DeserializeCapabilityTypeData(e)), _capabilityTypeClientDiagnostics, Pipeline, "CapabilityTypeCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, (e, o) => new CapabilityTypeResource(Client, CapabilityTypeData.DeserializeCapabilityTypeData(e)), _capabilityTypeClientDiagnostics, Pipeline, "CapabilityTypeCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -169,7 +169,7 @@ namespace Azure.ResourceManager.Chaos
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _capabilityTypeRestClient.CreateListRequest(Id.SubscriptionId, Id.Parent.Name, Id.Name, continuationToken);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _capabilityTypeRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.Parent.Name, Id.Name, continuationToken);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new CapabilityTypeResource(Client, CapabilityTypeData.DeserializeCapabilityTypeData(e)), _capabilityTypeClientDiagnostics, Pipeline, "CapabilityTypeCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, (e, o) => new CapabilityTypeResource(Client, CapabilityTypeData.DeserializeCapabilityTypeData(e)), _capabilityTypeClientDiagnostics, Pipeline, "CapabilityTypeCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

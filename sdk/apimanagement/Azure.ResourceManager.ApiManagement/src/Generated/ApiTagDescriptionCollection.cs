@@ -233,7 +233,7 @@ namespace Azure.ResourceManager.ApiManagement
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _apiTagDescriptionRestClient.CreateListByServiceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, filter, top, skip);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _apiTagDescriptionRestClient.CreateListByServiceNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, filter, top, skip);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ApiTagDescriptionResource(Client, ApiTagDescriptionData.DeserializeApiTagDescriptionData(e)), _apiTagDescriptionClientDiagnostics, Pipeline, "ApiTagDescriptionCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, (e, o) => new ApiTagDescriptionResource(Client, ApiTagDescriptionData.DeserializeApiTagDescriptionData(e)), _apiTagDescriptionClientDiagnostics, Pipeline, "ApiTagDescriptionCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -258,7 +258,7 @@ namespace Azure.ResourceManager.ApiManagement
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _apiTagDescriptionRestClient.CreateListByServiceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, filter, top, skip);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _apiTagDescriptionRestClient.CreateListByServiceNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, filter, top, skip);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ApiTagDescriptionResource(Client, ApiTagDescriptionData.DeserializeApiTagDescriptionData(e)), _apiTagDescriptionClientDiagnostics, Pipeline, "ApiTagDescriptionCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, (e, o) => new ApiTagDescriptionResource(Client, ApiTagDescriptionData.DeserializeApiTagDescriptionData(e)), _apiTagDescriptionClientDiagnostics, Pipeline, "ApiTagDescriptionCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

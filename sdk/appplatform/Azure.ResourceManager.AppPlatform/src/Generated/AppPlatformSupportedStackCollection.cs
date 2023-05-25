@@ -144,7 +144,7 @@ namespace Azure.ResourceManager.AppPlatform
         public virtual AsyncPageable<AppPlatformSupportedStackResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _appPlatformSupportedStackBuildServiceRestClient.CreateListSupportedStacksRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new AppPlatformSupportedStackResource(Client, AppPlatformSupportedStackData.DeserializeAppPlatformSupportedStackData(e)), _appPlatformSupportedStackBuildServiceClientDiagnostics, Pipeline, "AppPlatformSupportedStackCollection.GetAll", "value", null, cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, (e, o) => new AppPlatformSupportedStackResource(Client, AppPlatformSupportedStackData.DeserializeAppPlatformSupportedStackData(e)), _appPlatformSupportedStackBuildServiceClientDiagnostics, Pipeline, "AppPlatformSupportedStackCollection.GetAll", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -165,7 +165,7 @@ namespace Azure.ResourceManager.AppPlatform
         public virtual Pageable<AppPlatformSupportedStackResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _appPlatformSupportedStackBuildServiceRestClient.CreateListSupportedStacksRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, null, e => new AppPlatformSupportedStackResource(Client, AppPlatformSupportedStackData.DeserializeAppPlatformSupportedStackData(e)), _appPlatformSupportedStackBuildServiceClientDiagnostics, Pipeline, "AppPlatformSupportedStackCollection.GetAll", "value", null, cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, null, (e, o) => new AppPlatformSupportedStackResource(Client, AppPlatformSupportedStackData.DeserializeAppPlatformSupportedStackData(e)), _appPlatformSupportedStackBuildServiceClientDiagnostics, Pipeline, "AppPlatformSupportedStackCollection.GetAll", "value", null, cancellationToken);
         }
 
         /// <summary>

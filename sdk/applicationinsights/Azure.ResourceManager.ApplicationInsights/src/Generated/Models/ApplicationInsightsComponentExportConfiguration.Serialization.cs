@@ -7,12 +7,13 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.ApplicationInsights.Models
 {
     public partial class ApplicationInsightsComponentExportConfiguration
     {
-        internal static ApplicationInsightsComponentExportConfiguration DeserializeApplicationInsightsComponentExportConfiguration(JsonElement element)
+        internal static ApplicationInsightsComponentExportConfiguration DeserializeApplicationInsightsComponentExportConfiguration(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

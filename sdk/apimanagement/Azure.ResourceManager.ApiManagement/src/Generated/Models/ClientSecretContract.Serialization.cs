@@ -7,12 +7,13 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
     public partial class ClientSecretContract
     {
-        internal static ClientSecretContract DeserializeClientSecretContract(JsonElement element)
+        internal static ClientSecretContract DeserializeClientSecretContract(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

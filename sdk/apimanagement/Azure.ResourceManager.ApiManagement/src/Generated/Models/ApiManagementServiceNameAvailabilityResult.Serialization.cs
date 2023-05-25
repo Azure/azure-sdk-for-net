@@ -7,12 +7,13 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
     public partial class ApiManagementServiceNameAvailabilityResult
     {
-        internal static ApiManagementServiceNameAvailabilityResult DeserializeApiManagementServiceNameAvailabilityResult(JsonElement element)
+        internal static ApiManagementServiceNameAvailabilityResult DeserializeApiManagementServiceNameAvailabilityResult(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

@@ -8,12 +8,13 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Authorization.Models
 {
     internal partial class RoleDefinitionPermissionListResult
     {
-        internal static RoleDefinitionPermissionListResult DeserializeRoleDefinitionPermissionListResult(JsonElement element)
+        internal static RoleDefinitionPermissionListResult DeserializeRoleDefinitionPermissionListResult(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

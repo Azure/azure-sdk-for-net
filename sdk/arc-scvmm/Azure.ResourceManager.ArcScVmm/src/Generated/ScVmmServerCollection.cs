@@ -228,7 +228,7 @@ namespace Azure.ResourceManager.ArcScVmm
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _scVmmServerVmmServersRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _scVmmServerVmmServersRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ScVmmServerResource(Client, ScVmmServerData.DeserializeScVmmServerData(e)), _scVmmServerVmmServersClientDiagnostics, Pipeline, "ScVmmServerCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, (e, o) => new ScVmmServerResource(Client, ScVmmServerData.DeserializeScVmmServerData(e)), _scVmmServerVmmServersClientDiagnostics, Pipeline, "ScVmmServerCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -250,7 +250,7 @@ namespace Azure.ResourceManager.ArcScVmm
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _scVmmServerVmmServersRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _scVmmServerVmmServersRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ScVmmServerResource(Client, ScVmmServerData.DeserializeScVmmServerData(e)), _scVmmServerVmmServersClientDiagnostics, Pipeline, "ScVmmServerCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, (e, o) => new ScVmmServerResource(Client, ScVmmServerData.DeserializeScVmmServerData(e)), _scVmmServerVmmServersClientDiagnostics, Pipeline, "ScVmmServerCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

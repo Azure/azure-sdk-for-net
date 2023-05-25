@@ -7,12 +7,13 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.BillingBenefits.Models
 {
     internal partial class SavingsPlanSummaryCount
     {
-        internal static SavingsPlanSummaryCount DeserializeSavingsPlanSummaryCount(JsonElement element)
+        internal static SavingsPlanSummaryCount DeserializeSavingsPlanSummaryCount(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

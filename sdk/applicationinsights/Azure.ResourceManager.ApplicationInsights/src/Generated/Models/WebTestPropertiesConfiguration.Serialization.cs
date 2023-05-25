@@ -7,12 +7,15 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.ApplicationInsights.Models
 {
     internal partial class WebTestPropertiesConfiguration : IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IUtf8JsonSerializable)this).Write(writer, new SerializableOptions());
+
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer, SerializableOptions options)
         {
             writer.WriteStartObject();
             if (Optional.IsDefined(WebTest))
@@ -23,7 +26,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
             writer.WriteEndObject();
         }
 
-        internal static WebTestPropertiesConfiguration DeserializeWebTestPropertiesConfiguration(JsonElement element)
+        internal static WebTestPropertiesConfiguration DeserializeWebTestPropertiesConfiguration(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

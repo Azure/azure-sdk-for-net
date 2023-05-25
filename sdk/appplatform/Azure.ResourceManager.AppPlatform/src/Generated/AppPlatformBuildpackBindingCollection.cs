@@ -227,7 +227,7 @@ namespace Azure.ResourceManager.AppPlatform
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _appPlatformBuildpackBindingBuildpackBindingRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _appPlatformBuildpackBindingBuildpackBindingRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new AppPlatformBuildpackBindingResource(Client, AppPlatformBuildpackBindingData.DeserializeAppPlatformBuildpackBindingData(e)), _appPlatformBuildpackBindingBuildpackBindingClientDiagnostics, Pipeline, "AppPlatformBuildpackBindingCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, (e, o) => new AppPlatformBuildpackBindingResource(Client, AppPlatformBuildpackBindingData.DeserializeAppPlatformBuildpackBindingData(e)), _appPlatformBuildpackBindingBuildpackBindingClientDiagnostics, Pipeline, "AppPlatformBuildpackBindingCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -249,7 +249,7 @@ namespace Azure.ResourceManager.AppPlatform
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _appPlatformBuildpackBindingBuildpackBindingRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _appPlatformBuildpackBindingBuildpackBindingRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new AppPlatformBuildpackBindingResource(Client, AppPlatformBuildpackBindingData.DeserializeAppPlatformBuildpackBindingData(e)), _appPlatformBuildpackBindingBuildpackBindingClientDiagnostics, Pipeline, "AppPlatformBuildpackBindingCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, (e, o) => new AppPlatformBuildpackBindingResource(Client, AppPlatformBuildpackBindingData.DeserializeAppPlatformBuildpackBindingData(e)), _appPlatformBuildpackBindingBuildpackBindingClientDiagnostics, Pipeline, "AppPlatformBuildpackBindingCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

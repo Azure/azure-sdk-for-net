@@ -8,13 +8,14 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.Automanage;
 
 namespace Azure.ResourceManager.Automanage.Models
 {
     internal partial class BestPracticeList
     {
-        internal static BestPracticeList DeserializeBestPracticeList(JsonElement element)
+        internal static BestPracticeList DeserializeBestPracticeList(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

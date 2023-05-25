@@ -228,7 +228,7 @@ namespace Azure.ResourceManager.Batch
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _batchApplicationApplicationRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, maxresults);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _batchApplicationApplicationRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, maxresults);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new BatchApplicationResource(Client, BatchApplicationData.DeserializeBatchApplicationData(e)), _batchApplicationApplicationClientDiagnostics, Pipeline, "BatchApplicationCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, (e, o) => new BatchApplicationResource(Client, BatchApplicationData.DeserializeBatchApplicationData(e)), _batchApplicationApplicationClientDiagnostics, Pipeline, "BatchApplicationCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -251,7 +251,7 @@ namespace Azure.ResourceManager.Batch
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _batchApplicationApplicationRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, maxresults);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _batchApplicationApplicationRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, maxresults);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new BatchApplicationResource(Client, BatchApplicationData.DeserializeBatchApplicationData(e)), _batchApplicationApplicationClientDiagnostics, Pipeline, "BatchApplicationCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, (e, o) => new BatchApplicationResource(Client, BatchApplicationData.DeserializeBatchApplicationData(e)), _batchApplicationApplicationClientDiagnostics, Pipeline, "BatchApplicationCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

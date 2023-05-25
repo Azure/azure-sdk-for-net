@@ -7,12 +7,13 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.Communication.CallAutomation
 {
     internal partial class RemoveParticipantResponseInternal
     {
-        internal static RemoveParticipantResponseInternal DeserializeRemoveParticipantResponseInternal(JsonElement element)
+        internal static RemoveParticipantResponseInternal DeserializeRemoveParticipantResponseInternal(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

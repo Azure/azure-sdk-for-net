@@ -8,12 +8,13 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Analysis.Models
 {
     internal partial class NewResourceResultSkuEnumeration
     {
-        internal static NewResourceResultSkuEnumeration DeserializeNewResourceResultSkuEnumeration(JsonElement element)
+        internal static NewResourceResultSkuEnumeration DeserializeNewResourceResultSkuEnumeration(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
