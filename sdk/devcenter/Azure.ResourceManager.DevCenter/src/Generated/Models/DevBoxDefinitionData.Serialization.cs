@@ -48,6 +48,11 @@ namespace Azure.ResourceManager.DevCenter
                 writer.WritePropertyName("osStorageType"u8);
                 writer.WriteStringValue(OSStorageType);
             }
+            if (Optional.IsDefined(HibernateSupport))
+            {
+                writer.WritePropertyName("hibernateSupport"u8);
+                writer.WriteStringValue(HibernateSupport.Value.ToString());
+            }
             writer.WriteEndObject();
             writer.WriteEndObject();
         }
@@ -64,13 +69,14 @@ namespace Azure.ResourceManager.DevCenter
             string name = default;
             ResourceType type = default;
             Optional<SystemData> systemData = default;
-            Optional<ImageReference> imageReference = default;
+            Optional<DevCenterImageReference> imageReference = default;
             Optional<DevCenterSku> sku = default;
             Optional<string> osStorageType = default;
-            Optional<string> provisioningState = default;
+            Optional<DevCenterHibernateSupport> hibernateSupport = default;
+            Optional<DevCenterProvisioningState> provisioningState = default;
             Optional<ImageValidationStatus> imageValidationStatus = default;
             Optional<ImageValidationErrorDetails> imageValidationErrorDetails = default;
-            Optional<ImageReference> activeImageReference = default;
+            Optional<DevCenterImageReference> activeImageReference = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("tags"u8))
@@ -131,7 +137,7 @@ namespace Azure.ResourceManager.DevCenter
                             {
                                 continue;
                             }
-                            imageReference = ImageReference.DeserializeImageReference(property0.Value);
+                            imageReference = DevCenterImageReference.DeserializeDevCenterImageReference(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("sku"u8))
@@ -148,9 +154,22 @@ namespace Azure.ResourceManager.DevCenter
                             osStorageType = property0.Value.GetString();
                             continue;
                         }
+                        if (property0.NameEquals("hibernateSupport"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            hibernateSupport = new DevCenterHibernateSupport(property0.Value.GetString());
+                            continue;
+                        }
                         if (property0.NameEquals("provisioningState"u8))
                         {
-                            provisioningState = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            provisioningState = new DevCenterProvisioningState(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("imageValidationStatus"u8))
@@ -177,14 +196,14 @@ namespace Azure.ResourceManager.DevCenter
                             {
                                 continue;
                             }
-                            activeImageReference = ImageReference.DeserializeImageReference(property0.Value);
+                            activeImageReference = DevCenterImageReference.DeserializeDevCenterImageReference(property0.Value);
                             continue;
                         }
                     }
                     continue;
                 }
             }
-            return new DevBoxDefinitionData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, imageReference.Value, sku.Value, osStorageType.Value, provisioningState.Value, Optional.ToNullable(imageValidationStatus), imageValidationErrorDetails.Value, activeImageReference.Value);
+            return new DevBoxDefinitionData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, imageReference.Value, sku.Value, osStorageType.Value, Optional.ToNullable(hibernateSupport), Optional.ToNullable(provisioningState), Optional.ToNullable(imageValidationStatus), imageValidationErrorDetails.Value, activeImageReference.Value);
         }
     }
 }

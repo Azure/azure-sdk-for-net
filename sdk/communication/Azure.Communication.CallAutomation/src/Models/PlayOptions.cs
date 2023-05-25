@@ -14,7 +14,7 @@ namespace Azure.Communication.CallAutomation
         /// <summary>
         /// A PlaySource object representing the source to play.
         /// </summary>
-        public PlaySource PlaySource { get; }
+        public IReadOnlyList<PlaySource> PlaySources { get; }
 
         /// <summary>
         /// A list of target identifiers to play the file to.
@@ -36,7 +36,17 @@ namespace Azure.Communication.CallAutomation
         /// </summary>
         public PlayOptions(PlaySource playSource, IEnumerable<CommunicationIdentifier> playTo)
         {
-            PlaySource = playSource;
+            List<PlaySource> playSources = new List<PlaySource>(){ playSource };
+            PlaySources = playSources;
+            PlayTo = playTo.ToList();
+        }
+
+        /// <summary>
+        /// Creates a new PlayOptions object.
+        /// </summary>
+        public PlayOptions(IEnumerable<PlaySource> playSources, IEnumerable<CommunicationIdentifier> playTo)
+        {
+            PlaySources = playSources.ToList();
             PlayTo = playTo.ToList();
         }
     }

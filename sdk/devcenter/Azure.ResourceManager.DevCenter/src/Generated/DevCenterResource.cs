@@ -36,8 +36,8 @@ namespace Azure.ResourceManager.DevCenter
 
         private readonly ClientDiagnostics _devCenterClientDiagnostics;
         private readonly DevCentersRestOperations _devCenterRestClient;
-        private readonly ClientDiagnostics _imageClientDiagnostics;
-        private readonly ImagesRestOperations _imageRestClient;
+        private readonly ClientDiagnostics _devCenterImageImagesClientDiagnostics;
+        private readonly ImagesRestOperations _devCenterImageImagesRestClient;
         private readonly DevCenterData _data;
 
         /// <summary> Initializes a new instance of the <see cref="DevCenterResource"/> class for mocking. </summary>
@@ -62,9 +62,9 @@ namespace Azure.ResourceManager.DevCenter
             _devCenterClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DevCenter", ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(ResourceType, out string devCenterApiVersion);
             _devCenterRestClient = new DevCentersRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, devCenterApiVersion);
-            _imageClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DevCenter", ImageResource.ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(ImageResource.ResourceType, out string imageApiVersion);
-            _imageRestClient = new ImagesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, imageApiVersion);
+            _devCenterImageImagesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DevCenter", DevCenterImageResource.ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(DevCenterImageResource.ResourceType, out string devCenterImageImagesApiVersion);
+            _devCenterImageImagesRestClient = new ImagesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, devCenterImageImagesApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -147,11 +147,11 @@ namespace Azure.ResourceManager.DevCenter
             return GetAttachedNetworkConnections().Get(attachedNetworkConnectionName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of GalleryResources in the DevCenter. </summary>
-        /// <returns> An object representing collection of GalleryResources and their operations over a GalleryResource. </returns>
-        public virtual GalleryCollection GetGalleries()
+        /// <summary> Gets a collection of DevCenterGalleryResources in the DevCenter. </summary>
+        /// <returns> An object representing collection of DevCenterGalleryResources and their operations over a DevCenterGalleryResource. </returns>
+        public virtual DevCenterGalleryCollection GetDevCenterGalleries()
         {
-            return GetCachedClient(Client => new GalleryCollection(Client, Id));
+            return GetCachedClient(Client => new DevCenterGalleryCollection(Client, Id));
         }
 
         /// <summary>
@@ -172,9 +172,9 @@ namespace Azure.ResourceManager.DevCenter
         /// <exception cref="ArgumentException"> <paramref name="galleryName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="galleryName"/> is null. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<GalleryResource>> GetGalleryAsync(string galleryName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<DevCenterGalleryResource>> GetDevCenterGalleryAsync(string galleryName, CancellationToken cancellationToken = default)
         {
-            return await GetGalleries().GetAsync(galleryName, cancellationToken).ConfigureAwait(false);
+            return await GetDevCenterGalleries().GetAsync(galleryName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -195,39 +195,16 @@ namespace Azure.ResourceManager.DevCenter
         /// <exception cref="ArgumentException"> <paramref name="galleryName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="galleryName"/> is null. </exception>
         [ForwardsClientCalls]
-        public virtual Response<GalleryResource> GetGallery(string galleryName, CancellationToken cancellationToken = default)
+        public virtual Response<DevCenterGalleryResource> GetDevCenterGallery(string galleryName, CancellationToken cancellationToken = default)
         {
-            return GetGalleries().Get(galleryName, cancellationToken);
+            return GetDevCenterGalleries().Get(galleryName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of CatalogResources in the DevCenter. </summary>
-        /// <returns> An object representing collection of CatalogResources and their operations over a CatalogResource. </returns>
-        public virtual CatalogCollection GetCatalogs()
+        /// <summary> Gets a collection of DevCenterCatalogResources in the DevCenter. </summary>
+        /// <returns> An object representing collection of DevCenterCatalogResources and their operations over a DevCenterCatalogResource. </returns>
+        public virtual DevCenterCatalogCollection GetDevCenterCatalogs()
         {
-            return GetCachedClient(Client => new CatalogCollection(Client, Id));
-        }
-
-        /// <summary>
-        /// Gets a catalog
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevCenter/devcenters/{devCenterName}/catalogs/{catalogName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Catalogs_Get</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="catalogName"> The name of the Catalog. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="catalogName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="catalogName"/> is null. </exception>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<CatalogResource>> GetCatalogAsync(string catalogName, CancellationToken cancellationToken = default)
-        {
-            return await GetCatalogs().GetAsync(catalogName, cancellationToken).ConfigureAwait(false);
+            return GetCachedClient(Client => new DevCenterCatalogCollection(Client, Id));
         }
 
         /// <summary>
@@ -248,16 +225,39 @@ namespace Azure.ResourceManager.DevCenter
         /// <exception cref="ArgumentException"> <paramref name="catalogName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="catalogName"/> is null. </exception>
         [ForwardsClientCalls]
-        public virtual Response<CatalogResource> GetCatalog(string catalogName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<DevCenterCatalogResource>> GetDevCenterCatalogAsync(string catalogName, CancellationToken cancellationToken = default)
         {
-            return GetCatalogs().Get(catalogName, cancellationToken);
+            return await GetDevCenterCatalogs().GetAsync(catalogName, cancellationToken).ConfigureAwait(false);
         }
 
-        /// <summary> Gets a collection of EnvironmentTypeResources in the DevCenter. </summary>
-        /// <returns> An object representing collection of EnvironmentTypeResources and their operations over a EnvironmentTypeResource. </returns>
-        public virtual EnvironmentTypeCollection GetEnvironmentTypes()
+        /// <summary>
+        /// Gets a catalog
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevCenter/devcenters/{devCenterName}/catalogs/{catalogName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Catalogs_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="catalogName"> The name of the Catalog. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="catalogName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="catalogName"/> is null. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<DevCenterCatalogResource> GetDevCenterCatalog(string catalogName, CancellationToken cancellationToken = default)
         {
-            return GetCachedClient(Client => new EnvironmentTypeCollection(Client, Id));
+            return GetDevCenterCatalogs().Get(catalogName, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of DevCenterEnvironmentTypeResources in the DevCenter. </summary>
+        /// <returns> An object representing collection of DevCenterEnvironmentTypeResources and their operations over a DevCenterEnvironmentTypeResource. </returns>
+        public virtual DevCenterEnvironmentTypeCollection GetDevCenterEnvironmentTypes()
+        {
+            return GetCachedClient(Client => new DevCenterEnvironmentTypeCollection(Client, Id));
         }
 
         /// <summary>
@@ -278,9 +278,9 @@ namespace Azure.ResourceManager.DevCenter
         /// <exception cref="ArgumentException"> <paramref name="environmentTypeName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="environmentTypeName"/> is null. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<EnvironmentTypeResource>> GetEnvironmentTypeAsync(string environmentTypeName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<DevCenterEnvironmentTypeResource>> GetDevCenterEnvironmentTypeAsync(string environmentTypeName, CancellationToken cancellationToken = default)
         {
-            return await GetEnvironmentTypes().GetAsync(environmentTypeName, cancellationToken).ConfigureAwait(false);
+            return await GetDevCenterEnvironmentTypes().GetAsync(environmentTypeName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -301,9 +301,9 @@ namespace Azure.ResourceManager.DevCenter
         /// <exception cref="ArgumentException"> <paramref name="environmentTypeName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="environmentTypeName"/> is null. </exception>
         [ForwardsClientCalls]
-        public virtual Response<EnvironmentTypeResource> GetEnvironmentType(string environmentTypeName, CancellationToken cancellationToken = default)
+        public virtual Response<DevCenterEnvironmentTypeResource> GetDevCenterEnvironmentType(string environmentTypeName, CancellationToken cancellationToken = default)
         {
-            return GetEnvironmentTypes().Get(environmentTypeName, cancellationToken);
+            return GetDevCenterEnvironmentTypes().Get(environmentTypeName, cancellationToken);
         }
 
         /// <summary> Gets a collection of DevBoxDefinitionResources in the DevCenter. </summary>
@@ -582,12 +582,12 @@ namespace Azure.ResourceManager.DevCenter
         /// </summary>
         /// <param name="top"> The maximum number of resources to return from the operation. Example: &apos;$top=10&apos;. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ImageResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<ImageResource> GetImagesAsync(int? top = null, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="DevCenterImageResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<DevCenterImageResource> GetImagesAsync(int? top = null, CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _imageRestClient.CreateListByDevCenterRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, top);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _imageRestClient.CreateListByDevCenterNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, top);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ImageResource(Client, ImageData.DeserializeImageData(e)), _imageClientDiagnostics, Pipeline, "DevCenterResource.GetImages", "value", "nextLink", cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _devCenterImageImagesRestClient.CreateListByDevCenterRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, top);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _devCenterImageImagesRestClient.CreateListByDevCenterNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, top);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new DevCenterImageResource(Client, DevCenterImageData.DeserializeDevCenterImageData(e)), _devCenterImageImagesClientDiagnostics, Pipeline, "DevCenterResource.GetImages", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -605,12 +605,12 @@ namespace Azure.ResourceManager.DevCenter
         /// </summary>
         /// <param name="top"> The maximum number of resources to return from the operation. Example: &apos;$top=10&apos;. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ImageResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<ImageResource> GetImages(int? top = null, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="DevCenterImageResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<DevCenterImageResource> GetImages(int? top = null, CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _imageRestClient.CreateListByDevCenterRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, top);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _imageRestClient.CreateListByDevCenterNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, top);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ImageResource(Client, ImageData.DeserializeImageData(e)), _imageClientDiagnostics, Pipeline, "DevCenterResource.GetImages", "value", "nextLink", cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _devCenterImageImagesRestClient.CreateListByDevCenterRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, top);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _devCenterImageImagesRestClient.CreateListByDevCenterNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, top);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new DevCenterImageResource(Client, DevCenterImageData.DeserializeDevCenterImageData(e)), _devCenterImageImagesClientDiagnostics, Pipeline, "DevCenterResource.GetImages", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
