@@ -344,12 +344,12 @@ namespace Azure.Identity.Tests
                 expCredentialTypes.ConditionalAdd(!excludeEnvironmentCredential, typeof(EnvironmentCredential));
                 expCredentialTypes.ConditionalAdd(!excludeWorkloadIdentityCredential, typeof(WorkloadIdentityCredential));
                 expCredentialTypes.ConditionalAdd(!excludeManagedIdentityCredential, typeof(ManagedIdentityCredential));
-                expCredentialTypes.ConditionalAdd(!excludeDeveloperCliCredential, typeof(AzureDeveloperCliCredential));
                 expCredentialTypes.ConditionalAdd(!excludeSharedTokenCacheCredential, typeof(SharedTokenCacheCredential));
                 expCredentialTypes.ConditionalAdd(!excludeVisualStudioCredential, typeof(VisualStudioCredential));
                 expCredentialTypes.ConditionalAdd(!excludeVisualStudioCodeCredential, typeof(VisualStudioCodeCredential));
                 expCredentialTypes.ConditionalAdd(!excludeCliCredential, typeof(AzureCliCredential));
                 expCredentialTypes.ConditionalAdd(!excludeAzurePowerShellCredential, typeof(AzurePowerShellCredential));
+                expCredentialTypes.ConditionalAdd(!excludeDeveloperCliCredential, typeof(AzureDeveloperCliCredential));
                 expCredentialTypes.ConditionalAdd(!excludeInteractiveBrowserCredential, typeof(InteractiveBrowserCredential));
 
                 var options = new DefaultAzureCredentialOptions

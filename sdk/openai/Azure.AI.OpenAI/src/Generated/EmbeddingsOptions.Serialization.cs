@@ -26,7 +26,12 @@ namespace Azure.AI.OpenAI
                 writer.WriteStringValue(InternalNonAzureModelName);
             }
             writer.WritePropertyName("input"u8);
-            writer.WriteStringValue(Input);
+            writer.WriteStartArray();
+            foreach (var item in Input)
+            {
+                writer.WriteStringValue(item);
+            }
+            writer.WriteEndArray();
             writer.WriteEndObject();
         }
 

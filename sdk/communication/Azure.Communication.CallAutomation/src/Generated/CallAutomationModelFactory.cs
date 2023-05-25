@@ -57,98 +57,98 @@ namespace Azure.Communication.CallAutomation
             return new ResultInformation(code, subCode, message);
         }
 
-        /// <summary> Initializes a new instance of CallConnectedEventData. </summary>
+        /// <summary> Initializes a new instance of CallConnected. </summary>
         /// <param name="callConnectionId"> Call connection ID. </param>
         /// <param name="serverCallId"> Server call ID. </param>
         /// <param name="correlationId"> Correlation ID for event to call correlation. Also called ChainId for skype chain ID. </param>
         /// <param name="operationContext"> Used by customers to set the context for creating a new call. This property will be null for answering a call. </param>
-        /// <returns> A new <see cref="CallAutomation.CallConnectedEventData"/> instance for mocking. </returns>
-        public static CallConnectedEventData CallConnectedEventData(string callConnectionId = null, string serverCallId = null, string correlationId = null, string operationContext = null)
+        /// <returns> A new <see cref="CallAutomation.CallConnected"/> instance for mocking. </returns>
+        public static CallConnected CallConnected(string callConnectionId = null, string serverCallId = null, string correlationId = null, string operationContext = null)
         {
-            return new CallConnectedEventData(callConnectionId, serverCallId, correlationId, operationContext);
+            return new CallConnected(callConnectionId, serverCallId, correlationId, operationContext);
         }
 
-        /// <summary> Initializes a new instance of CallDisconnectedEventData. </summary>
+        /// <summary> Initializes a new instance of CallDisconnected. </summary>
         /// <param name="callConnectionId"> Call connection ID. </param>
         /// <param name="serverCallId"> Server call ID. </param>
         /// <param name="correlationId"> Correlation ID for event to call correlation. Also called ChainId for skype chain ID. </param>
         /// <param name="operationContext"> Used by customers to set the context for creating a new call. This property will be null for answering a call. </param>
-        /// <returns> A new <see cref="CallAutomation.CallDisconnectedEventData"/> instance for mocking. </returns>
-        public static CallDisconnectedEventData CallDisconnectedEventData(string callConnectionId = null, string serverCallId = null, string correlationId = null, string operationContext = null)
+        /// <returns> A new <see cref="CallAutomation.CallDisconnected"/> instance for mocking. </returns>
+        public static CallDisconnected CallDisconnected(string callConnectionId = null, string serverCallId = null, string correlationId = null, string operationContext = null)
         {
-            return new CallDisconnectedEventData(callConnectionId, serverCallId, correlationId, operationContext);
+            return new CallDisconnected(callConnectionId, serverCallId, correlationId, operationContext);
         }
 
-        /// <summary> Initializes a new instance of CallTransferAcceptedEventData. </summary>
+        /// <summary> Initializes a new instance of CallTransferAccepted. </summary>
         /// <param name="callConnectionId"> Call connection ID. </param>
         /// <param name="serverCallId"> Server call ID. </param>
         /// <param name="correlationId"> Correlation ID for event to call correlation. Also called ChainId for skype chain ID. </param>
         /// <param name="operationContext"> Used by customers when calling mid-call actions to correlate the request to the response event. </param>
         /// <param name="resultInformation"> Contains the resulting SIP code/sub-code and message from NGC services. </param>
-        /// <returns> A new <see cref="CallAutomation.CallTransferAcceptedEventData"/> instance for mocking. </returns>
-        public static CallTransferAcceptedEventData CallTransferAcceptedEventData(string callConnectionId = null, string serverCallId = null, string correlationId = null, string operationContext = null, ResultInformation resultInformation = null)
+        /// <returns> A new <see cref="CallAutomation.CallTransferAccepted"/> instance for mocking. </returns>
+        public static CallTransferAccepted CallTransferAccepted(string callConnectionId = null, string serverCallId = null, string correlationId = null, string operationContext = null, ResultInformation resultInformation = null)
         {
-            return new CallTransferAcceptedEventData(callConnectionId, serverCallId, correlationId, operationContext, resultInformation);
+            return new CallTransferAccepted(callConnectionId, serverCallId, correlationId, operationContext, resultInformation);
         }
 
-        /// <summary> Initializes a new instance of CallTransferFailedEventData. </summary>
+        /// <summary> Initializes a new instance of CallTransferFailed. </summary>
         /// <param name="callConnectionId"> Call connection ID. </param>
         /// <param name="serverCallId"> Server call ID. </param>
         /// <param name="correlationId"> Correlation ID for event to call correlation. Also called ChainId for skype chain ID. </param>
         /// <param name="operationContext"> Used by customers when calling mid-call actions to correlate the request to the response event. </param>
         /// <param name="resultInformation"> Contains the resulting SIP code/sub-code and message from NGC services. </param>
-        /// <returns> A new <see cref="CallAutomation.CallTransferFailedEventData"/> instance for mocking. </returns>
-        public static CallTransferFailedEventData CallTransferFailedEventData(string callConnectionId = null, string serverCallId = null, string correlationId = null, string operationContext = null, ResultInformation resultInformation = null)
+        /// <returns> A new <see cref="CallAutomation.CallTransferFailed"/> instance for mocking. </returns>
+        public static CallTransferFailed CallTransferFailed(string callConnectionId = null, string serverCallId = null, string correlationId = null, string operationContext = null, ResultInformation resultInformation = null)
         {
-            return new CallTransferFailedEventData(callConnectionId, serverCallId, correlationId, operationContext, resultInformation);
+            return new CallTransferFailed(callConnectionId, serverCallId, correlationId, operationContext, resultInformation);
         }
 
-        /// <summary> Initializes a new instance of RecordingStateChangedEventData. </summary>
+        /// <summary> Initializes a new instance of RecordingStateChanged. </summary>
         /// <param name="callConnectionId"> Call connection ID. </param>
         /// <param name="serverCallId"> Server call ID. </param>
-        /// <param name="correlationId"> Correlation ID for event to call correlation. Also called ChainId for skype chain ID. </param>
+        /// <param name="correlationId"> Correlation ID for event to call correlation. </param>
         /// <param name="recordingId"> The call recording id. </param>
         /// <param name="state"></param>
         /// <param name="startDateTime"> The time of the recording started. </param>
-        /// <returns> A new <see cref="CallAutomation.RecordingStateChangedEventData"/> instance for mocking. </returns>
-        public static RecordingStateChangedEventData RecordingStateChangedEventData(string callConnectionId = null, string serverCallId = null, string correlationId = null, string recordingId = null, RecordingState state = default, DateTimeOffset? startDateTime = null)
+        /// <returns> A new <see cref="CallAutomation.RecordingStateChanged"/> instance for mocking. </returns>
+        public static RecordingStateChanged RecordingStateChanged(string callConnectionId = null, string serverCallId = null, string correlationId = null, string recordingId = null, RecordingState state = default, DateTimeOffset? startDateTime = null)
         {
-            return new RecordingStateChangedEventData(callConnectionId, serverCallId, correlationId, recordingId, state, startDateTime);
+            return new RecordingStateChanged(callConnectionId, serverCallId, correlationId, recordingId, state, startDateTime);
         }
 
-        /// <summary> Initializes a new instance of PlayCompletedEventData. </summary>
+        /// <summary> Initializes a new instance of PlayCompleted. </summary>
         /// <param name="callConnectionId"> Call connection ID. </param>
         /// <param name="serverCallId"> Server call ID. </param>
-        /// <param name="correlationId"> Correlation ID for event to call correlation. Also called ChainId for skype chain ID. </param>
+        /// <param name="correlationId"> Correlation ID for event to call correlation. </param>
         /// <param name="operationContext"> Used by customers when calling mid-call actions to correlate the request to the response event. </param>
-        /// <param name="resultInformation"> Contains the resulting SIP code/sub-code and message from NGC services. </param>
-        /// <returns> A new <see cref="CallAutomation.PlayCompletedEventData"/> instance for mocking. </returns>
-        public static PlayCompletedEventData PlayCompletedEventData(string callConnectionId = null, string serverCallId = null, string correlationId = null, string operationContext = null, ResultInformation resultInformation = null)
+        /// <param name="resultInformation"> Contains the resulting SIP code, sub-code and message. </param>
+        /// <returns> A new <see cref="CallAutomation.PlayCompleted"/> instance for mocking. </returns>
+        public static PlayCompleted PlayCompleted(string callConnectionId = null, string serverCallId = null, string correlationId = null, string operationContext = null, ResultInformation resultInformation = null)
         {
-            return new PlayCompletedEventData(callConnectionId, serverCallId, correlationId, operationContext, resultInformation);
+            return new PlayCompleted(callConnectionId, serverCallId, correlationId, operationContext, resultInformation);
         }
 
-        /// <summary> Initializes a new instance of PlayFailedEventData. </summary>
+        /// <summary> Initializes a new instance of PlayFailed. </summary>
         /// <param name="callConnectionId"> Call connection ID. </param>
         /// <param name="serverCallId"> Server call ID. </param>
-        /// <param name="correlationId"> Correlation ID for event to call correlation. Also called ChainId for skype chain ID. </param>
+        /// <param name="correlationId"> Correlation ID for event to call correlation. </param>
         /// <param name="operationContext"> Used by customers when calling mid-call actions to correlate the request to the response event. </param>
-        /// <param name="resultInformation"> Contains the resulting SIP code/sub-code and message from NGC services. </param>
-        /// <returns> A new <see cref="CallAutomation.PlayFailedEventData"/> instance for mocking. </returns>
-        public static PlayFailedEventData PlayFailedEventData(string callConnectionId = null, string serverCallId = null, string correlationId = null, string operationContext = null, ResultInformation resultInformation = null)
+        /// <param name="resultInformation"> Contains the resulting SIP code, sub-code and message. </param>
+        /// <returns> A new <see cref="CallAutomation.PlayFailed"/> instance for mocking. </returns>
+        public static PlayFailed PlayFailed(string callConnectionId = null, string serverCallId = null, string correlationId = null, string operationContext = null, ResultInformation resultInformation = null)
         {
-            return new PlayFailedEventData(callConnectionId, serverCallId, correlationId, operationContext, resultInformation);
+            return new PlayFailed(callConnectionId, serverCallId, correlationId, operationContext, resultInformation);
         }
 
-        /// <summary> Initializes a new instance of PlayCanceledEventData. </summary>
+        /// <summary> Initializes a new instance of PlayCanceled. </summary>
         /// <param name="callConnectionId"> Call connection ID. </param>
         /// <param name="serverCallId"> Server call ID. </param>
-        /// <param name="correlationId"> Correlation ID for event to call correlation. Also called ChainId for skype chain ID. </param>
+        /// <param name="correlationId"> Correlation ID for event to call correlation. </param>
         /// <param name="operationContext"> Used by customers when calling mid-call actions to correlate the request to the response event. </param>
-        /// <returns> A new <see cref="CallAutomation.PlayCanceledEventData"/> instance for mocking. </returns>
-        public static PlayCanceledEventData PlayCanceledEventData(string callConnectionId = null, string serverCallId = null, string correlationId = null, string operationContext = null)
+        /// <returns> A new <see cref="CallAutomation.PlayCanceled"/> instance for mocking. </returns>
+        public static PlayCanceled PlayCanceled(string callConnectionId = null, string serverCallId = null, string correlationId = null, string operationContext = null)
         {
-            return new PlayCanceledEventData(callConnectionId, serverCallId, correlationId, operationContext);
+            return new PlayCanceled(callConnectionId, serverCallId, correlationId, operationContext);
         }
 
         /// <summary> Initializes a new instance of CollectTonesResult. </summary>
@@ -191,96 +191,97 @@ namespace Azure.Communication.CallAutomation
             return new SpeechResult(speech);
         }
 
-        /// <summary> Initializes a new instance of RecognizeFailedEventData. </summary>
+        /// <summary> Initializes a new instance of RecognizeFailed. </summary>
         /// <param name="callConnectionId"> Call connection ID. </param>
         /// <param name="serverCallId"> Server call ID. </param>
-        /// <param name="correlationId"> Correlation ID for event to call correlation. Also called ChainId for skype chain ID. </param>
+        /// <param name="correlationId"> Correlation ID for event to call correlation. </param>
         /// <param name="operationContext"> Used by customers when calling mid-call actions to correlate the request to the response event. </param>
-        /// <param name="resultInformation"> Contains the resulting SIP code/sub-code and message from NGC services. </param>
-        /// <returns> A new <see cref="CallAutomation.RecognizeFailedEventData"/> instance for mocking. </returns>
-        public static RecognizeFailedEventData RecognizeFailedEventData(string callConnectionId = null, string serverCallId = null, string correlationId = null, string operationContext = null, ResultInformation resultInformation = null)
+        /// <param name="resultInformation"> Contains the resulting SIP code, sub-code and message. </param>
+        /// <returns> A new <see cref="CallAutomation.RecognizeFailed"/> instance for mocking. </returns>
+        public static RecognizeFailed RecognizeFailed(string callConnectionId = null, string serverCallId = null, string correlationId = null, string operationContext = null, ResultInformation resultInformation = null)
         {
-            return new RecognizeFailedEventData(callConnectionId, serverCallId, correlationId, operationContext, resultInformation);
+            return new RecognizeFailed(callConnectionId, serverCallId, correlationId, operationContext, resultInformation);
         }
 
-        /// <summary> Initializes a new instance of RecognizeCanceledEventData. </summary>
+        /// <summary> Initializes a new instance of RecognizeCanceled. </summary>
         /// <param name="callConnectionId"> Call connection ID. </param>
         /// <param name="serverCallId"> Server call ID. </param>
-        /// <param name="correlationId"> Correlation ID for event to call correlation. Also called ChainId for skype chain ID. </param>
+        /// <param name="correlationId"> Correlation ID for event to call correlation. </param>
         /// <param name="operationContext"> Used by customers when calling mid-call actions to correlate the request to the response event. </param>
-        /// <returns> A new <see cref="CallAutomation.RecognizeCanceledEventData"/> instance for mocking. </returns>
-        public static RecognizeCanceledEventData RecognizeCanceledEventData(string callConnectionId = null, string serverCallId = null, string correlationId = null, string operationContext = null)
+        /// <returns> A new <see cref="CallAutomation.RecognizeCanceled"/> instance for mocking. </returns>
+        public static RecognizeCanceled RecognizeCanceled(string callConnectionId = null, string serverCallId = null, string correlationId = null, string operationContext = null)
         {
-            return new RecognizeCanceledEventData(callConnectionId, serverCallId, correlationId, operationContext);
+            return new RecognizeCanceled(callConnectionId, serverCallId, correlationId, operationContext);
         }
 
-        /// <summary> Initializes a new instance of ContinuousDtmfRecognitionToneFailedEventData. </summary>
+        /// <summary> Initializes a new instance of ContinuousDtmfRecognitionToneFailed. </summary>
         /// <param name="callConnectionId"> Call connection ID. </param>
         /// <param name="serverCallId"> Server call ID. </param>
-        /// <param name="correlationId"> Correlation ID for event to call correlation. Also called ChainId for skype chain ID. </param>
-        /// <param name="resultInformation"> Contains the resulting SIP code/sub-code and message from NGC services. </param>
-        /// <returns> A new <see cref="CallAutomation.ContinuousDtmfRecognitionToneFailedEventData"/> instance for mocking. </returns>
-        public static ContinuousDtmfRecognitionToneFailedEventData ContinuousDtmfRecognitionToneFailedEventData(string callConnectionId = null, string serverCallId = null, string correlationId = null, ResultInformation resultInformation = null)
+        /// <param name="correlationId"> Correlation ID for event to call correlation. </param>
+        /// <param name="resultInformation"> Contains the resulting SIP code, sub-code and message. </param>
+        /// <param name="operationContext"> Used by customers when calling mid-call actions to correlate the request to the response event. </param>
+        /// <returns> A new <see cref="CallAutomation.ContinuousDtmfRecognitionToneFailed"/> instance for mocking. </returns>
+        public static ContinuousDtmfRecognitionToneFailed ContinuousDtmfRecognitionToneFailed(string callConnectionId = null, string serverCallId = null, string correlationId = null, ResultInformation resultInformation = null, string operationContext = null)
         {
-            return new ContinuousDtmfRecognitionToneFailedEventData(callConnectionId, serverCallId, correlationId, resultInformation);
+            return new ContinuousDtmfRecognitionToneFailed(callConnectionId, serverCallId, correlationId, resultInformation, operationContext);
         }
 
-        /// <summary> Initializes a new instance of ContinuousDtmfRecognitionToneReceivedEventData. </summary>
+        /// <summary> Initializes a new instance of ContinuousDtmfRecognitionToneReceived. </summary>
         /// <param name="toneInfo"> Information about Tone. </param>
         /// <param name="callConnectionId"> Call connection ID. </param>
         /// <param name="serverCallId"> Server call ID. </param>
         /// <param name="correlationId"> Correlation ID for event to call correlation. Also called ChainId or skype chain ID. </param>
-        /// <param name="resultInformation"> Contains the resulting SIP code/sub-code and message from NGC services. </param>
-        /// <returns> A new <see cref="CallAutomation.ContinuousDtmfRecognitionToneReceivedEventData"/> instance for mocking. </returns>
-        public static ContinuousDtmfRecognitionToneReceivedEventData ContinuousDtmfRecognitionToneReceivedEventData(ToneInfo toneInfo = null, string callConnectionId = null, string serverCallId = null, string correlationId = null, ResultInformation resultInformation = null)
+        /// <param name="resultInformation"> Contains the resulting SIP code, sub-code and message. </param>
+        /// <param name="operationContext"> Used by customers when calling mid-call actions to correlate the request to the response event. </param>
+        /// <returns> A new <see cref="CallAutomation.ContinuousDtmfRecognitionToneReceived"/> instance for mocking. </returns>
+        public static ContinuousDtmfRecognitionToneReceived ContinuousDtmfRecognitionToneReceived(ToneInfo toneInfo = null, string callConnectionId = null, string serverCallId = null, string correlationId = null, ResultInformation resultInformation = null, string operationContext = null)
         {
-            return new ContinuousDtmfRecognitionToneReceivedEventData(toneInfo, callConnectionId, serverCallId, correlationId, resultInformation);
+            return new ContinuousDtmfRecognitionToneReceived(toneInfo, callConnectionId, serverCallId, correlationId, resultInformation, operationContext);
         }
 
         /// <summary> Initializes a new instance of ToneInfo. </summary>
         /// <param name="sequenceId"> The sequence id which can be used to determine if the same tone was played multiple times or if any tones were missed. </param>
         /// <param name="tone"></param>
-        /// <param name="participantId"> The id of participant. </param>
         /// <returns> A new <see cref="CallAutomation.ToneInfo"/> instance for mocking. </returns>
-        public static ToneInfo ToneInfo(int sequenceId = default, DtmfTone tone = default, string participantId = null)
+        public static ToneInfo ToneInfo(int sequenceId = default, DtmfTone tone = default)
         {
-            return new ToneInfo(sequenceId, tone, participantId);
+            return new ToneInfo(sequenceId, tone);
         }
 
-        /// <summary> Initializes a new instance of ContinuousDtmfRecognitionStoppedEventData. </summary>
+        /// <summary> Initializes a new instance of ContinuousDtmfRecognitionStopped. </summary>
         /// <param name="callConnectionId"> Call connection ID. </param>
         /// <param name="serverCallId"> Server call ID. </param>
-        /// <param name="correlationId"> Correlation ID for event to call correlation. Also called ChainId for skype chain ID. </param>
+        /// <param name="correlationId"> Correlation ID for event to call correlation. </param>
         /// <param name="operationContext"> Used by customers when calling mid-call actions to correlate the request to the response event. </param>
-        /// <param name="resultInformation"> Contains the resulting SIP code/sub-code and message from NGC services. </param>
-        /// <returns> A new <see cref="CallAutomation.ContinuousDtmfRecognitionStoppedEventData"/> instance for mocking. </returns>
-        public static ContinuousDtmfRecognitionStoppedEventData ContinuousDtmfRecognitionStoppedEventData(string callConnectionId = null, string serverCallId = null, string correlationId = null, string operationContext = null, ResultInformation resultInformation = null)
+        /// <param name="resultInformation"> Contains the resulting SIP code, sub-code and message. </param>
+        /// <returns> A new <see cref="CallAutomation.ContinuousDtmfRecognitionStopped"/> instance for mocking. </returns>
+        public static ContinuousDtmfRecognitionStopped ContinuousDtmfRecognitionStopped(string callConnectionId = null, string serverCallId = null, string correlationId = null, string operationContext = null, ResultInformation resultInformation = null)
         {
-            return new ContinuousDtmfRecognitionStoppedEventData(callConnectionId, serverCallId, correlationId, operationContext, resultInformation);
+            return new ContinuousDtmfRecognitionStopped(callConnectionId, serverCallId, correlationId, operationContext, resultInformation);
         }
 
-        /// <summary> Initializes a new instance of SendDtmfCompletedEventData. </summary>
+        /// <summary> Initializes a new instance of SendDtmfCompleted. </summary>
         /// <param name="callConnectionId"> Call connection ID. </param>
         /// <param name="serverCallId"> Server call ID. </param>
-        /// <param name="correlationId"> Correlation ID for event to call correlation. Also called ChainId for skype chain ID. </param>
+        /// <param name="correlationId"> Correlation ID for event to call correlation. </param>
         /// <param name="operationContext"> Used by customers when calling mid-call actions to correlate the request to the response event. </param>
-        /// <param name="resultInformation"> Contains the resulting SIP code/sub-code and message from NGC services. </param>
-        /// <returns> A new <see cref="CallAutomation.SendDtmfCompletedEventData"/> instance for mocking. </returns>
-        public static SendDtmfCompletedEventData SendDtmfCompletedEventData(string callConnectionId = null, string serverCallId = null, string correlationId = null, string operationContext = null, ResultInformation resultInformation = null)
+        /// <param name="resultInformation"> Contains the resulting SIP code, sub-code and message. </param>
+        /// <returns> A new <see cref="CallAutomation.SendDtmfCompleted"/> instance for mocking. </returns>
+        public static SendDtmfCompleted SendDtmfCompleted(string callConnectionId = null, string serverCallId = null, string correlationId = null, string operationContext = null, ResultInformation resultInformation = null)
         {
-            return new SendDtmfCompletedEventData(callConnectionId, serverCallId, correlationId, operationContext, resultInformation);
+            return new SendDtmfCompleted(callConnectionId, serverCallId, correlationId, operationContext, resultInformation);
         }
 
-        /// <summary> Initializes a new instance of SendDtmfFailedEventData. </summary>
+        /// <summary> Initializes a new instance of SendDtmfFailed. </summary>
         /// <param name="callConnectionId"> Call connection ID. </param>
         /// <param name="serverCallId"> Server call ID. </param>
-        /// <param name="correlationId"> Correlation ID for event to call correlation. Also called ChainId for skype chain ID. </param>
+        /// <param name="correlationId"> Correlation ID for event to call correlation. </param>
         /// <param name="operationContext"> Used by customers when calling mid-call actions to correlate the request to the response event. </param>
-        /// <param name="resultInformation"> Contains the resulting SIP code/sub-code and message from NGC services. </param>
-        /// <returns> A new <see cref="CallAutomation.SendDtmfFailedEventData"/> instance for mocking. </returns>
-        public static SendDtmfFailedEventData SendDtmfFailedEventData(string callConnectionId = null, string serverCallId = null, string correlationId = null, string operationContext = null, ResultInformation resultInformation = null)
+        /// <param name="resultInformation"> Contains the resulting SIP code, sub-code and message. </param>
+        /// <returns> A new <see cref="CallAutomation.SendDtmfFailed"/> instance for mocking. </returns>
+        public static SendDtmfFailed SendDtmfFailed(string callConnectionId = null, string serverCallId = null, string correlationId = null, string operationContext = null, ResultInformation resultInformation = null)
         {
-            return new SendDtmfFailedEventData(callConnectionId, serverCallId, correlationId, operationContext, resultInformation);
+            return new SendDtmfFailed(callConnectionId, serverCallId, correlationId, operationContext, resultInformation);
         }
     }
 }

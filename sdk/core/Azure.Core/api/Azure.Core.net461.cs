@@ -18,8 +18,8 @@ namespace Azure
     public static partial class AzureCoreExtensions
     {
         public static dynamic ToDynamicFromJson(this System.BinaryData utf8Json) { throw null; }
-        public static dynamic ToDynamicFromJson(this System.BinaryData utf8Json, Azure.Core.Dynamic.DynamicDataNameMapping nameMapping) { throw null; }
-        public static dynamic ToDynamicFromJson(this System.BinaryData utf8Json, Azure.DynamicDataOptions options) { throw null; }
+        public static dynamic ToDynamicFromJson(this System.BinaryData utf8Json, Azure.Core.Dynamic.DynamicCaseMapping caseMapping, Azure.Core.Dynamic.DynamicDateTimeHandling dateTimeHandling = Azure.Core.Dynamic.DynamicDateTimeHandling.Rfc3339) { throw null; }
+        public static dynamic ToDynamicFromJson(this System.BinaryData utf8Json, Azure.Core.Dynamic.DynamicDataOptions options) { throw null; }
         public static System.Threading.Tasks.ValueTask<T?> ToObjectAsync<T>(this System.BinaryData data, Azure.Core.Serialization.ObjectSerializer serializer, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static object? ToObjectFromJson(this System.BinaryData data) { throw null; }
         public static T? ToObject<T>(this System.BinaryData data, Azure.Core.Serialization.ObjectSerializer serializer, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -45,12 +45,6 @@ namespace Azure
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public string Signature { get { throw null; } }
         public void Update(string signature) { }
-    }
-    public partial class DynamicDataOptions
-    {
-        public static readonly Azure.DynamicDataOptions Default;
-        public DynamicDataOptions() { }
-        public Azure.Core.Dynamic.DynamicDataNameMapping NameMapping { get { throw null; } set { } }
     }
     [System.FlagsAttribute]
     public enum ErrorOptions
@@ -786,6 +780,11 @@ namespace Azure.Core.Diagnostics
 }
 namespace Azure.Core.Dynamic
 {
+    public enum DynamicCaseMapping
+    {
+        None = 0,
+        PascalToCamel = 1,
+    }
     [System.Diagnostics.DebuggerDisplayAttribute("{DebuggerDisplay,nq}")]
     public sealed partial class DynamicData : System.Dynamic.IDynamicMetaObjectProvider, System.IDisposable
     {
@@ -796,26 +795,36 @@ namespace Azure.Core.Dynamic
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.Core.Dynamic.DynamicData? left, object? right) { throw null; }
+        public static explicit operator System.DateTime (Azure.Core.Dynamic.DynamicData value) { throw null; }
+        public static explicit operator System.DateTimeOffset (Azure.Core.Dynamic.DynamicData value) { throw null; }
+        public static explicit operator System.Guid (Azure.Core.Dynamic.DynamicData value) { throw null; }
         public static implicit operator bool (Azure.Core.Dynamic.DynamicData value) { throw null; }
+        public static implicit operator byte (Azure.Core.Dynamic.DynamicData value) { throw null; }
+        public static implicit operator decimal (Azure.Core.Dynamic.DynamicData value) { throw null; }
         public static implicit operator double (Azure.Core.Dynamic.DynamicData value) { throw null; }
+        public static implicit operator short (Azure.Core.Dynamic.DynamicData value) { throw null; }
         public static implicit operator int (Azure.Core.Dynamic.DynamicData value) { throw null; }
         public static implicit operator long (Azure.Core.Dynamic.DynamicData value) { throw null; }
-        public static implicit operator bool? (Azure.Core.Dynamic.DynamicData value) { throw null; }
-        public static implicit operator double? (Azure.Core.Dynamic.DynamicData value) { throw null; }
-        public static implicit operator int? (Azure.Core.Dynamic.DynamicData value) { throw null; }
-        public static implicit operator long? (Azure.Core.Dynamic.DynamicData value) { throw null; }
-        public static implicit operator float? (Azure.Core.Dynamic.DynamicData value) { throw null; }
+        public static implicit operator sbyte (Azure.Core.Dynamic.DynamicData value) { throw null; }
         public static implicit operator float (Azure.Core.Dynamic.DynamicData value) { throw null; }
         public static implicit operator string (Azure.Core.Dynamic.DynamicData value) { throw null; }
+        public static implicit operator ushort (Azure.Core.Dynamic.DynamicData value) { throw null; }
+        public static implicit operator uint (Azure.Core.Dynamic.DynamicData value) { throw null; }
+        public static implicit operator ulong (Azure.Core.Dynamic.DynamicData value) { throw null; }
         public static bool operator !=(Azure.Core.Dynamic.DynamicData? left, object? right) { throw null; }
         System.Dynamic.DynamicMetaObject System.Dynamic.IDynamicMetaObjectProvider.GetMetaObject(System.Linq.Expressions.Expression parameter) { throw null; }
         public override string ToString() { throw null; }
     }
-    public enum DynamicDataNameMapping
+    public partial class DynamicDataOptions
     {
-        None = 0,
-        PascalCaseGetters = 1,
-        PascalCaseGettersCamelCaseSetters = 2,
+        public DynamicDataOptions() { }
+        public Azure.Core.Dynamic.DynamicCaseMapping CaseMapping { get { throw null; } set { } }
+        public Azure.Core.Dynamic.DynamicDateTimeHandling DateTimeHandling { get { throw null; } set { } }
+    }
+    public enum DynamicDateTimeHandling
+    {
+        Rfc3339 = 0,
+        UnixTime = 1,
     }
 }
 namespace Azure.Core.Extensions

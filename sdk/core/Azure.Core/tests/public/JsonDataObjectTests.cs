@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using Azure.Core.Dynamic;
 using Microsoft.CSharp.RuntimeBinder;
 using NUnit.Framework;
 
@@ -25,13 +26,14 @@ namespace Azure.Core.Tests.Public
         [Test]
         public void CanConvertObjectToModel()
         {
+            DynamicDataOptions options = new() { CaseMapping = DynamicCaseMapping.PascalToCamel };
             dynamic data = BinaryData.FromString(
                 """
                 {
                     "message": "Hi",
                     "number" : 5
                 }
-                """).ToDynamicFromJson(DynamicDataOptions.Default);
+                """).ToDynamicFromJson(options);
 
             Assert.AreEqual(new SampleModel("Hi", 5), (SampleModel)data);
         }

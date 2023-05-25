@@ -26,7 +26,7 @@ namespace Azure.Storage.DataMovement.Tests
         /// <summary>
         /// Upload and verify the contents of the blob
         ///
-        /// By default in this function an event arguement will be added to the options event handler
+        /// By default in this function an event argument will be added to the options event handler
         /// to detect when the upload has finished.
         /// </summary>
         /// <param name="container">The source container which will contains the source blobs</param>
@@ -63,9 +63,14 @@ namespace Azure.Storage.DataMovement.Tests
             TransferManager transferManager = new TransferManager(transferManagerOptions);
 
             StorageResourceContainer sourceResource =
-                new BlobDirectoryStorageResourceContainer(container, sourceBlobPrefix);
+                new BlobStorageResourceContainer(container, new() { DirectoryPrefix = sourceBlobPrefix });
             StorageResourceContainer destinationResource =
-                new BlobDirectoryStorageResourceContainer(container, destinationBlobPrefix);
+                new BlobStorageResourceContainer(container,
+                new BlobStorageResourceContainerOptions()
+                {
+                    CopyMethod = TransferCopyMethod.AsyncCopy,
+                    DirectoryPrefix = destinationBlobPrefix,
+                });
 
             DataTransfer transfer = await transferManager.StartTransferAsync(sourceResource, destinationResource, options);
 
@@ -220,8 +225,8 @@ namespace Azure.Storage.DataMovement.Tests
             var dirName2 = GetNewBlobDirectoryName();
 
             // Set up destination client
-            StorageResourceContainer destinationResource = new BlobDirectoryStorageResourceContainer(test.Container, dirName);
-            StorageResourceContainer sourceResource = new BlobDirectoryStorageResourceContainer(test.Container, dirName2);
+            StorageResourceContainer destinationResource = new BlobStorageResourceContainer(test.Container, new() { DirectoryPrefix = dirName });
+            StorageResourceContainer sourceResource = new BlobStorageResourceContainer(test.Container, new() { DirectoryPrefix = dirName2 });
 
             TransferManagerOptions managerOptions = new TransferManagerOptions()
             {
@@ -441,6 +446,48 @@ namespace Azure.Storage.DataMovement.Tests
                 options: options).ConfigureAwait(false);
         }
 
+        [Test]
+        [LiveOnly] // https://github.com/Azure/azure-sdk-for-net/issues/33082
+        public async Task BlockBlobDirectoryToDirectory_Root()
+        {
+            // Arrange
+            string[] files = { "file1", "dir1/file1", "dir1/file2", "dir1/file3", "dir2/file1" };
+            BinaryData data = BinaryData.FromString("Hello World");
+
+            await using DisposingBlobContainer source = await GetTestContainerAsync();
+            await using DisposingBlobContainer destination = await GetTestContainerAsync();
+
+            foreach (string file in files)
+            {
+                await source.Container.UploadBlobAsync(file, data);
+            }
+
+            TransferManager transferManager = new TransferManager();
+
+            StorageResourceContainer sourceResource =
+                new BlobStorageResourceContainer(source.Container);
+            StorageResourceContainer destinationResource = new BlobStorageResourceContainer(
+                destination.Container,
+                new BlobStorageResourceContainerOptions()
+                {
+                    CopyMethod = TransferCopyMethod.AsyncCopy,
+                });
+
+            // Act
+            DataTransfer transfer = await transferManager.StartTransferAsync(sourceResource, destinationResource);
+
+            CancellationTokenSource tokenSource = new CancellationTokenSource(TimeSpan.FromSeconds(10));
+            await transfer.AwaitCompletion(tokenSource.Token);
+
+            // Assert
+            Assert.AreEqual(StorageTransferStatus.Completed, transfer.TransferStatus);
+
+            IEnumerable<string> destinationFiles =
+                (await destination.Container.GetBlobsAsync().ToEnumerableAsync()).Select(b => b.Name);
+
+            Assert.IsTrue(destinationFiles.OrderBy(f => f).SequenceEqual(files.OrderBy(f => f)));
+        }
+
         #region Single Concurrency
         private async Task CreateBlobDirectoryTree(
             BlobContainerClient client,
@@ -480,13 +527,13 @@ namespace Azure.Storage.DataMovement.Tests
             await CreateBlobDirectoryTree(containerClient, sourceFolderPath, sourceBlobPrefix, size);
 
             // Create new source block blob.
-            StorageResourceContainer sourceResource = new BlobDirectoryStorageResourceContainer(containerClient, sourceBlobPrefix);
-            StorageResourceContainer destinationResource = new BlobDirectoryStorageResourceContainer(
+            StorageResourceContainer sourceResource = new BlobStorageResourceContainer(containerClient, new() { DirectoryPrefix = sourceBlobPrefix });
+            StorageResourceContainer destinationResource = new BlobStorageResourceContainer(
                 containerClient,
-                destBlobPrefix,
                 new BlobStorageResourceContainerOptions()
                 {
-                    CopyMethod = TransferCopyMethod.AsyncCopy
+                    CopyMethod = TransferCopyMethod.AsyncCopy,
+                    DirectoryPrefix = destBlobPrefix,
                 });
 
             // If we want a failure condition to happen

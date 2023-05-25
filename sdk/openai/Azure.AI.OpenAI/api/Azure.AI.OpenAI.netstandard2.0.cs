@@ -3,7 +3,7 @@ namespace Azure.AI.OpenAI
     public partial class ChatChoice
     {
         internal ChatChoice() { }
-        public Azure.AI.OpenAI.CompletionsFinishReason FinishReason { get { throw null; } }
+        public Azure.AI.OpenAI.CompletionsFinishReason? FinishReason { get { throw null; } }
         public int Index { get { throw null; } }
         public Azure.AI.OpenAI.ChatMessage Message { get { throw null; } }
     }
@@ -58,7 +58,7 @@ namespace Azure.AI.OpenAI
     public partial class Choice
     {
         internal Choice() { }
-        public Azure.AI.OpenAI.CompletionsFinishReason FinishReason { get { throw null; } }
+        public Azure.AI.OpenAI.CompletionsFinishReason? FinishReason { get { throw null; } }
         public int Index { get { throw null; } }
         public Azure.AI.OpenAI.CompletionsLogProbabilityModel LogProbabilityModel { get { throw null; } }
         public string Text { get { throw null; } }
@@ -137,8 +137,9 @@ namespace Azure.AI.OpenAI
     }
     public partial class EmbeddingsOptions
     {
+        public EmbeddingsOptions(System.Collections.Generic.IEnumerable<string> input) { }
         public EmbeddingsOptions(string input) { }
-        public string Input { get { throw null; } }
+        public System.Collections.Generic.IList<string> Input { get { throw null; } }
         public string User { get { throw null; } set { } }
     }
     public partial class EmbeddingsUsage

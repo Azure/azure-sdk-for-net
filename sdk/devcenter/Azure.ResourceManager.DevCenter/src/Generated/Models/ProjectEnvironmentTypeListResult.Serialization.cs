@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.DevCenter.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<ProjectEnvironmentTypeData>> value = default;
+            Optional<IReadOnlyList<DevCenterProjectEnvironmentData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -30,10 +30,10 @@ namespace Azure.ResourceManager.DevCenter.Models
                     {
                         continue;
                     }
-                    List<ProjectEnvironmentTypeData> array = new List<ProjectEnvironmentTypeData>();
+                    List<DevCenterProjectEnvironmentData> array = new List<DevCenterProjectEnvironmentData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ProjectEnvironmentTypeData.DeserializeProjectEnvironmentTypeData(item));
+                        array.Add(DevCenterProjectEnvironmentData.DeserializeDevCenterProjectEnvironmentData(item));
                     }
                     value = array;
                     continue;

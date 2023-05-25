@@ -36,7 +36,7 @@ foreach (HttpHeader header in http.Headers)
 }
 ```
 
-## Accessing HTTP response content with `dynamic`
+## Accessing HTTP response content with dynamic
 
 If a service method does not return `Response<T>`, JSON content can be accessed using `dynamic`.
 

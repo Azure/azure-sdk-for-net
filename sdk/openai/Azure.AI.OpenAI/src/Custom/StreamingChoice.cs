@@ -34,7 +34,7 @@ namespace Azure.AI.OpenAI
         /// provides "length." If no value is present, this StreamingChoice is still in progress.
         /// </remarks>
         public CompletionsFinishReason FinishReason
-            => GetLocked(() => _baseChoices.Last().FinishReason);
+            => GetLocked(() => _baseChoices.Last().FinishReason.Value);
 
         internal bool StreamingDoneSignalReceived
         {

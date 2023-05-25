@@ -73,7 +73,7 @@ namespace Azure.IoT.Hub.Service.Models
         /// <param name="warningCode"> The warning code. </param>
         /// <param name="warningStatus"> The details of the warning. </param>
         /// <returns> A new <see cref="Models.DeviceRegistryOperationWarning"/> instance for mocking. </returns>
-        public static DeviceRegistryOperationWarning DeviceRegistryOperationWarning(string deviceId = null, string warningCode = null, string warningStatus = null)
+        public static DeviceRegistryOperationWarning DeviceRegistryOperationWarning(string deviceId = null, DeviceRegistryOperationWarningCode? warningCode = null, string warningStatus = null)
         {
             return new DeviceRegistryOperationWarning(deviceId, warningCode, warningStatus);
         }

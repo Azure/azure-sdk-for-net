@@ -14,5 +14,11 @@ namespace Azure.AI.OpenAI
     public partial class EmbeddingsOptions
     {
         internal string InternalNonAzureModelName { get; set; }
+
+        /// <inheritdoc cref="EmbeddingsOptions.EmbeddingsOptions(System.Collections.Generic.IEnumerable{string})"/>
+        public EmbeddingsOptions(string input)
+            : this(new string[] { input })
+        {
+        }
     }
 }

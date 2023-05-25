@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.DevCenter.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task GetAll_AttachedNetworksListByProject()
         {
-            // Generated from example definition: specification/devcenter/resource-manager/Microsoft.DevCenter/preview/2022-08-01-preview/examples/AttachedNetworks_ListByProject.json
+            // Generated from example definition: specification/devcenter/resource-manager/Microsoft.DevCenter/stable/2023-04-01/examples/AttachedNetworks_ListByProject.json
             // this example is just showing the usage of "AttachedNetworks_ListByProject" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -29,16 +29,16 @@ namespace Azure.ResourceManager.DevCenter.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this ProjectResource created on azure
-            // for more information of creating ProjectResource, please refer to the document of ProjectResource
-            string subscriptionId = "{subscriptionId}";
+            // this example assumes you already have this DevCenterProjectResource created on azure
+            // for more information of creating DevCenterProjectResource, please refer to the document of DevCenterProjectResource
+            string subscriptionId = "0ac520ee-14c0-480f-b6c9-0a90c58ffff";
             string resourceGroupName = "rg1";
-            string projectName = "{projectName}";
-            ResourceIdentifier projectResourceId = ProjectResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, projectName);
-            ProjectResource project = client.GetProjectResource(projectResourceId);
+            string projectName = "DevProject";
+            ResourceIdentifier devCenterProjectResourceId = DevCenterProjectResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, projectName);
+            DevCenterProjectResource devCenterProject = client.GetDevCenterProjectResource(devCenterProjectResourceId);
 
             // get the collection of this ProjectAttachedNetworkConnectionResource
-            ProjectAttachedNetworkConnectionCollection collection = project.GetProjectAttachedNetworkConnections();
+            ProjectAttachedNetworkConnectionCollection collection = devCenterProject.GetProjectAttachedNetworkConnections();
 
             // invoke the operation and iterate over the result
             await foreach (ProjectAttachedNetworkConnectionResource item in collection.GetAllAsync())
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.DevCenter.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Get_AttachedNetworksGetByProject()
         {
-            // Generated from example definition: specification/devcenter/resource-manager/Microsoft.DevCenter/preview/2022-08-01-preview/examples/AttachedNetworks_GetByProject.json
+            // Generated from example definition: specification/devcenter/resource-manager/Microsoft.DevCenter/stable/2023-04-01/examples/AttachedNetworks_GetByProject.json
             // this example is just showing the usage of "AttachedNetworks_GetByProject" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -66,16 +66,16 @@ namespace Azure.ResourceManager.DevCenter.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this ProjectResource created on azure
-            // for more information of creating ProjectResource, please refer to the document of ProjectResource
-            string subscriptionId = "{subscriptionId}";
+            // this example assumes you already have this DevCenterProjectResource created on azure
+            // for more information of creating DevCenterProjectResource, please refer to the document of DevCenterProjectResource
+            string subscriptionId = "0ac520ee-14c0-480f-b6c9-0a90c58ffff";
             string resourceGroupName = "rg1";
-            string projectName = "{projectName}";
-            ResourceIdentifier projectResourceId = ProjectResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, projectName);
-            ProjectResource project = client.GetProjectResource(projectResourceId);
+            string projectName = "DevProject";
+            ResourceIdentifier devCenterProjectResourceId = DevCenterProjectResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, projectName);
+            DevCenterProjectResource devCenterProject = client.GetDevCenterProjectResource(devCenterProjectResourceId);
 
             // get the collection of this ProjectAttachedNetworkConnectionResource
-            ProjectAttachedNetworkConnectionCollection collection = project.GetProjectAttachedNetworkConnections();
+            ProjectAttachedNetworkConnectionCollection collection = devCenterProject.GetProjectAttachedNetworkConnections();
 
             // invoke the operation
             string attachedNetworkConnectionName = "network-uswest3";
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.DevCenter.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Exists_AttachedNetworksGetByProject()
         {
-            // Generated from example definition: specification/devcenter/resource-manager/Microsoft.DevCenter/preview/2022-08-01-preview/examples/AttachedNetworks_GetByProject.json
+            // Generated from example definition: specification/devcenter/resource-manager/Microsoft.DevCenter/stable/2023-04-01/examples/AttachedNetworks_GetByProject.json
             // this example is just showing the usage of "AttachedNetworks_GetByProject" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -101,16 +101,16 @@ namespace Azure.ResourceManager.DevCenter.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this ProjectResource created on azure
-            // for more information of creating ProjectResource, please refer to the document of ProjectResource
-            string subscriptionId = "{subscriptionId}";
+            // this example assumes you already have this DevCenterProjectResource created on azure
+            // for more information of creating DevCenterProjectResource, please refer to the document of DevCenterProjectResource
+            string subscriptionId = "0ac520ee-14c0-480f-b6c9-0a90c58ffff";
             string resourceGroupName = "rg1";
-            string projectName = "{projectName}";
-            ResourceIdentifier projectResourceId = ProjectResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, projectName);
-            ProjectResource project = client.GetProjectResource(projectResourceId);
+            string projectName = "DevProject";
+            ResourceIdentifier devCenterProjectResourceId = DevCenterProjectResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, projectName);
+            DevCenterProjectResource devCenterProject = client.GetDevCenterProjectResource(devCenterProjectResourceId);
 
             // get the collection of this ProjectAttachedNetworkConnectionResource
-            ProjectAttachedNetworkConnectionCollection collection = project.GetProjectAttachedNetworkConnections();
+            ProjectAttachedNetworkConnectionCollection collection = devCenterProject.GetProjectAttachedNetworkConnections();
 
             // invoke the operation
             string attachedNetworkConnectionName = "network-uswest3";

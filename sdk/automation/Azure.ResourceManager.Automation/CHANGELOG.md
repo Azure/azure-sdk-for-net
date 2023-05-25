@@ -8,6 +8,8 @@
 
 ### Bugs Fixed
 
+- Fixed an issue that `System.UriFormatException` is thrown when `Uri` type field is empty during serialization of `AutomationWebhookData`.
+
 ### Other Changes
 
 ## 1.0.1 (2023-02-14)

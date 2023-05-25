@@ -4,7 +4,7 @@ Some Azure SDK APIs return values that hold raw JSON, for example [protocol meth
 
 ## Accessing Response Content
 
-### Get `dynamic` from `Response`
+### Get dynamic from Response
 
 Dynamic content is obtained from the `Response` return value.
 
@@ -23,65 +23,88 @@ dynamic widget = response.Content.ToDynamicFromJson();
 string name = widget.name;
 ```
 
+### Get a JSON property idiomatically
+
+To use dynamic content with an idiomatic .NET style, pass `DynamicCaseMapping.PascalToCamel` to `ToDynamicFromJson()`.  This will allow using PascalCase property names to get camelCase JSON members.
+
+```C# Snippet:AzureCoreGetDynamicJsonPropertyPascalCase
+Response response = client.GetWidget();
+dynamic widget = response.Content.ToDynamicFromJson(DynamicCaseMapping.PascalToCamel);
+string name = widget.Name;
+```
+
 ### Set a JSON property
 
-JSON members can be set on the dynamic object.
+JSON members can be set on the dynamic object.  Pass `DynamicCaseMapping.PascalToCamel` to `ToDynamicFromJson()` to write JSON members with camelCase names.
 
 ```C# Snippet:AzureCoreSetDynamicJsonProperty
 Response response = client.GetWidget();
-dynamic widget = response.Content.ToDynamicFromJson();
-widget.name = "New Name";
+dynamic widget = response.Content.ToDynamicFromJson(DynamicCaseMapping.PascalToCamel);
+widget.Name = "New Name";
 client.SetWidget(RequestContent.Create(widget));
 ```
 
-### Access an array value
+### Get or set array values
 
 JSON array values are accessed using array indexers.  The `Length` property returns the number of elements in a JSON array.
 
 ```C# Snippet:AzureCoreGetDynamicJsonArrayValue
 Response response = client.GetWidget();
-dynamic widget = response.Content.ToDynamicFromJson();
+dynamic widget = response.Content.ToDynamicFromJson(DynamicCaseMapping.PascalToCamel);
 
 // JSON is `{ "values" : [1, 2, 3] }`
-if (widget.values.Length > 0)
+if (widget.Values.Length > 0)
 {
-    int value = widget.values[0];
-}
-```
-
-### Check whether an optional property is present
-
-Optional properties will return null if not present in the JSON content.
-
-```C# Snippet:AzureCoreGetDynamicJsonOptionalProperty
-Response response = client.GetWidget();
-dynamic widget = response.Content.ToDynamicFromJson();
-
-// JSON is `{ "details" : { "color" : "blue", "size" : "small" } }`
-
-// Check whether optional property is present
-if (widget.details != null)
-{
-    string color = widget.details.color;
+    int value = widget.Values[0];
 }
 ```
 
 ### Enumerate a collection
 
-Dynamic JSON objects and arrays are `IEnumerable` and can be iterated over with the `foreach` keyword.
+Dynamic JSON objects and arrays implement `IEnumerable` and can be iterated over with the `foreach` keyword.
 
 ```C# Snippet:AzureCoreEnumerateDynamicJsonObject
 Response response = client.GetWidget();
-dynamic widget = response.Content.ToDynamicFromJson();
+dynamic widget = response.Content.ToDynamicFromJson(DynamicCaseMapping.PascalToCamel);
 
 // JSON is `{ "details" : { "color" : "blue", "size" : "small" } }`
-foreach (dynamic property in widget.details)
+foreach (dynamic property in widget.Details)
 {
     Console.WriteLine($"Widget has property {property.Name}='{property.Value}'.");
 }
 ```
 
-### Get a property with invalid C# characters in the name
+### Check an optional property
+
+Optional properties will return null if not present in the JSON content.
+
+```C# Snippet:AzureCoreGetDynamicJsonOptionalProperty
+Response response = client.GetWidget();
+dynamic widget = response.Content.ToDynamicFromJson(DynamicCaseMapping.PascalToCamel);
+
+// JSON is `{ "details" : { "color" : "blue", "size" : "small" } }`
+
+// Check whether optional property is present
+if (widget.Details != null)
+{
+    string color = widget.Details.Color;
+}
+```
+
+To differentiate between an absent property and a property with a `null` value, use property indexers.
+
+```C# Snippet:AzureCoreCheckPropertyNullOrAbsent
+try
+{
+    double price = widget.Details["price"];
+}
+catch (KeyNotFoundException)
+{
+    Console.WriteLine("Widget details do not contain 'price'.");
+}
+```
+
+### Get a property with invalid C# characters in its name
 
 JSON members whose names have characters that are not valid for property names in C# can be accessed using property indexers.
 
@@ -93,27 +116,13 @@ dynamic widget = response.Content.ToDynamicFromJson();
 string id = widget["$id"];
 ```
 
-### Working with Azure values
-
-When working with JSON from Azure services, you can learn what properties are available in the JSON response content from the REST API documentation for the service, examples in the protocol method documentation, or by expanding the [Dynamic View](https://learn.microsoft.com/visualstudio/debugger/watch-and-quickwatch-windows) in Visual Studio.
-
-```C# Snippet:AzureCoreUseDynamicDataDefaults
-Response response = client.GetWidget();
-dynamic widget = response.Content.ToDynamicFromJson(DynamicDataOptions.Default);
-string id = widget.Id;
-widget.Name = "New Name";
-client.SetWidget(RequestContent.Create(widget));
-```
-
-If no parameter is passed to `ToDynamicFromJson()`, properties names must exactly match the member names in the JSON content.  Passing `DynamicDataOptions.Default` will enable properties to be accessed using PascalCase property names, and will write any added properties with camelCase names.
-
 ### Cast to a POCO type
 
 Dynamic JSON objects can be cast to CLR types using the cast operator.
 
 ```C# Snippet:AzureCoreCastDynamicJsonToPOCO
 Response response = client.GetWidget();
-dynamic content = response.Content.ToDynamicFromJson(DynamicDataOptions.Default);
+dynamic content = response.Content.ToDynamicFromJson(DynamicCaseMapping.PascalToCamel);
 
 // JSON is `{ "id" : "123", "name" : "Widget" }`
 Widget widget = (Widget)content;
@@ -127,9 +136,37 @@ public class Widget
 }
 ```
 
-Passing `DynamicDataOptions.Default` will deserialize the type from JSON with case-insensitive property names.
+### Work with Azure values
 
-## Setting RequestContent
+When working with JSON from Azure services, you can learn what properties are available in the JSON response content from the REST API documentation for the service, examples in the protocol method documentation, or by expanding the [Dynamic View](https://learn.microsoft.com/visualstudio/debugger/watch-and-quickwatch-windows) in Visual Studio.
+
+Note that most Azure services name JSON fields [with camelCase names](https://github.com/microsoft/api-guidelines/blob/vNext/azure/Guidelines.md#json-field-name-casing) to [treat them with case-sensitivity](https://github.com/microsoft/api-guidelines/blob/vNext/azure/Guidelines.md#json-field-names-case-sensitivity).  Not every Azure service adheres to this convention; please consult the service REST API documentation.
+
+If you are using the `DynamicCaseMapping.PascalToCamel` setting and there is a need to bypass these name mappings, JSON members can be accessed with exact strings using property indexers.
+
+```C# Snippet:AzureCoreSetPropertyWithoutCaseMapping
+Response response = client.GetWidget();
+dynamic widget = response.Content.ToDynamicFromJson(DynamicCaseMapping.PascalToCamel);
+
+widget.details["IPAddress"] = "127.0.0.1";
+// JSON is `{ "details" : { "IPAddress" : "127.0.0.1" } }`
+```
+
+### Dispose large JSON documents
+
+Memory allocated when JSON is parsed will be garbage collected like any allocated byte array.
+If you need to control when memory is returned to the pool (e.g. for atypically large JSON payloads), you can use dynamic content with the `using` keyword.
+
+```C# Snippet:AzureCoreDisposeDynamicJson
+Response response = client.GetLargeWidget();
+using (dynamic widget = response.Content.ToDynamicFromJson(DynamicCaseMapping.PascalToCamel))
+{
+    widget.Name = "New Name";
+    client.SetWidget(RequestContent.Create(widget));
+}
+```
+
+## Setting Request Content
 
 To author new JSON, it is recommended to [use anonymous types](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md#2-create-and-send-a-request).  When working with Azure services, however, it is common to retrieve a value from from the service, make some changes to it, and send the updated value back to the service.  This is called a "round-trip scenario."
 
@@ -160,7 +197,7 @@ To make this common case easier to implement, Dynamic JSON is mutable.  This all
 
 ```C# Snippet:AzureCoreRoundTripDynamicJson
 Response response = client.GetWidget();
-dynamic widget = response.Content.ToDynamicFromJson(DynamicDataOptions.Default);
+dynamic widget = response.Content.ToDynamicFromJson(DynamicCaseMapping.PascalToCamel);
 widget.Name = "New Name";
 client.SetWidget(RequestContent.Create(widget));
 ```
