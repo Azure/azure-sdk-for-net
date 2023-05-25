@@ -1,12 +1,12 @@
-# Azure Schema Registry Json Schema client library for .NET
+# Azure Schema Registry JSON Schema client library for .NET
 
-Azure Schema Registry is a schema repository service hosted by Azure Event Hubs, providing schema storage, versioning, and management. This package provides a Json Schema serializer capable of serializing and deserializing payloads containing Schema Registry schema identifiers and Json-serialized data.
+Azure Schema Registry is a schema repository service hosted by Azure Event Hubs, providing schema storage, versioning, and management. This package provides a JSON Schema serializer capable of serializing and deserializing payloads containing Schema Registry schema identifiers and JSON-serialized data.
 
 ## Getting started
 
 ### Install the package
 
-Install the Azure Schema Registry Json Schema library for .NET with [NuGet][nuget]:
+Install the Azure Schema Registry JSON Schema library for .NET with [NuGet][nuget]:
 
 ```dotnetcli
 dotnet add package Microsoft.Azure.Data.SchemaRegistry.JsonSchema
@@ -51,7 +51,7 @@ var schemaRegistryClient = new SchemaRegistryClient(fullyQualifiedNamespace: ful
 
 ### JSON Schema generator
 
-The `SchemaRegistryJsonSchemaGenerator` is an abstract class that must be implemented and passed into the `SchemaRegistryJsonSerializer` constructor. This allows you to choose the third-party Json Schema package you would like to use for generating schemas from types. You can optionally provide an implementation for Json Schema validation. The default evaluates all schemas as valid.
+The `SchemaRegistryJsonSchemaGenerator` is an abstract class that must be implemented and passed into the `SchemaRegistryJsonSerializer` constructor. This allows you to choose the third-party JSON Schema package you would like to use for generating schemas from types. You can optionally provide an implementation for JSON Schema validation. The default evaluates all schemas as valid.
 
 ### Serializer
 
@@ -64,7 +64,7 @@ This library provides a serializer, `SchemaRegistryJsonSerializer` that interact
 ```C# Snippet:SampleSchemaRegistryJsonSchemaGeneratorImplementation
 internal class SampleJsonGenerator : SchemaRegistryJsonSchemaGenerator
 {
-    public override bool IsValidToSchema(Object data, Type dataType, string schemaDefinition)
+    public override bool ValidateAgainstSchema(Object data, Type dataType, string schemaDefinition)
     {
         JSchema schema = JSchema.Parse(schemaDefinition);
         JObject jobjectData = JObject.FromObject(data);
@@ -81,7 +81,7 @@ internal class SampleJsonGenerator : SchemaRegistryJsonSchemaGenerator
 
 ### Serialize and deserialize data using the Event Hub EventData model
 
-In order to serialize an `EventData` instance with Json information, you can do the following:
+In order to serialize an `EventData` instance with JSON information, you can do the following:
 
 ```C# Snippet:SchemaRegistryJsonSerializeEventData
 var serializer = new SchemaRegistryJsonSerializer(client, groupName, new SampleJsonGenerator());
@@ -92,7 +92,7 @@ EventData eventData = (EventData)await serializer.SerializeAsync(employee, messa
 // the schema Id will be included as a parameter of the content type
 Console.WriteLine(eventData.ContentType);
 
-// the serialized JSon data will be stored in the EventBody
+// the serialized JSON data will be stored in the EventBody
 Console.WriteLine(eventData.EventBody);
 
 // construct a publisher and publish the events to our event hub
@@ -159,7 +159,7 @@ Errors related to invalid schemas will be thrown as an `Exception`, and the `Inn
 
 ## Next steps
 
-See Azure Schema Registry for additional information.
+See [Azure Schema Registry][azure_schema_registry] for additional information.
 
 ## Contributing
 
@@ -179,11 +179,11 @@ This project has adopted the [Microsoft Open Source Code of Conduct][code_of_con
 [quickstart_guide]: https://github.com/Azure/azure-sdk-for-net/blob/main/doc/dev/mgmt_quickstart.md
 [schema_registry_client]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/schemaregistry/Azure.Data.SchemaRegistry/src/SchemaRegistryClient.cs
 [azure_portal]: https://ms.portal.azure.com/
-[schema_properties]: src/SchemaProperties.cs
 [azure_identity]: https://www.nuget.org/packages/Azure.Identity
 [cla]: https://cla.microsoft.com
 [code_of_conduct]: https://opensource.microsoft.com/codeofconduct/
 [code_of_conduct_faq]: https://opensource.microsoft.com/codeofconduct/faq/
 [email_opencode]: mailto:opencode@microsoft.com
 [azure_sub]: https://azure.microsoft.com/free/dotnet/
+[azure_schema_registry]: https://aka.ms/schemaregistry
 [request_failed_exception]: https://docs.microsoft.com/dotnet/api/azure.requestfailedexception?view=azure-dotnet

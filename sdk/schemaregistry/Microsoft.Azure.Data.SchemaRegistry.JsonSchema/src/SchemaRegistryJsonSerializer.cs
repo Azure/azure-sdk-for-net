@@ -355,7 +355,7 @@ namespace Microsoft.Azure.Data.SchemaRegistry.JsonSchema
                 var schemaString = schemaDef ?? _jsonSchemaGenerator.GenerateSchemaFromObject(dataType);
 
                 // Attempt to validate
-                var isValid = _jsonSchemaGenerator.IsValidToSchema(data, dataType, schemaString);
+                var isValid = _jsonSchemaGenerator.ValidateAgainstSchema(data, dataType, schemaString);
 
                 if (!isValid)
                 {
@@ -408,7 +408,7 @@ namespace Microsoft.Azure.Data.SchemaRegistry.JsonSchema
                 throw new Exception("The schema Id matches a schema that is not in Json format.");
             }
 
-            var isValid = _jsonSchemaGenerator.IsValidToSchema(data, dataType, schemaString);
+            var isValid = _jsonSchemaGenerator.ValidateAgainstSchema(data, dataType, schemaString);
 
             if (!isValid)
             {
@@ -548,7 +548,7 @@ namespace Microsoft.Azure.Data.SchemaRegistry.JsonSchema
             string[] contentTypeArray = contentType.ToString().Split('+');
             if (contentTypeArray.Length != 2 || contentTypeArray[0] != JsonMimeType)
             {
-                throw new FormatException("Content type was not in the expected format of 'application/json+schema-id', where 'schema-id' " +
+                throw new FormatException($"Content type was not in the expected format of '{JsonMimeType}+schema-id', where 'schema-id' " +
                                           "is the Schema Registry schema ID.");
             }
 
@@ -611,7 +611,7 @@ namespace Microsoft.Azure.Data.SchemaRegistry.JsonSchema
             bool isValid;
             try
             {
-                isValid = _jsonSchemaGenerator.IsValidToSchema(objectToReturn, dataType, schemaDefinition);
+                isValid = _jsonSchemaGenerator.ValidateAgainstSchema(objectToReturn, dataType, schemaDefinition);
             }
             catch (Exception ex)
             {

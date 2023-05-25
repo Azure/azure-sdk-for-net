@@ -24,7 +24,6 @@ namespace Microsoft.Azure.Data.SchemaRegistry.JsonSchema.Tests.Samples
         private SchemaRegistryClient schemaRegistryClient;
         private static readonly string _schema = "{\r\n  \"$schema\": \"http://json-schema.org/draft-04/schema#\",\r\n  \"title\": \"Employee\",\r\n  \"type\": \"object\",\r\n  \"additionalProperties\": false,\r\n  \"properties\": {\r\n    \"Age\": {\r\n      \"type\": \"integer\",\r\n      \"format\": \"int32\"\r\n    },\r\n    \"Name\": {\r\n      \"type\": [\r\n        \"null\",\r\n        \"string\"\r\n      ]\r\n    }\r\n  }\r\n}";
 
-        private Dictionary<Type, string> _schemaDictionary;
 #pragma warning restore IDE1006 // Naming Styles
 
         [Test]
@@ -58,7 +57,7 @@ namespace Microsoft.Azure.Data.SchemaRegistry.JsonSchema.Tests.Samples
             // the schema Id will be included as a parameter of the content type
             Console.WriteLine(eventData.ContentType);
 
-            // the serialized JSon data will be stored in the EventBody
+            // the serialized JSON data will be stored in the EventBody
             Console.WriteLine(eventData.EventBody);
 #endif
 
@@ -146,7 +145,7 @@ namespace Microsoft.Azure.Data.SchemaRegistry.JsonSchema.Tests.Samples
         #region Snippet:SampleSchemaRegistryJsonSchemaGeneratorImplementation
         internal class SampleJsonGenerator : SchemaRegistryJsonSchemaGenerator
         {
-            public override bool IsValidToSchema(Object data, Type dataType, string schemaDefinition)
+            public override bool ValidateAgainstSchema(Object data, Type dataType, string schemaDefinition)
             {
 #if SNIPPET
                 JSchema schema = JSchema.Parse(schemaDefinition);

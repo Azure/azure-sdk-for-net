@@ -2,8 +2,6 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Threading;
-using System.Threading.Tasks;
 
 namespace Microsoft.Azure.Data.SchemaRegistry.JsonSchema
 {
@@ -19,7 +17,7 @@ namespace Microsoft.Azure.Data.SchemaRegistry.JsonSchema
         /// <param name="dataType"></param>
         /// <param name="schemaDefinition"></param>
         /// <returns></returns>
-        public virtual bool IsValidToSchema(Object data, Type dataType, string schemaDefinition)
+        public virtual bool ValidateAgainstSchema(Object data, Type dataType, string schemaDefinition)
         {
             return true;
         }
