@@ -8,6 +8,7 @@
 using System;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.DevCenter.Models;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.DevCenter
@@ -37,7 +38,7 @@ namespace Azure.ResourceManager.DevCenter
             Optional<DateTimeOffset> publishedDate = default;
             Optional<bool> excludeFromLatest = default;
             Optional<int> osDiskImageSizeInGb = default;
-            Optional<string> provisioningState = default;
+            Optional<DevCenterProvisioningState> provisioningState = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -107,14 +108,18 @@ namespace Azure.ResourceManager.DevCenter
                         }
                         if (property0.NameEquals("provisioningState"u8))
                         {
-                            provisioningState = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            provisioningState = new DevCenterProvisioningState(property0.Value.GetString());
                             continue;
                         }
                     }
                     continue;
                 }
             }
-            return new ImageVersionData(id, name, type, systemData.Value, name0.Value, Optional.ToNullable(publishedDate), Optional.ToNullable(excludeFromLatest), Optional.ToNullable(osDiskImageSizeInGb), provisioningState.Value);
+            return new ImageVersionData(id, name, type, systemData.Value, name0.Value, Optional.ToNullable(publishedDate), Optional.ToNullable(excludeFromLatest), Optional.ToNullable(osDiskImageSizeInGb), Optional.ToNullable(provisioningState));
         }
     }
 }
