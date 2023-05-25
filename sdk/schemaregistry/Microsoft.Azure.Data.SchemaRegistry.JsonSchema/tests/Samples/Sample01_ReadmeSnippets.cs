@@ -148,9 +148,7 @@ namespace Microsoft.Azure.Data.SchemaRegistry.JsonSchema.Tests.Samples
             public override bool ValidateAgainstSchema(Object data, Type dataType, string schemaDefinition)
             {
 #if SNIPPET
-                JSchema schema = JSchema.Parse(schemaDefinition);
-                JObject jobjectData = JObject.FromObject(data);
-                return jobjectData.IsValid(schema);
+                // TODO
 #else
                 return true;
 #endif
@@ -158,9 +156,7 @@ namespace Microsoft.Azure.Data.SchemaRegistry.JsonSchema.Tests.Samples
             public override string GenerateSchemaFromObject(Type dataType)
             {
 #if SNIPPET
-                JSchemaGenerator generator = new();
-                JSchema schema = generator.Generate(dataType);
-                return schema.ToString();
+                // TODO
 #else
                 return _schema;
 #endif
