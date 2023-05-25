@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
             Optional<string> category = default;
             Optional<string> title = default;
             Optional<string> owner = default;
-            Optional<string> additionalContentUrl = default;
+            Optional<Uri> additionalContentUrl = default;
             Optional<BinaryData> metadata = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -87,7 +87,11 @@ namespace Azure.ResourceManager.PolicyInsights.Models
                         }
                         if (property0.NameEquals("additionalContentUrl"u8))
                         {
-                            additionalContentUrl = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null || property0.Value.ValueKind == JsonValueKind.String && property0.Value.GetString().Length == 0)
+                            {
+                                continue;
+                            }
+                            additionalContentUrl = new Uri(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("metadata"u8))

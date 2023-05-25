@@ -8,6 +8,9 @@
 
 ### Bugs Fixed
 
+- Fixed an issue that `System.UriFormatException` is thrown when `Uri` type field is empty during serialization of `PolicyMetadataData`.
+- Fixed an issue that `System.UriFormatException` is thrown when `Uri` type field is empty during serialization of `SlimPolicyMetadata`.
+
 ### Other Changes
 
 ## 1.1.0 (2023-02-16)

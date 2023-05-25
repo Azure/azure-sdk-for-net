@@ -31,17 +31,17 @@ namespace Azure.ResourceManager.PolicyInsights
         /// <param name="category"> The category of the policy metadata. </param>
         /// <param name="title"> The title of the policy metadata. </param>
         /// <param name="owner"> The owner of the policy metadata. </param>
-        /// <param name="additionalContentUriString"> Url for getting additional content about the resource metadata. </param>
+        /// <param name="additionalContentUri"> Url for getting additional content about the resource metadata. </param>
         /// <param name="metadata"> Additional metadata. </param>
         /// <param name="description"> The description of the policy metadata. </param>
         /// <param name="requirements"> The requirements of the policy metadata. </param>
-        internal PolicyMetadataData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string metadataId, string category, string title, string owner, string additionalContentUriString, BinaryData metadata, string description, string requirements) : base(id, name, resourceType, systemData)
+        internal PolicyMetadataData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string metadataId, string category, string title, string owner, Uri additionalContentUri, BinaryData metadata, string description, string requirements) : base(id, name, resourceType, systemData)
         {
             MetadataId = metadataId;
             Category = category;
             Title = title;
             Owner = owner;
-            AdditionalContentUriString = additionalContentUriString;
+            AdditionalContentUri = additionalContentUri;
             Metadata = metadata;
             Description = description;
             Requirements = requirements;
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.PolicyInsights
         /// <summary> The owner of the policy metadata. </summary>
         public string Owner { get; }
         /// <summary> Url for getting additional content about the resource metadata. </summary>
-        public string AdditionalContentUriString { get; }
+        public Uri AdditionalContentUri { get; }
         /// <summary>
         /// Additional metadata.
         /// <para>
