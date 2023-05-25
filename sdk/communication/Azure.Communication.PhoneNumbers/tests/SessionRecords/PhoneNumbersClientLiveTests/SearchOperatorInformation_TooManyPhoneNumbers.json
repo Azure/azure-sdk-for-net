@@ -1,46 +1,48 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://smstestapp.communication.azure.com/availablePhoneNumbers/:purchase?api-version=2023-05-01-preview",
+      "RequestUri": "https://smstestapp.communication.azure.com/operatorInformation/:search?api-version=2023-05-01-preview",
       "RequestMethod": "POST",
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "Content-Length": "30",
+        "Content-Length": "54",
         "Content-Type": "application/json",
-        "traceparent": "00-525f52ea900dd144820ba86246779e67-363f903b7982a444-00",
+        "traceparent": "00-379c9b936bb2eb4e8b437ba0322950af-88af2fc35dbd6947-00",
         "User-Agent": "azsdk-net-Communication.PhoneNumbers/1.2.0-alpha.20230519.1 (.NET Framework 4.8.9139.0; Microsoft Windows 10.0.22621 )",
-        "x-ms-client-request-id": "0e8d3ddb878876faf39cf6d894f56af9",
+        "x-ms-client-request-id": "86ffed34906fecb9b9510bcf6f0592b1",
         "x-ms-content-sha256": "Sanitized",
         "x-ms-date": "Wed, 24 May 2023 23:02:27 GMT",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
-        "searchId": "some-invalid-id"
+        "phoneNumbers": [
+          "\u002BSanitized",
+          "\u002BSanitized"
+        ]
       },
-      "StatusCode": 404,
+      "StatusCode": 400,
       "ResponseHeaders": {
-        "api-supported-versions": "2021-03-07, 2022-01-11-preview2, 2022-06-01-preview, 2022-12-01, 2022-12-02-preview2, 2023-05-01-preview",
+        "api-supported-versions": "2023-05-01-preview",
         "Content-Type": "application/json",
         "Date": "Wed, 24 May 2023 23:02:27 GMT",
-        "MS-CV": "FHc4FZY04kiDNdTf1\u002Bfpwg.0",
+        "MS-CV": "7TmqZDsbMUKLCx9a5LN42Q.0",
         "Strict-Transport-Security": "max-age=2592000",
         "Transfer-Encoding": "chunked",
-        "X-Azure-Ref": "0g5duZAAAAADJse2AI2CrSKy2x6\u002B22oDHV1NURURHRTAxMTkAOWZjN2I1MTktYThjYy00Zjg5LTkzNWUtYzkxNDhhZTA5ZTgx",
+        "X-Azure-Ref": "0g5duZAAAAACMQheS90T5RKr1LbP67CejV1NURURHRTAxMTkAOWZjN2I1MTktYThjYy00Zjg5LTkzNWUtYzkxNDhhZTA5ZTgx",
         "X-Cache": "CONFIG_NOCACHE",
-        "X-Processing-Time": "170ms"
+        "X-Processing-Time": "11ms"
       },
       "ResponseBody": {
         "error": {
-          "code": "NotFound",
-          "message": "Input searchId some-invalid-id cannot be found.",
-          "target": "searchid"
+          "code": "BadRequest",
+          "message": "Can only accept one phoneNumber"
         }
       }
     }
   ],
   "Variables": {
     "COMMUNICATION_LIVETEST_STATIC_CONNECTION_STRING": "endpoint=https://smstestapp.communication.azure.com/;accesskey=Kg==",
-    "RandomSeed": "817305010"
+    "RandomSeed": "2126476583"
   }
 }

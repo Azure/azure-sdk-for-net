@@ -1,30 +1,31 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://smstestapp.communication.azure.com/availablePhoneNumbers/countries/US/areaCodes?phoneNumberType=tollFree\u0026assignmentType=application\u0026api-version=2022-12-01",
+      "RequestUri": "https://smstestapp.communication.azure.com/availablePhoneNumbers/countries/US/areaCodes?phoneNumberType=tollFree\u0026assignmentType=application\u0026api-version=2023-05-01-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "traceparent": "00-82fee9aa7941e04184d3b8e8b3155776-f824a16a80b53649-00",
-        "User-Agent": "azsdk-net-Communication.PhoneNumbers/1.1.0-alpha.20221207.1 (.NET Core 3.1.31; Microsoft Windows 10.0.22621)",
-        "x-ms-client-request-id": "78ae0822c857010b8631a66c5a2048b7",
+        "traceparent": "00-6002f9891ef2094bad22088bfd50d370-10823125e90cf845-00",
+        "User-Agent": "azsdk-net-Communication.PhoneNumbers/1.2.0-alpha.20230519.1 (.NET Framework 4.8.9139.0; Microsoft Windows 10.0.22621 )",
+        "x-ms-client-request-id": "3c31d2cf54cd8b4ce7d88510c7b05873",
         "x-ms-content-sha256": "Sanitized",
-        "x-ms-date": "Wed, 07 Dec 2022 21:34:55 GMT",
+        "x-ms-date": "Wed, 24 May 2023 23:03:27 GMT",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
       "StatusCode": 200,
       "ResponseHeaders": {
-        "api-supported-versions": "2021-03-07, 2022-12-01",
+        "api-supported-versions": "2021-03-07, 2022-12-01, 2022-12-02-preview2, 2023-05-01-preview",
+        "Cache-Control": "max-age=21600, private, stale-while-revalidate=86400",
+        "Content-Length": "182",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Wed, 07 Dec 2022 21:35:00 GMT",
-        "MS-CV": "1F7SjISZDEqgIZ8WaqZU1g.0",
+        "Date": "Wed, 24 May 2023 23:03:36 GMT",
+        "MS-CV": "zDLa62VwsEqXg/IM3Rb9Wg.0",
         "Strict-Transport-Security": "max-age=2592000",
-        "Transfer-Encoding": "chunked",
-        "X-Azure-Ref": "0/waRYwAAAAA40NsXmMnjR6MVTPsKa01HTUVYMzFFREdFMDQxOQA5ZmM3YjUxOS1hOGNjLTRmODktOTM1ZS1jOTE0OGFlMDllODE=",
+        "X-Azure-Ref": "0v5duZAAAAAC6T8QZTq8xQYVMhOw3tJ1VV1NURURHRTAxMTkAOWZjN2I1MTktYThjYy00Zjg5LTkzNWUtYzkxNDhhZTA5ZTgx",
         "X-Cache": "CONFIG_NOCACHE",
-        "X-Processing-Time": "5755ms"
+        "X-Processing-Time": "9101ms"
       },
       "ResponseBody": {
         "areaCodes": [
@@ -59,6 +60,6 @@
   ],
   "Variables": {
     "COMMUNICATION_LIVETEST_STATIC_CONNECTION_STRING": "endpoint=https://smstestapp.communication.azure.com/;accesskey=Kg==",
-    "RandomSeed": "749271556"
+    "RandomSeed": "1549895354"
   }
 }
