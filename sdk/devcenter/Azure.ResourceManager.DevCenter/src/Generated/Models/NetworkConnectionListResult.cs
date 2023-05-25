@@ -17,20 +17,20 @@ namespace Azure.ResourceManager.DevCenter.Models
         /// <summary> Initializes a new instance of NetworkConnectionListResult. </summary>
         internal NetworkConnectionListResult()
         {
-            Value = new ChangeTrackingList<NetworkConnectionData>();
+            Value = new ChangeTrackingList<DevCenterNetworkConnectionData>();
         }
 
         /// <summary> Initializes a new instance of NetworkConnectionListResult. </summary>
         /// <param name="value"> Current page of results. </param>
         /// <param name="nextLink"> URL to get the next set of results if there are any. </param>
-        internal NetworkConnectionListResult(IReadOnlyList<NetworkConnectionData> value, string nextLink)
+        internal NetworkConnectionListResult(IReadOnlyList<DevCenterNetworkConnectionData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
         /// <summary> Current page of results. </summary>
-        public IReadOnlyList<NetworkConnectionData> Value { get; }
+        public IReadOnlyList<DevCenterNetworkConnectionData> Value { get; }
         /// <summary> URL to get the next set of results if there are any. </summary>
         public string NextLink { get; }
     }

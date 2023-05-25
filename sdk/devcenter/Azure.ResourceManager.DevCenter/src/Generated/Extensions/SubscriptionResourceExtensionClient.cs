@@ -21,16 +21,18 @@ namespace Azure.ResourceManager.DevCenter
     {
         private ClientDiagnostics _devCenterClientDiagnostics;
         private DevCentersRestOperations _devCenterRestClient;
-        private ClientDiagnostics _projectClientDiagnostics;
-        private ProjectsRestOperations _projectRestClient;
+        private ClientDiagnostics _devCenterProjectProjectsClientDiagnostics;
+        private ProjectsRestOperations _devCenterProjectProjectsRestClient;
         private ClientDiagnostics _operationStatusesClientDiagnostics;
         private OperationStatusesRestOperations _operationStatusesRestClient;
         private ClientDiagnostics _usagesClientDiagnostics;
         private UsagesRestOperations _usagesRestClient;
+        private ClientDiagnostics _checkNameAvailabilityClientDiagnostics;
+        private CheckNameAvailabilityRestOperations _checkNameAvailabilityRestClient;
         private ClientDiagnostics _skusClientDiagnostics;
         private SkusRestOperations _skusRestClient;
-        private ClientDiagnostics _networkConnectionClientDiagnostics;
-        private NetworkConnectionsRestOperations _networkConnectionRestClient;
+        private ClientDiagnostics _devCenterNetworkConnectionNetworkConnectionsClientDiagnostics;
+        private NetworkConnectionsRestOperations _devCenterNetworkConnectionNetworkConnectionsRestClient;
 
         /// <summary> Initializes a new instance of the <see cref="SubscriptionResourceExtensionClient"/> class for mocking. </summary>
         protected SubscriptionResourceExtensionClient()
@@ -46,16 +48,18 @@ namespace Azure.ResourceManager.DevCenter
 
         private ClientDiagnostics DevCenterClientDiagnostics => _devCenterClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.DevCenter", DevCenterResource.ResourceType.Namespace, Diagnostics);
         private DevCentersRestOperations DevCenterRestClient => _devCenterRestClient ??= new DevCentersRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(DevCenterResource.ResourceType));
-        private ClientDiagnostics ProjectClientDiagnostics => _projectClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.DevCenter", ProjectResource.ResourceType.Namespace, Diagnostics);
-        private ProjectsRestOperations ProjectRestClient => _projectRestClient ??= new ProjectsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(ProjectResource.ResourceType));
+        private ClientDiagnostics DevCenterProjectProjectsClientDiagnostics => _devCenterProjectProjectsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.DevCenter", DevCenterProjectResource.ResourceType.Namespace, Diagnostics);
+        private ProjectsRestOperations DevCenterProjectProjectsRestClient => _devCenterProjectProjectsRestClient ??= new ProjectsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(DevCenterProjectResource.ResourceType));
         private ClientDiagnostics OperationStatusesClientDiagnostics => _operationStatusesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.DevCenter", ProviderConstants.DefaultProviderNamespace, Diagnostics);
         private OperationStatusesRestOperations OperationStatusesRestClient => _operationStatusesRestClient ??= new OperationStatusesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
         private ClientDiagnostics UsagesClientDiagnostics => _usagesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.DevCenter", ProviderConstants.DefaultProviderNamespace, Diagnostics);
         private UsagesRestOperations UsagesRestClient => _usagesRestClient ??= new UsagesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
+        private ClientDiagnostics CheckNameAvailabilityClientDiagnostics => _checkNameAvailabilityClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.DevCenter", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+        private CheckNameAvailabilityRestOperations CheckNameAvailabilityRestClient => _checkNameAvailabilityRestClient ??= new CheckNameAvailabilityRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
         private ClientDiagnostics SkusClientDiagnostics => _skusClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.DevCenter", ProviderConstants.DefaultProviderNamespace, Diagnostics);
         private SkusRestOperations SkusRestClient => _skusRestClient ??= new SkusRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
-        private ClientDiagnostics NetworkConnectionClientDiagnostics => _networkConnectionClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.DevCenter", NetworkConnectionResource.ResourceType.Namespace, Diagnostics);
-        private NetworkConnectionsRestOperations NetworkConnectionRestClient => _networkConnectionRestClient ??= new NetworkConnectionsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(NetworkConnectionResource.ResourceType));
+        private ClientDiagnostics DevCenterNetworkConnectionNetworkConnectionsClientDiagnostics => _devCenterNetworkConnectionNetworkConnectionsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.DevCenter", DevCenterNetworkConnectionResource.ResourceType.Namespace, Diagnostics);
+        private NetworkConnectionsRestOperations DevCenterNetworkConnectionNetworkConnectionsRestClient => _devCenterNetworkConnectionNetworkConnectionsRestClient ??= new NetworkConnectionsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(DevCenterNetworkConnectionResource.ResourceType));
 
         private string GetApiVersionOrNull(ResourceType resourceType)
         {
@@ -124,12 +128,12 @@ namespace Azure.ResourceManager.DevCenter
         /// </summary>
         /// <param name="top"> The maximum number of resources to return from the operation. Example: &apos;$top=10&apos;. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ProjectResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<ProjectResource> GetProjectsAsync(int? top = null, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="DevCenterProjectResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<DevCenterProjectResource> GetDevCenterProjectsAsync(int? top = null, CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => ProjectRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId, top);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => ProjectRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId, top);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ProjectResource(Client, ProjectData.DeserializeProjectData(e)), ProjectClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetProjects", "value", "nextLink", cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => DevCenterProjectProjectsRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId, top);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => DevCenterProjectProjectsRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId, top);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new DevCenterProjectResource(Client, DevCenterProjectData.DeserializeDevCenterProjectData(e)), DevCenterProjectProjectsClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetDevCenterProjects", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -147,12 +151,12 @@ namespace Azure.ResourceManager.DevCenter
         /// </summary>
         /// <param name="top"> The maximum number of resources to return from the operation. Example: &apos;$top=10&apos;. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ProjectResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<ProjectResource> GetProjects(int? top = null, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="DevCenterProjectResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<DevCenterProjectResource> GetDevCenterProjects(int? top = null, CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => ProjectRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId, top);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => ProjectRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId, top);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ProjectResource(Client, ProjectData.DeserializeProjectData(e)), ProjectClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetProjects", "value", "nextLink", cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => DevCenterProjectProjectsRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId, top);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => DevCenterProjectProjectsRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId, top);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new DevCenterProjectResource(Client, DevCenterProjectData.DeserializeDevCenterProjectData(e)), DevCenterProjectProjectsClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetDevCenterProjects", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -171,9 +175,9 @@ namespace Azure.ResourceManager.DevCenter
         /// <param name="location"> The Azure region. </param>
         /// <param name="operationId"> The ID of an ongoing async operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<OperationStatus>> GetOperationStatusAsync(AzureLocation location, string operationId, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<DevCenterOperationStatus>> GetDevCenterOperationStatusAsync(AzureLocation location, string operationId, CancellationToken cancellationToken = default)
         {
-            using var scope = OperationStatusesClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetOperationStatus");
+            using var scope = OperationStatusesClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetDevCenterOperationStatus");
             scope.Start();
             try
             {
@@ -203,9 +207,9 @@ namespace Azure.ResourceManager.DevCenter
         /// <param name="location"> The Azure region. </param>
         /// <param name="operationId"> The ID of an ongoing async operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<OperationStatus> GetOperationStatus(AzureLocation location, string operationId, CancellationToken cancellationToken = default)
+        public virtual Response<DevCenterOperationStatus> GetDevCenterOperationStatus(AzureLocation location, string operationId, CancellationToken cancellationToken = default)
         {
-            using var scope = OperationStatusesClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetOperationStatus");
+            using var scope = OperationStatusesClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetDevCenterOperationStatus");
             scope.Start();
             try
             {
@@ -235,11 +239,11 @@ namespace Azure.ResourceManager.DevCenter
         /// <param name="location"> The Azure region. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="DevCenterUsage" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<DevCenterUsage> GetUsagesByLocationAsync(AzureLocation location, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<DevCenterUsage> GetDevCenterUsagesByLocationAsync(AzureLocation location, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => UsagesRestClient.CreateListByLocationRequest(Id.SubscriptionId, location);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => UsagesRestClient.CreateListByLocationNextPageRequest(nextLink, Id.SubscriptionId, location);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, DevCenterUsage.DeserializeDevCenterUsage, UsagesClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetUsagesByLocation", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, DevCenterUsage.DeserializeDevCenterUsage, UsagesClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetDevCenterUsagesByLocation", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -258,11 +262,73 @@ namespace Azure.ResourceManager.DevCenter
         /// <param name="location"> The Azure region. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="DevCenterUsage" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<DevCenterUsage> GetUsagesByLocation(AzureLocation location, CancellationToken cancellationToken = default)
+        public virtual Pageable<DevCenterUsage> GetDevCenterUsagesByLocation(AzureLocation location, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => UsagesRestClient.CreateListByLocationRequest(Id.SubscriptionId, location);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => UsagesRestClient.CreateListByLocationNextPageRequest(nextLink, Id.SubscriptionId, location);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, DevCenterUsage.DeserializeDevCenterUsage, UsagesClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetUsagesByLocation", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, DevCenterUsage.DeserializeDevCenterUsage, UsagesClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetDevCenterUsagesByLocation", "value", "nextLink", cancellationToken);
+        }
+
+        /// <summary>
+        /// Check the availability of name for resource
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.DevCenter/checkNameAvailability</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>CheckNameAvailability_Execute</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="content"> The required parameters for checking if resource name is available. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<Response<DevCenterNameAvailabilityResult>> CheckDevCenterNameAvailabilityAsync(DevCenterNameAvailabilityContent content, CancellationToken cancellationToken = default)
+        {
+            using var scope = CheckNameAvailabilityClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.CheckDevCenterNameAvailability");
+            scope.Start();
+            try
+            {
+                var response = await CheckNameAvailabilityRestClient.ExecuteAsync(Id.SubscriptionId, content, cancellationToken).ConfigureAwait(false);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Check the availability of name for resource
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.DevCenter/checkNameAvailability</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>CheckNameAvailability_Execute</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="content"> The required parameters for checking if resource name is available. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual Response<DevCenterNameAvailabilityResult> CheckDevCenterNameAvailability(DevCenterNameAvailabilityContent content, CancellationToken cancellationToken = default)
+        {
+            using var scope = CheckNameAvailabilityClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.CheckDevCenterNameAvailability");
+            scope.Start();
+            try
+            {
+                var response = CheckNameAvailabilityRestClient.Execute(Id.SubscriptionId, content, cancellationToken);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary>
@@ -281,11 +347,11 @@ namespace Azure.ResourceManager.DevCenter
         /// <param name="top"> The maximum number of resources to return from the operation. Example: &apos;$top=10&apos;. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="DevCenterSkuDetails" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<DevCenterSkuDetails> GetSkusBySubscriptionAsync(int? top = null, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<DevCenterSkuDetails> GetDevCenterSkusBySubscriptionAsync(int? top = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => SkusRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId, top);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => SkusRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId, top);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, DevCenterSkuDetails.DeserializeDevCenterSkuDetails, SkusClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetSkusBySubscription", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, DevCenterSkuDetails.DeserializeDevCenterSkuDetails, SkusClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetDevCenterSkusBySubscription", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -304,11 +370,11 @@ namespace Azure.ResourceManager.DevCenter
         /// <param name="top"> The maximum number of resources to return from the operation. Example: &apos;$top=10&apos;. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="DevCenterSkuDetails" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<DevCenterSkuDetails> GetSkusBySubscription(int? top = null, CancellationToken cancellationToken = default)
+        public virtual Pageable<DevCenterSkuDetails> GetDevCenterSkusBySubscription(int? top = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => SkusRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId, top);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => SkusRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId, top);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, DevCenterSkuDetails.DeserializeDevCenterSkuDetails, SkusClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetSkusBySubscription", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, DevCenterSkuDetails.DeserializeDevCenterSkuDetails, SkusClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetDevCenterSkusBySubscription", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -326,12 +392,12 @@ namespace Azure.ResourceManager.DevCenter
         /// </summary>
         /// <param name="top"> The maximum number of resources to return from the operation. Example: &apos;$top=10&apos;. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="NetworkConnectionResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<NetworkConnectionResource> GetNetworkConnectionsAsync(int? top = null, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="DevCenterNetworkConnectionResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<DevCenterNetworkConnectionResource> GetDevCenterNetworkConnectionsAsync(int? top = null, CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => NetworkConnectionRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId, top);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => NetworkConnectionRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId, top);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new NetworkConnectionResource(Client, NetworkConnectionData.DeserializeNetworkConnectionData(e)), NetworkConnectionClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetNetworkConnections", "value", "nextLink", cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => DevCenterNetworkConnectionNetworkConnectionsRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId, top);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => DevCenterNetworkConnectionNetworkConnectionsRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId, top);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new DevCenterNetworkConnectionResource(Client, DevCenterNetworkConnectionData.DeserializeDevCenterNetworkConnectionData(e)), DevCenterNetworkConnectionNetworkConnectionsClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetDevCenterNetworkConnections", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -349,12 +415,12 @@ namespace Azure.ResourceManager.DevCenter
         /// </summary>
         /// <param name="top"> The maximum number of resources to return from the operation. Example: &apos;$top=10&apos;. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="NetworkConnectionResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<NetworkConnectionResource> GetNetworkConnections(int? top = null, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="DevCenterNetworkConnectionResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<DevCenterNetworkConnectionResource> GetDevCenterNetworkConnections(int? top = null, CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => NetworkConnectionRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId, top);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => NetworkConnectionRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId, top);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new NetworkConnectionResource(Client, NetworkConnectionData.DeserializeNetworkConnectionData(e)), NetworkConnectionClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetNetworkConnections", "value", "nextLink", cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => DevCenterNetworkConnectionNetworkConnectionsRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId, top);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => DevCenterNetworkConnectionNetworkConnectionsRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId, top);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new DevCenterNetworkConnectionResource(Client, DevCenterNetworkConnectionData.DeserializeDevCenterNetworkConnectionData(e)), DevCenterNetworkConnectionNetworkConnectionsClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetDevCenterNetworkConnections", "value", "nextLink", cancellationToken);
         }
     }
 }
