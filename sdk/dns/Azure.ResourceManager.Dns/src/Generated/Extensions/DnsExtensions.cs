@@ -269,7 +269,7 @@ namespace Azure.ResourceManager.Dns
         /// <returns> Returns a <see cref="DnsTlsaRecordResource" /> object. </returns>
         public static DnsTlsaRecordResource GetDnsTlsaRecordResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
+            return client.GetResourceClient<DnsTlsaRecordResource>(() =>
             {
                 DnsTlsaRecordResource.ValidateResourceId(id);
                 return new DnsTlsaRecordResource(client, id);
@@ -288,7 +288,7 @@ namespace Azure.ResourceManager.Dns
         /// <returns> Returns a <see cref="DnsDSRecordResource" /> object. </returns>
         public static DnsDSRecordResource GetDnsDSRecordResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
+            return client.GetResourceClient<DnsDSRecordResource>(() =>
             {
                 DnsDSRecordResource.ValidateResourceId(id);
                 return new DnsDSRecordResource(client, id);
@@ -307,7 +307,7 @@ namespace Azure.ResourceManager.Dns
         /// <returns> Returns a <see cref="DnsNaptrRecordResource" /> object. </returns>
         public static DnsNaptrRecordResource GetDnsNaptrRecordResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
+            return client.GetResourceClient<DnsNaptrRecordResource>(() =>
             {
                 DnsNaptrRecordResource.ValidateResourceId(id);
                 return new DnsNaptrRecordResource(client, id);
