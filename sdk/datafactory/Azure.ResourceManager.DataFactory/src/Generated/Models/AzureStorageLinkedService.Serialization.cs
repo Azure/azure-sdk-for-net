@@ -9,6 +9,7 @@ using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Expressions.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
@@ -64,11 +65,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(ConnectionString))
             {
                 writer.WritePropertyName("connectionString"u8);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(ConnectionString);
-#else
-                JsonSerializer.Serialize(writer, JsonDocument.Parse(ConnectionString.ToString()).RootElement);
-#endif
+                JsonSerializer.Serialize(writer, ConnectionString);
             }
             if (Optional.IsDefined(AccountKey))
             {
@@ -78,11 +75,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(SasUri))
             {
                 writer.WritePropertyName("sasUri"u8);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(SasUri);
-#else
-                JsonSerializer.Serialize(writer, JsonDocument.Parse(SasUri.ToString()).RootElement);
-#endif
+                JsonSerializer.Serialize(writer, SasUri);
             }
             if (Optional.IsDefined(SasToken))
             {
@@ -122,9 +115,9 @@ namespace Azure.ResourceManager.DataFactory.Models
             Optional<string> description = default;
             Optional<IDictionary<string, EntityParameterSpecification>> parameters = default;
             Optional<IList<BinaryData>> annotations = default;
-            Optional<BinaryData> connectionString = default;
+            Optional<DataFactoryElement<string>> connectionString = default;
             Optional<AzureKeyVaultSecretReference> accountKey = default;
-            Optional<BinaryData> sasUri = default;
+            Optional<DataFactoryElement<string>> sasUri = default;
             Optional<AzureKeyVaultSecretReference> sasToken = default;
             Optional<BinaryData> encryptedCredential = default;
             IDictionary<string, BinaryData> additionalProperties = default;
@@ -200,7 +193,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             {
                                 continue;
                             }
-                            connectionString = BinaryData.FromString(property0.Value.GetRawText());
+                            connectionString = JsonSerializer.Deserialize<DataFactoryElement<string>>(property0.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("accountKey"u8))
@@ -218,7 +211,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             {
                                 continue;
                             }
-                            sasUri = BinaryData.FromString(property0.Value.GetRawText());
+                            sasUri = JsonSerializer.Deserialize<DataFactoryElement<string>>(property0.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("sasToken"u8))

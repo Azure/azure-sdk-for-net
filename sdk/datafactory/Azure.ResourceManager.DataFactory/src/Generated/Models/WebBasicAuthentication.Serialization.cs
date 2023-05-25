@@ -5,9 +5,9 @@
 
 #nullable disable
 
-using System;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Expressions.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
@@ -17,19 +17,11 @@ namespace Azure.ResourceManager.DataFactory.Models
         {
             writer.WriteStartObject();
             writer.WritePropertyName("username"u8);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(Username);
-#else
-            JsonSerializer.Serialize(writer, JsonDocument.Parse(Username.ToString()).RootElement);
-#endif
+            JsonSerializer.Serialize(writer, Username);
             writer.WritePropertyName("password"u8);
             writer.WriteObjectValue(Password);
             writer.WritePropertyName("url"u8);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(Uri);
-#else
-            JsonSerializer.Serialize(writer, JsonDocument.Parse(Uri.ToString()).RootElement);
-#endif
+            JsonSerializer.Serialize(writer, Uri);
             writer.WritePropertyName("authenticationType"u8);
             writer.WriteStringValue(AuthenticationType.ToString());
             writer.WriteEndObject();
@@ -41,15 +33,15 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 return null;
             }
-            BinaryData username = default;
+            DataFactoryElement<string> username = default;
             FactorySecretBaseDefinition password = default;
-            BinaryData url = default;
+            DataFactoryElement<string> url = default;
             WebAuthenticationType authenticationType = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("username"u8))
                 {
-                    username = BinaryData.FromString(property.Value.GetRawText());
+                    username = JsonSerializer.Deserialize<DataFactoryElement<string>>(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("password"u8))
@@ -59,7 +51,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
                 if (property.NameEquals("url"u8))
                 {
-                    url = BinaryData.FromString(property.Value.GetRawText());
+                    url = JsonSerializer.Deserialize<DataFactoryElement<string>>(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("authenticationType"u8))

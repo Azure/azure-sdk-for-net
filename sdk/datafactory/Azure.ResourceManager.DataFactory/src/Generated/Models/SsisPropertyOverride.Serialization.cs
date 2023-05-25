@@ -5,9 +5,9 @@
 
 #nullable disable
 
-using System;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Expressions.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
@@ -17,11 +17,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         {
             writer.WriteStartObject();
             writer.WritePropertyName("value"u8);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(Value);
-#else
-            JsonSerializer.Serialize(writer, JsonDocument.Parse(Value.ToString()).RootElement);
-#endif
+            JsonSerializer.Serialize(writer, Value);
             if (Optional.IsDefined(IsSensitive))
             {
                 writer.WritePropertyName("isSensitive"u8);
@@ -36,13 +32,13 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 return null;
             }
-            BinaryData value = default;
+            DataFactoryElement<string> value = default;
             Optional<bool> isSensitive = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
                 {
-                    value = BinaryData.FromString(property.Value.GetRawText());
+                    value = JsonSerializer.Deserialize<DataFactoryElement<string>>(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("isSensitive"u8))

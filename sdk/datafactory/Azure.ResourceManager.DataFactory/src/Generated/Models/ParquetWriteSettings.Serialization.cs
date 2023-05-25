@@ -9,6 +9,7 @@ using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Expressions.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
@@ -20,20 +21,12 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(MaxRowsPerFile))
             {
                 writer.WritePropertyName("maxRowsPerFile"u8);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(MaxRowsPerFile);
-#else
-                JsonSerializer.Serialize(writer, JsonDocument.Parse(MaxRowsPerFile.ToString()).RootElement);
-#endif
+                JsonSerializer.Serialize(writer, MaxRowsPerFile);
             }
             if (Optional.IsDefined(FileNamePrefix))
             {
                 writer.WritePropertyName("fileNamePrefix"u8);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(FileNamePrefix);
-#else
-                JsonSerializer.Serialize(writer, JsonDocument.Parse(FileNamePrefix.ToString()).RootElement);
-#endif
+                JsonSerializer.Serialize(writer, FileNamePrefix);
             }
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(FormatWriteSettingsType);
@@ -55,8 +48,8 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 return null;
             }
-            Optional<BinaryData> maxRowsPerFile = default;
-            Optional<BinaryData> fileNamePrefix = default;
+            Optional<DataFactoryElement<int>> maxRowsPerFile = default;
+            Optional<DataFactoryElement<string>> fileNamePrefix = default;
             string type = default;
             IDictionary<string, BinaryData> additionalProperties = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -68,7 +61,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    maxRowsPerFile = BinaryData.FromString(property.Value.GetRawText());
+                    maxRowsPerFile = JsonSerializer.Deserialize<DataFactoryElement<int>>(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("fileNamePrefix"u8))
@@ -77,7 +70,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    fileNamePrefix = BinaryData.FromString(property.Value.GetRawText());
+                    fileNamePrefix = JsonSerializer.Deserialize<DataFactoryElement<string>>(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("type"u8))

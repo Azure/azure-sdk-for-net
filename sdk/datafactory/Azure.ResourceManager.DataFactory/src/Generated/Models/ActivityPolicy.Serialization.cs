@@ -9,6 +9,7 @@ using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Expressions.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
@@ -20,20 +21,12 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(Timeout))
             {
                 writer.WritePropertyName("timeout"u8);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(Timeout);
-#else
-                JsonSerializer.Serialize(writer, JsonDocument.Parse(Timeout.ToString()).RootElement);
-#endif
+                JsonSerializer.Serialize(writer, Timeout);
             }
             if (Optional.IsDefined(Retry))
             {
                 writer.WritePropertyName("retry"u8);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(Retry);
-#else
-                JsonSerializer.Serialize(writer, JsonDocument.Parse(Retry.ToString()).RootElement);
-#endif
+                JsonSerializer.Serialize(writer, Retry);
             }
             if (Optional.IsDefined(RetryIntervalInSeconds))
             {
@@ -68,8 +61,8 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 return null;
             }
-            Optional<BinaryData> timeout = default;
-            Optional<BinaryData> retry = default;
+            Optional<DataFactoryElement<string>> timeout = default;
+            Optional<DataFactoryElement<int>> retry = default;
             Optional<int> retryIntervalInSeconds = default;
             Optional<bool> secureInput = default;
             Optional<bool> secureOutput = default;
@@ -83,7 +76,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    timeout = BinaryData.FromString(property.Value.GetRawText());
+                    timeout = JsonSerializer.Deserialize<DataFactoryElement<string>>(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("retry"u8))
@@ -92,7 +85,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    retry = BinaryData.FromString(property.Value.GetRawText());
+                    retry = JsonSerializer.Deserialize<DataFactoryElement<int>>(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("retryIntervalInSeconds"u8))

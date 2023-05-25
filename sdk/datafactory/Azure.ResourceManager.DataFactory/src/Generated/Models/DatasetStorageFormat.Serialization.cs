@@ -20,20 +20,12 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(Serializer))
             {
                 writer.WritePropertyName("serializer"u8);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(Serializer);
-#else
-                JsonSerializer.Serialize(writer, JsonDocument.Parse(Serializer.ToString()).RootElement);
-#endif
+                JsonSerializer.Serialize(writer, Serializer);
             }
             if (Optional.IsDefined(Deserializer))
             {
                 writer.WritePropertyName("deserializer"u8);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(Deserializer);
-#else
-                JsonSerializer.Serialize(writer, JsonDocument.Parse(Deserializer.ToString()).RootElement);
-#endif
+                JsonSerializer.Serialize(writer, Deserializer);
             }
             foreach (var item in AdditionalProperties)
             {

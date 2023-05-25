@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.DataFactory
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>managedPrivateEndpoints_CreateOrUpdate</description>
+        /// <description>ManagedPrivateEndpoints_CreateOrUpdate</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.DataFactory
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>managedPrivateEndpoints_CreateOrUpdate</description>
+        /// <description>ManagedPrivateEndpoints_CreateOrUpdate</description>
         /// </item>
         /// </list>
         /// </summary>

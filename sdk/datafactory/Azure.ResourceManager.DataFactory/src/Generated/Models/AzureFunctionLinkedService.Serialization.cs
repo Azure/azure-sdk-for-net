@@ -9,6 +9,7 @@ using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Expressions.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
@@ -98,11 +99,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(Authentication))
             {
                 writer.WritePropertyName("authentication"u8);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(Authentication);
-#else
-                JsonSerializer.Serialize(writer, JsonDocument.Parse(Authentication.ToString()).RootElement);
-#endif
+                JsonSerializer.Serialize(writer, Authentication);
             }
             writer.WriteEndObject();
             foreach (var item in AdditionalProperties)
@@ -133,7 +130,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             Optional<BinaryData> encryptedCredential = default;
             Optional<FactoryCredentialReference> credential = default;
             Optional<BinaryData> resourceId = default;
-            Optional<BinaryData> authentication = default;
+            Optional<DataFactoryElement<string>> authentication = default;
             IDictionary<string, BinaryData> additionalProperties = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -248,7 +245,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             {
                                 continue;
                             }
-                            authentication = BinaryData.FromString(property0.Value.GetRawText());
+                            authentication = JsonSerializer.Deserialize<DataFactoryElement<string>>(property0.Value.GetRawText());
                             continue;
                         }
                     }

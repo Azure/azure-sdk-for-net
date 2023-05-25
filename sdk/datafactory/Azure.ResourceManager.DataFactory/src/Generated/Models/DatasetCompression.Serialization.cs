@@ -9,6 +9,7 @@ using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Expressions.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
@@ -18,19 +19,11 @@ namespace Azure.ResourceManager.DataFactory.Models
         {
             writer.WriteStartObject();
             writer.WritePropertyName("type"u8);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(DatasetCompressionType);
-#else
-            JsonSerializer.Serialize(writer, JsonDocument.Parse(DatasetCompressionType.ToString()).RootElement);
-#endif
+            JsonSerializer.Serialize(writer, DatasetCompressionType);
             if (Optional.IsDefined(Level))
             {
                 writer.WritePropertyName("level"u8);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(Level);
-#else
-                JsonSerializer.Serialize(writer, JsonDocument.Parse(Level.ToString()).RootElement);
-#endif
+                JsonSerializer.Serialize(writer, Level);
             }
             foreach (var item in AdditionalProperties)
             {
@@ -50,15 +43,15 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 return null;
             }
-            BinaryData type = default;
-            Optional<BinaryData> level = default;
+            DataFactoryElement<string> type = default;
+            Optional<DataFactoryElement<string>> level = default;
             IDictionary<string, BinaryData> additionalProperties = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("type"u8))
                 {
-                    type = BinaryData.FromString(property.Value.GetRawText());
+                    type = JsonSerializer.Deserialize<DataFactoryElement<string>>(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("level"u8))
@@ -67,7 +60,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    level = BinaryData.FromString(property.Value.GetRawText());
+                    level = JsonSerializer.Deserialize<DataFactoryElement<string>>(property.Value.GetRawText());
                     continue;
                 }
                 additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));

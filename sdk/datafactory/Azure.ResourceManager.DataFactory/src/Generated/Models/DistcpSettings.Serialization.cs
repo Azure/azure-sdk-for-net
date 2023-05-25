@@ -5,9 +5,9 @@
 
 #nullable disable
 
-using System;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Expressions.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
@@ -17,25 +17,13 @@ namespace Azure.ResourceManager.DataFactory.Models
         {
             writer.WriteStartObject();
             writer.WritePropertyName("resourceManagerEndpoint"u8);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(ResourceManagerEndpoint);
-#else
-            JsonSerializer.Serialize(writer, JsonDocument.Parse(ResourceManagerEndpoint.ToString()).RootElement);
-#endif
+            JsonSerializer.Serialize(writer, ResourceManagerEndpoint);
             writer.WritePropertyName("tempScriptPath"u8);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(TempScriptPath);
-#else
-            JsonSerializer.Serialize(writer, JsonDocument.Parse(TempScriptPath.ToString()).RootElement);
-#endif
+            JsonSerializer.Serialize(writer, TempScriptPath);
             if (Optional.IsDefined(DistcpOptions))
             {
                 writer.WritePropertyName("distcpOptions"u8);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(DistcpOptions);
-#else
-                JsonSerializer.Serialize(writer, JsonDocument.Parse(DistcpOptions.ToString()).RootElement);
-#endif
+                JsonSerializer.Serialize(writer, DistcpOptions);
             }
             writer.WriteEndObject();
         }
@@ -46,19 +34,19 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 return null;
             }
-            BinaryData resourceManagerEndpoint = default;
-            BinaryData tempScriptPath = default;
-            Optional<BinaryData> distcpOptions = default;
+            DataFactoryElement<string> resourceManagerEndpoint = default;
+            DataFactoryElement<string> tempScriptPath = default;
+            Optional<DataFactoryElement<string>> distcpOptions = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("resourceManagerEndpoint"u8))
                 {
-                    resourceManagerEndpoint = BinaryData.FromString(property.Value.GetRawText());
+                    resourceManagerEndpoint = JsonSerializer.Deserialize<DataFactoryElement<string>>(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("tempScriptPath"u8))
                 {
-                    tempScriptPath = BinaryData.FromString(property.Value.GetRawText());
+                    tempScriptPath = JsonSerializer.Deserialize<DataFactoryElement<string>>(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("distcpOptions"u8))
@@ -67,7 +55,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    distcpOptions = BinaryData.FromString(property.Value.GetRawText());
+                    distcpOptions = JsonSerializer.Deserialize<DataFactoryElement<string>>(property.Value.GetRawText());
                     continue;
                 }
             }

@@ -5,9 +5,9 @@
 
 #nullable disable
 
-using System;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Expressions.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
@@ -19,20 +19,12 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(ComputeType))
             {
                 writer.WritePropertyName("computeType"u8);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(ComputeType);
-#else
-                JsonSerializer.Serialize(writer, JsonDocument.Parse(ComputeType.ToString()).RootElement);
-#endif
+                JsonSerializer.Serialize(writer, ComputeType);
             }
             if (Optional.IsDefined(CoreCount))
             {
                 writer.WritePropertyName("coreCount"u8);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(CoreCount);
-#else
-                JsonSerializer.Serialize(writer, JsonDocument.Parse(CoreCount.ToString()).RootElement);
-#endif
+                JsonSerializer.Serialize(writer, CoreCount);
             }
             writer.WriteEndObject();
         }
@@ -43,8 +35,8 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 return null;
             }
-            Optional<BinaryData> computeType = default;
-            Optional<BinaryData> coreCount = default;
+            Optional<DataFactoryElement<string>> computeType = default;
+            Optional<DataFactoryElement<int>> coreCount = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("computeType"u8))
@@ -53,7 +45,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    computeType = BinaryData.FromString(property.Value.GetRawText());
+                    computeType = JsonSerializer.Deserialize<DataFactoryElement<string>>(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("coreCount"u8))
@@ -62,7 +54,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    coreCount = BinaryData.FromString(property.Value.GetRawText());
+                    coreCount = JsonSerializer.Deserialize<DataFactoryElement<int>>(property.Value.GetRawText());
                     continue;
                 }
             }

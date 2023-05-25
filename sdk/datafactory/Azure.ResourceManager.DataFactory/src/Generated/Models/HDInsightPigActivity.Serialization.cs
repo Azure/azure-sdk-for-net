@@ -9,6 +9,7 @@ using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Expressions.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
@@ -35,6 +36,16 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
+            }
+            if (Optional.IsDefined(State))
+            {
+                writer.WritePropertyName("state"u8);
+                writer.WriteStringValue(State.Value.ToString());
+            }
+            if (Optional.IsDefined(OnInactiveMarkAs))
+            {
+                writer.WritePropertyName("onInactiveMarkAs"u8);
+                writer.WriteStringValue(OnInactiveMarkAs.Value.ToString());
             }
             if (Optional.IsCollectionDefined(DependsOn))
             {
@@ -85,11 +96,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(ScriptPath))
             {
                 writer.WritePropertyName("scriptPath"u8);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(ScriptPath);
-#else
-                JsonSerializer.Serialize(writer, JsonDocument.Parse(ScriptPath.ToString()).RootElement);
-#endif
+                JsonSerializer.Serialize(writer, ScriptPath);
             }
             if (Optional.IsDefined(ScriptLinkedService))
             {
@@ -140,12 +147,14 @@ namespace Azure.ResourceManager.DataFactory.Models
             string name = default;
             string type = default;
             Optional<string> description = default;
+            Optional<ActivityState> state = default;
+            Optional<ActivityOnInactiveMarkA> onInactiveMarkAs = default;
             Optional<IList<ActivityDependency>> dependsOn = default;
             Optional<IList<ActivityUserProperty>> userProperties = default;
             Optional<IList<FactoryLinkedServiceReference>> storageLinkedServices = default;
             Optional<BinaryData> arguments = default;
             Optional<HDInsightActivityDebugInfoOptionSetting> getDebugInfo = default;
-            Optional<BinaryData> scriptPath = default;
+            Optional<DataFactoryElement<string>> scriptPath = default;
             Optional<FactoryLinkedServiceReference> scriptLinkedService = default;
             Optional<IDictionary<string, BinaryData>> defines = default;
             IDictionary<string, BinaryData> additionalProperties = default;
@@ -183,6 +192,24 @@ namespace Azure.ResourceManager.DataFactory.Models
                 if (property.NameEquals("description"u8))
                 {
                     description = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("state"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    state = new ActivityState(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("onInactiveMarkAs"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    onInactiveMarkAs = new ActivityOnInactiveMarkA(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("dependsOn"u8))
@@ -260,7 +287,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             {
                                 continue;
                             }
-                            scriptPath = BinaryData.FromString(property0.Value.GetRawText());
+                            scriptPath = JsonSerializer.Deserialize<DataFactoryElement<string>>(property0.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("scriptLinkedService"u8))
@@ -299,7 +326,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new HDInsightPigActivity(name, type, description.Value, Optional.ToList(dependsOn), Optional.ToList(userProperties), additionalProperties, linkedServiceName.Value, policy.Value, Optional.ToList(storageLinkedServices), arguments.Value, Optional.ToNullable(getDebugInfo), scriptPath.Value, scriptLinkedService.Value, Optional.ToDictionary(defines));
+            return new HDInsightPigActivity(name, type, description.Value, Optional.ToNullable(state), Optional.ToNullable(onInactiveMarkAs), Optional.ToList(dependsOn), Optional.ToList(userProperties), additionalProperties, linkedServiceName.Value, policy.Value, Optional.ToList(storageLinkedServices), arguments.Value, Optional.ToNullable(getDebugInfo), scriptPath.Value, scriptLinkedService.Value, Optional.ToDictionary(defines));
         }
     }
 }

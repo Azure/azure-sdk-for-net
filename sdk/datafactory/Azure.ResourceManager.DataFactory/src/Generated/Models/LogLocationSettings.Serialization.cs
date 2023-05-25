@@ -5,9 +5,9 @@
 
 #nullable disable
 
-using System;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Expressions.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
@@ -21,11 +21,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(Path))
             {
                 writer.WritePropertyName("path"u8);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(Path);
-#else
-                JsonSerializer.Serialize(writer, JsonDocument.Parse(Path.ToString()).RootElement);
-#endif
+                JsonSerializer.Serialize(writer, Path);
             }
             writer.WriteEndObject();
         }
@@ -37,7 +33,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 return null;
             }
             FactoryLinkedServiceReference linkedServiceName = default;
-            Optional<BinaryData> path = default;
+            Optional<DataFactoryElement<string>> path = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("linkedServiceName"u8))
@@ -51,7 +47,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    path = BinaryData.FromString(property.Value.GetRawText());
+                    path = JsonSerializer.Deserialize<DataFactoryElement<string>>(property.Value.GetRawText());
                     continue;
                 }
             }

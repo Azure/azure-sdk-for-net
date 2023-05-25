@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.Core.Expressions.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
@@ -18,7 +19,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="text"> The query text. Type: string (or Expression with resultType string). </param>
         /// <param name="scriptType"> The type of the query. Type: string. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="text"/> is null. </exception>
-        public ScriptActivityScriptBlock(BinaryData text, ScriptType scriptType)
+        public ScriptActivityScriptBlock(DataFactoryElement<string> text, ScriptType scriptType)
         {
             Argument.AssertNotNull(text, nameof(text));
 
@@ -31,44 +32,15 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="text"> The query text. Type: string (or Expression with resultType string). </param>
         /// <param name="scriptType"> The type of the query. Type: string. </param>
         /// <param name="parameters"> Array of script parameters. Type: array. </param>
-        internal ScriptActivityScriptBlock(BinaryData text, ScriptType scriptType, IList<ScriptActivityParameter> parameters)
+        internal ScriptActivityScriptBlock(DataFactoryElement<string> text, ScriptType scriptType, IList<ScriptActivityParameter> parameters)
         {
             Text = text;
             ScriptType = scriptType;
             Parameters = parameters;
         }
 
-        /// <summary>
-        /// The query text. Type: string (or Expression with resultType string).
-        /// <para>
-        /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formated json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        public BinaryData Text { get; set; }
+        /// <summary> The query text. Type: string (or Expression with resultType string). </summary>
+        public DataFactoryElement<string> Text { get; set; }
         /// <summary> The type of the query. Type: string. </summary>
         public ScriptType ScriptType { get; set; }
         /// <summary> Array of script parameters. Type: array. </summary>

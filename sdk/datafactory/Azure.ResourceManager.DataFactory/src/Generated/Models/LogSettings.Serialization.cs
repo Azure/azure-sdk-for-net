@@ -5,9 +5,9 @@
 
 #nullable disable
 
-using System;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Expressions.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
@@ -19,11 +19,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(EnableCopyActivityLog))
             {
                 writer.WritePropertyName("enableCopyActivityLog"u8);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(EnableCopyActivityLog);
-#else
-                JsonSerializer.Serialize(writer, JsonDocument.Parse(EnableCopyActivityLog.ToString()).RootElement);
-#endif
+                JsonSerializer.Serialize(writer, EnableCopyActivityLog);
             }
             if (Optional.IsDefined(CopyActivityLogSettings))
             {
@@ -41,7 +37,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 return null;
             }
-            Optional<BinaryData> enableCopyActivityLog = default;
+            Optional<DataFactoryElement<bool>> enableCopyActivityLog = default;
             Optional<CopyActivityLogSettings> copyActivityLogSettings = default;
             LogLocationSettings logLocationSettings = default;
             foreach (var property in element.EnumerateObject())
@@ -52,7 +48,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    enableCopyActivityLog = BinaryData.FromString(property.Value.GetRawText());
+                    enableCopyActivityLog = JsonSerializer.Deserialize<DataFactoryElement<bool>>(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("copyActivityLogSettings"u8))

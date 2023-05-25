@@ -503,6 +503,61 @@ namespace Azure.ResourceManager.DataFactory
             return GetFactoryVirtualNetworks().Get(managedVirtualNetworkName, ifNoneMatch, cancellationToken);
         }
 
+        /// <summary> Gets a collection of ManagedIdentityCredentialResources in the DataFactory. </summary>
+        /// <returns> An object representing collection of ManagedIdentityCredentialResources and their operations over a ManagedIdentityCredentialResource. </returns>
+        public virtual ManagedIdentityCredentialResourceCollection GetManagedIdentityCredentialResources()
+        {
+            return GetCachedClient(Client => new ManagedIdentityCredentialResourceCollection(Client, Id));
+        }
+
+        /// <summary>
+        /// Gets a credential.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataFactory/factories/{factoryName}/credentials/{credentialName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>CredentialOperations_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="credentialName"> Credential name. </param>
+        /// <param name="ifNoneMatch"> ETag of the credential entity. Should only be specified for get. If the ETag matches the existing entity tag, or if * was provided, then no content will be returned. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="credentialName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="credentialName"/> is null. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<ManagedIdentityCredentialResource>> GetManagedIdentityCredentialResourceAsync(string credentialName, string ifNoneMatch = null, CancellationToken cancellationToken = default)
+        {
+            return await GetManagedIdentityCredentialResources().GetAsync(credentialName, ifNoneMatch, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Gets a credential.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataFactory/factories/{factoryName}/credentials/{credentialName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>CredentialOperations_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="credentialName"> Credential name. </param>
+        /// <param name="ifNoneMatch"> ETag of the credential entity. Should only be specified for get. If the ETag matches the existing entity tag, or if * was provided, then no content will be returned. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="credentialName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="credentialName"/> is null. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<ManagedIdentityCredentialResource> GetManagedIdentityCredentialResource(string credentialName, string ifNoneMatch = null, CancellationToken cancellationToken = default)
+        {
+            return GetManagedIdentityCredentialResources().Get(credentialName, ifNoneMatch, cancellationToken);
+        }
+
         /// <summary> Gets a collection of FactoryPrivateEndpointConnectionResources in the DataFactory. </summary>
         /// <returns> An object representing collection of FactoryPrivateEndpointConnectionResources and their operations over a FactoryPrivateEndpointConnectionResource. </returns>
         public virtual FactoryPrivateEndpointConnectionCollection GetFactoryPrivateEndpointConnections()

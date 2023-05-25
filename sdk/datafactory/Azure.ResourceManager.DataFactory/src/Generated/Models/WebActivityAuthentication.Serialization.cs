@@ -5,9 +5,9 @@
 
 #nullable disable
 
-using System;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Expressions.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
@@ -29,11 +29,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(Username))
             {
                 writer.WritePropertyName("username"u8);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(Username);
-#else
-                JsonSerializer.Serialize(writer, JsonDocument.Parse(Username.ToString()).RootElement);
-#endif
+                JsonSerializer.Serialize(writer, Username);
             }
             if (Optional.IsDefined(Password))
             {
@@ -43,20 +39,12 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(Resource))
             {
                 writer.WritePropertyName("resource"u8);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(Resource);
-#else
-                JsonSerializer.Serialize(writer, JsonDocument.Parse(Resource.ToString()).RootElement);
-#endif
+                JsonSerializer.Serialize(writer, Resource);
             }
             if (Optional.IsDefined(UserTenant))
             {
                 writer.WritePropertyName("userTenant"u8);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(UserTenant);
-#else
-                JsonSerializer.Serialize(writer, JsonDocument.Parse(UserTenant.ToString()).RootElement);
-#endif
+                JsonSerializer.Serialize(writer, UserTenant);
             }
             if (Optional.IsDefined(Credential))
             {
@@ -74,10 +62,10 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
             Optional<string> type = default;
             Optional<FactorySecretBaseDefinition> pfx = default;
-            Optional<BinaryData> username = default;
+            Optional<DataFactoryElement<string>> username = default;
             Optional<FactorySecretBaseDefinition> password = default;
-            Optional<BinaryData> resource = default;
-            Optional<BinaryData> userTenant = default;
+            Optional<DataFactoryElement<string>> resource = default;
+            Optional<DataFactoryElement<string>> userTenant = default;
             Optional<FactoryCredentialReference> credential = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -101,7 +89,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    username = BinaryData.FromString(property.Value.GetRawText());
+                    username = JsonSerializer.Deserialize<DataFactoryElement<string>>(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("password"u8))
@@ -119,7 +107,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    resource = BinaryData.FromString(property.Value.GetRawText());
+                    resource = JsonSerializer.Deserialize<DataFactoryElement<string>>(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("userTenant"u8))
@@ -128,7 +116,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    userTenant = BinaryData.FromString(property.Value.GetRawText());
+                    userTenant = JsonSerializer.Deserialize<DataFactoryElement<string>>(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("credential"u8))

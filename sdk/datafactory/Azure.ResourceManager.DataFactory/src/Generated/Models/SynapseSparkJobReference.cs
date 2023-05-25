@@ -6,28 +6,29 @@
 #nullable disable
 
 using System;
+using Azure.Core;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    /// <summary> SQL stored procedure parameter. </summary>
-    public partial class StoredProcedureParameter
+    /// <summary> Synapse spark job reference type. </summary>
+    public partial class SynapseSparkJobReference
     {
-        /// <summary> Initializes a new instance of StoredProcedureParameter. </summary>
-        public StoredProcedureParameter()
+        /// <summary> Initializes a new instance of SynapseSparkJobReference. </summary>
+        /// <param name="sparkJobReferenceType"> Synapse spark job reference type. </param>
+        /// <param name="referenceName"> Reference spark job name. Expression with resultType string. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="referenceName"/> is null. </exception>
+        public SynapseSparkJobReference(SparkJobReferenceType sparkJobReferenceType, BinaryData referenceName)
         {
+            Argument.AssertNotNull(referenceName, nameof(referenceName));
+
+            SparkJobReferenceType = sparkJobReferenceType;
+            ReferenceName = referenceName;
         }
 
-        /// <summary> Initializes a new instance of StoredProcedureParameter. </summary>
-        /// <param name="value"> Stored procedure parameter value. Type: string (or Expression with resultType string). </param>
-        /// <param name="parameterType"> Stored procedure parameter type. </param>
-        internal StoredProcedureParameter(BinaryData value, StoredProcedureParameterType? parameterType)
-        {
-            Value = value;
-            ParameterType = parameterType;
-        }
-
+        /// <summary> Synapse spark job reference type. </summary>
+        public SparkJobReferenceType SparkJobReferenceType { get; set; }
         /// <summary>
-        /// Stored procedure parameter value. Type: string (or Expression with resultType string).
+        /// Reference spark job name. Expression with resultType string.
         /// <para>
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
@@ -56,8 +57,6 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// </list>
         /// </para>
         /// </summary>
-        public BinaryData Value { get; set; }
-        /// <summary> Stored procedure parameter type. </summary>
-        public StoredProcedureParameterType? ParameterType { get; set; }
+        public BinaryData ReferenceName { get; set; }
     }
 }

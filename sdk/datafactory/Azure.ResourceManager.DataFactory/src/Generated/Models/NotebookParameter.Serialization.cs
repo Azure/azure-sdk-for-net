@@ -5,25 +5,28 @@
 
 #nullable disable
 
-using System;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Expressions.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    public partial class StoredProcedureParameter : IUtf8JsonSerializable
+    public partial class NotebookParameter : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             if (Optional.IsDefined(Value))
             {
-                writer.WritePropertyName("value"u8);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(Value);
-#else
-                JsonSerializer.Serialize(writer, JsonDocument.Parse(Value.ToString()).RootElement);
-#endif
+                if (Value != null)
+                {
+                    writer.WritePropertyName("value"u8);
+                    JsonSerializer.Serialize(writer, Value);
+                }
+                else
+                {
+                    writer.WriteNull("value");
+                }
             }
             if (Optional.IsDefined(ParameterType))
             {
@@ -33,23 +36,24 @@ namespace Azure.ResourceManager.DataFactory.Models
             writer.WriteEndObject();
         }
 
-        internal static StoredProcedureParameter DeserializeStoredProcedureParameter(JsonElement element)
+        internal static NotebookParameter DeserializeNotebookParameter(JsonElement element)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<BinaryData> value = default;
-            Optional<StoredProcedureParameterType> type = default;
+            Optional<DataFactoryElement<string>> value = default;
+            Optional<NotebookParameterType> type = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        value = null;
                         continue;
                     }
-                    value = BinaryData.FromString(property.Value.GetRawText());
+                    value = JsonSerializer.Deserialize<DataFactoryElement<string>>(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("type"u8))
@@ -58,11 +62,11 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    type = new StoredProcedureParameterType(property.Value.GetString());
+                    type = new NotebookParameterType(property.Value.GetString());
                     continue;
                 }
             }
-            return new StoredProcedureParameter(value.Value, Optional.ToNullable(type));
+            return new NotebookParameter(value.Value, Optional.ToNullable(type));
         }
     }
 }

@@ -9,7 +9,7 @@ generate-model-factory: false
 csharp: true
 library-name: DataFactory
 namespace: Azure.ResourceManager.DataFactory
-require: https://github.com/Azure/azure-rest-api-specs/blob/de400f7204d30d25543ac967636180728d52a88f/specification/datafactory/resource-manager/readme.md
+require: https://github.com/Azure/azure-rest-api-specs/blob/cd06d327e115cdb55f8e7c9fd1b23fa551b5b750/specification/datafactory/resource-manager/readme.md
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
 skip-csproj: true
@@ -254,11 +254,12 @@ directive:
     transform: >
       $.DataFlowDebugSessionInfo.properties.lastActivityTime['format'] = 'date-time';
       $.UpdateIntegrationRuntimeRequest.properties.updateDelayOffset['format'] = 'duration';
-  - from: Pipeline.json
-    where: $.definitions
-    transform: >
-      $.PipelineElapsedTimeMetricPolicy.properties.duration['type'] = 'string';
-      $.PipelineElapsedTimeMetricPolicy.properties.duration['format'] = 'duration';
+      $.LinkedServiceReference.properties.type['x-ms-enum']['name'] = 'LinkedServiceReferenceType';
+#  - from: Pipeline.json
+#    where: $.definitions
+#    transform: >
+#      $.PipelineElapsedTimeMetricPolicy.properties.duration['type'] = 'string';
+#      $.PipelineElapsedTimeMetricPolicy.properties.duration['format'] = 'duration';
   - from: IntegrationRuntime.json
     where: $.definitions
     transform: >

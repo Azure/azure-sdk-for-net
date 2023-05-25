@@ -9,6 +9,7 @@ using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Expressions.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
@@ -18,19 +19,11 @@ namespace Azure.ResourceManager.DataFactory.Models
         {
             writer.WriteStartObject();
             writer.WritePropertyName("linkedServiceName"u8);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(LinkedServiceName);
-#else
-            JsonSerializer.Serialize(writer, JsonDocument.Parse(LinkedServiceName.ToString()).RootElement);
-#endif
+            JsonSerializer.Serialize(writer, LinkedServiceName);
             if (Optional.IsDefined(Path))
             {
                 writer.WritePropertyName("path"u8);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(Path);
-#else
-                JsonSerializer.Serialize(writer, JsonDocument.Parse(Path.ToString()).RootElement);
-#endif
+                JsonSerializer.Serialize(writer, Path);
             }
             foreach (var item in AdditionalProperties)
             {
@@ -50,15 +43,15 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 return null;
             }
-            BinaryData linkedServiceName = default;
-            Optional<BinaryData> path = default;
+            DataFactoryElement<string> linkedServiceName = default;
+            Optional<DataFactoryElement<string>> path = default;
             IDictionary<string, BinaryData> additionalProperties = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("linkedServiceName"u8))
                 {
-                    linkedServiceName = BinaryData.FromString(property.Value.GetRawText());
+                    linkedServiceName = JsonSerializer.Deserialize<DataFactoryElement<string>>(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("path"u8))
@@ -67,7 +60,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    path = BinaryData.FromString(property.Value.GetRawText());
+                    path = JsonSerializer.Deserialize<DataFactoryElement<string>>(property.Value.GetRawText());
                     continue;
                 }
                 additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));

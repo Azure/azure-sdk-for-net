@@ -43,7 +43,8 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="collaborationBranch"> Collaboration branch. </param>
         /// <param name="rootFolder"> Root folder. </param>
         /// <param name="lastCommitId"> Last commit id. </param>
-        internal FactoryRepoConfiguration(string factoryRepoConfigurationType, string accountName, string repositoryName, string collaborationBranch, string rootFolder, string lastCommitId)
+        /// <param name="disablePublish"> Disable manual publish operation in ADF studio to favor automated publish. </param>
+        internal FactoryRepoConfiguration(string factoryRepoConfigurationType, string accountName, string repositoryName, string collaborationBranch, string rootFolder, string lastCommitId, bool? disablePublish)
         {
             FactoryRepoConfigurationType = factoryRepoConfigurationType;
             AccountName = accountName;
@@ -51,6 +52,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             CollaborationBranch = collaborationBranch;
             RootFolder = rootFolder;
             LastCommitId = lastCommitId;
+            DisablePublish = disablePublish;
         }
 
         /// <summary> Type of repo configuration. </summary>
@@ -65,5 +67,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         public string RootFolder { get; set; }
         /// <summary> Last commit id. </summary>
         public string LastCommitId { get; set; }
+        /// <summary> Disable manual publish operation in ADF studio to favor automated publish. </summary>
+        public bool? DisablePublish { get; set; }
     }
 }

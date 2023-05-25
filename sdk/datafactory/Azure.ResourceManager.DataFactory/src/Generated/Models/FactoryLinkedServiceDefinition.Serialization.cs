@@ -108,6 +108,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     case "AzureSqlDatabase": return AzureSqlDatabaseLinkedService.DeserializeAzureSqlDatabaseLinkedService(element);
                     case "AzureSqlMI": return AzureSqlMILinkedService.DeserializeAzureSqlMILinkedService(element);
                     case "AzureStorage": return AzureStorageLinkedService.DeserializeAzureStorageLinkedService(element);
+                    case "AzureSynapseArtifacts": return AzureSynapseArtifactsLinkedService.DeserializeAzureSynapseArtifactsLinkedService(element);
                     case "AzureTableStorage": return AzureTableStorageLinkedService.DeserializeAzureTableStorageLinkedService(element);
                     case "Cassandra": return CassandraLinkedService.DeserializeCassandraLinkedService(element);
                     case "CommonDataServiceForApps": return CommonDataServiceForAppsLinkedService.DeserializeCommonDataServiceForAppsLinkedService(element);
@@ -128,6 +129,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     case "GoogleAdWords": return GoogleAdWordsLinkedService.DeserializeGoogleAdWordsLinkedService(element);
                     case "GoogleBigQuery": return GoogleBigQueryLinkedService.DeserializeGoogleBigQueryLinkedService(element);
                     case "GoogleCloudStorage": return GoogleCloudStorageLinkedService.DeserializeGoogleCloudStorageLinkedService(element);
+                    case "GoogleSheets": return GoogleSheetsLinkedService.DeserializeGoogleSheetsLinkedService(element);
                     case "Greenplum": return GreenplumLinkedService.DeserializeGreenplumLinkedService(element);
                     case "HBase": return HBaseLinkedService.DeserializeHBaseLinkedService(element);
                     case "HDInsight": return HDInsightLinkedService.DeserializeHDInsightLinkedService(element);

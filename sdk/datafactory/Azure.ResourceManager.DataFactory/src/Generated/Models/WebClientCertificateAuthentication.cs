@@ -7,6 +7,7 @@
 
 using System;
 using Azure.Core;
+using Azure.Core.Expressions.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
@@ -14,7 +15,7 @@ namespace Azure.ResourceManager.DataFactory.Models
     public partial class WebClientCertificateAuthentication : WebLinkedServiceTypeProperties
     {
         /// <summary> Initializes a new instance of WebClientCertificateAuthentication. </summary>
-        /// <param name="uri"> The URL of the web service endpoint, e.g. http://www.microsoft.com . Type: string (or Expression with resultType string). </param>
+        /// <param name="uri"> The URL of the web service endpoint, e.g. https://www.microsoft.com . Type: string (or Expression with resultType string). </param>
         /// <param name="pfx">
         /// Base64-encoded contents of a PFX file.
         /// Please note <see cref="FactorySecretBaseDefinition"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
@@ -26,7 +27,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// The available derived classes include <see cref="FactorySecretString"/> and <see cref="AzureKeyVaultSecretReference"/>.
         /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="uri"/>, <paramref name="pfx"/> or <paramref name="password"/> is null. </exception>
-        public WebClientCertificateAuthentication(BinaryData uri, FactorySecretBaseDefinition pfx, FactorySecretBaseDefinition password) : base(uri)
+        public WebClientCertificateAuthentication(DataFactoryElement<string> uri, FactorySecretBaseDefinition pfx, FactorySecretBaseDefinition password) : base(uri)
         {
             Argument.AssertNotNull(uri, nameof(uri));
             Argument.AssertNotNull(pfx, nameof(pfx));
@@ -38,7 +39,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> Initializes a new instance of WebClientCertificateAuthentication. </summary>
-        /// <param name="uri"> The URL of the web service endpoint, e.g. http://www.microsoft.com . Type: string (or Expression with resultType string). </param>
+        /// <param name="uri"> The URL of the web service endpoint, e.g. https://www.microsoft.com . Type: string (or Expression with resultType string). </param>
         /// <param name="authenticationType"> Type of authentication used to connect to the web table source. </param>
         /// <param name="pfx">
         /// Base64-encoded contents of a PFX file.
@@ -50,7 +51,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// Please note <see cref="FactorySecretBaseDefinition"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="FactorySecretString"/> and <see cref="AzureKeyVaultSecretReference"/>.
         /// </param>
-        internal WebClientCertificateAuthentication(BinaryData uri, WebAuthenticationType authenticationType, FactorySecretBaseDefinition pfx, FactorySecretBaseDefinition password) : base(uri, authenticationType)
+        internal WebClientCertificateAuthentication(DataFactoryElement<string> uri, WebAuthenticationType authenticationType, FactorySecretBaseDefinition pfx, FactorySecretBaseDefinition password) : base(uri, authenticationType)
         {
             Pfx = pfx;
             Password = password;

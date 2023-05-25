@@ -8,6 +8,7 @@
 using System;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Expressions.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
@@ -28,29 +29,17 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(PartitionColumnName))
             {
                 writer.WritePropertyName("partitionColumnName"u8);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(PartitionColumnName);
-#else
-                JsonSerializer.Serialize(writer, JsonDocument.Parse(PartitionColumnName.ToString()).RootElement);
-#endif
+                JsonSerializer.Serialize(writer, PartitionColumnName);
             }
             if (Optional.IsDefined(PartitionUpperBound))
             {
                 writer.WritePropertyName("partitionUpperBound"u8);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(PartitionUpperBound);
-#else
-                JsonSerializer.Serialize(writer, JsonDocument.Parse(PartitionUpperBound.ToString()).RootElement);
-#endif
+                JsonSerializer.Serialize(writer, PartitionUpperBound);
             }
             if (Optional.IsDefined(PartitionLowerBound))
             {
                 writer.WritePropertyName("partitionLowerBound"u8);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(PartitionLowerBound);
-#else
-                JsonSerializer.Serialize(writer, JsonDocument.Parse(PartitionLowerBound.ToString()).RootElement);
-#endif
+                JsonSerializer.Serialize(writer, PartitionLowerBound);
             }
             writer.WriteEndObject();
         }
@@ -62,9 +51,9 @@ namespace Azure.ResourceManager.DataFactory.Models
                 return null;
             }
             Optional<BinaryData> partitionNames = default;
-            Optional<BinaryData> partitionColumnName = default;
-            Optional<BinaryData> partitionUpperBound = default;
-            Optional<BinaryData> partitionLowerBound = default;
+            Optional<DataFactoryElement<string>> partitionColumnName = default;
+            Optional<DataFactoryElement<string>> partitionUpperBound = default;
+            Optional<DataFactoryElement<string>> partitionLowerBound = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("partitionNames"u8))
@@ -82,7 +71,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    partitionColumnName = BinaryData.FromString(property.Value.GetRawText());
+                    partitionColumnName = JsonSerializer.Deserialize<DataFactoryElement<string>>(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("partitionUpperBound"u8))
@@ -91,7 +80,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    partitionUpperBound = BinaryData.FromString(property.Value.GetRawText());
+                    partitionUpperBound = JsonSerializer.Deserialize<DataFactoryElement<string>>(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("partitionLowerBound"u8))
@@ -100,7 +89,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    partitionLowerBound = BinaryData.FromString(property.Value.GetRawText());
+                    partitionLowerBound = JsonSerializer.Deserialize<DataFactoryElement<string>>(property.Value.GetRawText());
                     continue;
                 }
             }

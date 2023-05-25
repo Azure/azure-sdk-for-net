@@ -221,6 +221,25 @@ namespace Azure.ResourceManager.DataFactory
         }
         #endregion
 
+        #region ManagedIdentityCredentialResource
+        /// <summary>
+        /// Gets an object representing a <see cref="ManagedIdentityCredentialResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ManagedIdentityCredentialResource.CreateResourceIdentifier" /> to create a <see cref="ManagedIdentityCredentialResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="ManagedIdentityCredentialResource" /> object. </returns>
+        public static ManagedIdentityCredentialResource GetManagedIdentityCredentialResource(this ArmClient client, ResourceIdentifier id)
+        {
+            return client.GetResourceClient(() =>
+            {
+                ManagedIdentityCredentialResource.ValidateResourceId(id);
+                return new ManagedIdentityCredentialResource(client, id);
+            }
+            );
+        }
+        #endregion
+
         #region FactoryPrivateEndpointConnectionResource
         /// <summary>
         /// Gets an object representing a <see cref="FactoryPrivateEndpointConnectionResource" /> along with the instance operations that can be performed on it but with no data.

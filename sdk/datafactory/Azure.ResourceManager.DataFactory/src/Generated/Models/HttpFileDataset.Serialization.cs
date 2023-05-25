@@ -9,6 +9,7 @@ using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Expressions.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
@@ -27,20 +28,12 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(Structure))
             {
                 writer.WritePropertyName("structure"u8);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(Structure);
-#else
-                JsonSerializer.Serialize(writer, JsonDocument.Parse(Structure.ToString()).RootElement);
-#endif
+                JsonSerializer.Serialize(writer, Structure);
             }
             if (Optional.IsDefined(Schema))
             {
                 writer.WritePropertyName("schema"u8);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(Schema);
-#else
-                JsonSerializer.Serialize(writer, JsonDocument.Parse(Schema.ToString()).RootElement);
-#endif
+                JsonSerializer.Serialize(writer, Schema);
             }
             writer.WritePropertyName("linkedServiceName"u8);
             writer.WriteObjectValue(LinkedServiceName);
@@ -84,38 +77,22 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(RelativeUri))
             {
                 writer.WritePropertyName("relativeUrl"u8);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(RelativeUri);
-#else
-                JsonSerializer.Serialize(writer, JsonDocument.Parse(RelativeUri.ToString()).RootElement);
-#endif
+                JsonSerializer.Serialize(writer, RelativeUri);
             }
             if (Optional.IsDefined(RequestMethod))
             {
                 writer.WritePropertyName("requestMethod"u8);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(RequestMethod);
-#else
-                JsonSerializer.Serialize(writer, JsonDocument.Parse(RequestMethod.ToString()).RootElement);
-#endif
+                JsonSerializer.Serialize(writer, RequestMethod);
             }
             if (Optional.IsDefined(RequestBody))
             {
                 writer.WritePropertyName("requestBody"u8);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(RequestBody);
-#else
-                JsonSerializer.Serialize(writer, JsonDocument.Parse(RequestBody.ToString()).RootElement);
-#endif
+                JsonSerializer.Serialize(writer, RequestBody);
             }
             if (Optional.IsDefined(AdditionalHeaders))
             {
                 writer.WritePropertyName("additionalHeaders"u8);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(AdditionalHeaders);
-#else
-                JsonSerializer.Serialize(writer, JsonDocument.Parse(AdditionalHeaders.ToString()).RootElement);
-#endif
+                JsonSerializer.Serialize(writer, AdditionalHeaders);
             }
             if (Optional.IsDefined(Format))
             {
@@ -148,16 +125,16 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
             string type = default;
             Optional<string> description = default;
-            Optional<BinaryData> structure = default;
-            Optional<BinaryData> schema = default;
+            Optional<DataFactoryElement<IList<DatasetDataElement>>> structure = default;
+            Optional<DataFactoryElement<IList<DatasetSchemaDataElement>>> schema = default;
             FactoryLinkedServiceReference linkedServiceName = default;
             Optional<IDictionary<string, EntityParameterSpecification>> parameters = default;
             Optional<IList<BinaryData>> annotations = default;
             Optional<DatasetFolder> folder = default;
-            Optional<BinaryData> relativeUrl = default;
-            Optional<BinaryData> requestMethod = default;
-            Optional<BinaryData> requestBody = default;
-            Optional<BinaryData> additionalHeaders = default;
+            Optional<DataFactoryElement<string>> relativeUrl = default;
+            Optional<DataFactoryElement<string>> requestMethod = default;
+            Optional<DataFactoryElement<string>> requestBody = default;
+            Optional<DataFactoryElement<string>> additionalHeaders = default;
             Optional<DatasetStorageFormat> format = default;
             Optional<DatasetCompression> compression = default;
             IDictionary<string, BinaryData> additionalProperties = default;
@@ -180,7 +157,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    structure = BinaryData.FromString(property.Value.GetRawText());
+                    structure = JsonSerializer.Deserialize<DataFactoryElement<IList<DatasetDataElement>>>(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("schema"u8))
@@ -189,7 +166,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    schema = BinaryData.FromString(property.Value.GetRawText());
+                    schema = JsonSerializer.Deserialize<DataFactoryElement<IList<DatasetSchemaDataElement>>>(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("linkedServiceName"u8))
@@ -256,7 +233,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             {
                                 continue;
                             }
-                            relativeUrl = BinaryData.FromString(property0.Value.GetRawText());
+                            relativeUrl = JsonSerializer.Deserialize<DataFactoryElement<string>>(property0.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("requestMethod"u8))
@@ -265,7 +242,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             {
                                 continue;
                             }
-                            requestMethod = BinaryData.FromString(property0.Value.GetRawText());
+                            requestMethod = JsonSerializer.Deserialize<DataFactoryElement<string>>(property0.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("requestBody"u8))
@@ -274,7 +251,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             {
                                 continue;
                             }
-                            requestBody = BinaryData.FromString(property0.Value.GetRawText());
+                            requestBody = JsonSerializer.Deserialize<DataFactoryElement<string>>(property0.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("additionalHeaders"u8))
@@ -283,7 +260,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             {
                                 continue;
                             }
-                            additionalHeaders = BinaryData.FromString(property0.Value.GetRawText());
+                            additionalHeaders = JsonSerializer.Deserialize<DataFactoryElement<string>>(property0.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("format"u8))

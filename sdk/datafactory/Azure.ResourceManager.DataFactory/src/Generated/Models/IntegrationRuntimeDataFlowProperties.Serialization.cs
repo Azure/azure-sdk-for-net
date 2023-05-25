@@ -37,6 +37,16 @@ namespace Azure.ResourceManager.DataFactory.Models
                 writer.WritePropertyName("cleanup"u8);
                 writer.WriteBooleanValue(ShouldCleanupAfterTtl.Value);
             }
+            if (Optional.IsCollectionDefined(CustomProperties))
+            {
+                writer.WritePropertyName("customProperties"u8);
+                writer.WriteStartArray();
+                foreach (var item in CustomProperties)
+                {
+                    writer.WriteObjectValue(item);
+                }
+                writer.WriteEndArray();
+            }
             foreach (var item in AdditionalProperties)
             {
                 writer.WritePropertyName(item.Key);
@@ -59,6 +69,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             Optional<int> coreCount = default;
             Optional<int> timeToLive = default;
             Optional<bool> cleanup = default;
+            Optional<IList<IntegrationRuntimeDataFlowPropertiesCustomPropertiesItem>> customProperties = default;
             IDictionary<string, BinaryData> additionalProperties = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -99,10 +110,24 @@ namespace Azure.ResourceManager.DataFactory.Models
                     cleanup = property.Value.GetBoolean();
                     continue;
                 }
+                if (property.NameEquals("customProperties"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<IntegrationRuntimeDataFlowPropertiesCustomPropertiesItem> array = new List<IntegrationRuntimeDataFlowPropertiesCustomPropertiesItem>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(IntegrationRuntimeDataFlowPropertiesCustomPropertiesItem.DeserializeIntegrationRuntimeDataFlowPropertiesCustomPropertiesItem(item));
+                    }
+                    customProperties = array;
+                    continue;
+                }
                 additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new IntegrationRuntimeDataFlowProperties(Optional.ToNullable(computeType), Optional.ToNullable(coreCount), Optional.ToNullable(timeToLive), Optional.ToNullable(cleanup), additionalProperties);
+            return new IntegrationRuntimeDataFlowProperties(Optional.ToNullable(computeType), Optional.ToNullable(coreCount), Optional.ToNullable(timeToLive), Optional.ToNullable(cleanup), Optional.ToList(customProperties), additionalProperties);
         }
     }
 }

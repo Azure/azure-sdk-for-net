@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    /// <summary> The connection mode used to access CosmosDB account. Type: string (or Expression with resultType string). </summary>
+    /// <summary> The connection mode used to access CosmosDB account. Type: string. </summary>
     public readonly partial struct CosmosDBConnectionMode : IEquatable<CosmosDBConnectionMode>
     {
         private readonly string _value;

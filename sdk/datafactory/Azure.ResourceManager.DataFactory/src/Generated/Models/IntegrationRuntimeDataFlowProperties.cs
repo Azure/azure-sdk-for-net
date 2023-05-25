@@ -17,6 +17,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <summary> Initializes a new instance of IntegrationRuntimeDataFlowProperties. </summary>
         public IntegrationRuntimeDataFlowProperties()
         {
+            CustomProperties = new ChangeTrackingList<IntegrationRuntimeDataFlowPropertiesCustomPropertiesItem>();
             AdditionalProperties = new ChangeTrackingDictionary<string, BinaryData>();
         }
 
@@ -25,13 +26,15 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="coreCount"> Core count of the cluster which will execute data flow job. Supported values are: 8, 16, 32, 48, 80, 144 and 272. </param>
         /// <param name="timeToLiveInMinutes"> Time to live (in minutes) setting of the cluster which will execute data flow job. </param>
         /// <param name="shouldCleanupAfterTtl"> Cluster will not be recycled and it will be used in next data flow activity run until TTL (time to live) is reached if this is set as false. Default is true. </param>
+        /// <param name="customProperties"> Custom properties are used to tune the data flow runtime performance. </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
-        internal IntegrationRuntimeDataFlowProperties(DataFlowComputeType? computeType, int? coreCount, int? timeToLiveInMinutes, bool? shouldCleanupAfterTtl, IDictionary<string, BinaryData> additionalProperties)
+        internal IntegrationRuntimeDataFlowProperties(DataFlowComputeType? computeType, int? coreCount, int? timeToLiveInMinutes, bool? shouldCleanupAfterTtl, IList<IntegrationRuntimeDataFlowPropertiesCustomPropertiesItem> customProperties, IDictionary<string, BinaryData> additionalProperties)
         {
             ComputeType = computeType;
             CoreCount = coreCount;
             TimeToLiveInMinutes = timeToLiveInMinutes;
             ShouldCleanupAfterTtl = shouldCleanupAfterTtl;
+            CustomProperties = customProperties;
             AdditionalProperties = additionalProperties;
         }
 
@@ -43,6 +46,8 @@ namespace Azure.ResourceManager.DataFactory.Models
         public int? TimeToLiveInMinutes { get; set; }
         /// <summary> Cluster will not be recycled and it will be used in next data flow activity run until TTL (time to live) is reached if this is set as false. Default is true. </summary>
         public bool? ShouldCleanupAfterTtl { get; set; }
+        /// <summary> Custom properties are used to tune the data flow runtime performance. </summary>
+        public IList<IntegrationRuntimeDataFlowPropertiesCustomPropertiesItem> CustomProperties { get; }
         /// <summary>
         /// Additional Properties
         /// <para>

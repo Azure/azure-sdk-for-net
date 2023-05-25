@@ -9,6 +9,7 @@ using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Expressions.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
@@ -20,70 +21,42 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(Recursive))
             {
                 writer.WritePropertyName("recursive"u8);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(Recursive);
-#else
-                JsonSerializer.Serialize(writer, JsonDocument.Parse(Recursive.ToString()).RootElement);
-#endif
+                JsonSerializer.Serialize(writer, Recursive);
             }
             if (Optional.IsDefined(WildcardFolderPath))
             {
                 writer.WritePropertyName("wildcardFolderPath"u8);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(WildcardFolderPath);
-#else
-                JsonSerializer.Serialize(writer, JsonDocument.Parse(WildcardFolderPath.ToString()).RootElement);
-#endif
+                JsonSerializer.Serialize(writer, WildcardFolderPath);
             }
             if (Optional.IsDefined(WildcardFileName))
             {
                 writer.WritePropertyName("wildcardFileName"u8);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(WildcardFileName);
-#else
-                JsonSerializer.Serialize(writer, JsonDocument.Parse(WildcardFileName.ToString()).RootElement);
-#endif
+                JsonSerializer.Serialize(writer, WildcardFileName);
             }
             if (Optional.IsDefined(FileListPath))
             {
                 writer.WritePropertyName("fileListPath"u8);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(FileListPath);
-#else
-                JsonSerializer.Serialize(writer, JsonDocument.Parse(FileListPath.ToString()).RootElement);
-#endif
+                JsonSerializer.Serialize(writer, FileListPath);
             }
             if (Optional.IsDefined(EnablePartitionDiscovery))
             {
                 writer.WritePropertyName("enablePartitionDiscovery"u8);
-                writer.WriteBooleanValue(EnablePartitionDiscovery.Value);
+                JsonSerializer.Serialize(writer, EnablePartitionDiscovery);
             }
             if (Optional.IsDefined(PartitionRootPath))
             {
                 writer.WritePropertyName("partitionRootPath"u8);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(PartitionRootPath);
-#else
-                JsonSerializer.Serialize(writer, JsonDocument.Parse(PartitionRootPath.ToString()).RootElement);
-#endif
+                JsonSerializer.Serialize(writer, PartitionRootPath);
             }
             if (Optional.IsDefined(ModifiedDatetimeStart))
             {
                 writer.WritePropertyName("modifiedDatetimeStart"u8);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(ModifiedDatetimeStart);
-#else
-                JsonSerializer.Serialize(writer, JsonDocument.Parse(ModifiedDatetimeStart.ToString()).RootElement);
-#endif
+                JsonSerializer.Serialize(writer, ModifiedDatetimeStart);
             }
             if (Optional.IsDefined(ModifiedDatetimeEnd))
             {
                 writer.WritePropertyName("modifiedDatetimeEnd"u8);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(ModifiedDatetimeEnd);
-#else
-                JsonSerializer.Serialize(writer, JsonDocument.Parse(ModifiedDatetimeEnd.ToString()).RootElement);
-#endif
+                JsonSerializer.Serialize(writer, ModifiedDatetimeEnd);
             }
             if (Optional.IsDefined(DistcpSettings))
             {
@@ -93,31 +66,19 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(DeleteFilesAfterCompletion))
             {
                 writer.WritePropertyName("deleteFilesAfterCompletion"u8);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(DeleteFilesAfterCompletion);
-#else
-                JsonSerializer.Serialize(writer, JsonDocument.Parse(DeleteFilesAfterCompletion.ToString()).RootElement);
-#endif
+                JsonSerializer.Serialize(writer, DeleteFilesAfterCompletion);
             }
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(StoreReadSettingsType);
             if (Optional.IsDefined(MaxConcurrentConnections))
             {
                 writer.WritePropertyName("maxConcurrentConnections"u8);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(MaxConcurrentConnections);
-#else
-                JsonSerializer.Serialize(writer, JsonDocument.Parse(MaxConcurrentConnections.ToString()).RootElement);
-#endif
+                JsonSerializer.Serialize(writer, MaxConcurrentConnections);
             }
             if (Optional.IsDefined(DisableMetricsCollection))
             {
                 writer.WritePropertyName("disableMetricsCollection"u8);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(DisableMetricsCollection);
-#else
-                JsonSerializer.Serialize(writer, JsonDocument.Parse(DisableMetricsCollection.ToString()).RootElement);
-#endif
+                JsonSerializer.Serialize(writer, DisableMetricsCollection);
             }
             foreach (var item in AdditionalProperties)
             {
@@ -137,19 +98,19 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 return null;
             }
-            Optional<BinaryData> recursive = default;
-            Optional<BinaryData> wildcardFolderPath = default;
-            Optional<BinaryData> wildcardFileName = default;
-            Optional<BinaryData> fileListPath = default;
-            Optional<bool> enablePartitionDiscovery = default;
-            Optional<BinaryData> partitionRootPath = default;
-            Optional<BinaryData> modifiedDatetimeStart = default;
-            Optional<BinaryData> modifiedDatetimeEnd = default;
+            Optional<DataFactoryElement<bool>> recursive = default;
+            Optional<DataFactoryElement<string>> wildcardFolderPath = default;
+            Optional<DataFactoryElement<string>> wildcardFileName = default;
+            Optional<DataFactoryElement<string>> fileListPath = default;
+            Optional<DataFactoryElement<bool>> enablePartitionDiscovery = default;
+            Optional<DataFactoryElement<string>> partitionRootPath = default;
+            Optional<DataFactoryElement<string>> modifiedDatetimeStart = default;
+            Optional<DataFactoryElement<string>> modifiedDatetimeEnd = default;
             Optional<DistcpSettings> distcpSettings = default;
-            Optional<BinaryData> deleteFilesAfterCompletion = default;
+            Optional<DataFactoryElement<bool>> deleteFilesAfterCompletion = default;
             string type = default;
-            Optional<BinaryData> maxConcurrentConnections = default;
-            Optional<BinaryData> disableMetricsCollection = default;
+            Optional<DataFactoryElement<int>> maxConcurrentConnections = default;
+            Optional<DataFactoryElement<bool>> disableMetricsCollection = default;
             IDictionary<string, BinaryData> additionalProperties = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -160,7 +121,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    recursive = BinaryData.FromString(property.Value.GetRawText());
+                    recursive = JsonSerializer.Deserialize<DataFactoryElement<bool>>(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("wildcardFolderPath"u8))
@@ -169,7 +130,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    wildcardFolderPath = BinaryData.FromString(property.Value.GetRawText());
+                    wildcardFolderPath = JsonSerializer.Deserialize<DataFactoryElement<string>>(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("wildcardFileName"u8))
@@ -178,7 +139,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    wildcardFileName = BinaryData.FromString(property.Value.GetRawText());
+                    wildcardFileName = JsonSerializer.Deserialize<DataFactoryElement<string>>(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("fileListPath"u8))
@@ -187,7 +148,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    fileListPath = BinaryData.FromString(property.Value.GetRawText());
+                    fileListPath = JsonSerializer.Deserialize<DataFactoryElement<string>>(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("enablePartitionDiscovery"u8))
@@ -196,7 +157,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    enablePartitionDiscovery = property.Value.GetBoolean();
+                    enablePartitionDiscovery = JsonSerializer.Deserialize<DataFactoryElement<bool>>(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("partitionRootPath"u8))
@@ -205,7 +166,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    partitionRootPath = BinaryData.FromString(property.Value.GetRawText());
+                    partitionRootPath = JsonSerializer.Deserialize<DataFactoryElement<string>>(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("modifiedDatetimeStart"u8))
@@ -214,7 +175,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    modifiedDatetimeStart = BinaryData.FromString(property.Value.GetRawText());
+                    modifiedDatetimeStart = JsonSerializer.Deserialize<DataFactoryElement<string>>(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("modifiedDatetimeEnd"u8))
@@ -223,7 +184,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    modifiedDatetimeEnd = BinaryData.FromString(property.Value.GetRawText());
+                    modifiedDatetimeEnd = JsonSerializer.Deserialize<DataFactoryElement<string>>(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("distcpSettings"u8))
@@ -241,7 +202,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    deleteFilesAfterCompletion = BinaryData.FromString(property.Value.GetRawText());
+                    deleteFilesAfterCompletion = JsonSerializer.Deserialize<DataFactoryElement<bool>>(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("type"u8))
@@ -255,7 +216,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    maxConcurrentConnections = BinaryData.FromString(property.Value.GetRawText());
+                    maxConcurrentConnections = JsonSerializer.Deserialize<DataFactoryElement<int>>(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("disableMetricsCollection"u8))
@@ -264,13 +225,13 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    disableMetricsCollection = BinaryData.FromString(property.Value.GetRawText());
+                    disableMetricsCollection = JsonSerializer.Deserialize<DataFactoryElement<bool>>(property.Value.GetRawText());
                     continue;
                 }
                 additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new HdfsReadSettings(type, maxConcurrentConnections.Value, disableMetricsCollection.Value, additionalProperties, recursive.Value, wildcardFolderPath.Value, wildcardFileName.Value, fileListPath.Value, Optional.ToNullable(enablePartitionDiscovery), partitionRootPath.Value, modifiedDatetimeStart.Value, modifiedDatetimeEnd.Value, distcpSettings.Value, deleteFilesAfterCompletion.Value);
+            return new HdfsReadSettings(type, maxConcurrentConnections.Value, disableMetricsCollection.Value, additionalProperties, recursive.Value, wildcardFolderPath.Value, wildcardFileName.Value, fileListPath.Value, enablePartitionDiscovery.Value, partitionRootPath.Value, modifiedDatetimeStart.Value, modifiedDatetimeEnd.Value, distcpSettings.Value, deleteFilesAfterCompletion.Value);
         }
     }
 }

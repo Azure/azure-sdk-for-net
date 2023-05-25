@@ -24,6 +24,16 @@ namespace Azure.ResourceManager.DataFactory.Models
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
+            if (Optional.IsDefined(State))
+            {
+                writer.WritePropertyName("state"u8);
+                writer.WriteStringValue(State.Value.ToString());
+            }
+            if (Optional.IsDefined(OnInactiveMarkAs))
+            {
+                writer.WritePropertyName("onInactiveMarkAs"u8);
+                writer.WriteStringValue(OnInactiveMarkAs.Value.ToString());
+            }
             if (Optional.IsCollectionDefined(DependsOn))
             {
                 writer.WritePropertyName("dependsOn"u8);
@@ -98,8 +108,10 @@ namespace Azure.ResourceManager.DataFactory.Models
                     case "Lookup": return LookupActivity.DeserializeLookupActivity(element);
                     case "Script": return ScriptActivity.DeserializeScriptActivity(element);
                     case "SetVariable": return SetVariableActivity.DeserializeSetVariableActivity(element);
+                    case "SparkJob": return SynapseSparkJobDefinitionActivity.DeserializeSynapseSparkJobDefinitionActivity(element);
                     case "SqlServerStoredProcedure": return SqlServerStoredProcedureActivity.DeserializeSqlServerStoredProcedureActivity(element);
                     case "Switch": return SwitchActivity.DeserializeSwitchActivity(element);
+                    case "SynapseNotebook": return SynapseNotebookActivity.DeserializeSynapseNotebookActivity(element);
                     case "Until": return UntilActivity.DeserializeUntilActivity(element);
                     case "Validation": return ValidationActivity.DeserializeValidationActivity(element);
                     case "Wait": return WaitActivity.DeserializeWaitActivity(element);
