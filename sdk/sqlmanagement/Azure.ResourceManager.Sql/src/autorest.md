@@ -328,6 +328,7 @@ rename-mapping:
   ServerConfigurationOption: ManagedInstanceServerConfigurationOption
   OutboundEnvironmentEndpoint: SqlOutboundEnvironmentEndpoint
   OutboundEnvironmentEndpointCollection: SqlOutboundEnvironmentEndpointCollection
+  MetricDefinition.resourceUri: ResourceUriString
 
 prompted-enum-values:
   - Default
