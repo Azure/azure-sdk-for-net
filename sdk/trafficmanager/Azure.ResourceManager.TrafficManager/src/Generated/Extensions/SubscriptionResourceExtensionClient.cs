@@ -5,11 +5,14 @@
 
 #nullable disable
 
+using System;
 using System.Threading;
+using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
+using Azure.ResourceManager.TrafficManager.Models;
 
 namespace Azure.ResourceManager.TrafficManager
 {
@@ -45,6 +48,68 @@ namespace Azure.ResourceManager.TrafficManager
         public virtual TrafficManagerUserMetricsResource GetTrafficManagerUserMetrics()
         {
             return new TrafficManagerUserMetricsResource(Client, Id.AppendProviderResource("Microsoft.Network", "trafficManagerUserMetricsKeys", "default"));
+        }
+
+        /// <summary>
+        /// Checks the availability of a Traffic Manager Relative DNS name.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Network/checkTrafficManagerNameAvailabilityV2</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Profiles_checkTrafficManagerNameAvailabilityV2</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="trafficManagerRelativeDnsNameAvailabilityParameters"> The Traffic Manager name parameters supplied to the CheckTrafficManagerNameAvailability operation. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<Response<TrafficManagerNameAvailabilityResult>> CheckTrafficManagerNameAvailabilityV2ProfileAsync(TrafficManagerRelativeDnsNameAvailabilityParameters trafficManagerRelativeDnsNameAvailabilityParameters, CancellationToken cancellationToken = default)
+        {
+            using var scope = TrafficManagerProfileProfilesClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.CheckTrafficManagerNameAvailabilityV2Profile");
+            scope.Start();
+            try
+            {
+                var response = await TrafficManagerProfileProfilesRestClient.CheckTrafficManagerNameAvailabilityV2Async(Id.SubscriptionId, trafficManagerRelativeDnsNameAvailabilityParameters, cancellationToken).ConfigureAwait(false);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Checks the availability of a Traffic Manager Relative DNS name.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Network/checkTrafficManagerNameAvailabilityV2</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Profiles_checkTrafficManagerNameAvailabilityV2</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="trafficManagerRelativeDnsNameAvailabilityParameters"> The Traffic Manager name parameters supplied to the CheckTrafficManagerNameAvailability operation. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual Response<TrafficManagerNameAvailabilityResult> CheckTrafficManagerNameAvailabilityV2Profile(TrafficManagerRelativeDnsNameAvailabilityParameters trafficManagerRelativeDnsNameAvailabilityParameters, CancellationToken cancellationToken = default)
+        {
+            using var scope = TrafficManagerProfileProfilesClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.CheckTrafficManagerNameAvailabilityV2Profile");
+            scope.Start();
+            try
+            {
+                var response = TrafficManagerProfileProfilesRestClient.CheckTrafficManagerNameAvailabilityV2(Id.SubscriptionId, trafficManagerRelativeDnsNameAvailabilityParameters, cancellationToken);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary>

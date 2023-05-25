@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.TrafficManager.Models
 {
-    public partial class TrafficManagerRelativeDnsNameAvailabilityContent : IUtf8JsonSerializable
+    public partial class TrafficManagerRelativeDnsNameAvailabilityParameters : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
