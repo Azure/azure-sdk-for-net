@@ -17,7 +17,7 @@ namespace Azure.Communication.PhoneNumbers.Tests
         private const string UrlEncodedPhoneNumberRegEx = @"[\\%2B]{0,3}[0-9]{11,15}";
         protected const string UnauthorizedNumber = "+14255550123";
 
-        public PhoneNumbersClientLiveTestBase(bool isAsync) : base(isAsync)
+        public PhoneNumbersClientLiveTestBase(bool isAsync) : base(isAsync, RecordedTestMode.Record)
         {
             SanitizedHeaders.Add("location");
             BodyRegexSanitizers.Add(new BodyRegexSanitizer(PhoneNumberRegEx, SanitizeValue));
