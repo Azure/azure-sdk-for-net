@@ -1,0 +1,7 @@
+﻿[*.cs]
+
+# no space between new()
+dotnet_diagnostic.SA1000.severity = silent 
+
+# no file headers
+dotnet_diagnostic.SA1633.severity = silent
