@@ -59,7 +59,9 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
             [SemanticConventions.AttributeMessagingDestination] = OperationType.Messaging,
             [SemanticConventions.AttributeMessagingDestinationKind] = OperationType.Messaging,
             [SemanticConventions.AttributeMessagingTempDestination] = OperationType.Messaging,
-            [SemanticConventions.AttributeMessagingUrl] = OperationType.Messaging
+            [SemanticConventions.AttributeMessagingUrl] = OperationType.Messaging,
+
+            [SemanticConventions.AttributeEnduserId] = OperationType.Common,
         };
 
         public AzMonList MappedTags;

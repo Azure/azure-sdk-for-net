@@ -31,6 +31,8 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Models
                 Tags["ai.user.userAgent"] = userAgent;
             }
 
+            SetAuthenticatedUserId(ref activityTagsProcessor);
+
             // we only have mapping for server spans
             // todo: non-server spans
             if (activity.Kind == ActivityKind.Server)
@@ -107,6 +109,17 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Models
         internal static DateTimeOffset FormatUtcTimestamp(System.DateTime utcTimestamp)
         {
             return DateTime.SpecifyKind(utcTimestamp, DateTimeKind.Utc);
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        private void SetAuthenticatedUserId(ref ActivityTagsProcessor activityTagsProcessor)
+        {
+            var endUserId = AzMonList.GetTagValue(ref activityTagsProcessor.MappedTags, SemanticConventions.AttributeEnduserId)?.ToString();
+
+            if (endUserId != null)
+            {
+                Tags[ContextTagKeys.AiUserAuthUserId.ToString()] = endUserId;
+            }
         }
     }
 }

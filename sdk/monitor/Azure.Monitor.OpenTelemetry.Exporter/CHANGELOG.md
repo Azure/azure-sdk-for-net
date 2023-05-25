@@ -4,6 +4,9 @@
 
 ### Features Added
 
+* Add support for Authenticated User Id.
+  ([]())
+ 
 ### Breaking Changes
 
 ### Bugs Fixed
