@@ -42,13 +42,10 @@ namespace Azure.Communication.PhoneNumbers
         private readonly object _dummy;
         private readonly int _dummyPrimitive;
         public OperatorNumberType(string value) { throw null; }
-        public static Azure.Communication.PhoneNumbers.OperatorNumberType FreePhone { get { throw null; } }
         public static Azure.Communication.PhoneNumbers.OperatorNumberType Geographic { get { throw null; } }
         public static Azure.Communication.PhoneNumbers.OperatorNumberType Mobile { get { throw null; } }
-        public static Azure.Communication.PhoneNumbers.OperatorNumberType Paging { get { throw null; } }
-        public static Azure.Communication.PhoneNumbers.OperatorNumberType SpecialServices { get { throw null; } }
-        public static Azure.Communication.PhoneNumbers.OperatorNumberType TestNumber { get { throw null; } }
-        public static Azure.Communication.PhoneNumbers.OperatorNumberType Voip { get { throw null; } }
+        public static Azure.Communication.PhoneNumbers.OperatorNumberType Other { get { throw null; } }
+        public static Azure.Communication.PhoneNumbers.OperatorNumberType Unknown { get { throw null; } }
         public bool Equals(Azure.Communication.PhoneNumbers.OperatorNumberType other) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
