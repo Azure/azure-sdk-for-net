@@ -8,15 +8,9 @@
 namespace Azure.AI.OpenAI
 {
     /// <summary> A single, role-attributed message within a chat completion interaction. </summary>
+    [System.Text.Json.Serialization.JsonConverter(typeof(ChatMessageConverter))]
     public partial class ChatMessage
     {
-        /// <summary> Initializes a new instance of ChatMessage. </summary>
-        /// <param name="role"> The role associated with this message payload. </param>
-        public ChatMessage(ChatRole role)
-        {
-            Role = role;
-        }
-
         /// <summary> Initializes a new instance of ChatMessage. </summary>
         /// <param name="role"> The role associated with this message payload. </param>
         /// <param name="content"> The text associated with this message payload. </param>
