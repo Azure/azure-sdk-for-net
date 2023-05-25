@@ -20,8 +20,8 @@ namespace Azure.ResourceManager.DevCenter.Models
             }
             Optional<long> currentValue = default;
             Optional<long> limit = default;
-            Optional<UsageUnit> unit = default;
-            Optional<UsageName> name = default;
+            Optional<DevCenterUsageUnit> unit = default;
+            Optional<DevCenterUsageName> name = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("currentValue"u8))
@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.DevCenter.Models
                     {
                         continue;
                     }
-                    unit = new UsageUnit(property.Value.GetString());
+                    unit = new DevCenterUsageUnit(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("name"u8))
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.DevCenter.Models
                     {
                         continue;
                     }
-                    name = UsageName.DeserializeUsageName(property.Value);
+                    name = DevCenterUsageName.DeserializeDevCenterUsageName(property.Value);
                     continue;
                 }
             }

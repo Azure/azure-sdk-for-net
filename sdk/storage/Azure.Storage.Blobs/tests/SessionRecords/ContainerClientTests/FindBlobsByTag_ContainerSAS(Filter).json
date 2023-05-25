@@ -63,7 +63,7 @@
       "ResponseBody": []
     },
     {
-      "RequestUri": "https://gczxscnapby3prdev16a.blob.preprod.core.windows.net/test-container-ab9fcba2-5297-30ae-2a82-b20c134bec5b?sv=2022-11-02\u0026se=2021-11-05T17%3A30%3A07Z\u0026sr=c\u0026sp=f\u0026sig=Sanitized\u0026restype=container\u0026comp=blobs\u0026where=%22myTagKey%22%3D%27myTagValue%27",
+      "RequestUri": "https://gczxscnapby3prdev16a.blob.preprod.core.windows.net/test-container-ab9fcba2-5297-30ae-2a82-b20c134bec5b?sv=2023-01-03\u0026se=2021-11-05T17%3A30%3A07Z\u0026sr=c\u0026sp=f\u0026sig=Sanitized\u0026restype=container\u0026comp=blobs\u0026where=%22myTagKey%22%3D%27myTagValue%27",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/xml",

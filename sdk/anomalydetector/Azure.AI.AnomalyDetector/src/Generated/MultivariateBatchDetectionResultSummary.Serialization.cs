@@ -28,7 +28,7 @@ namespace Azure.AI.AnomalyDetector
             {
                 if (property.NameEquals("status"u8))
                 {
-                    status = property.Value.GetString().ToMultivariateBatchDetectionStatus();
+                    status = new MultivariateBatchDetectionStatus(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("errors"u8))

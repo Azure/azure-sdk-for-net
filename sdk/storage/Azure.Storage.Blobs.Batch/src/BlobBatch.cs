@@ -216,7 +216,7 @@ namespace Azure.Storage.Blobs.Specialized
 
             return new DelayedResponse(
                 message,
-                async response =>
+                response =>
                 {
                     switch (response.Status)
                     {
@@ -224,7 +224,7 @@ namespace Azure.Storage.Blobs.Specialized
                             BlobDeleteHeaders blobDeleteHeaders = new BlobDeleteHeaders(response);
                             return ResponseWithHeaders.FromValue(blobDeleteHeaders, response);
                         default:
-                            throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response).ConfigureAwait(false);
+                            throw new RequestFailedException(response);
                     }
                 });
         }
@@ -327,7 +327,7 @@ namespace Azure.Storage.Blobs.Specialized
 
             return new DelayedResponse(
                 message,
-                async response =>
+                response =>
                 {
                     switch (response.Status)
                     {
@@ -336,7 +336,7 @@ namespace Azure.Storage.Blobs.Specialized
                             BlobSetAccessTierHeaders blobSetAccessTierHeaders = new BlobSetAccessTierHeaders(response);
                             return ResponseWithHeaders.FromValue(blobSetAccessTierHeaders, response);
                         default:
-                            throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response).ConfigureAwait(false);
+                            throw new RequestFailedException(response);
                     }
                 });
         }

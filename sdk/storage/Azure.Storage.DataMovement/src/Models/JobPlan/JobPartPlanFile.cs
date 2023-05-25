@@ -72,6 +72,15 @@ namespace Azure.Storage.DataMovement.Models.JobPlan
             return result;
         }
 
+        public static JobPartPlanFile CreateExistingPartPlanFile(
+            JobPartPlanFileName fileName)
+        {
+            return new JobPartPlanFile()
+            {
+                FileName = fileName
+            };
+        }
+
         public void Dispose()
         {
             WriteLock.Dispose();

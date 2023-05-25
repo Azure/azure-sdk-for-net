@@ -19,7 +19,7 @@ namespace Azure.IoT.Hub.Service.Models
                 return null;
             }
             Optional<string> deviceId = default;
-            Optional<string> warningCode = default;
+            Optional<DeviceRegistryOperationWarningCode> warningCode = default;
             Optional<string> warningStatus = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -30,7 +30,11 @@ namespace Azure.IoT.Hub.Service.Models
                 }
                 if (property.NameEquals("warningCode"u8))
                 {
-                    warningCode = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    warningCode = new DeviceRegistryOperationWarningCode(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("warningStatus"u8))
@@ -39,7 +43,7 @@ namespace Azure.IoT.Hub.Service.Models
                     continue;
                 }
             }
-            return new DeviceRegistryOperationWarning(deviceId.Value, warningCode.Value, warningStatus.Value);
+            return new DeviceRegistryOperationWarning(deviceId.Value, Optional.ToNullable(warningCode), warningStatus.Value);
         }
     }
 }

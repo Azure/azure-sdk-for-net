@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.MachineLearning
             {
                 uri.AppendQuery("isDefault", isDefault.Value, true);
             }
-            if (names != null)
+            if (names != null && Optional.IsCollectionDefined(names))
             {
                 uri.AppendQueryDelimited("names", names, ",", true);
             }

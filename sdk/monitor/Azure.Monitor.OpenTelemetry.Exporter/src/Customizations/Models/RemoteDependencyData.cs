@@ -17,6 +17,9 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Models
 
         public RemoteDependencyData(int version, Activity activity, ref ActivityTagsProcessor activityTagsProcessor) : base(version)
         {
+            Properties = new ChangeTrackingDictionary<string, string>();
+            Measurements = new ChangeTrackingDictionary<string, double>();
+
             string? httpUrl = null;
             string dependencyName;
 
@@ -50,7 +53,15 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Models
                 case OperationType.Db:
                     var depDataAndType = AzMonList.GetTagValues(ref activityTagsProcessor.MappedTags, SemanticConventions.AttributeDbStatement, SemanticConventions.AttributeDbSystem);
                     Data = depDataAndType[0]?.ToString().Truncate(SchemaConstants.RemoteDependencyData_Data_MaxLength);
-                    Target = activityTagsProcessor.MappedTags.GetDbDependencyTarget().Truncate(SchemaConstants.RemoteDependencyData_Target_MaxLength);
+                    var dbNameAndTarget = activityTagsProcessor.MappedTags.GetDbDependencyTargetAndName();
+                    Target = dbNameAndTarget.DbTarget.Truncate(SchemaConstants.RemoteDependencyData_Target_MaxLength);
+
+                    // special case for db.name
+                    var sanitizedDbName = dbNameAndTarget.DbName.Truncate(SchemaConstants.KVP_MaxValueLength);
+                    if (sanitizedDbName != null)
+                    {
+                        Properties.Add(SemanticConventions.AttributeDbName, sanitizedDbName);
+                    }
                     Type = s_sqlDbs.Contains(depDataAndType[1]?.ToString()) ? "SQL" : depDataAndType[1]?.ToString().Truncate(SchemaConstants.RemoteDependencyData_Type_MaxLength);
                     break;
                 case OperationType.Rpc:
@@ -66,19 +77,23 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Models
                     break;
             }
 
-            if (activity.Kind == ActivityKind.Internal)
+            if (activityTagsProcessor.HasAzureNamespace)
+            {
+                if (activity.Kind == ActivityKind.Internal)
+                {
+                    Type = $"InProc | {activityTagsProcessor.MappedTags.GetAzNameSpace()}";
+                }
+                else
+                {
+                    // The Azure SDK sets az.namespace with its resource provider information.
+                    // When ActivityKind is not internal and az.namespace is present, set the value of Type to az.namespace.
+                    Type = activityTagsProcessor.MappedTags.GetAzNameSpace() ?? Type;
+                }
+            }
+            else if (activity.Kind == ActivityKind.Internal)
             {
                 Type = "InProc";
             }
-            else
-            {
-                // The Azure SDK sets az.namespace with its resource provider information.
-                // When ActivityKind is not internal and az.namespace is present, set the value of Type to az.namespace.
-                Type = activityTagsProcessor.UnMappedTags.GetAzNameSpace() ?? Type;
-            }
-
-            Properties = new ChangeTrackingDictionary<string, string>();
-            Measurements = new ChangeTrackingDictionary<string, double>();
 
             TraceHelper.AddActivityLinksToProperties(activity, ref activityTagsProcessor.UnMappedTags);
             TraceHelper.AddPropertiesToTelemetry(Properties, ref activityTagsProcessor.UnMappedTags);

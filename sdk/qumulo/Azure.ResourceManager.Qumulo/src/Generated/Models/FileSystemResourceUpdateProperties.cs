@@ -28,11 +28,16 @@ namespace Azure.ResourceManager.Qumulo.Models
         public string UserDetailsEmail
         {
             get => UserDetails is null ? default : UserDetails.Email;
-            set => UserDetails = new QumuloUserDetails(value);
+            set
+            {
+                if (UserDetails is null)
+                    UserDetails = new QumuloUserDetails();
+                UserDetails.Email = value;
+            }
         }
 
         /// <summary> Delegated subnet id for Vnet injection. </summary>
-        public string DelegatedSubnetId { get; set; }
+        public ResourceIdentifier DelegatedSubnetId { get; set; }
         /// <summary> File system Id of the resource. </summary>
         public Uri ClusterLoginUri { get; set; }
         /// <summary> Private IPs of the resource. </summary>

@@ -5,6 +5,9 @@ using System.Text.Json;
 using Azure.Core;
 using System.Text.Json.Serialization;
 using System;
+using System.Runtime.Serialization;
+using System.IO;
+using System.Text;
 
 namespace Azure.Communication.CallAutomation
 {
@@ -16,15 +19,14 @@ namespace Azure.Communication.CallAutomation
         /// <summary> The abstract recognize result. </summary>
         public RecognizeResult RecognizeResult { get; }
 
-        /// <summary> The recognize speech result. </summary>
-        private SpeechResult SpeechResult { get; }
+        private static string SPEECH_DTMF_ERROR = "Speech or Dtmf Recognition return two results!";
 
         /// <summary>
         /// The recognition type.
         /// </summary>
         [CodeGenMember("RecognitionType")]
         [JsonConverter(typeof(EquatableEnumJsonConverter<CallMediaRecognitionType>))]
-        private CallMediaRecognitionType RecognitionType { get; set; }
+        public CallMediaRecognitionType RecognitionType { get; set; }
 
         /// <summary> Initializes a new instance of RecognizeCompleted. </summary>
         internal RecognizeCompleted()
@@ -41,9 +43,8 @@ namespace Azure.Communication.CallAutomation
         /// Determines the sub-type of the recognize operation.
         /// In case of cancel operation the this field is not set and is returned empty
         /// </param>
-        /// <param name="collectTonesResult"> Defines the result for RecognitionType = Dtmf. </param>
-        /// <param name="choiceResult"> Defines the result for RecognitionType = Choices. </param>
-        internal RecognizeCompleted(string callConnectionId, string serverCallId, string correlationId, string operationContext, ResultInformation resultInformation, CallMediaRecognitionType recognitionType, CollectTonesResult collectTonesResult, ChoiceResult choiceResult)
+        /// <param name="recognizeResult"> Defines the result for general recognizeResult. </param>
+        internal RecognizeCompleted(string callConnectionId, string serverCallId, string correlationId, string operationContext, ResultInformation resultInformation, CallMediaRecognitionType recognitionType, RecognizeResult recognizeResult)
         {
             CallConnectionId = callConnectionId;
             ServerCallId = serverCallId;
@@ -51,19 +52,7 @@ namespace Azure.Communication.CallAutomation
             OperationContext = operationContext;
             ResultInformation = resultInformation;
             RecognitionType = recognitionType;
-
-            if (RecognitionType == CallMediaRecognitionType.Dtmf)
-            {
-                RecognizeResult = collectTonesResult;
-            }
-            else if (RecognitionType == CallMediaRecognitionType.Choices)
-            {
-                RecognizeResult = choiceResult;
-            }
-            else if (RecognitionType == CallMediaRecognitionType.Speech || RecognitionType == CallMediaRecognitionType.SpeechOrDtmf)
-            {
-                RecognizeResult = SpeechResult;
-            }
+            RecognizeResult = recognizeResult;
         }
 
         /// <summary> Initializes a new instance of RecognizeCompletedEvent. </summary>
@@ -77,16 +66,30 @@ namespace Azure.Communication.CallAutomation
             ResultInformation = internalEvent.ResultInformation;
             if (internalEvent.RecognitionType == CallMediaRecognitionType.Dtmf)
             {
-                RecognizeResult = internalEvent.CollectTonesResult;
+                RecognizeResult = internalEvent.DtmfResult;
             }
             else if (internalEvent.RecognitionType == CallMediaRecognitionType.Choices)
             {
                 RecognizeResult = internalEvent.ChoiceResult;
             }
-            else if (internalEvent.RecognitionType == CallMediaRecognitionType.Speech || RecognitionType == CallMediaRecognitionType.SpeechOrDtmf)
+            else if (internalEvent.RecognitionType == CallMediaRecognitionType.Speech)
             {
                 RecognizeResult = internalEvent.SpeechResult;
-                SpeechResult = internalEvent.SpeechResult;
+            }
+            else if (internalEvent.RecognitionType == CallMediaRecognitionType.SpeechOrDtmf)
+            {
+                if (internalEvent.SpeechResult != null)
+                {
+                    RecognizeResult = internalEvent.SpeechResult;
+                }
+                else if (internalEvent.DtmfResult != null)
+                {
+                    RecognizeResult = internalEvent.DtmfResult;
+                }
+                else
+                {
+                    throw new Exception(SPEECH_DTMF_ERROR);
+                }
             }
         }
 
@@ -103,6 +106,70 @@ namespace Azure.Communication.CallAutomation
             RecognizeCompletedInternal parsedRecognizeCompleted = RecognizeCompletedInternal.DeserializeRecognizeCompletedInternal(element);
 
             return new RecognizeCompleted(parsedRecognizeCompleted);
+        }
+
+        /// <summary>
+        /// Serialize <see cref="RecognizeCompleted"/> event.
+        /// </summary>
+        /// <returns>The serialized json string.</returns>
+        public string Serialize()
+        {
+            string jsonValue = "";
+
+            var options = new JsonWriterOptions
+            {
+                Indented = true
+            };
+
+            JsonConverter jsonConverter = new EquatableEnumJsonConverter<CallMediaRecognitionType>();
+            var recognitionTypeOption = new JsonSerializerOptions()
+            {
+                Converters = { jsonConverter },
+                Encoder = System.Text.Encodings.Web.JavaScriptEncoder.UnsafeRelaxedJsonEscaping
+            };
+
+            using var stream = new MemoryStream();
+            using var writer = new Utf8JsonWriter(stream, options);
+            JsonSerializerOptions jsonSeializerOptionForObject = new JsonSerializerOptions()
+            {
+                PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
+            };
+            jsonSeializerOptionForObject.Encoder = System.Text.Encodings.Web.JavaScriptEncoder.UnsafeRelaxedJsonEscaping;
+            writer.WriteStartObject();
+            writer.WriteString("callConnectionId", CallConnectionId);
+            writer.WriteString("serverCallId", ServerCallId);
+            writer.WriteString("correlationId", CorrelationId);
+            writer.WriteString("operationContext", OperationContext);
+            writer.WritePropertyName("resultInformation");
+            JsonSerializer.Serialize(writer, ResultInformation, jsonSeializerOptionForObject);
+            writer.WritePropertyName("recognitionType");
+            JsonSerializer.Serialize(writer, RecognitionType, recognitionTypeOption);
+
+            if (RecognitionType == CallMediaRecognitionType.Dtmf)
+            {
+                DtmfResult dtmfResult = (DtmfResult)RecognizeResult;
+                writer.WritePropertyName("dtmfResult");
+                JsonSerializer.Serialize(writer, dtmfResult, jsonSeializerOptionForObject);
+            }
+            else if (RecognitionType == CallMediaRecognitionType.Choices)
+            {
+                ChoiceResult choiceResult = (ChoiceResult)RecognizeResult;
+                writer.WritePropertyName("choiceResult");
+                JsonSerializer.Serialize(writer, choiceResult, jsonSeializerOptionForObject);
+            }
+            else if (RecognitionType == CallMediaRecognitionType.Speech)
+            {
+                SpeechResult speechResult = (SpeechResult)RecognizeResult;
+                writer.WritePropertyName("speechResult");
+                JsonSerializer.Serialize(writer, speechResult, jsonSeializerOptionForObject);
+            }
+
+            writer.WriteEndObject();
+            writer.Flush();
+
+            jsonValue = Encoding.UTF8.GetString(stream.ToArray());
+
+            return jsonValue;
         }
     }
 }

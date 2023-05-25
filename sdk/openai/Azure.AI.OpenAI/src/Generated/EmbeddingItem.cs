@@ -28,16 +28,18 @@ namespace Azure.AI.OpenAI
         }
 
         /// <summary> Initializes a new instance of EmbeddingItem. </summary>
+        /// <param name="object"> Name of the field in which the embedding is contained. </param>
         /// <param name="embedding"> List of embeddings value for the input prompt. These represents a measurement of releated of text strings. </param>
         /// <param name="index"> Index of the prompt to which the EmbeddingItem corresponds. </param>
-        internal EmbeddingItem(IReadOnlyList<float> embedding, int index)
+        internal EmbeddingItem(EmbeddingItemObject @object, IReadOnlyList<float> embedding, int index)
         {
-            Embedding = embedding.ToList();
+            Object = @object;
+            Embedding = embedding;
             Index = index;
         }
 
         /// <summary> Name of the field in which the embedding is contained. </summary>
-        internal string Object { get; } = "embedding";
+        public EmbeddingItemObject Object { get; } = EmbeddingItemObject.Embedding;
 
         /// <summary> List of embeddings value for the input prompt. These represents a measurement of releated of text strings. </summary>
         public IReadOnlyList<float> Embedding { get; }

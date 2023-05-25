@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.Compute
             Optional<SupportedOperatingSystemType> osType = default;
             Optional<OperatingSystemStateType> osState = default;
             Optional<DateTimeOffset> endOfLifeDate = default;
-            Optional<GalleryImageIdentifier> identifier = default;
+            Optional<CommunityGalleryImageIdentifier> identifier = default;
             Optional<RecommendedMachineConfiguration> recommended = default;
             Optional<Disallowed> disallowed = default;
             Optional<HyperVGeneration> hyperVGeneration = default;
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.Compute
                             {
                                 continue;
                             }
-                            identifier = GalleryImageIdentifier.DeserializeGalleryImageIdentifier(property0.Value);
+                            identifier = CommunityGalleryImageIdentifier.DeserializeCommunityGalleryImageIdentifier(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("recommended"u8))

@@ -226,6 +226,9 @@ rename-mapping:
   LogAnalyticsIdentifier.workspaceId: -|uuid
   OnPremiseResourceDetails.workspaceId: -|arm-id
   OnPremiseSqlResourceDetails.workspaceId: -|arm-id
+  InformationType: SecurityInformationTypeInfo
+  InformationType.enabled: IsEnabled
+  Rank: SensitivityLabelRank
 
 prepend-rp-prefix:
   - CloudName

@@ -45,6 +45,7 @@ Once you have the Azure resource credentials and the Event Hubs namespace hostna
 // Create a new SchemaRegistry client using the default credential from Azure.Identity using environment variables previously set,
 // including AZURE_CLIENT_ID, AZURE_CLIENT_SECRET, and AZURE_TENANT_ID.
 // For more information on Azure.Identity usage, see: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/identity/Azure.Identity/README.md
+string fullyQualifiedNamespace = "{hostname}.servicebus.windows.net";
 var client = new SchemaRegistryClient(fullyQualifiedNamespace: fullyQualifiedNamespace, credential: new DefaultAzureCredential());
 ```
 
@@ -89,6 +90,7 @@ The following shows examples of what is available through the `SchemaRegistryCli
 Register a schema to be stored in the Azure Schema Registry.
 
 ```C# Snippet:SchemaRegistryRegisterSchema
+string groupName = "<schema_group_name>";
 string name = "employeeSample";
 SchemaFormat format = SchemaFormat.Avro;
 // Example schema's definition
@@ -111,6 +113,7 @@ Response<SchemaProperties> schemaProperties = client.RegisterSchema(groupName, n
 Retrieve a previously registered schema ID from the Azure Schema Registry.
 
 ```C# Snippet:SchemaRegistryRetrieveSchemaId
+string groupName = "<schema_group_name>";
 string name = "employeeSample";
 SchemaFormat format = SchemaFormat.Avro;
 // Example schema's content
@@ -134,11 +137,15 @@ string schemaId = schemaProperties.Id;
 Retrieve a previously registered schema's content from the Azure Schema Registry with either a schema ID or the group name, schema name, and version.
 
 ```C# Snippet:SchemaRegistryRetrieveSchema
+var schemaId = "<schema_id>";
 SchemaRegistrySchema schema = client.GetSchema(schemaId);
 string definition = schema.Definition;
 ```
 
 ```C# Snippet:SchemaRegistryRetrieveSchemaVersion
+string groupName = "<schema_group_name>";
+string name = "<schema_id>";
+int version = 1;
 SchemaRegistrySchema schema = client.GetSchema(groupName, name, version);
 string definition = schema.Definition;
 ```

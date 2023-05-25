@@ -25,15 +25,19 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
         /// <param name="systemData"> The systemData. </param>
         /// <param name="allowNewSession"> Allow a new session. </param>
         /// <param name="assignedUser"> User assigned to SessionHost. </param>
-        internal SessionHostPatch(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, bool? allowNewSession, string assignedUser) : base(id, name, resourceType, systemData)
+        /// <param name="friendlyName"> Friendly name of SessionHost. </param>
+        internal SessionHostPatch(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, bool? allowNewSession, string assignedUser, string friendlyName) : base(id, name, resourceType, systemData)
         {
             AllowNewSession = allowNewSession;
             AssignedUser = assignedUser;
+            FriendlyName = friendlyName;
         }
 
         /// <summary> Allow a new session. </summary>
         public bool? AllowNewSession { get; set; }
         /// <summary> User assigned to SessionHost. </summary>
         public string AssignedUser { get; set; }
+        /// <summary> Friendly name of SessionHost. </summary>
+        public string FriendlyName { get; set; }
     }
 }

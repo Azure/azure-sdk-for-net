@@ -5,14 +5,13 @@ Run `dotnet build /t:GenerateCode` to generate code.
 ``` yaml
 title: MonitorQuery
 input-file:
-    - https://github.com/Azure/azure-rest-api-specs/blob/dba6ed1f03bda88ac6884c0a883246446cc72495/specification/operationalinsights/data-plane/Microsoft.OperationalInsights/preview/2021-05-19_Preview/OperationalInsights.json
-    - https://github.com/Azure/azure-rest-api-specs/blob/dba6ed1f03bda88ac6884c0a883246446cc72495/specification/monitor/resource-manager/Microsoft.Insights/stable/2018-01-01/metricDefinitions_API.json
-    - https://github.com/Azure/azure-rest-api-specs/blob/dba6ed1f03bda88ac6884c0a883246446cc72495/specification/monitor/resource-manager/Microsoft.Insights/stable/2018-01-01/metrics_API.json
-    - https://github.com/Azure/azure-rest-api-specs/blob/dba6ed1f03bda88ac6884c0a883246446cc72495/specification/monitor/resource-manager/Microsoft.Insights/preview/2017-12-01-preview/metricNamespaces_API.json
+    - https://github.com/Azure/azure-rest-api-specs/blob/9a46bdbfea7730a3521ac11f5ea1120007d67f79/specification/operationalinsights/data-plane/Microsoft.OperationalInsights/stable/2022-10-27/OperationalInsights.json
+    - https://github.com/Azure/azure-rest-api-specs/blob/fc3c409825d6a31ba909a88ea34dcc13165edc9c/specification/monitor/resource-manager/Microsoft.Insights/stable/2018-01-01/metricDefinitions_API.json
+    - https://github.com/Azure/azure-rest-api-specs/blob/fc3c409825d6a31ba909a88ea34dcc13165edc9c/specification/monitor/resource-manager/Microsoft.Insights/stable/2018-01-01/metrics_API.json
+    - https://github.com/Azure/azure-rest-api-specs/blob/fc3c409825d6a31ba909a88ea34dcc13165edc9c/specification/monitor/resource-manager/Microsoft.Insights/preview/2017-12-01-preview/metricNamespaces_API.json
 generation1-convenience-client: true
 modelerfour:
     lenient-model-deduplication: true
-    seal-single-value-enum-by-default: true
 ```
 
 ### Remove metadata operations
@@ -68,4 +67,29 @@ directive:
   where: $.definitions.column
   transform: >
     $.required = ["name", "type"]
+```
+
+``` yaml
+directive:
+- from: swagger-document
+  where: $.parameters.ResourceIdParameter
+  transform:
+    $["x-ms-format"] = "arm-id"
+```
+
+### Keep previous constant behavior
+
+Adding these two properties into required keeps the generator to generate the assignment of this property in ctor.
+
+Adding the `x-ms-constant` extension prevents the generator from wrapping the type into an extensible enum
+
+``` yaml
+directive:
+- from: swagger-document
+  where: $.definitions.batchQueryRequest
+  transform: >
+    $.required.push("path");
+    $.required.push("method");
+    $.properties.path["x-ms-constant"] = true;
+    $.properties.method["x-ms-constant"] = true;
 ```
