@@ -32,6 +32,7 @@ namespace Azure.AI.OpenAI
     }
     public partial class ChatMessage
     {
+        public ChatMessage(Azure.AI.OpenAI.ChatRole role) { }
         public ChatMessage(Azure.AI.OpenAI.ChatRole role, string content) { }
         public string Content { get { throw null; } set { } }
         public Azure.AI.OpenAI.ChatRole Role { get { throw null; } set { } }
