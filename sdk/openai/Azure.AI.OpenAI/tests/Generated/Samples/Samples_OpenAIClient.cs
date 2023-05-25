@@ -72,7 +72,10 @@ namespace Azure.AI.OpenAI.Samples
 
             var chatCompletionsOptions = new ChatCompletionsOptions(new ChatMessage[]
             {
-                new ChatMessage(ChatRole.System, "<Content>"),
+    new ChatMessage(ChatRole.System)
+{
+        Content = "<Content>",
+    }
             })
             {
                 MaxTokens = 1234,
