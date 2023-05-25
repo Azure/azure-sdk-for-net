@@ -346,6 +346,59 @@ using Azure.Core.Pipeline;
             }
         }
 
+        /// <summary> Protocol method to use to remove properties from job. </summary>
+        /// <param name="jobId"> Id of the job. </param>
+        /// <param name="patchContent"> Request content payload. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
+        public virtual async Task<Response<RouterJob>> UpdateJobAsync(
+            string jobId,
+            RequestContent patchContent,
+            CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(RouterClient)}.{nameof(UpdateJob)}");
+            scope.Start();
+            try
+            {
+                return await RestClient.UpsertJobAsync(
+                        id: jobId,
+                        patchContent: patchContent,
+                        cancellationToken: cancellationToken)
+                    .ConfigureAwait(false);
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+        }
+
+        /// <summary> Protocol method to use to remove properties from job. </summary>
+        /// <param name="jobId"> Id of the job. </param>
+        /// <param name="patchContent"> Request content payload. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
+        public virtual Response<RouterJob> UpdateJob(
+            string jobId,
+            RequestContent patchContent,
+            CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(RouterClient)}.{nameof(UpdateJob)}");
+            scope.Start();
+            try
+            {
+                return RestClient.UpsertJob(
+                    id: jobId,
+                    patchContent: patchContent,
+                    cancellationToken: cancellationToken);
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+        }
+
         /// <summary> Retrieves an existing job by Id. </summary>
         /// <param name="jobId"> The id of the job. </param>
         /// <param name="cancellationToken"> (Optional) The cancellation token to use. </param>
@@ -1134,6 +1187,61 @@ using Azure.Core.Pipeline;
                 var response = RestClient.UpsertWorker(
                     workerId: options.WorkerId,
                     patch: request,
+                    cancellationToken: cancellationToken);
+                return Response.FromValue(response.Value, response.GetRawResponse());
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+        }
+
+        /// <summary> Protocol method to use to remove properties from worker. </summary>
+        /// <param name="workerId"> Id of the worker. </param>
+        /// <param name="patchContent"> Request content payload. </param>
+        /// <param name="cancellationToken"> (Optional) The cancellation token to use. </param>
+        /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
+        public virtual async Task<Response<RouterWorker>> UpdateWorkerAsync(
+            string workerId,
+            RequestContent patchContent,
+            CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(RouterClient)}.{nameof(UpdateWorker)}");
+            scope.Start();
+            try
+            {
+                var response = await RestClient.UpsertWorkerAsync(
+                        workerId: workerId,
+                        patchContent: patchContent,
+                        cancellationToken: cancellationToken)
+                    .ConfigureAwait(false);
+                return Response.FromValue(response.Value, response.GetRawResponse());
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+        }
+
+        /// <summary> Protocol method to use to remove properties from worker. </summary>
+        /// <param name="workerId"> Id of the worker. </param>
+        /// <param name="patchContent"> Request content payload. </param>
+        /// <param name="cancellationToken"> (Optional) The cancellation token to use. </param>
+        /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
+        public virtual Response<RouterWorker> UpdateWorker(
+            string workerId,
+            RequestContent patchContent,
+            CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(RouterClient)}.{nameof(UpdateWorker)}");
+            scope.Start();
+            try
+            {
+                var response = RestClient.UpsertWorker(
+                    workerId: workerId,
+                    patchContent: patchContent,
                     cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value, response.GetRawResponse());
             }

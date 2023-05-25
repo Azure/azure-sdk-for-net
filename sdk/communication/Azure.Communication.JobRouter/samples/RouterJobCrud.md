@@ -96,6 +96,15 @@ Response<RouterJob> updatedJob = routerClient.UpdateJob(
 Console.WriteLine($"Job has been successfully updated. Current value of channelReference: {updatedJob.Value.ChannelReference}"); // "45678"
 ```
 
+## Remove from job
+
+```C# Snippet:Azure_Communication_JobRouter_Tests_Samples_Crud_UpdateJobRemoveProp
+Response<RouterJob> updatedJobWithoutChannelReference = routerClient.UpdateJob(jobId,
+    RequestContent.Create(new { ChannelReference = (string?)null }));
+
+Console.WriteLine($"Job has been successfully updated. 'ChannelReference' has been removed: {string.IsNullOrWhiteSpace(updatedJobWithoutChannelReference.Value.ChannelReference)}");
+```
+
 ## Reclassify a job
 
 ```C# Snippet:Azure_Communication_JobRouter_Tests_Samples_Crud_ReclassifyRouterJob

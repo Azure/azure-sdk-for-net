@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Azure.Communication.JobRouter.Models;
 using Azure.Communication.JobRouter.Tests.Infrastructure;
+using Azure.Core;
 using Azure.Core.TestFramework;
 using NUnit.Framework;
 
@@ -70,6 +71,15 @@ namespace Azure.Communication.JobRouter.Tests.Samples
             Console.WriteLine($"Successfully fetched classification policy with id: {queriedClassificationPolicy.Value.Id}");
 
             #endregion Snippet:Azure_Communication_JobRouter_Tests_Samples_Crud_GetClassificationPolicy_Async
+
+            #region Snippet:Azure_Communication_JobRouter_Tests_Samples_Crud_UpdateClassificationPolicyRemoveProp_Async
+
+            Response<ClassificationPolicy> updatedClassificationPolicyWithoutName = await routerAdministrationClient.UpdateClassificationPolicyAsync(classificationPolicyId,
+                RequestContent.Create(new { Name = (string?)null }));
+
+            Console.WriteLine($"Classification policy successfully update: 'Name' has been removed. Status: {string.IsNullOrWhiteSpace(updatedClassificationPolicyWithoutName.Value.Name)}");
+
+            #endregion Snippet:Azure_Communication_JobRouter_Tests_Samples_Crud_UpdateClassificationPolicyRemoveProp_Async
 
             #region Snippet:Azure_Communication_JobRouter_Tests_Samples_Crud_UpdateClassificationPolicy_Async
 

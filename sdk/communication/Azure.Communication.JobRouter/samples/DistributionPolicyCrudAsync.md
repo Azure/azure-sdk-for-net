@@ -55,6 +55,15 @@ Response<DistributionPolicy> updatedDistributionPolicy = await routerAdministrat
 Console.WriteLine($"Distribution policy successfully update with new distribution mode. Mode Type: {updatedDistributionPolicy.Value.Mode.Kind}");
 ```
 
+## Remove from distribution policy
+
+```C# Snippet:Azure_Communication_JobRouter_Tests_Samples_Crud_UpdateDistributionPolicyRemoveProp_Async
+Response<DistributionPolicy> updatedDistributionPolicyWithoutName = await routerAdministrationClient.UpdateDistributionPolicyAsync(distributionPolicyId,
+    RequestContent.Create(new { Name = (string?)null }));
+
+Console.WriteLine($"Distribution policy successfully updated: 'Name' has been removed. Status: Status: {string.IsNullOrWhiteSpace(updatedDistributionPolicyWithoutName.Value.Name)}");
+```
+
 ## List distribution policies
 
 ```C# Snippet:Azure_Communication_JobRouter_Tests_Samples_Crud_GetDistributionPolicies_Async

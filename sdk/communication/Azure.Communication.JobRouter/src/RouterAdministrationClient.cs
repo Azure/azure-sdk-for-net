@@ -237,6 +237,59 @@ namespace Azure.Communication.JobRouter
             }
         }
 
+        /// <summary> Protocol method to use to remove properties from classification policy. </summary>
+        /// <param name="classificationPolicyId"> Id of the classification policy. </param>
+        /// <param name="patchContent"> Request content payload. </param>
+        /// <param name="cancellationToken"> (Optional) The cancellation token to use. </param>
+        /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
+        public virtual async Task<Response<ClassificationPolicy>> UpdateClassificationPolicyAsync(
+            string classificationPolicyId,
+            RequestContent patchContent,
+            CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(RouterAdministrationClient)}.{nameof(UpdateClassificationPolicy)}");
+            scope.Start();
+            try
+            {
+                return await RestClient.UpsertClassificationPolicyAsync(
+                        id: classificationPolicyId,
+                        patchContent: patchContent,
+                        cancellationToken: cancellationToken)
+                    .ConfigureAwait(false);
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+        }
+
+        /// <summary> Protocol method to use to remove properties from classification policy. </summary>
+        /// <param name="classificationPolicyId"> Id of the classification policy. </param>
+        /// <param name="patchContent"> Request content payload. </param>
+        /// <param name="cancellationToken"> (Optional) The cancellation token to use. </param>
+        /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
+        public virtual Response<ClassificationPolicy> UpdateClassificationPolicy(
+            string classificationPolicyId,
+            RequestContent patchContent,
+            CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(RouterAdministrationClient)}.{nameof(UpdateClassificationPolicy)}");
+            scope.Start();
+            try
+            {
+                return RestClient.UpsertClassificationPolicy(
+                    id: classificationPolicyId,
+                    patchContent: patchContent,
+                    cancellationToken: cancellationToken);
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+        }
+
         /// <summary> Retrieves existing classification policies. </summary>
         /// <param name="cancellationToken"> (Optional) The cancellation token to use. </param>
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
@@ -533,6 +586,59 @@ namespace Azure.Communication.JobRouter
                 return RestClient.UpsertDistributionPolicy(
                     id: options.DistributionPolicyId,
                     patch: request,
+                    cancellationToken: cancellationToken);
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+        }
+
+        /// <summary> Protocol method to use to remove properties from distribution policy. </summary>
+        /// <param name="distributionPolicyId"> Id of the distribution policy. </param>
+        /// <param name="patchContent"> Request content payload. </param>
+        /// <param name="cancellationToken"> (Optional) The cancellation token to use. </param>
+        /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
+        public virtual async Task<Response<DistributionPolicy>> UpdateDistributionPolicyAsync(
+            string distributionPolicyId,
+            RequestContent patchContent,
+            CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(RouterAdministrationClient)}.{nameof(UpdateDistributionPolicy)}");
+            scope.Start();
+            try
+            {
+                return await RestClient.UpsertDistributionPolicyAsync(
+                        id: distributionPolicyId,
+                        patchContent: patchContent,
+                        cancellationToken: cancellationToken)
+                    .ConfigureAwait(false);
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+        }
+
+        /// <summary> Protocol method to use to remove properties from distribution policy. </summary>
+        /// <param name="distributionPolicyId"> Id of the distribution policy. </param>
+        /// <param name="patchContent"> Request content payload. </param>
+        /// <param name="cancellationToken"> (Optional) The cancellation token to use. </param>
+        /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
+        public virtual Response<DistributionPolicy> UpdateDistributionPolicy(
+            string distributionPolicyId,
+            RequestContent patchContent,
+            CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(RouterAdministrationClient)}.{nameof(UpdateDistributionPolicy)}");
+            scope.Start();
+            try
+            {
+                return RestClient.UpsertDistributionPolicy(
+                    id: distributionPolicyId,
+                    patchContent: patchContent,
                     cancellationToken: cancellationToken);
             }
             catch (Exception ex)
@@ -849,6 +955,59 @@ namespace Azure.Communication.JobRouter
             }
         }
 
+        /// <summary> Protocol method to use to remove properties from exception policy. </summary>
+        /// <param name="exceptionPolicyId"> Id of the exception policy. </param>
+        /// <param name="patchContent"> Request content payload. </param>
+        /// <param name="cancellationToken"> (Optional) The cancellation token to use. </param>
+        /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
+        public virtual async Task<Response<ExceptionPolicy>> UpdateExceptionPolicyAsync(
+            string exceptionPolicyId,
+            RequestContent patchContent,
+            CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(RouterAdministrationClient)}.{nameof(UpdateExceptionPolicy)}");
+            scope.Start();
+            try
+            {
+                return await RestClient.UpsertExceptionPolicyAsync(
+                        id: exceptionPolicyId,
+                        patchContent: patchContent,
+                        cancellationToken: cancellationToken)
+                    .ConfigureAwait(false);
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+        }
+
+        /// <summary> Protocol method to use to remove properties from exception policy. </summary>
+        /// <param name="exceptionPolicyId"> Id of the exception policy. </param>
+        /// <param name="patchContent"> Request content payload. </param>
+        /// <param name="cancellationToken"> (Optional) The cancellation token to use. </param>
+        /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
+        public virtual Response<ExceptionPolicy> UpdateExceptionPolicy(
+            string exceptionPolicyId,
+            RequestContent patchContent,
+            CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(RouterAdministrationClient)}.{nameof(UpdateExceptionPolicy)}");
+            scope.Start();
+            try
+            {
+                return RestClient.UpsertExceptionPolicy(
+                    id: exceptionPolicyId,
+                    patchContent: patchContent,
+                    cancellationToken: cancellationToken);
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+        }
+
         /// <summary> Retrieves existing exception policies. </summary>
         /// <param name="cancellationToken"> (Optional) The cancellation token to use. </param>
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
@@ -1147,6 +1306,61 @@ namespace Azure.Communication.JobRouter
                 return RestClient.UpsertQueue(
                     id: options.QueueId,
                     patch: request,
+                    cancellationToken: cancellationToken);
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+        }
+
+        /// <summary> Protocol method to use to remove properties from worker. </summary>
+        /// <param name="queueId"> Id of the queue. </param>
+        /// <param name="patchContent"> Request content payload. </param>
+        /// <param name="cancellationToken"> (Optional) The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="patchContent"/> is null. </exception>
+        /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
+        public virtual async Task<Response<JobQueue>> UpdateQueueAsync(
+            string queueId,
+            RequestContent patchContent,
+            CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(RouterAdministrationClient)}.{nameof(UpdateQueue)}");
+            scope.Start();
+            try
+            {
+                return await RestClient.UpsertQueueAsync(
+                        id: queueId,
+                        patchContent: patchContent,
+                        cancellationToken: cancellationToken)
+                    .ConfigureAwait(false);
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+        }
+
+        /// <summary> Creates or updates a queue. </summary>
+        /// <param name="queueId"> Id of the queue. </param>
+        /// <param name="patchContent"> Options for updating a job queue. </param>
+        /// <param name="cancellationToken"> (Optional) The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="patchContent"/> is null. </exception>
+        /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
+        public virtual Response<JobQueue> UpdateQueue(
+            string queueId,
+            RequestContent patchContent,
+            CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(RouterAdministrationClient)}.{nameof(UpdateQueue)}");
+            scope.Start();
+            try
+            {
+                return RestClient.UpsertQueue(
+                    id: queueId,
+                    patchContent: patchContent,
                     cancellationToken: cancellationToken);
             }
             catch (Exception ex)

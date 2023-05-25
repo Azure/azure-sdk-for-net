@@ -143,6 +143,16 @@ Console.WriteLine($"`EscalateJobOnWaitTimeExceededTrigger` rule has been success
 Console.WriteLine($"`EscalateJobOnWaitTimeExceededTrigger2Min` rule has been successfully added: {updateExceptionPolicy.Value.ExceptionRules.ContainsKey("EscalateJobOnWaitTimeExceededTrigger2Min")}");
 ```
 
+## Remove from exception policy
+
+```C# Snippet:Azure_Communication_JobRouter_Tests_Samples_Crud_UpdateExceptionPolicyRemoveProp
+// we are going to remove Name
+Response<ExceptionPolicy> updateExceptionPolicyWithoutName = routerClient.UpdateExceptionPolicy(exceptionPolicyId,
+        RequestContent.Create(new { Name = (string?)null }));
+
+Console.WriteLine($"Exception policy successfully updated: 'Name' has been removed. Status: {string.IsNullOrWhiteSpace(updateExceptionPolicyWithoutName.Value.Name)}");
+```
+
 ## List exception policies
 
 ```C# Snippet:Azure_Communication_JobRouter_Tests_Samples_Crud_GetExceptionPolicies
