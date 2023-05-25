@@ -91,7 +91,7 @@ namespace Microsoft.Azure.Data.SchemaRegistry.JsonSchema
         public TMessage Serialize<TMessage, TData>(
             TData data,
             CancellationToken cancellationToken = default) where TMessage : MessageContent, new()
-            => (TMessage) SerializeInternalAsync(data, typeof(TData), typeof(TMessage), false, cancellationToken).EnsureCompleted();
+            => (TMessage) SerializeInternalAsync(data, null, null, typeof(TData), typeof(TMessage), false, cancellationToken).EnsureCompleted();
 
         /// <summary>
         /// serializes the message data as Json and stores it in <see cref="MessageContent.Data"/>. The <see cref="MessageContent.ContentType"/>
@@ -115,7 +115,7 @@ namespace Microsoft.Azure.Data.SchemaRegistry.JsonSchema
         public async ValueTask<TMessage> SerializeAsync<TMessage, TData>(
             TData data,
             CancellationToken cancellationToken = default) where TMessage : MessageContent, new()
-            => (TMessage) await SerializeInternalAsync(data, typeof(TData), typeof(TMessage), true, cancellationToken).ConfigureAwait(false);
+            => (TMessage) await SerializeInternalAsync(data, null, null, typeof(TData), typeof(TMessage), true, cancellationToken).ConfigureAwait(false);
 
         /// <summary>
         /// serializes the message data as Json and stores it in <see cref="MessageContent.Data"/>. The <see cref="MessageContent.ContentType"/>
@@ -144,7 +144,7 @@ namespace Microsoft.Azure.Data.SchemaRegistry.JsonSchema
             Type dataType = default,
             Type messageType = default,
             CancellationToken cancellationToken = default)
-            => SerializeInternalAsync(data, dataType, messageType, false, cancellationToken).EnsureCompleted();
+            => SerializeInternalAsync(data, null, null, dataType, messageType, false, cancellationToken).EnsureCompleted();
 
         /// <summary>
         /// serializes the message data as Json and stores it in <see cref="MessageContent.Data"/>. The <see cref="MessageContent.ContentType"/>
@@ -173,7 +173,7 @@ namespace Microsoft.Azure.Data.SchemaRegistry.JsonSchema
             Type dataType = default,
             Type messageType = default,
             CancellationToken cancellationToken = default)
-            => await SerializeInternalAsync(data, dataType, messageType, true, cancellationToken).ConfigureAwait(false);
+            => await SerializeInternalAsync(data, null, null, dataType, messageType, true, cancellationToken).ConfigureAwait(false);
 
         /// <summary>
         /// serializes the message data as Json and stores it in <see cref="MessageContent.Data"/>. The <see cref="MessageContent.ContentType"/>
@@ -182,7 +182,7 @@ namespace Microsoft.Azure.Data.SchemaRegistry.JsonSchema
         /// <typeparam name="TMessage">The <see cref="MessageContent"/> type to serialize the data into.</typeparam>
         /// <typeparam name="TData">The type of the data to serialize.</typeparam>
         /// <param name="data">The data to serialize to Json and serialize into the message.</param>
-        /// <param name="schemaId">The Id of the schema that is associated with the given type.</param>
+        /// <param name="schemaId">TODO.</param>
         /// <param name="cancellationToken">An optional <see cref="CancellationToken"/> instance to signal the request to cancel the operation</param>
         /// <exception cref="InvalidOperationException">
         ///   This can occur if the <code>groupName</code> was not specified when constructing the <see cref="SchemaRegistryJsonSerializer"/>.
@@ -195,18 +195,18 @@ namespace Microsoft.Azure.Data.SchemaRegistry.JsonSchema
         ///   The data did not adhere to the Json schema, or the schema itself was invalid.
         ///   The <see cref="Exception.InnerException"/> will contain the underlying exception from the <see cref="SchemaRegistryJsonSchemaGenerator"/> class.
         /// </exception>
-        public TMessage Serialize<TMessage, TData>(
+        public TMessage SerializeWithSchemaId<TMessage, TData>(
             TData data,
             string schemaId,
             CancellationToken cancellationToken = default) where TMessage : MessageContent, new()
-            => (TMessage)SerializeInternalAsync(data, typeof(TData), typeof(TMessage), false, cancellationToken).EnsureCompleted();
+            => (TMessage)SerializeInternalAsync(data, schemaId: schemaId, null, typeof(TData), typeof(TMessage), false, cancellationToken).EnsureCompleted();
 
         /// <summary>
         /// serializes the message data as Json and stores it in <see cref="MessageContent.Data"/>. The <see cref="MessageContent.ContentType"/>
         /// will be set to "application/json+schemaId" where schemaId is the ID of the schema used to serialize the data.
         /// </summary>
         /// <param name="data">The data to serialize to Json and serialize into the message.</param>
-        /// <param name="schemaId">The Id of the schema that is associated with the given type.</param>
+        /// <param name="schemaId">TODO.</param>
         /// <param name="cancellationToken">An optional <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
         /// <typeparam name="TMessage">The <see cref="MessageContent"/> type to serialize the data into.</typeparam>
         /// <typeparam name="TData">The type of the data to serialize.</typeparam>
@@ -221,18 +221,18 @@ namespace Microsoft.Azure.Data.SchemaRegistry.JsonSchema
         ///   The data did not adhere to the Json schema, or the schema itself was invalid.
         ///   The <see cref="Exception.InnerException"/> will contain the underlying exception from the <see cref="SchemaRegistryJsonSchemaGenerator"/> class.
         /// </exception>
-        public async ValueTask<TMessage> SerializeAsync<TMessage, TData>(
+        public async ValueTask<TMessage> SerializeWithSchemaIdAsync<TMessage, TData>(
             TData data,
             string schemaId,
             CancellationToken cancellationToken = default) where TMessage : MessageContent, new()
-            => (TMessage)await SerializeInternalAsync(data, typeof(TData), typeof(TMessage), true, cancellationToken).ConfigureAwait(false);
+            => (TMessage)await SerializeInternalAsync(data, schemaId: schemaId, null, typeof(TData), typeof(TMessage), true, cancellationToken).ConfigureAwait(false);
 
         /// <summary>
         /// serializes the message data as Json and stores it in <see cref="MessageContent.Data"/>. The <see cref="MessageContent.ContentType"/>
         /// will be set to "application/json+schemaId" where schemaId is the ID of the schema used to serialize the data.
         /// </summary>
         /// <param name="data">The data to serialize to Json and serialize into the message.</param>
-        /// <param name="schemaId">The Id of the schema that is associated with the given type.</param>
+        /// <param name="schemaId">TODO.</param>
         /// <param name="dataType">The type of the data to serialize. If left blank, the type will be determined at runtime by
         /// calling <see cref="Object.GetType"/>.</param>
         /// <param name="messageType">The type of message to serialize the data into. Must extend from <see cref="MessageContent"/>, and
@@ -250,20 +250,20 @@ namespace Microsoft.Azure.Data.SchemaRegistry.JsonSchema
         ///   The data did not adhere to the Json schema, or the schema itself was invalid.
         ///   The <see cref="Exception.InnerException"/> will contain the underlying exception from the <see cref="SchemaRegistryJsonSchemaGenerator"/> class.
         /// </exception>
-        public MessageContent Serialize(
+        public MessageContent SerializeWithSchemaId(
             object data,
             string schemaId,
             Type dataType = default,
             Type messageType = default,
             CancellationToken cancellationToken = default)
-            => SerializeInternalAsync(data, dataType, messageType, false, cancellationToken).EnsureCompleted();
+            => SerializeInternalAsync(data, schemaId: schemaId, null, dataType, messageType, false, cancellationToken).EnsureCompleted();
 
         /// <summary>
         /// serializes the message data as Json and stores it in <see cref="MessageContent.Data"/>. The <see cref="MessageContent.ContentType"/>
         /// will be set to "application/json+schemaId" where schemaId is the ID of the schema used to serialize the data.
         /// </summary>
         /// <param name="data">The data to serialize to Json and serialize into the message.</param>
-        /// <param name="schemaId">The Id of the schema that is associated with the given type.</param>
+        /// <param name="schemaId">TODO.</param>
         /// <param name="dataType">The type of the data to serialize. If left blank, the type will be determined at runtime by
         /// calling <see cref="Object.GetType"/>.</param>
         /// <param name="messageType">The type of message to serialize the data into. Must extend from <see cref="MessageContent"/>, and
@@ -281,16 +281,18 @@ namespace Microsoft.Azure.Data.SchemaRegistry.JsonSchema
         ///   The data did not adhere to the Json schema, or the schema itself was invalid.
         ///   The <see cref="Exception.InnerException"/> will contain the underlying exception from the <see cref="SchemaRegistryJsonSchemaGenerator"/> class.
         /// </exception>
-        public async ValueTask<MessageContent> SerializeAsync(
+        public async ValueTask<MessageContent> SerializeWithSchemaIdAsync(
             object data,
             string schemaId,
             Type dataType = default,
             Type messageType = default,
             CancellationToken cancellationToken = default)
-            => await SerializeInternalAsync(data, dataType, messageType, true, cancellationToken).ConfigureAwait(false);
+            => await SerializeInternalAsync(data, schemaId: schemaId, null, dataType, messageType, true, cancellationToken).ConfigureAwait(false);
 
         internal async ValueTask<MessageContent> SerializeInternalAsync(
             object data,
+            string schemaId,
+            string schemaDef,
             Type dataType,
             Type messageType,
             bool async,
@@ -312,17 +314,19 @@ namespace Microsoft.Azure.Data.SchemaRegistry.JsonSchema
 
             var message = (MessageContent)Activator.CreateInstance(messageType);
 
-            (string schemaId, BinaryData bd) = async
-                ? await SerializeInternalAsync(data, dataType, true, cancellationToken).ConfigureAwait(false)
-                : SerializeInternalAsync(data, dataType, false, cancellationToken).EnsureCompleted();
+            (string retrievedSchemaId, BinaryData bd) = async
+                ? await SerializeInternalAsync(data, schemaId, schemaDef, dataType, true, cancellationToken).ConfigureAwait(false)
+                : SerializeInternalAsync(data, schemaId, schemaDef, dataType, false, cancellationToken).EnsureCompleted();
 
             message.Data = bd;
-            message.ContentType = $"{JsonMimeType}+{schemaId}";
+            message.ContentType = $"{JsonMimeType}+{retrievedSchemaId}";
             return message;
         }
 
         private async ValueTask<(string SchemaId, BinaryData Data)> SerializeInternalAsync(
             object value,
+            string schemaId,
+            string schemaDef,
             Type dataType,
             bool async,
             CancellationToken cancellationToken)
@@ -347,8 +351,8 @@ namespace Microsoft.Azure.Data.SchemaRegistry.JsonSchema
                     data = BinaryData.FromString(jsonString);
                 }
 
-                // Get the schema from the service
-                var schemaString = _jsonSchemaGenerator.GenerateSchemaFromObject(dataType);
+                // Use the given schema string definition or generate one from the type
+                var schemaString = schemaDef ?? _jsonSchemaGenerator.GenerateSchemaFromObject(dataType);
 
                 // Attempt to validate
                 var isValid = _jsonSchemaGenerator.IsValidToSchema(data, dataType, schemaString);
@@ -360,11 +364,21 @@ namespace Microsoft.Azure.Data.SchemaRegistry.JsonSchema
 
                 if (async)
                 {
-                    return (await GetSchemaIdAsync(schemaString, dataType.Name, true, cancellationToken).ConfigureAwait(false), data);
+                    if (schemaId == null)
+                    {
+                        return (await GetSchemaIdAsync(schemaString, dataType.Name, true, cancellationToken).ConfigureAwait(false), data);
+                    }
+                    await ValidateSchemaDefinitionUsingIdAsync(schemaId, data, dataType, async, cancellationToken).ConfigureAwait(false);
+                    return (schemaId, data);
                 }
                 else
                 {
-                    return (GetSchemaIdAsync(schemaString, dataType.Name, false, cancellationToken).EnsureCompleted(), data);
+                    if (schemaId == null)
+                    {
+                        return (GetSchemaIdAsync(schemaString, dataType.Name, false, cancellationToken).EnsureCompleted(), data);
+                    };
+                    ValidateSchemaDefinitionUsingIdAsync(schemaId, data, dataType, async, cancellationToken).EnsureCompleted();
+                    return (schemaId, data);
                 }
             }
             catch (Exception ex)
@@ -374,6 +388,36 @@ namespace Microsoft.Azure.Data.SchemaRegistry.JsonSchema
                     $"Make sure that the schema represents valid Json.",
                     ex);
             }
+        }
+
+        private async Task ValidateSchemaDefinitionUsingIdAsync(string schemaId, object data, Type dataType, bool async, CancellationToken cancellationToken)
+        {
+            if (_idToSchemaMap.TryGet(schemaId, out var value))
+            {
+                return;
+            }
+
+            var schemaDefinition = (async) ?
+                await _client.GetSchemaAsync(schemaId, cancellationToken).ConfigureAwait(false) :
+                _client.GetSchema(schemaId, cancellationToken);
+
+            var schemaString = schemaDefinition.Value.Definition;
+
+            if (schemaDefinition.Value.Properties.Format != SchemaFormat.Json)
+            {
+                throw new Exception("The schema Id matches a schema that is not in Json format.");
+            }
+
+            var isValid = _jsonSchemaGenerator.IsValidToSchema(data, dataType, schemaString);
+
+            if (!isValid)
+            {
+                throw new Exception("The schema is not valid according to the given SchemaRegistryJsonSchemaGenerator.");
+            }
+
+            _schemaToIdMap.AddOrUpdate(schemaString, schemaId, schemaString.Length);
+            _idToSchemaMap.AddOrUpdate(schemaId, schemaString, schemaString.Length);
+            // TODO - log that cache was updated
         }
 
         private async Task<string> GetSchemaIdAsync(string schema, string schemaName, bool async, CancellationToken cancellationToken)

@@ -31,42 +31,131 @@ In order to interact with the Azure Schema Registry service, you'll need to crea
 
 #### Get credentials
 
-To acquire authenicated credentials and start interacting with Azure resources, please see the [quickstart guide here][quickstart_guide].
+To acquire authenticated credentials and start interacting with Azure resources, please see the [quickstart guide here][quickstart_guide].
 
 #### Get Event Hubs namespace hostname
 
-The simpliest way is to use the [Azure portal][azure_portal] and navigate to your Event Hubs namespace. From the Overview tab, you'll see `Host name`. Copy the value from this field.
+The simplest way is to use the [Azure portal][azure_portal] and navigate to your Event Hubs namespace. From the Overview tab, you'll see `Host name`. Copy the value from this field.
 
 #### Create SchemaRegistryClient
 
 Once you have the Azure resource credentials and the Event Hubs namespace hostname, you can create the [SchemaRegistryClient][schema_registry_client]. You'll also need the [Azure.Identity][azure_identity] package to create the credential.
 
+```C# Snippet:SchemaRegistryJsonCreateSchemaRegistryClient
+// Create a new SchemaRegistry client using the default credential from Azure.Identity using environment variables previously set,
+// including AZURE_CLIENT_ID, AZURE_CLIENT_SECRET, and AZURE_TENANT_ID.
+// For more information on Azure.Identity usage, see: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/identity/Azure.Identity/README.md
+var schemaRegistryClient = new SchemaRegistryClient(fullyQualifiedNamespace: fullyQualifiedNamespace, credential: new DefaultAzureCredential());
+```
 ## Key concepts
+
+### JSON Schema generator
+
+The `SchemaRegistryJsonSchemaGenerator` is an abstract class that must be implemented and passed into the `SchemaRegistryJsonSerializer` constructor. This allows you to choose the third-party Json Schema package you would like to use for generating schemas from types. You can optionally provide an implementation for Json Schema validation. The default evaluates all schemas as valid.
 
 ### Serializer
 
-This library provides a serializer, that interacts with `EventData` events. The SchemaRegistryJsonSerializer utilizes a SchemaRegistryClient to enrich the `EventData` events with the schema ID for the schema used to serialize the data.
+This library provides a serializer, `SchemaRegistryJsonSerializer` that interacts with `EventData` events. The `SchemaRegistryJsonSerializer` utilizes a `SchemaRegistryClient` to enrich the `EventData` events with the schema ID for the schema used to serialize the data.
 
+## Examples
 
-### Examples
+## Implementation of `SchemaRegistryJsonSchemaGenerator` using `Newtonsoft.Json.Schema`
+
+```C# Snippet:SampleSchemaRegistryJsonSchemaGeneratorImplementation
+internal class SampleJsonGenerator : SchemaRegistryJsonSchemaGenerator
+{
+    public override bool IsValidToSchema(Object data, Type dataType, string schemaDefinition)
+    {
+        JSchema schema = JSchema.Parse(schemaDefinition);
+        JObject jobjectData = JObject.FromObject(data);
+        return jobjectData.IsValid(schema);
+    }
+    public override string GenerateSchemaFromObject(Type dataType)
+    {
+        JSchemaGenerator generator = new();
+        JSchema schema = generator.Generate(dataType);
+        return schema.ToString();
+    }
+}
+```
 
 ### Serialize and deserialize data using the Event Hub EventData model
 
 In order to serialize an `EventData` instance with Json information, you can do the following:
 
+```C# Snippet:SchemaRegistryJsonSerializeEventData
+var serializer = new SchemaRegistryJsonSerializer(client, groupName, new SampleJsonGenerator());
+
+var employee = new Employee { Age = 42, Name = "Caketown" };
+EventData eventData = (EventData)await serializer.SerializeAsync(employee, messageType: typeof(EventData));
+
+// the schema Id will be included as a parameter of the content type
+Console.WriteLine(eventData.ContentType);
+
+// the serialized JSon data will be stored in the EventBody
+Console.WriteLine(eventData.EventBody);
+
+// construct a publisher and publish the events to our event hub
+var fullyQualifiedNamespace = "<< FULLY-QUALIFIED EVENT HUBS NAMESPACE (like something.servicebus.windows.net) >>";
+var eventHubName = "<< NAME OF THE EVENT HUB >>";
+var credential = new DefaultAzureCredential();
+await using var producer = new EventHubProducerClient(fullyQualifiedNamespace, eventHubName, credential);
+await producer.SendAsync(new EventData[] { eventData });
+```
+
 To deserialize an `EventData` event that you are consuming:
 
-You can also use generic methods to serialize and deserialize the data. This may be more convenient if you are not building a library on top of the Json Schema serializer, as you won't have to worry about the virality of generics:
+```C# Snippet:SchemaRegistryJsonDeserializeEventData
+// construct a consumer and consume the event from our event hub
+await using var consumer = new EventHubConsumerClient(EventHubConsumerClient.DefaultConsumerGroupName, fullyQualifiedNamespace, eventHubName, credential);
+await foreach (PartitionEvent receivedEvent in consumer.ReadEventsAsync())
+{
+    Employee deserialized = (Employee)await serializer.DeserializeAsync(eventData, typeof(Employee));
+    Console.WriteLine(deserialized.Age);
+    Console.WriteLine(deserialized.Name);
+    break;
+}
+```
+
+You can also use generic methods to serialize and deserialize the data. This may be more convenient if you are not building a library on top of the Json Schema serializer. Using it with your own library may introduce complexities.
+
+```C# Snippet:SchemaRegistryJsonSerializeEventDataGenerics
+var serializer = new SchemaRegistryJsonSerializer(client, groupName, new SampleJsonGenerator());
+
+var employee = new Employee { Age = 42, Name = "Caketown" };
+EventData eventData = await serializer.SerializeAsync<EventData, Employee>(employee);
+
+// the schema Id will be included as a parameter of the content type
+Console.WriteLine(eventData.ContentType);
+
+// the serialized Avro data will be stored in the EventBody
+Console.WriteLine(eventData.EventBody);
+```
 
 Similarly, to deserialize:
 
+```C# Snippet:SchemaRegistryJsonDeserializeEventDataGenerics
+Employee deserialized = await serializer.DeserializeAsync<Employee>(eventData);
+Console.WriteLine(deserialized.Age);
+Console.WriteLine(deserialized.Name);
+```
+
 ### Serialize and deserialize data using `MessageContent` directly
 
-It is also possible to serialize and deserialize using `MessageContent`. Use this option if you are not integrating with any of the messaging libraries that work with `MessageContent`.
+It is also possible to serialize and deserialize using `MessageContent`. Use this option if you are integrating with a library that uses `MessageContent` directly.
+
+```C# Snippet:SchemaRegistryJsonSerializeDeserializeMessageContent
+var serializer = new SchemaRegistryJsonSerializer(client, groupName, new SampleJsonGenerator());
+MessageContent content = await serializer.SerializeAsync<MessageContent, Employee>(employee);
+
+Employee deserializedEmployee = await serializer.DeserializeAsync<Employee>(content);
+```
 
 ## Troubleshooting
 
-If you encounter errors when communicating with the Schema Registry service, these errors will be thrown as a [RequestFailedException][request_failed_exception]. The serializer will only communicate with the service the first time it encounters a schema (when serializing) or a schema ID (when deserializing). Any errors related to invalid Content-Types will be thrown as a `FormatException`. Errors related to invalid schemas will be thrown as an `Exception`, and the `InnerException` property will contain the underlying exception that was thrown from the Apache Avro library. This type of error would typically be caught during testing and should not be handled in code. Any errors related to incompatible schemas will be thrown as an `Exception` with the `InnerException` property set to the underlying exception from the Apache Avro library.
+If you encounter errors when communicating with the Schema Registry service, these errors will be thrown as a [RequestFailedException][request_failed_exception]. The serializer will only communicate with the service the first time it encounters a schema (when serializing) or a schema ID (when deserializing). Any errors related to invalid Content-Types will be thrown as a `FormatException`. 
+
+Errors related to invalid schemas will be thrown as an `Exception`, and the `InnerException` property will contain the underlying exception that was thrown from your implemented methods in the `SchemaRegistryJsonSchemaGenerator`. This type of error would typically be caught during testing and should not be handled in code.
 
 ## Next steps
 
