@@ -83,14 +83,14 @@
     <!-- Azure SDK packages -->
 	  <PackageReference Update="Azure.Communication.Identity" Version="1.2.0" />
     <PackageReference Update="Azure.Communication.Common" Version="1.2.1" />
-    <PackageReference Update="Azure.Core" Version="1.31.0" />
+    <PackageReference Update="Azure.Core" Version="1.32.0" />
     <PackageReference Update="Azure.Core.Amqp" Version="1.3.0" />
-    <PackageReference Update="Azure.Core.Experimental" Version="0.1.0-preview.25" />
+    <PackageReference Update="Azure.Core.Experimental" Version="0.1.0-preview.27" />
     <PackageReference Update="Azure.Data.SchemaRegistry" Version="1.2.0" />
     <PackageReference Update="Azure.Data.Tables" Version="12.8.0" />
-    <PackageReference Update="Azure.Messaging.EventHubs" Version="5.9.0" />
+    <PackageReference Update="Azure.Messaging.EventHubs" Version="5.9.1" />
     <PackageReference Update="Azure.Messaging.EventGrid" Version="4.14.1" />
-    <PackageReference Update="Azure.Messaging.ServiceBus" Version="7.13.1" />
+    <PackageReference Update="Azure.Messaging.ServiceBus" Version="7.14.0" />
     <PackageReference Update="Azure.Messaging.WebPubSub" Version="1.2.0" />
     <PackageReference Update="Azure.Monitor.Query" Version="1.1.0" />
     <PackageReference Update="Azure.Identity" Version="1.7.0" />
@@ -100,7 +100,7 @@
     <PackageReference Update="Azure.Storage.Common" Version="12.15.0" />
     <PackageReference Update="Azure.Storage.Blobs" Version="12.16.0" />
     <PackageReference Update="Azure.Storage.Queues" Version="12.14.0" />
-    <PackageReference Update="Azure.ResourceManager" Version="1.4.0" />
+    <PackageReference Update="Azure.ResourceManager" Version="1.6.0" />
 
     <!-- Other approved packages -->
     <PackageReference Update="Microsoft.Azure.Amqp" Version="2.6.1" />
@@ -118,7 +118,7 @@
 
     <!-- OpenTelemetry dependency approved for Azure.Monitor.OpenTelemetry.Exporter package only -->
     <PackageReference Update="OpenTelemetry" Version="1.4.0"  Condition="'$(MSBuildProjectName)' == 'Azure.Monitor.OpenTelemetry.Exporter'" />
-    <PackageReference Update="OpenTelemetry.Extensions.AzureMonitor" VersionOverride="1.0.0-beta.3" />
+    <PackageReference Update="OpenTelemetry.Extensions.AzureMonitor" VersionOverride="1.0.0-beta.4" />
     <PackageReference Update="OpenTelemetry.Extensions.Hosting" Version="1.4.0" />
     <PackageReference Update="OpenTelemetry.Instrumentation.AspNetCore" Version="1.0.0-rc9.14" />
     <PackageReference Update="OpenTelemetry.Instrumentation.Http" Version="1.0.0-rc9.14" />
@@ -167,7 +167,7 @@
     All should have PrivateAssets="All" set so they don't become package dependencies
   -->
   <ItemGroup>
-    <PackageReference Update="Microsoft.Azure.AutoRest.CSharp" Version="3.0.0-beta.20230427.2" PrivateAssets="All" />
+    <PackageReference Update="Microsoft.Azure.AutoRest.CSharp" Version="3.0.0-beta.20230525.3" PrivateAssets="All" />
     <PackageReference Update="Azure.ClientSdk.Analyzers" Version="0.1.1-dev.20230131.1" PrivateAssets="All" />
     <PackageReference Update="coverlet.collector" Version="1.3.0" PrivateAssets="All" />
     <PackageReference Update="Microsoft.CodeAnalysis.NetAnalyzers" Version="7.0.1" PrivateAssets="All" />
@@ -295,7 +295,7 @@
   </ItemGroup>
 
   <PropertyGroup>
-    <TestProxyVersion>1.0.0-dev.20230417.1</TestProxyVersion>
+    <TestProxyVersion>1.0.0-dev.20230427.1</TestProxyVersion>
   </PropertyGroup>
 
 </Project>

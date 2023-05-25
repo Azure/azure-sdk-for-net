@@ -429,6 +429,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
         public System.Collections.Generic.IList<Azure.ResourceManager.ContainerInstance.Models.ContainerPort> Ports { get { throw null; } }
         public Azure.ResourceManager.ContainerInstance.Models.ContainerProbe ReadinessProbe { get { throw null; } set { } }
         public Azure.ResourceManager.ContainerInstance.Models.ContainerResourceRequirements Resources { get { throw null; } set { } }
+        public Azure.ResourceManager.ContainerInstance.Models.ContainerSecurityContextDefinition SecurityContext { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.ContainerInstance.Models.ContainerVolumeMount> VolumeMounts { get { throw null; } }
     }
     public partial class ContainerInstanceGitRepoVolume
@@ -539,6 +540,22 @@ namespace Azure.ResourceManager.ContainerInstance.Models
         public Azure.ResourceManager.ContainerInstance.Models.ContainerResourceLimits Limits { get { throw null; } set { } }
         public Azure.ResourceManager.ContainerInstance.Models.ContainerResourceRequestsContent Requests { get { throw null; } set { } }
     }
+    public partial class ContainerSecurityContextCapabilitiesDefinition
+    {
+        public ContainerSecurityContextCapabilitiesDefinition() { }
+        public System.Collections.Generic.IList<string> Add { get { throw null; } }
+        public System.Collections.Generic.IList<string> Drop { get { throw null; } }
+    }
+    public partial class ContainerSecurityContextDefinition
+    {
+        public ContainerSecurityContextDefinition() { }
+        public bool? AllowPrivilegeEscalation { get { throw null; } set { } }
+        public Azure.ResourceManager.ContainerInstance.Models.ContainerSecurityContextCapabilitiesDefinition Capabilities { get { throw null; } set { } }
+        public bool? IsPrivileged { get { throw null; } set { } }
+        public int? RunAsGroup { get { throw null; } set { } }
+        public int? RunAsUser { get { throw null; } set { } }
+        public string SeccompProfile { get { throw null; } set { } }
+    }
     public partial class ContainerState
     {
         internal ContainerState() { }
@@ -609,6 +626,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
         public string Image { get { throw null; } set { } }
         public Azure.ResourceManager.ContainerInstance.Models.InitContainerPropertiesDefinitionInstanceView InstanceView { get { throw null; } }
         public string Name { get { throw null; } set { } }
+        public Azure.ResourceManager.ContainerInstance.Models.ContainerSecurityContextDefinition SecurityContext { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.ContainerInstance.Models.ContainerVolumeMount> VolumeMounts { get { throw null; } }
     }
     public partial class InitContainerPropertiesDefinitionInstanceView

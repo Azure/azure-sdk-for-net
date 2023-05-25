@@ -32,7 +32,7 @@ namespace Azure.Communication.CallAutomation.Tests.Infrastructure
         private const string TestDispatcherRegEx = @"https://incomingcalldispatcher.azurewebsites.net";
         private const string TestDispatcherQNameRegEx = @"(?<=\?q=)(.*)";
 
-        private Dictionary<string, ConcurrentDictionary<Type, CallAutomationEventData>> _eventstore;
+        private Dictionary<string, ConcurrentDictionary<Type, CallAutomationEventBase>> _eventstore;
         private ConcurrentDictionary<string, string> _incomingcontextstore;
         private RecordedEventListener _recordedEventListener;
         private HttpPipeline _pipeline;
@@ -57,7 +57,7 @@ namespace Azure.Communication.CallAutomation.Tests.Infrastructure
         [SetUp]
         public void TestSetup()
         {
-            _eventstore = new Dictionary<string, ConcurrentDictionary<Type, CallAutomationEventData>>();
+            _eventstore = new Dictionary<string, ConcurrentDictionary<Type, CallAutomationEventBase>>();
             _incomingcontextstore = new ConcurrentDictionary<string, string>();
             _recordedEventListener = new RecordedEventListener(Mode, GetSessionFilePath(), CreateServiceBusClient);
 
@@ -142,7 +142,7 @@ namespace Azure.Communication.CallAutomation.Tests.Infrastructure
             return null;
         }
 
-        protected async Task<CallAutomationEventData?> WaitForEvent<T>(string callConnectionId, TimeSpan timeOut)
+        protected async Task<CallAutomationEventBase?> WaitForEvent<T>(string callConnectionId, TimeSpan timeOut)
         {
             var timeOutTime = DateTime.Now.Add(timeOut);
             while (DateTime.Now < timeOutTime)
@@ -199,8 +199,7 @@ namespace Azure.Communication.CallAutomation.Tests.Infrastructure
                     {
                         using (Recording.DisableRecording())
                         {
-                            var hangUpOptions = new HangUpOptions(true);
-                            await client.GetCallConnection(callConnectionId).HangUpAsync(hangUpOptions).ConfigureAwait(false);
+                            await client.GetCallConnection(callConnectionId).HangUpAsync(true).ConfigureAwait(false);
                         }
                     }
                 }
@@ -216,7 +215,7 @@ namespace Azure.Communication.CallAutomation.Tests.Infrastructure
         /// <returns>The instrumented <see cref="CallAutomationClientOptions" />.</returns>
         private CallAutomationClientOptions CreateServerCallingClientOptionsWithCorrelationVectorLogs(CommunicationUserIdentifier? source = null)
         {
-            CallAutomationClientOptions callClientOptions = new CallAutomationClientOptions(source: source);
+            CallAutomationClientOptions callClientOptions = new CallAutomationClientOptions() { Source = source };
             callClientOptions.Diagnostics.LoggedHeaderNames.Add("MS-CV");
             return InstrumentClientOptions(callClientOptions);
         }
@@ -246,7 +245,7 @@ namespace Azure.Communication.CallAutomation.Tests.Infrastructure
                 else
                 {
                     // for call automation callback events
-                    CallAutomationEventData callBackEvent = CallAutomationEventParser.Parse(BinaryData.FromString(body));
+                    CallAutomationEventBase callBackEvent = CallAutomationEventParser.Parse(BinaryData.FromString(body));
 
                     if (_eventstore.TryGetValue(callBackEvent.CallConnectionId, out var mylist))
                     {
@@ -254,7 +253,7 @@ namespace Azure.Communication.CallAutomation.Tests.Infrastructure
                     }
                     else
                     {
-                        ConcurrentDictionary<Type, CallAutomationEventData> events = new ConcurrentDictionary<Type, CallAutomationEventData>();
+                        ConcurrentDictionary<Type, CallAutomationEventBase> events = new ConcurrentDictionary<Type, CallAutomationEventBase>();
                         events.TryAdd(callBackEvent.GetType(), callBackEvent);
                         _eventstore.Add(callBackEvent.CallConnectionId, events);
                     }

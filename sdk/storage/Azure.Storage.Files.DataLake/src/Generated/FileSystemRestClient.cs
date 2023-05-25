@@ -412,11 +412,11 @@ namespace Azure.Storage.Files.DataLake
             {
                 uri.AppendQuery("maxResults", maxResults.Value, true);
             }
-            if (include != null)
+            if (include != null && Optional.IsCollectionDefined(include))
             {
                 uri.AppendQueryDelimited("include", include, ",", true);
             }
-            uri.AppendQuery("showonly", "deleted", true);
+            uri.AppendQuery("showonly", ListBlobsShowOnly.Deleted.ToString(), true);
             if (timeout != null)
             {
                 uri.AppendQuery("timeout", timeout.Value, true);

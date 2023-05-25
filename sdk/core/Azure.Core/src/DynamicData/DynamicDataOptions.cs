@@ -1,29 +1,27 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-namespace Azure
+namespace Azure.Core.Dynamic
 {
     /// <summary>
-    /// Provides the ability for the user to define custom behavior when accessing JSON through a dynamic layer.
+    /// Provides options to be used with <see cref="DynamicData"/>.
     /// </summary>
-    public struct DynamicDataOptions
+    public class DynamicDataOptions
     {
-        /// <summary>
-        /// Gets the default <see cref="DynamicDataOptions"/> for Azure services.
-        /// </summary>
-        public static readonly DynamicDataOptions Default = new()
+        private static readonly DynamicDataOptions _default = new()
         {
-            NameMapping = DynamicDataNameMapping.PascalCaseGettersCamelCaseSetters
+            DateTimeHandling = DynamicDateTimeHandling.Rfc3339
         };
+        internal static DynamicDataOptions Default { get => _default; }
 
         /// <summary>
-        /// Creates a new instance of DynamicDataOptions.
+        /// Gets or sets an object that specifies how dynamic property names will be mapped to member names in the data buffer.
         /// </summary>
-        public DynamicDataOptions() { }
+        public DynamicCaseMapping CaseMapping { get; set; }
 
         /// <summary>
-        /// Specifies how properties on <see cref="DynamicData"/> will be accessed in the underlying data buffer.
+        /// Gets or sets an object that specifies how DateTime and DateTimeOffset should be handled when serializing and deserializing.
         /// </summary>
-        public DynamicDataNameMapping NameMapping { get; set; }
+        public DynamicDateTimeHandling DateTimeHandling { get; set; }
     }
 }

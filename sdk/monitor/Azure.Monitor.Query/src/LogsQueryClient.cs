@@ -324,18 +324,17 @@ namespace Azure.Monitor.Query
         /// <code language="csharp">
         /// var client = new LogsQueryClient(new DefaultAzureCredential());
         ///
-        /// var results = await client.QueryResourceAsync(new ResourceIdentifier(TestEnvironment.StorageAccountId),
-        ///     &quot;search *&quot;,
-        ///     new QueryTimeRange(TimeSpan.FromDays(5)));
+        /// string resourceId = &quot;/subscriptions/&lt;subscription_id&gt;/resourceGroups/&lt;resource_group_name&gt;/providers/&lt;resource_provider&gt;/&lt;resource&gt;&quot;;
+        /// string tableName = &quot;&lt;table_name&gt;&quot;;
+        /// Response&lt;LogsQueryResult&gt; results = await client.QueryResourceAsync(
+        ///     new ResourceIdentifier(resourceId),
+        ///     $&quot;{tableName} | distinct * | project TimeGenerated&quot;,
+        ///     new QueryTimeRange(TimeSpan.FromDays(7)));
         ///
-        /// var resultTable = results.Value.Table;
-        ///
-        /// foreach (LogsTableRow rows in resultTable.Rows)
+        /// LogsTable resultTable = results.Value.Table;
+        /// foreach (LogsTableRow row in resultTable.Rows)
         /// {
-        ///     foreach (var row in rows)
-        ///     {
-        ///         Console.WriteLine(row);
-        ///     }
+        ///     Console.WriteLine($&quot;{row[&quot;OperationName&quot;]} {row[&quot;ResourceGroup&quot;]}&quot;);
         /// }
         ///
         /// foreach (LogsTableColumn columns in resultTable.Columns)
@@ -364,18 +363,17 @@ namespace Azure.Monitor.Query
         /// <code language="csharp">
         /// var client = new LogsQueryClient(new DefaultAzureCredential());
         ///
-        /// var results = await client.QueryResourceAsync(new ResourceIdentifier(TestEnvironment.StorageAccountId),
-        ///     &quot;search *&quot;,
-        ///     new QueryTimeRange(TimeSpan.FromDays(5)));
+        /// string resourceId = &quot;/subscriptions/&lt;subscription_id&gt;/resourceGroups/&lt;resource_group_name&gt;/providers/&lt;resource_provider&gt;/&lt;resource&gt;&quot;;
+        /// string tableName = &quot;&lt;table_name&gt;&quot;;
+        /// Response&lt;LogsQueryResult&gt; results = await client.QueryResourceAsync(
+        ///     new ResourceIdentifier(resourceId),
+        ///     $&quot;{tableName} | distinct * | project TimeGenerated&quot;,
+        ///     new QueryTimeRange(TimeSpan.FromDays(7)));
         ///
-        /// var resultTable = results.Value.Table;
-        ///
-        /// foreach (LogsTableRow rows in resultTable.Rows)
+        /// LogsTable resultTable = results.Value.Table;
+        /// foreach (LogsTableRow row in resultTable.Rows)
         /// {
-        ///     foreach (var row in rows)
-        ///     {
-        ///         Console.WriteLine(row);
-        ///     }
+        ///     Console.WriteLine($&quot;{row[&quot;OperationName&quot;]} {row[&quot;ResourceGroup&quot;]}&quot;);
         /// }
         ///
         /// foreach (LogsTableColumn columns in resultTable.Columns)
@@ -393,7 +391,7 @@ namespace Azure.Monitor.Query
         /// <returns>The logs matching the query.</returns>
         public virtual async Task<Response<IReadOnlyList<T>>> QueryResourceAsync<T>(ResourceIdentifier resourceId, string query, QueryTimeRange timeRange, LogsQueryOptions options = null, CancellationToken cancellationToken = default)
         {
-            Response<LogsQueryResult> response = await QueryWorkspaceAsync(resourceId, query, timeRange, options, cancellationToken).ConfigureAwait(false);
+            Response<LogsQueryResult> response = await QueryResourceAsync(resourceId, query, timeRange, options, cancellationToken).ConfigureAwait(false);
 
             return Response.FromValue(RowBinder.Shared.BindResults<T>(response.Value.AllTables), response.GetRawResponse());
         }
@@ -404,18 +402,17 @@ namespace Azure.Monitor.Query
         /// <code language="csharp">
         /// var client = new LogsQueryClient(new DefaultAzureCredential());
         ///
-        /// var results = await client.QueryResourceAsync(new ResourceIdentifier(TestEnvironment.StorageAccountId),
-        ///     &quot;search *&quot;,
-        ///     new QueryTimeRange(TimeSpan.FromDays(5)));
+        /// string resourceId = &quot;/subscriptions/&lt;subscription_id&gt;/resourceGroups/&lt;resource_group_name&gt;/providers/&lt;resource_provider&gt;/&lt;resource&gt;&quot;;
+        /// string tableName = &quot;&lt;table_name&gt;&quot;;
+        /// Response&lt;LogsQueryResult&gt; results = await client.QueryResourceAsync(
+        ///     new ResourceIdentifier(resourceId),
+        ///     $&quot;{tableName} | distinct * | project TimeGenerated&quot;,
+        ///     new QueryTimeRange(TimeSpan.FromDays(7)));
         ///
-        /// var resultTable = results.Value.Table;
-        ///
-        /// foreach (LogsTableRow rows in resultTable.Rows)
+        /// LogsTable resultTable = results.Value.Table;
+        /// foreach (LogsTableRow row in resultTable.Rows)
         /// {
-        ///     foreach (var row in rows)
-        ///     {
-        ///         Console.WriteLine(row);
-        ///     }
+        ///     Console.WriteLine($&quot;{row[&quot;OperationName&quot;]} {row[&quot;ResourceGroup&quot;]}&quot;);
         /// }
         ///
         /// foreach (LogsTableColumn columns in resultTable.Columns)
@@ -454,18 +451,17 @@ namespace Azure.Monitor.Query
         /// <code language="csharp">
         /// var client = new LogsQueryClient(new DefaultAzureCredential());
         ///
-        /// var results = await client.QueryResourceAsync(new ResourceIdentifier(TestEnvironment.StorageAccountId),
-        ///     &quot;search *&quot;,
-        ///     new QueryTimeRange(TimeSpan.FromDays(5)));
+        /// string resourceId = &quot;/subscriptions/&lt;subscription_id&gt;/resourceGroups/&lt;resource_group_name&gt;/providers/&lt;resource_provider&gt;/&lt;resource&gt;&quot;;
+        /// string tableName = &quot;&lt;table_name&gt;&quot;;
+        /// Response&lt;LogsQueryResult&gt; results = await client.QueryResourceAsync(
+        ///     new ResourceIdentifier(resourceId),
+        ///     $&quot;{tableName} | distinct * | project TimeGenerated&quot;,
+        ///     new QueryTimeRange(TimeSpan.FromDays(7)));
         ///
-        /// var resultTable = results.Value.Table;
-        ///
-        /// foreach (LogsTableRow rows in resultTable.Rows)
+        /// LogsTable resultTable = results.Value.Table;
+        /// foreach (LogsTableRow row in resultTable.Rows)
         /// {
-        ///     foreach (var row in rows)
-        ///     {
-        ///         Console.WriteLine(row);
-        ///     }
+        ///     Console.WriteLine($&quot;{row[&quot;OperationName&quot;]} {row[&quot;ResourceGroup&quot;]}&quot;);
         /// }
         ///
         /// foreach (LogsTableColumn columns in resultTable.Columns)
@@ -719,14 +715,7 @@ namespace Azure.Monitor.Query
                 }
                 default:
                 {
-                    if (async)
-                    {
-                        throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
-                    }
-                    else
-                    {
-                        throw _clientDiagnostics.CreateRequestFailedException(message.Response);
-                    }
+                    throw new RequestFailedException(message.Response);
                 }
             }
         }
@@ -780,14 +769,7 @@ namespace Azure.Monitor.Query
                 }
                 default:
                 {
-                    if (async)
-                    {
-                        throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
-                    }
-                    else
-                    {
-                        throw _clientDiagnostics.CreateRequestFailedException(message.Response);
-                    }
+                    throw new RequestFailedException(message.Response);
                 }
             }
         }

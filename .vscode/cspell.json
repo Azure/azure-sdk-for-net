@@ -46,7 +46,9 @@
     "sdk/objectanchors/*/api/*.cs",
     "sdk/purview/*/api/*.cs",
     "sdk/remoterendering/*/api/*.cs",
-    "sdk/videoanalyzer/*/api/*.cs"
+    "sdk/videoanalyzer/*/api/*.cs",
+    "sdk/newrelicobservability/*/api/*.cs",
+    "sdk/paloaltonetworks.ngfw/*/api/*.cs"
   ],
   // cspell is not case sensitive
   // Sort words alphabetically to make this list easier to use
@@ -69,6 +71,7 @@
     "fhir",
     "finalizer",
     "finalizers",
+    "hnsw",
     "illumos",
     "interventional",
     "ints",
@@ -99,6 +102,7 @@
     "unformattable",
     "unhold",
     "uninstrumented",
+    "vcpus",
     "vmss",
     "vnet",
     "westus",
@@ -313,7 +317,8 @@
     {
       "filename": "**/sdk/newrelic/**/*.cs",
       "words": [
-        "liftr"
+        "liftr",
+        "payg"
       ]
     },
     {
@@ -582,6 +587,23 @@
         "Afri",
         "Apac",
         "Latam"
+      ]
+    },
+    {
+      "filename": "**/sdk/networkcloud/**/*.cs",
+      "words": [
+        "Reimage",
+        "Uncordon",
+        "Uncordoned",
+        "Ipam",
+        "Virtio",
+        "nics",
+        "Lldp",
+        "Nics",
+        "Dpdk",
+        "Sriov",
+        "Sata",
+        "Uefi"
       ]
     },
     {

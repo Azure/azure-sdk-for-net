@@ -26,6 +26,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Demo.Traces
                 { "service.name", "my-service" },
                 { "service.namespace", "my-namespace" },
                 { "service.instance.id", "my-instance" },
+                { "foo", "bar" }
             };
 
             var resourceBuilder = ResourceBuilder.CreateDefault().AddAttributes(resourceAttributes);
@@ -35,7 +36,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Demo.Traces
                             .AddSource(ActivitySourceName)
                             .AddProcessor(new ActivityFilteringProcessor())
                             .AddProcessor(new ActivityEnrichingProcessor())
-                            .SetSampler(new ApplicationInsightsSampler(1.0F))
+                            .SetSampler(new ApplicationInsightsSampler(new ApplicationInsightsSamplerOptions() { SamplingRatio = 1.0F }))
                             .AddAzureMonitorTraceExporter(o => o.ConnectionString = connectionString, credential)
                             .Build();
         }

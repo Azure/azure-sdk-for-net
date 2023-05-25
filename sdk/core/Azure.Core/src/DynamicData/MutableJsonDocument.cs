@@ -16,12 +16,21 @@ namespace Azure.Core.Json
     [JsonConverter(typeof(JsonConverter))]
     internal sealed partial class MutableJsonDocument : IDisposable
     {
-        internal static readonly JsonSerializerOptions DefaultJsonSerializerOptions = new JsonSerializerOptions();
-
         private readonly ReadOnlyMemory<byte> _original;
         private readonly JsonDocument _originalDocument;
 
-        internal ChangeTracker Changes { get; } = new();
+        private readonly JsonSerializerOptions _serializerOptions;
+        internal JsonSerializerOptions SerializerOptions { get => _serializerOptions; }
+
+        private ChangeTracker? _changeTracker;
+        internal ChangeTracker Changes
+        {
+            get
+            {
+                _changeTracker ??= new ChangeTracker(SerializerOptions);
+                return _changeTracker;
+            }
+        }
 
         /// <summary>
         /// Gets the root element of this JSON document.
@@ -108,36 +117,39 @@ namespace Azure.Core.Json
         /// </summary>
         /// <param name="utf8Json">A UTF-8 encoded string representing a JSON value.</param>
         /// <returns>A <see cref="MutableJsonDocument"/> representation of the value.</returns>
+        /// <param name="serializerOptions">Serializer options used to serialize and deserialize any changes to the JSON.</param>
         /// <exception cref="JsonException"><paramref name="utf8Json"/> does not represent a valid single JSON value.</exception>
-        public static MutableJsonDocument Parse(ReadOnlyMemory<byte> utf8Json)
+        public static MutableJsonDocument Parse(ReadOnlyMemory<byte> utf8Json, JsonSerializerOptions? serializerOptions = default)
         {
             var doc = JsonDocument.Parse(utf8Json);
-            return new MutableJsonDocument(doc, utf8Json);
+            return new MutableJsonDocument(doc, utf8Json, serializerOptions);
         }
 
         /// <summary>
         /// Parses a UTF-8 encoded string representing a single JSON value into a <see cref="MutableJsonDocument"/>.
         /// </summary>
         /// <param name="utf8Json">A UTF-8 encoded string representing a JSON value.</param>
+        /// <param name="serializerOptions">Serializer options used to serialize and deserialize any changes to the JSON.</param>
         /// <returns>A <see cref="MutableJsonDocument"/> representation of the value.</returns>
         /// <exception cref="JsonException"><paramref name="utf8Json"/> does not represent a valid single JSON value.</exception>
-        public static MutableJsonDocument Parse(BinaryData utf8Json)
+        public static MutableJsonDocument Parse(BinaryData utf8Json, JsonSerializerOptions? serializerOptions = default)
         {
             var doc = JsonDocument.Parse(utf8Json);
-            return new MutableJsonDocument(doc, utf8Json.ToMemory());
+            return new MutableJsonDocument(doc, utf8Json.ToMemory(), serializerOptions);
         }
 
         /// <summary>
         /// Parses test representing a single JSON value into a <see cref="MutableJsonDocument"/>.
         /// </summary>
         /// <param name="json">The JSON string.</param>
+        /// <param name="serializerOptions">Serializer options used to serialize and deserialize any changes to the JSON.</param>
         /// <returns>A <see cref="MutableJsonDocument"/> representation of the value.</returns>
         /// <exception cref="JsonException"><paramref name="json"/> does not represent a valid single JSON value.</exception>
-        public static MutableJsonDocument Parse(string json)
+        public static MutableJsonDocument Parse(string json, JsonSerializerOptions? serializerOptions = default)
         {
             byte[] utf8 = Encoding.UTF8.GetBytes(json);
             Memory<byte> jsonMemory = utf8.AsMemory();
-            return new MutableJsonDocument(JsonDocument.Parse(jsonMemory), jsonMemory);
+            return new MutableJsonDocument(JsonDocument.Parse(jsonMemory), jsonMemory, serializerOptions);
         }
 
         /// <inheritdoc/>
@@ -146,39 +158,34 @@ namespace Azure.Core.Json
             _originalDocument.Dispose();
         }
 
-        internal MutableJsonDocument(JsonDocument jsonDocument, ReadOnlyMemory<byte> utf8Json)
+        internal MutableJsonDocument(JsonDocument document, JsonSerializerOptions? serializerOptions) : this(document, GetBytesFromDocument(document), serializerOptions)
+        {
+        }
+
+        internal MutableJsonDocument(JsonDocument document, ReadOnlyMemory<byte> utf8Json, JsonSerializerOptions? serializerOptions)
         {
             _original = utf8Json;
-            _originalDocument = jsonDocument;
+            _originalDocument = document;
+            _serializerOptions = serializerOptions ?? new JsonSerializerOptions();
         }
 
-        /// <summary>
-        /// Creates a new JsonData object which represents the given object.
-        /// </summary>
-        /// <param name="value">The value to convert.</param>
-        internal MutableJsonDocument(object? value) : this(value, DefaultJsonSerializerOptions)
+        private static ReadOnlyMemory<byte> GetBytesFromDocument(JsonDocument document)
         {
-        }
+            using MemoryStream stream = new();
+            using (Utf8JsonWriter writer = new(stream))
+            {
+                document.WriteTo(writer);
+            }
 
-        /// <summary>
-        /// Creates a new JsonData object which represents the given object.
-        /// </summary>
-        /// <param name="value">The value to convert.</param>
-        /// <param name="options">Options to control the conversion behavior.</param>
-        /// <param name="type">The type of the value to convert. </param>
-        internal MutableJsonDocument(object? value, JsonSerializerOptions options, Type? type = null)
-        {
-            Type inputType = type ?? (value == null ? typeof(object) : value.GetType());
-            _original = JsonSerializer.SerializeToUtf8Bytes(value, inputType, options);
-            _originalDocument = JsonDocument.Parse(_original);
+            return new ReadOnlyMemory<byte>(stream.GetBuffer(), 0, (int)stream.Position);
         }
 
         private class JsonConverter : JsonConverter<MutableJsonDocument>
         {
             public override MutableJsonDocument Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
-                using JsonDocument document = JsonDocument.ParseValue(ref reader);
-                return new MutableJsonDocument(document);
+                JsonDocument document = JsonDocument.ParseValue(ref reader);
+                return new MutableJsonDocument(document, options);
             }
 
             public override void Write(Utf8JsonWriter writer, MutableJsonDocument value, JsonSerializerOptions options)

@@ -80,16 +80,6 @@ namespace Azure.Storage.DataMovement.Tests
             return files;
         }
 
-        public static DisposingLocalDirectory GetTestLocalDirectory(string directoryPath = default)
-        {
-            if (string.IsNullOrEmpty(directoryPath))
-            {
-                directoryPath = Path.Combine(Path.GetTempPath(), Guid.NewGuid().ToString());
-            }
-            Directory.CreateDirectory(directoryPath);
-            return new DisposingLocalDirectory(directoryPath);
-        }
-
         public Dictionary<string, string> BuildTags()
             => new Dictionary<string, string>
             {

@@ -534,7 +534,7 @@ namespace Azure.Health.Insights.ClinicalMatching
         public System.DateTimeOffset CreatedDateTime { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResponseError> Errors { get { throw null; } }
         public System.DateTimeOffset ExpirationDateTime { get { throw null; } }
-        public string JobId { get { throw null; } }
+        public System.Guid JobId { get { throw null; } }
         public System.DateTimeOffset LastUpdateDateTime { get { throw null; } }
         public Azure.Health.Insights.ClinicalMatching.TrialMatcherResults Results { get { throw null; } }
         public Azure.Health.Insights.ClinicalMatching.JobStatus Status { get { throw null; } }

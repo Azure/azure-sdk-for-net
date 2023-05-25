@@ -4,7 +4,6 @@ Run `dotnet build /t:GenerateCode` to generate code.
 
 ```yaml
 azure-arm: true
-generate-model-factory: false
 arm-core: true
 clear-output-folder: true
 skip-csproj: true
@@ -232,6 +231,11 @@ override-operation-name:
   ResourceLinks_ListAtSubscription: GetResourceLinks
 
 no-property-type-replacement: ResourceProviderData;ResourceProvider;
+
+operations-to-skip-lro-api-version-override:
+- Tags_CreateOrUpdateAtScope
+- Tags_UpdateAtScope
+- Tags_DeleteAtScope
 
 format-by-name-rules:
   'tenantId': 'uuid'
@@ -820,6 +824,6 @@ directive:
       $.CreateManagementGroupRequest.properties.type['x-ms-format'] = 'resource-type';
       $.CheckNameAvailabilityRequest["x-ms-client-name"] = "ManagementGroupNameAvailabilityContent";
       $.CheckNameAvailabilityRequest.properties.type['x-ms-client-name'] = "ResourceType";
-      $.CheckNameAvailabilityRequest.properties.type['x-ms-contant'] = true;
+      $.CheckNameAvailabilityRequest.properties.type['x-ms-constant'] = true;
       $.CheckNameAvailabilityRequest.properties.type['x-ms-format'] = 'resource-type';
 ```

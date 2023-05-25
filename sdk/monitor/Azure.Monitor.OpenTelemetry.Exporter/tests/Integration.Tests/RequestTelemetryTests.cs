@@ -2,7 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Collections.Concurrent;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -26,7 +26,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Integration.Tests
         {
         }
 
-#if !NET461
+#if !NET462
         /// <summary>
         /// This test validates that when an app instrumented with the AzureMonitorExporter receives an HTTP request,
         /// A TelemetryItem is created matching that request.
@@ -36,7 +36,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Integration.Tests
         {
             string testValue = Guid.NewGuid().ToString();
 
-            ConcurrentBag<TelemetryItem>? telemetryItems = null;
+            List<TelemetryItem>? telemetryItems = null;
 
             // Arrange
             var client = this.factory
@@ -61,7 +61,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Integration.Tests
 
             // Assert
             Assert.True(telemetryItems.Any(), "test project did not capture telemetry");
-            var telemetryItem = telemetryItems.Single();
+            var telemetryItem = telemetryItems.Last()!;
             this.telemetryOutput.Write(telemetryItem);
 
             AssertRequestTelemetry(

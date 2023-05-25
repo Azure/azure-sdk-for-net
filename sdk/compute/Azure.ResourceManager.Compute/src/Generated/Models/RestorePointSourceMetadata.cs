@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.Compute.Models
     public partial class RestorePointSourceMetadata
     {
         /// <summary> Initializes a new instance of RestorePointSourceMetadata. </summary>
-        internal RestorePointSourceMetadata()
+        public RestorePointSourceMetadata()
         {
         }
 
@@ -27,7 +27,8 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="securityProfile"> Gets the security profile. </param>
         /// <param name="location"> Location of the VM from which the restore point was created. </param>
         /// <param name="userData"> UserData associated with the source VM for which restore point is captured, which is a base-64 encoded value. </param>
-        internal RestorePointSourceMetadata(VirtualMachineHardwareProfile hardwareProfile, RestorePointSourceVmStorageProfile storageProfile, VirtualMachineOSProfile osProfile, DiagnosticsProfile diagnosticsProfile, string licenseType, string vmId, SecurityProfile securityProfile, AzureLocation? location, string userData)
+        /// <param name="hyperVGeneration"> HyperVGeneration of the source VM for which restore point is captured. </param>
+        internal RestorePointSourceMetadata(VirtualMachineHardwareProfile hardwareProfile, RestorePointSourceVmStorageProfile storageProfile, VirtualMachineOSProfile osProfile, DiagnosticsProfile diagnosticsProfile, string licenseType, string vmId, SecurityProfile securityProfile, AzureLocation? location, string userData, HyperVGeneration? hyperVGeneration)
         {
             HardwareProfile = hardwareProfile;
             StorageProfile = storageProfile;
@@ -38,17 +39,18 @@ namespace Azure.ResourceManager.Compute.Models
             SecurityProfile = securityProfile;
             Location = location;
             UserData = userData;
+            HyperVGeneration = hyperVGeneration;
         }
 
         /// <summary> Gets the hardware profile. </summary>
         public VirtualMachineHardwareProfile HardwareProfile { get; }
         /// <summary> Gets the storage profile. </summary>
-        public RestorePointSourceVmStorageProfile StorageProfile { get; }
+        public RestorePointSourceVmStorageProfile StorageProfile { get; set; }
         /// <summary> Gets the OS profile. </summary>
         public VirtualMachineOSProfile OSProfile { get; }
         /// <summary> Gets the diagnostics profile. </summary>
         internal DiagnosticsProfile DiagnosticsProfile { get; }
-        /// <summary> Boot Diagnostics is a debugging feature which allows you to view Console Output and Screenshot to diagnose VM status. &lt;br&gt;**NOTE**: If storageUri is being specified then ensure that the storage account is in the same region and subscription as the VM. &lt;br&gt;&lt;br&gt; You can easily view the output of your console log. &lt;br&gt;&lt;br&gt; Azure also enables you to see a screenshot of the VM from the hypervisor. </summary>
+        /// <summary> Boot Diagnostics is a debugging feature which allows you to view Console Output and Screenshot to diagnose VM status. **NOTE**: If storageUri is being specified then ensure that the storage account is in the same region and subscription as the VM. You can easily view the output of your console log. Azure also enables you to see a screenshot of the VM from the hypervisor. </summary>
         public BootDiagnostics BootDiagnostics
         {
             get => DiagnosticsProfile?.BootDiagnostics;
@@ -64,5 +66,7 @@ namespace Azure.ResourceManager.Compute.Models
         public AzureLocation? Location { get; }
         /// <summary> UserData associated with the source VM for which restore point is captured, which is a base-64 encoded value. </summary>
         public string UserData { get; }
+        /// <summary> HyperVGeneration of the source VM for which restore point is captured. </summary>
+        public HyperVGeneration? HyperVGeneration { get; }
     }
 }

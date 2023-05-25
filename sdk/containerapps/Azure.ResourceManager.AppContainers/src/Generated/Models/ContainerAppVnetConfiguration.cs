@@ -18,37 +18,29 @@ namespace Azure.ResourceManager.AppContainers.Models
         }
 
         /// <summary> Initializes a new instance of ContainerAppVnetConfiguration. </summary>
-        /// <param name="isInternal"> Boolean indicating the environment only has an internal load balancer. These environments do not have a public static IP resource. They must provide runtimeSubnetId and infrastructureSubnetId if enabling this property. </param>
-        /// <param name="infrastructureSubnetId"> Resource ID of a subnet for infrastructure components. This subnet must be in the same VNET as the subnet defined in runtimeSubnetId. Must not overlap with any other provided IP ranges. </param>
-        /// <param name="runtimeSubnetId"> Resource ID of a subnet that Container App containers are injected into. This subnet must be in the same VNET as the subnet defined in infrastructureSubnetId. Must not overlap with any other provided IP ranges. </param>
+        /// <param name="isInternal"> Boolean indicating the environment only has an internal load balancer. These environments do not have a public static IP resource. They must provide infrastructureSubnetId if enabling this property. </param>
+        /// <param name="infrastructureSubnetId"> Resource ID of a subnet for infrastructure components. Must not overlap with any other provided IP ranges. </param>
         /// <param name="dockerBridgeCidr"> CIDR notation IP range assigned to the Docker bridge, network. Must not overlap with any other provided IP ranges. </param>
         /// <param name="platformReservedCidr"> IP range in CIDR notation that can be reserved for environment infrastructure IP addresses. Must not overlap with any other provided IP ranges. </param>
         /// <param name="platformReservedDnsIP"> An IP address from the IP range defined by platformReservedCidr that will be reserved for the internal DNS server. </param>
-        /// <param name="outboundSettings"> Configuration used to control the Environment Egress outbound traffic. </param>
-        internal ContainerAppVnetConfiguration(bool? isInternal, ResourceIdentifier infrastructureSubnetId, string runtimeSubnetId, string dockerBridgeCidr, string platformReservedCidr, string platformReservedDnsIP, ContainerAppManagedEnvironmentOutboundSettings outboundSettings)
+        internal ContainerAppVnetConfiguration(bool? isInternal, ResourceIdentifier infrastructureSubnetId, string dockerBridgeCidr, string platformReservedCidr, string platformReservedDnsIP)
         {
             IsInternal = isInternal;
             InfrastructureSubnetId = infrastructureSubnetId;
-            RuntimeSubnetId = runtimeSubnetId;
             DockerBridgeCidr = dockerBridgeCidr;
             PlatformReservedCidr = platformReservedCidr;
             PlatformReservedDnsIP = platformReservedDnsIP;
-            OutboundSettings = outboundSettings;
         }
 
-        /// <summary> Boolean indicating the environment only has an internal load balancer. These environments do not have a public static IP resource. They must provide runtimeSubnetId and infrastructureSubnetId if enabling this property. </summary>
+        /// <summary> Boolean indicating the environment only has an internal load balancer. These environments do not have a public static IP resource. They must provide infrastructureSubnetId if enabling this property. </summary>
         public bool? IsInternal { get; set; }
-        /// <summary> Resource ID of a subnet for infrastructure components. This subnet must be in the same VNET as the subnet defined in runtimeSubnetId. Must not overlap with any other provided IP ranges. </summary>
+        /// <summary> Resource ID of a subnet for infrastructure components. Must not overlap with any other provided IP ranges. </summary>
         public ResourceIdentifier InfrastructureSubnetId { get; set; }
-        /// <summary> Resource ID of a subnet that Container App containers are injected into. This subnet must be in the same VNET as the subnet defined in infrastructureSubnetId. Must not overlap with any other provided IP ranges. </summary>
-        public string RuntimeSubnetId { get; set; }
         /// <summary> CIDR notation IP range assigned to the Docker bridge, network. Must not overlap with any other provided IP ranges. </summary>
         public string DockerBridgeCidr { get; set; }
         /// <summary> IP range in CIDR notation that can be reserved for environment infrastructure IP addresses. Must not overlap with any other provided IP ranges. </summary>
         public string PlatformReservedCidr { get; set; }
         /// <summary> An IP address from the IP range defined by platformReservedCidr that will be reserved for the internal DNS server. </summary>
         public string PlatformReservedDnsIP { get; set; }
-        /// <summary> Configuration used to control the Environment Egress outbound traffic. </summary>
-        public ContainerAppManagedEnvironmentOutboundSettings OutboundSettings { get; set; }
     }
 }
