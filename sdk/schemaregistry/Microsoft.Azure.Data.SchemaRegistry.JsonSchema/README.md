@@ -66,15 +66,11 @@ internal class SampleJsonGenerator : SchemaRegistryJsonSchemaGenerator
 {
     public override bool ValidateAgainstSchema(Object data, Type dataType, string schemaDefinition)
     {
-        JSchema schema = JSchema.Parse(schemaDefinition);
-        JObject jobjectData = JObject.FromObject(data);
-        return jobjectData.IsValid(schema);
+        // TODO
     }
     public override string GenerateSchemaFromObject(Type dataType)
     {
-        JSchemaGenerator generator = new();
-        JSchema schema = generator.Generate(dataType);
-        return schema.ToString();
+        // TODO
     }
 }
 ```
