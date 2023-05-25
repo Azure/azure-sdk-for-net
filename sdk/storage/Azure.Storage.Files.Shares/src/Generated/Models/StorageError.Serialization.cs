@@ -8,6 +8,7 @@
 using System.Text.Json;
 using System.Xml.Linq;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.Storage.Files.Shares.Models
 {
@@ -23,7 +24,7 @@ namespace Azure.Storage.Files.Shares.Models
             return new StorageError(message);
         }
 
-        internal static StorageError DeserializeStorageError(JsonElement element)
+        internal static StorageError DeserializeStorageError(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

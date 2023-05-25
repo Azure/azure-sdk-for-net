@@ -9,13 +9,14 @@ using System;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
     [JsonConverter(typeof(PipelineRunInvokedByConverter))]
     public partial class PipelineRunInvokedBy
     {
-        internal static PipelineRunInvokedBy DeserializePipelineRunInvokedBy(JsonElement element)
+        internal static PipelineRunInvokedBy DeserializePipelineRunInvokedBy(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

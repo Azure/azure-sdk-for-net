@@ -7,12 +7,13 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.TrafficManager.Models
 {
     public partial class TrafficManagerNameAvailabilityResult
     {
-        internal static TrafficManagerNameAvailabilityResult DeserializeTrafficManagerNameAvailabilityResult(JsonElement element)
+        internal static TrafficManagerNameAvailabilityResult DeserializeTrafficManagerNameAvailabilityResult(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

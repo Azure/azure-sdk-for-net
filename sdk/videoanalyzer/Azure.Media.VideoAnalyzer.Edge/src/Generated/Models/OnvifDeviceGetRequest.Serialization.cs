@@ -7,12 +7,15 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.Media.VideoAnalyzer.Edge.Models
 {
     public partial class OnvifDeviceGetRequest : IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IUtf8JsonSerializable)this).Write(writer, new SerializableOptions());
+
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer, SerializableOptions options)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("endpoint"u8);
@@ -25,7 +28,7 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
             writer.WriteEndObject();
         }
 
-        internal static OnvifDeviceGetRequest DeserializeOnvifDeviceGetRequest(JsonElement element)
+        internal static OnvifDeviceGetRequest DeserializeOnvifDeviceGetRequest(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

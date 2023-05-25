@@ -8,10 +8,67 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.IoT.TimeSeriesInsights
 {
     internal partial class TypesBatchResponse
     {
+        internal static TypesBatchResponse DeserializeTypesBatchResponse(JsonElement element, SerializableOptions options = default)
+        {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            Optional<IReadOnlyList<TimeSeriesTypeOperationResult>> @get = default;
+            Optional<IReadOnlyList<TimeSeriesTypeOperationResult>> put = default;
+            Optional<IReadOnlyList<TimeSeriesOperationError>> delete = default;
+            foreach (var property in element.EnumerateObject())
+            {
+                if (property.NameEquals("get"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<TimeSeriesTypeOperationResult> array = new List<TimeSeriesTypeOperationResult>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(TimeSeriesTypeOperationResult.DeserializeTimeSeriesTypeOperationResult(item));
+                    }
+                    @get = array;
+                    continue;
+                }
+                if (property.NameEquals("put"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<TimeSeriesTypeOperationResult> array = new List<TimeSeriesTypeOperationResult>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(TimeSeriesTypeOperationResult.DeserializeTimeSeriesTypeOperationResult(item));
+                    }
+                    put = array;
+                    continue;
+                }
+                if (property.NameEquals("delete"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<TimeSeriesOperationError> array = new List<TimeSeriesOperationError>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(TimeSeriesOperationError.DeserializeTimeSeriesOperationError(item));
+                    }
+                    delete = array;
+                    continue;
+                }
+            }
+            return new TypesBatchResponse(Optional.ToList(@get), Optional.ToList(put), Optional.ToList(delete));
+        }
     }
 }

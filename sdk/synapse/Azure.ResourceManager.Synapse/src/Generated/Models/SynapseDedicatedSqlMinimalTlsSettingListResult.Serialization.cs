@@ -8,13 +8,14 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.Synapse;
 
 namespace Azure.ResourceManager.Synapse.Models
 {
     internal partial class SynapseDedicatedSqlMinimalTlsSettingListResult
     {
-        internal static SynapseDedicatedSqlMinimalTlsSettingListResult DeserializeSynapseDedicatedSqlMinimalTlsSettingListResult(JsonElement element)
+        internal static SynapseDedicatedSqlMinimalTlsSettingListResult DeserializeSynapseDedicatedSqlMinimalTlsSettingListResult(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

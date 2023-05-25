@@ -8,12 +8,13 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.StreamAnalytics.Models
 {
     public partial class StreamAnalyticsError
     {
-        internal static StreamAnalyticsError DeserializeStreamAnalyticsError(JsonElement element)
+        internal static StreamAnalyticsError DeserializeStreamAnalyticsError(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

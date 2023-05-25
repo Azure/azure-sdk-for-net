@@ -8,12 +8,13 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.AppService.Models
 {
     public partial class ServiceSpecification
     {
-        internal static ServiceSpecification DeserializeServiceSpecification(JsonElement element)
+        internal static ServiceSpecification DeserializeServiceSpecification(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

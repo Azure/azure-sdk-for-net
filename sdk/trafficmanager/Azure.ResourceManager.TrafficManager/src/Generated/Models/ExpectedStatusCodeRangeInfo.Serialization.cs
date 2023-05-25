@@ -7,12 +7,15 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.TrafficManager.Models
 {
     public partial class ExpectedStatusCodeRangeInfo : IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IUtf8JsonSerializable)this).Write(writer, new SerializableOptions());
+
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer, SerializableOptions options)
         {
             writer.WriteStartObject();
             if (Optional.IsDefined(Min))
@@ -28,7 +31,7 @@ namespace Azure.ResourceManager.TrafficManager.Models
             writer.WriteEndObject();
         }
 
-        internal static ExpectedStatusCodeRangeInfo DeserializeExpectedStatusCodeRangeInfo(JsonElement element)
+        internal static ExpectedStatusCodeRangeInfo DeserializeExpectedStatusCodeRangeInfo(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

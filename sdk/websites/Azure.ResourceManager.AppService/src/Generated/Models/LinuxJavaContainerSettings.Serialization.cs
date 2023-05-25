@@ -8,12 +8,13 @@
 using System;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.AppService.Models
 {
     public partial class LinuxJavaContainerSettings
     {
-        internal static LinuxJavaContainerSettings DeserializeLinuxJavaContainerSettings(JsonElement element)
+        internal static LinuxJavaContainerSettings DeserializeLinuxJavaContainerSettings(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

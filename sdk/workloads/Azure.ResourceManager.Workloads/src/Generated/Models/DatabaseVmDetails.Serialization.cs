@@ -8,13 +8,14 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Workloads.Models
 {
     public partial class DatabaseVmDetails
     {
-        internal static DatabaseVmDetails DeserializeDatabaseVmDetails(JsonElement element)
+        internal static DatabaseVmDetails DeserializeDatabaseVmDetails(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

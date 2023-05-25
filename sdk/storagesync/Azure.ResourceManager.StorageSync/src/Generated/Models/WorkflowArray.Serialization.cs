@@ -8,13 +8,14 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.StorageSync;
 
 namespace Azure.ResourceManager.StorageSync.Models
 {
     internal partial class WorkflowArray
     {
-        internal static WorkflowArray DeserializeWorkflowArray(JsonElement element)
+        internal static WorkflowArray DeserializeWorkflowArray(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

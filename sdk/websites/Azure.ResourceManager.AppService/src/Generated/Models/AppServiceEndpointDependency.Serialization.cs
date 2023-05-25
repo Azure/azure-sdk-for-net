@@ -8,12 +8,13 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.AppService.Models
 {
     public partial class AppServiceEndpointDependency
     {
-        internal static AppServiceEndpointDependency DeserializeAppServiceEndpointDependency(JsonElement element)
+        internal static AppServiceEndpointDependency DeserializeAppServiceEndpointDependency(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

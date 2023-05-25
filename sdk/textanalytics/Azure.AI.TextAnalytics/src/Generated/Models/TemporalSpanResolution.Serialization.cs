@@ -8,12 +8,15 @@
 using System.Text.Json;
 using Azure.AI.TextAnalytics.Models;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.AI.TextAnalytics
 {
     public partial class TemporalSpanResolution : IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IUtf8JsonSerializable)this).Write(writer, new SerializableOptions());
+
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer, SerializableOptions options)
         {
             writer.WriteStartObject();
             if (Optional.IsDefined(Begin))
@@ -46,7 +49,7 @@ namespace Azure.AI.TextAnalytics
             writer.WriteEndObject();
         }
 
-        internal static TemporalSpanResolution DeserializeTemporalSpanResolution(JsonElement element)
+        internal static TemporalSpanResolution DeserializeTemporalSpanResolution(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

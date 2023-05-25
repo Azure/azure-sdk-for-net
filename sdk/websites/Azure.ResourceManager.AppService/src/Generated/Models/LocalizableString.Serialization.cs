@@ -7,12 +7,13 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.AppService.Models
 {
     public partial class LocalizableString
     {
-        internal static LocalizableString DeserializeLocalizableString(JsonElement element)
+        internal static LocalizableString DeserializeLocalizableString(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

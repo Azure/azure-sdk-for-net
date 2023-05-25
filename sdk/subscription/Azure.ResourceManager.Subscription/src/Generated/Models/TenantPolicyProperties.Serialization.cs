@@ -9,12 +9,13 @@ using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Subscription.Models
 {
     public partial class TenantPolicyProperties
     {
-        internal static TenantPolicyProperties DeserializeTenantPolicyProperties(JsonElement element)
+        internal static TenantPolicyProperties DeserializeTenantPolicyProperties(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

@@ -8,12 +8,13 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.AppService.Models
 {
     public partial class AppServiceHostName
     {
-        internal static AppServiceHostName DeserializeAppServiceHostName(JsonElement element)
+        internal static AppServiceHostName DeserializeAppServiceHostName(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

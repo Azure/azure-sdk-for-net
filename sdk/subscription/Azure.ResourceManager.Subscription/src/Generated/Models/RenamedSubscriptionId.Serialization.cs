@@ -7,12 +7,13 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Subscription.Models
 {
     public partial class RenamedSubscriptionId
     {
-        internal static RenamedSubscriptionId DeserializeRenamedSubscriptionId(JsonElement element)
+        internal static RenamedSubscriptionId DeserializeRenamedSubscriptionId(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

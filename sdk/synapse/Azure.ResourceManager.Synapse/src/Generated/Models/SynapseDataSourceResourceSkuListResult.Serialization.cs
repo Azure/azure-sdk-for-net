@@ -8,12 +8,13 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Synapse.Models
 {
     internal partial class SynapseDataSourceResourceSkuListResult
     {
-        internal static SynapseDataSourceResourceSkuListResult DeserializeSynapseDataSourceResourceSkuListResult(JsonElement element)
+        internal static SynapseDataSourceResourceSkuListResult DeserializeSynapseDataSourceResourceSkuListResult(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

@@ -7,12 +7,13 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.AppService.Models
 {
     public partial class CertificateOrderContact
     {
-        internal static CertificateOrderContact DeserializeCertificateOrderContact(JsonElement element)
+        internal static CertificateOrderContact DeserializeCertificateOrderContact(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

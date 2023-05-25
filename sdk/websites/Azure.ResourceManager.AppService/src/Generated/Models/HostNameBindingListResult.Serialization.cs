@@ -8,13 +8,14 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.AppService;
 
 namespace Azure.ResourceManager.AppService.Models
 {
     internal partial class HostNameBindingListResult
     {
-        internal static HostNameBindingListResult DeserializeHostNameBindingListResult(JsonElement element)
+        internal static HostNameBindingListResult DeserializeHostNameBindingListResult(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

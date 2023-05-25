@@ -7,12 +7,13 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Workloads.Models
 {
     internal partial class SapVirtualInstanceError
     {
-        internal static SapVirtualInstanceError DeserializeSapVirtualInstanceError(JsonElement element)
+        internal static SapVirtualInstanceError DeserializeSapVirtualInstanceError(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

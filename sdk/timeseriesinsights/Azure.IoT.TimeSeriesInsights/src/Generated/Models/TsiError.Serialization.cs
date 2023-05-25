@@ -7,12 +7,13 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.IoT.TimeSeriesInsights
 {
     internal partial class TsiError
     {
-        internal static TsiError DeserializeTsiError(JsonElement element)
+        internal static TsiError DeserializeTsiError(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

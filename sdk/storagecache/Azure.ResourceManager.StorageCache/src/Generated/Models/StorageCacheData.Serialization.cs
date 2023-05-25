@@ -9,6 +9,7 @@ using System.Collections.Generic;
 using System.Net;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.StorageCache.Models;
 
@@ -16,7 +17,9 @@ namespace Azure.ResourceManager.StorageCache
 {
     public partial class StorageCacheData : IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IUtf8JsonSerializable)this).Write(writer, new SerializableOptions());
+
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer, SerializableOptions options)
         {
             writer.WriteStartObject();
             if (Optional.IsDefined(Identity))
@@ -93,7 +96,7 @@ namespace Azure.ResourceManager.StorageCache
             writer.WriteEndObject();
         }
 
-        internal static StorageCacheData DeserializeStorageCacheData(JsonElement element)
+        internal static StorageCacheData DeserializeStorageCacheData(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

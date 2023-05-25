@@ -9,12 +9,13 @@ using System;
 using System.Text.Json;
 using Azure.AI.Translation.Document.Models;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.AI.Translation.Document
 {
     public partial class TranslationStatusResult
     {
-        internal static TranslationStatusResult DeserializeTranslationStatusResult(JsonElement element)
+        internal static TranslationStatusResult DeserializeTranslationStatusResult(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

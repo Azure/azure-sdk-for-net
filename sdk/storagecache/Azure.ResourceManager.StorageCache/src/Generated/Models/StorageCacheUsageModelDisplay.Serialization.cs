@@ -7,12 +7,13 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.StorageCache.Models
 {
     internal partial class StorageCacheUsageModelDisplay
     {
-        internal static StorageCacheUsageModelDisplay DeserializeStorageCacheUsageModelDisplay(JsonElement element)
+        internal static StorageCacheUsageModelDisplay DeserializeStorageCacheUsageModelDisplay(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

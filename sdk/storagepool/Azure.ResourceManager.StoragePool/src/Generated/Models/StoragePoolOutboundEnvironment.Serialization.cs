@@ -8,12 +8,13 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.StoragePool.Models
 {
     public partial class StoragePoolOutboundEnvironment
     {
-        internal static StoragePoolOutboundEnvironment DeserializeStoragePoolOutboundEnvironment(JsonElement element)
+        internal static StoragePoolOutboundEnvironment DeserializeStoragePoolOutboundEnvironment(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

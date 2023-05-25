@@ -8,13 +8,14 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.StorageCache;
 
 namespace Azure.ResourceManager.StorageCache.Models
 {
     internal partial class StorageTargetsResult
     {
-        internal static StorageTargetsResult DeserializeStorageTargetsResult(JsonElement element)
+        internal static StorageTargetsResult DeserializeStorageTargetsResult(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

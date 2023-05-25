@@ -7,6 +7,7 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Synapse.Models;
 
@@ -14,7 +15,7 @@ namespace Azure.ResourceManager.Synapse
 {
     public partial class SynapsePrivateEndpointConnectionForPrivateLinkHubData
     {
-        internal static SynapsePrivateEndpointConnectionForPrivateLinkHubData DeserializeSynapsePrivateEndpointConnectionForPrivateLinkHubData(JsonElement element)
+        internal static SynapsePrivateEndpointConnectionForPrivateLinkHubData DeserializeSynapsePrivateEndpointConnectionForPrivateLinkHubData(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

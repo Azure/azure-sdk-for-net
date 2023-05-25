@@ -7,10 +7,51 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.IoT.TimeSeriesInsights
 {
     internal partial class GetEvents : IUtf8JsonSerializable
     {
+
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer, SerializableOptions options)
+        {
+            writer.WriteStartObject();
+            writer.WritePropertyName("timeSeriesId"u8);
+            writer.WriteStartArray();
+            foreach (var item in TimeSeriesIdInternal)
+            {
+                if (item == null)
+                {
+                    writer.WriteNullValue();
+                    continue;
+                }
+                writer.WriteObjectValue(item);
+            }
+            writer.WriteEndArray();
+            writer.WritePropertyName("searchSpan"u8);
+            writer.WriteObjectValue(SearchSpan);
+            if (Optional.IsDefined(Filter))
+            {
+                writer.WritePropertyName("filter"u8);
+                writer.WriteObjectValue(Filter);
+            }
+            if (Optional.IsCollectionDefined(ProjectedProperties))
+            {
+                writer.WritePropertyName("projectedProperties"u8);
+                writer.WriteStartArray();
+                foreach (var item in ProjectedProperties)
+                {
+                    writer.WriteObjectValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsDefined(Take))
+            {
+                writer.WritePropertyName("take"u8);
+                writer.WriteNumberValue(Take.Value);
+            }
+            writer.WriteEndObject();
+        }
     }
 }

@@ -6,12 +6,13 @@
 #nullable disable
 
 using System.Text.Json;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Synapse.Models
 {
     public partial class SynapseSsisObjectMetadata
     {
-        internal static SynapseSsisObjectMetadata DeserializeSynapseSsisObjectMetadata(JsonElement element)
+        internal static SynapseSsisObjectMetadata DeserializeSynapseSsisObjectMetadata(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

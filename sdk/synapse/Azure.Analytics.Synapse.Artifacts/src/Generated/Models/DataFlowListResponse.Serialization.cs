@@ -10,13 +10,14 @@ using System.Collections.Generic;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
     [JsonConverter(typeof(DataFlowListResponseConverter))]
     internal partial class DataFlowListResponse
     {
-        internal static DataFlowListResponse DeserializeDataFlowListResponse(JsonElement element)
+        internal static DataFlowListResponse DeserializeDataFlowListResponse(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

@@ -8,13 +8,14 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.Workloads;
 
 namespace Azure.ResourceManager.Workloads.Models
 {
     internal partial class SapApplicationServerInstanceList
     {
-        internal static SapApplicationServerInstanceList DeserializeSapApplicationServerInstanceList(JsonElement element)
+        internal static SapApplicationServerInstanceList DeserializeSapApplicationServerInstanceList(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

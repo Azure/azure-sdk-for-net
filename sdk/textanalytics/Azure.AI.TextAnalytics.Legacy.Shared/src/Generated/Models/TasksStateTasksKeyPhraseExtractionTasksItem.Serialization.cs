@@ -9,12 +9,13 @@ using System;
 using System.Text.Json;
 using Azure.AI.TextAnalytics.Legacy;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.AI.TextAnalytics.Legacy.Models
 {
     internal partial class TasksStateTasksKeyPhraseExtractionTasksItem
     {
-        internal static TasksStateTasksKeyPhraseExtractionTasksItem DeserializeTasksStateTasksKeyPhraseExtractionTasksItem(JsonElement element)
+        internal static TasksStateTasksKeyPhraseExtractionTasksItem DeserializeTasksStateTasksKeyPhraseExtractionTasksItem(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

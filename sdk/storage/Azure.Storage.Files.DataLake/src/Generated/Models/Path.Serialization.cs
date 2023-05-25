@@ -8,12 +8,13 @@
 using System;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.Storage.Files.DataLake.Models
 {
     internal partial class Path
     {
-        internal static Path DeserializePath(JsonElement element)
+        internal static Path DeserializePath(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

@@ -7,12 +7,13 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Synapse.Models
 {
     public partial class ReplaceAllFirewallRulesOperationResult
     {
-        internal static ReplaceAllFirewallRulesOperationResult DeserializeReplaceAllFirewallRulesOperationResult(JsonElement element)
+        internal static ReplaceAllFirewallRulesOperationResult DeserializeReplaceAllFirewallRulesOperationResult(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

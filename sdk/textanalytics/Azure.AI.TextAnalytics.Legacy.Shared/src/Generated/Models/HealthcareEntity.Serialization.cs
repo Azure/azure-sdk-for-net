@@ -9,12 +9,13 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure.AI.TextAnalytics.Legacy.Models;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.AI.TextAnalytics.Legacy
 {
     internal partial class HealthcareEntity
     {
-        internal static HealthcareEntity DeserializeHealthcareEntity(JsonElement element)
+        internal static HealthcareEntity DeserializeHealthcareEntity(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

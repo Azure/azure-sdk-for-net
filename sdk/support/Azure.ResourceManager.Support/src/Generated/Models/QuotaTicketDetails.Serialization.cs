@@ -8,12 +8,15 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Support.Models
 {
     public partial class QuotaTicketDetails : IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IUtf8JsonSerializable)this).Write(writer, new SerializableOptions());
+
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer, SerializableOptions options)
         {
             writer.WriteStartObject();
             if (Optional.IsDefined(QuotaChangeRequestSubType))
@@ -39,7 +42,7 @@ namespace Azure.ResourceManager.Support.Models
             writer.WriteEndObject();
         }
 
-        internal static QuotaTicketDetails DeserializeQuotaTicketDetails(JsonElement element)
+        internal static QuotaTicketDetails DeserializeQuotaTicketDetails(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

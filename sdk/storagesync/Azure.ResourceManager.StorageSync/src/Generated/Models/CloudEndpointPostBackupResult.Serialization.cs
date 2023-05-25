@@ -7,12 +7,13 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.StorageSync.Models
 {
     public partial class CloudEndpointPostBackupResult
     {
-        internal static CloudEndpointPostBackupResult DeserializeCloudEndpointPostBackupResult(JsonElement element)
+        internal static CloudEndpointPostBackupResult DeserializeCloudEndpointPostBackupResult(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

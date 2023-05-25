@@ -8,13 +8,14 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.Synapse;
 
 namespace Azure.ResourceManager.Synapse.Models
 {
     internal partial class SynapseWorkloadClassifierListResult
     {
-        internal static SynapseWorkloadClassifierListResult DeserializeSynapseWorkloadClassifierListResult(JsonElement element)
+        internal static SynapseWorkloadClassifierListResult DeserializeSynapseWorkloadClassifierListResult(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

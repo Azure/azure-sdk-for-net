@@ -8,12 +8,13 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.StoragePool.Models
 {
     internal partial class StoragePoolSkuListResult
     {
-        internal static StoragePoolSkuListResult DeserializeStoragePoolSkuListResult(JsonElement element)
+        internal static StoragePoolSkuListResult DeserializeStoragePoolSkuListResult(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

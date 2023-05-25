@@ -8,12 +8,13 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.StorageCache.Models
 {
     public partial class StorageCacheSkuLocationInfo
     {
-        internal static StorageCacheSkuLocationInfo DeserializeStorageCacheSkuLocationInfo(JsonElement element)
+        internal static StorageCacheSkuLocationInfo DeserializeStorageCacheSkuLocationInfo(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

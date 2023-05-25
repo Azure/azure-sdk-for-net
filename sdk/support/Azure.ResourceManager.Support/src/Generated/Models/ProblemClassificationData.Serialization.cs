@@ -7,13 +7,14 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Support
 {
     public partial class ProblemClassificationData
     {
-        internal static ProblemClassificationData DeserializeProblemClassificationData(JsonElement element)
+        internal static ProblemClassificationData DeserializeProblemClassificationData(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

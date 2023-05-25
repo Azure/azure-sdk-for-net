@@ -9,12 +9,13 @@ using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Subscription.Models
 {
     public partial class SubscriptionAliasProperties
     {
-        internal static SubscriptionAliasProperties DeserializeSubscriptionAliasProperties(JsonElement element)
+        internal static SubscriptionAliasProperties DeserializeSubscriptionAliasProperties(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

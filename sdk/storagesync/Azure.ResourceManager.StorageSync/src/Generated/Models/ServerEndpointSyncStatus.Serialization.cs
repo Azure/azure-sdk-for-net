@@ -8,12 +8,13 @@
 using System;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.StorageSync.Models
 {
     public partial class ServerEndpointSyncStatus
     {
-        internal static ServerEndpointSyncStatus DeserializeServerEndpointSyncStatus(JsonElement element)
+        internal static ServerEndpointSyncStatus DeserializeServerEndpointSyncStatus(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

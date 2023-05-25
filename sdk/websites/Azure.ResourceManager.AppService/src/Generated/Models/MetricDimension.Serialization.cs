@@ -7,12 +7,13 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.AppService.Models
 {
     public partial class MetricDimension
     {
-        internal static MetricDimension DeserializeMetricDimension(JsonElement element)
+        internal static MetricDimension DeserializeMetricDimension(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

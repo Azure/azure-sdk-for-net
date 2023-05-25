@@ -8,12 +8,13 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.AppService.Models
 {
     public partial class FunctionAppMajorVersion
     {
-        internal static FunctionAppMajorVersion DeserializeFunctionAppMajorVersion(JsonElement element)
+        internal static FunctionAppMajorVersion DeserializeFunctionAppMajorVersion(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

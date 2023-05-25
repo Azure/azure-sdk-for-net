@@ -8,13 +8,14 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.Synapse;
 
 namespace Azure.ResourceManager.Synapse.Models
 {
     internal partial class SynapseDatabasePrincipalAssignmentListResult
     {
-        internal static SynapseDatabasePrincipalAssignmentListResult DeserializeSynapseDatabasePrincipalAssignmentListResult(JsonElement element)
+        internal static SynapseDatabasePrincipalAssignmentListResult DeserializeSynapseDatabasePrincipalAssignmentListResult(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

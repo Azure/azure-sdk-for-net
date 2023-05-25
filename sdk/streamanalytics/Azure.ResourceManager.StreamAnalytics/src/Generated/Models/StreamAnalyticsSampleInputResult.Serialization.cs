@@ -9,12 +9,13 @@ using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.StreamAnalytics.Models
 {
     public partial class StreamAnalyticsSampleInputResult
     {
-        internal static StreamAnalyticsSampleInputResult DeserializeStreamAnalyticsSampleInputResult(JsonElement element)
+        internal static StreamAnalyticsSampleInputResult DeserializeStreamAnalyticsSampleInputResult(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

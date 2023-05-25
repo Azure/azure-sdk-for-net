@@ -8,12 +8,13 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.Analytics.Synapse.Spark.Models
 {
     public partial class SparkRequest
     {
-        internal static SparkRequest DeserializeSparkRequest(JsonElement element)
+        internal static SparkRequest DeserializeSparkRequest(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

@@ -10,13 +10,14 @@ using System.Collections.Generic;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
     [JsonConverter(typeof(PipelineRunsQueryResponseConverter))]
     public partial class PipelineRunsQueryResponse
     {
-        internal static PipelineRunsQueryResponse DeserializePipelineRunsQueryResponse(JsonElement element)
+        internal static PipelineRunsQueryResponse DeserializePipelineRunsQueryResponse(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

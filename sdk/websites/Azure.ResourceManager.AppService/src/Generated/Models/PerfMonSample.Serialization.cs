@@ -8,12 +8,13 @@
 using System;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.AppService.Models
 {
     public partial class PerfMonSample
     {
-        internal static PerfMonSample DeserializePerfMonSample(JsonElement element)
+        internal static PerfMonSample DeserializePerfMonSample(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

@@ -9,12 +9,15 @@ using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.AI.TextAnalytics
 {
     public partial struct LinkedEntity : IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IUtf8JsonSerializable)this).Write(writer, new SerializableOptions());
+
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer, SerializableOptions options)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("name"u8);
@@ -45,7 +48,7 @@ namespace Azure.AI.TextAnalytics
             writer.WriteEndObject();
         }
 
-        internal static LinkedEntity DeserializeLinkedEntity(JsonElement element)
+        internal static LinkedEntity DeserializeLinkedEntity(JsonElement element, SerializableOptions options = default)
         {
             string name = default;
             IEnumerable<LinkedEntityMatch> matches = default;

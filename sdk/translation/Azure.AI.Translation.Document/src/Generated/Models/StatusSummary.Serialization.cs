@@ -7,12 +7,13 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.AI.Translation.Document.Models
 {
     internal partial class StatusSummary
     {
-        internal static StatusSummary DeserializeStatusSummary(JsonElement element)
+        internal static StatusSummary DeserializeStatusSummary(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

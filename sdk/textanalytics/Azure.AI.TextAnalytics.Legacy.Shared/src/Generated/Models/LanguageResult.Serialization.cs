@@ -8,12 +8,13 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.AI.TextAnalytics.Legacy
 {
     internal partial class LanguageResult
     {
-        internal static LanguageResult DeserializeLanguageResult(JsonElement element)
+        internal static LanguageResult DeserializeLanguageResult(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

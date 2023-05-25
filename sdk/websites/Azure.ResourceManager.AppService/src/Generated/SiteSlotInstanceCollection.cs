@@ -145,7 +145,7 @@ namespace Azure.ResourceManager.AppService
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _siteSlotInstanceWebAppsRestClient.CreateListInstanceIdentifiersSlotRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _siteSlotInstanceWebAppsRestClient.CreateListInstanceIdentifiersSlotNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new SiteSlotInstanceResource(Client, WebSiteInstanceStatusData.DeserializeWebSiteInstanceStatusData(e)), _siteSlotInstanceWebAppsClientDiagnostics, Pipeline, "SiteSlotInstanceCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, (e, o) => new SiteSlotInstanceResource(Client, WebSiteInstanceStatusData.DeserializeWebSiteInstanceStatusData(e)), _siteSlotInstanceWebAppsClientDiagnostics, Pipeline, "SiteSlotInstanceCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -167,7 +167,7 @@ namespace Azure.ResourceManager.AppService
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _siteSlotInstanceWebAppsRestClient.CreateListInstanceIdentifiersSlotRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _siteSlotInstanceWebAppsRestClient.CreateListInstanceIdentifiersSlotNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new SiteSlotInstanceResource(Client, WebSiteInstanceStatusData.DeserializeWebSiteInstanceStatusData(e)), _siteSlotInstanceWebAppsClientDiagnostics, Pipeline, "SiteSlotInstanceCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, (e, o) => new SiteSlotInstanceResource(Client, WebSiteInstanceStatusData.DeserializeWebSiteInstanceStatusData(e)), _siteSlotInstanceWebAppsClientDiagnostics, Pipeline, "SiteSlotInstanceCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

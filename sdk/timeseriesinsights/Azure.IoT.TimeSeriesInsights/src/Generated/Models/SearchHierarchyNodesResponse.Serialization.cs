@@ -8,12 +8,13 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.IoT.TimeSeriesInsights
 {
     internal partial class SearchHierarchyNodesResponse
     {
-        internal static SearchHierarchyNodesResponse DeserializeSearchHierarchyNodesResponse(JsonElement element)
+        internal static SearchHierarchyNodesResponse DeserializeSearchHierarchyNodesResponse(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

@@ -7,12 +7,13 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.StreamAnalytics.Models
 {
     public partial class StreamAnalyticsResourceTestStatus
     {
-        internal static StreamAnalyticsResourceTestStatus DeserializeStreamAnalyticsResourceTestStatus(JsonElement element)
+        internal static StreamAnalyticsResourceTestStatus DeserializeStreamAnalyticsResourceTestStatus(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

@@ -8,13 +8,14 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.StoragePool;
 
 namespace Azure.ResourceManager.StoragePool.Models
 {
     internal partial class DiskPoolListResult
     {
-        internal static DiskPoolListResult DeserializeDiskPoolListResult(JsonElement element)
+        internal static DiskPoolListResult DeserializeDiskPoolListResult(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

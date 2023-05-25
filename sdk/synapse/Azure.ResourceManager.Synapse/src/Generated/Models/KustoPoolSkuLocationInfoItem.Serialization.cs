@@ -8,12 +8,13 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Synapse.Models
 {
     public partial class KustoPoolSkuLocationInfoItem
     {
-        internal static KustoPoolSkuLocationInfoItem DeserializeKustoPoolSkuLocationInfoItem(JsonElement element)
+        internal static KustoPoolSkuLocationInfoItem DeserializeKustoPoolSkuLocationInfoItem(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

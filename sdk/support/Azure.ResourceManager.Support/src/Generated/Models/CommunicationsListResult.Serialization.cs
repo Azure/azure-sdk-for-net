@@ -8,13 +8,14 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.Support;
 
 namespace Azure.ResourceManager.Support.Models
 {
     internal partial class CommunicationsListResult
     {
-        internal static CommunicationsListResult DeserializeCommunicationsListResult(JsonElement element)
+        internal static CommunicationsListResult DeserializeCommunicationsListResult(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

@@ -8,12 +8,13 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.StreamAnalytics.Models
 {
     internal partial class StreamAnalyticsSubscriptionQuotasListResult
     {
-        internal static StreamAnalyticsSubscriptionQuotasListResult DeserializeStreamAnalyticsSubscriptionQuotasListResult(JsonElement element)
+        internal static StreamAnalyticsSubscriptionQuotasListResult DeserializeStreamAnalyticsSubscriptionQuotasListResult(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

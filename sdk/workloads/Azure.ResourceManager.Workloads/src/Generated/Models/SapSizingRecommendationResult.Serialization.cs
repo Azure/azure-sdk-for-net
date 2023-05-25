@@ -6,12 +6,13 @@
 #nullable disable
 
 using System.Text.Json;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Workloads.Models
 {
     public partial class SapSizingRecommendationResult
     {
-        internal static SapSizingRecommendationResult DeserializeSapSizingRecommendationResult(JsonElement element)
+        internal static SapSizingRecommendationResult DeserializeSapSizingRecommendationResult(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

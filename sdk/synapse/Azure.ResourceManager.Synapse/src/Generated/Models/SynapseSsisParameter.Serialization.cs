@@ -7,12 +7,13 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Synapse.Models
 {
     public partial class SynapseSsisParameter
     {
-        internal static SynapseSsisParameter DeserializeSynapseSsisParameter(JsonElement element)
+        internal static SynapseSsisParameter DeserializeSynapseSsisParameter(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

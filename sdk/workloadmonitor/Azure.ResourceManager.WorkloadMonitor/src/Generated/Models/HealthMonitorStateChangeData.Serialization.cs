@@ -8,6 +8,7 @@
 using System;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.WorkloadMonitor.Models;
 
@@ -15,7 +16,7 @@ namespace Azure.ResourceManager.WorkloadMonitor
 {
     public partial class HealthMonitorStateChangeData
     {
-        internal static HealthMonitorStateChangeData DeserializeHealthMonitorStateChangeData(JsonElement element)
+        internal static HealthMonitorStateChangeData DeserializeHealthMonitorStateChangeData(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

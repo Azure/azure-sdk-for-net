@@ -8,12 +8,13 @@
 using System;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.StorageSync.Models
 {
     public partial class CloudTieringLowDiskMode
     {
-        internal static CloudTieringLowDiskMode DeserializeCloudTieringLowDiskMode(JsonElement element)
+        internal static CloudTieringLowDiskMode DeserializeCloudTieringLowDiskMode(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

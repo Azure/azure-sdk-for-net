@@ -7,12 +7,13 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.StorageMover.Models
 {
     public partial class JobRunError
     {
-        internal static JobRunError DeserializeJobRunError(JsonElement element)
+        internal static JobRunError DeserializeJobRunError(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

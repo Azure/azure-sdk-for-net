@@ -7,12 +7,15 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Workloads.Models
 {
     public partial class HighAvailabilitySoftwareConfiguration : IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IUtf8JsonSerializable)this).Write(writer, new SerializableOptions());
+
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer, SerializableOptions options)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("fencingClientId"u8);
@@ -20,6 +23,30 @@ namespace Azure.ResourceManager.Workloads.Models
             writer.WritePropertyName("fencingClientPassword"u8);
             writer.WriteStringValue(FencingClientPassword);
             writer.WriteEndObject();
+        }
+
+        internal static HighAvailabilitySoftwareConfiguration DeserializeHighAvailabilitySoftwareConfiguration(JsonElement element, SerializableOptions options = default)
+        {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            string fencingClientId = default;
+            string fencingClientPassword = default;
+            foreach (var property in element.EnumerateObject())
+            {
+                if (property.NameEquals("fencingClientId"u8))
+                {
+                    fencingClientId = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("fencingClientPassword"u8))
+                {
+                    fencingClientPassword = property.Value.GetString();
+                    continue;
+                }
+            }
+            return new HighAvailabilitySoftwareConfiguration(fencingClientId, fencingClientPassword);
         }
     }
 }

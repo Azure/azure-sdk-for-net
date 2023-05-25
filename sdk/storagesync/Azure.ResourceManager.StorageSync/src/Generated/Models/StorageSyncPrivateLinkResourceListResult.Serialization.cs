@@ -8,12 +8,13 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.StorageSync.Models
 {
     internal partial class StorageSyncPrivateLinkResourceListResult
     {
-        internal static StorageSyncPrivateLinkResourceListResult DeserializeStorageSyncPrivateLinkResourceListResult(JsonElement element)
+        internal static StorageSyncPrivateLinkResourceListResult DeserializeStorageSyncPrivateLinkResourceListResult(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

@@ -8,12 +8,13 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.AppService.Models
 {
     internal partial class ProcessThreadInfoListResult
     {
-        internal static ProcessThreadInfoListResult DeserializeProcessThreadInfoListResult(JsonElement element)
+        internal static ProcessThreadInfoListResult DeserializeProcessThreadInfoListResult(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

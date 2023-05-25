@@ -8,13 +8,14 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.Support;
 
 namespace Azure.ResourceManager.Support.Models
 {
     internal partial class SupportTicketsListResult
     {
-        internal static SupportTicketsListResult DeserializeSupportTicketsListResult(JsonElement element)
+        internal static SupportTicketsListResult DeserializeSupportTicketsListResult(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

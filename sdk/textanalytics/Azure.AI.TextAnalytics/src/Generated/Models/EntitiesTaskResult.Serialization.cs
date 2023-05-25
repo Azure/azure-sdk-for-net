@@ -7,12 +7,13 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.AI.TextAnalytics.Models
 {
     internal partial class EntitiesTaskResult
     {
-        internal static EntitiesTaskResult DeserializeEntitiesTaskResult(JsonElement element)
+        internal static EntitiesTaskResult DeserializeEntitiesTaskResult(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

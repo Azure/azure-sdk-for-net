@@ -7,12 +7,13 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Synapse.Models
 {
     public partial class SynapseIntegrationRuntimeAuthKeys
     {
-        internal static SynapseIntegrationRuntimeAuthKeys DeserializeSynapseIntegrationRuntimeAuthKeys(JsonElement element)
+        internal static SynapseIntegrationRuntimeAuthKeys DeserializeSynapseIntegrationRuntimeAuthKeys(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

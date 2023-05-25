@@ -8,12 +8,13 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Synapse.Models
 {
     public partial class SynapseSsisPackage
     {
-        internal static SynapseSsisPackage DeserializeSynapseSsisPackage(JsonElement element)
+        internal static SynapseSsisPackage DeserializeSynapseSsisPackage(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

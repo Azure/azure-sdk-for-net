@@ -8,12 +8,13 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.AppService.Models
 {
     internal partial class PremierAddOnOfferListResult
     {
-        internal static PremierAddOnOfferListResult DeserializePremierAddOnOfferListResult(JsonElement element)
+        internal static PremierAddOnOfferListResult DeserializePremierAddOnOfferListResult(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

@@ -8,12 +8,13 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Subscription.Models
 {
     public partial class BillingAccountPolicyProperties
     {
-        internal static BillingAccountPolicyProperties DeserializeBillingAccountPolicyProperties(JsonElement element)
+        internal static BillingAccountPolicyProperties DeserializeBillingAccountPolicyProperties(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

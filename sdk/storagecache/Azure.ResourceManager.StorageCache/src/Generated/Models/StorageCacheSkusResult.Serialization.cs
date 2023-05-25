@@ -8,12 +8,13 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.StorageCache.Models
 {
     internal partial class StorageCacheSkusResult
     {
-        internal static StorageCacheSkusResult DeserializeStorageCacheSkusResult(JsonElement element)
+        internal static StorageCacheSkusResult DeserializeStorageCacheSkusResult(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

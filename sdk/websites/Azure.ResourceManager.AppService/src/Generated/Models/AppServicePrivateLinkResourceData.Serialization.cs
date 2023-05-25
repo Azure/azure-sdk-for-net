@@ -7,13 +7,14 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.AppService.Models
 {
     public partial class AppServicePrivateLinkResourceData
     {
-        internal static AppServicePrivateLinkResourceData DeserializeAppServicePrivateLinkResourceData(JsonElement element)
+        internal static AppServicePrivateLinkResourceData DeserializeAppServicePrivateLinkResourceData(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

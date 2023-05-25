@@ -7,12 +7,13 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.IoT.TimeSeriesInsights
 {
     internal partial class HierarchyHit
     {
-        internal static HierarchyHit DeserializeHierarchyHit(JsonElement element)
+        internal static HierarchyHit DeserializeHierarchyHit(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

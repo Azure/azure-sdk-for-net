@@ -7,12 +7,13 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Workloads.Models
 {
     public partial class SapSupportedSku
     {
-        internal static SapSupportedSku DeserializeSapSupportedSku(JsonElement element)
+        internal static SapSupportedSku DeserializeSapSupportedSku(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

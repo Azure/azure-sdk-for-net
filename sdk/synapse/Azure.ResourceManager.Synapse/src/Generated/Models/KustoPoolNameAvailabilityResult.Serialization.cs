@@ -7,12 +7,13 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Synapse.Models
 {
     public partial class KustoPoolNameAvailabilityResult
     {
-        internal static KustoPoolNameAvailabilityResult DeserializeKustoPoolNameAvailabilityResult(JsonElement element)
+        internal static KustoPoolNameAvailabilityResult DeserializeKustoPoolNameAvailabilityResult(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

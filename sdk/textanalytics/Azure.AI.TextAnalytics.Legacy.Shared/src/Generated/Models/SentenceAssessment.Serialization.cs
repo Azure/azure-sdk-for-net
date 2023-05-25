@@ -8,12 +8,13 @@
 using System.Text.Json;
 using Azure.AI.TextAnalytics.Legacy.Models;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.AI.TextAnalytics.Legacy
 {
     internal partial class SentenceAssessment
     {
-        internal static SentenceAssessment DeserializeSentenceAssessment(JsonElement element)
+        internal static SentenceAssessment DeserializeSentenceAssessment(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

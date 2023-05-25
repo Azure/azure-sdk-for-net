@@ -9,13 +9,14 @@ using System;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
     [JsonConverter(typeof(MetastoreRequestSuccessResponseConverter))]
     public partial class MetastoreRequestSuccessResponse
     {
-        internal static MetastoreRequestSuccessResponse DeserializeMetastoreRequestSuccessResponse(JsonElement element)
+        internal static MetastoreRequestSuccessResponse DeserializeMetastoreRequestSuccessResponse(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

@@ -7,12 +7,13 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.StorageSync.Models
 {
     public partial class ServerEndpointRecallError
     {
-        internal static ServerEndpointRecallError DeserializeServerEndpointRecallError(JsonElement element)
+        internal static ServerEndpointRecallError DeserializeServerEndpointRecallError(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

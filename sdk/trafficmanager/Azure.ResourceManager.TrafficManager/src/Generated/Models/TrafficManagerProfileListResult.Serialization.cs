@@ -8,13 +8,14 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.TrafficManager;
 
 namespace Azure.ResourceManager.TrafficManager.Models
 {
     internal partial class TrafficManagerProfileListResult
     {
-        internal static TrafficManagerProfileListResult DeserializeTrafficManagerProfileListResult(JsonElement element)
+        internal static TrafficManagerProfileListResult DeserializeTrafficManagerProfileListResult(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

@@ -8,12 +8,13 @@
 using System.Net;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.StoragePool.Models
 {
     public partial class OutboundEndpointDetail
     {
-        internal static OutboundEndpointDetail DeserializeOutboundEndpointDetail(JsonElement element)
+        internal static OutboundEndpointDetail DeserializeOutboundEndpointDetail(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

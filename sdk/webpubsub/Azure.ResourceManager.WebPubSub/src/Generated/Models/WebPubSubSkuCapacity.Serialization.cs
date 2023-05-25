@@ -8,12 +8,13 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.WebPubSub.Models
 {
     public partial class WebPubSubSkuCapacity
     {
-        internal static WebPubSubSkuCapacity DeserializeWebPubSubSkuCapacity(JsonElement element)
+        internal static WebPubSubSkuCapacity DeserializeWebPubSubSkuCapacity(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

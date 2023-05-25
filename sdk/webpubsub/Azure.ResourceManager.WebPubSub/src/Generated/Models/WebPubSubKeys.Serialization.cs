@@ -7,12 +7,13 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.WebPubSub.Models
 {
     public partial class WebPubSubKeys
     {
-        internal static WebPubSubKeys DeserializeWebPubSubKeys(JsonElement element)
+        internal static WebPubSubKeys DeserializeWebPubSubKeys(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

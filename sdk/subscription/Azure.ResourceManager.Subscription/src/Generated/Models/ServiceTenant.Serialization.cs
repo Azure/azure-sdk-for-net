@@ -8,12 +8,13 @@
 using System;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Subscription.Models
 {
     public partial class ServiceTenant
     {
-        internal static ServiceTenant DeserializeServiceTenant(JsonElement element)
+        internal static ServiceTenant DeserializeServiceTenant(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

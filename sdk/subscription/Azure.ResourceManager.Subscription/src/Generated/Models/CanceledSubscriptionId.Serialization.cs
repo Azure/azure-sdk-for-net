@@ -7,12 +7,13 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Subscription.Models
 {
     public partial class CanceledSubscriptionId
     {
-        internal static CanceledSubscriptionId DeserializeCanceledSubscriptionId(JsonElement element)
+        internal static CanceledSubscriptionId DeserializeCanceledSubscriptionId(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

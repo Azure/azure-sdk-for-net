@@ -8,12 +8,13 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Workloads.Models
 {
     public partial class SapSupportedResourceSkusResult
     {
-        internal static SapSupportedResourceSkusResult DeserializeSapSupportedResourceSkusResult(JsonElement element)
+        internal static SapSupportedResourceSkusResult DeserializeSapSupportedResourceSkusResult(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

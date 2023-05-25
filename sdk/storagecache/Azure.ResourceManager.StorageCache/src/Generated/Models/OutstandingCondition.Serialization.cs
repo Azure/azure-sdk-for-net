@@ -8,12 +8,13 @@
 using System;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.StorageCache.Models
 {
     public partial class OutstandingCondition
     {
-        internal static OutstandingCondition DeserializeOutstandingCondition(JsonElement element)
+        internal static OutstandingCondition DeserializeOutstandingCondition(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

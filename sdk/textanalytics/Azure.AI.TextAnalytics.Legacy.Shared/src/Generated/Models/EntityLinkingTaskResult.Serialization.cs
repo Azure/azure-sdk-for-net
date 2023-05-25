@@ -7,12 +7,13 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.AI.TextAnalytics.Legacy
 {
     internal partial class EntityLinkingTaskResult
     {
-        internal static EntityLinkingTaskResult DeserializeEntityLinkingTaskResult(JsonElement element)
+        internal static EntityLinkingTaskResult DeserializeEntityLinkingTaskResult(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

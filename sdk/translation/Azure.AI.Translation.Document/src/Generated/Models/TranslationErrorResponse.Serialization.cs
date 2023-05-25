@@ -7,12 +7,13 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.AI.Translation.Document.Models
 {
     internal partial class TranslationErrorResponse
     {
-        internal static TranslationErrorResponse DeserializeTranslationErrorResponse(JsonElement element)
+        internal static TranslationErrorResponse DeserializeTranslationErrorResponse(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

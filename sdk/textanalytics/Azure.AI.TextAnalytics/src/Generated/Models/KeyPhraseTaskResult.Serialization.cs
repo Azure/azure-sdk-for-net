@@ -7,12 +7,13 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.AI.TextAnalytics.Models
 {
     internal partial class KeyPhraseTaskResult
     {
-        internal static KeyPhraseTaskResult DeserializeKeyPhraseTaskResult(JsonElement element)
+        internal static KeyPhraseTaskResult DeserializeKeyPhraseTaskResult(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

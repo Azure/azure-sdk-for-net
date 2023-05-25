@@ -8,12 +8,13 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Synapse.Models
 {
     public partial class SynapsePrivateLinkResourceProperties
     {
-        internal static SynapsePrivateLinkResourceProperties DeserializeSynapsePrivateLinkResourceProperties(JsonElement element)
+        internal static SynapsePrivateLinkResourceProperties DeserializeSynapsePrivateLinkResourceProperties(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

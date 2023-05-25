@@ -8,12 +8,13 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.AppService.Models
 {
     internal partial class AppServiceBillingMeterListResult
     {
-        internal static AppServiceBillingMeterListResult DeserializeAppServiceBillingMeterListResult(JsonElement element)
+        internal static AppServiceBillingMeterListResult DeserializeAppServiceBillingMeterListResult(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

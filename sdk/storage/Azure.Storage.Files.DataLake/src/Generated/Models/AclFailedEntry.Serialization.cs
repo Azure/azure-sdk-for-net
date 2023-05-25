@@ -7,12 +7,13 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.Storage.Files.DataLake.Models
 {
     internal partial class AclFailedEntry
     {
-        internal static AclFailedEntry DeserializeAclFailedEntry(JsonElement element)
+        internal static AclFailedEntry DeserializeAclFailedEntry(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

@@ -8,13 +8,14 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.Subscription;
 
 namespace Azure.ResourceManager.Subscription.Models
 {
     internal partial class SubscriptionAliasListResult
     {
-        internal static SubscriptionAliasListResult DeserializeSubscriptionAliasListResult(JsonElement element)
+        internal static SubscriptionAliasListResult DeserializeSubscriptionAliasListResult(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

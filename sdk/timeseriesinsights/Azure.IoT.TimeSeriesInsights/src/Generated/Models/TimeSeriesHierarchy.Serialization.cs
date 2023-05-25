@@ -7,12 +7,15 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.IoT.TimeSeriesInsights
 {
     public partial class TimeSeriesHierarchy : IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IUtf8JsonSerializable)this).Write(writer, new SerializableOptions());
+
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer, SerializableOptions options)
         {
             writer.WriteStartObject();
             if (Optional.IsDefined(Id))
@@ -27,7 +30,7 @@ namespace Azure.IoT.TimeSeriesInsights
             writer.WriteEndObject();
         }
 
-        internal static TimeSeriesHierarchy DeserializeTimeSeriesHierarchy(JsonElement element)
+        internal static TimeSeriesHierarchy DeserializeTimeSeriesHierarchy(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

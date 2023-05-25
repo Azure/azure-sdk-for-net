@@ -8,12 +8,13 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.IoT.TimeSeriesInsights
 {
     public partial class TimeSeriesOperationErrorDetails
     {
-        internal static TimeSeriesOperationErrorDetails DeserializeTimeSeriesOperationErrorDetails(JsonElement element)
+        internal static TimeSeriesOperationErrorDetails DeserializeTimeSeriesOperationErrorDetails(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

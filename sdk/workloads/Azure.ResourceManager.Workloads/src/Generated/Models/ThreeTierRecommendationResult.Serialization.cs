@@ -7,12 +7,13 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Workloads.Models
 {
     public partial class ThreeTierRecommendationResult
     {
-        internal static ThreeTierRecommendationResult DeserializeThreeTierRecommendationResult(JsonElement element)
+        internal static ThreeTierRecommendationResult DeserializeThreeTierRecommendationResult(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

@@ -8,6 +8,7 @@
 using System.Text.Json;
 using System.Xml.Linq;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.Storage.Files.DataLake.Models
 {
@@ -28,7 +29,7 @@ namespace Azure.Storage.Files.DataLake.Models
             return new StorageErrorError(code, message);
         }
 
-        internal static StorageErrorError DeserializeStorageErrorError(JsonElement element)
+        internal static StorageErrorError DeserializeStorageErrorError(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

@@ -8,6 +8,7 @@
 using System.Text.Json;
 using System.Xml.Linq;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.Data.Tables.Models
 {
@@ -23,7 +24,7 @@ namespace Azure.Data.Tables.Models
             return new TableServiceError(message);
         }
 
-        internal static TableServiceError DeserializeTableServiceError(JsonElement element)
+        internal static TableServiceError DeserializeTableServiceError(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

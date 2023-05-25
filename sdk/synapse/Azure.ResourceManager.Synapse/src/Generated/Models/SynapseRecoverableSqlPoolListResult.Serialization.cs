@@ -8,13 +8,14 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.Synapse;
 
 namespace Azure.ResourceManager.Synapse.Models
 {
     internal partial class SynapseRecoverableSqlPoolListResult
     {
-        internal static SynapseRecoverableSqlPoolListResult DeserializeSynapseRecoverableSqlPoolListResult(JsonElement element)
+        internal static SynapseRecoverableSqlPoolListResult DeserializeSynapseRecoverableSqlPoolListResult(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

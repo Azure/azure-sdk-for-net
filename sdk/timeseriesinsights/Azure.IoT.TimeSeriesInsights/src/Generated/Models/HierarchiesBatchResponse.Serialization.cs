@@ -8,10 +8,67 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.IoT.TimeSeriesInsights
 {
     internal partial class HierarchiesBatchResponse
     {
+        internal static HierarchiesBatchResponse DeserializeHierarchiesBatchResponse(JsonElement element, SerializableOptions options = default)
+        {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            Optional<IReadOnlyList<TimeSeriesHierarchyOperationResult>> @get = default;
+            Optional<IReadOnlyList<TimeSeriesHierarchyOperationResult>> put = default;
+            Optional<IReadOnlyList<TimeSeriesOperationError>> delete = default;
+            foreach (var property in element.EnumerateObject())
+            {
+                if (property.NameEquals("get"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<TimeSeriesHierarchyOperationResult> array = new List<TimeSeriesHierarchyOperationResult>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(TimeSeriesHierarchyOperationResult.DeserializeTimeSeriesHierarchyOperationResult(item));
+                    }
+                    @get = array;
+                    continue;
+                }
+                if (property.NameEquals("put"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<TimeSeriesHierarchyOperationResult> array = new List<TimeSeriesHierarchyOperationResult>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(TimeSeriesHierarchyOperationResult.DeserializeTimeSeriesHierarchyOperationResult(item));
+                    }
+                    put = array;
+                    continue;
+                }
+                if (property.NameEquals("delete"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<TimeSeriesOperationError> array = new List<TimeSeriesOperationError>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(TimeSeriesOperationError.DeserializeTimeSeriesOperationError(item));
+                    }
+                    delete = array;
+                    continue;
+                }
+            }
+            return new HierarchiesBatchResponse(Optional.ToList(@get), Optional.ToList(put), Optional.ToList(delete));
+        }
     }
 }

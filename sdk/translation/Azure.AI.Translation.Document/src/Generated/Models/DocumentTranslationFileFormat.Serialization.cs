@@ -8,12 +8,13 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.AI.Translation.Document
 {
     public partial class DocumentTranslationFileFormat
     {
-        internal static DocumentTranslationFileFormat DeserializeDocumentTranslationFileFormat(JsonElement element)
+        internal static DocumentTranslationFileFormat DeserializeDocumentTranslationFileFormat(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

@@ -9,13 +9,14 @@ using System;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
     [JsonConverter(typeof(LinkTableStatusConverter))]
     public partial class LinkTableStatus
     {
-        internal static LinkTableStatus DeserializeLinkTableStatus(JsonElement element)
+        internal static LinkTableStatus DeserializeLinkTableStatus(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

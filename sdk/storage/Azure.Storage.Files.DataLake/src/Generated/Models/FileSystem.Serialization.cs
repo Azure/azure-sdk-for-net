@@ -7,12 +7,13 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.Storage.Files.DataLake.Models
 {
     internal partial class FileSystem
     {
-        internal static FileSystem DeserializeFileSystem(JsonElement element)
+        internal static FileSystem DeserializeFileSystem(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

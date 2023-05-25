@@ -227,7 +227,7 @@ namespace Azure.ResourceManager.StorageMover
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _storageMoverAgentAgentsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _storageMoverAgentAgentsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new StorageMoverAgentResource(Client, StorageMoverAgentData.DeserializeStorageMoverAgentData(e)), _storageMoverAgentAgentsClientDiagnostics, Pipeline, "StorageMoverAgentCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, (e, o) => new StorageMoverAgentResource(Client, StorageMoverAgentData.DeserializeStorageMoverAgentData(e)), _storageMoverAgentAgentsClientDiagnostics, Pipeline, "StorageMoverAgentCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -249,7 +249,7 @@ namespace Azure.ResourceManager.StorageMover
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _storageMoverAgentAgentsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _storageMoverAgentAgentsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new StorageMoverAgentResource(Client, StorageMoverAgentData.DeserializeStorageMoverAgentData(e)), _storageMoverAgentAgentsClientDiagnostics, Pipeline, "StorageMoverAgentCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, (e, o) => new StorageMoverAgentResource(Client, StorageMoverAgentData.DeserializeStorageMoverAgentData(e)), _storageMoverAgentAgentsClientDiagnostics, Pipeline, "StorageMoverAgentCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

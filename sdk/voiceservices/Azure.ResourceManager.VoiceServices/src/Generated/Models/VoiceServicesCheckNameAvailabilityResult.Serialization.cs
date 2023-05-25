@@ -7,12 +7,13 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.VoiceServices.Models
 {
     public partial class VoiceServicesCheckNameAvailabilityResult
     {
-        internal static VoiceServicesCheckNameAvailabilityResult DeserializeVoiceServicesCheckNameAvailabilityResult(JsonElement element)
+        internal static VoiceServicesCheckNameAvailabilityResult DeserializeVoiceServicesCheckNameAvailabilityResult(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

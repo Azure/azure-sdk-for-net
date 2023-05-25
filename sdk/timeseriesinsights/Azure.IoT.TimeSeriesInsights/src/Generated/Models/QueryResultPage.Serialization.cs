@@ -9,12 +9,13 @@ using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.IoT.TimeSeriesInsights
 {
     internal partial class QueryResultPage
     {
-        internal static QueryResultPage DeserializeQueryResultPage(JsonElement element)
+        internal static QueryResultPage DeserializeQueryResultPage(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

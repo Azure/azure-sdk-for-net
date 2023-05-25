@@ -8,12 +8,13 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.AppService.Models
 {
     internal partial class ResourceMetricDefinitionListResult
     {
-        internal static ResourceMetricDefinitionListResult DeserializeResourceMetricDefinitionListResult(JsonElement element)
+        internal static ResourceMetricDefinitionListResult DeserializeResourceMetricDefinitionListResult(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

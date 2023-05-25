@@ -8,6 +8,7 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.StorageMover.Models;
 
@@ -15,7 +16,9 @@ namespace Azure.ResourceManager.StorageMover
 {
     public partial class StorageMoverData : IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IUtf8JsonSerializable)this).Write(writer, new SerializableOptions());
+
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer, SerializableOptions options)
         {
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(Tags))
@@ -42,7 +45,7 @@ namespace Azure.ResourceManager.StorageMover
             writer.WriteEndObject();
         }
 
-        internal static StorageMoverData DeserializeStorageMoverData(JsonElement element)
+        internal static StorageMoverData DeserializeStorageMoverData(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

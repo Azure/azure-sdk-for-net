@@ -8,12 +8,13 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.AI.TextAnalytics.Legacy
 {
     internal partial class DocumentEntities
     {
-        internal static DocumentEntities DeserializeDocumentEntities(JsonElement element)
+        internal static DocumentEntities DeserializeDocumentEntities(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

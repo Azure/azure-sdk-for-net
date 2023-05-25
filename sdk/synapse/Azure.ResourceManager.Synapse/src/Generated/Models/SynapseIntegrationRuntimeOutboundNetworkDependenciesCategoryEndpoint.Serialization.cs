@@ -8,12 +8,13 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Synapse.Models
 {
     public partial class SynapseIntegrationRuntimeOutboundNetworkDependenciesCategoryEndpoint
     {
-        internal static SynapseIntegrationRuntimeOutboundNetworkDependenciesCategoryEndpoint DeserializeSynapseIntegrationRuntimeOutboundNetworkDependenciesCategoryEndpoint(JsonElement element)
+        internal static SynapseIntegrationRuntimeOutboundNetworkDependenciesCategoryEndpoint DeserializeSynapseIntegrationRuntimeOutboundNetworkDependenciesCategoryEndpoint(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

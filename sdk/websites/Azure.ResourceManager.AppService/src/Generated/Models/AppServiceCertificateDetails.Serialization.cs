@@ -8,12 +8,13 @@
 using System;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.AppService.Models
 {
     public partial class AppServiceCertificateDetails
     {
-        internal static AppServiceCertificateDetails DeserializeAppServiceCertificateDetails(JsonElement element)
+        internal static AppServiceCertificateDetails DeserializeAppServiceCertificateDetails(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

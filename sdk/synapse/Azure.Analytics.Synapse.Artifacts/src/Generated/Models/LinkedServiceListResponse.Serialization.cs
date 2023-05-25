@@ -10,13 +10,14 @@ using System.Collections.Generic;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
     [JsonConverter(typeof(LinkedServiceListResponseConverter))]
     internal partial class LinkedServiceListResponse
     {
-        internal static LinkedServiceListResponse DeserializeLinkedServiceListResponse(JsonElement element)
+        internal static LinkedServiceListResponse DeserializeLinkedServiceListResponse(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

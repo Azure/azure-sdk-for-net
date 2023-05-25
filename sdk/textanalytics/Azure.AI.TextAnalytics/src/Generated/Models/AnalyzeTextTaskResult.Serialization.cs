@@ -6,12 +6,13 @@
 #nullable disable
 
 using System.Text.Json;
+using Azure.Core.Serialization;
 
 namespace Azure.AI.TextAnalytics.Models
 {
     internal partial class AnalyzeTextTaskResult
     {
-        internal static AnalyzeTextTaskResult DeserializeAnalyzeTextTaskResult(JsonElement element)
+        internal static AnalyzeTextTaskResult DeserializeAnalyzeTextTaskResult(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

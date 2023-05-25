@@ -8,13 +8,14 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.StreamAnalytics;
 
 namespace Azure.ResourceManager.StreamAnalytics.Models
 {
     internal partial class StreamingJobOutputListResult
     {
-        internal static StreamingJobOutputListResult DeserializeStreamingJobOutputListResult(JsonElement element)
+        internal static StreamingJobOutputListResult DeserializeStreamingJobOutputListResult(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

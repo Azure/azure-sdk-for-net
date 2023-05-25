@@ -8,12 +8,15 @@
 using System.Text.Json;
 using Azure.AI.TextAnalytics;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.AI.TextAnalytics.Models
 {
     internal partial struct DetectedLanguageInternal : IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IUtf8JsonSerializable)this).Write(writer, new SerializableOptions());
+
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer, SerializableOptions options)
         {
             writer.WriteStartObject();
             if (Name != null)
@@ -44,7 +47,7 @@ namespace Azure.AI.TextAnalytics.Models
             writer.WriteEndObject();
         }
 
-        internal static DetectedLanguageInternal DeserializeDetectedLanguageInternal(JsonElement element)
+        internal static DetectedLanguageInternal DeserializeDetectedLanguageInternal(JsonElement element, SerializableOptions options = default)
         {
             string name = default;
             string iso6391Name = default;

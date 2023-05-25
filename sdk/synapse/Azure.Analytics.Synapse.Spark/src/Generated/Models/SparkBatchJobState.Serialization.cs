@@ -8,12 +8,13 @@
 using System;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.Analytics.Synapse.Spark.Models
 {
     public partial class SparkBatchJobState
     {
-        internal static SparkBatchJobState DeserializeSparkBatchJobState(JsonElement element)
+        internal static SparkBatchJobState DeserializeSparkBatchJobState(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

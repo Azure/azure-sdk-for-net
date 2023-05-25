@@ -7,12 +7,15 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.AI.TextAnalytics
 {
     public partial struct TextDocumentStatistics : IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IUtf8JsonSerializable)this).Write(writer, new SerializableOptions());
+
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer, SerializableOptions options)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("charactersCount"u8);
@@ -22,7 +25,7 @@ namespace Azure.AI.TextAnalytics
             writer.WriteEndObject();
         }
 
-        internal static TextDocumentStatistics DeserializeTextDocumentStatistics(JsonElement element)
+        internal static TextDocumentStatistics DeserializeTextDocumentStatistics(JsonElement element, SerializableOptions options = default)
         {
             int charactersCount = default;
             int transactionsCount = default;

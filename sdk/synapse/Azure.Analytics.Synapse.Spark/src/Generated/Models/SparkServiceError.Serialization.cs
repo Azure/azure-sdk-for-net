@@ -7,12 +7,13 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.Analytics.Synapse.Spark.Models
 {
     public partial class SparkServiceError
     {
-        internal static SparkServiceError DeserializeSparkServiceError(JsonElement element)
+        internal static SparkServiceError DeserializeSparkServiceError(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

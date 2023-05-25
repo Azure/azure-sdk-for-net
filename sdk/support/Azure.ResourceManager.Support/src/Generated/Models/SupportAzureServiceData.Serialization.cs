@@ -8,13 +8,14 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Support
 {
     public partial class SupportAzureServiceData
     {
-        internal static SupportAzureServiceData DeserializeSupportAzureServiceData(JsonElement element)
+        internal static SupportAzureServiceData DeserializeSupportAzureServiceData(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

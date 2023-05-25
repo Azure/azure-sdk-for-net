@@ -8,13 +8,14 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.AppService;
 
 namespace Azure.ResourceManager.AppService.Models
 {
     internal partial class StaticSiteUserProvidedFunctionAppsListResult
     {
-        internal static StaticSiteUserProvidedFunctionAppsListResult DeserializeStaticSiteUserProvidedFunctionAppsListResult(JsonElement element)
+        internal static StaticSiteUserProvidedFunctionAppsListResult DeserializeStaticSiteUserProvidedFunctionAppsListResult(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

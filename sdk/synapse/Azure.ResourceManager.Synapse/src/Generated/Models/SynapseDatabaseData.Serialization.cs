@@ -7,6 +7,7 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Synapse.Models;
 
@@ -14,7 +15,9 @@ namespace Azure.ResourceManager.Synapse
 {
     public partial class SynapseDatabaseData : IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IUtf8JsonSerializable)this).Write(writer, new SerializableOptions());
+
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer, SerializableOptions options)
         {
             writer.WriteStartObject();
             if (Optional.IsDefined(Location))
@@ -27,7 +30,7 @@ namespace Azure.ResourceManager.Synapse
             writer.WriteEndObject();
         }
 
-        internal static SynapseDatabaseData DeserializeSynapseDatabaseData(JsonElement element)
+        internal static SynapseDatabaseData DeserializeSynapseDatabaseData(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

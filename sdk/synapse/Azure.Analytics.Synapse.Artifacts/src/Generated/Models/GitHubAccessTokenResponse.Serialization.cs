@@ -9,13 +9,14 @@ using System;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
     [JsonConverter(typeof(GitHubAccessTokenResponseConverter))]
     public partial class GitHubAccessTokenResponse
     {
-        internal static GitHubAccessTokenResponse DeserializeGitHubAccessTokenResponse(JsonElement element)
+        internal static GitHubAccessTokenResponse DeserializeGitHubAccessTokenResponse(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

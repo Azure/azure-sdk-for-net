@@ -8,13 +8,14 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.AppService;
 
 namespace Azure.ResourceManager.AppService.Models
 {
     internal partial class TopLevelDomainListResult
     {
-        internal static TopLevelDomainListResult DeserializeTopLevelDomainListResult(JsonElement element)
+        internal static TopLevelDomainListResult DeserializeTopLevelDomainListResult(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

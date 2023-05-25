@@ -8,12 +8,13 @@
 using System.Text.Json;
 using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.AI.Translation.Text
 {
     public partial class TranslationLanguage
     {
-        internal static TranslationLanguage DeserializeTranslationLanguage(JsonElement element)
+        internal static TranslationLanguage DeserializeTranslationLanguage(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

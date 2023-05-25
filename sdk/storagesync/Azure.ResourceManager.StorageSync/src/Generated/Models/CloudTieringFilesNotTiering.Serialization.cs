@@ -9,12 +9,13 @@ using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.StorageSync.Models
 {
     public partial class CloudTieringFilesNotTiering
     {
-        internal static CloudTieringFilesNotTiering DeserializeCloudTieringFilesNotTiering(JsonElement element)
+        internal static CloudTieringFilesNotTiering DeserializeCloudTieringFilesNotTiering(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

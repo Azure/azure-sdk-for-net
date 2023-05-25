@@ -8,12 +8,13 @@
 using System;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.StorageSync.Models
 {
     public partial class CloudTieringCachePerformance
     {
-        internal static CloudTieringCachePerformance DeserializeCloudTieringCachePerformance(JsonElement element)
+        internal static CloudTieringCachePerformance DeserializeCloudTieringCachePerformance(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

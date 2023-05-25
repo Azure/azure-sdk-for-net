@@ -7,12 +7,13 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.AppService.Models
 {
     public partial class ResourceMetricAvailability
     {
-        internal static ResourceMetricAvailability DeserializeResourceMetricAvailability(JsonElement element)
+        internal static ResourceMetricAvailability DeserializeResourceMetricAvailability(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

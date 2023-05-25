@@ -8,12 +8,13 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Synapse.Models
 {
     public partial class SynapseDataConnectionValidationListResult
     {
-        internal static SynapseDataConnectionValidationListResult DeserializeSynapseDataConnectionValidationListResult(JsonElement element)
+        internal static SynapseDataConnectionValidationListResult DeserializeSynapseDataConnectionValidationListResult(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

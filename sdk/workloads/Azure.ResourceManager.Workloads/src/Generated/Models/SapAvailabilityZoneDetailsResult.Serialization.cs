@@ -8,12 +8,13 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Workloads.Models
 {
     public partial class SapAvailabilityZoneDetailsResult
     {
-        internal static SapAvailabilityZoneDetailsResult DeserializeSapAvailabilityZoneDetailsResult(JsonElement element)
+        internal static SapAvailabilityZoneDetailsResult DeserializeSapAvailabilityZoneDetailsResult(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

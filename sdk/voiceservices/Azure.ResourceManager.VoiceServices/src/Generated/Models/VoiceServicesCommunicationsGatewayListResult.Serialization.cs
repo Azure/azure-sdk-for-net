@@ -9,13 +9,14 @@ using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.VoiceServices;
 
 namespace Azure.ResourceManager.VoiceServices.Models
 {
     internal partial class VoiceServicesCommunicationsGatewayListResult
     {
-        internal static VoiceServicesCommunicationsGatewayListResult DeserializeVoiceServicesCommunicationsGatewayListResult(JsonElement element)
+        internal static VoiceServicesCommunicationsGatewayListResult DeserializeVoiceServicesCommunicationsGatewayListResult(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

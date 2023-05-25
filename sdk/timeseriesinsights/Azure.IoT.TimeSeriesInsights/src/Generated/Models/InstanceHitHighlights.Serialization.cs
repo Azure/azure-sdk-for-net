@@ -8,12 +8,13 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.IoT.TimeSeriesInsights
 {
     internal partial class InstanceHitHighlights
     {
-        internal static InstanceHitHighlights DeserializeInstanceHitHighlights(JsonElement element)
+        internal static InstanceHitHighlights DeserializeInstanceHitHighlights(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

@@ -8,12 +8,13 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.Data.Tables.Models
 {
     internal partial class TableQueryResponse
     {
-        internal static TableQueryResponse DeserializeTableQueryResponse(JsonElement element)
+        internal static TableQueryResponse DeserializeTableQueryResponse(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

@@ -7,12 +7,13 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Synapse.Models
 {
     public partial class SynapseDataSourceResourceSku
     {
-        internal static SynapseDataSourceResourceSku DeserializeSynapseDataSourceResourceSku(JsonElement element)
+        internal static SynapseDataSourceResourceSku DeserializeSynapseDataSourceResourceSku(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

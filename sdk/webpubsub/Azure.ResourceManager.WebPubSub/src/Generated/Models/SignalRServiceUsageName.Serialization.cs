@@ -7,12 +7,13 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.WebPubSub.Models
 {
     public partial class SignalRServiceUsageName
     {
-        internal static SignalRServiceUsageName DeserializeSignalRServiceUsageName(JsonElement element)
+        internal static SignalRServiceUsageName DeserializeSignalRServiceUsageName(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

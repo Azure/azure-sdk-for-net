@@ -8,12 +8,13 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.AppService.Models
 {
     public partial class AppServiceDeploymentLocations
     {
-        internal static AppServiceDeploymentLocations DeserializeAppServiceDeploymentLocations(JsonElement element)
+        internal static AppServiceDeploymentLocations DeserializeAppServiceDeploymentLocations(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

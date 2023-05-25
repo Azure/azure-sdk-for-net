@@ -9,12 +9,13 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure.AI.Translation.Document;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.AI.Translation.Document.Models
 {
     internal partial class SupportedFileFormats
     {
-        internal static SupportedFileFormats DeserializeSupportedFileFormats(JsonElement element)
+        internal static SupportedFileFormats DeserializeSupportedFileFormats(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

@@ -8,12 +8,13 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.AppService.Models
 {
     public partial class SiteCloneability
     {
-        internal static SiteCloneability DeserializeSiteCloneability(JsonElement element)
+        internal static SiteCloneability DeserializeSiteCloneability(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

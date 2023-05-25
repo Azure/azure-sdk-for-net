@@ -8,12 +8,13 @@
 using System;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.Analytics.Synapse.Spark.Models
 {
     public partial class SparkServicePlugin
     {
-        internal static SparkServicePlugin DeserializeSparkServicePlugin(JsonElement element)
+        internal static SparkServicePlugin DeserializeSparkServicePlugin(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

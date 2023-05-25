@@ -9,12 +9,13 @@ using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Subscription.Models
 {
     public partial class AcceptOwnershipStatus
     {
-        internal static AcceptOwnershipStatus DeserializeAcceptOwnershipStatus(JsonElement element)
+        internal static AcceptOwnershipStatus DeserializeAcceptOwnershipStatus(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

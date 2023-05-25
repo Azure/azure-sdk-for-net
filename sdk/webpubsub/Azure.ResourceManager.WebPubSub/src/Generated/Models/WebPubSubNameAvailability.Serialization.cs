@@ -7,12 +7,13 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.WebPubSub.Models
 {
     public partial class WebPubSubNameAvailability
     {
-        internal static WebPubSubNameAvailability DeserializeWebPubSubNameAvailability(JsonElement element)
+        internal static WebPubSubNameAvailability DeserializeWebPubSubNameAvailability(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

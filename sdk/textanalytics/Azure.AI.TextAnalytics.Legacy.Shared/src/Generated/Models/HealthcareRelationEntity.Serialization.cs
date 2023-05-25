@@ -7,12 +7,13 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.AI.TextAnalytics.Legacy
 {
     internal partial class HealthcareRelationEntity
     {
-        internal static HealthcareRelationEntity DeserializeHealthcareRelationEntity(JsonElement element)
+        internal static HealthcareRelationEntity DeserializeHealthcareRelationEntity(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

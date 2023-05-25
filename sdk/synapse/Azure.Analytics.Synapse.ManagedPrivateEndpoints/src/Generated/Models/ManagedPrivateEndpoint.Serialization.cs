@@ -7,12 +7,15 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.Analytics.Synapse.ManagedPrivateEndpoints.Models
 {
     public partial class ManagedPrivateEndpoint : IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IUtf8JsonSerializable)this).Write(writer, new SerializableOptions());
+
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer, SerializableOptions options)
         {
             writer.WriteStartObject();
             if (Optional.IsDefined(Properties))
@@ -23,7 +26,7 @@ namespace Azure.Analytics.Synapse.ManagedPrivateEndpoints.Models
             writer.WriteEndObject();
         }
 
-        internal static ManagedPrivateEndpoint DeserializeManagedPrivateEndpoint(JsonElement element)
+        internal static ManagedPrivateEndpoint DeserializeManagedPrivateEndpoint(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

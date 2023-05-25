@@ -8,6 +8,7 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.WebPubSub.Models;
 
@@ -15,7 +16,9 @@ namespace Azure.ResourceManager.WebPubSub
 {
     public partial class WebPubSubData : IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IUtf8JsonSerializable)this).Write(writer, new SerializableOptions());
+
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer, SerializableOptions options)
         {
             writer.WriteStartObject();
             if (Optional.IsDefined(Sku))
@@ -82,7 +85,7 @@ namespace Azure.ResourceManager.WebPubSub
             writer.WriteEndObject();
         }
 
-        internal static WebPubSubData DeserializeWebPubSubData(JsonElement element)
+        internal static WebPubSubData DeserializeWebPubSubData(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

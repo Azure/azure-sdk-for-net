@@ -8,12 +8,13 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.StorageCache.Models
 {
     public partial class StorageCacheRestriction
     {
-        internal static StorageCacheRestriction DeserializeStorageCacheRestriction(JsonElement element)
+        internal static StorageCacheRestriction DeserializeStorageCacheRestriction(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

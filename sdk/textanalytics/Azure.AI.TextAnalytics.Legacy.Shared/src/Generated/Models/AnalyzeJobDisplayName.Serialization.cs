@@ -7,12 +7,13 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.AI.TextAnalytics.Legacy
 {
     internal partial class AnalyzeJobDisplayName
     {
-        internal static AnalyzeJobDisplayName DeserializeAnalyzeJobDisplayName(JsonElement element)
+        internal static AnalyzeJobDisplayName DeserializeAnalyzeJobDisplayName(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

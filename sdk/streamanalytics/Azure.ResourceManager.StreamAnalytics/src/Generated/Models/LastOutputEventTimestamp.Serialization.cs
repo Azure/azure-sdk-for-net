@@ -8,12 +8,13 @@
 using System;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.StreamAnalytics.Models
 {
     public partial class LastOutputEventTimestamp
     {
-        internal static LastOutputEventTimestamp DeserializeLastOutputEventTimestamp(JsonElement element)
+        internal static LastOutputEventTimestamp DeserializeLastOutputEventTimestamp(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

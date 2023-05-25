@@ -7,10 +7,59 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.IoT.TimeSeriesInsights
 {
     internal partial class AggregateSeries : IUtf8JsonSerializable
     {
+
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer, SerializableOptions options)
+        {
+            writer.WriteStartObject();
+            writer.WritePropertyName("timeSeriesId"u8);
+            writer.WriteStartArray();
+            foreach (var item in TimeSeriesIdInternal)
+            {
+                if (item == null)
+                {
+                    writer.WriteNullValue();
+                    continue;
+                }
+                writer.WriteObjectValue(item);
+            }
+            writer.WriteEndArray();
+            writer.WritePropertyName("searchSpan"u8);
+            writer.WriteObjectValue(SearchSpan);
+            if (Optional.IsDefined(Filter))
+            {
+                writer.WritePropertyName("filter"u8);
+                writer.WriteObjectValue(Filter);
+            }
+            writer.WritePropertyName("interval"u8);
+            writer.WriteStringValue(Interval, "P");
+            if (Optional.IsCollectionDefined(ProjectedVariables))
+            {
+                writer.WritePropertyName("projectedVariables"u8);
+                writer.WriteStartArray();
+                foreach (var item in ProjectedVariables)
+                {
+                    writer.WriteStringValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsCollectionDefined(InlineVariables))
+            {
+                writer.WritePropertyName("inlineVariables"u8);
+                writer.WriteStartObject();
+                foreach (var item in InlineVariables)
+                {
+                    writer.WritePropertyName(item.Key);
+                    writer.WriteObjectValue(item.Value);
+                }
+                writer.WriteEndObject();
+            }
+            writer.WriteEndObject();
+        }
     }
 }

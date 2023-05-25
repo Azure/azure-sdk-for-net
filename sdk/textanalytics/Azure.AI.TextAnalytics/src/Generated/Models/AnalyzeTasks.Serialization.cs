@@ -8,12 +8,13 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.AI.TextAnalytics.Models
 {
     internal partial class AnalyzeTasks
     {
-        internal static AnalyzeTasks DeserializeAnalyzeTasks(JsonElement element)
+        internal static AnalyzeTasks DeserializeAnalyzeTasks(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

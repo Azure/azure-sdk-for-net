@@ -8,12 +8,13 @@
 using System;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.AppService.Models
 {
     public partial class CsmUsageQuota
     {
-        internal static CsmUsageQuota DeserializeCsmUsageQuota(JsonElement element)
+        internal static CsmUsageQuota DeserializeCsmUsageQuota(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

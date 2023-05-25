@@ -8,12 +8,13 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Workloads.Models
 {
     public partial class SapDiskConfigurationsResult
     {
-        internal static SapDiskConfigurationsResult DeserializeSapDiskConfigurationsResult(JsonElement element)
+        internal static SapDiskConfigurationsResult DeserializeSapDiskConfigurationsResult(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

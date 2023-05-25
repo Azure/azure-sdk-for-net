@@ -8,12 +8,13 @@
 using System.Text.Json;
 using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.AI.Translation.Text
 {
     public partial class DictionaryExample
     {
-        internal static DictionaryExample DeserializeDictionaryExample(JsonElement element)
+        internal static DictionaryExample DeserializeDictionaryExample(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

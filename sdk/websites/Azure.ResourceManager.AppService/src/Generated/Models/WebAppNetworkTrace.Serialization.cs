@@ -7,12 +7,13 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.AppService.Models
 {
     public partial class WebAppNetworkTrace
     {
-        internal static WebAppNetworkTrace DeserializeWebAppNetworkTrace(JsonElement element)
+        internal static WebAppNetworkTrace DeserializeWebAppNetworkTrace(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

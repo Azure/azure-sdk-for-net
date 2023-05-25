@@ -7,12 +7,13 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.IoT.TimeSeriesInsights
 {
     public partial class TimeSeriesTypeOperationResult
     {
-        internal static TimeSeriesTypeOperationResult DeserializeTimeSeriesTypeOperationResult(JsonElement element)
+        internal static TimeSeriesTypeOperationResult DeserializeTimeSeriesTypeOperationResult(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

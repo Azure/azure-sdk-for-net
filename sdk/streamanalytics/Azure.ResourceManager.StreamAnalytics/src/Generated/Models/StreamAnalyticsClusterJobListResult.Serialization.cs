@@ -8,12 +8,13 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.StreamAnalytics.Models
 {
     internal partial class StreamAnalyticsClusterJobListResult
     {
-        internal static StreamAnalyticsClusterJobListResult DeserializeStreamAnalyticsClusterJobListResult(JsonElement element)
+        internal static StreamAnalyticsClusterJobListResult DeserializeStreamAnalyticsClusterJobListResult(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

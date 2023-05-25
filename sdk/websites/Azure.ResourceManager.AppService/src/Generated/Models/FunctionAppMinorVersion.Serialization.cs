@@ -7,12 +7,13 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.AppService.Models
 {
     public partial class FunctionAppMinorVersion
     {
-        internal static FunctionAppMinorVersion DeserializeFunctionAppMinorVersion(JsonElement element)
+        internal static FunctionAppMinorVersion DeserializeFunctionAppMinorVersion(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

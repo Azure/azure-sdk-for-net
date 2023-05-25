@@ -8,13 +8,14 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.WebPubSub;
 
 namespace Azure.ResourceManager.WebPubSub.Models
 {
     internal partial class WebPubSubHubList
     {
-        internal static WebPubSubHubList DeserializeWebPubSubHubList(JsonElement element)
+        internal static WebPubSubHubList DeserializeWebPubSubHubList(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

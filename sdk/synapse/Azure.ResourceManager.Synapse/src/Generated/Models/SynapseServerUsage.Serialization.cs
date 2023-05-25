@@ -8,12 +8,13 @@
 using System;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Synapse.Models
 {
     public partial class SynapseServerUsage
     {
-        internal static SynapseServerUsage DeserializeSynapseServerUsage(JsonElement element)
+        internal static SynapseServerUsage DeserializeSynapseServerUsage(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

@@ -8,12 +8,13 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.AppService.Models
 {
     internal partial class AppSnapshotListResult
     {
-        internal static AppSnapshotListResult DeserializeAppSnapshotListResult(JsonElement element)
+        internal static AppSnapshotListResult DeserializeAppSnapshotListResult(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

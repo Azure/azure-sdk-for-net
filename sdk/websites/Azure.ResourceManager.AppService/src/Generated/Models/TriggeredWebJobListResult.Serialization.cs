@@ -8,13 +8,14 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.AppService;
 
 namespace Azure.ResourceManager.AppService.Models
 {
     internal partial class TriggeredWebJobListResult
     {
-        internal static TriggeredWebJobListResult DeserializeTriggeredWebJobListResult(JsonElement element)
+        internal static TriggeredWebJobListResult DeserializeTriggeredWebJobListResult(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

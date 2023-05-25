@@ -10,12 +10,13 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure.AI.TextAnalytics;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.AI.TextAnalytics.Models
 {
     internal partial class AnalyzeTextJobState
     {
-        internal static AnalyzeTextJobState DeserializeAnalyzeTextJobState(JsonElement element)
+        internal static AnalyzeTextJobState DeserializeAnalyzeTextJobState(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

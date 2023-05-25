@@ -8,12 +8,13 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.AppService.Models
 {
     public partial class WebAppMajorVersion
     {
-        internal static WebAppMajorVersion DeserializeWebAppMajorVersion(JsonElement element)
+        internal static WebAppMajorVersion DeserializeWebAppMajorVersion(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

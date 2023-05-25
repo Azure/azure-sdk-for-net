@@ -8,12 +8,13 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.IoT.TimeSeriesInsights
 {
     internal partial class GetHierarchiesPage
     {
-        internal static GetHierarchiesPage DeserializeGetHierarchiesPage(JsonElement element)
+        internal static GetHierarchiesPage DeserializeGetHierarchiesPage(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

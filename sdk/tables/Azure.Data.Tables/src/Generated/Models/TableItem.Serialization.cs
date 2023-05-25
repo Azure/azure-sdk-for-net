@@ -7,12 +7,13 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.Data.Tables.Models
 {
     public partial class TableItem
     {
-        internal static TableItem DeserializeTableItem(JsonElement element)
+        internal static TableItem DeserializeTableItem(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

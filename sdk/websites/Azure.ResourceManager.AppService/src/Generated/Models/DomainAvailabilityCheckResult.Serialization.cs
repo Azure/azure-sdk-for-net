@@ -7,12 +7,13 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.AppService.Models
 {
     public partial class DomainAvailabilityCheckResult
     {
-        internal static DomainAvailabilityCheckResult DeserializeDomainAvailabilityCheckResult(JsonElement element)
+        internal static DomainAvailabilityCheckResult DeserializeDomainAvailabilityCheckResult(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

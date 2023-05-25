@@ -8,6 +8,7 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Workloads.Models;
 
@@ -15,7 +16,9 @@ namespace Azure.ResourceManager.Workloads
 {
     public partial class SapVirtualInstanceData : IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IUtf8JsonSerializable)this).Write(writer, new SerializableOptions());
+
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer, SerializableOptions options)
         {
             writer.WriteStartObject();
             if (Optional.IsDefined(Identity))
@@ -53,7 +56,7 @@ namespace Azure.ResourceManager.Workloads
             writer.WriteEndObject();
         }
 
-        internal static SapVirtualInstanceData DeserializeSapVirtualInstanceData(JsonElement element)
+        internal static SapVirtualInstanceData DeserializeSapVirtualInstanceData(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

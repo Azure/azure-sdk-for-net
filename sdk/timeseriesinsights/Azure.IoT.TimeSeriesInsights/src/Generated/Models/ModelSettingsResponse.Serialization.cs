@@ -7,12 +7,13 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.IoT.TimeSeriesInsights
 {
     internal partial class ModelSettingsResponse
     {
-        internal static ModelSettingsResponse DeserializeModelSettingsResponse(JsonElement element)
+        internal static ModelSettingsResponse DeserializeModelSettingsResponse(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

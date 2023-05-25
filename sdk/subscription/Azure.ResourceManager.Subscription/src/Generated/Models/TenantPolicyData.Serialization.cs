@@ -7,6 +7,7 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Subscription.Models;
 
@@ -14,7 +15,7 @@ namespace Azure.ResourceManager.Subscription
 {
     public partial class TenantPolicyData
     {
-        internal static TenantPolicyData DeserializeTenantPolicyData(JsonElement element)
+        internal static TenantPolicyData DeserializeTenantPolicyData(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
