@@ -7,12 +7,13 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Elastic.Models
 {
     public partial class DeploymentInfoResponse
     {
-        internal static DeploymentInfoResponse DeserializeDeploymentInfoResponse(JsonElement element)
+        internal static DeploymentInfoResponse DeserializeDeploymentInfoResponse(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

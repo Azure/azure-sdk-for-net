@@ -8,12 +8,13 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.DevTestLabs.Models
 {
     public partial class DevTestLabEvaluatePoliciesResult
     {
-        internal static DevTestLabEvaluatePoliciesResult DeserializeDevTestLabEvaluatePoliciesResult(JsonElement element)
+        internal static DevTestLabEvaluatePoliciesResult DeserializeDevTestLabEvaluatePoliciesResult(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

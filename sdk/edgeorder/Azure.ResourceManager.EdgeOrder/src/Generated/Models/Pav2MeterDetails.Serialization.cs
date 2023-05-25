@@ -8,12 +8,13 @@
 using System;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.EdgeOrder.Models
 {
     public partial class Pav2MeterDetails
     {
-        internal static Pav2MeterDetails DeserializePav2MeterDetails(JsonElement element)
+        internal static Pav2MeterDetails DeserializePav2MeterDetails(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

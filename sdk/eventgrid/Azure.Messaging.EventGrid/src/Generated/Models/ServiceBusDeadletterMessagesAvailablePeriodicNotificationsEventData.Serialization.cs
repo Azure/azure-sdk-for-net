@@ -9,13 +9,14 @@ using System;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
     [JsonConverter(typeof(ServiceBusDeadletterMessagesAvailablePeriodicNotificationsEventDataConverter))]
     public partial class ServiceBusDeadletterMessagesAvailablePeriodicNotificationsEventData
     {
-        internal static ServiceBusDeadletterMessagesAvailablePeriodicNotificationsEventData DeserializeServiceBusDeadletterMessagesAvailablePeriodicNotificationsEventData(JsonElement element)
+        internal static ServiceBusDeadletterMessagesAvailablePeriodicNotificationsEventData DeserializeServiceBusDeadletterMessagesAvailablePeriodicNotificationsEventData(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

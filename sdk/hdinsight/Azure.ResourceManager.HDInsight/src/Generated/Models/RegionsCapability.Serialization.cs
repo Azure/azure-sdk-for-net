@@ -8,12 +8,13 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.HDInsight.Models
 {
     public partial class RegionsCapability
     {
-        internal static RegionsCapability DeserializeRegionsCapability(JsonElement element)
+        internal static RegionsCapability DeserializeRegionsCapability(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

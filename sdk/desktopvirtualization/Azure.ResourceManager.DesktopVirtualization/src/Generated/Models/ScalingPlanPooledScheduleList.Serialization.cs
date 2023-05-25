@@ -8,13 +8,14 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.DesktopVirtualization;
 
 namespace Azure.ResourceManager.DesktopVirtualization.Models
 {
     internal partial class ScalingPlanPooledScheduleList
     {
-        internal static ScalingPlanPooledScheduleList DeserializeScalingPlanPooledScheduleList(JsonElement element)
+        internal static ScalingPlanPooledScheduleList DeserializeScalingPlanPooledScheduleList(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

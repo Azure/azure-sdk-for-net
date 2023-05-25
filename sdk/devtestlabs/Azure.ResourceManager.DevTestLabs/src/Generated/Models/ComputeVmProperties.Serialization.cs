@@ -8,12 +8,13 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.DevTestLabs.Models
 {
     public partial class ComputeVmProperties
     {
-        internal static ComputeVmProperties DeserializeComputeVmProperties(JsonElement element)
+        internal static ComputeVmProperties DeserializeComputeVmProperties(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

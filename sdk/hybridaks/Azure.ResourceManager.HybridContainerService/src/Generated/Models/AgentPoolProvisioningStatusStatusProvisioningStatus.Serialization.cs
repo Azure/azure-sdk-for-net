@@ -7,12 +7,15 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.HybridContainerService.Models
 {
     public partial class AgentPoolProvisioningStatusStatusProvisioningStatus : IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IUtf8JsonSerializable)this).Write(writer, new SerializableOptions());
+
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer, SerializableOptions options)
         {
             writer.WriteStartObject();
             if (Optional.IsDefined(Error))
@@ -38,7 +41,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
             writer.WriteEndObject();
         }
 
-        internal static AgentPoolProvisioningStatusStatusProvisioningStatus DeserializeAgentPoolProvisioningStatusStatusProvisioningStatus(JsonElement element)
+        internal static AgentPoolProvisioningStatusStatusProvisioningStatus DeserializeAgentPoolProvisioningStatusStatusProvisioningStatus(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

@@ -8,12 +8,13 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.AI.FormRecognizer.DocumentAnalysis
 {
     public partial class DocumentTable
     {
-        internal static DocumentTable DeserializeDocumentTable(JsonElement element)
+        internal static DocumentTable DeserializeDocumentTable(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

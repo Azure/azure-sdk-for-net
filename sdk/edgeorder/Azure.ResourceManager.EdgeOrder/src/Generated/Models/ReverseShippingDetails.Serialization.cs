@@ -8,12 +8,13 @@
 using System;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.EdgeOrder.Models
 {
     public partial class ReverseShippingDetails
     {
-        internal static ReverseShippingDetails DeserializeReverseShippingDetails(JsonElement element)
+        internal static ReverseShippingDetails DeserializeReverseShippingDetails(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

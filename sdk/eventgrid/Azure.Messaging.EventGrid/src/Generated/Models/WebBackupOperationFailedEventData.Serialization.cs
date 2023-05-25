@@ -9,13 +9,14 @@ using System;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
     [JsonConverter(typeof(WebBackupOperationFailedEventDataConverter))]
     public partial class WebBackupOperationFailedEventData
     {
-        internal static WebBackupOperationFailedEventData DeserializeWebBackupOperationFailedEventData(JsonElement element)
+        internal static WebBackupOperationFailedEventData DeserializeWebBackupOperationFailedEventData(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

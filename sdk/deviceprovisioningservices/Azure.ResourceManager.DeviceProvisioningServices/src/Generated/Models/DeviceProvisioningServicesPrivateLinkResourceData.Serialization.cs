@@ -7,6 +7,7 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.DeviceProvisioningServices.Models;
 using Azure.ResourceManager.Models;
 
@@ -14,7 +15,7 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
 {
     public partial class DeviceProvisioningServicesPrivateLinkResourceData
     {
-        internal static DeviceProvisioningServicesPrivateLinkResourceData DeserializeDeviceProvisioningServicesPrivateLinkResourceData(JsonElement element)
+        internal static DeviceProvisioningServicesPrivateLinkResourceData DeserializeDeviceProvisioningServicesPrivateLinkResourceData(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

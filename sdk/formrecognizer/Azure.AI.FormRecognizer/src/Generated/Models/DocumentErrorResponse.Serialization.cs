@@ -7,12 +7,13 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.AI.FormRecognizer.DocumentAnalysis
 {
     internal partial class DocumentErrorResponse
     {
-        internal static DocumentErrorResponse DeserializeDocumentErrorResponse(JsonElement element)
+        internal static DocumentErrorResponse DeserializeDocumentErrorResponse(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

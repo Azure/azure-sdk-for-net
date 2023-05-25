@@ -7,12 +7,13 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
     public partial class DeviceConnectionStateEventInfo
     {
-        internal static DeviceConnectionStateEventInfo DeserializeDeviceConnectionStateEventInfo(JsonElement element)
+        internal static DeviceConnectionStateEventInfo DeserializeDeviceConnectionStateEventInfo(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

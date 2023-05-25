@@ -8,13 +8,14 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.HDInsight;
 
 namespace Azure.ResourceManager.HDInsight.Models
 {
     internal partial class HDInsightPrivateEndpointConnectionListResult
     {
-        internal static HDInsightPrivateEndpointConnectionListResult DeserializeHDInsightPrivateEndpointConnectionListResult(JsonElement element)
+        internal static HDInsightPrivateEndpointConnectionListResult DeserializeHDInsightPrivateEndpointConnectionListResult(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

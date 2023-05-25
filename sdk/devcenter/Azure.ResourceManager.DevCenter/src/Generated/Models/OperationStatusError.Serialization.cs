@@ -7,12 +7,13 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.DevCenter.Models
 {
     public partial class OperationStatusError
     {
-        internal static OperationStatusError DeserializeOperationStatusError(JsonElement element)
+        internal static OperationStatusError DeserializeOperationStatusError(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

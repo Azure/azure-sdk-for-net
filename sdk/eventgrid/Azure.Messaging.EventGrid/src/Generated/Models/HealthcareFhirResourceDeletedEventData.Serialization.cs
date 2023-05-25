@@ -9,13 +9,14 @@ using System;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
     [JsonConverter(typeof(HealthcareFhirResourceDeletedEventDataConverter))]
     public partial class HealthcareFhirResourceDeletedEventData
     {
-        internal static HealthcareFhirResourceDeletedEventData DeserializeHealthcareFhirResourceDeletedEventData(JsonElement element)
+        internal static HealthcareFhirResourceDeletedEventData DeserializeHealthcareFhirResourceDeletedEventData(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

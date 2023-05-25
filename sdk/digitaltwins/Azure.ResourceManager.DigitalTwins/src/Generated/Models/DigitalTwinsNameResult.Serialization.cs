@@ -7,12 +7,13 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.DigitalTwins.Models
 {
     public partial class DigitalTwinsNameResult
     {
-        internal static DigitalTwinsNameResult DeserializeDigitalTwinsNameResult(JsonElement element)
+        internal static DigitalTwinsNameResult DeserializeDigitalTwinsNameResult(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

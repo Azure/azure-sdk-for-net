@@ -7,13 +7,14 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.Messaging.EventGrid.SystemEvents;
 
 namespace Azure.Messaging.EventGrid.Models
 {
     internal partial class UnknownMediaJobOutput
     {
-        internal static UnknownMediaJobOutput DeserializeUnknownMediaJobOutput(JsonElement element)
+        internal static UnknownMediaJobOutput DeserializeUnknownMediaJobOutput(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

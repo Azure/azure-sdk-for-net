@@ -8,12 +8,13 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.FrontDoor.Models
 {
     internal partial class PreconfiguredEndpointList
     {
-        internal static PreconfiguredEndpointList DeserializePreconfiguredEndpointList(JsonElement element)
+        internal static PreconfiguredEndpointList DeserializePreconfiguredEndpointList(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

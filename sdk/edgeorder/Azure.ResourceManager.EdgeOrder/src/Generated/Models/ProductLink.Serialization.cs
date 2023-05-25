@@ -8,12 +8,13 @@
 using System;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.EdgeOrder.Models
 {
     public partial class ProductLink
     {
-        internal static ProductLink DeserializeProductLink(JsonElement element)
+        internal static ProductLink DeserializeProductLink(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

@@ -8,12 +8,13 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.AI.FormRecognizer.DocumentAnalysis
 {
     public partial struct BoundingRegion
     {
-        internal static BoundingRegion DeserializeBoundingRegion(JsonElement element)
+        internal static BoundingRegion DeserializeBoundingRegion(JsonElement element, SerializableOptions options = default)
         {
             int pageNumber = default;
             IReadOnlyList<float> polygon = default;

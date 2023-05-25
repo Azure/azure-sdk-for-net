@@ -8,12 +8,13 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Dynatrace.Models
 {
     internal partial class MonitoredResourceListResponse
     {
-        internal static MonitoredResourceListResponse DeserializeMonitoredResourceListResponse(JsonElement element)
+        internal static MonitoredResourceListResponse DeserializeMonitoredResourceListResponse(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

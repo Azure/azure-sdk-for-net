@@ -7,12 +7,13 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.DesktopVirtualization.Models
 {
     public partial class SessionHostHealthCheckReport
     {
-        internal static SessionHostHealthCheckReport DeserializeSessionHostHealthCheckReport(JsonElement element)
+        internal static SessionHostHealthCheckReport DeserializeSessionHostHealthCheckReport(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

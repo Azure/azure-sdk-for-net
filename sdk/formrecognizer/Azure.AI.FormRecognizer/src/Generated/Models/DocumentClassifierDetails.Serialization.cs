@@ -9,12 +9,13 @@ using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.AI.FormRecognizer.DocumentAnalysis
 {
     public partial class DocumentClassifierDetails
     {
-        internal static DocumentClassifierDetails DeserializeDocumentClassifierDetails(JsonElement element)
+        internal static DocumentClassifierDetails DeserializeDocumentClassifierDetails(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

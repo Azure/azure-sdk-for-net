@@ -8,12 +8,13 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.HDInsight.Models
 {
     public partial class HDInsightBillingResources
     {
-        internal static HDInsightBillingResources DeserializeHDInsightBillingResources(JsonElement element)
+        internal static HDInsightBillingResources DeserializeHDInsightBillingResources(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

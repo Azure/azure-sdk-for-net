@@ -8,12 +8,13 @@
 using System;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.DevTestLabs.Models
 {
     public partial class DevTestLabArmTemplateInfo
     {
-        internal static DevTestLabArmTemplateInfo DeserializeDevTestLabArmTemplateInfo(JsonElement element)
+        internal static DevTestLabArmTemplateInfo DeserializeDevTestLabArmTemplateInfo(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

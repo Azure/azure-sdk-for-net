@@ -8,12 +8,15 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.DeviceUpdate.Models
 {
     public partial class PrivateLinkServiceConnection : IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IUtf8JsonSerializable)this).Write(writer, new SerializableOptions());
+
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer, SerializableOptions options)
         {
             writer.WriteStartObject();
             if (Optional.IsDefined(Name))
@@ -39,7 +42,7 @@ namespace Azure.ResourceManager.DeviceUpdate.Models
             writer.WriteEndObject();
         }
 
-        internal static PrivateLinkServiceConnection DeserializePrivateLinkServiceConnection(JsonElement element)
+        internal static PrivateLinkServiceConnection DeserializePrivateLinkServiceConnection(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

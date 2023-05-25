@@ -9,13 +9,14 @@ using System;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
     [JsonConverter(typeof(StorageBlobTierChangedEventDataConverter))]
     public partial class StorageBlobTierChangedEventData
     {
-        internal static StorageBlobTierChangedEventData DeserializeStorageBlobTierChangedEventData(JsonElement element)
+        internal static StorageBlobTierChangedEventData DeserializeStorageBlobTierChangedEventData(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

@@ -8,12 +8,13 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.DeviceProvisioningServices.Models
 {
     internal partial class IotDpsSkuDefinitionListResult
     {
-        internal static IotDpsSkuDefinitionListResult DeserializeIotDpsSkuDefinitionListResult(JsonElement element)
+        internal static IotDpsSkuDefinitionListResult DeserializeIotDpsSkuDefinitionListResult(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

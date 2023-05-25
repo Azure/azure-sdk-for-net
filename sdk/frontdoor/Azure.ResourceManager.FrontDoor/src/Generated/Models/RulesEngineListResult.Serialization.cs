@@ -8,13 +8,14 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.FrontDoor;
 
 namespace Azure.ResourceManager.FrontDoor.Models
 {
     internal partial class RulesEngineListResult
     {
-        internal static RulesEngineListResult DeserializeRulesEngineListResult(JsonElement element)
+        internal static RulesEngineListResult DeserializeRulesEngineListResult(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

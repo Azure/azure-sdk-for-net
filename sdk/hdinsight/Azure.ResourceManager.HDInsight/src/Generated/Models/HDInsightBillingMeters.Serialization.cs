@@ -7,12 +7,13 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.HDInsight.Models
 {
     public partial class HDInsightBillingMeters
     {
-        internal static HDInsightBillingMeters DeserializeHDInsightBillingMeters(JsonElement element)
+        internal static HDInsightBillingMeters DeserializeHDInsightBillingMeters(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

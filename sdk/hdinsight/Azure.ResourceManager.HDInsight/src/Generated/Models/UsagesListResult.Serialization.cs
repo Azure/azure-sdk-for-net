@@ -8,12 +8,13 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.HDInsight.Models
 {
     internal partial class UsagesListResult
     {
-        internal static UsagesListResult DeserializeUsagesListResult(JsonElement element)
+        internal static UsagesListResult DeserializeUsagesListResult(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

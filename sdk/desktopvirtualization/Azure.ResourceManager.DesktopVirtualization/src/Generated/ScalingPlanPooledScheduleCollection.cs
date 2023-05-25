@@ -230,7 +230,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _scalingPlanPooledScheduleRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, pageSizeHint, isDescending, initialSkip);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _scalingPlanPooledScheduleRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, pageSizeHint, isDescending, initialSkip);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ScalingPlanPooledScheduleResource(Client, ScalingPlanPooledScheduleData.DeserializeScalingPlanPooledScheduleData(e)), _scalingPlanPooledScheduleClientDiagnostics, Pipeline, "ScalingPlanPooledScheduleCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, (e, o) => new ScalingPlanPooledScheduleResource(Client, ScalingPlanPooledScheduleData.DeserializeScalingPlanPooledScheduleData(e)), _scalingPlanPooledScheduleClientDiagnostics, Pipeline, "ScalingPlanPooledScheduleCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -255,7 +255,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _scalingPlanPooledScheduleRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, pageSizeHint, isDescending, initialSkip);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _scalingPlanPooledScheduleRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, pageSizeHint, isDescending, initialSkip);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ScalingPlanPooledScheduleResource(Client, ScalingPlanPooledScheduleData.DeserializeScalingPlanPooledScheduleData(e)), _scalingPlanPooledScheduleClientDiagnostics, Pipeline, "ScalingPlanPooledScheduleCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, (e, o) => new ScalingPlanPooledScheduleResource(Client, ScalingPlanPooledScheduleData.DeserializeScalingPlanPooledScheduleData(e)), _scalingPlanPooledScheduleClientDiagnostics, Pipeline, "ScalingPlanPooledScheduleCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

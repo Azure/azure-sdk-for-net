@@ -7,12 +7,13 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.EdgeOrder.Models
 {
     internal partial class UnknownMeterDetails
     {
-        internal static UnknownMeterDetails DeserializeUnknownMeterDetails(JsonElement element)
+        internal static UnknownMeterDetails DeserializeUnknownMeterDetails(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

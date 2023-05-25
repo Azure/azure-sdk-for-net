@@ -7,12 +7,13 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.HealthcareApis.Models
 {
     public partial class HealthcareApisNameAvailabilityResult
     {
-        internal static HealthcareApisNameAvailabilityResult DeserializeHealthcareApisNameAvailabilityResult(JsonElement element)
+        internal static HealthcareApisNameAvailabilityResult DeserializeHealthcareApisNameAvailabilityResult(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

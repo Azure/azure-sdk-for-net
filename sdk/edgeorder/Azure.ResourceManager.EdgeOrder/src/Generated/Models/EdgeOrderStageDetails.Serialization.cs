@@ -8,12 +8,13 @@
 using System;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.EdgeOrder.Models
 {
     public partial class EdgeOrderStageDetails
     {
-        internal static EdgeOrderStageDetails DeserializeEdgeOrderStageDetails(JsonElement element)
+        internal static EdgeOrderStageDetails DeserializeEdgeOrderStageDetails(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

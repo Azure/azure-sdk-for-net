@@ -9,13 +9,14 @@ using System;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
     [JsonConverter(typeof(RedisScalingCompletedEventDataConverter))]
     public partial class RedisScalingCompletedEventData
     {
-        internal static RedisScalingCompletedEventData DeserializeRedisScalingCompletedEventData(JsonElement element)
+        internal static RedisScalingCompletedEventData DeserializeRedisScalingCompletedEventData(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

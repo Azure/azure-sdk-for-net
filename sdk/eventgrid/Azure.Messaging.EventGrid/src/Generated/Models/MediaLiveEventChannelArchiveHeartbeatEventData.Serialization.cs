@@ -9,13 +9,14 @@ using System;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
     [JsonConverter(typeof(MediaLiveEventChannelArchiveHeartbeatEventDataConverter))]
     public partial class MediaLiveEventChannelArchiveHeartbeatEventData
     {
-        internal static MediaLiveEventChannelArchiveHeartbeatEventData DeserializeMediaLiveEventChannelArchiveHeartbeatEventData(JsonElement element)
+        internal static MediaLiveEventChannelArchiveHeartbeatEventData DeserializeMediaLiveEventChannelArchiveHeartbeatEventData(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

@@ -7,12 +7,13 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.AI.FormRecognizer.DocumentAnalysis
 {
     public partial struct DocumentSpan
     {
-        internal static DocumentSpan DeserializeDocumentSpan(JsonElement element)
+        internal static DocumentSpan DeserializeDocumentSpan(JsonElement element, SerializableOptions options = default)
         {
             int offset = default;
             int length = default;

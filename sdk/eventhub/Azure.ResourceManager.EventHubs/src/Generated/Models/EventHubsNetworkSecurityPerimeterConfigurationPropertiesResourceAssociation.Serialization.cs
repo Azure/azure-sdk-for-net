@@ -7,12 +7,13 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.EventHubs.Models
 {
     public partial class EventHubsNetworkSecurityPerimeterConfigurationPropertiesResourceAssociation
     {
-        internal static EventHubsNetworkSecurityPerimeterConfigurationPropertiesResourceAssociation DeserializeEventHubsNetworkSecurityPerimeterConfigurationPropertiesResourceAssociation(JsonElement element)
+        internal static EventHubsNetworkSecurityPerimeterConfigurationPropertiesResourceAssociation DeserializeEventHubsNetworkSecurityPerimeterConfigurationPropertiesResourceAssociation(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

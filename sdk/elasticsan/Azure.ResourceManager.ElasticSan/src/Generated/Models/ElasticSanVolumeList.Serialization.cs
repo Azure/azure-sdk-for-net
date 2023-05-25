@@ -8,13 +8,14 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.ElasticSan;
 
 namespace Azure.ResourceManager.ElasticSan.Models
 {
     internal partial class ElasticSanVolumeList
     {
-        internal static ElasticSanVolumeList DeserializeElasticSanVolumeList(JsonElement element)
+        internal static ElasticSanVolumeList DeserializeElasticSanVolumeList(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

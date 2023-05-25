@@ -8,12 +8,13 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.EventHubs.Models
 {
     internal partial class AvailableClustersList
     {
-        internal static AvailableClustersList DeserializeAvailableClustersList(JsonElement element)
+        internal static AvailableClustersList DeserializeAvailableClustersList(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

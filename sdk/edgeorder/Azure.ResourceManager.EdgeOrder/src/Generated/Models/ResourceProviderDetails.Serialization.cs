@@ -7,12 +7,13 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.EdgeOrder.Models
 {
     public partial class ResourceProviderDetails
     {
-        internal static ResourceProviderDetails DeserializeResourceProviderDetails(JsonElement element)
+        internal static ResourceProviderDetails DeserializeResourceProviderDetails(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

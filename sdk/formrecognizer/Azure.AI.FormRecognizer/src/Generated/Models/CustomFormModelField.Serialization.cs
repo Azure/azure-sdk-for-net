@@ -7,12 +7,13 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.AI.FormRecognizer.Training
 {
     public partial class CustomFormModelField
     {
-        internal static CustomFormModelField DeserializeCustomFormModelField(JsonElement element)
+        internal static CustomFormModelField DeserializeCustomFormModelField(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

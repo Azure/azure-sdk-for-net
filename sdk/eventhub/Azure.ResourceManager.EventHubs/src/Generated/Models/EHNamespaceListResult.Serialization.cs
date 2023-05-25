@@ -8,13 +8,14 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.EventHubs;
 
 namespace Azure.ResourceManager.EventHubs.Models
 {
     internal partial class EHNamespaceListResult
     {
-        internal static EHNamespaceListResult DeserializeEHNamespaceListResult(JsonElement element)
+        internal static EHNamespaceListResult DeserializeEHNamespaceListResult(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

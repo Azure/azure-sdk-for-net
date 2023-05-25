@@ -7,12 +7,15 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Grafana.Models
 {
     public partial class GrafanaPrivateLinkServiceConnectionState : IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IUtf8JsonSerializable)this).Write(writer, new SerializableOptions());
+
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer, SerializableOptions options)
         {
             writer.WriteStartObject();
             if (Optional.IsDefined(Status))
@@ -33,7 +36,7 @@ namespace Azure.ResourceManager.Grafana.Models
             writer.WriteEndObject();
         }
 
-        internal static GrafanaPrivateLinkServiceConnectionState DeserializeGrafanaPrivateLinkServiceConnectionState(JsonElement element)
+        internal static GrafanaPrivateLinkServiceConnectionState DeserializeGrafanaPrivateLinkServiceConnectionState(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

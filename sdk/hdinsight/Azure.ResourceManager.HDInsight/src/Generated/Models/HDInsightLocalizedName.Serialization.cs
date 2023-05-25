@@ -7,12 +7,13 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.HDInsight.Models
 {
     public partial class HDInsightLocalizedName
     {
-        internal static HDInsightLocalizedName DeserializeHDInsightLocalizedName(JsonElement element)
+        internal static HDInsightLocalizedName DeserializeHDInsightLocalizedName(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

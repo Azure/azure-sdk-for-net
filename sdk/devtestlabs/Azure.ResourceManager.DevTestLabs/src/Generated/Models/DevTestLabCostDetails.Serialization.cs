@@ -8,12 +8,13 @@
 using System;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.DevTestLabs.Models
 {
     public partial class DevTestLabCostDetails
     {
-        internal static DevTestLabCostDetails DeserializeDevTestLabCostDetails(JsonElement element)
+        internal static DevTestLabCostDetails DeserializeDevTestLabCostDetails(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

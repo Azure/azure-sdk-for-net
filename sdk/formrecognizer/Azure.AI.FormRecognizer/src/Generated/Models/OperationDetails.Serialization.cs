@@ -7,12 +7,13 @@
 
 using System.Text.Json;
 using Azure.AI.FormRecognizer.Models;
+using Azure.Core.Serialization;
 
 namespace Azure.AI.FormRecognizer.DocumentAnalysis
 {
     public partial class OperationDetails
     {
-        internal static OperationDetails DeserializeOperationDetails(JsonElement element)
+        internal static OperationDetails DeserializeOperationDetails(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

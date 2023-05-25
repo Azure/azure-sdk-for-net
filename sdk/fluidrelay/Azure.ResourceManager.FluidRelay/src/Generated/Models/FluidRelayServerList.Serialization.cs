@@ -8,13 +8,14 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.FluidRelay;
 
 namespace Azure.ResourceManager.FluidRelay.Models
 {
     internal partial class FluidRelayServerList
     {
-        internal static FluidRelayServerList DeserializeFluidRelayServerList(JsonElement element)
+        internal static FluidRelayServerList DeserializeFluidRelayServerList(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

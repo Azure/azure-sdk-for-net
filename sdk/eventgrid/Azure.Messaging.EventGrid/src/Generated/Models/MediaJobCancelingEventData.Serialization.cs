@@ -10,13 +10,14 @@ using System.Collections.Generic;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
     [JsonConverter(typeof(MediaJobCancelingEventDataConverter))]
     public partial class MediaJobCancelingEventData
     {
-        internal static MediaJobCancelingEventData DeserializeMediaJobCancelingEventData(JsonElement element)
+        internal static MediaJobCancelingEventData DeserializeMediaJobCancelingEventData(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

@@ -6,12 +6,13 @@
 #nullable disable
 
 using System.Text.Json;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.DevSpaces.Models
 {
     public partial class OrchestratorSpecificConnectionDetails
     {
-        internal static OrchestratorSpecificConnectionDetails DeserializeOrchestratorSpecificConnectionDetails(JsonElement element)
+        internal static OrchestratorSpecificConnectionDetails DeserializeOrchestratorSpecificConnectionDetails(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

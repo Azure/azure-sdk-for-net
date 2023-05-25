@@ -7,12 +7,13 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.AI.FormRecognizer.DocumentAnalysis
 {
     internal partial class CustomDocumentModelsDetails
     {
-        internal static CustomDocumentModelsDetails DeserializeCustomDocumentModelsDetails(JsonElement element)
+        internal static CustomDocumentModelsDetails DeserializeCustomDocumentModelsDetails(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

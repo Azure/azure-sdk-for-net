@@ -8,13 +8,14 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.EdgeOrder;
 
 namespace Azure.ResourceManager.EdgeOrder.Models
 {
     internal partial class OrderItemResourceList
     {
-        internal static OrderItemResourceList DeserializeOrderItemResourceList(JsonElement element)
+        internal static OrderItemResourceList DeserializeOrderItemResourceList(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

@@ -8,13 +8,14 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.DeviceProvisioningServices;
 
 namespace Azure.ResourceManager.DeviceProvisioningServices.Models
 {
     internal partial class PrivateLinkResources
     {
-        internal static PrivateLinkResources DeserializePrivateLinkResources(JsonElement element)
+        internal static PrivateLinkResources DeserializePrivateLinkResources(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

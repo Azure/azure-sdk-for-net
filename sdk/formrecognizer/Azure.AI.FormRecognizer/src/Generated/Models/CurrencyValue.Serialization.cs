@@ -7,12 +7,13 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.AI.FormRecognizer.DocumentAnalysis
 {
     public partial struct CurrencyValue
     {
-        internal static CurrencyValue DeserializeCurrencyValue(JsonElement element)
+        internal static CurrencyValue DeserializeCurrencyValue(JsonElement element, SerializableOptions options = default)
         {
             double amount = default;
             Optional<string> currencySymbol = default;

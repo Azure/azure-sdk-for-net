@@ -7,12 +7,13 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.DigitalTwins.Core
 {
     public partial class IncomingRelationship
     {
-        internal static IncomingRelationship DeserializeIncomingRelationship(JsonElement element)
+        internal static IncomingRelationship DeserializeIncomingRelationship(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

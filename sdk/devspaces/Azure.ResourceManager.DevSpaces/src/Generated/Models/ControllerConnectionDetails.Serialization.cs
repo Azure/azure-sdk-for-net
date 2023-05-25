@@ -7,12 +7,13 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.DevSpaces.Models
 {
     public partial class ControllerConnectionDetails
     {
-        internal static ControllerConnectionDetails DeserializeControllerConnectionDetails(JsonElement element)
+        internal static ControllerConnectionDetails DeserializeControllerConnectionDetails(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

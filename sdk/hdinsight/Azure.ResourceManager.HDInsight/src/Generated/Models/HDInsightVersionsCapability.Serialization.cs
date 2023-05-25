@@ -8,12 +8,13 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.HDInsight.Models
 {
     public partial class HDInsightVersionsCapability
     {
-        internal static HDInsightVersionsCapability DeserializeHDInsightVersionsCapability(JsonElement element)
+        internal static HDInsightVersionsCapability DeserializeHDInsightVersionsCapability(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

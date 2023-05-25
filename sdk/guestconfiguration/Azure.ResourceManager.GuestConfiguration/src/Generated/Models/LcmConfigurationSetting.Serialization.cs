@@ -7,12 +7,13 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.GuestConfiguration.Models
 {
     public partial class LcmConfigurationSetting
     {
-        internal static LcmConfigurationSetting DeserializeLcmConfigurationSetting(JsonElement element)
+        internal static LcmConfigurationSetting DeserializeLcmConfigurationSetting(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

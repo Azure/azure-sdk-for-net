@@ -7,12 +7,13 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.HDInsight.Models
 {
     public partial class HDInsightVmSizeProperty
     {
-        internal static HDInsightVmSizeProperty DeserializeHDInsightVmSizeProperty(JsonElement element)
+        internal static HDInsightVmSizeProperty DeserializeHDInsightVmSizeProperty(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

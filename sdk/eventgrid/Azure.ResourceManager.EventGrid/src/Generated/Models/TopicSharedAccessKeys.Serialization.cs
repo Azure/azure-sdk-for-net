@@ -7,12 +7,13 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.EventGrid.Models
 {
     public partial class TopicSharedAccessKeys
     {
-        internal static TopicSharedAccessKeys DeserializeTopicSharedAccessKeys(JsonElement element)
+        internal static TopicSharedAccessKeys DeserializeTopicSharedAccessKeys(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

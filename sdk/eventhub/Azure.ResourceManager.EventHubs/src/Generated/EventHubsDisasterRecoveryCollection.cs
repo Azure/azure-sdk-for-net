@@ -227,7 +227,7 @@ namespace Azure.ResourceManager.EventHubs
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _eventHubsDisasterRecoveryDisasterRecoveryConfigsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _eventHubsDisasterRecoveryDisasterRecoveryConfigsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new EventHubsDisasterRecoveryResource(Client, EventHubsDisasterRecoveryData.DeserializeEventHubsDisasterRecoveryData(e)), _eventHubsDisasterRecoveryDisasterRecoveryConfigsClientDiagnostics, Pipeline, "EventHubsDisasterRecoveryCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, (e, o) => new EventHubsDisasterRecoveryResource(Client, EventHubsDisasterRecoveryData.DeserializeEventHubsDisasterRecoveryData(e)), _eventHubsDisasterRecoveryDisasterRecoveryConfigsClientDiagnostics, Pipeline, "EventHubsDisasterRecoveryCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -249,7 +249,7 @@ namespace Azure.ResourceManager.EventHubs
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _eventHubsDisasterRecoveryDisasterRecoveryConfigsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _eventHubsDisasterRecoveryDisasterRecoveryConfigsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new EventHubsDisasterRecoveryResource(Client, EventHubsDisasterRecoveryData.DeserializeEventHubsDisasterRecoveryData(e)), _eventHubsDisasterRecoveryDisasterRecoveryConfigsClientDiagnostics, Pipeline, "EventHubsDisasterRecoveryCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, (e, o) => new EventHubsDisasterRecoveryResource(Client, EventHubsDisasterRecoveryData.DeserializeEventHubsDisasterRecoveryData(e)), _eventHubsDisasterRecoveryDisasterRecoveryConfigsClientDiagnostics, Pipeline, "EventHubsDisasterRecoveryCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

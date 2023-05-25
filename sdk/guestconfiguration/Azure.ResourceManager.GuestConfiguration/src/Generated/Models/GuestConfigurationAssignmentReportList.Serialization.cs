@@ -8,12 +8,13 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.GuestConfiguration.Models
 {
     internal partial class GuestConfigurationAssignmentReportList
     {
-        internal static GuestConfigurationAssignmentReportList DeserializeGuestConfigurationAssignmentReportList(JsonElement element)
+        internal static GuestConfigurationAssignmentReportList DeserializeGuestConfigurationAssignmentReportList(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

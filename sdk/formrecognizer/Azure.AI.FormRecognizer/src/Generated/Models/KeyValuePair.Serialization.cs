@@ -7,12 +7,13 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.AI.FormRecognizer.Models
 {
     internal partial class KeyValuePair
     {
-        internal static KeyValuePair DeserializeKeyValuePair(JsonElement element)
+        internal static KeyValuePair DeserializeKeyValuePair(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

@@ -8,13 +8,14 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.DigitalTwins;
 
 namespace Azure.ResourceManager.DigitalTwins.Models
 {
     internal partial class PrivateEndpointConnectionsResponse
     {
-        internal static PrivateEndpointConnectionsResponse DeserializePrivateEndpointConnectionsResponse(JsonElement element)
+        internal static PrivateEndpointConnectionsResponse DeserializePrivateEndpointConnectionsResponse(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

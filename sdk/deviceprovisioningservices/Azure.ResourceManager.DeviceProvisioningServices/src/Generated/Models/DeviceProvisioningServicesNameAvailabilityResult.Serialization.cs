@@ -7,12 +7,13 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.DeviceProvisioningServices.Models
 {
     public partial class DeviceProvisioningServicesNameAvailabilityResult
     {
-        internal static DeviceProvisioningServicesNameAvailabilityResult DeserializeDeviceProvisioningServicesNameAvailabilityResult(JsonElement element)
+        internal static DeviceProvisioningServicesNameAvailabilityResult DeserializeDeviceProvisioningServicesNameAvailabilityResult(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

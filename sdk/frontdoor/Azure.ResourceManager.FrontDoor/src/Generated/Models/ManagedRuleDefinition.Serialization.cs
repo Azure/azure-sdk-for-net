@@ -7,12 +7,13 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.FrontDoor.Models
 {
     public partial class ManagedRuleDefinition
     {
-        internal static ManagedRuleDefinition DeserializeManagedRuleDefinition(JsonElement element)
+        internal static ManagedRuleDefinition DeserializeManagedRuleDefinition(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

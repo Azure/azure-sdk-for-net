@@ -7,12 +7,13 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.DevCenter.Models
 {
     public partial class ImageValidationErrorDetails
     {
-        internal static ImageValidationErrorDetails DeserializeImageValidationErrorDetails(JsonElement element)
+        internal static ImageValidationErrorDetails DeserializeImageValidationErrorDetails(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

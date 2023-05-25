@@ -9,13 +9,14 @@ using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.GraphServices;
 
 namespace Azure.ResourceManager.GraphServices.Models
 {
     internal partial class GraphServicesAccountResourceList
     {
-        internal static GraphServicesAccountResourceList DeserializeGraphServicesAccountResourceList(JsonElement element)
+        internal static GraphServicesAccountResourceList DeserializeGraphServicesAccountResourceList(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

@@ -7,12 +7,13 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.DevSpaces.Models
 {
     public partial class KubernetesConnectionDetails
     {
-        internal static KubernetesConnectionDetails DeserializeKubernetesConnectionDetails(JsonElement element)
+        internal static KubernetesConnectionDetails DeserializeKubernetesConnectionDetails(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

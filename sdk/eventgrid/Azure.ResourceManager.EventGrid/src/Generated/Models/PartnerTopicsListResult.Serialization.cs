@@ -8,13 +8,14 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.EventGrid;
 
 namespace Azure.ResourceManager.EventGrid.Models
 {
     internal partial class PartnerTopicsListResult
     {
-        internal static PartnerTopicsListResult DeserializePartnerTopicsListResult(JsonElement element)
+        internal static PartnerTopicsListResult DeserializePartnerTopicsListResult(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

@@ -6,12 +6,13 @@
 #nullable disable
 
 using System.Text.Json;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.EdgeOrder.Models
 {
     public partial class EdgeOrderProductMeterDetails
     {
-        internal static EdgeOrderProductMeterDetails DeserializeEdgeOrderProductMeterDetails(JsonElement element)
+        internal static EdgeOrderProductMeterDetails DeserializeEdgeOrderProductMeterDetails(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

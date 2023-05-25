@@ -7,12 +7,13 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.DevTestLabs.Models
 {
     public partial class DevTestLabRdpConnection
     {
-        internal static DevTestLabRdpConnection DeserializeDevTestLabRdpConnection(JsonElement element)
+        internal static DevTestLabRdpConnection DeserializeDevTestLabRdpConnection(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

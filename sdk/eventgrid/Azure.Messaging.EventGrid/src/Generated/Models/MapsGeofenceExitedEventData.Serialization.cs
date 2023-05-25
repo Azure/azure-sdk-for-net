@@ -10,13 +10,14 @@ using System.Collections.Generic;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
     [JsonConverter(typeof(MapsGeofenceExitedEventDataConverter))]
     public partial class MapsGeofenceExitedEventData
     {
-        internal static MapsGeofenceExitedEventData DeserializeMapsGeofenceExitedEventData(JsonElement element)
+        internal static MapsGeofenceExitedEventData DeserializeMapsGeofenceExitedEventData(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

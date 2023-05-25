@@ -8,12 +8,13 @@
 using System;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.HybridContainerService.Models
 {
     public partial class ArcAgentStatus
     {
-        internal static ArcAgentStatus DeserializeArcAgentStatus(JsonElement element)
+        internal static ArcAgentStatus DeserializeArcAgentStatus(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

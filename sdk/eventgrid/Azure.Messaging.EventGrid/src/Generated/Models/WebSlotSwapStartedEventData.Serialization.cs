@@ -9,13 +9,14 @@ using System;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
     [JsonConverter(typeof(WebSlotSwapStartedEventDataConverter))]
     public partial class WebSlotSwapStartedEventData
     {
-        internal static WebSlotSwapStartedEventData DeserializeWebSlotSwapStartedEventData(JsonElement element)
+        internal static WebSlotSwapStartedEventData DeserializeWebSlotSwapStartedEventData(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

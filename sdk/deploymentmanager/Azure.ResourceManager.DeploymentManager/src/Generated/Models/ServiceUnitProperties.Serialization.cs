@@ -7,12 +7,13 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.DeploymentManager.Models
 {
     public partial class ServiceUnitProperties
     {
-        internal static ServiceUnitProperties DeserializeServiceUnitProperties(JsonElement element)
+        internal static ServiceUnitProperties DeserializeServiceUnitProperties(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

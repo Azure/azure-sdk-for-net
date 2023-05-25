@@ -9,12 +9,13 @@ using System;
 using System.Text.Json;
 using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.DeploymentManager.Models
 {
     public partial class RolloutOperationInfo
     {
-        internal static RolloutOperationInfo DeserializeRolloutOperationInfo(JsonElement element)
+        internal static RolloutOperationInfo DeserializeRolloutOperationInfo(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

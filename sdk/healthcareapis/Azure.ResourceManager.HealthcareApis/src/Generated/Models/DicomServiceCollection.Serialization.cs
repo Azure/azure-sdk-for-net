@@ -8,13 +8,14 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.HealthcareApis;
 
 namespace Azure.ResourceManager.HealthcareApis.Models
 {
     internal partial class DicomServiceCollection
     {
-        internal static DicomServiceCollection DeserializeDicomServiceCollection(JsonElement element)
+        internal static DicomServiceCollection DeserializeDicomServiceCollection(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

@@ -8,13 +8,14 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.Dynatrace;
 
 namespace Azure.ResourceManager.Dynatrace.Models
 {
     internal partial class MonitorResourceListResult
     {
-        internal static MonitorResourceListResult DeserializeMonitorResourceListResult(JsonElement element)
+        internal static MonitorResourceListResult DeserializeMonitorResourceListResult(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

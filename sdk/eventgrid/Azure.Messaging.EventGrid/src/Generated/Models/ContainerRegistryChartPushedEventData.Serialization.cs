@@ -9,13 +9,14 @@ using System;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
     [JsonConverter(typeof(ContainerRegistryChartPushedEventDataConverter))]
     public partial class ContainerRegistryChartPushedEventData
     {
-        internal static ContainerRegistryChartPushedEventData DeserializeContainerRegistryChartPushedEventData(JsonElement element)
+        internal static ContainerRegistryChartPushedEventData DeserializeContainerRegistryChartPushedEventData(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

@@ -7,12 +7,13 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.FrontDoor.Models
 {
     public partial class FrontDoorNameAvailabilityResult
     {
-        internal static FrontDoorNameAvailabilityResult DeserializeFrontDoorNameAvailabilityResult(JsonElement element)
+        internal static FrontDoorNameAvailabilityResult DeserializeFrontDoorNameAvailabilityResult(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

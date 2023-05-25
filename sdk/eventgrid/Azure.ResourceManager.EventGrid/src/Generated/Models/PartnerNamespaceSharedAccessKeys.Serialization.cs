@@ -7,12 +7,13 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.EventGrid.Models
 {
     public partial class PartnerNamespaceSharedAccessKeys
     {
-        internal static PartnerNamespaceSharedAccessKeys DeserializePartnerNamespaceSharedAccessKeys(JsonElement element)
+        internal static PartnerNamespaceSharedAccessKeys DeserializePartnerNamespaceSharedAccessKeys(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

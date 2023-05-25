@@ -9,13 +9,14 @@ using System;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
     [JsonConverter(typeof(ApiManagementUserCreatedEventDataConverter))]
     public partial class ApiManagementUserCreatedEventData
     {
-        internal static ApiManagementUserCreatedEventData DeserializeApiManagementUserCreatedEventData(JsonElement element)
+        internal static ApiManagementUserCreatedEventData DeserializeApiManagementUserCreatedEventData(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

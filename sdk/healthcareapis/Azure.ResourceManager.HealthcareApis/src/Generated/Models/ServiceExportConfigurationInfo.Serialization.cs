@@ -7,12 +7,15 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.HealthcareApis.Models
 {
     internal partial class ServiceExportConfigurationInfo : IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IUtf8JsonSerializable)this).Write(writer, new SerializableOptions());
+
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer, SerializableOptions options)
         {
             writer.WriteStartObject();
             if (Optional.IsDefined(StorageAccountName))
@@ -23,7 +26,7 @@ namespace Azure.ResourceManager.HealthcareApis.Models
             writer.WriteEndObject();
         }
 
-        internal static ServiceExportConfigurationInfo DeserializeServiceExportConfigurationInfo(JsonElement element)
+        internal static ServiceExportConfigurationInfo DeserializeServiceExportConfigurationInfo(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

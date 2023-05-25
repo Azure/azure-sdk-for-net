@@ -8,12 +8,13 @@
 using System;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.EventGrid.Models
 {
     public partial class EventSubscriptionFullUri
     {
-        internal static EventSubscriptionFullUri DeserializeEventSubscriptionFullUri(JsonElement element)
+        internal static EventSubscriptionFullUri DeserializeEventSubscriptionFullUri(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

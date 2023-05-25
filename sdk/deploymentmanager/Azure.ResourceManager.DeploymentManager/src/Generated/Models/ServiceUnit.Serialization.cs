@@ -8,12 +8,13 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.DeploymentManager.Models
 {
     public partial class ServiceUnit
     {
-        internal static ServiceUnit DeserializeServiceUnit(JsonElement element)
+        internal static ServiceUnit DeserializeServiceUnit(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

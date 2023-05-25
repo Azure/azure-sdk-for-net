@@ -8,12 +8,13 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.EventGrid.Models
 {
     internal partial class EventTypesListResult
     {
-        internal static EventTypesListResult DeserializeEventTypesListResult(JsonElement element)
+        internal static EventTypesListResult DeserializeEventTypesListResult(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

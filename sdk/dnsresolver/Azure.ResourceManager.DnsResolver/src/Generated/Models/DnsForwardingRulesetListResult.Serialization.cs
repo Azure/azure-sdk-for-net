@@ -8,13 +8,14 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.DnsResolver;
 
 namespace Azure.ResourceManager.DnsResolver.Models
 {
     internal partial class DnsForwardingRulesetListResult
     {
-        internal static DnsForwardingRulesetListResult DeserializeDnsForwardingRulesetListResult(JsonElement element)
+        internal static DnsForwardingRulesetListResult DeserializeDnsForwardingRulesetListResult(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

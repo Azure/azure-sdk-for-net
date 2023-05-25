@@ -8,13 +8,14 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.DigitalTwins;
 
 namespace Azure.ResourceManager.DigitalTwins.Models
 {
     internal partial class TimeSeriesDatabaseConnectionListResult
     {
-        internal static TimeSeriesDatabaseConnectionListResult DeserializeTimeSeriesDatabaseConnectionListResult(JsonElement element)
+        internal static TimeSeriesDatabaseConnectionListResult DeserializeTimeSeriesDatabaseConnectionListResult(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

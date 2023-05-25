@@ -8,12 +8,13 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.AI.FormRecognizer.DocumentAnalysis
 {
     public partial class DocumentAnnotation
     {
-        internal static DocumentAnnotation DeserializeDocumentAnnotation(JsonElement element)
+        internal static DocumentAnnotation DeserializeDocumentAnnotation(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

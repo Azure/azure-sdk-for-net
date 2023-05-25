@@ -8,12 +8,13 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Dynatrace.Models
 {
     internal partial class VmHostsListResponse
     {
-        internal static VmHostsListResponse DeserializeVmHostsListResponse(JsonElement element)
+        internal static VmHostsListResponse DeserializeVmHostsListResponse(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

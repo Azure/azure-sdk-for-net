@@ -7,12 +7,13 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.HybridContainerService.Models
 {
     public partial class ProvisionedClustersCommonPropertiesStatusProvisioningStatus
     {
-        internal static ProvisionedClustersCommonPropertiesStatusProvisioningStatus DeserializeProvisionedClustersCommonPropertiesStatusProvisioningStatus(JsonElement element)
+        internal static ProvisionedClustersCommonPropertiesStatusProvisioningStatus DeserializeProvisionedClustersCommonPropertiesStatusProvisioningStatus(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

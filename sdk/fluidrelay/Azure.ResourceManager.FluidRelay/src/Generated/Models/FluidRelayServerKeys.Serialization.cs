@@ -7,12 +7,13 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.FluidRelay.Models
 {
     public partial class FluidRelayServerKeys
     {
-        internal static FluidRelayServerKeys DeserializeFluidRelayServerKeys(JsonElement element)
+        internal static FluidRelayServerKeys DeserializeFluidRelayServerKeys(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

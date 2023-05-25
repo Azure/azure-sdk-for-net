@@ -7,12 +7,13 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.DevTestLabs.Models
 {
     public partial class DevTestLabExternalSubnet
     {
-        internal static DevTestLabExternalSubnet DeserializeDevTestLabExternalSubnet(JsonElement element)
+        internal static DevTestLabExternalSubnet DeserializeDevTestLabExternalSubnet(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

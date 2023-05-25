@@ -7,12 +7,13 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.DevTestLabs.Models
 {
     internal partial class LabCostSummaryProperties
     {
-        internal static LabCostSummaryProperties DeserializeLabCostSummaryProperties(JsonElement element)
+        internal static LabCostSummaryProperties DeserializeLabCostSummaryProperties(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

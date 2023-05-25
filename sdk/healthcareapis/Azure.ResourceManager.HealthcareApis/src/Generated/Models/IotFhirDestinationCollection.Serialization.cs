@@ -8,13 +8,14 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.HealthcareApis;
 
 namespace Azure.ResourceManager.HealthcareApis.Models
 {
     internal partial class IotFhirDestinationCollection
     {
-        internal static IotFhirDestinationCollection DeserializeIotFhirDestinationCollection(JsonElement element)
+        internal static IotFhirDestinationCollection DeserializeIotFhirDestinationCollection(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

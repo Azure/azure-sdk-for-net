@@ -8,13 +8,14 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.DevCenter;
 
 namespace Azure.ResourceManager.DevCenter.Models
 {
     internal partial class ProjectEnvironmentTypeListResult
     {
-        internal static ProjectEnvironmentTypeListResult DeserializeProjectEnvironmentTypeListResult(JsonElement element)
+        internal static ProjectEnvironmentTypeListResult DeserializeProjectEnvironmentTypeListResult(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

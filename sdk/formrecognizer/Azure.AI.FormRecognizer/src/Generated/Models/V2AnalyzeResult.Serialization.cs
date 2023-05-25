@@ -8,12 +8,13 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.AI.FormRecognizer.Models
 {
     internal partial class V2AnalyzeResult
     {
-        internal static V2AnalyzeResult DeserializeV2AnalyzeResult(JsonElement element)
+        internal static V2AnalyzeResult DeserializeV2AnalyzeResult(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

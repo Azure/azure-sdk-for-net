@@ -8,12 +8,13 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
     public partial class AcsIncomingCallCustomContext
     {
-        internal static AcsIncomingCallCustomContext DeserializeAcsIncomingCallCustomContext(JsonElement element)
+        internal static AcsIncomingCallCustomContext DeserializeAcsIncomingCallCustomContext(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

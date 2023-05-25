@@ -7,12 +7,13 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
     public partial class MediaJobOutputAsset
     {
-        internal static MediaJobOutputAsset DeserializeMediaJobOutputAsset(JsonElement element)
+        internal static MediaJobOutputAsset DeserializeMediaJobOutputAsset(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

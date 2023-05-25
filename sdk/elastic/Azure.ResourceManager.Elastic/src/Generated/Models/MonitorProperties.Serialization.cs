@@ -7,12 +7,15 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Elastic.Models
 {
     public partial class MonitorProperties : IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IUtf8JsonSerializable)this).Write(writer, new SerializableOptions());
+
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer, SerializableOptions options)
         {
             writer.WriteStartObject();
             if (Optional.IsDefined(ProvisioningState))
@@ -38,7 +41,7 @@ namespace Azure.ResourceManager.Elastic.Models
             writer.WriteEndObject();
         }
 
-        internal static MonitorProperties DeserializeMonitorProperties(JsonElement element)
+        internal static MonitorProperties DeserializeMonitorProperties(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

@@ -10,13 +10,14 @@ using System.Collections.Generic;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
     [JsonConverter(typeof(AcsChatMessageEditedInThreadEventDataConverter))]
     public partial class AcsChatMessageEditedInThreadEventData
     {
-        internal static AcsChatMessageEditedInThreadEventData DeserializeAcsChatMessageEditedInThreadEventData(JsonElement element)
+        internal static AcsChatMessageEditedInThreadEventData DeserializeAcsChatMessageEditedInThreadEventData(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

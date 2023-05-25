@@ -10,13 +10,16 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.HDInsight;
 
 namespace Azure.ResourceManager.HDInsight.Models
 {
     public partial class HDInsightClusterProperties : IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IUtf8JsonSerializable)this).Write(writer, new SerializableOptions());
+
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer, SerializableOptions options)
         {
             writer.WriteStartObject();
             if (Optional.IsDefined(ClusterVersion))
@@ -149,7 +152,7 @@ namespace Azure.ResourceManager.HDInsight.Models
             writer.WriteEndObject();
         }
 
-        internal static HDInsightClusterProperties DeserializeHDInsightClusterProperties(JsonElement element)
+        internal static HDInsightClusterProperties DeserializeHDInsightClusterProperties(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

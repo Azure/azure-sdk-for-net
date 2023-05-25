@@ -7,12 +7,13 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Dynatrace.Models
 {
     public partial class LinkableEnvironmentResult
     {
-        internal static LinkableEnvironmentResult DeserializeLinkableEnvironmentResult(JsonElement element)
+        internal static LinkableEnvironmentResult DeserializeLinkableEnvironmentResult(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

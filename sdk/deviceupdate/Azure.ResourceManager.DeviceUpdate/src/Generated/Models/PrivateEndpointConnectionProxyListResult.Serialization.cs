@@ -8,13 +8,14 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.DeviceUpdate;
 
 namespace Azure.ResourceManager.DeviceUpdate.Models
 {
     internal partial class PrivateEndpointConnectionProxyListResult
     {
-        internal static PrivateEndpointConnectionProxyListResult DeserializePrivateEndpointConnectionProxyListResult(JsonElement element)
+        internal static PrivateEndpointConnectionProxyListResult DeserializePrivateEndpointConnectionProxyListResult(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

@@ -229,7 +229,7 @@ namespace Azure.ResourceManager.EventGrid
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _partnerNamespaceChannelChannelsRestClient.CreateListByPartnerNamespaceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, top);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _partnerNamespaceChannelChannelsRestClient.CreateListByPartnerNamespaceNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, top);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new PartnerNamespaceChannelResource(Client, PartnerNamespaceChannelData.DeserializePartnerNamespaceChannelData(e)), _partnerNamespaceChannelChannelsClientDiagnostics, Pipeline, "PartnerNamespaceChannelCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, (e, o) => new PartnerNamespaceChannelResource(Client, PartnerNamespaceChannelData.DeserializePartnerNamespaceChannelData(e)), _partnerNamespaceChannelChannelsClientDiagnostics, Pipeline, "PartnerNamespaceChannelCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -253,7 +253,7 @@ namespace Azure.ResourceManager.EventGrid
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _partnerNamespaceChannelChannelsRestClient.CreateListByPartnerNamespaceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, top);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _partnerNamespaceChannelChannelsRestClient.CreateListByPartnerNamespaceNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, top);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new PartnerNamespaceChannelResource(Client, PartnerNamespaceChannelData.DeserializePartnerNamespaceChannelData(e)), _partnerNamespaceChannelChannelsClientDiagnostics, Pipeline, "PartnerNamespaceChannelCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, (e, o) => new PartnerNamespaceChannelResource(Client, PartnerNamespaceChannelData.DeserializePartnerNamespaceChannelData(e)), _partnerNamespaceChannelChannelsClientDiagnostics, Pipeline, "PartnerNamespaceChannelCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

@@ -227,7 +227,7 @@ namespace Azure.ResourceManager.DeploymentManager
         public virtual AsyncPageable<ServiceTopologyResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _serviceTopologyResourceServiceTopologiesRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new ServiceTopologyResource(Client, ServiceTopologyResourceData.DeserializeServiceTopologyResourceData(e)), _serviceTopologyResourceServiceTopologiesClientDiagnostics, Pipeline, "ServiceTopologyResourceCollection.GetAll", "", null, cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, (e, o) => new ServiceTopologyResource(Client, ServiceTopologyResourceData.DeserializeServiceTopologyResourceData(e)), _serviceTopologyResourceServiceTopologiesClientDiagnostics, Pipeline, "ServiceTopologyResourceCollection.GetAll", "", null, cancellationToken);
         }
 
         /// <summary>
@@ -248,7 +248,7 @@ namespace Azure.ResourceManager.DeploymentManager
         public virtual Pageable<ServiceTopologyResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _serviceTopologyResourceServiceTopologiesRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName);
-            return PageableHelpers.CreatePageable(FirstPageRequest, null, e => new ServiceTopologyResource(Client, ServiceTopologyResourceData.DeserializeServiceTopologyResourceData(e)), _serviceTopologyResourceServiceTopologiesClientDiagnostics, Pipeline, "ServiceTopologyResourceCollection.GetAll", "", null, cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, null, (e, o) => new ServiceTopologyResource(Client, ServiceTopologyResourceData.DeserializeServiceTopologyResourceData(e)), _serviceTopologyResourceServiceTopologiesClientDiagnostics, Pipeline, "ServiceTopologyResourceCollection.GetAll", "", null, cancellationToken);
         }
 
         /// <summary>

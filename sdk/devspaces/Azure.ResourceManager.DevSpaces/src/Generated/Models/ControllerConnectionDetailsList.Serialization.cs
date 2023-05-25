@@ -8,12 +8,13 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.DevSpaces.Models
 {
     public partial class ControllerConnectionDetailsList
     {
-        internal static ControllerConnectionDetailsList DeserializeControllerConnectionDetailsList(JsonElement element)
+        internal static ControllerConnectionDetailsList DeserializeControllerConnectionDetailsList(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

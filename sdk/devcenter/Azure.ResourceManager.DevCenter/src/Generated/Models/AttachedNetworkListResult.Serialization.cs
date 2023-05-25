@@ -8,13 +8,14 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.DevCenter;
 
 namespace Azure.ResourceManager.DevCenter.Models
 {
     internal partial class AttachedNetworkListResult
     {
-        internal static AttachedNetworkListResult DeserializeAttachedNetworkListResult(JsonElement element)
+        internal static AttachedNetworkListResult DeserializeAttachedNetworkListResult(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

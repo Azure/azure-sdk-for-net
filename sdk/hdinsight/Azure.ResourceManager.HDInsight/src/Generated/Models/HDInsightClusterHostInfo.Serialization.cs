@@ -8,12 +8,13 @@
 using System;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.HDInsight.Models
 {
     public partial class HDInsightClusterHostInfo
     {
-        internal static HDInsightClusterHostInfo DeserializeHDInsightClusterHostInfo(JsonElement element)
+        internal static HDInsightClusterHostInfo DeserializeHDInsightClusterHostInfo(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

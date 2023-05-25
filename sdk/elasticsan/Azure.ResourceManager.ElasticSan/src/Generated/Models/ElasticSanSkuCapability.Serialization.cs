@@ -7,12 +7,13 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.ElasticSan.Models
 {
     public partial class ElasticSanSkuCapability
     {
-        internal static ElasticSanSkuCapability DeserializeElasticSanSkuCapability(JsonElement element)
+        internal static ElasticSanSkuCapability DeserializeElasticSanSkuCapability(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

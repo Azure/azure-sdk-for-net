@@ -8,12 +8,13 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.ElasticSan.Models
 {
     public partial class ElasticSanSkuInformation
     {
-        internal static ElasticSanSkuInformation DeserializeElasticSanSkuInformation(JsonElement element)
+        internal static ElasticSanSkuInformation DeserializeElasticSanSkuInformation(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

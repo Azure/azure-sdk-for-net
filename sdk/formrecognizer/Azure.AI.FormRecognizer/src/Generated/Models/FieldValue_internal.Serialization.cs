@@ -9,12 +9,13 @@ using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.AI.FormRecognizer.Models
 {
     internal partial class FieldValue_internal
     {
-        internal static FieldValue_internal DeserializeFieldValue_internal(JsonElement element)
+        internal static FieldValue_internal DeserializeFieldValue_internal(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

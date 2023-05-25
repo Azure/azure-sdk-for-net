@@ -7,12 +7,13 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.DevTestLabs.Models
 {
     public partial class DevTestLabPolicyViolation
     {
-        internal static DevTestLabPolicyViolation DeserializeDevTestLabPolicyViolation(JsonElement element)
+        internal static DevTestLabPolicyViolation DeserializeDevTestLabPolicyViolation(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

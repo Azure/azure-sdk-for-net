@@ -9,13 +9,14 @@ using System;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
     [JsonConverter(typeof(WebRestoreOperationCompletedEventDataConverter))]
     public partial class WebRestoreOperationCompletedEventData
     {
-        internal static WebRestoreOperationCompletedEventData DeserializeWebRestoreOperationCompletedEventData(JsonElement element)
+        internal static WebRestoreOperationCompletedEventData DeserializeWebRestoreOperationCompletedEventData(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

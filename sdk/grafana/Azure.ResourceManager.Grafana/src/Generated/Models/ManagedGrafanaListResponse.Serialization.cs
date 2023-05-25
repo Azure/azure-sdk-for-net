@@ -8,13 +8,14 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.Grafana;
 
 namespace Azure.ResourceManager.Grafana.Models
 {
     internal partial class ManagedGrafanaListResponse
     {
-        internal static ManagedGrafanaListResponse DeserializeManagedGrafanaListResponse(JsonElement element)
+        internal static ManagedGrafanaListResponse DeserializeManagedGrafanaListResponse(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

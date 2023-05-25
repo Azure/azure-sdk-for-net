@@ -8,13 +8,14 @@
 using System.Text.Json;
 using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.DeviceProvisioningServices.Models
 {
     public partial class CertificateVerificationCodeResult
     {
-        internal static CertificateVerificationCodeResult DeserializeCertificateVerificationCodeResult(JsonElement element)
+        internal static CertificateVerificationCodeResult DeserializeCertificateVerificationCodeResult(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

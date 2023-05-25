@@ -9,13 +9,14 @@ using System;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
     [JsonConverter(typeof(ContainerRegistryImageDeletedEventDataConverter))]
     public partial class ContainerRegistryImageDeletedEventData
     {
-        internal static ContainerRegistryImageDeletedEventData DeserializeContainerRegistryImageDeletedEventData(JsonElement element)
+        internal static ContainerRegistryImageDeletedEventData DeserializeContainerRegistryImageDeletedEventData(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

@@ -8,13 +8,14 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.HybridContainerService;
 
 namespace Azure.ResourceManager.HybridContainerService.Models
 {
     internal partial class ProvisionedClustersResponseListResult
     {
-        internal static ProvisionedClustersResponseListResult DeserializeProvisionedClustersResponseListResult(JsonElement element)
+        internal static ProvisionedClustersResponseListResult DeserializeProvisionedClustersResponseListResult(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

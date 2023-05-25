@@ -7,12 +7,13 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.HybridContainerService.Models
 {
     internal partial class VirtualNetworksPropertiesStatus
     {
-        internal static VirtualNetworksPropertiesStatus DeserializeVirtualNetworksPropertiesStatus(JsonElement element)
+        internal static VirtualNetworksPropertiesStatus DeserializeVirtualNetworksPropertiesStatus(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

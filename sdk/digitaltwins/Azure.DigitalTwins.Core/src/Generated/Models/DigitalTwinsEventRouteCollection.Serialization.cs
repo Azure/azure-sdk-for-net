@@ -8,12 +8,13 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.DigitalTwins.Core
 {
     internal partial class DigitalTwinsEventRouteCollection
     {
-        internal static DigitalTwinsEventRouteCollection DeserializeDigitalTwinsEventRouteCollection(JsonElement element)
+        internal static DigitalTwinsEventRouteCollection DeserializeDigitalTwinsEventRouteCollection(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

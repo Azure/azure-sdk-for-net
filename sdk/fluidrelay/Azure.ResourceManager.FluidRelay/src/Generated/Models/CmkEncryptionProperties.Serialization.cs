@@ -8,12 +8,15 @@
 using System;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.FluidRelay.Models
 {
     public partial class CmkEncryptionProperties : IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IUtf8JsonSerializable)this).Write(writer, new SerializableOptions());
+
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer, SerializableOptions options)
         {
             writer.WriteStartObject();
             if (Optional.IsDefined(KeyEncryptionKeyIdentity))
@@ -29,7 +32,7 @@ namespace Azure.ResourceManager.FluidRelay.Models
             writer.WriteEndObject();
         }
 
-        internal static CmkEncryptionProperties DeserializeCmkEncryptionProperties(JsonElement element)
+        internal static CmkEncryptionProperties DeserializeCmkEncryptionProperties(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

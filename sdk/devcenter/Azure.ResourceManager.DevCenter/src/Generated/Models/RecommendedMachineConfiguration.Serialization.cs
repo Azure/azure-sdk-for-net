@@ -7,12 +7,13 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.DevCenter.Models
 {
     public partial class RecommendedMachineConfiguration
     {
-        internal static RecommendedMachineConfiguration DeserializeRecommendedMachineConfiguration(JsonElement element)
+        internal static RecommendedMachineConfiguration DeserializeRecommendedMachineConfiguration(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

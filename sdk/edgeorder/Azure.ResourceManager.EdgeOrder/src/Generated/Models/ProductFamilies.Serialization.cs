@@ -8,12 +8,13 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.EdgeOrder.Models
 {
     internal partial class ProductFamilies
     {
-        internal static ProductFamilies DeserializeProductFamilies(JsonElement element)
+        internal static ProductFamilies DeserializeProductFamilies(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

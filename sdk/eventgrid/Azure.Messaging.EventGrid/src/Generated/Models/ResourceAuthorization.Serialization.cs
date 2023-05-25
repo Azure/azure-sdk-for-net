@@ -8,12 +8,13 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
     public partial class ResourceAuthorization
     {
-        internal static ResourceAuthorization DeserializeResourceAuthorization(JsonElement element)
+        internal static ResourceAuthorization DeserializeResourceAuthorization(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

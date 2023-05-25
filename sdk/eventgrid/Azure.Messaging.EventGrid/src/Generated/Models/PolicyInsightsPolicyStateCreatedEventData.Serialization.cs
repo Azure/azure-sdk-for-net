@@ -9,13 +9,14 @@ using System;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
     [JsonConverter(typeof(PolicyInsightsPolicyStateCreatedEventDataConverter))]
     public partial class PolicyInsightsPolicyStateCreatedEventData
     {
-        internal static PolicyInsightsPolicyStateCreatedEventData DeserializePolicyInsightsPolicyStateCreatedEventData(JsonElement element)
+        internal static PolicyInsightsPolicyStateCreatedEventData DeserializePolicyInsightsPolicyStateCreatedEventData(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

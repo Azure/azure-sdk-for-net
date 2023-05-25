@@ -6,13 +6,14 @@
 #nullable disable
 
 using System.Text.Json;
+using Azure.Core.Serialization;
 using Azure.Messaging.EventGrid.Models;
 
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
     public partial class MediaJobOutput
     {
-        internal static MediaJobOutput DeserializeMediaJobOutput(JsonElement element)
+        internal static MediaJobOutput DeserializeMediaJobOutput(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

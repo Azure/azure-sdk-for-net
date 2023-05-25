@@ -8,12 +8,13 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
     public partial class AcsRecordingStorageInfoProperties
     {
-        internal static AcsRecordingStorageInfoProperties DeserializeAcsRecordingStorageInfoProperties(JsonElement element)
+        internal static AcsRecordingStorageInfoProperties DeserializeAcsRecordingStorageInfoProperties(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

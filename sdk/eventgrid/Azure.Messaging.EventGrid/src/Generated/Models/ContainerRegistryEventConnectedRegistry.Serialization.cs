@@ -7,12 +7,13 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
     public partial class ContainerRegistryEventConnectedRegistry
     {
-        internal static ContainerRegistryEventConnectedRegistry DeserializeContainerRegistryEventConnectedRegistry(JsonElement element)
+        internal static ContainerRegistryEventConnectedRegistry DeserializeContainerRegistryEventConnectedRegistry(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

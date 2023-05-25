@@ -8,12 +8,13 @@
 using System.Text.Json;
 using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.Health.Insights.CancerProfiling
 {
     public partial class InferenceEvidence
     {
-        internal static InferenceEvidence DeserializeInferenceEvidence(JsonElement element)
+        internal static InferenceEvidence DeserializeInferenceEvidence(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

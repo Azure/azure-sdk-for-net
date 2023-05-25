@@ -8,12 +8,13 @@
 using System.Text.Json;
 using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.Health.Insights.ClinicalMatching
 {
     public partial class ClinicalNoteEvidence
     {
-        internal static ClinicalNoteEvidence DeserializeClinicalNoteEvidence(JsonElement element)
+        internal static ClinicalNoteEvidence DeserializeClinicalNoteEvidence(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

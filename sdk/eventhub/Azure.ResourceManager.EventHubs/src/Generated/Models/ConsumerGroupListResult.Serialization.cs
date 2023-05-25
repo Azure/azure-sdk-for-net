@@ -8,13 +8,14 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.EventHubs;
 
 namespace Azure.ResourceManager.EventHubs.Models
 {
     internal partial class ConsumerGroupListResult
     {
-        internal static ConsumerGroupListResult DeserializeConsumerGroupListResult(JsonElement element)
+        internal static ConsumerGroupListResult DeserializeConsumerGroupListResult(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

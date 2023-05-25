@@ -10,12 +10,13 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure.AI.FormRecognizer.DocumentAnalysis;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.AI.FormRecognizer.Models
 {
     internal partial class UnknownOperationDetails
     {
-        internal static UnknownOperationDetails DeserializeUnknownOperationDetails(JsonElement element)
+        internal static UnknownOperationDetails DeserializeUnknownOperationDetails(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

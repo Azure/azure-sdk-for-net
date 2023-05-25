@@ -7,12 +7,13 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.DevTestLabs.Models
 {
     public partial class DevTestLabResourceCost
     {
-        internal static DevTestLabResourceCost DeserializeDevTestLabResourceCost(JsonElement element)
+        internal static DevTestLabResourceCost DeserializeDevTestLabResourceCost(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

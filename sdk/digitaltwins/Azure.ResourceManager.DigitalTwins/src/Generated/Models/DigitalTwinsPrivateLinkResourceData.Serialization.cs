@@ -7,6 +7,7 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.DigitalTwins.Models;
 using Azure.ResourceManager.Models;
 
@@ -14,7 +15,7 @@ namespace Azure.ResourceManager.DigitalTwins
 {
     public partial class DigitalTwinsPrivateLinkResourceData
     {
-        internal static DigitalTwinsPrivateLinkResourceData DeserializeDigitalTwinsPrivateLinkResourceData(JsonElement element)
+        internal static DigitalTwinsPrivateLinkResourceData DeserializeDigitalTwinsPrivateLinkResourceData(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

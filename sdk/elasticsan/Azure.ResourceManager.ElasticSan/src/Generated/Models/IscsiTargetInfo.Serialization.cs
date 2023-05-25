@@ -7,12 +7,13 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.ElasticSan.Models
 {
     public partial class IscsiTargetInfo
     {
-        internal static IscsiTargetInfo DeserializeIscsiTargetInfo(JsonElement element)
+        internal static IscsiTargetInfo DeserializeIscsiTargetInfo(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

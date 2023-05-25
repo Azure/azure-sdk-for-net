@@ -8,12 +8,13 @@
 using System;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.AI.FormRecognizer.Training
 {
     public partial class CustomFormModelInfo
     {
-        internal static CustomFormModelInfo DeserializeCustomFormModelInfo(JsonElement element)
+        internal static CustomFormModelInfo DeserializeCustomFormModelInfo(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

@@ -8,12 +8,13 @@
 using System;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.DevTestLabs.Models
 {
     public partial class ComputeDataDisk
     {
-        internal static ComputeDataDisk DeserializeComputeDataDisk(JsonElement element)
+        internal static ComputeDataDisk DeserializeComputeDataDisk(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

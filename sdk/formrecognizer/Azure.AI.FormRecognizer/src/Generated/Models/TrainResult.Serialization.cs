@@ -9,12 +9,13 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure.AI.FormRecognizer.Training;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.AI.FormRecognizer.Models
 {
     internal partial class TrainResult
     {
-        internal static TrainResult DeserializeTrainResult(JsonElement element)
+        internal static TrainResult DeserializeTrainResult(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

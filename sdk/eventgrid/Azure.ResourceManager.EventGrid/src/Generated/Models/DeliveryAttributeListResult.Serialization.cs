@@ -8,12 +8,13 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.EventGrid.Models
 {
     internal partial class DeliveryAttributeListResult
     {
-        internal static DeliveryAttributeListResult DeserializeDeliveryAttributeListResult(JsonElement element)
+        internal static DeliveryAttributeListResult DeserializeDeliveryAttributeListResult(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

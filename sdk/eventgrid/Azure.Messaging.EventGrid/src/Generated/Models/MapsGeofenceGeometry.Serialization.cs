@@ -7,12 +7,13 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
     public partial class MapsGeofenceGeometry
     {
-        internal static MapsGeofenceGeometry DeserializeMapsGeofenceGeometry(JsonElement element)
+        internal static MapsGeofenceGeometry DeserializeMapsGeofenceGeometry(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

@@ -8,12 +8,13 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.DigitalTwins.Core
 {
     internal partial class IncomingRelationshipCollection
     {
-        internal static IncomingRelationshipCollection DeserializeIncomingRelationshipCollection(JsonElement element)
+        internal static IncomingRelationshipCollection DeserializeIncomingRelationshipCollection(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

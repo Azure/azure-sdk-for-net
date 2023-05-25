@@ -7,12 +7,13 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.AI.FormRecognizer.DocumentAnalysis
 {
     internal partial class ServiceResourceDetails
     {
-        internal static ServiceResourceDetails DeserializeServiceResourceDetails(JsonElement element)
+        internal static ServiceResourceDetails DeserializeServiceResourceDetails(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
