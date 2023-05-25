@@ -156,13 +156,6 @@ namespace Microsoft.Azure.Data.SchemaRegistry.JsonSchema.Tests
         }
 
         [RecordedTest]
-        public async Task ThrowsExceptionWhenDeserializingWithInvalidJsonSchema()
-        {
-            // TODO : need to find a case that throws an exception in the serialize call
-            await Task.Yield();
-        }
-
-        [RecordedTest]
         public void CannotDeserializeWithNullSchemaId()
         {
             var client = CreateClient();
@@ -266,6 +259,18 @@ namespace Microsoft.Azure.Data.SchemaRegistry.JsonSchema.Tests
         }
 
         [RecordedTest]
+        public void SchemaGeneratorWithValidationExceptionThrows()
+        {
+            var client = CreateClient();
+            var groupName = TestEnvironment.SchemaRegistryGroup;
+
+            var serializer = new SchemaRegistryJsonSerializer(client, groupName, new ValidateThrowsGenerator());
+
+            Assert.That(
+                async () => await serializer.SerializeAsync(new Employee { Age = 42, Name = "Caketown" }), Throws.InstanceOf<Exception>().And.Property(nameof(Exception.InnerException)).InstanceOf<FormatException>());
+        }
+
+        [RecordedTest]
         public void SerializingThrowsForNonExistentSchema()
         {
             var client = CreateClient();
@@ -304,6 +309,19 @@ namespace Microsoft.Azure.Data.SchemaRegistry.JsonSchema.Tests
             public override string GenerateSchemaFromObject(Type dataType)
             {
                 return _schema;
+            }
+        }
+
+        private class ValidateThrowsGenerator : SchemaRegistryJsonSchemaGenerator
+        {
+            public override string GenerateSchemaFromObject(Type dataType)
+            {
+                return _schema;
+            }
+
+            public override bool ValidateAgainstSchema(object data, Type dataType, string schemaDefinition)
+            {
+                throw new FormatException("This is bad JSON!!!!");
             }
         }
     }

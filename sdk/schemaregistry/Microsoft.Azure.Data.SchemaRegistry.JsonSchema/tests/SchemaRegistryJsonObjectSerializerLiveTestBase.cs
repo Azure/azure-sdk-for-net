@@ -9,7 +9,7 @@ namespace Microsoft.Azure.Data.SchemaRegistry.JsonSchema.Tests
     public class SchemaRegistryJsonObjectSerializerLiveTestBase : RecordedTestBase<SchemaRegistryJsonSerializerTestEnvironment>
     {
         // TODO: remove test mode
-        public SchemaRegistryJsonObjectSerializerLiveTestBase(bool isAsync) : base(isAsync, RecordedTestMode.Live)
+        public SchemaRegistryJsonObjectSerializerLiveTestBase(bool isAsync) : base(isAsync, RecordedTestMode.Playback)
         {
             TestDiagnostics = false;
         }

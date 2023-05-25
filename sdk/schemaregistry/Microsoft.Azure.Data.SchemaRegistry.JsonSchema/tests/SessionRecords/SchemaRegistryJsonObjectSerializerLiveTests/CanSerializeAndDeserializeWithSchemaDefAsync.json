@@ -9,7 +9,53 @@
         "Content-Length": "320",
         "Content-Type": "application/json; serialization=json",
         "User-Agent": "azsdk-net-Data.SchemaRegistry/1.4.0-alpha.20230525.1 (.NET 6.0.16; Microsoft Windows 10.0.22621)",
-        "x-ms-client-request-id": "1803a2825f0ba781e2a174bbd31db0f7",
+        "x-ms-client-request-id": "d9d8f4211b1a1cba127ccfbddb47682c",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "$schema": "http://json-schema.org/draft-04/schema#",
+        "title": "Employee",
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "Age": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "Name": {
+            "type": [
+              "null",
+              "string"
+            ]
+          }
+        }
+      },
+      "StatusCode": 204,
+      "ResponseHeaders": {
+        "Content-Length": "0",
+        "Date": "Thu, 25 May 2023 23:28:24 GMT",
+        "Location": "https://t1e4564477a3bf4db-json.servicebus.windows.net/$schemagroups/azsdk_net_test_group/schemas/Employee/versions/1?api-version=2022-10",
+        "Schema-Group-Name": "azsdk_net_test_group",
+        "Schema-Id": "2e2df660592c42e1965b8fb667ad9305",
+        "Schema-Id-Location": "https://t1e4564477a3bf4db-json.servicebus.windows.net:443/$schemagroups/$schemas/2e2df660592c42e1965b8fb667ad9305?api-version=2022-10",
+        "Schema-Name": "Employee",
+        "Schema-Version": "1",
+        "Schema-Versions-Location": "https://t1e4564477a3bf4db-json.servicebus.windows.net:443/$schemagroups/azsdk_net_test_group/schemas/Employee/versions?api-version=2022-10",
+        "Server": "Microsoft-HTTPAPI/2.0",
+        "Strict-Transport-Security": "max-age=31536000"
+      },
+      "ResponseBody": null
+    },
+    {
+      "RequestUri": "https://t1e4564477a3bf4db-json.servicebus.windows.net/$schemaGroups/azsdk_net_test_group/schemas/Employee:get-id?api-version=2022-10",
+      "RequestMethod": "POST",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "Content-Length": "320",
+        "Content-Type": "application/json; serialization=json",
+        "User-Agent": "azsdk-net-Data.SchemaRegistry/1.4.0-alpha.20230525.1 (.NET 6.0.16; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "e7629b8e2af71b6e3e7de9285159ff06",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
@@ -45,56 +91,11 @@
         "Strict-Transport-Security": "max-age=31536000"
       },
       "ResponseBody": null
-    },
-    {
-      "RequestUri": "https://t1e4564477a3bf4db-json.servicebus.windows.net/$schemaGroups/$schemas/2e2df660592c42e1965b8fb667ad9305?api-version=2022-10",
-      "RequestMethod": "GET",
-      "RequestHeaders": {
-        "Accept": "application/json; serialization=Avro, application/json; serialization=Json, application/octet-stream",
-        "Authorization": "Sanitized",
-        "User-Agent": "azsdk-net-Data.SchemaRegistry/1.4.0-alpha.20230525.1 (.NET 6.0.16; Microsoft Windows 10.0.22621)",
-        "x-ms-client-request-id": "5c88f7dda149ee56d2f816cd135c0d67",
-        "x-ms-return-client-request-id": "true"
-      },
-      "RequestBody": null,
-      "StatusCode": 200,
-      "ResponseHeaders": {
-        "Content-Type": "application/json; serialization=Json",
-        "Date": "Thu, 25 May 2023 23:28:26 GMT",
-        "Location": "https://t1e4564477a3bf4db-json.servicebus.windows.net/$schemagroups/azsdk_net_test_group/schemas/Employee/versions/1?api-version=2022-10",
-        "Schema-Group-Name": "azsdk_net_test_group",
-        "Schema-Id": "2e2df660592c42e1965b8fb667ad9305",
-        "Schema-Id-Location": "https://t1e4564477a3bf4db-json.servicebus.windows.net:443/$schemagroups/$schemas/2e2df660592c42e1965b8fb667ad9305?api-version=2022-10",
-        "Schema-Name": "Employee",
-        "Schema-Version": "1",
-        "Schema-Versions-Location": "https://t1e4564477a3bf4db-json.servicebus.windows.net:443/$schemagroups/azsdk_net_test_group/schemas/Employee/versions?api-version=2022-10",
-        "Server": "Microsoft-HTTPAPI/2.0",
-        "Strict-Transport-Security": "max-age=31536000",
-        "Transfer-Encoding": "chunked"
-      },
-      "ResponseBody": {
-        "$schema": "http://json-schema.org/draft-04/schema#",
-        "title": "Employee",
-        "type": "object",
-        "additionalProperties": false,
-        "properties": {
-          "Age": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "Name": {
-            "type": [
-              "null",
-              "string"
-            ]
-          }
-        }
-      }
     }
   ],
   "Variables": {
     "AZURE_AUTHORITY_HOST": "https://login.microsoftonline.com/",
-    "RandomSeed": "347198277",
+    "RandomSeed": "565651683",
     "SCHEMAREGISTRY_ENDPOINT_JSON": "t1e4564477a3bf4db-json.servicebus.windows.net",
     "SCHEMAREGISTRY_GROUP": "azsdk_net_test_group"
   }

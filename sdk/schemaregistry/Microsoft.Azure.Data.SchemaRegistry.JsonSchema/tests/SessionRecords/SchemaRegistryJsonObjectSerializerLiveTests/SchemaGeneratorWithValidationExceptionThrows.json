@@ -1,0 +1,8 @@
+{
+  "Entries": [],
+  "Variables": {
+    "AZURE_AUTHORITY_HOST": "https://login.microsoftonline.com/",
+    "SCHEMAREGISTRY_ENDPOINT_JSON": "t1e4564477a3bf4db-json.servicebus.windows.net",
+    "SCHEMAREGISTRY_GROUP": "azsdk_net_test_group"
+  }
+}
