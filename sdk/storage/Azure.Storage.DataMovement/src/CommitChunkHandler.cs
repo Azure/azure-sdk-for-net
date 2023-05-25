@@ -2,10 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Collections.Generic;
-using System.Text;
 using Azure.Core;
-using Azure.Storage.DataMovement;
 using System.Threading.Tasks;
 using System.Threading;
 using System.Threading.Channels;

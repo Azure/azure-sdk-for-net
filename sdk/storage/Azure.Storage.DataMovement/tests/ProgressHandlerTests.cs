@@ -69,17 +69,30 @@ namespace Azure.Storage.DataMovement.Tests
             }
         }
 
-        private long[] CalculateExpectedBytesUpdates(int fileSize, int fileCount, int chunkSize)
+        private long[] CalculateExpectedBytesUpdates(int fileSize, int fileCount, int chunkSize, TransferType transferType)
         {
-            int numUpdates = (fileSize / chunkSize) * fileCount;
-            List<long> expectedBytesTransferred = new List<long>(numUpdates + 1);
-
+            List<long> expectedBytesTransferred = new List<long>();
             int totalBytes = 0;
-            for (int i = 0; i <= numUpdates; i++)
+
+            // Async copy does not use chunks
+            if (transferType == TransferType.AsyncCopy)
             {
-                expectedBytesTransferred.Add(totalBytes);
-                totalBytes += chunkSize;
+                for (int i = 0; i <= fileCount; i++)
+                {
+                    expectedBytesTransferred.Add(totalBytes);
+                    totalBytes += fileSize;
+                }
             }
+            else
+            {
+                int numUpdates = (fileSize / chunkSize) * fileCount;
+                for (int i = 0; i <= numUpdates; i++)
+                {
+                    expectedBytesTransferred.Add(totalBytes);
+                    totalBytes += chunkSize;
+                }
+            }
+
             return expectedBytesTransferred.ToArray();
         }
 
@@ -234,7 +247,7 @@ namespace Azure.Storage.DataMovement.Tests
         [TestCase(TransferType.Download)]
         [TestCase(TransferType.AsyncCopy)]
         [TestCase(TransferType.SyncCopy)]
-        public async Task ProgressHandler_Large(TransferType transferType)
+        public async Task ProgressHandler_Chunks(TransferType transferType)
         {
             // Arrange
             // For this test, file size should be multiple of chunk size to make predictable progress updates
@@ -286,7 +299,7 @@ namespace Azure.Storage.DataMovement.Tests
             await TransferAndAssertProgress(
                 sourceResource,
                 destinationResource,
-                CalculateExpectedBytesUpdates(fileSize, fileCount, chunkSize),
+                CalculateExpectedBytesUpdates(fileSize, fileCount, chunkSize, transferType),
                 10 /* fileCount */,
                 transferManagerOptions: transferManagerOptions,
                 transferOptions: transferOptions,

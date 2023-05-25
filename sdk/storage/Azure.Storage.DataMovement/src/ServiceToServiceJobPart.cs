@@ -259,6 +259,9 @@ namespace Azure.Storage.DataMovement
                     completeLength: length,
                     cancellationToken: _cancellationToken).ConfigureAwait(false);
 
+                // Report first chunk written to progress tracker
+                ReportBytesWritten(blockSize);
+
                 if (blockSize == length)
                 {
                     await CompleteTransferAsync().ConfigureAwait(false);
