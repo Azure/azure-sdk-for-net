@@ -70,6 +70,26 @@ namespace Azure.Core.Dynamic
         }
 
         /// <summary>
+        /// Converts the value to a byte array.
+        /// </summary>
+        /// <param name="value">The value to convert.</param>
+        public static implicit operator byte[](DynamicData value)
+        {
+            try
+            {
+                return value._element.GetBytesFromBase64();
+            }
+            catch (InvalidOperationException e)
+            {
+                throw new InvalidCastException(GetInvalidKindExceptionText(typeof(byte[]), value._element), e);
+            }
+            catch (FormatException formatException)
+            {
+                throw new InvalidCastException(GetInvalidFormatExceptionText(typeof(byte[]), value._element), formatException);
+            }
+        }
+
+        /// <summary>
         /// Converts the value to a <see cref="sbyte"/>.
         /// </summary>
         /// <param name="value">The value to convert.</param>

@@ -409,6 +409,40 @@ namespace Azure.Core.Json
             return value;
         }
 
+        public bool TryGetBytesFromBase64(out byte[]? value)
+        {
+            EnsureValid();
+
+            if (Changes.TryGetChange(_path, _highWaterMark, out MutableJsonChange change))
+            {
+                switch (change.Value)
+                {
+                    case byte[] b:
+                        value = b;
+                        return true;
+                    case JsonElement element:
+                        return element.TryGetBytesFromBase64(out value);
+                    case null:
+                        value = default;
+                        return false;
+                    default:
+                        return change.AsJsonElement().TryGetBytesFromBase64(out value);
+                }
+            }
+
+            return _element.TryGetBytesFromBase64(out value);
+        }
+
+        public byte[] GetBytesFromBase64()
+        {
+            if (!TryGetBytesFromBase64(out byte[]? value))
+            {
+                throw new FormatException(GetFormatExceptionText(_path, typeof(byte[])));
+            }
+
+            return value!;
+        }
+
         public bool TryGetDateTime(out DateTime value)
         {
             EnsureValid();
@@ -1024,6 +1058,9 @@ namespace Azure.Core.Json
                 case byte b:
                     Set(b);
                     break;
+                case byte[] b:
+                    Changes.AddChange(_path, b, _element.ValueKind != JsonValueKind.String);
+                    break;
                 case sbyte sb:
                     Set(sb);
                     break;
@@ -1072,8 +1109,6 @@ namespace Azure.Core.Json
                 case JsonDocument d:
                     Set(d.RootElement);
                     break;
-                case BinaryData:
-                    throw new NotSupportedException("Assigning a 'BinaryData' type is not supported.");
                 case Stream:
                     throw new NotSupportedException("Assigning a 'Stream' type is not supported.");
                 default:

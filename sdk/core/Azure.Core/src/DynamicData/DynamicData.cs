@@ -46,7 +46,8 @@ namespace Azure.Core.Dynamic
             {
                 Converters =
                 {
-                    new DefaultTimeSpanConverter()
+                    new DefaultTimeSpanConverter(),
+                    new BinaryDataConverter()
                 }
             };
 
@@ -250,6 +251,10 @@ namespace Azure.Core.Dynamic
                 byte b =>
                     _element.ValueKind == JsonValueKind.Number &&
                     _element.TryGetByte(out byte ob) && b == ob,
+
+                byte[] b =>
+                    _element.ValueKind == JsonValueKind.String &&
+                    _element.TryGetBytesFromBase64(out byte[]? ob) && b == ob,
 
                 sbyte s =>
                     _element.ValueKind == JsonValueKind.Number &&

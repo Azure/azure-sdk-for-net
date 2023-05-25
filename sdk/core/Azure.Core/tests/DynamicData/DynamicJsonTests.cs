@@ -846,7 +846,17 @@ namespace Azure.Core.Tests
         }
 
         [Test]
-        public void CanSetBinaryDataValue()
+        public void CanGetBinaryDataPropertyAsBytes()
+        {
+            dynamic json = BinaryData.FromString("""{ "data" : null }""").ToDynamicFromJson(DynamicCaseMapping.PascalToCamel);
+            BinaryData data = BinaryData.FromString("a");
+            json.Data = data;
+            byte[] bytes = json.Data;
+            CollectionAssert.AreEqual(data.ToArray(), bytes);
+        }
+
+        [Test]
+        public void CanSetBinaryDataValueAnonymousType()
         {
             dynamic json = BinaryData.FromString("""{ "data" : null }""").ToDynamicFromJson(DynamicCaseMapping.PascalToCamel);
 
@@ -856,13 +866,76 @@ namespace Azure.Core.Tests
             };
 
             BinaryData serializedValue = BinaryData.FromObjectAsJson(value);
-            JsonDocument doc = JsonDocument.Parse(serializedValue);
 
-            Assert.AreEqual(1, doc.RootElement.GetProperty("foo").GetInt32());
+            // existing property
+            json.Data = serializedValue;
 
-            json.data = serializedValue;
+            // new property
+            json.NewData = serializedValue;
 
-            Assert.AreEqual(1, (int)json.data.foo);
+            // To get the value back from BinaryData property, we must first obtain it as BinaryData.
+            BinaryData data = json.Data;
+            BinaryData newData = json.NewData;
+
+            // And now you can use dynamic data to read the values.
+            dynamic first = data.ToDynamicFromJson(DynamicCaseMapping.PascalToCamel);
+            dynamic second = newData.ToDynamicFromJson(DynamicCaseMapping.PascalToCamel);
+
+            Assert.AreEqual(1, (int)first.Foo);
+            Assert.AreEqual(1, (int)second.Foo);
+        }
+
+        [Test]
+        public void CanSetBinaryDataValueModelType()
+        {
+            dynamic json = BinaryData.FromString("""{ "data" : null }""").ToDynamicFromJson(DynamicCaseMapping.PascalToCamel);
+
+            SampleModel model = new SampleModel() { Number = 1, Message = "hi" };
+
+            BinaryData serializedValue = BinaryData.FromObjectAsJson(model);
+
+            // existing property
+            json.Data = serializedValue;
+
+            // new property
+            json.NewData = serializedValue;
+
+            // To get the value back from BinaryData property, we must first obtain it as BinaryData.
+            BinaryData data = json.Data;
+            BinaryData newData = json.NewData;
+
+            SampleModel first = data.ToObjectFromJson<SampleModel>();
+            SampleModel second = newData.ToObjectFromJson<SampleModel>();
+
+            Assert.AreEqual(1, first.Number);
+            Assert.AreEqual(1, second.Number);
+        }
+
+        [Test]
+        public void CanSerializeModelWithBinaryDataProperty()
+        {
+            string json = """{ "foo": null }""";
+            dynamic value = BinaryData.FromString(json).ToDynamicFromJson();
+
+            BinaryData b = BinaryData.FromString("b");
+
+            BinaryDataModel model = new BinaryDataModel()
+            {
+                StringProperty = "a",
+                BinaryDataProperty = b
+            };
+
+            // Existing property
+            value.Foo = model;
+
+            // Added property
+            value.Bar = model;
+
+            Assert.AreEqual("a", (string)value.Foo.StringProperty);
+            CollectionAssert.AreEqual(b.ToArray(), ((BinaryData)value.Foo.BinaryDataProperty).ToArray());
+
+            Assert.AreEqual("a", (string)value.Bar.StringProperty);
+            CollectionAssert.AreEqual(b.ToArray(), ((BinaryData)value.Bar.BinaryDataProperty).ToArray());
         }
 
         [Test]
@@ -1120,6 +1193,9 @@ namespace Azure.Core.Tests
             yield return new object[] { (sbyte)1, "1" };
             yield return new object[] { (short)1, "1" };
             yield return new object[] { (ushort)1, "1" };
+
+            byte[] bytes = new byte[] { 0, 1, 2 };
+            yield return new object[] { bytes, $"\"{Convert.ToBase64String(bytes)}\"" };
         }
 
         internal class CustomType
@@ -1171,6 +1247,13 @@ namespace Azure.Core.Tests
                 return Message == obj.Message && Number == obj.Number;
             }
         }
+
+        internal class BinaryDataModel
+        {
+            public string StringProperty { get; set; }
+            public BinaryData BinaryDataProperty { get; set; }
+        }
+
         private T JsonAsType<T>(string json)
         {
             dynamic jsonData = DynamicJsonTests.GetDynamicJson(json);

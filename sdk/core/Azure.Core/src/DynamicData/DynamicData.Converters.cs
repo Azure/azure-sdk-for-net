@@ -92,6 +92,7 @@ namespace Azure.Core.Dynamic
                 writer.WriteStringValue(value);
             }
         }
+
         private class UnixTimeDateTimeConverter : JsonConverter<DateTime>
         {
             public override DateTime Read(
@@ -140,6 +141,20 @@ namespace Azure.Core.Dynamic
                 // From: https://github.com/Azure/autorest.csharp/blob/bcc52a3d5788d03bb61c802619b1e3902214d304/src/assets/Generator.Shared/Utf8JsonWriterExtensions.cs#L64
                 long value = dateTimeValue.ToUniversalTime().ToUnixTimeSeconds();
                 writer.WriteNumberValue(value);
+            }
+        }
+
+        private class BinaryDataConverter : JsonConverter<BinaryData>
+        {
+            public override BinaryData Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
+            {
+                byte[] value = reader.GetBytesFromBase64();
+                return BinaryData.FromBytes(value);
+            }
+
+            public override void Write(Utf8JsonWriter writer, BinaryData value, JsonSerializerOptions options)
+            {
+                writer.WriteBase64StringValue(value);
             }
         }
     }

@@ -800,6 +800,7 @@ namespace Azure.Core.Dynamic
         public static explicit operator System.Guid (Azure.Core.Dynamic.DynamicData value) { throw null; }
         public static implicit operator bool (Azure.Core.Dynamic.DynamicData value) { throw null; }
         public static implicit operator byte (Azure.Core.Dynamic.DynamicData value) { throw null; }
+        public static implicit operator byte[] (Azure.Core.Dynamic.DynamicData value) { throw null; }
         public static implicit operator decimal (Azure.Core.Dynamic.DynamicData value) { throw null; }
         public static implicit operator double (Azure.Core.Dynamic.DynamicData value) { throw null; }
         public static implicit operator short (Azure.Core.Dynamic.DynamicData value) { throw null; }
