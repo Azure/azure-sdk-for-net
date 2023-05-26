@@ -1,0 +1,181 @@
+<?xml version="1.0" encoding="utf-8"?>
+<doc>
+  <members>
+    <member name="GetApplicationsAsync(Int32,String,Int32,String,Boolean,RequestContext)">
+<example>
+This sample shows how to call GetApplicationsAsync and parse the result.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var client = new BatchServiceClient(credential).GetApplicationsClient(<2022-10-01.16.0>);
+
+Response response = await client.GetApplicationsAsync();
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.ToString());
+]]></code>
+This sample shows how to call GetApplicationsAsync with all parameters, and how to parse the result.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var client = new BatchServiceClient(credential).GetApplicationsClient(<2022-10-01.16.0>);
+
+Response response = await client.GetApplicationsAsync(1234, "<ocpDate>", 1234, "<clientRequestId>", true);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("value")[0].GetProperty("id").ToString());
+Console.WriteLine(result.GetProperty("value")[0].GetProperty("displayName").ToString());
+Console.WriteLine(result.GetProperty("value")[0].GetProperty("versions")[0].ToString());
+Console.WriteLine(result.GetProperty("odata.nextLink").ToString());
+]]></code>
+</example>
+<remarks>
+This operation returns only Applications and versions that are available for
+use on Compute Nodes; that is, that can be used in an Package reference. For
+administrator information about applications and versions that are not yet
+available to Compute Nodes, use the Azure portal or the Azure Resource Manager
+API.
+
+Below is the JSON schema for the response payload.
+
+Response Body:
+
+Schema for <c>ApplicationListResult</c>:
+<code>{
+  value: [
+    {
+      id: string, # Required. A string that uniquely identifies the application within the Account.
+      displayName: string, # Required. The display name for the application.
+      versions: [string], # Required. The list of available versions of the application.
+    }
+  ], # Optional. The list of applications available in the Account.
+  odata.nextLink: string, # Optional. The URL to get the next set of results.
+}
+</code>
+
+</remarks>
+    </member>
+    <member name="GetApplications(Int32,String,Int32,String,Boolean,RequestContext)">
+<example>
+This sample shows how to call GetApplications and parse the result.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var client = new BatchServiceClient(credential).GetApplicationsClient(<2022-10-01.16.0>);
+
+Response response = client.GetApplications();
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.ToString());
+]]></code>
+This sample shows how to call GetApplications with all parameters, and how to parse the result.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var client = new BatchServiceClient(credential).GetApplicationsClient(<2022-10-01.16.0>);
+
+Response response = client.GetApplications(1234, "<ocpDate>", 1234, "<clientRequestId>", true);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("value")[0].GetProperty("id").ToString());
+Console.WriteLine(result.GetProperty("value")[0].GetProperty("displayName").ToString());
+Console.WriteLine(result.GetProperty("value")[0].GetProperty("versions")[0].ToString());
+Console.WriteLine(result.GetProperty("odata.nextLink").ToString());
+]]></code>
+</example>
+<remarks>
+This operation returns only Applications and versions that are available for
+use on Compute Nodes; that is, that can be used in an Package reference. For
+administrator information about applications and versions that are not yet
+available to Compute Nodes, use the Azure portal or the Azure Resource Manager
+API.
+
+Below is the JSON schema for the response payload.
+
+Response Body:
+
+Schema for <c>ApplicationListResult</c>:
+<code>{
+  value: [
+    {
+      id: string, # Required. A string that uniquely identifies the application within the Account.
+      displayName: string, # Required. The display name for the application.
+      versions: [string], # Required. The list of available versions of the application.
+    }
+  ], # Optional. The list of applications available in the Account.
+  odata.nextLink: string, # Optional. The URL to get the next set of results.
+}
+</code>
+
+</remarks>
+    </member>
+    <member name="GetApplicationAsync(String,RequestContext)">
+<example>
+This sample shows how to call GetApplicationAsync with required parameters and parse the result.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var client = new BatchServiceClient(credential).GetApplicationsClient(<2022-10-01.16.0>);
+
+Response response = await client.GetApplicationAsync("<applicationId>");
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("id").ToString());
+Console.WriteLine(result.GetProperty("displayName").ToString());
+Console.WriteLine(result.GetProperty("versions")[0].ToString());
+]]></code>
+</example>
+<remarks>
+This operation returns only Applications and versions that are available for
+use on Compute Nodes; that is, that can be used in an Package reference. For
+administrator information about Applications and versions that are not yet
+available to Compute Nodes, use the Azure portal or the Azure Resource Manager
+API.
+
+Below is the JSON schema for the response payload.
+
+Response Body:
+
+Schema for <c>Application</c>:
+<code>{
+  id: string, # Required. A string that uniquely identifies the application within the Account.
+  displayName: string, # Required. The display name for the application.
+  versions: [string], # Required. The list of available versions of the application.
+}
+</code>
+
+</remarks>
+    </member>
+    <member name="GetApplication(String,RequestContext)">
+<example>
+This sample shows how to call GetApplication with required parameters and parse the result.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var client = new BatchServiceClient(credential).GetApplicationsClient(<2022-10-01.16.0>);
+
+Response response = client.GetApplication("<applicationId>");
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("id").ToString());
+Console.WriteLine(result.GetProperty("displayName").ToString());
+Console.WriteLine(result.GetProperty("versions")[0].ToString());
+]]></code>
+</example>
+<remarks>
+This operation returns only Applications and versions that are available for
+use on Compute Nodes; that is, that can be used in an Package reference. For
+administrator information about Applications and versions that are not yet
+available to Compute Nodes, use the Azure portal or the Azure Resource Manager
+API.
+
+Below is the JSON schema for the response payload.
+
+Response Body:
+
+Schema for <c>Application</c>:
+<code>{
+  id: string, # Required. A string that uniquely identifies the application within the Account.
+  displayName: string, # Required. The display name for the application.
+  versions: [string], # Required. The list of available versions of the application.
+}
+</code>
+
+</remarks>
+    </member>
+  </members>
+</doc>

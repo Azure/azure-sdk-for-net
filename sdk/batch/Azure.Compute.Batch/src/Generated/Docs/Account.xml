@@ -1,0 +1,337 @@
+<?xml version="1.0" encoding="utf-8"?>
+<doc>
+  <members>
+    <member name="GetSupportedImagesAsync(Int32,String,Int32,String,Boolean,String,RequestContext)">
+<example>
+This sample shows how to call GetSupportedImagesAsync and parse the result.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var client = new BatchServiceClient(credential).GetAccountClient(<2022-10-01.16.0>);
+
+Response response = await client.GetSupportedImagesAsync();
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.ToString());
+]]></code>
+This sample shows how to call GetSupportedImagesAsync with all parameters, and how to parse the result.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var client = new BatchServiceClient(credential).GetAccountClient(<2022-10-01.16.0>);
+
+Response response = await client.GetSupportedImagesAsync(1234, "<ocpDate>", 1234, "<clientRequestId>", true, "<filter>");
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("value")[0].GetProperty("nodeAgentSKUId").ToString());
+Console.WriteLine(result.GetProperty("value")[0].GetProperty("imageReference").GetProperty("publisher").ToString());
+Console.WriteLine(result.GetProperty("value")[0].GetProperty("imageReference").GetProperty("offer").ToString());
+Console.WriteLine(result.GetProperty("value")[0].GetProperty("imageReference").GetProperty("sku").ToString());
+Console.WriteLine(result.GetProperty("value")[0].GetProperty("imageReference").GetProperty("version").ToString());
+Console.WriteLine(result.GetProperty("value")[0].GetProperty("imageReference").GetProperty("virtualMachineImageId").ToString());
+Console.WriteLine(result.GetProperty("value")[0].GetProperty("imageReference").GetProperty("exactVersion").ToString());
+Console.WriteLine(result.GetProperty("value")[0].GetProperty("osType").ToString());
+Console.WriteLine(result.GetProperty("value")[0].GetProperty("capabilities")[0].ToString());
+Console.WriteLine(result.GetProperty("value")[0].GetProperty("batchSupportEndOfLife").ToString());
+Console.WriteLine(result.GetProperty("value")[0].GetProperty("verificationType").ToString());
+Console.WriteLine(result.GetProperty("odata.nextLink").ToString());
+]]></code>
+</example>
+<remarks>
+Below is the JSON schema for the response payload.
+
+Response Body:
+
+Schema for <c>AccountListSupportedImagesResult</c>:
+<code>{
+  value: [
+    {
+      nodeAgentSKUId: string, # Required. The ID of the Compute Node agent SKU which the Image supports.
+      imageReference: {
+        publisher: string, # Optional. For example, Canonical or MicrosoftWindowsServer.
+        offer: string, # Optional. For example, UbuntuServer or WindowsServer.
+        sku: string, # Optional. For example, 18.04-LTS or 2019-Datacenter.
+        version: string, # Optional. A value of &apos;latest&apos; can be specified to select the latest version of an Image.
+If omitted, the default is &apos;latest&apos;.
+        virtualMachineImageId: string, # Optional. This property is mutually exclusive with other ImageReference properties. The
+Shared Image Gallery Image must have replicas in the same region and must be in
+the same subscription as the Azure Batch account. If the image version is not
+specified in the imageId, the latest version will be used. For information
+about the firewall settings for the Batch Compute Node agent to communicate
+with the Batch service see
+https://docs.microsoft.com/en-us/azure/batch/batch-api-basics#virtual-network-vnet-and-firewall-configuration.
+        exactVersion: string, # Optional. The specific version of the platform image or marketplace image used to create
+the node. This read-only field differs from &apos;version&apos; only if the value
+specified for &apos;version&apos; when the pool was created was &apos;latest&apos;.
+      }, # Required. A reference to an Azure Virtual Machines Marketplace Image or a Shared Image
+Gallery Image. To get the list of all Azure Marketplace Image references
+verified by Azure Batch, see the &apos;List Supported Images&apos; operation.
+      osType: &quot;linux&quot; | &quot;windows&quot;, # Required. The type of operating system (e.g. Windows or Linux) of the Image.
+      capabilities: [string], # Optional. Not every capability of the Image is listed. Capabilities in this list are
+considered of special interest and are generally related to integration with
+other features in the Azure Batch service.
+      batchSupportEndOfLife: string (date &amp; time), # Optional. The time when the Azure Batch service will stop accepting create Pool requests
+for the Image.
+      verificationType: &quot;verified&quot; | &quot;unverified&quot;, # Required. Whether the Azure Batch service actively verifies that the Image is compatible
+with the associated Compute Node agent SKU.
+    }
+  ], # Optional. The list of supported Virtual Machine Images.
+  odata.nextLink: string, # Optional. The URL to get the next set of results.
+}
+</code>
+
+</remarks>
+    </member>
+    <member name="GetSupportedImages(Int32,String,Int32,String,Boolean,String,RequestContext)">
+<example>
+This sample shows how to call GetSupportedImages and parse the result.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var client = new BatchServiceClient(credential).GetAccountClient(<2022-10-01.16.0>);
+
+Response response = client.GetSupportedImages();
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.ToString());
+]]></code>
+This sample shows how to call GetSupportedImages with all parameters, and how to parse the result.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var client = new BatchServiceClient(credential).GetAccountClient(<2022-10-01.16.0>);
+
+Response response = client.GetSupportedImages(1234, "<ocpDate>", 1234, "<clientRequestId>", true, "<filter>");
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("value")[0].GetProperty("nodeAgentSKUId").ToString());
+Console.WriteLine(result.GetProperty("value")[0].GetProperty("imageReference").GetProperty("publisher").ToString());
+Console.WriteLine(result.GetProperty("value")[0].GetProperty("imageReference").GetProperty("offer").ToString());
+Console.WriteLine(result.GetProperty("value")[0].GetProperty("imageReference").GetProperty("sku").ToString());
+Console.WriteLine(result.GetProperty("value")[0].GetProperty("imageReference").GetProperty("version").ToString());
+Console.WriteLine(result.GetProperty("value")[0].GetProperty("imageReference").GetProperty("virtualMachineImageId").ToString());
+Console.WriteLine(result.GetProperty("value")[0].GetProperty("imageReference").GetProperty("exactVersion").ToString());
+Console.WriteLine(result.GetProperty("value")[0].GetProperty("osType").ToString());
+Console.WriteLine(result.GetProperty("value")[0].GetProperty("capabilities")[0].ToString());
+Console.WriteLine(result.GetProperty("value")[0].GetProperty("batchSupportEndOfLife").ToString());
+Console.WriteLine(result.GetProperty("value")[0].GetProperty("verificationType").ToString());
+Console.WriteLine(result.GetProperty("odata.nextLink").ToString());
+]]></code>
+</example>
+<remarks>
+Below is the JSON schema for the response payload.
+
+Response Body:
+
+Schema for <c>AccountListSupportedImagesResult</c>:
+<code>{
+  value: [
+    {
+      nodeAgentSKUId: string, # Required. The ID of the Compute Node agent SKU which the Image supports.
+      imageReference: {
+        publisher: string, # Optional. For example, Canonical or MicrosoftWindowsServer.
+        offer: string, # Optional. For example, UbuntuServer or WindowsServer.
+        sku: string, # Optional. For example, 18.04-LTS or 2019-Datacenter.
+        version: string, # Optional. A value of &apos;latest&apos; can be specified to select the latest version of an Image.
+If omitted, the default is &apos;latest&apos;.
+        virtualMachineImageId: string, # Optional. This property is mutually exclusive with other ImageReference properties. The
+Shared Image Gallery Image must have replicas in the same region and must be in
+the same subscription as the Azure Batch account. If the image version is not
+specified in the imageId, the latest version will be used. For information
+about the firewall settings for the Batch Compute Node agent to communicate
+with the Batch service see
+https://docs.microsoft.com/en-us/azure/batch/batch-api-basics#virtual-network-vnet-and-firewall-configuration.
+        exactVersion: string, # Optional. The specific version of the platform image or marketplace image used to create
+the node. This read-only field differs from &apos;version&apos; only if the value
+specified for &apos;version&apos; when the pool was created was &apos;latest&apos;.
+      }, # Required. A reference to an Azure Virtual Machines Marketplace Image or a Shared Image
+Gallery Image. To get the list of all Azure Marketplace Image references
+verified by Azure Batch, see the &apos;List Supported Images&apos; operation.
+      osType: &quot;linux&quot; | &quot;windows&quot;, # Required. The type of operating system (e.g. Windows or Linux) of the Image.
+      capabilities: [string], # Optional. Not every capability of the Image is listed. Capabilities in this list are
+considered of special interest and are generally related to integration with
+other features in the Azure Batch service.
+      batchSupportEndOfLife: string (date &amp; time), # Optional. The time when the Azure Batch service will stop accepting create Pool requests
+for the Image.
+      verificationType: &quot;verified&quot; | &quot;unverified&quot;, # Required. Whether the Azure Batch service actively verifies that the Image is compatible
+with the associated Compute Node agent SKU.
+    }
+  ], # Optional. The list of supported Virtual Machine Images.
+  odata.nextLink: string, # Optional. The URL to get the next set of results.
+}
+</code>
+
+</remarks>
+    </member>
+    <member name="GetPoolNodeCountsAsync(Int32,String,Int32,String,Boolean,String,RequestContext)">
+<example>
+This sample shows how to call GetPoolNodeCountsAsync and parse the result.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var client = new BatchServiceClient(credential).GetAccountClient(<2022-10-01.16.0>);
+
+Response response = await client.GetPoolNodeCountsAsync();
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.ToString());
+]]></code>
+This sample shows how to call GetPoolNodeCountsAsync with all parameters, and how to parse the result.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var client = new BatchServiceClient(credential).GetAccountClient(<2022-10-01.16.0>);
+
+Response response = await client.GetPoolNodeCountsAsync(1234, "<ocpDate>", 1234, "<clientRequestId>", true, "<filter>");
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("value")[0].GetProperty("poolId").ToString());
+Console.WriteLine(result.GetProperty("value")[0].GetProperty("dedicated").GetProperty("creating").ToString());
+Console.WriteLine(result.GetProperty("value")[0].GetProperty("dedicated").GetProperty("idle").ToString());
+Console.WriteLine(result.GetProperty("value")[0].GetProperty("dedicated").GetProperty("offline").ToString());
+Console.WriteLine(result.GetProperty("value")[0].GetProperty("dedicated").GetProperty("preempted").ToString());
+Console.WriteLine(result.GetProperty("value")[0].GetProperty("dedicated").GetProperty("rebooting").ToString());
+Console.WriteLine(result.GetProperty("value")[0].GetProperty("dedicated").GetProperty("reimaging").ToString());
+Console.WriteLine(result.GetProperty("value")[0].GetProperty("dedicated").GetProperty("running").ToString());
+Console.WriteLine(result.GetProperty("value")[0].GetProperty("dedicated").GetProperty("starting").ToString());
+Console.WriteLine(result.GetProperty("value")[0].GetProperty("dedicated").GetProperty("startTaskFailed").ToString());
+Console.WriteLine(result.GetProperty("value")[0].GetProperty("dedicated").GetProperty("leavingPool").ToString());
+Console.WriteLine(result.GetProperty("value")[0].GetProperty("dedicated").GetProperty("unknown").ToString());
+Console.WriteLine(result.GetProperty("value")[0].GetProperty("dedicated").GetProperty("unusable").ToString());
+Console.WriteLine(result.GetProperty("value")[0].GetProperty("dedicated").GetProperty("waitingForStartTask").ToString());
+Console.WriteLine(result.GetProperty("value")[0].GetProperty("dedicated").GetProperty("total").ToString());
+Console.WriteLine(result.GetProperty("value")[0].GetProperty("lowPriority").GetProperty("creating").ToString());
+Console.WriteLine(result.GetProperty("value")[0].GetProperty("lowPriority").GetProperty("idle").ToString());
+Console.WriteLine(result.GetProperty("value")[0].GetProperty("lowPriority").GetProperty("offline").ToString());
+Console.WriteLine(result.GetProperty("value")[0].GetProperty("lowPriority").GetProperty("preempted").ToString());
+Console.WriteLine(result.GetProperty("value")[0].GetProperty("lowPriority").GetProperty("rebooting").ToString());
+Console.WriteLine(result.GetProperty("value")[0].GetProperty("lowPriority").GetProperty("reimaging").ToString());
+Console.WriteLine(result.GetProperty("value")[0].GetProperty("lowPriority").GetProperty("running").ToString());
+Console.WriteLine(result.GetProperty("value")[0].GetProperty("lowPriority").GetProperty("starting").ToString());
+Console.WriteLine(result.GetProperty("value")[0].GetProperty("lowPriority").GetProperty("startTaskFailed").ToString());
+Console.WriteLine(result.GetProperty("value")[0].GetProperty("lowPriority").GetProperty("leavingPool").ToString());
+Console.WriteLine(result.GetProperty("value")[0].GetProperty("lowPriority").GetProperty("unknown").ToString());
+Console.WriteLine(result.GetProperty("value")[0].GetProperty("lowPriority").GetProperty("unusable").ToString());
+Console.WriteLine(result.GetProperty("value")[0].GetProperty("lowPriority").GetProperty("waitingForStartTask").ToString());
+Console.WriteLine(result.GetProperty("value")[0].GetProperty("lowPriority").GetProperty("total").ToString());
+Console.WriteLine(result.GetProperty("odata.nextLink").ToString());
+]]></code>
+</example>
+<remarks>
+Below is the JSON schema for the response payload.
+
+Response Body:
+
+Schema for <c>PoolNodeCountsListResult</c>:
+<code>{
+  value: [
+    {
+      poolId: string, # Required. The ID of the Pool.
+      dedicated: {
+        creating: number, # Required. The number of Compute Nodes in the creating state.
+        idle: number, # Required. The number of Compute Nodes in the idle state.
+        offline: number, # Required. The number of Compute Nodes in the offline state.
+        preempted: number, # Required. The number of Compute Nodes in the preempted state.
+        rebooting: number, # Required. The count of Compute Nodes in the rebooting state.
+        reimaging: number, # Required. The number of Compute Nodes in the reimaging state.
+        running: number, # Required. The number of Compute Nodes in the running state.
+        starting: number, # Required. The number of Compute Nodes in the starting state.
+        startTaskFailed: number, # Required. The number of Compute Nodes in the startTaskFailed state.
+        leavingPool: number, # Required. The number of Compute Nodes in the leavingPool state.
+        unknown: number, # Required. The number of Compute Nodes in the unknown state.
+        unusable: number, # Required. The number of Compute Nodes in the unusable state.
+        waitingForStartTask: number, # Required. The number of Compute Nodes in the waitingForStartTask state.
+        total: number, # Required. The total number of Compute Nodes.
+      }, # Optional. The number of Compute Nodes in each Compute Node state.
+      lowPriority: NodeCounts, # Optional. The number of Compute Nodes in each Compute Node state.
+    }
+  ], # Optional. A list of Compute Node counts by Pool.
+  odata.nextLink: string, # Optional. The URL to get the next set of results.
+}
+</code>
+
+</remarks>
+    </member>
+    <member name="GetPoolNodeCounts(Int32,String,Int32,String,Boolean,String,RequestContext)">
+<example>
+This sample shows how to call GetPoolNodeCounts and parse the result.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var client = new BatchServiceClient(credential).GetAccountClient(<2022-10-01.16.0>);
+
+Response response = client.GetPoolNodeCounts();
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.ToString());
+]]></code>
+This sample shows how to call GetPoolNodeCounts with all parameters, and how to parse the result.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var client = new BatchServiceClient(credential).GetAccountClient(<2022-10-01.16.0>);
+
+Response response = client.GetPoolNodeCounts(1234, "<ocpDate>", 1234, "<clientRequestId>", true, "<filter>");
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("value")[0].GetProperty("poolId").ToString());
+Console.WriteLine(result.GetProperty("value")[0].GetProperty("dedicated").GetProperty("creating").ToString());
+Console.WriteLine(result.GetProperty("value")[0].GetProperty("dedicated").GetProperty("idle").ToString());
+Console.WriteLine(result.GetProperty("value")[0].GetProperty("dedicated").GetProperty("offline").ToString());
+Console.WriteLine(result.GetProperty("value")[0].GetProperty("dedicated").GetProperty("preempted").ToString());
+Console.WriteLine(result.GetProperty("value")[0].GetProperty("dedicated").GetProperty("rebooting").ToString());
+Console.WriteLine(result.GetProperty("value")[0].GetProperty("dedicated").GetProperty("reimaging").ToString());
+Console.WriteLine(result.GetProperty("value")[0].GetProperty("dedicated").GetProperty("running").ToString());
+Console.WriteLine(result.GetProperty("value")[0].GetProperty("dedicated").GetProperty("starting").ToString());
+Console.WriteLine(result.GetProperty("value")[0].GetProperty("dedicated").GetProperty("startTaskFailed").ToString());
+Console.WriteLine(result.GetProperty("value")[0].GetProperty("dedicated").GetProperty("leavingPool").ToString());
+Console.WriteLine(result.GetProperty("value")[0].GetProperty("dedicated").GetProperty("unknown").ToString());
+Console.WriteLine(result.GetProperty("value")[0].GetProperty("dedicated").GetProperty("unusable").ToString());
+Console.WriteLine(result.GetProperty("value")[0].GetProperty("dedicated").GetProperty("waitingForStartTask").ToString());
+Console.WriteLine(result.GetProperty("value")[0].GetProperty("dedicated").GetProperty("total").ToString());
+Console.WriteLine(result.GetProperty("value")[0].GetProperty("lowPriority").GetProperty("creating").ToString());
+Console.WriteLine(result.GetProperty("value")[0].GetProperty("lowPriority").GetProperty("idle").ToString());
+Console.WriteLine(result.GetProperty("value")[0].GetProperty("lowPriority").GetProperty("offline").ToString());
+Console.WriteLine(result.GetProperty("value")[0].GetProperty("lowPriority").GetProperty("preempted").ToString());
+Console.WriteLine(result.GetProperty("value")[0].GetProperty("lowPriority").GetProperty("rebooting").ToString());
+Console.WriteLine(result.GetProperty("value")[0].GetProperty("lowPriority").GetProperty("reimaging").ToString());
+Console.WriteLine(result.GetProperty("value")[0].GetProperty("lowPriority").GetProperty("running").ToString());
+Console.WriteLine(result.GetProperty("value")[0].GetProperty("lowPriority").GetProperty("starting").ToString());
+Console.WriteLine(result.GetProperty("value")[0].GetProperty("lowPriority").GetProperty("startTaskFailed").ToString());
+Console.WriteLine(result.GetProperty("value")[0].GetProperty("lowPriority").GetProperty("leavingPool").ToString());
+Console.WriteLine(result.GetProperty("value")[0].GetProperty("lowPriority").GetProperty("unknown").ToString());
+Console.WriteLine(result.GetProperty("value")[0].GetProperty("lowPriority").GetProperty("unusable").ToString());
+Console.WriteLine(result.GetProperty("value")[0].GetProperty("lowPriority").GetProperty("waitingForStartTask").ToString());
+Console.WriteLine(result.GetProperty("value")[0].GetProperty("lowPriority").GetProperty("total").ToString());
+Console.WriteLine(result.GetProperty("odata.nextLink").ToString());
+]]></code>
+</example>
+<remarks>
+Below is the JSON schema for the response payload.
+
+Response Body:
+
+Schema for <c>PoolNodeCountsListResult</c>:
+<code>{
+  value: [
+    {
+      poolId: string, # Required. The ID of the Pool.
+      dedicated: {
+        creating: number, # Required. The number of Compute Nodes in the creating state.
+        idle: number, # Required. The number of Compute Nodes in the idle state.
+        offline: number, # Required. The number of Compute Nodes in the offline state.
+        preempted: number, # Required. The number of Compute Nodes in the preempted state.
+        rebooting: number, # Required. The count of Compute Nodes in the rebooting state.
+        reimaging: number, # Required. The number of Compute Nodes in the reimaging state.
+        running: number, # Required. The number of Compute Nodes in the running state.
+        starting: number, # Required. The number of Compute Nodes in the starting state.
+        startTaskFailed: number, # Required. The number of Compute Nodes in the startTaskFailed state.
+        leavingPool: number, # Required. The number of Compute Nodes in the leavingPool state.
+        unknown: number, # Required. The number of Compute Nodes in the unknown state.
+        unusable: number, # Required. The number of Compute Nodes in the unusable state.
+        waitingForStartTask: number, # Required. The number of Compute Nodes in the waitingForStartTask state.
+        total: number, # Required. The total number of Compute Nodes.
+      }, # Optional. The number of Compute Nodes in each Compute Node state.
+      lowPriority: NodeCounts, # Optional. The number of Compute Nodes in each Compute Node state.
+    }
+  ], # Optional. A list of Compute Node counts by Pool.
+  odata.nextLink: string, # Optional. The URL to get the next set of results.
+}
+</code>
+
+</remarks>
+    </member>
+  </members>
+</doc>

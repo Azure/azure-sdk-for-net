@@ -1,0 +1,2293 @@
+<?xml version="1.0" encoding="utf-8"?>
+<doc>
+  <members>
+    <member name="AddUserAsync(String,String,RequestContent,Int32,String,Boolean,String,RequestContext)">
+<example>
+This sample shows how to call AddUserAsync with required parameters and request content.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var client = new BatchServiceClient(credential).GetComputeNodesClient(<2022-10-01.16.0>);
+
+var data = new {
+    name = "<name>",
+};
+
+Response response = await client.AddUserAsync("<poolId>", "<nodeId>", RequestContent.Create(data));
+Console.WriteLine(response.Status);
+]]></code>
+This sample shows how to call AddUserAsync with all parameters and request content.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var client = new BatchServiceClient(credential).GetComputeNodesClient(<2022-10-01.16.0>);
+
+var data = new {
+    name = "<name>",
+    isAdmin = true,
+    expiryTime = "2022-05-10T14:57:31.2311892-04:00",
+    password = "<password>",
+    sshPublicKey = "<sshPublicKey>",
+};
+
+Response response = await client.AddUserAsync("<poolId>", "<nodeId>", RequestContent.Create(data), 1234, "<clientRequestId>", true, "<ocpDate>");
+Console.WriteLine(response.Status);
+]]></code>
+</example>
+<remarks>
+You can add a user Account to a Compute Node only when it is in the idle or
+running state.
+
+Below is the JSON schema for the request payload.
+
+Request Body:
+
+Schema for <c>ComputeNodeUser</c>:
+<code>{
+  name: string, # Required. The user name of the Account.
+  isAdmin: boolean, # Optional. The default value is false.
+  expiryTime: string (date &amp; time), # Optional. If omitted, the default is 1 day from the current time. For Linux Compute
+Nodes, the expiryTime has a precision up to a day.
+  password: string, # Optional. The password is required for Windows Compute Nodes (those created with
+&apos;cloudServiceConfiguration&apos;, or created with &apos;virtualMachineConfiguration&apos;
+using a Windows Image reference). For Linux Compute Nodes, the password can
+optionally be specified along with the sshPublicKey property.
+  sshPublicKey: string, # Optional. The public key should be compatible with OpenSSH encoding and should be base 64
+encoded. This property can be specified only for Linux Compute Nodes. If this
+is specified for a Windows Compute Node, then the Batch service rejects the
+request; if you are calling the REST API directly, the HTTP status code is 400
+(Bad Request).
+}
+</code>
+
+</remarks>
+    </member>
+    <member name="AddUser(String,String,RequestContent,Int32,String,Boolean,String,RequestContext)">
+<example>
+This sample shows how to call AddUser with required parameters and request content.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var client = new BatchServiceClient(credential).GetComputeNodesClient(<2022-10-01.16.0>);
+
+var data = new {
+    name = "<name>",
+};
+
+Response response = client.AddUser("<poolId>", "<nodeId>", RequestContent.Create(data));
+Console.WriteLine(response.Status);
+]]></code>
+This sample shows how to call AddUser with all parameters and request content.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var client = new BatchServiceClient(credential).GetComputeNodesClient(<2022-10-01.16.0>);
+
+var data = new {
+    name = "<name>",
+    isAdmin = true,
+    expiryTime = "2022-05-10T14:57:31.2311892-04:00",
+    password = "<password>",
+    sshPublicKey = "<sshPublicKey>",
+};
+
+Response response = client.AddUser("<poolId>", "<nodeId>", RequestContent.Create(data), 1234, "<clientRequestId>", true, "<ocpDate>");
+Console.WriteLine(response.Status);
+]]></code>
+</example>
+<remarks>
+You can add a user Account to a Compute Node only when it is in the idle or
+running state.
+
+Below is the JSON schema for the request payload.
+
+Request Body:
+
+Schema for <c>ComputeNodeUser</c>:
+<code>{
+  name: string, # Required. The user name of the Account.
+  isAdmin: boolean, # Optional. The default value is false.
+  expiryTime: string (date &amp; time), # Optional. If omitted, the default is 1 day from the current time. For Linux Compute
+Nodes, the expiryTime has a precision up to a day.
+  password: string, # Optional. The password is required for Windows Compute Nodes (those created with
+&apos;cloudServiceConfiguration&apos;, or created with &apos;virtualMachineConfiguration&apos;
+using a Windows Image reference). For Linux Compute Nodes, the password can
+optionally be specified along with the sshPublicKey property.
+  sshPublicKey: string, # Optional. The public key should be compatible with OpenSSH encoding and should be base 64
+encoded. This property can be specified only for Linux Compute Nodes. If this
+is specified for a Windows Compute Node, then the Batch service rejects the
+request; if you are calling the REST API directly, the HTTP status code is 400
+(Bad Request).
+}
+</code>
+
+</remarks>
+    </member>
+    <member name="DeleteUserAsync(String,String,String,Int32,String,Boolean,String,RequestContext)">
+<example>
+This sample shows how to call DeleteUserAsync with required parameters.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var client = new BatchServiceClient(credential).GetComputeNodesClient(<2022-10-01.16.0>);
+
+Response response = await client.DeleteUserAsync("<poolId>", "<nodeId>", "<userName>");
+Console.WriteLine(response.Status);
+]]></code>
+This sample shows how to call DeleteUserAsync with all parameters.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var client = new BatchServiceClient(credential).GetComputeNodesClient(<2022-10-01.16.0>);
+
+Response response = await client.DeleteUserAsync("<poolId>", "<nodeId>", "<userName>", 1234, "<clientRequestId>", true, "<ocpDate>");
+Console.WriteLine(response.Status);
+]]></code>
+</example>
+<remarks>
+You can delete a user Account to a Compute Node only when it is in the idle or
+running state.
+</remarks>
+    </member>
+    <member name="DeleteUser(String,String,String,Int32,String,Boolean,String,RequestContext)">
+<example>
+This sample shows how to call DeleteUser with required parameters.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var client = new BatchServiceClient(credential).GetComputeNodesClient(<2022-10-01.16.0>);
+
+Response response = client.DeleteUser("<poolId>", "<nodeId>", "<userName>");
+Console.WriteLine(response.Status);
+]]></code>
+This sample shows how to call DeleteUser with all parameters.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var client = new BatchServiceClient(credential).GetComputeNodesClient(<2022-10-01.16.0>);
+
+Response response = client.DeleteUser("<poolId>", "<nodeId>", "<userName>", 1234, "<clientRequestId>", true, "<ocpDate>");
+Console.WriteLine(response.Status);
+]]></code>
+</example>
+<remarks>
+You can delete a user Account to a Compute Node only when it is in the idle or
+running state.
+</remarks>
+    </member>
+    <member name="UpdateUserAsync(String,String,String,RequestContent,Int32,String,Boolean,String,RequestContext)">
+<example>
+This sample shows how to call UpdateUserAsync with required parameters.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var client = new BatchServiceClient(credential).GetComputeNodesClient(<2022-10-01.16.0>);
+
+var data = new {};
+
+Response response = await client.UpdateUserAsync("<poolId>", "<nodeId>", "<userName>", RequestContent.Create(data));
+Console.WriteLine(response.Status);
+]]></code>
+This sample shows how to call UpdateUserAsync with all parameters and request content.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var client = new BatchServiceClient(credential).GetComputeNodesClient(<2022-10-01.16.0>);
+
+var data = new {
+    password = "<password>",
+    expiryTime = "2022-05-10T14:57:31.2311892-04:00",
+    sshPublicKey = "<sshPublicKey>",
+};
+
+Response response = await client.UpdateUserAsync("<poolId>", "<nodeId>", "<userName>", RequestContent.Create(data), 1234, "<clientRequestId>", true, "<ocpDate>");
+Console.WriteLine(response.Status);
+]]></code>
+</example>
+<remarks>
+This operation replaces of all the updatable properties of the Account. For
+example, if the expiryTime element is not specified, the current value is
+replaced with the default value, not left unmodified. You can update a user
+Account on a Compute Node only when it is in the idle or running state.
+
+Below is the JSON schema for the request payload.
+
+Request Body:
+
+Schema for <c>NodeUpdateUserParameters</c>:
+<code>{
+  password: string, # Optional. The password is required for Windows Compute Nodes (those created with
+&apos;cloudServiceConfiguration&apos;, or created with &apos;virtualMachineConfiguration&apos;
+using a Windows Image reference). For Linux Compute Nodes, the password can
+optionally be specified along with the sshPublicKey property. If omitted, any
+existing password is removed.
+  expiryTime: string (date &amp; time), # Optional. If omitted, the default is 1 day from the current time. For Linux Compute
+Nodes, the expiryTime has a precision up to a day.
+  sshPublicKey: string, # Optional. The public key should be compatible with OpenSSH encoding and should be base 64
+encoded. This property can be specified only for Linux Compute Nodes. If this
+is specified for a Windows Compute Node, then the Batch service rejects the
+request; if you are calling the REST API directly, the HTTP status code is 400
+(Bad Request). If omitted, any existing SSH public key is removed.
+}
+</code>
+
+</remarks>
+    </member>
+    <member name="UpdateUser(String,String,String,RequestContent,Int32,String,Boolean,String,RequestContext)">
+<example>
+This sample shows how to call UpdateUser with required parameters.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var client = new BatchServiceClient(credential).GetComputeNodesClient(<2022-10-01.16.0>);
+
+var data = new {};
+
+Response response = client.UpdateUser("<poolId>", "<nodeId>", "<userName>", RequestContent.Create(data));
+Console.WriteLine(response.Status);
+]]></code>
+This sample shows how to call UpdateUser with all parameters and request content.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var client = new BatchServiceClient(credential).GetComputeNodesClient(<2022-10-01.16.0>);
+
+var data = new {
+    password = "<password>",
+    expiryTime = "2022-05-10T14:57:31.2311892-04:00",
+    sshPublicKey = "<sshPublicKey>",
+};
+
+Response response = client.UpdateUser("<poolId>", "<nodeId>", "<userName>", RequestContent.Create(data), 1234, "<clientRequestId>", true, "<ocpDate>");
+Console.WriteLine(response.Status);
+]]></code>
+</example>
+<remarks>
+This operation replaces of all the updatable properties of the Account. For
+example, if the expiryTime element is not specified, the current value is
+replaced with the default value, not left unmodified. You can update a user
+Account on a Compute Node only when it is in the idle or running state.
+
+Below is the JSON schema for the request payload.
+
+Request Body:
+
+Schema for <c>NodeUpdateUserParameters</c>:
+<code>{
+  password: string, # Optional. The password is required for Windows Compute Nodes (those created with
+&apos;cloudServiceConfiguration&apos;, or created with &apos;virtualMachineConfiguration&apos;
+using a Windows Image reference). For Linux Compute Nodes, the password can
+optionally be specified along with the sshPublicKey property. If omitted, any
+existing password is removed.
+  expiryTime: string (date &amp; time), # Optional. If omitted, the default is 1 day from the current time. For Linux Compute
+Nodes, the expiryTime has a precision up to a day.
+  sshPublicKey: string, # Optional. The public key should be compatible with OpenSSH encoding and should be base 64
+encoded. This property can be specified only for Linux Compute Nodes. If this
+is specified for a Windows Compute Node, then the Batch service rejects the
+request; if you are calling the REST API directly, the HTTP status code is 400
+(Bad Request). If omitted, any existing SSH public key is removed.
+}
+</code>
+
+</remarks>
+    </member>
+    <member name="GetComputeNodeAsync(String,String,Int32,String,Boolean,String,String,RequestContext)">
+<example>
+This sample shows how to call GetComputeNodeAsync with required parameters and parse the result.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var client = new BatchServiceClient(credential).GetComputeNodesClient(<2022-10-01.16.0>);
+
+Response response = await client.GetComputeNodeAsync("<poolId>", "<nodeId>");
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.ToString());
+]]></code>
+This sample shows how to call GetComputeNodeAsync with all parameters, and how to parse the result.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var client = new BatchServiceClient(credential).GetComputeNodesClient(<2022-10-01.16.0>);
+
+Response response = await client.GetComputeNodeAsync("<poolId>", "<nodeId>", 1234, "<clientRequestId>", true, "<ocpDate>", "<select>");
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("id").ToString());
+Console.WriteLine(result.GetProperty("url").ToString());
+Console.WriteLine(result.GetProperty("state").ToString());
+Console.WriteLine(result.GetProperty("schedulingState").ToString());
+Console.WriteLine(result.GetProperty("stateTransitionTime").ToString());
+Console.WriteLine(result.GetProperty("lastBootTime").ToString());
+Console.WriteLine(result.GetProperty("allocationTime").ToString());
+Console.WriteLine(result.GetProperty("ipAddress").ToString());
+Console.WriteLine(result.GetProperty("affinityId").ToString());
+Console.WriteLine(result.GetProperty("vmSize").ToString());
+Console.WriteLine(result.GetProperty("totalTasksRun").ToString());
+Console.WriteLine(result.GetProperty("runningTasksCount").ToString());
+Console.WriteLine(result.GetProperty("runningTaskSlotsCount").ToString());
+Console.WriteLine(result.GetProperty("totalTasksSucceeded").ToString());
+Console.WriteLine(result.GetProperty("recentTasks")[0].GetProperty("taskUrl").ToString());
+Console.WriteLine(result.GetProperty("recentTasks")[0].GetProperty("jobId").ToString());
+Console.WriteLine(result.GetProperty("recentTasks")[0].GetProperty("taskId").ToString());
+Console.WriteLine(result.GetProperty("recentTasks")[0].GetProperty("subtaskId").ToString());
+Console.WriteLine(result.GetProperty("recentTasks")[0].GetProperty("taskState").ToString());
+Console.WriteLine(result.GetProperty("recentTasks")[0].GetProperty("executionInfo").GetProperty("startTime").ToString());
+Console.WriteLine(result.GetProperty("recentTasks")[0].GetProperty("executionInfo").GetProperty("endTime").ToString());
+Console.WriteLine(result.GetProperty("recentTasks")[0].GetProperty("executionInfo").GetProperty("exitCode").ToString());
+Console.WriteLine(result.GetProperty("recentTasks")[0].GetProperty("executionInfo").GetProperty("containerInfo").GetProperty("containerId").ToString());
+Console.WriteLine(result.GetProperty("recentTasks")[0].GetProperty("executionInfo").GetProperty("containerInfo").GetProperty("state").ToString());
+Console.WriteLine(result.GetProperty("recentTasks")[0].GetProperty("executionInfo").GetProperty("containerInfo").GetProperty("error").ToString());
+Console.WriteLine(result.GetProperty("recentTasks")[0].GetProperty("executionInfo").GetProperty("failureInfo").GetProperty("category").ToString());
+Console.WriteLine(result.GetProperty("recentTasks")[0].GetProperty("executionInfo").GetProperty("failureInfo").GetProperty("code").ToString());
+Console.WriteLine(result.GetProperty("recentTasks")[0].GetProperty("executionInfo").GetProperty("failureInfo").GetProperty("message").ToString());
+Console.WriteLine(result.GetProperty("recentTasks")[0].GetProperty("executionInfo").GetProperty("failureInfo").GetProperty("details")[0].GetProperty("name").ToString());
+Console.WriteLine(result.GetProperty("recentTasks")[0].GetProperty("executionInfo").GetProperty("failureInfo").GetProperty("details")[0].GetProperty("value").ToString());
+Console.WriteLine(result.GetProperty("recentTasks")[0].GetProperty("executionInfo").GetProperty("retryCount").ToString());
+Console.WriteLine(result.GetProperty("recentTasks")[0].GetProperty("executionInfo").GetProperty("lastRetryTime").ToString());
+Console.WriteLine(result.GetProperty("recentTasks")[0].GetProperty("executionInfo").GetProperty("requeueCount").ToString());
+Console.WriteLine(result.GetProperty("recentTasks")[0].GetProperty("executionInfo").GetProperty("lastRequeueTime").ToString());
+Console.WriteLine(result.GetProperty("recentTasks")[0].GetProperty("executionInfo").GetProperty("result").ToString());
+Console.WriteLine(result.GetProperty("startTask").GetProperty("commandLine").ToString());
+Console.WriteLine(result.GetProperty("startTask").GetProperty("containerSettings").GetProperty("containerRunOptions").ToString());
+Console.WriteLine(result.GetProperty("startTask").GetProperty("containerSettings").GetProperty("imageName").ToString());
+Console.WriteLine(result.GetProperty("startTask").GetProperty("containerSettings").GetProperty("registry").GetProperty("username").ToString());
+Console.WriteLine(result.GetProperty("startTask").GetProperty("containerSettings").GetProperty("registry").GetProperty("password").ToString());
+Console.WriteLine(result.GetProperty("startTask").GetProperty("containerSettings").GetProperty("registry").GetProperty("registryServer").ToString());
+Console.WriteLine(result.GetProperty("startTask").GetProperty("containerSettings").GetProperty("registry").GetProperty("identityReference").GetProperty("resourceId").ToString());
+Console.WriteLine(result.GetProperty("startTask").GetProperty("containerSettings").GetProperty("workingDirectory").ToString());
+Console.WriteLine(result.GetProperty("startTask").GetProperty("resourceFiles")[0].GetProperty("autoStorageContainerName").ToString());
+Console.WriteLine(result.GetProperty("startTask").GetProperty("resourceFiles")[0].GetProperty("storageContainerUrl").ToString());
+Console.WriteLine(result.GetProperty("startTask").GetProperty("resourceFiles")[0].GetProperty("httpUrl").ToString());
+Console.WriteLine(result.GetProperty("startTask").GetProperty("resourceFiles")[0].GetProperty("blobPrefix").ToString());
+Console.WriteLine(result.GetProperty("startTask").GetProperty("resourceFiles")[0].GetProperty("filePath").ToString());
+Console.WriteLine(result.GetProperty("startTask").GetProperty("resourceFiles")[0].GetProperty("fileMode").ToString());
+Console.WriteLine(result.GetProperty("startTask").GetProperty("resourceFiles")[0].GetProperty("identityReference").GetProperty("resourceId").ToString());
+Console.WriteLine(result.GetProperty("startTask").GetProperty("environmentSettings")[0].GetProperty("name").ToString());
+Console.WriteLine(result.GetProperty("startTask").GetProperty("environmentSettings")[0].GetProperty("value").ToString());
+Console.WriteLine(result.GetProperty("startTask").GetProperty("userIdentity").GetProperty("username").ToString());
+Console.WriteLine(result.GetProperty("startTask").GetProperty("userIdentity").GetProperty("autoUser").GetProperty("scope").ToString());
+Console.WriteLine(result.GetProperty("startTask").GetProperty("userIdentity").GetProperty("autoUser").GetProperty("elevationLevel").ToString());
+Console.WriteLine(result.GetProperty("startTask").GetProperty("maxTaskRetryCount").ToString());
+Console.WriteLine(result.GetProperty("startTask").GetProperty("waitForSuccess").ToString());
+Console.WriteLine(result.GetProperty("startTaskInfo").GetProperty("state").ToString());
+Console.WriteLine(result.GetProperty("startTaskInfo").GetProperty("startTime").ToString());
+Console.WriteLine(result.GetProperty("startTaskInfo").GetProperty("endTime").ToString());
+Console.WriteLine(result.GetProperty("startTaskInfo").GetProperty("exitCode").ToString());
+Console.WriteLine(result.GetProperty("startTaskInfo").GetProperty("containerInfo").GetProperty("containerId").ToString());
+Console.WriteLine(result.GetProperty("startTaskInfo").GetProperty("containerInfo").GetProperty("state").ToString());
+Console.WriteLine(result.GetProperty("startTaskInfo").GetProperty("containerInfo").GetProperty("error").ToString());
+Console.WriteLine(result.GetProperty("startTaskInfo").GetProperty("failureInfo").GetProperty("category").ToString());
+Console.WriteLine(result.GetProperty("startTaskInfo").GetProperty("failureInfo").GetProperty("code").ToString());
+Console.WriteLine(result.GetProperty("startTaskInfo").GetProperty("failureInfo").GetProperty("message").ToString());
+Console.WriteLine(result.GetProperty("startTaskInfo").GetProperty("failureInfo").GetProperty("details")[0].GetProperty("name").ToString());
+Console.WriteLine(result.GetProperty("startTaskInfo").GetProperty("failureInfo").GetProperty("details")[0].GetProperty("value").ToString());
+Console.WriteLine(result.GetProperty("startTaskInfo").GetProperty("retryCount").ToString());
+Console.WriteLine(result.GetProperty("startTaskInfo").GetProperty("lastRetryTime").ToString());
+Console.WriteLine(result.GetProperty("startTaskInfo").GetProperty("result").ToString());
+Console.WriteLine(result.GetProperty("certificateReferences")[0].GetProperty("thumbprint").ToString());
+Console.WriteLine(result.GetProperty("certificateReferences")[0].GetProperty("thumbprintAlgorithm").ToString());
+Console.WriteLine(result.GetProperty("certificateReferences")[0].GetProperty("storeLocation").ToString());
+Console.WriteLine(result.GetProperty("certificateReferences")[0].GetProperty("storeName").ToString());
+Console.WriteLine(result.GetProperty("certificateReferences")[0].GetProperty("visibility")[0].ToString());
+Console.WriteLine(result.GetProperty("errors")[0].GetProperty("code").ToString());
+Console.WriteLine(result.GetProperty("errors")[0].GetProperty("message").ToString());
+Console.WriteLine(result.GetProperty("errors")[0].GetProperty("errorDetails")[0].GetProperty("name").ToString());
+Console.WriteLine(result.GetProperty("errors")[0].GetProperty("errorDetails")[0].GetProperty("value").ToString());
+Console.WriteLine(result.GetProperty("isDedicated").ToString());
+Console.WriteLine(result.GetProperty("endpointConfiguration").GetProperty("inboundEndpoints")[0].GetProperty("name").ToString());
+Console.WriteLine(result.GetProperty("endpointConfiguration").GetProperty("inboundEndpoints")[0].GetProperty("protocol").ToString());
+Console.WriteLine(result.GetProperty("endpointConfiguration").GetProperty("inboundEndpoints")[0].GetProperty("publicIPAddress").ToString());
+Console.WriteLine(result.GetProperty("endpointConfiguration").GetProperty("inboundEndpoints")[0].GetProperty("publicFQDN").ToString());
+Console.WriteLine(result.GetProperty("endpointConfiguration").GetProperty("inboundEndpoints")[0].GetProperty("frontendPort").ToString());
+Console.WriteLine(result.GetProperty("endpointConfiguration").GetProperty("inboundEndpoints")[0].GetProperty("backendPort").ToString());
+Console.WriteLine(result.GetProperty("nodeAgentInfo").GetProperty("version").ToString());
+Console.WriteLine(result.GetProperty("nodeAgentInfo").GetProperty("lastUpdateTime").ToString());
+Console.WriteLine(result.GetProperty("virtualMachineInfo").GetProperty("imageReference").GetProperty("publisher").ToString());
+Console.WriteLine(result.GetProperty("virtualMachineInfo").GetProperty("imageReference").GetProperty("offer").ToString());
+Console.WriteLine(result.GetProperty("virtualMachineInfo").GetProperty("imageReference").GetProperty("sku").ToString());
+Console.WriteLine(result.GetProperty("virtualMachineInfo").GetProperty("imageReference").GetProperty("version").ToString());
+Console.WriteLine(result.GetProperty("virtualMachineInfo").GetProperty("imageReference").GetProperty("virtualMachineImageId").ToString());
+Console.WriteLine(result.GetProperty("virtualMachineInfo").GetProperty("imageReference").GetProperty("exactVersion").ToString());
+]]></code>
+</example>
+<remarks>
+Below is the JSON schema for the response payload.
+
+Response Body:
+
+Schema for <c>ComputeNode</c>:
+<code>{
+  id: string, # Optional. Every Compute Node that is added to a Pool is assigned a unique ID. Whenever a
+Compute Node is removed from a Pool, all of its local files are deleted, and
+the ID is reclaimed and could be reused for new Compute Nodes.
+  url: string, # Optional. The URL of the Compute Node.
+  state: &quot;idle&quot; | &quot;rebooting&quot; | &quot;reimaging&quot; | &quot;running&quot; | &quot;unusable&quot; | &quot;creating&quot; | &quot;starting&quot; | &quot;waitingforstarttask&quot; | &quot;starttaskfailed&quot; | &quot;unknown&quot; | &quot;leavingpool&quot; | &quot;offline&quot; | &quot;preempted&quot;, # Optional. The Spot/Low-priority Compute Node has been preempted. Tasks which were running
+on the Compute Node when it was preempted will be rescheduled when another
+Compute Node becomes available.
+  schedulingState: &quot;enabled&quot; | &quot;disabled&quot;, # Optional. Whether the Compute Node is available for Task scheduling.
+  stateTransitionTime: string (date &amp; time), # Optional. The time at which the Compute Node entered its current state.
+  lastBootTime: string (date &amp; time), # Optional. This property may not be present if the Compute Node state is unusable.
+  allocationTime: string (date &amp; time), # Optional. This is the time when the Compute Node was initially allocated and doesn&apos;t
+change once set. It is not updated when the Compute Node is service healed or
+preempted.
+  ipAddress: string, # Optional. Every Compute Node that is added to a Pool is assigned a unique IP address.
+Whenever a Compute Node is removed from a Pool, all of its local files are
+deleted, and the IP address is reclaimed and could be reused for new Compute
+Nodes.
+  affinityId: string, # Optional. Note that this is just a soft affinity. If the target Compute Node is busy or
+unavailable at the time the Task is scheduled, then the Task will be scheduled
+elsewhere.
+  vmSize: string, # Optional. For information about available sizes of virtual machines in Pools, see Choose
+a VM size for Compute Nodes in an Azure Batch Pool
+(https://docs.microsoft.com/azure/batch/batch-pool-vm-sizes).
+  totalTasksRun: number, # Optional. The total number of Job Tasks completed on the Compute Node. This includes Job
+Manager Tasks and normal Tasks, but not Job Preparation, Job Release or Start
+Tasks.
+  runningTasksCount: number, # Optional. The total number of currently running Job Tasks on the Compute Node. This
+includes Job Manager Tasks and normal Tasks, but not Job Preparation, Job
+Release or Start Tasks.
+  runningTaskSlotsCount: number, # Optional. The total number of scheduling slots used by currently running Job Tasks on the
+Compute Node. This includes Job Manager Tasks and normal Tasks, but not Job
+Preparation, Job Release or Start Tasks.
+  totalTasksSucceeded: number, # Optional. The total number of Job Tasks which completed successfully (with exitCode 0) on
+the Compute Node. This includes Job Manager Tasks and normal Tasks, but not Job
+Preparation, Job Release or Start Tasks.
+  recentTasks: [
+    {
+      taskUrl: string, # Optional. The URL of the Task.
+      jobId: string, # Optional. The ID of the Job to which the Task belongs.
+      taskId: string, # Optional. The ID of the Task.
+      subtaskId: number, # Optional. The ID of the subtask if the Task is a multi-instance Task.
+      taskState: &quot;active&quot; | &quot;preparing&quot; | &quot;running&quot; | &quot;completed&quot;, # Required. The state of the Task.
+      executionInfo: {
+        startTime: string (date &amp; time), # Optional. &apos;Running&apos; corresponds to the running state, so if the Task specifies resource
+files or Packages, then the start time reflects the time at which the Task
+started downloading or deploying these. If the Task has been restarted or
+retried, this is the most recent time at which the Task started running. This
+property is present only for Tasks that are in the running or completed state.
+        endTime: string (date &amp; time), # Optional. This property is set only if the Task is in the Completed state.
+        exitCode: number, # Optional. This property is set only if the Task is in the completed state. In general,
+the exit code for a process reflects the specific convention implemented by the
+application developer for that process. If you use the exit code value to make
+decisions in your code, be sure that you know the exit code convention used by
+the application process. However, if the Batch service terminates the Task (due
+to timeout, or user termination via the API) you may see an operating
+system-defined exit code.
+        containerInfo: {
+          containerId: string, # Optional. The ID of the container.
+          state: string, # Optional. This is the state of the container according to the Docker service. It is
+equivalent to the status field returned by &quot;docker inspect&quot;.
+          error: string, # Optional. This is the detailed error string from the Docker service, if available. It is
+equivalent to the error field returned by &quot;docker inspect&quot;.
+        }, # Optional. This property is set only if the Task runs in a container context.
+        failureInfo: {
+          category: &quot;usererror&quot; | &quot;servererror&quot;, # Required. The category of the error.
+          code: string, # Optional. An identifier for the Task error. Codes are invariant and are intended to be
+consumed programmatically.
+          message: string, # Optional. A message describing the Task error, intended to be suitable for display in a
+user interface.
+          details: [NameValuePair], # Optional. A list of additional details related to the error.
+        }, # Optional. This property is set only if the Task is in the completed state and encountered
+a failure.
+        retryCount: number, # Required. Task application failures (non-zero exit code) are retried, pre-processing
+errors (the Task could not be run) and file upload errors are not retried. The
+Batch service will retry the Task up to the limit specified by the constraints.
+        lastRetryTime: string (date &amp; time), # Optional. This element is present only if the Task was retried (i.e. retryCount is
+nonzero). If present, this is typically the same as startTime, but may be
+different if the Task has been restarted for reasons other than retry; for
+example, if the Compute Node was rebooted during a retry, then the startTime is
+updated but the lastRetryTime is not.
+        requeueCount: number, # Required. When the user removes Compute Nodes from a Pool (by resizing/shrinking the
+pool) or when the Job is being disabled, the user can specify that running
+Tasks on the Compute Nodes be requeued for execution. This count tracks how
+many times the Task has been requeued for these reasons.
+        lastRequeueTime: string (date &amp; time), # Optional. This property is set only if the requeueCount is nonzero.
+        result: &quot;success&quot; | &quot;failure&quot;, # Optional. If the value is &apos;failed&apos;, then the details of the failure can be found in the
+failureInfo property.
+      }, # Optional. Information about the execution of a Task.
+    }
+  ], # Optional. This property is present only if at least one Task has run on this Compute Node
+since it was assigned to the Pool.
+  startTask: {
+    commandLine: string, # Required. The command line does not run under a shell, and therefore cannot take
+advantage of shell features such as environment variable expansion. If you want
+to take advantage of such features, you should invoke the shell in the command
+line, for example using &quot;cmd /c MyCommand&quot; in Windows or &quot;/bin/sh -c
+MyCommand&quot; in Linux. If the command line refers to file paths, it should use a
+relative path (relative to the Task working directory), or use the Batch
+provided environment variable
+(https://docs.microsoft.com/en-us/azure/batch/batch-compute-node-environment-variables).
+    containerSettings: {
+      containerRunOptions: string, # Optional. These additional options are supplied as arguments to the &quot;docker create&quot;
+command, in addition to those controlled by the Batch Service.
+      imageName: string, # Required. This is the full Image reference, as would be specified to &quot;docker pull&quot;. If
+no tag is provided as part of the Image name, the tag &quot;:latest&quot; is used as a
+default.
+      registry: {
+        username: string, # Optional. The user name to log into the registry server.
+        password: string, # Optional. The password to log into the registry server.
+        registryServer: string, # Optional. If omitted, the default is &quot;docker.io&quot;.
+        identityReference: {
+          resourceId: string, # Optional. The ARM resource id of the user assigned identity.
+        }, # Optional. The reference to a user assigned identity associated with the Batch pool which
+a compute node will use.
+      }, # Optional. This setting can be omitted if was already provided at Pool creation.
+      workingDirectory: &quot;taskWorkingDirectory&quot; | &quot;containerImageDefault&quot;, # Optional. The default is &apos;taskWorkingDirectory&apos;.
+    }, # Optional. When this is specified, all directories recursively below the
+AZ_BATCH_NODE_ROOT_DIR (the root of Azure Batch directories on the node) are
+mapped into the container, all Task environment variables are mapped into the
+container, and the Task command line is executed in the container. Files
+produced in the container outside of AZ_BATCH_NODE_ROOT_DIR might not be
+reflected to the host disk, meaning that Batch file APIs will not be able to
+access those files.
+    resourceFiles: [ResourceFile], # Optional. Files listed under this element are located in the Task&apos;s working directory.
+    environmentSettings: [EnvironmentSetting], # Optional. A list of environment variable settings for the StartTask.
+    userIdentity: {
+      username: string, # Optional. The userName and autoUser properties are mutually exclusive; you must specify
+one but not both.
+      autoUser: {
+        scope: &quot;task&quot; | &quot;pool&quot;, # Optional. The default value is pool. If the pool is running Windows a value of Task
+should be specified if stricter isolation between tasks is required. For
+example, if the task mutates the registry in a way which could impact other
+tasks, or if certificates have been specified on the pool which should not be
+accessible by normal tasks but should be accessible by StartTasks.
+        elevationLevel: &quot;nonadmin&quot; | &quot;admin&quot;, # Optional. The default value is nonAdmin.
+      }, # Optional. The userName and autoUser properties are mutually exclusive; you must specify
+one but not both.
+    }, # Optional. If omitted, the Task runs as a non-administrative user unique to the Task.
+    maxTaskRetryCount: number, # Optional. The Batch service retries a Task if its exit code is nonzero. Note that this
+value specifically controls the number of retries. The Batch service will try
+the Task once, and may then retry up to this limit. For example, if the maximum
+retry count is 3, Batch tries the Task up to 4 times (one initial try and 3
+retries). If the maximum retry count is 0, the Batch service does not retry the
+Task. If the maximum retry count is -1, the Batch service retries the Task
+without limit, however this is not recommended for a start task or any task.
+The default value is 0 (no retries)
+    waitForSuccess: boolean, # Optional. If true and the StartTask fails on a Node, the Batch service retries the
+StartTask up to its maximum retry count (maxTaskRetryCount). If the Task has
+still not completed successfully after all retries, then the Batch service
+marks the Node unusable, and will not schedule Tasks to it. This condition can
+be detected via the Compute Node state and failure info details. If false, the
+Batch service will not wait for the StartTask to complete. In this case, other
+Tasks can start executing on the Compute Node while the StartTask is still
+running; and even if the StartTask fails, new Tasks will continue to be
+scheduled on the Compute Node. The default is true.
+  }, # Optional. Batch will retry Tasks when a recovery operation is triggered on a Node.
+Examples of recovery operations include (but are not limited to) when an
+unhealthy Node is rebooted or a Compute Node disappeared due to host failure.
+Retries due to recovery operations are independent of and are not counted
+against the maxTaskRetryCount. Even if the maxTaskRetryCount is 0, an internal
+retry due to a recovery operation may occur. Because of this, all Tasks should
+be idempotent. This means Tasks need to tolerate being interrupted and
+restarted without causing any corruption or duplicate data. The best practice
+for long running Tasks is to use some form of checkpointing. In some cases the
+StartTask may be re-run even though the Compute Node was not rebooted. Special
+care should be taken to avoid StartTasks which create breakaway process or
+install/launch services from the StartTask working directory, as this will
+block Batch from being able to re-run the StartTask.
+  startTaskInfo: {
+    state: &quot;running&quot; | &quot;completed&quot;, # Required. The state of the StartTask on the Compute Node.
+    startTime: string (date &amp; time), # Required. This value is reset every time the Task is restarted or retried (that is, this
+is the most recent time at which the StartTask started running).
+    endTime: string (date &amp; time), # Optional. This is the end time of the most recent run of the StartTask, if that run has
+completed (even if that run failed and a retry is pending). This element is not
+present if the StartTask is currently running.
+    exitCode: number, # Optional. This property is set only if the StartTask is in the completed state. In
+general, the exit code for a process reflects the specific convention
+implemented by the application developer for that process. If you use the exit
+code value to make decisions in your code, be sure that you know the exit code
+convention used by the application process. However, if the Batch service
+terminates the StartTask (due to timeout, or user termination via the API) you
+may see an operating system-defined exit code.
+    containerInfo: TaskContainerExecutionInformation, # Optional. This property is set only if the Task runs in a container context.
+    failureInfo: TaskFailureInformation, # Optional. This property is set only if the Task is in the completed state and encountered
+a failure.
+    retryCount: number, # Required. Task application failures (non-zero exit code) are retried, pre-processing
+errors (the Task could not be run) and file upload errors are not retried. The
+Batch service will retry the Task up to the limit specified by the constraints.
+    lastRetryTime: string (date &amp; time), # Optional. This element is present only if the Task was retried (i.e. retryCount is
+nonzero). If present, this is typically the same as startTime, but may be
+different if the Task has been restarted for reasons other than retry; for
+example, if the Compute Node was rebooted during a retry, then the startTime is
+updated but the lastRetryTime is not.
+    result: &quot;success&quot; | &quot;failure&quot;, # Optional. If the value is &apos;failed&apos;, then the details of the failure can be found in the
+failureInfo property.
+  }, # Optional. Information about a StartTask running on a Compute Node.
+  certificateReferences: [CertificateReference], # Optional. For Windows Nodes, the Batch service installs the Certificates to the specified
+Certificate store and location. For Linux Compute Nodes, the Certificates are
+stored in a directory inside the Task working directory and an environment
+variable AZ_BATCH_CERTIFICATES_DIR is supplied to the Task to query for this
+location. For Certificates with visibility of &apos;remoteUser&apos;, a &apos;certs&apos; directory
+is created in the user&apos;s home directory (e.g., /home/{user-name}/certs) and
+Certificates are placed in that directory.
+  errors: [ComputeNodeError], # Optional. The list of errors that are currently being encountered by the Compute Node.
+  isDedicated: boolean, # Optional. Whether this Compute Node is a dedicated Compute Node. If false, the Compute
+Node is a Spot/Low-priority Compute Node.
+  endpointConfiguration: {
+    inboundEndpoints: [InboundEndpoint], # Required. The list of inbound endpoints that are accessible on the Compute Node.
+  }, # Optional. The endpoint configuration for the Compute Node.
+  nodeAgentInfo: {
+    version: string, # Required. This version number can be checked against the Compute Node agent release notes
+located at
+https://github.com/Azure/Batch/blob/master/changelogs/nodeagent/CHANGELOG.md.
+    lastUpdateTime: string (date &amp; time), # Required. This is the most recent time that the Compute Node agent was updated to a new
+version.
+  }, # Optional. The Batch Compute Node agent is a program that runs on each Compute Node in the
+Pool and provides Batch capability on the Compute Node.
+  virtualMachineInfo: {
+    imageReference: {
+      publisher: string, # Optional. For example, Canonical or MicrosoftWindowsServer.
+      offer: string, # Optional. For example, UbuntuServer or WindowsServer.
+      sku: string, # Optional. For example, 18.04-LTS or 2019-Datacenter.
+      version: string, # Optional. A value of &apos;latest&apos; can be specified to select the latest version of an Image.
+If omitted, the default is &apos;latest&apos;.
+      virtualMachineImageId: string, # Optional. This property is mutually exclusive with other ImageReference properties. The
+Shared Image Gallery Image must have replicas in the same region and must be in
+the same subscription as the Azure Batch account. If the image version is not
+specified in the imageId, the latest version will be used. For information
+about the firewall settings for the Batch Compute Node agent to communicate
+with the Batch service see
+https://docs.microsoft.com/en-us/azure/batch/batch-api-basics#virtual-network-vnet-and-firewall-configuration.
+      exactVersion: string, # Optional. The specific version of the platform image or marketplace image used to create
+the node. This read-only field differs from &apos;version&apos; only if the value
+specified for &apos;version&apos; when the pool was created was &apos;latest&apos;.
+    }, # Optional. A reference to an Azure Virtual Machines Marketplace Image or a Shared Image
+Gallery Image. To get the list of all Azure Marketplace Image references
+verified by Azure Batch, see the &apos;List Supported Images&apos; operation.
+  }, # Optional. Info about the current state of the virtual machine.
+}
+</code>
+
+</remarks>
+    </member>
+    <member name="GetComputeNode(String,String,Int32,String,Boolean,String,String,RequestContext)">
+<example>
+This sample shows how to call GetComputeNode with required parameters and parse the result.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var client = new BatchServiceClient(credential).GetComputeNodesClient(<2022-10-01.16.0>);
+
+Response response = client.GetComputeNode("<poolId>", "<nodeId>");
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.ToString());
+]]></code>
+This sample shows how to call GetComputeNode with all parameters, and how to parse the result.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var client = new BatchServiceClient(credential).GetComputeNodesClient(<2022-10-01.16.0>);
+
+Response response = client.GetComputeNode("<poolId>", "<nodeId>", 1234, "<clientRequestId>", true, "<ocpDate>", "<select>");
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("id").ToString());
+Console.WriteLine(result.GetProperty("url").ToString());
+Console.WriteLine(result.GetProperty("state").ToString());
+Console.WriteLine(result.GetProperty("schedulingState").ToString());
+Console.WriteLine(result.GetProperty("stateTransitionTime").ToString());
+Console.WriteLine(result.GetProperty("lastBootTime").ToString());
+Console.WriteLine(result.GetProperty("allocationTime").ToString());
+Console.WriteLine(result.GetProperty("ipAddress").ToString());
+Console.WriteLine(result.GetProperty("affinityId").ToString());
+Console.WriteLine(result.GetProperty("vmSize").ToString());
+Console.WriteLine(result.GetProperty("totalTasksRun").ToString());
+Console.WriteLine(result.GetProperty("runningTasksCount").ToString());
+Console.WriteLine(result.GetProperty("runningTaskSlotsCount").ToString());
+Console.WriteLine(result.GetProperty("totalTasksSucceeded").ToString());
+Console.WriteLine(result.GetProperty("recentTasks")[0].GetProperty("taskUrl").ToString());
+Console.WriteLine(result.GetProperty("recentTasks")[0].GetProperty("jobId").ToString());
+Console.WriteLine(result.GetProperty("recentTasks")[0].GetProperty("taskId").ToString());
+Console.WriteLine(result.GetProperty("recentTasks")[0].GetProperty("subtaskId").ToString());
+Console.WriteLine(result.GetProperty("recentTasks")[0].GetProperty("taskState").ToString());
+Console.WriteLine(result.GetProperty("recentTasks")[0].GetProperty("executionInfo").GetProperty("startTime").ToString());
+Console.WriteLine(result.GetProperty("recentTasks")[0].GetProperty("executionInfo").GetProperty("endTime").ToString());
+Console.WriteLine(result.GetProperty("recentTasks")[0].GetProperty("executionInfo").GetProperty("exitCode").ToString());
+Console.WriteLine(result.GetProperty("recentTasks")[0].GetProperty("executionInfo").GetProperty("containerInfo").GetProperty("containerId").ToString());
+Console.WriteLine(result.GetProperty("recentTasks")[0].GetProperty("executionInfo").GetProperty("containerInfo").GetProperty("state").ToString());
+Console.WriteLine(result.GetProperty("recentTasks")[0].GetProperty("executionInfo").GetProperty("containerInfo").GetProperty("error").ToString());
+Console.WriteLine(result.GetProperty("recentTasks")[0].GetProperty("executionInfo").GetProperty("failureInfo").GetProperty("category").ToString());
+Console.WriteLine(result.GetProperty("recentTasks")[0].GetProperty("executionInfo").GetProperty("failureInfo").GetProperty("code").ToString());
+Console.WriteLine(result.GetProperty("recentTasks")[0].GetProperty("executionInfo").GetProperty("failureInfo").GetProperty("message").ToString());
+Console.WriteLine(result.GetProperty("recentTasks")[0].GetProperty("executionInfo").GetProperty("failureInfo").GetProperty("details")[0].GetProperty("name").ToString());
+Console.WriteLine(result.GetProperty("recentTasks")[0].GetProperty("executionInfo").GetProperty("failureInfo").GetProperty("details")[0].GetProperty("value").ToString());
+Console.WriteLine(result.GetProperty("recentTasks")[0].GetProperty("executionInfo").GetProperty("retryCount").ToString());
+Console.WriteLine(result.GetProperty("recentTasks")[0].GetProperty("executionInfo").GetProperty("lastRetryTime").ToString());
+Console.WriteLine(result.GetProperty("recentTasks")[0].GetProperty("executionInfo").GetProperty("requeueCount").ToString());
+Console.WriteLine(result.GetProperty("recentTasks")[0].GetProperty("executionInfo").GetProperty("lastRequeueTime").ToString());
+Console.WriteLine(result.GetProperty("recentTasks")[0].GetProperty("executionInfo").GetProperty("result").ToString());
+Console.WriteLine(result.GetProperty("startTask").GetProperty("commandLine").ToString());
+Console.WriteLine(result.GetProperty("startTask").GetProperty("containerSettings").GetProperty("containerRunOptions").ToString());
+Console.WriteLine(result.GetProperty("startTask").GetProperty("containerSettings").GetProperty("imageName").ToString());
+Console.WriteLine(result.GetProperty("startTask").GetProperty("containerSettings").GetProperty("registry").GetProperty("username").ToString());
+Console.WriteLine(result.GetProperty("startTask").GetProperty("containerSettings").GetProperty("registry").GetProperty("password").ToString());
+Console.WriteLine(result.GetProperty("startTask").GetProperty("containerSettings").GetProperty("registry").GetProperty("registryServer").ToString());
+Console.WriteLine(result.GetProperty("startTask").GetProperty("containerSettings").GetProperty("registry").GetProperty("identityReference").GetProperty("resourceId").ToString());
+Console.WriteLine(result.GetProperty("startTask").GetProperty("containerSettings").GetProperty("workingDirectory").ToString());
+Console.WriteLine(result.GetProperty("startTask").GetProperty("resourceFiles")[0].GetProperty("autoStorageContainerName").ToString());
+Console.WriteLine(result.GetProperty("startTask").GetProperty("resourceFiles")[0].GetProperty("storageContainerUrl").ToString());
+Console.WriteLine(result.GetProperty("startTask").GetProperty("resourceFiles")[0].GetProperty("httpUrl").ToString());
+Console.WriteLine(result.GetProperty("startTask").GetProperty("resourceFiles")[0].GetProperty("blobPrefix").ToString());
+Console.WriteLine(result.GetProperty("startTask").GetProperty("resourceFiles")[0].GetProperty("filePath").ToString());
+Console.WriteLine(result.GetProperty("startTask").GetProperty("resourceFiles")[0].GetProperty("fileMode").ToString());
+Console.WriteLine(result.GetProperty("startTask").GetProperty("resourceFiles")[0].GetProperty("identityReference").GetProperty("resourceId").ToString());
+Console.WriteLine(result.GetProperty("startTask").GetProperty("environmentSettings")[0].GetProperty("name").ToString());
+Console.WriteLine(result.GetProperty("startTask").GetProperty("environmentSettings")[0].GetProperty("value").ToString());
+Console.WriteLine(result.GetProperty("startTask").GetProperty("userIdentity").GetProperty("username").ToString());
+Console.WriteLine(result.GetProperty("startTask").GetProperty("userIdentity").GetProperty("autoUser").GetProperty("scope").ToString());
+Console.WriteLine(result.GetProperty("startTask").GetProperty("userIdentity").GetProperty("autoUser").GetProperty("elevationLevel").ToString());
+Console.WriteLine(result.GetProperty("startTask").GetProperty("maxTaskRetryCount").ToString());
+Console.WriteLine(result.GetProperty("startTask").GetProperty("waitForSuccess").ToString());
+Console.WriteLine(result.GetProperty("startTaskInfo").GetProperty("state").ToString());
+Console.WriteLine(result.GetProperty("startTaskInfo").GetProperty("startTime").ToString());
+Console.WriteLine(result.GetProperty("startTaskInfo").GetProperty("endTime").ToString());
+Console.WriteLine(result.GetProperty("startTaskInfo").GetProperty("exitCode").ToString());
+Console.WriteLine(result.GetProperty("startTaskInfo").GetProperty("containerInfo").GetProperty("containerId").ToString());
+Console.WriteLine(result.GetProperty("startTaskInfo").GetProperty("containerInfo").GetProperty("state").ToString());
+Console.WriteLine(result.GetProperty("startTaskInfo").GetProperty("containerInfo").GetProperty("error").ToString());
+Console.WriteLine(result.GetProperty("startTaskInfo").GetProperty("failureInfo").GetProperty("category").ToString());
+Console.WriteLine(result.GetProperty("startTaskInfo").GetProperty("failureInfo").GetProperty("code").ToString());
+Console.WriteLine(result.GetProperty("startTaskInfo").GetProperty("failureInfo").GetProperty("message").ToString());
+Console.WriteLine(result.GetProperty("startTaskInfo").GetProperty("failureInfo").GetProperty("details")[0].GetProperty("name").ToString());
+Console.WriteLine(result.GetProperty("startTaskInfo").GetProperty("failureInfo").GetProperty("details")[0].GetProperty("value").ToString());
+Console.WriteLine(result.GetProperty("startTaskInfo").GetProperty("retryCount").ToString());
+Console.WriteLine(result.GetProperty("startTaskInfo").GetProperty("lastRetryTime").ToString());
+Console.WriteLine(result.GetProperty("startTaskInfo").GetProperty("result").ToString());
+Console.WriteLine(result.GetProperty("certificateReferences")[0].GetProperty("thumbprint").ToString());
+Console.WriteLine(result.GetProperty("certificateReferences")[0].GetProperty("thumbprintAlgorithm").ToString());
+Console.WriteLine(result.GetProperty("certificateReferences")[0].GetProperty("storeLocation").ToString());
+Console.WriteLine(result.GetProperty("certificateReferences")[0].GetProperty("storeName").ToString());
+Console.WriteLine(result.GetProperty("certificateReferences")[0].GetProperty("visibility")[0].ToString());
+Console.WriteLine(result.GetProperty("errors")[0].GetProperty("code").ToString());
+Console.WriteLine(result.GetProperty("errors")[0].GetProperty("message").ToString());
+Console.WriteLine(result.GetProperty("errors")[0].GetProperty("errorDetails")[0].GetProperty("name").ToString());
+Console.WriteLine(result.GetProperty("errors")[0].GetProperty("errorDetails")[0].GetProperty("value").ToString());
+Console.WriteLine(result.GetProperty("isDedicated").ToString());
+Console.WriteLine(result.GetProperty("endpointConfiguration").GetProperty("inboundEndpoints")[0].GetProperty("name").ToString());
+Console.WriteLine(result.GetProperty("endpointConfiguration").GetProperty("inboundEndpoints")[0].GetProperty("protocol").ToString());
+Console.WriteLine(result.GetProperty("endpointConfiguration").GetProperty("inboundEndpoints")[0].GetProperty("publicIPAddress").ToString());
+Console.WriteLine(result.GetProperty("endpointConfiguration").GetProperty("inboundEndpoints")[0].GetProperty("publicFQDN").ToString());
+Console.WriteLine(result.GetProperty("endpointConfiguration").GetProperty("inboundEndpoints")[0].GetProperty("frontendPort").ToString());
+Console.WriteLine(result.GetProperty("endpointConfiguration").GetProperty("inboundEndpoints")[0].GetProperty("backendPort").ToString());
+Console.WriteLine(result.GetProperty("nodeAgentInfo").GetProperty("version").ToString());
+Console.WriteLine(result.GetProperty("nodeAgentInfo").GetProperty("lastUpdateTime").ToString());
+Console.WriteLine(result.GetProperty("virtualMachineInfo").GetProperty("imageReference").GetProperty("publisher").ToString());
+Console.WriteLine(result.GetProperty("virtualMachineInfo").GetProperty("imageReference").GetProperty("offer").ToString());
+Console.WriteLine(result.GetProperty("virtualMachineInfo").GetProperty("imageReference").GetProperty("sku").ToString());
+Console.WriteLine(result.GetProperty("virtualMachineInfo").GetProperty("imageReference").GetProperty("version").ToString());
+Console.WriteLine(result.GetProperty("virtualMachineInfo").GetProperty("imageReference").GetProperty("virtualMachineImageId").ToString());
+Console.WriteLine(result.GetProperty("virtualMachineInfo").GetProperty("imageReference").GetProperty("exactVersion").ToString());
+]]></code>
+</example>
+<remarks>
+Below is the JSON schema for the response payload.
+
+Response Body:
+
+Schema for <c>ComputeNode</c>:
+<code>{
+  id: string, # Optional. Every Compute Node that is added to a Pool is assigned a unique ID. Whenever a
+Compute Node is removed from a Pool, all of its local files are deleted, and
+the ID is reclaimed and could be reused for new Compute Nodes.
+  url: string, # Optional. The URL of the Compute Node.
+  state: &quot;idle&quot; | &quot;rebooting&quot; | &quot;reimaging&quot; | &quot;running&quot; | &quot;unusable&quot; | &quot;creating&quot; | &quot;starting&quot; | &quot;waitingforstarttask&quot; | &quot;starttaskfailed&quot; | &quot;unknown&quot; | &quot;leavingpool&quot; | &quot;offline&quot; | &quot;preempted&quot;, # Optional. The Spot/Low-priority Compute Node has been preempted. Tasks which were running
+on the Compute Node when it was preempted will be rescheduled when another
+Compute Node becomes available.
+  schedulingState: &quot;enabled&quot; | &quot;disabled&quot;, # Optional. Whether the Compute Node is available for Task scheduling.
+  stateTransitionTime: string (date &amp; time), # Optional. The time at which the Compute Node entered its current state.
+  lastBootTime: string (date &amp; time), # Optional. This property may not be present if the Compute Node state is unusable.
+  allocationTime: string (date &amp; time), # Optional. This is the time when the Compute Node was initially allocated and doesn&apos;t
+change once set. It is not updated when the Compute Node is service healed or
+preempted.
+  ipAddress: string, # Optional. Every Compute Node that is added to a Pool is assigned a unique IP address.
+Whenever a Compute Node is removed from a Pool, all of its local files are
+deleted, and the IP address is reclaimed and could be reused for new Compute
+Nodes.
+  affinityId: string, # Optional. Note that this is just a soft affinity. If the target Compute Node is busy or
+unavailable at the time the Task is scheduled, then the Task will be scheduled
+elsewhere.
+  vmSize: string, # Optional. For information about available sizes of virtual machines in Pools, see Choose
+a VM size for Compute Nodes in an Azure Batch Pool
+(https://docs.microsoft.com/azure/batch/batch-pool-vm-sizes).
+  totalTasksRun: number, # Optional. The total number of Job Tasks completed on the Compute Node. This includes Job
+Manager Tasks and normal Tasks, but not Job Preparation, Job Release or Start
+Tasks.
+  runningTasksCount: number, # Optional. The total number of currently running Job Tasks on the Compute Node. This
+includes Job Manager Tasks and normal Tasks, but not Job Preparation, Job
+Release or Start Tasks.
+  runningTaskSlotsCount: number, # Optional. The total number of scheduling slots used by currently running Job Tasks on the
+Compute Node. This includes Job Manager Tasks and normal Tasks, but not Job
+Preparation, Job Release or Start Tasks.
+  totalTasksSucceeded: number, # Optional. The total number of Job Tasks which completed successfully (with exitCode 0) on
+the Compute Node. This includes Job Manager Tasks and normal Tasks, but not Job
+Preparation, Job Release or Start Tasks.
+  recentTasks: [
+    {
+      taskUrl: string, # Optional. The URL of the Task.
+      jobId: string, # Optional. The ID of the Job to which the Task belongs.
+      taskId: string, # Optional. The ID of the Task.
+      subtaskId: number, # Optional. The ID of the subtask if the Task is a multi-instance Task.
+      taskState: &quot;active&quot; | &quot;preparing&quot; | &quot;running&quot; | &quot;completed&quot;, # Required. The state of the Task.
+      executionInfo: {
+        startTime: string (date &amp; time), # Optional. &apos;Running&apos; corresponds to the running state, so if the Task specifies resource
+files or Packages, then the start time reflects the time at which the Task
+started downloading or deploying these. If the Task has been restarted or
+retried, this is the most recent time at which the Task started running. This
+property is present only for Tasks that are in the running or completed state.
+        endTime: string (date &amp; time), # Optional. This property is set only if the Task is in the Completed state.
+        exitCode: number, # Optional. This property is set only if the Task is in the completed state. In general,
+the exit code for a process reflects the specific convention implemented by the
+application developer for that process. If you use the exit code value to make
+decisions in your code, be sure that you know the exit code convention used by
+the application process. However, if the Batch service terminates the Task (due
+to timeout, or user termination via the API) you may see an operating
+system-defined exit code.
+        containerInfo: {
+          containerId: string, # Optional. The ID of the container.
+          state: string, # Optional. This is the state of the container according to the Docker service. It is
+equivalent to the status field returned by &quot;docker inspect&quot;.
+          error: string, # Optional. This is the detailed error string from the Docker service, if available. It is
+equivalent to the error field returned by &quot;docker inspect&quot;.
+        }, # Optional. This property is set only if the Task runs in a container context.
+        failureInfo: {
+          category: &quot;usererror&quot; | &quot;servererror&quot;, # Required. The category of the error.
+          code: string, # Optional. An identifier for the Task error. Codes are invariant and are intended to be
+consumed programmatically.
+          message: string, # Optional. A message describing the Task error, intended to be suitable for display in a
+user interface.
+          details: [NameValuePair], # Optional. A list of additional details related to the error.
+        }, # Optional. This property is set only if the Task is in the completed state and encountered
+a failure.
+        retryCount: number, # Required. Task application failures (non-zero exit code) are retried, pre-processing
+errors (the Task could not be run) and file upload errors are not retried. The
+Batch service will retry the Task up to the limit specified by the constraints.
+        lastRetryTime: string (date &amp; time), # Optional. This element is present only if the Task was retried (i.e. retryCount is
+nonzero). If present, this is typically the same as startTime, but may be
+different if the Task has been restarted for reasons other than retry; for
+example, if the Compute Node was rebooted during a retry, then the startTime is
+updated but the lastRetryTime is not.
+        requeueCount: number, # Required. When the user removes Compute Nodes from a Pool (by resizing/shrinking the
+pool) or when the Job is being disabled, the user can specify that running
+Tasks on the Compute Nodes be requeued for execution. This count tracks how
+many times the Task has been requeued for these reasons.
+        lastRequeueTime: string (date &amp; time), # Optional. This property is set only if the requeueCount is nonzero.
+        result: &quot;success&quot; | &quot;failure&quot;, # Optional. If the value is &apos;failed&apos;, then the details of the failure can be found in the
+failureInfo property.
+      }, # Optional. Information about the execution of a Task.
+    }
+  ], # Optional. This property is present only if at least one Task has run on this Compute Node
+since it was assigned to the Pool.
+  startTask: {
+    commandLine: string, # Required. The command line does not run under a shell, and therefore cannot take
+advantage of shell features such as environment variable expansion. If you want
+to take advantage of such features, you should invoke the shell in the command
+line, for example using &quot;cmd /c MyCommand&quot; in Windows or &quot;/bin/sh -c
+MyCommand&quot; in Linux. If the command line refers to file paths, it should use a
+relative path (relative to the Task working directory), or use the Batch
+provided environment variable
+(https://docs.microsoft.com/en-us/azure/batch/batch-compute-node-environment-variables).
+    containerSettings: {
+      containerRunOptions: string, # Optional. These additional options are supplied as arguments to the &quot;docker create&quot;
+command, in addition to those controlled by the Batch Service.
+      imageName: string, # Required. This is the full Image reference, as would be specified to &quot;docker pull&quot;. If
+no tag is provided as part of the Image name, the tag &quot;:latest&quot; is used as a
+default.
+      registry: {
+        username: string, # Optional. The user name to log into the registry server.
+        password: string, # Optional. The password to log into the registry server.
+        registryServer: string, # Optional. If omitted, the default is &quot;docker.io&quot;.
+        identityReference: {
+          resourceId: string, # Optional. The ARM resource id of the user assigned identity.
+        }, # Optional. The reference to a user assigned identity associated with the Batch pool which
+a compute node will use.
+      }, # Optional. This setting can be omitted if was already provided at Pool creation.
+      workingDirectory: &quot;taskWorkingDirectory&quot; | &quot;containerImageDefault&quot;, # Optional. The default is &apos;taskWorkingDirectory&apos;.
+    }, # Optional. When this is specified, all directories recursively below the
+AZ_BATCH_NODE_ROOT_DIR (the root of Azure Batch directories on the node) are
+mapped into the container, all Task environment variables are mapped into the
+container, and the Task command line is executed in the container. Files
+produced in the container outside of AZ_BATCH_NODE_ROOT_DIR might not be
+reflected to the host disk, meaning that Batch file APIs will not be able to
+access those files.
+    resourceFiles: [ResourceFile], # Optional. Files listed under this element are located in the Task&apos;s working directory.
+    environmentSettings: [EnvironmentSetting], # Optional. A list of environment variable settings for the StartTask.
+    userIdentity: {
+      username: string, # Optional. The userName and autoUser properties are mutually exclusive; you must specify
+one but not both.
+      autoUser: {
+        scope: &quot;task&quot; | &quot;pool&quot;, # Optional. The default value is pool. If the pool is running Windows a value of Task
+should be specified if stricter isolation between tasks is required. For
+example, if the task mutates the registry in a way which could impact other
+tasks, or if certificates have been specified on the pool which should not be
+accessible by normal tasks but should be accessible by StartTasks.
+        elevationLevel: &quot;nonadmin&quot; | &quot;admin&quot;, # Optional. The default value is nonAdmin.
+      }, # Optional. The userName and autoUser properties are mutually exclusive; you must specify
+one but not both.
+    }, # Optional. If omitted, the Task runs as a non-administrative user unique to the Task.
+    maxTaskRetryCount: number, # Optional. The Batch service retries a Task if its exit code is nonzero. Note that this
+value specifically controls the number of retries. The Batch service will try
+the Task once, and may then retry up to this limit. For example, if the maximum
+retry count is 3, Batch tries the Task up to 4 times (one initial try and 3
+retries). If the maximum retry count is 0, the Batch service does not retry the
+Task. If the maximum retry count is -1, the Batch service retries the Task
+without limit, however this is not recommended for a start task or any task.
+The default value is 0 (no retries)
+    waitForSuccess: boolean, # Optional. If true and the StartTask fails on a Node, the Batch service retries the
+StartTask up to its maximum retry count (maxTaskRetryCount). If the Task has
+still not completed successfully after all retries, then the Batch service
+marks the Node unusable, and will not schedule Tasks to it. This condition can
+be detected via the Compute Node state and failure info details. If false, the
+Batch service will not wait for the StartTask to complete. In this case, other
+Tasks can start executing on the Compute Node while the StartTask is still
+running; and even if the StartTask fails, new Tasks will continue to be
+scheduled on the Compute Node. The default is true.
+  }, # Optional. Batch will retry Tasks when a recovery operation is triggered on a Node.
+Examples of recovery operations include (but are not limited to) when an
+unhealthy Node is rebooted or a Compute Node disappeared due to host failure.
+Retries due to recovery operations are independent of and are not counted
+against the maxTaskRetryCount. Even if the maxTaskRetryCount is 0, an internal
+retry due to a recovery operation may occur. Because of this, all Tasks should
+be idempotent. This means Tasks need to tolerate being interrupted and
+restarted without causing any corruption or duplicate data. The best practice
+for long running Tasks is to use some form of checkpointing. In some cases the
+StartTask may be re-run even though the Compute Node was not rebooted. Special
+care should be taken to avoid StartTasks which create breakaway process or
+install/launch services from the StartTask working directory, as this will
+block Batch from being able to re-run the StartTask.
+  startTaskInfo: {
+    state: &quot;running&quot; | &quot;completed&quot;, # Required. The state of the StartTask on the Compute Node.
+    startTime: string (date &amp; time), # Required. This value is reset every time the Task is restarted or retried (that is, this
+is the most recent time at which the StartTask started running).
+    endTime: string (date &amp; time), # Optional. This is the end time of the most recent run of the StartTask, if that run has
+completed (even if that run failed and a retry is pending). This element is not
+present if the StartTask is currently running.
+    exitCode: number, # Optional. This property is set only if the StartTask is in the completed state. In
+general, the exit code for a process reflects the specific convention
+implemented by the application developer for that process. If you use the exit
+code value to make decisions in your code, be sure that you know the exit code
+convention used by the application process. However, if the Batch service
+terminates the StartTask (due to timeout, or user termination via the API) you
+may see an operating system-defined exit code.
+    containerInfo: TaskContainerExecutionInformation, # Optional. This property is set only if the Task runs in a container context.
+    failureInfo: TaskFailureInformation, # Optional. This property is set only if the Task is in the completed state and encountered
+a failure.
+    retryCount: number, # Required. Task application failures (non-zero exit code) are retried, pre-processing
+errors (the Task could not be run) and file upload errors are not retried. The
+Batch service will retry the Task up to the limit specified by the constraints.
+    lastRetryTime: string (date &amp; time), # Optional. This element is present only if the Task was retried (i.e. retryCount is
+nonzero). If present, this is typically the same as startTime, but may be
+different if the Task has been restarted for reasons other than retry; for
+example, if the Compute Node was rebooted during a retry, then the startTime is
+updated but the lastRetryTime is not.
+    result: &quot;success&quot; | &quot;failure&quot;, # Optional. If the value is &apos;failed&apos;, then the details of the failure can be found in the
+failureInfo property.
+  }, # Optional. Information about a StartTask running on a Compute Node.
+  certificateReferences: [CertificateReference], # Optional. For Windows Nodes, the Batch service installs the Certificates to the specified
+Certificate store and location. For Linux Compute Nodes, the Certificates are
+stored in a directory inside the Task working directory and an environment
+variable AZ_BATCH_CERTIFICATES_DIR is supplied to the Task to query for this
+location. For Certificates with visibility of &apos;remoteUser&apos;, a &apos;certs&apos; directory
+is created in the user&apos;s home directory (e.g., /home/{user-name}/certs) and
+Certificates are placed in that directory.
+  errors: [ComputeNodeError], # Optional. The list of errors that are currently being encountered by the Compute Node.
+  isDedicated: boolean, # Optional. Whether this Compute Node is a dedicated Compute Node. If false, the Compute
+Node is a Spot/Low-priority Compute Node.
+  endpointConfiguration: {
+    inboundEndpoints: [InboundEndpoint], # Required. The list of inbound endpoints that are accessible on the Compute Node.
+  }, # Optional. The endpoint configuration for the Compute Node.
+  nodeAgentInfo: {
+    version: string, # Required. This version number can be checked against the Compute Node agent release notes
+located at
+https://github.com/Azure/Batch/blob/master/changelogs/nodeagent/CHANGELOG.md.
+    lastUpdateTime: string (date &amp; time), # Required. This is the most recent time that the Compute Node agent was updated to a new
+version.
+  }, # Optional. The Batch Compute Node agent is a program that runs on each Compute Node in the
+Pool and provides Batch capability on the Compute Node.
+  virtualMachineInfo: {
+    imageReference: {
+      publisher: string, # Optional. For example, Canonical or MicrosoftWindowsServer.
+      offer: string, # Optional. For example, UbuntuServer or WindowsServer.
+      sku: string, # Optional. For example, 18.04-LTS or 2019-Datacenter.
+      version: string, # Optional. A value of &apos;latest&apos; can be specified to select the latest version of an Image.
+If omitted, the default is &apos;latest&apos;.
+      virtualMachineImageId: string, # Optional. This property is mutually exclusive with other ImageReference properties. The
+Shared Image Gallery Image must have replicas in the same region and must be in
+the same subscription as the Azure Batch account. If the image version is not
+specified in the imageId, the latest version will be used. For information
+about the firewall settings for the Batch Compute Node agent to communicate
+with the Batch service see
+https://docs.microsoft.com/en-us/azure/batch/batch-api-basics#virtual-network-vnet-and-firewall-configuration.
+      exactVersion: string, # Optional. The specific version of the platform image or marketplace image used to create
+the node. This read-only field differs from &apos;version&apos; only if the value
+specified for &apos;version&apos; when the pool was created was &apos;latest&apos;.
+    }, # Optional. A reference to an Azure Virtual Machines Marketplace Image or a Shared Image
+Gallery Image. To get the list of all Azure Marketplace Image references
+verified by Azure Batch, see the &apos;List Supported Images&apos; operation.
+  }, # Optional. Info about the current state of the virtual machine.
+}
+</code>
+
+</remarks>
+    </member>
+    <member name="RebootAsync(String,String,RequestContent,Int32,String,Boolean,String,RequestContext)">
+<example>
+This sample shows how to call RebootAsync with required parameters.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var client = new BatchServiceClient(credential).GetComputeNodesClient(<2022-10-01.16.0>);
+
+var data = new {};
+
+Response response = await client.RebootAsync("<poolId>", "<nodeId>", RequestContent.Create(data));
+Console.WriteLine(response.Status);
+]]></code>
+This sample shows how to call RebootAsync with all parameters and request content.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var client = new BatchServiceClient(credential).GetComputeNodesClient(<2022-10-01.16.0>);
+
+var data = new {
+    nodeRebootOption = "requeue",
+};
+
+Response response = await client.RebootAsync("<poolId>", "<nodeId>", RequestContent.Create(data), 1234, "<clientRequestId>", true, "<ocpDate>");
+Console.WriteLine(response.Status);
+]]></code>
+</example>
+<remarks>
+You can restart a Compute Node only if it is in an idle or running state.
+
+Below is the JSON schema for the request payload.
+
+Request Body:
+
+Schema for <c>NodeRebootParameters</c>:
+<code>{
+  nodeRebootOption: &quot;requeue&quot; | &quot;terminate&quot; | &quot;taskcompletion&quot; | &quot;retaineddata&quot;, # Optional. The default value is requeue.
+}
+</code>
+
+</remarks>
+    </member>
+    <member name="Reboot(String,String,RequestContent,Int32,String,Boolean,String,RequestContext)">
+<example>
+This sample shows how to call Reboot with required parameters.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var client = new BatchServiceClient(credential).GetComputeNodesClient(<2022-10-01.16.0>);
+
+var data = new {};
+
+Response response = client.Reboot("<poolId>", "<nodeId>", RequestContent.Create(data));
+Console.WriteLine(response.Status);
+]]></code>
+This sample shows how to call Reboot with all parameters and request content.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var client = new BatchServiceClient(credential).GetComputeNodesClient(<2022-10-01.16.0>);
+
+var data = new {
+    nodeRebootOption = "requeue",
+};
+
+Response response = client.Reboot("<poolId>", "<nodeId>", RequestContent.Create(data), 1234, "<clientRequestId>", true, "<ocpDate>");
+Console.WriteLine(response.Status);
+]]></code>
+</example>
+<remarks>
+You can restart a Compute Node only if it is in an idle or running state.
+
+Below is the JSON schema for the request payload.
+
+Request Body:
+
+Schema for <c>NodeRebootParameters</c>:
+<code>{
+  nodeRebootOption: &quot;requeue&quot; | &quot;terminate&quot; | &quot;taskcompletion&quot; | &quot;retaineddata&quot;, # Optional. The default value is requeue.
+}
+</code>
+
+</remarks>
+    </member>
+    <member name="ReimageAsync(String,String,RequestContent,Int32,String,Boolean,String,RequestContext)">
+<example>
+This sample shows how to call ReimageAsync with required parameters.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var client = new BatchServiceClient(credential).GetComputeNodesClient(<2022-10-01.16.0>);
+
+var data = new {};
+
+Response response = await client.ReimageAsync("<poolId>", "<nodeId>", RequestContent.Create(data));
+Console.WriteLine(response.Status);
+]]></code>
+This sample shows how to call ReimageAsync with all parameters and request content.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var client = new BatchServiceClient(credential).GetComputeNodesClient(<2022-10-01.16.0>);
+
+var data = new {
+    nodeReimageOption = "requeue",
+};
+
+Response response = await client.ReimageAsync("<poolId>", "<nodeId>", RequestContent.Create(data), 1234, "<clientRequestId>", true, "<ocpDate>");
+Console.WriteLine(response.Status);
+]]></code>
+</example>
+<remarks>
+You can reinstall the operating system on a Compute Node only if it is in an
+idle or running state. This API can be invoked only on Pools created with the
+cloud service configuration property.
+
+Below is the JSON schema for the request payload.
+
+Request Body:
+
+Schema for <c>NodeReimageParameters</c>:
+<code>{
+  nodeReimageOption: &quot;requeue&quot; | &quot;terminate&quot; | &quot;taskcompletion&quot; | &quot;retaineddata&quot;, # Optional. The default value is requeue.
+}
+</code>
+
+</remarks>
+    </member>
+    <member name="Reimage(String,String,RequestContent,Int32,String,Boolean,String,RequestContext)">
+<example>
+This sample shows how to call Reimage with required parameters.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var client = new BatchServiceClient(credential).GetComputeNodesClient(<2022-10-01.16.0>);
+
+var data = new {};
+
+Response response = client.Reimage("<poolId>", "<nodeId>", RequestContent.Create(data));
+Console.WriteLine(response.Status);
+]]></code>
+This sample shows how to call Reimage with all parameters and request content.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var client = new BatchServiceClient(credential).GetComputeNodesClient(<2022-10-01.16.0>);
+
+var data = new {
+    nodeReimageOption = "requeue",
+};
+
+Response response = client.Reimage("<poolId>", "<nodeId>", RequestContent.Create(data), 1234, "<clientRequestId>", true, "<ocpDate>");
+Console.WriteLine(response.Status);
+]]></code>
+</example>
+<remarks>
+You can reinstall the operating system on a Compute Node only if it is in an
+idle or running state. This API can be invoked only on Pools created with the
+cloud service configuration property.
+
+Below is the JSON schema for the request payload.
+
+Request Body:
+
+Schema for <c>NodeReimageParameters</c>:
+<code>{
+  nodeReimageOption: &quot;requeue&quot; | &quot;terminate&quot; | &quot;taskcompletion&quot; | &quot;retaineddata&quot;, # Optional. The default value is requeue.
+}
+</code>
+
+</remarks>
+    </member>
+    <member name="DisableSchedulingAsync(String,String,RequestContent,Int32,String,Boolean,String,RequestContext)">
+<example>
+This sample shows how to call DisableSchedulingAsync with required parameters.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var client = new BatchServiceClient(credential).GetComputeNodesClient(<2022-10-01.16.0>);
+
+var data = new {};
+
+Response response = await client.DisableSchedulingAsync("<poolId>", "<nodeId>", RequestContent.Create(data));
+Console.WriteLine(response.Status);
+]]></code>
+This sample shows how to call DisableSchedulingAsync with all parameters and request content.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var client = new BatchServiceClient(credential).GetComputeNodesClient(<2022-10-01.16.0>);
+
+var data = new {
+    nodeDisableSchedulingOption = "requeue",
+};
+
+Response response = await client.DisableSchedulingAsync("<poolId>", "<nodeId>", RequestContent.Create(data), 1234, "<clientRequestId>", true, "<ocpDate>");
+Console.WriteLine(response.Status);
+]]></code>
+</example>
+<remarks>
+You can disable Task scheduling on a Compute Node only if its current
+scheduling state is enabled.
+
+Below is the JSON schema for the request payload.
+
+Request Body:
+
+Schema for <c>NodeDisableSchedulingParameters</c>:
+<code>{
+  nodeDisableSchedulingOption: &quot;requeue&quot; | &quot;terminate&quot; | &quot;taskcompletion&quot;, # Optional. The default value is requeue.
+}
+</code>
+
+</remarks>
+    </member>
+    <member name="DisableScheduling(String,String,RequestContent,Int32,String,Boolean,String,RequestContext)">
+<example>
+This sample shows how to call DisableScheduling with required parameters.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var client = new BatchServiceClient(credential).GetComputeNodesClient(<2022-10-01.16.0>);
+
+var data = new {};
+
+Response response = client.DisableScheduling("<poolId>", "<nodeId>", RequestContent.Create(data));
+Console.WriteLine(response.Status);
+]]></code>
+This sample shows how to call DisableScheduling with all parameters and request content.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var client = new BatchServiceClient(credential).GetComputeNodesClient(<2022-10-01.16.0>);
+
+var data = new {
+    nodeDisableSchedulingOption = "requeue",
+};
+
+Response response = client.DisableScheduling("<poolId>", "<nodeId>", RequestContent.Create(data), 1234, "<clientRequestId>", true, "<ocpDate>");
+Console.WriteLine(response.Status);
+]]></code>
+</example>
+<remarks>
+You can disable Task scheduling on a Compute Node only if its current
+scheduling state is enabled.
+
+Below is the JSON schema for the request payload.
+
+Request Body:
+
+Schema for <c>NodeDisableSchedulingParameters</c>:
+<code>{
+  nodeDisableSchedulingOption: &quot;requeue&quot; | &quot;terminate&quot; | &quot;taskcompletion&quot;, # Optional. The default value is requeue.
+}
+</code>
+
+</remarks>
+    </member>
+    <member name="EnableSchedulingAsync(String,String,Int32,String,Boolean,String,RequestContext)">
+<example>
+This sample shows how to call EnableSchedulingAsync with required parameters.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var client = new BatchServiceClient(credential).GetComputeNodesClient(<2022-10-01.16.0>);
+
+Response response = await client.EnableSchedulingAsync("<poolId>", "<nodeId>");
+Console.WriteLine(response.Status);
+]]></code>
+This sample shows how to call EnableSchedulingAsync with all parameters.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var client = new BatchServiceClient(credential).GetComputeNodesClient(<2022-10-01.16.0>);
+
+Response response = await client.EnableSchedulingAsync("<poolId>", "<nodeId>", 1234, "<clientRequestId>", true, "<ocpDate>");
+Console.WriteLine(response.Status);
+]]></code>
+</example>
+<remarks>
+You can enable Task scheduling on a Compute Node only if its current scheduling
+state is disabled
+</remarks>
+    </member>
+    <member name="EnableScheduling(String,String,Int32,String,Boolean,String,RequestContext)">
+<example>
+This sample shows how to call EnableScheduling with required parameters.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var client = new BatchServiceClient(credential).GetComputeNodesClient(<2022-10-01.16.0>);
+
+Response response = client.EnableScheduling("<poolId>", "<nodeId>");
+Console.WriteLine(response.Status);
+]]></code>
+This sample shows how to call EnableScheduling with all parameters.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var client = new BatchServiceClient(credential).GetComputeNodesClient(<2022-10-01.16.0>);
+
+Response response = client.EnableScheduling("<poolId>", "<nodeId>", 1234, "<clientRequestId>", true, "<ocpDate>");
+Console.WriteLine(response.Status);
+]]></code>
+</example>
+<remarks>
+You can enable Task scheduling on a Compute Node only if its current scheduling
+state is disabled
+</remarks>
+    </member>
+    <member name="GetRemoteLoginSettingsAsync(String,String,Int32,String,Boolean,String,RequestContext)">
+<example>
+This sample shows how to call GetRemoteLoginSettingsAsync with required parameters and parse the result.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var client = new BatchServiceClient(credential).GetComputeNodesClient(<2022-10-01.16.0>);
+
+Response response = await client.GetRemoteLoginSettingsAsync("<poolId>", "<nodeId>");
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("remoteLoginIPAddress").ToString());
+Console.WriteLine(result.GetProperty("remoteLoginPort").ToString());
+]]></code>
+This sample shows how to call GetRemoteLoginSettingsAsync with all parameters, and how to parse the result.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var client = new BatchServiceClient(credential).GetComputeNodesClient(<2022-10-01.16.0>);
+
+Response response = await client.GetRemoteLoginSettingsAsync("<poolId>", "<nodeId>", 1234, "<clientRequestId>", true, "<ocpDate>");
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("remoteLoginIPAddress").ToString());
+Console.WriteLine(result.GetProperty("remoteLoginPort").ToString());
+]]></code>
+</example>
+<remarks>
+Before you can remotely login to a Compute Node using the remote login
+settings, you must create a user Account on the Compute Node. This API can be
+invoked only on Pools created with the virtual machine configuration property.
+For Pools created with a cloud service configuration, see the GetRemoteDesktop
+API.
+
+Below is the JSON schema for the response payload.
+
+Response Body:
+
+Schema for <c>ComputeNodeGetRemoteLoginSettingsResult</c>:
+<code>{
+  remoteLoginIPAddress: string, # Required. The IP address used for remote login to the Compute Node.
+  remoteLoginPort: number, # Required. The port used for remote login to the Compute Node.
+}
+</code>
+
+</remarks>
+    </member>
+    <member name="GetRemoteLoginSettings(String,String,Int32,String,Boolean,String,RequestContext)">
+<example>
+This sample shows how to call GetRemoteLoginSettings with required parameters and parse the result.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var client = new BatchServiceClient(credential).GetComputeNodesClient(<2022-10-01.16.0>);
+
+Response response = client.GetRemoteLoginSettings("<poolId>", "<nodeId>");
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("remoteLoginIPAddress").ToString());
+Console.WriteLine(result.GetProperty("remoteLoginPort").ToString());
+]]></code>
+This sample shows how to call GetRemoteLoginSettings with all parameters, and how to parse the result.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var client = new BatchServiceClient(credential).GetComputeNodesClient(<2022-10-01.16.0>);
+
+Response response = client.GetRemoteLoginSettings("<poolId>", "<nodeId>", 1234, "<clientRequestId>", true, "<ocpDate>");
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("remoteLoginIPAddress").ToString());
+Console.WriteLine(result.GetProperty("remoteLoginPort").ToString());
+]]></code>
+</example>
+<remarks>
+Before you can remotely login to a Compute Node using the remote login
+settings, you must create a user Account on the Compute Node. This API can be
+invoked only on Pools created with the virtual machine configuration property.
+For Pools created with a cloud service configuration, see the GetRemoteDesktop
+API.
+
+Below is the JSON schema for the response payload.
+
+Response Body:
+
+Schema for <c>ComputeNodeGetRemoteLoginSettingsResult</c>:
+<code>{
+  remoteLoginIPAddress: string, # Required. The IP address used for remote login to the Compute Node.
+  remoteLoginPort: number, # Required. The port used for remote login to the Compute Node.
+}
+</code>
+
+</remarks>
+    </member>
+    <member name="GetRemoteDesktopAsync(String,String,Int32,String,Boolean,String,RequestContext)">
+<example>
+This sample shows how to call GetRemoteDesktopAsync with required parameters and parse the result.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var client = new BatchServiceClient(credential).GetComputeNodesClient(<2022-10-01.16.0>);
+
+Response response = await client.GetRemoteDesktopAsync("<poolId>", "<nodeId>");
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.ToString());
+]]></code>
+This sample shows how to call GetRemoteDesktopAsync with all parameters, and how to parse the result.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var client = new BatchServiceClient(credential).GetComputeNodesClient(<2022-10-01.16.0>);
+
+Response response = await client.GetRemoteDesktopAsync("<poolId>", "<nodeId>", 1234, "<clientRequestId>", true, "<ocpDate>");
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.ToString());
+]]></code>
+</example>
+<remarks>
+Before you can access a Compute Node by using the RDP file, you must create a
+user Account on the Compute Node. This API can only be invoked on Pools created
+with a cloud service configuration. For Pools created with a virtual machine
+configuration, see the GetRemoteLoginSettings API.
+</remarks>
+    </member>
+    <member name="GetRemoteDesktop(String,String,Int32,String,Boolean,String,RequestContext)">
+<example>
+This sample shows how to call GetRemoteDesktop with required parameters and parse the result.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var client = new BatchServiceClient(credential).GetComputeNodesClient(<2022-10-01.16.0>);
+
+Response response = client.GetRemoteDesktop("<poolId>", "<nodeId>");
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.ToString());
+]]></code>
+This sample shows how to call GetRemoteDesktop with all parameters, and how to parse the result.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var client = new BatchServiceClient(credential).GetComputeNodesClient(<2022-10-01.16.0>);
+
+Response response = client.GetRemoteDesktop("<poolId>", "<nodeId>", 1234, "<clientRequestId>", true, "<ocpDate>");
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.ToString());
+]]></code>
+</example>
+<remarks>
+Before you can access a Compute Node by using the RDP file, you must create a
+user Account on the Compute Node. This API can only be invoked on Pools created
+with a cloud service configuration. For Pools created with a virtual machine
+configuration, see the GetRemoteLoginSettings API.
+</remarks>
+    </member>
+    <member name="UploadBatchServiceLogsAsync(String,String,RequestContent,Int32,String,Boolean,String,RequestContext)">
+<example>
+This sample shows how to call UploadBatchServiceLogsAsync with required parameters and request content, and how to parse the result.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var client = new BatchServiceClient(credential).GetComputeNodesClient(<2022-10-01.16.0>);
+
+var data = new {
+    containerUrl = "<containerUrl>",
+    startTime = "2022-05-10T14:57:31.2311892-04:00",
+};
+
+Response response = await client.UploadBatchServiceLogsAsync("<poolId>", "<nodeId>", RequestContent.Create(data));
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("virtualDirectoryName").ToString());
+Console.WriteLine(result.GetProperty("numberOfFilesUploaded").ToString());
+]]></code>
+This sample shows how to call UploadBatchServiceLogsAsync with all parameters and request content, and how to parse the result.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var client = new BatchServiceClient(credential).GetComputeNodesClient(<2022-10-01.16.0>);
+
+var data = new {
+    containerUrl = "<containerUrl>",
+    startTime = "2022-05-10T14:57:31.2311892-04:00",
+    endTime = "2022-05-10T14:57:31.2311892-04:00",
+    identityReference = new {
+        resourceId = "<resourceId>",
+    },
+};
+
+Response response = await client.UploadBatchServiceLogsAsync("<poolId>", "<nodeId>", RequestContent.Create(data), 1234, "<clientRequestId>", true, "<ocpDate>");
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("virtualDirectoryName").ToString());
+Console.WriteLine(result.GetProperty("numberOfFilesUploaded").ToString());
+]]></code>
+</example>
+<remarks>
+This is for gathering Azure Batch service log files in an automated fashion
+from Compute Nodes if you are experiencing an error and wish to escalate to
+Azure support. The Azure Batch service log files should be shared with Azure
+support to aid in debugging issues with the Batch service.
+
+Below is the JSON schema for the request and response payloads.
+
+Request Body:
+
+Schema for <c>UploadBatchServiceLogsConfiguration</c>:
+<code>{
+  containerUrl: string, # Required. If a user assigned managed identity is not being used, the URL must include a
+Shared Access Signature (SAS) granting write permissions to the container. The
+SAS duration must allow enough time for the upload to finish. The start time
+for SAS is optional and recommended to not be specified.
+  startTime: string (date &amp; time), # Required. Any log file containing a log message in the time range will be uploaded. This
+means that the operation might retrieve more logs than have been requested
+since the entire log file is always uploaded, but the operation should not
+retrieve fewer logs than have been requested.
+  endTime: string (date &amp; time), # Optional. Any log file containing a log message in the time range will be uploaded. This
+means that the operation might retrieve more logs than have been requested
+since the entire log file is always uploaded, but the operation should not
+retrieve fewer logs than have been requested. If omitted, the default is to
+upload all logs available after the startTime.
+  identityReference: {
+    resourceId: string, # Optional. The ARM resource id of the user assigned identity.
+  }, # Optional. The identity must have write access to the Azure Blob Storage container.
+}
+</code>
+
+Response Body:
+
+Schema for <c>UploadBatchServiceLogsResult</c>:
+<code>{
+  virtualDirectoryName: string, # Required. The virtual directory name is part of the blob name for each log file uploaded,
+and it is built based poolId, nodeId and a unique identifier.
+  numberOfFilesUploaded: number, # Required. The number of log files which will be uploaded.
+}
+</code>
+
+</remarks>
+    </member>
+    <member name="UploadBatchServiceLogs(String,String,RequestContent,Int32,String,Boolean,String,RequestContext)">
+<example>
+This sample shows how to call UploadBatchServiceLogs with required parameters and request content, and how to parse the result.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var client = new BatchServiceClient(credential).GetComputeNodesClient(<2022-10-01.16.0>);
+
+var data = new {
+    containerUrl = "<containerUrl>",
+    startTime = "2022-05-10T14:57:31.2311892-04:00",
+};
+
+Response response = client.UploadBatchServiceLogs("<poolId>", "<nodeId>", RequestContent.Create(data));
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("virtualDirectoryName").ToString());
+Console.WriteLine(result.GetProperty("numberOfFilesUploaded").ToString());
+]]></code>
+This sample shows how to call UploadBatchServiceLogs with all parameters and request content, and how to parse the result.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var client = new BatchServiceClient(credential).GetComputeNodesClient(<2022-10-01.16.0>);
+
+var data = new {
+    containerUrl = "<containerUrl>",
+    startTime = "2022-05-10T14:57:31.2311892-04:00",
+    endTime = "2022-05-10T14:57:31.2311892-04:00",
+    identityReference = new {
+        resourceId = "<resourceId>",
+    },
+};
+
+Response response = client.UploadBatchServiceLogs("<poolId>", "<nodeId>", RequestContent.Create(data), 1234, "<clientRequestId>", true, "<ocpDate>");
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("virtualDirectoryName").ToString());
+Console.WriteLine(result.GetProperty("numberOfFilesUploaded").ToString());
+]]></code>
+</example>
+<remarks>
+This is for gathering Azure Batch service log files in an automated fashion
+from Compute Nodes if you are experiencing an error and wish to escalate to
+Azure support. The Azure Batch service log files should be shared with Azure
+support to aid in debugging issues with the Batch service.
+
+Below is the JSON schema for the request and response payloads.
+
+Request Body:
+
+Schema for <c>UploadBatchServiceLogsConfiguration</c>:
+<code>{
+  containerUrl: string, # Required. If a user assigned managed identity is not being used, the URL must include a
+Shared Access Signature (SAS) granting write permissions to the container. The
+SAS duration must allow enough time for the upload to finish. The start time
+for SAS is optional and recommended to not be specified.
+  startTime: string (date &amp; time), # Required. Any log file containing a log message in the time range will be uploaded. This
+means that the operation might retrieve more logs than have been requested
+since the entire log file is always uploaded, but the operation should not
+retrieve fewer logs than have been requested.
+  endTime: string (date &amp; time), # Optional. Any log file containing a log message in the time range will be uploaded. This
+means that the operation might retrieve more logs than have been requested
+since the entire log file is always uploaded, but the operation should not
+retrieve fewer logs than have been requested. If omitted, the default is to
+upload all logs available after the startTime.
+  identityReference: {
+    resourceId: string, # Optional. The ARM resource id of the user assigned identity.
+  }, # Optional. The identity must have write access to the Azure Blob Storage container.
+}
+</code>
+
+Response Body:
+
+Schema for <c>UploadBatchServiceLogsResult</c>:
+<code>{
+  virtualDirectoryName: string, # Required. The virtual directory name is part of the blob name for each log file uploaded,
+and it is built based poolId, nodeId and a unique identifier.
+  numberOfFilesUploaded: number, # Required. The number of log files which will be uploaded.
+}
+</code>
+
+</remarks>
+    </member>
+    <member name="GetComputeNodesAsync(String,Int32,String,Int32,String,Boolean,String,String,RequestContext)">
+<example>
+This sample shows how to call GetComputeNodesAsync with required parameters and parse the result.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var client = new BatchServiceClient(credential).GetComputeNodesClient(<2022-10-01.16.0>);
+
+Response response = await client.GetComputeNodesAsync("<poolId>");
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.ToString());
+]]></code>
+This sample shows how to call GetComputeNodesAsync with all parameters, and how to parse the result.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var client = new BatchServiceClient(credential).GetComputeNodesClient(<2022-10-01.16.0>);
+
+Response response = await client.GetComputeNodesAsync("<poolId>", 1234, "<ocpDate>", 1234, "<clientRequestId>", true, "<filter>", "<select>");
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("value")[0].GetProperty("id").ToString());
+Console.WriteLine(result.GetProperty("value")[0].GetProperty("url").ToString());
+Console.WriteLine(result.GetProperty("value")[0].GetProperty("state").ToString());
+Console.WriteLine(result.GetProperty("value")[0].GetProperty("schedulingState").ToString());
+Console.WriteLine(result.GetProperty("value")[0].GetProperty("stateTransitionTime").ToString());
+Console.WriteLine(result.GetProperty("value")[0].GetProperty("lastBootTime").ToString());
+Console.WriteLine(result.GetProperty("value")[0].GetProperty("allocationTime").ToString());
+Console.WriteLine(result.GetProperty("value")[0].GetProperty("ipAddress").ToString());
+Console.WriteLine(result.GetProperty("value")[0].GetProperty("affinityId").ToString());
+Console.WriteLine(result.GetProperty("value")[0].GetProperty("vmSize").ToString());
+Console.WriteLine(result.GetProperty("value")[0].GetProperty("totalTasksRun").ToString());
+Console.WriteLine(result.GetProperty("value")[0].GetProperty("runningTasksCount").ToString());
+Console.WriteLine(result.GetProperty("value")[0].GetProperty("runningTaskSlotsCount").ToString());
+Console.WriteLine(result.GetProperty("value")[0].GetProperty("totalTasksSucceeded").ToString());
+Console.WriteLine(result.GetProperty("value")[0].GetProperty("recentTasks")[0].GetProperty("taskUrl").ToString());
+Console.WriteLine(result.GetProperty("value")[0].GetProperty("recentTasks")[0].GetProperty("jobId").ToString());
+Console.WriteLine(result.GetProperty("value")[0].GetProperty("recentTasks")[0].GetProperty("taskId").ToString());
+Console.WriteLine(result.GetProperty("value")[0].GetProperty("recentTasks")[0].GetProperty("subtaskId").ToString());
+Console.WriteLine(result.GetProperty("value")[0].GetProperty("recentTasks")[0].GetProperty("taskState").ToString());
+Console.WriteLine(result.GetProperty("value")[0].GetProperty("recentTasks")[0].GetProperty("executionInfo").GetProperty("startTime").ToString());
+Console.WriteLine(result.GetProperty("value")[0].GetProperty("recentTasks")[0].GetProperty("executionInfo").GetProperty("endTime").ToString());
+Console.WriteLine(result.GetProperty("value")[0].GetProperty("recentTasks")[0].GetProperty("executionInfo").GetProperty("exitCode").ToString());
+Console.WriteLine(result.GetProperty("value")[0].GetProperty("recentTasks")[0].GetProperty("executionInfo").GetProperty("containerInfo").GetProperty("containerId").ToString());
+Console.WriteLine(result.GetProperty("value")[0].GetProperty("recentTasks")[0].GetProperty("executionInfo").GetProperty("containerInfo").GetProperty("state").ToString());
+Console.WriteLine(result.GetProperty("value")[0].GetProperty("recentTasks")[0].GetProperty("executionInfo").GetProperty("containerInfo").GetProperty("error").ToString());
+Console.WriteLine(result.GetProperty("value")[0].GetProperty("recentTasks")[0].GetProperty("executionInfo").GetProperty("failureInfo").GetProperty("category").ToString());
+Console.WriteLine(result.GetProperty("value")[0].GetProperty("recentTasks")[0].GetProperty("executionInfo").GetProperty("failureInfo").GetProperty("code").ToString());
+Console.WriteLine(result.GetProperty("value")[0].GetProperty("recentTasks")[0].GetProperty("executionInfo").GetProperty("failureInfo").GetProperty("message").ToString());
+Console.WriteLine(result.GetProperty("value")[0].GetProperty("recentTasks")[0].GetProperty("executionInfo").GetProperty("failureInfo").GetProperty("details")[0].GetProperty("name").ToString());
+Console.WriteLine(result.GetProperty("value")[0].GetProperty("recentTasks")[0].GetProperty("executionInfo").GetProperty("failureInfo").GetProperty("details")[0].GetProperty("value").ToString());
+Console.WriteLine(result.GetProperty("value")[0].GetProperty("recentTasks")[0].GetProperty("executionInfo").GetProperty("retryCount").ToString());
+Console.WriteLine(result.GetProperty("value")[0].GetProperty("recentTasks")[0].GetProperty("executionInfo").GetProperty("lastRetryTime").ToString());
+Console.WriteLine(result.GetProperty("value")[0].GetProperty("recentTasks")[0].GetProperty("executionInfo").GetProperty("requeueCount").ToString());
+Console.WriteLine(result.GetProperty("value")[0].GetProperty("recentTasks")[0].GetProperty("executionInfo").GetProperty("lastRequeueTime").ToString());
+Console.WriteLine(result.GetProperty("value")[0].GetProperty("recentTasks")[0].GetProperty("executionInfo").GetProperty("result").ToString());
+Console.WriteLine(result.GetProperty("value")[0].GetProperty("startTask").GetProperty("commandLine").ToString());
+Console.WriteLine(result.GetProperty("value")[0].GetProperty("startTask").GetProperty("containerSettings").GetProperty("containerRunOptions").ToString());
+Console.WriteLine(result.GetProperty("value")[0].GetProperty("startTask").GetProperty("containerSettings").GetProperty("imageName").ToString());
+Console.WriteLine(result.GetProperty("value")[0].GetProperty("startTask").GetProperty("containerSettings").GetProperty("registry").GetProperty("username").ToString());
+Console.WriteLine(result.GetProperty("value")[0].GetProperty("startTask").GetProperty("containerSettings").GetProperty("registry").GetProperty("password").ToString());
+Console.WriteLine(result.GetProperty("value")[0].GetProperty("startTask").GetProperty("containerSettings").GetProperty("registry").GetProperty("registryServer").ToString());
+Console.WriteLine(result.GetProperty("value")[0].GetProperty("startTask").GetProperty("containerSettings").GetProperty("registry").GetProperty("identityReference").GetProperty("resourceId").ToString());
+Console.WriteLine(result.GetProperty("value")[0].GetProperty("startTask").GetProperty("containerSettings").GetProperty("workingDirectory").ToString());
+Console.WriteLine(result.GetProperty("value")[0].GetProperty("startTask").GetProperty("resourceFiles")[0].GetProperty("autoStorageContainerName").ToString());
+Console.WriteLine(result.GetProperty("value")[0].GetProperty("startTask").GetProperty("resourceFiles")[0].GetProperty("storageContainerUrl").ToString());
+Console.WriteLine(result.GetProperty("value")[0].GetProperty("startTask").GetProperty("resourceFiles")[0].GetProperty("httpUrl").ToString());
+Console.WriteLine(result.GetProperty("value")[0].GetProperty("startTask").GetProperty("resourceFiles")[0].GetProperty("blobPrefix").ToString());
+Console.WriteLine(result.GetProperty("value")[0].GetProperty("startTask").GetProperty("resourceFiles")[0].GetProperty("filePath").ToString());
+Console.WriteLine(result.GetProperty("value")[0].GetProperty("startTask").GetProperty("resourceFiles")[0].GetProperty("fileMode").ToString());
+Console.WriteLine(result.GetProperty("value")[0].GetProperty("startTask").GetProperty("resourceFiles")[0].GetProperty("identityReference").GetProperty("resourceId").ToString());
+Console.WriteLine(result.GetProperty("value")[0].GetProperty("startTask").GetProperty("environmentSettings")[0].GetProperty("name").ToString());
+Console.WriteLine(result.GetProperty("value")[0].GetProperty("startTask").GetProperty("environmentSettings")[0].GetProperty("value").ToString());
+Console.WriteLine(result.GetProperty("value")[0].GetProperty("startTask").GetProperty("userIdentity").GetProperty("username").ToString());
+Console.WriteLine(result.GetProperty("value")[0].GetProperty("startTask").GetProperty("userIdentity").GetProperty("autoUser").GetProperty("scope").ToString());
+Console.WriteLine(result.GetProperty("value")[0].GetProperty("startTask").GetProperty("userIdentity").GetProperty("autoUser").GetProperty("elevationLevel").ToString());
+Console.WriteLine(result.GetProperty("value")[0].GetProperty("startTask").GetProperty("maxTaskRetryCount").ToString());
+Console.WriteLine(result.GetProperty("value")[0].GetProperty("startTask").GetProperty("waitForSuccess").ToString());
+Console.WriteLine(result.GetProperty("value")[0].GetProperty("startTaskInfo").GetProperty("state").ToString());
+Console.WriteLine(result.GetProperty("value")[0].GetProperty("startTaskInfo").GetProperty("startTime").ToString());
+Console.WriteLine(result.GetProperty("value")[0].GetProperty("startTaskInfo").GetProperty("endTime").ToString());
+Console.WriteLine(result.GetProperty("value")[0].GetProperty("startTaskInfo").GetProperty("exitCode").ToString());
+Console.WriteLine(result.GetProperty("value")[0].GetProperty("startTaskInfo").GetProperty("containerInfo").GetProperty("containerId").ToString());
+Console.WriteLine(result.GetProperty("value")[0].GetProperty("startTaskInfo").GetProperty("containerInfo").GetProperty("state").ToString());
+Console.WriteLine(result.GetProperty("value")[0].GetProperty("startTaskInfo").GetProperty("containerInfo").GetProperty("error").ToString());
+Console.WriteLine(result.GetProperty("value")[0].GetProperty("startTaskInfo").GetProperty("failureInfo").GetProperty("category").ToString());
+Console.WriteLine(result.GetProperty("value")[0].GetProperty("startTaskInfo").GetProperty("failureInfo").GetProperty("code").ToString());
+Console.WriteLine(result.GetProperty("value")[0].GetProperty("startTaskInfo").GetProperty("failureInfo").GetProperty("message").ToString());
+Console.WriteLine(result.GetProperty("value")[0].GetProperty("startTaskInfo").GetProperty("failureInfo").GetProperty("details")[0].GetProperty("name").ToString());
+Console.WriteLine(result.GetProperty("value")[0].GetProperty("startTaskInfo").GetProperty("failureInfo").GetProperty("details")[0].GetProperty("value").ToString());
+Console.WriteLine(result.GetProperty("value")[0].GetProperty("startTaskInfo").GetProperty("retryCount").ToString());
+Console.WriteLine(result.GetProperty("value")[0].GetProperty("startTaskInfo").GetProperty("lastRetryTime").ToString());
+Console.WriteLine(result.GetProperty("value")[0].GetProperty("startTaskInfo").GetProperty("result").ToString());
+Console.WriteLine(result.GetProperty("value")[0].GetProperty("certificateReferences")[0].GetProperty("thumbprint").ToString());
+Console.WriteLine(result.GetProperty("value")[0].GetProperty("certificateReferences")[0].GetProperty("thumbprintAlgorithm").ToString());
+Console.WriteLine(result.GetProperty("value")[0].GetProperty("certificateReferences")[0].GetProperty("storeLocation").ToString());
+Console.WriteLine(result.GetProperty("value")[0].GetProperty("certificateReferences")[0].GetProperty("storeName").ToString());
+Console.WriteLine(result.GetProperty("value")[0].GetProperty("certificateReferences")[0].GetProperty("visibility")[0].ToString());
+Console.WriteLine(result.GetProperty("value")[0].GetProperty("errors")[0].GetProperty("code").ToString());
+Console.WriteLine(result.GetProperty("value")[0].GetProperty("errors")[0].GetProperty("message").ToString());
+Console.WriteLine(result.GetProperty("value")[0].GetProperty("errors")[0].GetProperty("errorDetails")[0].GetProperty("name").ToString());
+Console.WriteLine(result.GetProperty("value")[0].GetProperty("errors")[0].GetProperty("errorDetails")[0].GetProperty("value").ToString());
+Console.WriteLine(result.GetProperty("value")[0].GetProperty("isDedicated").ToString());
+Console.WriteLine(result.GetProperty("value")[0].GetProperty("endpointConfiguration").GetProperty("inboundEndpoints")[0].GetProperty("name").ToString());
+Console.WriteLine(result.GetProperty("value")[0].GetProperty("endpointConfiguration").GetProperty("inboundEndpoints")[0].GetProperty("protocol").ToString());
+Console.WriteLine(result.GetProperty("value")[0].GetProperty("endpointConfiguration").GetProperty("inboundEndpoints")[0].GetProperty("publicIPAddress").ToString());
+Console.WriteLine(result.GetProperty("value")[0].GetProperty("endpointConfiguration").GetProperty("inboundEndpoints")[0].GetProperty("publicFQDN").ToString());
+Console.WriteLine(result.GetProperty("value")[0].GetProperty("endpointConfiguration").GetProperty("inboundEndpoints")[0].GetProperty("frontendPort").ToString());
+Console.WriteLine(result.GetProperty("value")[0].GetProperty("endpointConfiguration").GetProperty("inboundEndpoints")[0].GetProperty("backendPort").ToString());
+Console.WriteLine(result.GetProperty("value")[0].GetProperty("nodeAgentInfo").GetProperty("version").ToString());
+Console.WriteLine(result.GetProperty("value")[0].GetProperty("nodeAgentInfo").GetProperty("lastUpdateTime").ToString());
+Console.WriteLine(result.GetProperty("value")[0].GetProperty("virtualMachineInfo").GetProperty("imageReference").GetProperty("publisher").ToString());
+Console.WriteLine(result.GetProperty("value")[0].GetProperty("virtualMachineInfo").GetProperty("imageReference").GetProperty("offer").ToString());
+Console.WriteLine(result.GetProperty("value")[0].GetProperty("virtualMachineInfo").GetProperty("imageReference").GetProperty("sku").ToString());
+Console.WriteLine(result.GetProperty("value")[0].GetProperty("virtualMachineInfo").GetProperty("imageReference").GetProperty("version").ToString());
+Console.WriteLine(result.GetProperty("value")[0].GetProperty("virtualMachineInfo").GetProperty("imageReference").GetProperty("virtualMachineImageId").ToString());
+Console.WriteLine(result.GetProperty("value")[0].GetProperty("virtualMachineInfo").GetProperty("imageReference").GetProperty("exactVersion").ToString());
+Console.WriteLine(result.GetProperty("odata.nextLink").ToString());
+]]></code>
+</example>
+<remarks>
+Below is the JSON schema for the response payload.
+
+Response Body:
+
+Schema for <c>ComputeNodeListResult</c>:
+<code>{
+  value: [
+    {
+      id: string, # Optional. Every Compute Node that is added to a Pool is assigned a unique ID. Whenever a
+Compute Node is removed from a Pool, all of its local files are deleted, and
+the ID is reclaimed and could be reused for new Compute Nodes.
+      url: string, # Optional. The URL of the Compute Node.
+      state: &quot;idle&quot; | &quot;rebooting&quot; | &quot;reimaging&quot; | &quot;running&quot; | &quot;unusable&quot; | &quot;creating&quot; | &quot;starting&quot; | &quot;waitingforstarttask&quot; | &quot;starttaskfailed&quot; | &quot;unknown&quot; | &quot;leavingpool&quot; | &quot;offline&quot; | &quot;preempted&quot;, # Optional. The Spot/Low-priority Compute Node has been preempted. Tasks which were running
+on the Compute Node when it was preempted will be rescheduled when another
+Compute Node becomes available.
+      schedulingState: &quot;enabled&quot; | &quot;disabled&quot;, # Optional. Whether the Compute Node is available for Task scheduling.
+      stateTransitionTime: string (date &amp; time), # Optional. The time at which the Compute Node entered its current state.
+      lastBootTime: string (date &amp; time), # Optional. This property may not be present if the Compute Node state is unusable.
+      allocationTime: string (date &amp; time), # Optional. This is the time when the Compute Node was initially allocated and doesn&apos;t
+change once set. It is not updated when the Compute Node is service healed or
+preempted.
+      ipAddress: string, # Optional. Every Compute Node that is added to a Pool is assigned a unique IP address.
+Whenever a Compute Node is removed from a Pool, all of its local files are
+deleted, and the IP address is reclaimed and could be reused for new Compute
+Nodes.
+      affinityId: string, # Optional. Note that this is just a soft affinity. If the target Compute Node is busy or
+unavailable at the time the Task is scheduled, then the Task will be scheduled
+elsewhere.
+      vmSize: string, # Optional. For information about available sizes of virtual machines in Pools, see Choose
+a VM size for Compute Nodes in an Azure Batch Pool
+(https://docs.microsoft.com/azure/batch/batch-pool-vm-sizes).
+      totalTasksRun: number, # Optional. The total number of Job Tasks completed on the Compute Node. This includes Job
+Manager Tasks and normal Tasks, but not Job Preparation, Job Release or Start
+Tasks.
+      runningTasksCount: number, # Optional. The total number of currently running Job Tasks on the Compute Node. This
+includes Job Manager Tasks and normal Tasks, but not Job Preparation, Job
+Release or Start Tasks.
+      runningTaskSlotsCount: number, # Optional. The total number of scheduling slots used by currently running Job Tasks on the
+Compute Node. This includes Job Manager Tasks and normal Tasks, but not Job
+Preparation, Job Release or Start Tasks.
+      totalTasksSucceeded: number, # Optional. The total number of Job Tasks which completed successfully (with exitCode 0) on
+the Compute Node. This includes Job Manager Tasks and normal Tasks, but not Job
+Preparation, Job Release or Start Tasks.
+      recentTasks: [TaskInformation], # Optional. This property is present only if at least one Task has run on this Compute Node
+since it was assigned to the Pool.
+      startTask: {
+        commandLine: string, # Required. The command line does not run under a shell, and therefore cannot take
+advantage of shell features such as environment variable expansion. If you want
+to take advantage of such features, you should invoke the shell in the command
+line, for example using &quot;cmd /c MyCommand&quot; in Windows or &quot;/bin/sh -c
+MyCommand&quot; in Linux. If the command line refers to file paths, it should use a
+relative path (relative to the Task working directory), or use the Batch
+provided environment variable
+(https://docs.microsoft.com/en-us/azure/batch/batch-compute-node-environment-variables).
+        containerSettings: {
+          containerRunOptions: string, # Optional. These additional options are supplied as arguments to the &quot;docker create&quot;
+command, in addition to those controlled by the Batch Service.
+          imageName: string, # Required. This is the full Image reference, as would be specified to &quot;docker pull&quot;. If
+no tag is provided as part of the Image name, the tag &quot;:latest&quot; is used as a
+default.
+          registry: {
+            username: string, # Optional. The user name to log into the registry server.
+            password: string, # Optional. The password to log into the registry server.
+            registryServer: string, # Optional. If omitted, the default is &quot;docker.io&quot;.
+            identityReference: {
+              resourceId: string, # Optional. The ARM resource id of the user assigned identity.
+            }, # Optional. The reference to a user assigned identity associated with the Batch pool which
+a compute node will use.
+          }, # Optional. This setting can be omitted if was already provided at Pool creation.
+          workingDirectory: &quot;taskWorkingDirectory&quot; | &quot;containerImageDefault&quot;, # Optional. The default is &apos;taskWorkingDirectory&apos;.
+        }, # Optional. When this is specified, all directories recursively below the
+AZ_BATCH_NODE_ROOT_DIR (the root of Azure Batch directories on the node) are
+mapped into the container, all Task environment variables are mapped into the
+container, and the Task command line is executed in the container. Files
+produced in the container outside of AZ_BATCH_NODE_ROOT_DIR might not be
+reflected to the host disk, meaning that Batch file APIs will not be able to
+access those files.
+        resourceFiles: [ResourceFile], # Optional. Files listed under this element are located in the Task&apos;s working directory.
+        environmentSettings: [EnvironmentSetting], # Optional. A list of environment variable settings for the StartTask.
+        userIdentity: {
+          username: string, # Optional. The userName and autoUser properties are mutually exclusive; you must specify
+one but not both.
+          autoUser: {
+            scope: &quot;task&quot; | &quot;pool&quot;, # Optional. The default value is pool. If the pool is running Windows a value of Task
+should be specified if stricter isolation between tasks is required. For
+example, if the task mutates the registry in a way which could impact other
+tasks, or if certificates have been specified on the pool which should not be
+accessible by normal tasks but should be accessible by StartTasks.
+            elevationLevel: &quot;nonadmin&quot; | &quot;admin&quot;, # Optional. The default value is nonAdmin.
+          }, # Optional. The userName and autoUser properties are mutually exclusive; you must specify
+one but not both.
+        }, # Optional. If omitted, the Task runs as a non-administrative user unique to the Task.
+        maxTaskRetryCount: number, # Optional. The Batch service retries a Task if its exit code is nonzero. Note that this
+value specifically controls the number of retries. The Batch service will try
+the Task once, and may then retry up to this limit. For example, if the maximum
+retry count is 3, Batch tries the Task up to 4 times (one initial try and 3
+retries). If the maximum retry count is 0, the Batch service does not retry the
+Task. If the maximum retry count is -1, the Batch service retries the Task
+without limit, however this is not recommended for a start task or any task.
+The default value is 0 (no retries)
+        waitForSuccess: boolean, # Optional. If true and the StartTask fails on a Node, the Batch service retries the
+StartTask up to its maximum retry count (maxTaskRetryCount). If the Task has
+still not completed successfully after all retries, then the Batch service
+marks the Node unusable, and will not schedule Tasks to it. This condition can
+be detected via the Compute Node state and failure info details. If false, the
+Batch service will not wait for the StartTask to complete. In this case, other
+Tasks can start executing on the Compute Node while the StartTask is still
+running; and even if the StartTask fails, new Tasks will continue to be
+scheduled on the Compute Node. The default is true.
+      }, # Optional. Batch will retry Tasks when a recovery operation is triggered on a Node.
+Examples of recovery operations include (but are not limited to) when an
+unhealthy Node is rebooted or a Compute Node disappeared due to host failure.
+Retries due to recovery operations are independent of and are not counted
+against the maxTaskRetryCount. Even if the maxTaskRetryCount is 0, an internal
+retry due to a recovery operation may occur. Because of this, all Tasks should
+be idempotent. This means Tasks need to tolerate being interrupted and
+restarted without causing any corruption or duplicate data. The best practice
+for long running Tasks is to use some form of checkpointing. In some cases the
+StartTask may be re-run even though the Compute Node was not rebooted. Special
+care should be taken to avoid StartTasks which create breakaway process or
+install/launch services from the StartTask working directory, as this will
+block Batch from being able to re-run the StartTask.
+      startTaskInfo: {
+        state: &quot;running&quot; | &quot;completed&quot;, # Required. The state of the StartTask on the Compute Node.
+        startTime: string (date &amp; time), # Required. This value is reset every time the Task is restarted or retried (that is, this
+is the most recent time at which the StartTask started running).
+        endTime: string (date &amp; time), # Optional. This is the end time of the most recent run of the StartTask, if that run has
+completed (even if that run failed and a retry is pending). This element is not
+present if the StartTask is currently running.
+        exitCode: number, # Optional. This property is set only if the StartTask is in the completed state. In
+general, the exit code for a process reflects the specific convention
+implemented by the application developer for that process. If you use the exit
+code value to make decisions in your code, be sure that you know the exit code
+convention used by the application process. However, if the Batch service
+terminates the StartTask (due to timeout, or user termination via the API) you
+may see an operating system-defined exit code.
+        containerInfo: {
+          containerId: string, # Optional. The ID of the container.
+          state: string, # Optional. This is the state of the container according to the Docker service. It is
+equivalent to the status field returned by &quot;docker inspect&quot;.
+          error: string, # Optional. This is the detailed error string from the Docker service, if available. It is
+equivalent to the error field returned by &quot;docker inspect&quot;.
+        }, # Optional. This property is set only if the Task runs in a container context.
+        failureInfo: {
+          category: &quot;usererror&quot; | &quot;servererror&quot;, # Required. The category of the error.
+          code: string, # Optional. An identifier for the Task error. Codes are invariant and are intended to be
+consumed programmatically.
+          message: string, # Optional. A message describing the Task error, intended to be suitable for display in a
+user interface.
+          details: [NameValuePair], # Optional. A list of additional details related to the error.
+        }, # Optional. This property is set only if the Task is in the completed state and encountered
+a failure.
+        retryCount: number, # Required. Task application failures (non-zero exit code) are retried, pre-processing
+errors (the Task could not be run) and file upload errors are not retried. The
+Batch service will retry the Task up to the limit specified by the constraints.
+        lastRetryTime: string (date &amp; time), # Optional. This element is present only if the Task was retried (i.e. retryCount is
+nonzero). If present, this is typically the same as startTime, but may be
+different if the Task has been restarted for reasons other than retry; for
+example, if the Compute Node was rebooted during a retry, then the startTime is
+updated but the lastRetryTime is not.
+        result: &quot;success&quot; | &quot;failure&quot;, # Optional. If the value is &apos;failed&apos;, then the details of the failure can be found in the
+failureInfo property.
+      }, # Optional. Information about a StartTask running on a Compute Node.
+      certificateReferences: [CertificateReference], # Optional. For Windows Nodes, the Batch service installs the Certificates to the specified
+Certificate store and location. For Linux Compute Nodes, the Certificates are
+stored in a directory inside the Task working directory and an environment
+variable AZ_BATCH_CERTIFICATES_DIR is supplied to the Task to query for this
+location. For Certificates with visibility of &apos;remoteUser&apos;, a &apos;certs&apos; directory
+is created in the user&apos;s home directory (e.g., /home/{user-name}/certs) and
+Certificates are placed in that directory.
+      errors: [ComputeNodeError], # Optional. The list of errors that are currently being encountered by the Compute Node.
+      isDedicated: boolean, # Optional. Whether this Compute Node is a dedicated Compute Node. If false, the Compute
+Node is a Spot/Low-priority Compute Node.
+      endpointConfiguration: {
+        inboundEndpoints: [InboundEndpoint], # Required. The list of inbound endpoints that are accessible on the Compute Node.
+      }, # Optional. The endpoint configuration for the Compute Node.
+      nodeAgentInfo: {
+        version: string, # Required. This version number can be checked against the Compute Node agent release notes
+located at
+https://github.com/Azure/Batch/blob/master/changelogs/nodeagent/CHANGELOG.md.
+        lastUpdateTime: string (date &amp; time), # Required. This is the most recent time that the Compute Node agent was updated to a new
+version.
+      }, # Optional. The Batch Compute Node agent is a program that runs on each Compute Node in the
+Pool and provides Batch capability on the Compute Node.
+      virtualMachineInfo: {
+        imageReference: {
+          publisher: string, # Optional. For example, Canonical or MicrosoftWindowsServer.
+          offer: string, # Optional. For example, UbuntuServer or WindowsServer.
+          sku: string, # Optional. For example, 18.04-LTS or 2019-Datacenter.
+          version: string, # Optional. A value of &apos;latest&apos; can be specified to select the latest version of an Image.
+If omitted, the default is &apos;latest&apos;.
+          virtualMachineImageId: string, # Optional. This property is mutually exclusive with other ImageReference properties. The
+Shared Image Gallery Image must have replicas in the same region and must be in
+the same subscription as the Azure Batch account. If the image version is not
+specified in the imageId, the latest version will be used. For information
+about the firewall settings for the Batch Compute Node agent to communicate
+with the Batch service see
+https://docs.microsoft.com/en-us/azure/batch/batch-api-basics#virtual-network-vnet-and-firewall-configuration.
+          exactVersion: string, # Optional. The specific version of the platform image or marketplace image used to create
+the node. This read-only field differs from &apos;version&apos; only if the value
+specified for &apos;version&apos; when the pool was created was &apos;latest&apos;.
+        }, # Optional. A reference to an Azure Virtual Machines Marketplace Image or a Shared Image
+Gallery Image. To get the list of all Azure Marketplace Image references
+verified by Azure Batch, see the &apos;List Supported Images&apos; operation.
+      }, # Optional. Info about the current state of the virtual machine.
+    }
+  ], # Optional. The list of Compute Nodes.
+  odata.nextLink: string, # Optional. The URL to get the next set of results.
+}
+</code>
+
+</remarks>
+    </member>
+    <member name="GetComputeNodes(String,Int32,String,Int32,String,Boolean,String,String,RequestContext)">
+<example>
+This sample shows how to call GetComputeNodes with required parameters and parse the result.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var client = new BatchServiceClient(credential).GetComputeNodesClient(<2022-10-01.16.0>);
+
+Response response = client.GetComputeNodes("<poolId>");
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.ToString());
+]]></code>
+This sample shows how to call GetComputeNodes with all parameters, and how to parse the result.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var client = new BatchServiceClient(credential).GetComputeNodesClient(<2022-10-01.16.0>);
+
+Response response = client.GetComputeNodes("<poolId>", 1234, "<ocpDate>", 1234, "<clientRequestId>", true, "<filter>", "<select>");
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("value")[0].GetProperty("id").ToString());
+Console.WriteLine(result.GetProperty("value")[0].GetProperty("url").ToString());
+Console.WriteLine(result.GetProperty("value")[0].GetProperty("state").ToString());
+Console.WriteLine(result.GetProperty("value")[0].GetProperty("schedulingState").ToString());
+Console.WriteLine(result.GetProperty("value")[0].GetProperty("stateTransitionTime").ToString());
+Console.WriteLine(result.GetProperty("value")[0].GetProperty("lastBootTime").ToString());
+Console.WriteLine(result.GetProperty("value")[0].GetProperty("allocationTime").ToString());
+Console.WriteLine(result.GetProperty("value")[0].GetProperty("ipAddress").ToString());
+Console.WriteLine(result.GetProperty("value")[0].GetProperty("affinityId").ToString());
+Console.WriteLine(result.GetProperty("value")[0].GetProperty("vmSize").ToString());
+Console.WriteLine(result.GetProperty("value")[0].GetProperty("totalTasksRun").ToString());
+Console.WriteLine(result.GetProperty("value")[0].GetProperty("runningTasksCount").ToString());
+Console.WriteLine(result.GetProperty("value")[0].GetProperty("runningTaskSlotsCount").ToString());
+Console.WriteLine(result.GetProperty("value")[0].GetProperty("totalTasksSucceeded").ToString());
+Console.WriteLine(result.GetProperty("value")[0].GetProperty("recentTasks")[0].GetProperty("taskUrl").ToString());
+Console.WriteLine(result.GetProperty("value")[0].GetProperty("recentTasks")[0].GetProperty("jobId").ToString());
+Console.WriteLine(result.GetProperty("value")[0].GetProperty("recentTasks")[0].GetProperty("taskId").ToString());
+Console.WriteLine(result.GetProperty("value")[0].GetProperty("recentTasks")[0].GetProperty("subtaskId").ToString());
+Console.WriteLine(result.GetProperty("value")[0].GetProperty("recentTasks")[0].GetProperty("taskState").ToString());
+Console.WriteLine(result.GetProperty("value")[0].GetProperty("recentTasks")[0].GetProperty("executionInfo").GetProperty("startTime").ToString());
+Console.WriteLine(result.GetProperty("value")[0].GetProperty("recentTasks")[0].GetProperty("executionInfo").GetProperty("endTime").ToString());
+Console.WriteLine(result.GetProperty("value")[0].GetProperty("recentTasks")[0].GetProperty("executionInfo").GetProperty("exitCode").ToString());
+Console.WriteLine(result.GetProperty("value")[0].GetProperty("recentTasks")[0].GetProperty("executionInfo").GetProperty("containerInfo").GetProperty("containerId").ToString());
+Console.WriteLine(result.GetProperty("value")[0].GetProperty("recentTasks")[0].GetProperty("executionInfo").GetProperty("containerInfo").GetProperty("state").ToString());
+Console.WriteLine(result.GetProperty("value")[0].GetProperty("recentTasks")[0].GetProperty("executionInfo").GetProperty("containerInfo").GetProperty("error").ToString());
+Console.WriteLine(result.GetProperty("value")[0].GetProperty("recentTasks")[0].GetProperty("executionInfo").GetProperty("failureInfo").GetProperty("category").ToString());
+Console.WriteLine(result.GetProperty("value")[0].GetProperty("recentTasks")[0].GetProperty("executionInfo").GetProperty("failureInfo").GetProperty("code").ToString());
+Console.WriteLine(result.GetProperty("value")[0].GetProperty("recentTasks")[0].GetProperty("executionInfo").GetProperty("failureInfo").GetProperty("message").ToString());
+Console.WriteLine(result.GetProperty("value")[0].GetProperty("recentTasks")[0].GetProperty("executionInfo").GetProperty("failureInfo").GetProperty("details")[0].GetProperty("name").ToString());
+Console.WriteLine(result.GetProperty("value")[0].GetProperty("recentTasks")[0].GetProperty("executionInfo").GetProperty("failureInfo").GetProperty("details")[0].GetProperty("value").ToString());
+Console.WriteLine(result.GetProperty("value")[0].GetProperty("recentTasks")[0].GetProperty("executionInfo").GetProperty("retryCount").ToString());
+Console.WriteLine(result.GetProperty("value")[0].GetProperty("recentTasks")[0].GetProperty("executionInfo").GetProperty("lastRetryTime").ToString());
+Console.WriteLine(result.GetProperty("value")[0].GetProperty("recentTasks")[0].GetProperty("executionInfo").GetProperty("requeueCount").ToString());
+Console.WriteLine(result.GetProperty("value")[0].GetProperty("recentTasks")[0].GetProperty("executionInfo").GetProperty("lastRequeueTime").ToString());
+Console.WriteLine(result.GetProperty("value")[0].GetProperty("recentTasks")[0].GetProperty("executionInfo").GetProperty("result").ToString());
+Console.WriteLine(result.GetProperty("value")[0].GetProperty("startTask").GetProperty("commandLine").ToString());
+Console.WriteLine(result.GetProperty("value")[0].GetProperty("startTask").GetProperty("containerSettings").GetProperty("containerRunOptions").ToString());
+Console.WriteLine(result.GetProperty("value")[0].GetProperty("startTask").GetProperty("containerSettings").GetProperty("imageName").ToString());
+Console.WriteLine(result.GetProperty("value")[0].GetProperty("startTask").GetProperty("containerSettings").GetProperty("registry").GetProperty("username").ToString());
+Console.WriteLine(result.GetProperty("value")[0].GetProperty("startTask").GetProperty("containerSettings").GetProperty("registry").GetProperty("password").ToString());
+Console.WriteLine(result.GetProperty("value")[0].GetProperty("startTask").GetProperty("containerSettings").GetProperty("registry").GetProperty("registryServer").ToString());
+Console.WriteLine(result.GetProperty("value")[0].GetProperty("startTask").GetProperty("containerSettings").GetProperty("registry").GetProperty("identityReference").GetProperty("resourceId").ToString());
+Console.WriteLine(result.GetProperty("value")[0].GetProperty("startTask").GetProperty("containerSettings").GetProperty("workingDirectory").ToString());
+Console.WriteLine(result.GetProperty("value")[0].GetProperty("startTask").GetProperty("resourceFiles")[0].GetProperty("autoStorageContainerName").ToString());
+Console.WriteLine(result.GetProperty("value")[0].GetProperty("startTask").GetProperty("resourceFiles")[0].GetProperty("storageContainerUrl").ToString());
+Console.WriteLine(result.GetProperty("value")[0].GetProperty("startTask").GetProperty("resourceFiles")[0].GetProperty("httpUrl").ToString());
+Console.WriteLine(result.GetProperty("value")[0].GetProperty("startTask").GetProperty("resourceFiles")[0].GetProperty("blobPrefix").ToString());
+Console.WriteLine(result.GetProperty("value")[0].GetProperty("startTask").GetProperty("resourceFiles")[0].GetProperty("filePath").ToString());
+Console.WriteLine(result.GetProperty("value")[0].GetProperty("startTask").GetProperty("resourceFiles")[0].GetProperty("fileMode").ToString());
+Console.WriteLine(result.GetProperty("value")[0].GetProperty("startTask").GetProperty("resourceFiles")[0].GetProperty("identityReference").GetProperty("resourceId").ToString());
+Console.WriteLine(result.GetProperty("value")[0].GetProperty("startTask").GetProperty("environmentSettings")[0].GetProperty("name").ToString());
+Console.WriteLine(result.GetProperty("value")[0].GetProperty("startTask").GetProperty("environmentSettings")[0].GetProperty("value").ToString());
+Console.WriteLine(result.GetProperty("value")[0].GetProperty("startTask").GetProperty("userIdentity").GetProperty("username").ToString());
+Console.WriteLine(result.GetProperty("value")[0].GetProperty("startTask").GetProperty("userIdentity").GetProperty("autoUser").GetProperty("scope").ToString());
+Console.WriteLine(result.GetProperty("value")[0].GetProperty("startTask").GetProperty("userIdentity").GetProperty("autoUser").GetProperty("elevationLevel").ToString());
+Console.WriteLine(result.GetProperty("value")[0].GetProperty("startTask").GetProperty("maxTaskRetryCount").ToString());
+Console.WriteLine(result.GetProperty("value")[0].GetProperty("startTask").GetProperty("waitForSuccess").ToString());
+Console.WriteLine(result.GetProperty("value")[0].GetProperty("startTaskInfo").GetProperty("state").ToString());
+Console.WriteLine(result.GetProperty("value")[0].GetProperty("startTaskInfo").GetProperty("startTime").ToString());
+Console.WriteLine(result.GetProperty("value")[0].GetProperty("startTaskInfo").GetProperty("endTime").ToString());
+Console.WriteLine(result.GetProperty("value")[0].GetProperty("startTaskInfo").GetProperty("exitCode").ToString());
+Console.WriteLine(result.GetProperty("value")[0].GetProperty("startTaskInfo").GetProperty("containerInfo").GetProperty("containerId").ToString());
+Console.WriteLine(result.GetProperty("value")[0].GetProperty("startTaskInfo").GetProperty("containerInfo").GetProperty("state").ToString());
+Console.WriteLine(result.GetProperty("value")[0].GetProperty("startTaskInfo").GetProperty("containerInfo").GetProperty("error").ToString());
+Console.WriteLine(result.GetProperty("value")[0].GetProperty("startTaskInfo").GetProperty("failureInfo").GetProperty("category").ToString());
+Console.WriteLine(result.GetProperty("value")[0].GetProperty("startTaskInfo").GetProperty("failureInfo").GetProperty("code").ToString());
+Console.WriteLine(result.GetProperty("value")[0].GetProperty("startTaskInfo").GetProperty("failureInfo").GetProperty("message").ToString());
+Console.WriteLine(result.GetProperty("value")[0].GetProperty("startTaskInfo").GetProperty("failureInfo").GetProperty("details")[0].GetProperty("name").ToString());
+Console.WriteLine(result.GetProperty("value")[0].GetProperty("startTaskInfo").GetProperty("failureInfo").GetProperty("details")[0].GetProperty("value").ToString());
+Console.WriteLine(result.GetProperty("value")[0].GetProperty("startTaskInfo").GetProperty("retryCount").ToString());
+Console.WriteLine(result.GetProperty("value")[0].GetProperty("startTaskInfo").GetProperty("lastRetryTime").ToString());
+Console.WriteLine(result.GetProperty("value")[0].GetProperty("startTaskInfo").GetProperty("result").ToString());
+Console.WriteLine(result.GetProperty("value")[0].GetProperty("certificateReferences")[0].GetProperty("thumbprint").ToString());
+Console.WriteLine(result.GetProperty("value")[0].GetProperty("certificateReferences")[0].GetProperty("thumbprintAlgorithm").ToString());
+Console.WriteLine(result.GetProperty("value")[0].GetProperty("certificateReferences")[0].GetProperty("storeLocation").ToString());
+Console.WriteLine(result.GetProperty("value")[0].GetProperty("certificateReferences")[0].GetProperty("storeName").ToString());
+Console.WriteLine(result.GetProperty("value")[0].GetProperty("certificateReferences")[0].GetProperty("visibility")[0].ToString());
+Console.WriteLine(result.GetProperty("value")[0].GetProperty("errors")[0].GetProperty("code").ToString());
+Console.WriteLine(result.GetProperty("value")[0].GetProperty("errors")[0].GetProperty("message").ToString());
+Console.WriteLine(result.GetProperty("value")[0].GetProperty("errors")[0].GetProperty("errorDetails")[0].GetProperty("name").ToString());
+Console.WriteLine(result.GetProperty("value")[0].GetProperty("errors")[0].GetProperty("errorDetails")[0].GetProperty("value").ToString());
+Console.WriteLine(result.GetProperty("value")[0].GetProperty("isDedicated").ToString());
+Console.WriteLine(result.GetProperty("value")[0].GetProperty("endpointConfiguration").GetProperty("inboundEndpoints")[0].GetProperty("name").ToString());
+Console.WriteLine(result.GetProperty("value")[0].GetProperty("endpointConfiguration").GetProperty("inboundEndpoints")[0].GetProperty("protocol").ToString());
+Console.WriteLine(result.GetProperty("value")[0].GetProperty("endpointConfiguration").GetProperty("inboundEndpoints")[0].GetProperty("publicIPAddress").ToString());
+Console.WriteLine(result.GetProperty("value")[0].GetProperty("endpointConfiguration").GetProperty("inboundEndpoints")[0].GetProperty("publicFQDN").ToString());
+Console.WriteLine(result.GetProperty("value")[0].GetProperty("endpointConfiguration").GetProperty("inboundEndpoints")[0].GetProperty("frontendPort").ToString());
+Console.WriteLine(result.GetProperty("value")[0].GetProperty("endpointConfiguration").GetProperty("inboundEndpoints")[0].GetProperty("backendPort").ToString());
+Console.WriteLine(result.GetProperty("value")[0].GetProperty("nodeAgentInfo").GetProperty("version").ToString());
+Console.WriteLine(result.GetProperty("value")[0].GetProperty("nodeAgentInfo").GetProperty("lastUpdateTime").ToString());
+Console.WriteLine(result.GetProperty("value")[0].GetProperty("virtualMachineInfo").GetProperty("imageReference").GetProperty("publisher").ToString());
+Console.WriteLine(result.GetProperty("value")[0].GetProperty("virtualMachineInfo").GetProperty("imageReference").GetProperty("offer").ToString());
+Console.WriteLine(result.GetProperty("value")[0].GetProperty("virtualMachineInfo").GetProperty("imageReference").GetProperty("sku").ToString());
+Console.WriteLine(result.GetProperty("value")[0].GetProperty("virtualMachineInfo").GetProperty("imageReference").GetProperty("version").ToString());
+Console.WriteLine(result.GetProperty("value")[0].GetProperty("virtualMachineInfo").GetProperty("imageReference").GetProperty("virtualMachineImageId").ToString());
+Console.WriteLine(result.GetProperty("value")[0].GetProperty("virtualMachineInfo").GetProperty("imageReference").GetProperty("exactVersion").ToString());
+Console.WriteLine(result.GetProperty("odata.nextLink").ToString());
+]]></code>
+</example>
+<remarks>
+Below is the JSON schema for the response payload.
+
+Response Body:
+
+Schema for <c>ComputeNodeListResult</c>:
+<code>{
+  value: [
+    {
+      id: string, # Optional. Every Compute Node that is added to a Pool is assigned a unique ID. Whenever a
+Compute Node is removed from a Pool, all of its local files are deleted, and
+the ID is reclaimed and could be reused for new Compute Nodes.
+      url: string, # Optional. The URL of the Compute Node.
+      state: &quot;idle&quot; | &quot;rebooting&quot; | &quot;reimaging&quot; | &quot;running&quot; | &quot;unusable&quot; | &quot;creating&quot; | &quot;starting&quot; | &quot;waitingforstarttask&quot; | &quot;starttaskfailed&quot; | &quot;unknown&quot; | &quot;leavingpool&quot; | &quot;offline&quot; | &quot;preempted&quot;, # Optional. The Spot/Low-priority Compute Node has been preempted. Tasks which were running
+on the Compute Node when it was preempted will be rescheduled when another
+Compute Node becomes available.
+      schedulingState: &quot;enabled&quot; | &quot;disabled&quot;, # Optional. Whether the Compute Node is available for Task scheduling.
+      stateTransitionTime: string (date &amp; time), # Optional. The time at which the Compute Node entered its current state.
+      lastBootTime: string (date &amp; time), # Optional. This property may not be present if the Compute Node state is unusable.
+      allocationTime: string (date &amp; time), # Optional. This is the time when the Compute Node was initially allocated and doesn&apos;t
+change once set. It is not updated when the Compute Node is service healed or
+preempted.
+      ipAddress: string, # Optional. Every Compute Node that is added to a Pool is assigned a unique IP address.
+Whenever a Compute Node is removed from a Pool, all of its local files are
+deleted, and the IP address is reclaimed and could be reused for new Compute
+Nodes.
+      affinityId: string, # Optional. Note that this is just a soft affinity. If the target Compute Node is busy or
+unavailable at the time the Task is scheduled, then the Task will be scheduled
+elsewhere.
+      vmSize: string, # Optional. For information about available sizes of virtual machines in Pools, see Choose
+a VM size for Compute Nodes in an Azure Batch Pool
+(https://docs.microsoft.com/azure/batch/batch-pool-vm-sizes).
+      totalTasksRun: number, # Optional. The total number of Job Tasks completed on the Compute Node. This includes Job
+Manager Tasks and normal Tasks, but not Job Preparation, Job Release or Start
+Tasks.
+      runningTasksCount: number, # Optional. The total number of currently running Job Tasks on the Compute Node. This
+includes Job Manager Tasks and normal Tasks, but not Job Preparation, Job
+Release or Start Tasks.
+      runningTaskSlotsCount: number, # Optional. The total number of scheduling slots used by currently running Job Tasks on the
+Compute Node. This includes Job Manager Tasks and normal Tasks, but not Job
+Preparation, Job Release or Start Tasks.
+      totalTasksSucceeded: number, # Optional. The total number of Job Tasks which completed successfully (with exitCode 0) on
+the Compute Node. This includes Job Manager Tasks and normal Tasks, but not Job
+Preparation, Job Release or Start Tasks.
+      recentTasks: [TaskInformation], # Optional. This property is present only if at least one Task has run on this Compute Node
+since it was assigned to the Pool.
+      startTask: {
+        commandLine: string, # Required. The command line does not run under a shell, and therefore cannot take
+advantage of shell features such as environment variable expansion. If you want
+to take advantage of such features, you should invoke the shell in the command
+line, for example using &quot;cmd /c MyCommand&quot; in Windows or &quot;/bin/sh -c
+MyCommand&quot; in Linux. If the command line refers to file paths, it should use a
+relative path (relative to the Task working directory), or use the Batch
+provided environment variable
+(https://docs.microsoft.com/en-us/azure/batch/batch-compute-node-environment-variables).
+        containerSettings: {
+          containerRunOptions: string, # Optional. These additional options are supplied as arguments to the &quot;docker create&quot;
+command, in addition to those controlled by the Batch Service.
+          imageName: string, # Required. This is the full Image reference, as would be specified to &quot;docker pull&quot;. If
+no tag is provided as part of the Image name, the tag &quot;:latest&quot; is used as a
+default.
+          registry: {
+            username: string, # Optional. The user name to log into the registry server.
+            password: string, # Optional. The password to log into the registry server.
+            registryServer: string, # Optional. If omitted, the default is &quot;docker.io&quot;.
+            identityReference: {
+              resourceId: string, # Optional. The ARM resource id of the user assigned identity.
+            }, # Optional. The reference to a user assigned identity associated with the Batch pool which
+a compute node will use.
+          }, # Optional. This setting can be omitted if was already provided at Pool creation.
+          workingDirectory: &quot;taskWorkingDirectory&quot; | &quot;containerImageDefault&quot;, # Optional. The default is &apos;taskWorkingDirectory&apos;.
+        }, # Optional. When this is specified, all directories recursively below the
+AZ_BATCH_NODE_ROOT_DIR (the root of Azure Batch directories on the node) are
+mapped into the container, all Task environment variables are mapped into the
+container, and the Task command line is executed in the container. Files
+produced in the container outside of AZ_BATCH_NODE_ROOT_DIR might not be
+reflected to the host disk, meaning that Batch file APIs will not be able to
+access those files.
+        resourceFiles: [ResourceFile], # Optional. Files listed under this element are located in the Task&apos;s working directory.
+        environmentSettings: [EnvironmentSetting], # Optional. A list of environment variable settings for the StartTask.
+        userIdentity: {
+          username: string, # Optional. The userName and autoUser properties are mutually exclusive; you must specify
+one but not both.
+          autoUser: {
+            scope: &quot;task&quot; | &quot;pool&quot;, # Optional. The default value is pool. If the pool is running Windows a value of Task
+should be specified if stricter isolation between tasks is required. For
+example, if the task mutates the registry in a way which could impact other
+tasks, or if certificates have been specified on the pool which should not be
+accessible by normal tasks but should be accessible by StartTasks.
+            elevationLevel: &quot;nonadmin&quot; | &quot;admin&quot;, # Optional. The default value is nonAdmin.
+          }, # Optional. The userName and autoUser properties are mutually exclusive; you must specify
+one but not both.
+        }, # Optional. If omitted, the Task runs as a non-administrative user unique to the Task.
+        maxTaskRetryCount: number, # Optional. The Batch service retries a Task if its exit code is nonzero. Note that this
+value specifically controls the number of retries. The Batch service will try
+the Task once, and may then retry up to this limit. For example, if the maximum
+retry count is 3, Batch tries the Task up to 4 times (one initial try and 3
+retries). If the maximum retry count is 0, the Batch service does not retry the
+Task. If the maximum retry count is -1, the Batch service retries the Task
+without limit, however this is not recommended for a start task or any task.
+The default value is 0 (no retries)
+        waitForSuccess: boolean, # Optional. If true and the StartTask fails on a Node, the Batch service retries the
+StartTask up to its maximum retry count (maxTaskRetryCount). If the Task has
+still not completed successfully after all retries, then the Batch service
+marks the Node unusable, and will not schedule Tasks to it. This condition can
+be detected via the Compute Node state and failure info details. If false, the
+Batch service will not wait for the StartTask to complete. In this case, other
+Tasks can start executing on the Compute Node while the StartTask is still
+running; and even if the StartTask fails, new Tasks will continue to be
+scheduled on the Compute Node. The default is true.
+      }, # Optional. Batch will retry Tasks when a recovery operation is triggered on a Node.
+Examples of recovery operations include (but are not limited to) when an
+unhealthy Node is rebooted or a Compute Node disappeared due to host failure.
+Retries due to recovery operations are independent of and are not counted
+against the maxTaskRetryCount. Even if the maxTaskRetryCount is 0, an internal
+retry due to a recovery operation may occur. Because of this, all Tasks should
+be idempotent. This means Tasks need to tolerate being interrupted and
+restarted without causing any corruption or duplicate data. The best practice
+for long running Tasks is to use some form of checkpointing. In some cases the
+StartTask may be re-run even though the Compute Node was not rebooted. Special
+care should be taken to avoid StartTasks which create breakaway process or
+install/launch services from the StartTask working directory, as this will
+block Batch from being able to re-run the StartTask.
+      startTaskInfo: {
+        state: &quot;running&quot; | &quot;completed&quot;, # Required. The state of the StartTask on the Compute Node.
+        startTime: string (date &amp; time), # Required. This value is reset every time the Task is restarted or retried (that is, this
+is the most recent time at which the StartTask started running).
+        endTime: string (date &amp; time), # Optional. This is the end time of the most recent run of the StartTask, if that run has
+completed (even if that run failed and a retry is pending). This element is not
+present if the StartTask is currently running.
+        exitCode: number, # Optional. This property is set only if the StartTask is in the completed state. In
+general, the exit code for a process reflects the specific convention
+implemented by the application developer for that process. If you use the exit
+code value to make decisions in your code, be sure that you know the exit code
+convention used by the application process. However, if the Batch service
+terminates the StartTask (due to timeout, or user termination via the API) you
+may see an operating system-defined exit code.
+        containerInfo: {
+          containerId: string, # Optional. The ID of the container.
+          state: string, # Optional. This is the state of the container according to the Docker service. It is
+equivalent to the status field returned by &quot;docker inspect&quot;.
+          error: string, # Optional. This is the detailed error string from the Docker service, if available. It is
+equivalent to the error field returned by &quot;docker inspect&quot;.
+        }, # Optional. This property is set only if the Task runs in a container context.
+        failureInfo: {
+          category: &quot;usererror&quot; | &quot;servererror&quot;, # Required. The category of the error.
+          code: string, # Optional. An identifier for the Task error. Codes are invariant and are intended to be
+consumed programmatically.
+          message: string, # Optional. A message describing the Task error, intended to be suitable for display in a
+user interface.
+          details: [NameValuePair], # Optional. A list of additional details related to the error.
+        }, # Optional. This property is set only if the Task is in the completed state and encountered
+a failure.
+        retryCount: number, # Required. Task application failures (non-zero exit code) are retried, pre-processing
+errors (the Task could not be run) and file upload errors are not retried. The
+Batch service will retry the Task up to the limit specified by the constraints.
+        lastRetryTime: string (date &amp; time), # Optional. This element is present only if the Task was retried (i.e. retryCount is
+nonzero). If present, this is typically the same as startTime, but may be
+different if the Task has been restarted for reasons other than retry; for
+example, if the Compute Node was rebooted during a retry, then the startTime is
+updated but the lastRetryTime is not.
+        result: &quot;success&quot; | &quot;failure&quot;, # Optional. If the value is &apos;failed&apos;, then the details of the failure can be found in the
+failureInfo property.
+      }, # Optional. Information about a StartTask running on a Compute Node.
+      certificateReferences: [CertificateReference], # Optional. For Windows Nodes, the Batch service installs the Certificates to the specified
+Certificate store and location. For Linux Compute Nodes, the Certificates are
+stored in a directory inside the Task working directory and an environment
+variable AZ_BATCH_CERTIFICATES_DIR is supplied to the Task to query for this
+location. For Certificates with visibility of &apos;remoteUser&apos;, a &apos;certs&apos; directory
+is created in the user&apos;s home directory (e.g., /home/{user-name}/certs) and
+Certificates are placed in that directory.
+      errors: [ComputeNodeError], # Optional. The list of errors that are currently being encountered by the Compute Node.
+      isDedicated: boolean, # Optional. Whether this Compute Node is a dedicated Compute Node. If false, the Compute
+Node is a Spot/Low-priority Compute Node.
+      endpointConfiguration: {
+        inboundEndpoints: [InboundEndpoint], # Required. The list of inbound endpoints that are accessible on the Compute Node.
+      }, # Optional. The endpoint configuration for the Compute Node.
+      nodeAgentInfo: {
+        version: string, # Required. This version number can be checked against the Compute Node agent release notes
+located at
+https://github.com/Azure/Batch/blob/master/changelogs/nodeagent/CHANGELOG.md.
+        lastUpdateTime: string (date &amp; time), # Required. This is the most recent time that the Compute Node agent was updated to a new
+version.
+      }, # Optional. The Batch Compute Node agent is a program that runs on each Compute Node in the
+Pool and provides Batch capability on the Compute Node.
+      virtualMachineInfo: {
+        imageReference: {
+          publisher: string, # Optional. For example, Canonical or MicrosoftWindowsServer.
+          offer: string, # Optional. For example, UbuntuServer or WindowsServer.
+          sku: string, # Optional. For example, 18.04-LTS or 2019-Datacenter.
+          version: string, # Optional. A value of &apos;latest&apos; can be specified to select the latest version of an Image.
+If omitted, the default is &apos;latest&apos;.
+          virtualMachineImageId: string, # Optional. This property is mutually exclusive with other ImageReference properties. The
+Shared Image Gallery Image must have replicas in the same region and must be in
+the same subscription as the Azure Batch account. If the image version is not
+specified in the imageId, the latest version will be used. For information
+about the firewall settings for the Batch Compute Node agent to communicate
+with the Batch service see
+https://docs.microsoft.com/en-us/azure/batch/batch-api-basics#virtual-network-vnet-and-firewall-configuration.
+          exactVersion: string, # Optional. The specific version of the platform image or marketplace image used to create
+the node. This read-only field differs from &apos;version&apos; only if the value
+specified for &apos;version&apos; when the pool was created was &apos;latest&apos;.
+        }, # Optional. A reference to an Azure Virtual Machines Marketplace Image or a Shared Image
+Gallery Image. To get the list of all Azure Marketplace Image references
+verified by Azure Batch, see the &apos;List Supported Images&apos; operation.
+      }, # Optional. Info about the current state of the virtual machine.
+    }
+  ], # Optional. The list of Compute Nodes.
+  odata.nextLink: string, # Optional. The URL to get the next set of results.
+}
+</code>
+
+</remarks>
+    </member>
+  </members>
+</doc>
