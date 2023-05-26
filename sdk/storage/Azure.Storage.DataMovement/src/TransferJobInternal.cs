@@ -314,7 +314,6 @@ namespace Azure.Storage.DataMovement
         /// </summary>
         public async Task JobPartEvent(TransferStatusEventArgs args)
         {
-            Console.WriteLine($"JobPartEvent: Status = {args.StorageTransferStatus}, Job Status = {_dataTransfer._state.GetTransferStatus()}");
             // NOTE: There is a chance this event can be triggered after the transfer has
             // completed if more job parts complete before the next instance of this event is handled.
 

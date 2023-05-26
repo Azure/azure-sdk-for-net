@@ -16,8 +16,6 @@ namespace Azure.Storage.DataMovement.Tests
         public void Report(StorageTransferProgress progress)
         {
             _updates.Add(progress);
-            string message = $"Event - Queued: {progress.QueuedCount}, InProgress: {progress.InProgressCount}, Completed: {progress.CompletedCount}, Skipped: {progress.SkippedCount}, Failed: {progress.FailedCount}, Bytes: {progress.BytesTransferred}";
-            Console.WriteLine(message);
         }
 
         public void Pause()

@@ -541,7 +541,6 @@ namespace Azure.Storage.DataMovement
                 }
                 else if (JobPartStatus == StorageTransferStatus.CancellationInProgress)
                 {
-                    Console.WriteLine("TransferStatus == CancellationInProgress");
                     await OnTransferStatusChanged(StorageTransferStatus.CompletedWithFailedTransfers).ConfigureAwait(false);
                 }
             }

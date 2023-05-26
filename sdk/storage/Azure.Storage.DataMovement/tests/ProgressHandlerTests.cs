@@ -128,7 +128,6 @@ namespace Azure.Storage.DataMovement.Tests
             DataTransfer transfer = await transferManager.StartTransferAsync(source, destination, transferOptions);
             CancellationTokenSource tokenSource = new CancellationTokenSource(TimeSpan.FromSeconds(waitTime));
             await transfer.AwaitCompletion(tokenSource.Token);
-            Console.WriteLine("Transfer completed");
 
             progressHandler.AssertProgress(fileCount, skippedCount, failedCount);
             progressHandler.AssertBytesTransferred(expectedBytesTransferred);
