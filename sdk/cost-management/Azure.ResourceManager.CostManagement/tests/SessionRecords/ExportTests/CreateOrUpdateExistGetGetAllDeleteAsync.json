@@ -1,0 +1,560 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c?api-version=2021-01-01",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-b8a2c39ac6ba0425d26029dd37fd00df-0d2a732765b5d781-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.5.0 (.NET 7.0.5; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "7372a0689636d03415cf0f3530237d60",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "748",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Fri, 26 May 2023 02:52:51 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "e0956a2e-9bc5-4482-8c7f-8d6b672e2d98",
+        "x-ms-ratelimit-remaining-subscription-reads": "11999",
+        "x-ms-request-id": "e0956a2e-9bc5-4482-8c7f-8d6b672e2d98",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20230526T025251Z:e0956a2e-9bc5-4482-8c7f-8d6b672e2d98"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c",
+        "authorizationSource": "RoleBased",
+        "managedByTenants": [],
+        "tags": {
+          "TagKey-9823": "TagValue-1254",
+          "TagKey-3481": "TagValue-320",
+          "TagKey-4926": "TagValue-1187",
+          "TagKey-751": "TagValue-3921",
+          "TagKey-1866": "TagValue-8559",
+          "TagKey-3094": "TagValue-9190",
+          "TagKey-2449": "TagValue-9",
+          "TagKey-8379": "TagValue-164",
+          "TagKey-7470": "TagValue-2205",
+          "TagKey-4236": "TagValue-3698",
+          "TagKey-5316": "TagValue-2725"
+        },
+        "subscriptionId": "db1ab6f0-4769-4b27-930e-01e2ef9c123c",
+        "tenantId": "72f988bf-86f1-41af-91ab-2d7cd011db47",
+        "displayName": ".NET Mgmt SDK Test with TTL = 1 Day",
+        "state": "Enabled",
+        "subscriptionPolicies": {
+          "locationPlacementId": "Internal_2014-09-01",
+          "quotaId": "Internal_2014-09-01",
+          "spendingLimit": "Off"
+        }
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourcegroups/CostManagementRG2106?api-version=**",
+      "RequestMethod": "PUT",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "Content-Length": "21",
+        "Content-Type": "application/json",
+        "traceparent": "00-498969f44933fc348730594585b5fac1-1c6ef725bff4d64e-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.5.0 (.NET 7.0.5; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "b2a6e6f6914b30a3844c7490db2ca6e7",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "location": "eastus"
+      },
+      "StatusCode": 201,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "237",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Fri, 26 May 2023 02:52:55 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "d8ab040a-6ff0-45c4-b679-48bf2c076a25",
+        "x-ms-ratelimit-remaining-subscription-writes": "1199",
+        "x-ms-request-id": "d8ab040a-6ff0-45c4-b679-48bf2c076a25",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20230526T025255Z:d8ab040a-6ff0-45c4-b679-48bf2c076a25"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/CostManagementRG2106",
+        "name": "CostManagementRG2106",
+        "type": "Microsoft.Resources/resourceGroups",
+        "location": "eastus",
+        "properties": {
+          "provisioningState": "Succeeded"
+        }
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.CostManagement/exports/export9820?api-version=2023-03-01",
+      "RequestMethod": "PUT",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "Content-Length": "319",
+        "Content-Type": "application/json",
+        "traceparent": "00-82b442cc7a5a39084c99c422cff54551-0f9a8df6513f9c73-00",
+        "User-Agent": "azsdk-net-ResourceManager.CostManagement/1.0.0-alpha.20230526.1 (.NET 7.0.5; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "dd571ae5b08e0156006f8167aa777a87",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "properties": {
+          "format": "Csv",
+          "deliveryInfo": {
+            "destination": {
+              "resourceId": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/CostManagementRG2106/providers/Microsoft.Storage/storageAccounts/azstorageforcost9037",
+              "container": "exportcontainer"
+            }
+          },
+          "definition": {
+            "type": "Usage",
+            "timeframe": "TheLastMonth"
+          }
+        }
+      },
+      "StatusCode": 201,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "577",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Fri, 26 May 2023 02:53:23 GMT",
+        "Expires": "-1",
+        "Location": "https://costmanagement.trafficmanager.net/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.CostManagement/exports/export9820?api-version=2023-03-01",
+        "Pragma": "no-cache",
+        "session-id": "c637993f-2a4d-4331-9afb-3ee1f730469f",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "dd571ae5b08e0156006f8167aa777a87",
+        "x-ms-correlation-request-id": "7bc87479-959c-4b71-8708-8734be3e0468",
+        "x-ms-ratelimit-remaining-subscription-reads": "11996",
+        "x-ms-request-id": "0a9af65d-c838-400b-93a2-d812a8841e70",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20230526T025323Z:7bc87479-959c-4b71-8708-8734be3e0468",
+        "X-Powered-By": "ASP.NET"
+      },
+      "ResponseBody": {
+        "id": "subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.CostManagement/exports/export9820",
+        "name": "export9820",
+        "type": "Microsoft.CostManagement/exports",
+        "eTag": "\u00221d98f7d3c6b9c22\u0022",
+        "properties": {
+          "schedule": {
+            "status": "Inactive"
+          },
+          "format": "Csv",
+          "deliveryInfo": {
+            "destination": {
+              "resourceId": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/CostManagementRG2106/providers/Microsoft.Storage/storageAccounts/azstorageforcost9037",
+              "container": "exportcontainer",
+              "rootFolderPath": null
+            }
+          },
+          "definition": {
+            "type": "Usage",
+            "timeframe": "TheLastMonth"
+          }
+        }
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.CostManagement/exports/export9820?api-version=2023-03-01",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-98808969cc9031cb53f22bd1949f7e9e-2cf7a8d4d76ed5ea-00",
+        "User-Agent": "azsdk-net-ResourceManager.CostManagement/1.0.0-alpha.20230526.1 (.NET 7.0.5; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "fc786a320d72911ba7b0a2e7b2f9a108",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "577",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Fri, 26 May 2023 02:53:23 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "session-id": "72c120cd-a219-4424-aa94-c44a9f24aee7",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "Vary": "Accept-Encoding",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "fc786a320d72911ba7b0a2e7b2f9a108",
+        "x-ms-correlation-request-id": "98ac5603-16b2-4377-b994-358cc2365b32",
+        "x-ms-ratelimit-remaining-subscription-reads": "11995",
+        "x-ms-request-id": "6ab5140c-dfd9-4011-9f25-245c64ce090f",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20230526T025324Z:98ac5603-16b2-4377-b994-358cc2365b32",
+        "X-Powered-By": "ASP.NET"
+      },
+      "ResponseBody": {
+        "id": "subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.CostManagement/exports/export9820",
+        "name": "export9820",
+        "type": "Microsoft.CostManagement/exports",
+        "eTag": "\u00221d98f7d3c6b9c22\u0022",
+        "properties": {
+          "schedule": {
+            "status": "Inactive"
+          },
+          "format": "Csv",
+          "deliveryInfo": {
+            "destination": {
+              "resourceId": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/CostManagementRG2106/providers/Microsoft.Storage/storageAccounts/azstorageforcost9037",
+              "container": "exportcontainer",
+              "rootFolderPath": null
+            }
+          },
+          "definition": {
+            "type": "Usage",
+            "timeframe": "TheLastMonth"
+          }
+        }
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.CostManagement/exports/export9820?api-version=2023-03-01",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-e355b68fd0fa80b537f428ae5690e0d4-0c5535cb19f8f7e7-00",
+        "User-Agent": "azsdk-net-ResourceManager.CostManagement/1.0.0-alpha.20230526.1 (.NET 7.0.5; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "ad71d85c3bd316c6e72f5ac3ee4834ff",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "577",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Fri, 26 May 2023 02:53:24 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "session-id": "9ec2ac11-f934-4c4f-848c-f9451afc4327",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "Vary": "Accept-Encoding",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "ad71d85c3bd316c6e72f5ac3ee4834ff",
+        "x-ms-correlation-request-id": "56cd1240-968a-4dbd-b43c-3376363d0456",
+        "x-ms-ratelimit-remaining-subscription-reads": "11994",
+        "x-ms-request-id": "654abdaa-5acf-458a-be16-f489b9478f93",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20230526T025324Z:56cd1240-968a-4dbd-b43c-3376363d0456",
+        "X-Powered-By": "ASP.NET"
+      },
+      "ResponseBody": {
+        "id": "subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.CostManagement/exports/export9820",
+        "name": "export9820",
+        "type": "Microsoft.CostManagement/exports",
+        "eTag": "\u00221d98f7d3c6b9c22\u0022",
+        "properties": {
+          "schedule": {
+            "status": "Inactive"
+          },
+          "format": "Csv",
+          "deliveryInfo": {
+            "destination": {
+              "resourceId": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/CostManagementRG2106/providers/Microsoft.Storage/storageAccounts/azstorageforcost9037",
+              "container": "exportcontainer",
+              "rootFolderPath": null
+            }
+          },
+          "definition": {
+            "type": "Usage",
+            "timeframe": "TheLastMonth"
+          }
+        }
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.CostManagement/exports?api-version=2023-03-01",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "User-Agent": "azsdk-net-ResourceManager.CostManagement/1.0.0-alpha.20230526.1 (.NET 7.0.5; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "381ec0e35ebcd819fec535de0d6f4e06",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "5211",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Fri, 26 May 2023 02:53:24 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "session-id": "f3615f69-193d-430e-9e83-5f6423851e2c",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "Vary": "Accept-Encoding",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "381ec0e35ebcd819fec535de0d6f4e06",
+        "x-ms-correlation-request-id": "9073a30f-3f07-4a3f-8c31-5249bb57bcea",
+        "x-ms-ratelimit-remaining-subscription-reads": "11993",
+        "x-ms-request-id": "12ac4aab-b8ac-46f6-8485-ecc1bf04c964",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20230526T025325Z:9073a30f-3f07-4a3f-8c31-5249bb57bcea",
+        "X-Powered-By": "ASP.NET"
+      },
+      "ResponseBody": {
+        "value": [
+          {
+            "id": "subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.CostManagement/exports/export6452",
+            "name": "export6452",
+            "type": "Microsoft.CostManagement/exports",
+            "eTag": "\u00221d987be9000a5ea\u0022",
+            "properties": {
+              "schedule": {
+                "status": "Inactive"
+              },
+              "format": "Csv",
+              "deliveryInfo": {
+                "destination": {
+                  "resourceId": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/CostManagementRG4791/providers/Microsoft.Storage/storageAccounts/azstorageforcost2073",
+                  "container": "exportcontainer",
+                  "rootFolderPath": null
+                }
+              },
+              "definition": {
+                "type": "Usage",
+                "timeframe": "TheLastMonth"
+              }
+            }
+          },
+          {
+            "id": "subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.CostManagement/exports/export4384",
+            "name": "export4384",
+            "type": "Microsoft.CostManagement/exports",
+            "eTag": "\u00221d987c19b5d323f\u0022",
+            "properties": {
+              "schedule": {
+                "status": "Inactive"
+              },
+              "format": "Csv",
+              "deliveryInfo": {
+                "destination": {
+                  "resourceId": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/CostManagementRG7622/providers/Microsoft.Storage/storageAccounts/azstorageforcost2231",
+                  "container": "exportcontainer",
+                  "rootFolderPath": null
+                }
+              },
+              "definition": {
+                "type": "Usage",
+                "timeframe": "TheLastMonth"
+              }
+            }
+          },
+          {
+            "id": "subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.CostManagement/exports/export2360",
+            "name": "export2360",
+            "type": "Microsoft.CostManagement/exports",
+            "eTag": "\u00221d98f7b1e5c532b\u0022",
+            "properties": {
+              "schedule": {
+                "status": "Inactive"
+              },
+              "format": "Csv",
+              "deliveryInfo": {
+                "destination": {
+                  "resourceId": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/CostManagementRG6523/providers/Microsoft.Storage/storageAccounts/azstorageforcost1660",
+                  "container": "exportcontainer",
+                  "rootFolderPath": null
+                }
+              },
+              "definition": {
+                "type": "Usage",
+                "timeframe": "TheLastMonth"
+              }
+            }
+          },
+          {
+            "id": "subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.CostManagement/exports/export457",
+            "name": "export457",
+            "type": "Microsoft.CostManagement/exports",
+            "eTag": "\u00221d98f7b4f594100\u0022",
+            "properties": {
+              "schedule": {
+                "status": "Inactive"
+              },
+              "format": "Csv",
+              "deliveryInfo": {
+                "destination": {
+                  "resourceId": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/CostManagementRG2229/providers/Microsoft.Storage/storageAccounts/azstorageforcost9229",
+                  "container": "exportcontainer",
+                  "rootFolderPath": null
+                }
+              },
+              "definition": {
+                "type": "Usage",
+                "timeframe": "TheLastMonth"
+              }
+            }
+          },
+          {
+            "id": "subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.CostManagement/exports/export2904",
+            "name": "export2904",
+            "type": "Microsoft.CostManagement/exports",
+            "eTag": "\u00221d98f7bb2c88c0c\u0022",
+            "properties": {
+              "schedule": {
+                "status": "Inactive"
+              },
+              "format": "Csv",
+              "deliveryInfo": {
+                "destination": {
+                  "resourceId": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/CostManagementRG5592/providers/Microsoft.Storage/storageAccounts/azstorageforcost4354",
+                  "container": "exportcontainer",
+                  "rootFolderPath": null
+                }
+              },
+              "definition": {
+                "type": "Usage",
+                "timeframe": "TheLastMonth"
+              }
+            }
+          },
+          {
+            "id": "subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.CostManagement/exports/export3958",
+            "name": "export3958",
+            "type": "Microsoft.CostManagement/exports",
+            "eTag": "\u00221d98f7bf13e1282\u0022",
+            "properties": {
+              "schedule": {
+                "status": "Inactive"
+              },
+              "format": "Csv",
+              "deliveryInfo": {
+                "destination": {
+                  "resourceId": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/CostManagementRG6517/providers/Microsoft.Storage/storageAccounts/azstorageforcost4008",
+                  "container": "exportcontainer",
+                  "rootFolderPath": null
+                }
+              },
+              "definition": {
+                "type": "Usage",
+                "timeframe": "TheLastMonth"
+              }
+            }
+          },
+          {
+            "id": "subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.CostManagement/exports/export1176",
+            "name": "export1176",
+            "type": "Microsoft.CostManagement/exports",
+            "eTag": "\u00221d98f7c6b728a8f\u0022",
+            "properties": {
+              "schedule": {
+                "status": "Inactive"
+              },
+              "format": "Csv",
+              "deliveryInfo": {
+                "destination": {
+                  "resourceId": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/CostManagementRG1660/providers/Microsoft.Storage/storageAccounts/azstorageforcost8487",
+                  "container": "exportcontainer",
+                  "rootFolderPath": null
+                }
+              },
+              "definition": {
+                "type": "Usage",
+                "timeframe": "TheLastMonth"
+              }
+            }
+          },
+          {
+            "id": "subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.CostManagement/exports/export4422",
+            "name": "export4422",
+            "type": "Microsoft.CostManagement/exports",
+            "eTag": "\u00221d98f7cd8a8ccde\u0022",
+            "properties": {
+              "schedule": {
+                "status": "Inactive"
+              },
+              "format": "Csv",
+              "deliveryInfo": {
+                "destination": {
+                  "resourceId": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/CostManagementRG7338/providers/Microsoft.Storage/storageAccounts/azstorageforcost7573",
+                  "container": "exportcontainer",
+                  "rootFolderPath": null
+                }
+              },
+              "definition": {
+                "type": "Usage",
+                "timeframe": "TheLastMonth"
+              }
+            }
+          },
+          {
+            "id": "subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.CostManagement/exports/export9820",
+            "name": "export9820",
+            "type": "Microsoft.CostManagement/exports",
+            "eTag": "\u00221d98f7d3c6b9c22\u0022",
+            "properties": {
+              "schedule": {
+                "status": "Inactive"
+              },
+              "format": "Csv",
+              "deliveryInfo": {
+                "destination": {
+                  "resourceId": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/CostManagementRG2106/providers/Microsoft.Storage/storageAccounts/azstorageforcost9037",
+                  "container": "exportcontainer",
+                  "rootFolderPath": null
+                }
+              },
+              "definition": {
+                "type": "Usage",
+                "timeframe": "TheLastMonth"
+              }
+            }
+          }
+        ]
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.CostManagement/exports/export9820?api-version=2023-03-01",
+      "RequestMethod": "DELETE",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-db413004ab28f59c1261c9f13dcfbab1-5b0918b62657bede-00",
+        "User-Agent": "azsdk-net-ResourceManager.CostManagement/1.0.0-alpha.20230526.1 (.NET 7.0.5; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "d20a78cecd06f7b3a4621442b258a35f",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "0",
+        "Date": "Fri, 26 May 2023 02:53:25 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "session-id": "9bb19dd1-18d2-41fa-b768-f578c84e2076",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "d20a78cecd06f7b3a4621442b258a35f",
+        "x-ms-correlation-request-id": "c4caf959-359d-44ad-9981-7d05f7e1edbd",
+        "x-ms-ratelimit-remaining-subscription-reads": "11992",
+        "x-ms-request-id": "928abdd9-e4eb-46a7-96ad-c323b889af7b",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20230526T025325Z:c4caf959-359d-44ad-9981-7d05f7e1edbd",
+        "X-Powered-By": "ASP.NET"
+      },
+      "ResponseBody": null
+    }
+  ],
+  "Variables": {
+    "AZURE_AUTHORITY_HOST": "https://login.microsoftonline.com",
+    "RandomSeed": "1414346635",
+    "RESOURCE_MANAGER_URL": null,
+    "SUBSCRIPTION_ID": "db1ab6f0-4769-4b27-930e-01e2ef9c123c"
+  }
+}

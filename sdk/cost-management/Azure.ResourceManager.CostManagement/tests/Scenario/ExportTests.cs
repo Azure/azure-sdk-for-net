@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.CostManagement.Tests
         }
 
         [RecordedTest]
-        [Ignore("Linked issue: https://github.com/Azure/azure-rest-api-specs/issues/23704")]
+        //[Ignore("Linked issue: https://github.com/Azure/azure-rest-api-specs/issues/23704")] //customization as the temporary workaround
         public async Task CreateOrUpdateExistGetGetAllDelete()
         {
             // create a storage account
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.CostManagement.Tests
             // GetAll
             var list = await _exportCollection.GetAllAsync().ToEnumerableAsync();
             Assert.IsNotEmpty(list);
-            ValidateCostManagementExport(list.FirstOrDefault().Data, exportName);
+            ValidateCostManagementExport(list.FirstOrDefault(item => item.Data.Name == exportName).Data, exportName);
 
             // Delete
             await export.DeleteAsync(WaitUntil.Completed);
@@ -82,6 +82,9 @@ namespace Azure.ResourceManager.CostManagement.Tests
         private void ValidateCostManagementExport(CostManagementExportData export, string exportName)
         {
             Assert.IsNotNull(export);
+            Assert.IsNotEmpty(export.Id);
+            Assert.AreEqual(exportName, export.Name);
+            Assert.AreEqual(ExportFormatType.Csv, export.Format);
         }
     }
 }
