@@ -97,7 +97,7 @@ namespace Azure.Core.Dynamic
                 return new DynamicData(element, _options);
             }
 
-            // If we're using the PascalToCamel mapping and the strict name lookup
+            // If we're using the CamelCase mapping and the strict name lookup
             // failed, do a second lookup with a camelCase name as well.
             if (_options.NameConversion == NameConversion.CamelCase && char.IsUpper(name[0]))
             {
