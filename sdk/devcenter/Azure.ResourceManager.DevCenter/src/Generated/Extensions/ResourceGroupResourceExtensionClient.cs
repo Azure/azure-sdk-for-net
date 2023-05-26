@@ -38,18 +38,18 @@ namespace Azure.ResourceManager.DevCenter
             return GetCachedClient(Client => new DevCenterCollection(Client, Id));
         }
 
-        /// <summary> Gets a collection of ProjectResources in the ResourceGroupResource. </summary>
-        /// <returns> An object representing collection of ProjectResources and their operations over a ProjectResource. </returns>
-        public virtual ProjectCollection GetProjects()
+        /// <summary> Gets a collection of DevCenterProjectResources in the ResourceGroupResource. </summary>
+        /// <returns> An object representing collection of DevCenterProjectResources and their operations over a DevCenterProjectResource. </returns>
+        public virtual DevCenterProjectCollection GetDevCenterProjects()
         {
-            return GetCachedClient(Client => new ProjectCollection(Client, Id));
+            return GetCachedClient(Client => new DevCenterProjectCollection(Client, Id));
         }
 
-        /// <summary> Gets a collection of NetworkConnectionResources in the ResourceGroupResource. </summary>
-        /// <returns> An object representing collection of NetworkConnectionResources and their operations over a NetworkConnectionResource. </returns>
-        public virtual NetworkConnectionCollection GetNetworkConnections()
+        /// <summary> Gets a collection of DevCenterNetworkConnectionResources in the ResourceGroupResource. </summary>
+        /// <returns> An object representing collection of DevCenterNetworkConnectionResources and their operations over a DevCenterNetworkConnectionResource. </returns>
+        public virtual DevCenterNetworkConnectionCollection GetDevCenterNetworkConnections()
         {
-            return GetCachedClient(Client => new NetworkConnectionCollection(Client, Id));
+            return GetCachedClient(Client => new DevCenterNetworkConnectionCollection(Client, Id));
         }
     }
 }
