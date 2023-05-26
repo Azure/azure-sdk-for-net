@@ -6,7 +6,7 @@ using Azure.Storage.DataMovement.Models;
 namespace Azure.Storage.DataMovement
 {
     /// <summary>
-    /// Progress Handler to track how many files were transferred, along with files that failed or were skipped in transfer.
+    /// Progress Handler to track how many files and bytes were transferred, along with files that failed or were skipped in transfer.
     /// </summary>
     public class StorageTransferProgress
     {
