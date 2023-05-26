@@ -99,6 +99,7 @@ trigger:
     - sdk/machinelearningservices/Azure.ResourceManager.MachineLearning
     - sdk/maintenance/Azure.ResourceManager.Maintenance
     - sdk/managednetwork/Azure.ResourceManager.ManagedNetwork
+    - sdk/managednetworkfabric/Azure.ResourceManager.ManagedNetworkFabric
     - sdk/managedserviceidentity/Azure.ResourceManager.ManagedServiceIdentities
     - sdk/managedservices/Azure.ResourceManager.ManagedServices
     - sdk/managementpartner/Azure.ResourceManager.ManagementPartner
@@ -270,6 +271,7 @@ pr:
     - sdk/machinelearningservices/Azure.ResourceManager.MachineLearning
     - sdk/maintenance/Azure.ResourceManager.Maintenance
     - sdk/managednetwork/Azure.ResourceManager.ManagedNetwork
+    - sdk/managednetworkfabric/Azure.ResourceManager.ManagedNetworkFabric
     - sdk/managedserviceidentity/Azure.ResourceManager.ManagedServiceIdentities
     - sdk/managedservices/Azure.ResourceManager.ManagedServices
     - sdk/managementpartner/Azure.ResourceManager.ManagementPartner
