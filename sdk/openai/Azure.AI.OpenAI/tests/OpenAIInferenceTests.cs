@@ -369,6 +369,7 @@ namespace Azure.AI.OpenAI.Tests
         }
 
         [RecordedTest]
+        [Ignore("Built-in serialization/deserialization not yet supported, but can be achieved with a custom converter")]
         public void JsonTypeSerialization()
         {
             var originalMessage = new ChatMessage(ChatRole.User, "How do I make a great taco?");

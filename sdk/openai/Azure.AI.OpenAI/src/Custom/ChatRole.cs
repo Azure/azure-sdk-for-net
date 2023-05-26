@@ -7,7 +7,6 @@ using System;
 
 namespace Azure.AI.OpenAI
 {
-    [System.Text.Json.Serialization.JsonConverter(typeof(ChatRoleConverter))]
     public readonly partial struct ChatRole : IEquatable<ChatRole>
     {
         // The custom partial definition of this type exists purely to add the converter type for JSON.
