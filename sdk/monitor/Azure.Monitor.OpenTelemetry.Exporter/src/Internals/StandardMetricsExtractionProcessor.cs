@@ -58,7 +58,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
         private void ReportRequestDurationMetric(Activity activity, string statusCodeAttribute)
         {
             string? statusCodeAttributeValue = null;
-            foreach (var tag in activity.EnumerateTagObjects())
+            foreach (ref readonly var tag in activity.EnumerateTagObjects())
             {
                 if (tag.Key == statusCodeAttribute)
                 {
