@@ -12,11 +12,11 @@ using NUnit.Framework;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 
-namespace Azure.ResourceManager.Storage.Tests.Helpers
+namespace Azure.ResourceManager.Storage.Tests
 {
     [PlaybackOnly("https://github.com/Azure/azure-sdk-for-net/issues/23897")]
     [ClientTestFixture]
-    public class StorageTestBase : ManagementRecordedTestBase<StorageManagementTestEnvironment>
+    public class StorageManagementTestBase : ManagementRecordedTestBase<StorageManagementTestEnvironment>
     {
         public static AzureLocation DefaultLocation => AzureLocation.EastUS2;
         public static string DefaultLocationString = "eastus2";
@@ -31,12 +31,14 @@ namespace Azure.ResourceManager.Storage.Tests.Helpers
         };
         protected ArmClient Client { get; private set; }
         protected SubscriptionResource DefaultSubscription { get; private set; }
-        protected StorageTestBase(bool isAsync) : base(isAsync)
+        protected StorageManagementTestBase(bool isAsync) : base(isAsync)
         {
+            IgnoreNetworkDependencyVersions();
         }
 
-        public StorageTestBase(bool isAsync, RecordedTestMode mode) : base(isAsync, mode)
+        public StorageManagementTestBase(bool isAsync, RecordedTestMode mode) : base(isAsync, mode)
         {
+            IgnoreNetworkDependencyVersions();
         }
 
         public static StorageAccountCreateOrUpdateContent GetDefaultStorageAccountParameters(StorageSku sku = null, StorageKind? kind = null, string location = null, ManagedServiceIdentity identity = null)
