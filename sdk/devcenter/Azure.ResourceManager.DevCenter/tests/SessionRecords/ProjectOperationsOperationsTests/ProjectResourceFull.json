@@ -85,7 +85,7 @@
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/62e47139-66d0-4b0b-a000-1e8a412890c1/resourceGroups/sdkrg-devcenter/providers/Microsoft.DevCenter/projects/sdktest-project?api-version=2022-08-01-preview",
+      "RequestUri": "https://management.azure.com/subscriptions/62e47139-66d0-4b0b-a000-1e8a412890c1/resourceGroups/sdkrg-devcenter/providers/Microsoft.DevCenter/projects/sdktest-project?api-version=2023-04-01",
       "RequestMethod": "PUT",
       "RequestHeaders": {
         "Accept": "application/json",
@@ -146,7 +146,7 @@
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/62e47139-66d0-4b0b-a000-1e8a412890c1/resourceGroups/sdkrg-devcenter/providers/Microsoft.DevCenter/projects?api-version=2022-08-01-preview",
+      "RequestUri": "https://management.azure.com/subscriptions/62e47139-66d0-4b0b-a000-1e8a412890c1/resourceGroups/sdkrg-devcenter/providers/Microsoft.DevCenter/projects?api-version=2023-04-01",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
@@ -209,7 +209,7 @@
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/62e47139-66d0-4b0b-a000-1e8a412890c1/resourceGroups/sdkrg-devcenter/providers/Microsoft.DevCenter/projects/sdktest-project?api-version=2022-08-01-preview",
+      "RequestUri": "https://management.azure.com/subscriptions/62e47139-66d0-4b0b-a000-1e8a412890c1/resourceGroups/sdkrg-devcenter/providers/Microsoft.DevCenter/projects/sdktest-project?api-version=2023-04-01",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
@@ -259,7 +259,7 @@
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/62e47139-66d0-4b0b-a000-1e8a412890c1/resourceGroups/sdkrg-devcenter/providers/Microsoft.DevCenter/projects/sdktest-project?api-version=2022-08-01-preview",
+      "RequestUri": "https://management.azure.com/subscriptions/62e47139-66d0-4b0b-a000-1e8a412890c1/resourceGroups/sdkrg-devcenter/providers/Microsoft.DevCenter/projects/sdktest-project?api-version=2023-04-01",
       "RequestMethod": "DELETE",
       "RequestHeaders": {
         "Accept": "application/json",
@@ -272,14 +272,14 @@
       "RequestBody": null,
       "StatusCode": 202,
       "ResponseHeaders": {
-        "Azure-AsyncOperation": "https://management.azure.com/subscriptions/62e47139-66d0-4b0b-a000-1e8a412890c1/providers/Microsoft.DevCenter/locations/AUSTRALIAEAST/operationStatuses/6a7c97c1-2bca-442a-b2b8-61892c3228ac*C5B4D465FACE4C108B4235B711230E5E7D27558FB38B29A6CF27A9DB4E43B411?api-version=2022-08-01-preview",
+        "Azure-AsyncOperation": "https://management.azure.com/subscriptions/62e47139-66d0-4b0b-a000-1e8a412890c1/providers/Microsoft.DevCenter/locations/AUSTRALIAEAST/operationStatuses/6a7c97c1-2bca-442a-b2b8-61892c3228ac*C5B4D465FACE4C108B4235B711230E5E7D27558FB38B29A6CF27A9DB4E43B411?api-version=2023-04-01",
         "Cache-Control": "no-cache",
         "Content-Length": "4",
         "Content-Type": "application/json; charset=utf-8",
         "Date": "Sun, 28 Aug 2022 09:37:17 GMT",
         "ETag": "\u002231003b40-0000-1a00-0000-630b374d0000\u0022",
         "Expires": "-1",
-        "Location": "https://management.azure.com/subscriptions/62e47139-66d0-4b0b-a000-1e8a412890c1/providers/Microsoft.DevCenter/locations/AUSTRALIAEAST/operationStatuses/6a7c97c1-2bca-442a-b2b8-61892c3228ac*C5B4D465FACE4C108B4235B711230E5E7D27558FB38B29A6CF27A9DB4E43B411?api-version=2022-08-01-preview",
+        "Location": "https://management.azure.com/subscriptions/62e47139-66d0-4b0b-a000-1e8a412890c1/providers/Microsoft.DevCenter/locations/AUSTRALIAEAST/operationStatuses/6a7c97c1-2bca-442a-b2b8-61892c3228ac*C5B4D465FACE4C108B4235B711230E5E7D27558FB38B29A6CF27A9DB4E43B411?api-version=2023-04-01",
         "Pragma": "no-cache",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "X-Content-Type-Options": "nosniff",
@@ -296,7 +296,7 @@
       "ResponseBody": "null"
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/62e47139-66d0-4b0b-a000-1e8a412890c1/providers/Microsoft.DevCenter/locations/AUSTRALIAEAST/operationStatuses/6a7c97c1-2bca-442a-b2b8-61892c3228ac*C5B4D465FACE4C108B4235B711230E5E7D27558FB38B29A6CF27A9DB4E43B411?api-version=2022-08-01-preview",
+      "RequestUri": "https://management.azure.com/subscriptions/62e47139-66d0-4b0b-a000-1e8a412890c1/providers/Microsoft.DevCenter/locations/AUSTRALIAEAST/operationStatuses/6a7c97c1-2bca-442a-b2b8-61892c3228ac*C5B4D465FACE4C108B4235B711230E5E7D27558FB38B29A6CF27A9DB4E43B411?api-version=2023-04-01",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
@@ -332,7 +332,7 @@
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/62e47139-66d0-4b0b-a000-1e8a412890c1/providers/Microsoft.DevCenter/locations/AUSTRALIAEAST/operationStatuses/6a7c97c1-2bca-442a-b2b8-61892c3228ac*C5B4D465FACE4C108B4235B711230E5E7D27558FB38B29A6CF27A9DB4E43B411?api-version=2022-08-01-preview",
+      "RequestUri": "https://management.azure.com/subscriptions/62e47139-66d0-4b0b-a000-1e8a412890c1/providers/Microsoft.DevCenter/locations/AUSTRALIAEAST/operationStatuses/6a7c97c1-2bca-442a-b2b8-61892c3228ac*C5B4D465FACE4C108B4235B711230E5E7D27558FB38B29A6CF27A9DB4E43B411?api-version=2023-04-01",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
@@ -368,7 +368,7 @@
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/62e47139-66d0-4b0b-a000-1e8a412890c1/providers/Microsoft.DevCenter/locations/AUSTRALIAEAST/operationStatuses/6a7c97c1-2bca-442a-b2b8-61892c3228ac*C5B4D465FACE4C108B4235B711230E5E7D27558FB38B29A6CF27A9DB4E43B411?api-version=2022-08-01-preview",
+      "RequestUri": "https://management.azure.com/subscriptions/62e47139-66d0-4b0b-a000-1e8a412890c1/providers/Microsoft.DevCenter/locations/AUSTRALIAEAST/operationStatuses/6a7c97c1-2bca-442a-b2b8-61892c3228ac*C5B4D465FACE4C108B4235B711230E5E7D27558FB38B29A6CF27A9DB4E43B411?api-version=2023-04-01",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
@@ -404,7 +404,7 @@
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/62e47139-66d0-4b0b-a000-1e8a412890c1/providers/Microsoft.DevCenter/locations/AUSTRALIAEAST/operationStatuses/6a7c97c1-2bca-442a-b2b8-61892c3228ac*C5B4D465FACE4C108B4235B711230E5E7D27558FB38B29A6CF27A9DB4E43B411?api-version=2022-08-01-preview",
+      "RequestUri": "https://management.azure.com/subscriptions/62e47139-66d0-4b0b-a000-1e8a412890c1/providers/Microsoft.DevCenter/locations/AUSTRALIAEAST/operationStatuses/6a7c97c1-2bca-442a-b2b8-61892c3228ac*C5B4D465FACE4C108B4235B711230E5E7D27558FB38B29A6CF27A9DB4E43B411?api-version=2023-04-01",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
@@ -440,7 +440,7 @@
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/62e47139-66d0-4b0b-a000-1e8a412890c1/providers/Microsoft.DevCenter/locations/AUSTRALIAEAST/operationStatuses/6a7c97c1-2bca-442a-b2b8-61892c3228ac*C5B4D465FACE4C108B4235B711230E5E7D27558FB38B29A6CF27A9DB4E43B411?api-version=2022-08-01-preview",
+      "RequestUri": "https://management.azure.com/subscriptions/62e47139-66d0-4b0b-a000-1e8a412890c1/providers/Microsoft.DevCenter/locations/AUSTRALIAEAST/operationStatuses/6a7c97c1-2bca-442a-b2b8-61892c3228ac*C5B4D465FACE4C108B4235B711230E5E7D27558FB38B29A6CF27A9DB4E43B411?api-version=2023-04-01",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
@@ -476,7 +476,7 @@
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/62e47139-66d0-4b0b-a000-1e8a412890c1/providers/Microsoft.DevCenter/locations/AUSTRALIAEAST/operationStatuses/6a7c97c1-2bca-442a-b2b8-61892c3228ac*C5B4D465FACE4C108B4235B711230E5E7D27558FB38B29A6CF27A9DB4E43B411?api-version=2022-08-01-preview",
+      "RequestUri": "https://management.azure.com/subscriptions/62e47139-66d0-4b0b-a000-1e8a412890c1/providers/Microsoft.DevCenter/locations/AUSTRALIAEAST/operationStatuses/6a7c97c1-2bca-442a-b2b8-61892c3228ac*C5B4D465FACE4C108B4235B711230E5E7D27558FB38B29A6CF27A9DB4E43B411?api-version=2023-04-01",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
@@ -512,7 +512,7 @@
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/62e47139-66d0-4b0b-a000-1e8a412890c1/providers/Microsoft.DevCenter/locations/AUSTRALIAEAST/operationStatuses/6a7c97c1-2bca-442a-b2b8-61892c3228ac*C5B4D465FACE4C108B4235B711230E5E7D27558FB38B29A6CF27A9DB4E43B411?api-version=2022-08-01-preview",
+      "RequestUri": "https://management.azure.com/subscriptions/62e47139-66d0-4b0b-a000-1e8a412890c1/providers/Microsoft.DevCenter/locations/AUSTRALIAEAST/operationStatuses/6a7c97c1-2bca-442a-b2b8-61892c3228ac*C5B4D465FACE4C108B4235B711230E5E7D27558FB38B29A6CF27A9DB4E43B411?api-version=2023-04-01",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
@@ -548,7 +548,7 @@
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/62e47139-66d0-4b0b-a000-1e8a412890c1/providers/Microsoft.DevCenter/locations/AUSTRALIAEAST/operationStatuses/6a7c97c1-2bca-442a-b2b8-61892c3228ac*C5B4D465FACE4C108B4235B711230E5E7D27558FB38B29A6CF27A9DB4E43B411?api-version=2022-08-01-preview",
+      "RequestUri": "https://management.azure.com/subscriptions/62e47139-66d0-4b0b-a000-1e8a412890c1/providers/Microsoft.DevCenter/locations/AUSTRALIAEAST/operationStatuses/6a7c97c1-2bca-442a-b2b8-61892c3228ac*C5B4D465FACE4C108B4235B711230E5E7D27558FB38B29A6CF27A9DB4E43B411?api-version=2023-04-01",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
@@ -584,7 +584,7 @@
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/62e47139-66d0-4b0b-a000-1e8a412890c1/providers/Microsoft.DevCenter/locations/AUSTRALIAEAST/operationStatuses/6a7c97c1-2bca-442a-b2b8-61892c3228ac*C5B4D465FACE4C108B4235B711230E5E7D27558FB38B29A6CF27A9DB4E43B411?api-version=2022-08-01-preview",
+      "RequestUri": "https://management.azure.com/subscriptions/62e47139-66d0-4b0b-a000-1e8a412890c1/providers/Microsoft.DevCenter/locations/AUSTRALIAEAST/operationStatuses/6a7c97c1-2bca-442a-b2b8-61892c3228ac*C5B4D465FACE4C108B4235B711230E5E7D27558FB38B29A6CF27A9DB4E43B411?api-version=2023-04-01",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",

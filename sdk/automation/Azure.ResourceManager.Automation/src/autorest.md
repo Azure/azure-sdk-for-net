@@ -220,6 +220,9 @@ rename-rules:
 no-property-type-replacement:
   - JobNavigation
 
+models-to-treat-empty-string-as-null:
+  - AutomationWebhookData
+
 request-path-to-resource-name:
   /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/objectDataTypes/{typeName}/fields: AutomationAccountResource
 request-path-to-parent:

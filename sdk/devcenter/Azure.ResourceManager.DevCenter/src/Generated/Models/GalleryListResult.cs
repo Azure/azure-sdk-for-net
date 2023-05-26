@@ -17,20 +17,20 @@ namespace Azure.ResourceManager.DevCenter.Models
         /// <summary> Initializes a new instance of GalleryListResult. </summary>
         internal GalleryListResult()
         {
-            Value = new ChangeTrackingList<GalleryData>();
+            Value = new ChangeTrackingList<DevCenterGalleryData>();
         }
 
         /// <summary> Initializes a new instance of GalleryListResult. </summary>
         /// <param name="value"> Current page of results. </param>
         /// <param name="nextLink"> URL to get the next set of results if there are any. </param>
-        internal GalleryListResult(IReadOnlyList<GalleryData> value, string nextLink)
+        internal GalleryListResult(IReadOnlyList<DevCenterGalleryData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
         /// <summary> Current page of results. </summary>
-        public IReadOnlyList<GalleryData> Value { get; }
+        public IReadOnlyList<DevCenterGalleryData> Value { get; }
         /// <summary> URL to get the next set of results if there are any. </summary>
         public string NextLink { get; }
     }
