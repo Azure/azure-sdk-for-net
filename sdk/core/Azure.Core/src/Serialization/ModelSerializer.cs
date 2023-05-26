@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
 using System.IO;
 
 namespace Azure.Core.Serialization
@@ -39,12 +40,15 @@ namespace Azure.Core.Serialization
         /// <param name="stream"></param>
         /// <param name="options"></param>
         /// <returns></returns>
-        public static T? Deserialize<T>(Stream stream, SerializableOptions? options = default) where T : IJsonSerializable, new()
+        public static T Deserialize<T>(Stream stream, SerializableOptions? options = default) where T : IJsonSerializable, new()
         {
             if (options != null && options.Serializer != null)
             {
                 var obj = options.Serializer.Deserialize(stream, typeof(T), default);
-                return (T?)obj;
+                if (obj is null)
+                    throw new InvalidOperationException();
+                else
+                    return (T)obj;
             }
 
             IJsonSerializable serializable = new T();
@@ -59,7 +63,7 @@ namespace Azure.Core.Serialization
         /// <param name="json"></param>
         /// <param name="options"></param>
         /// <returns></returns>
-        public static T? Deserialize<T>(string json, SerializableOptions? options = default) where T : IJsonSerializable, new()
+        public static T Deserialize<T>(string json, SerializableOptions? options = default) where T : IJsonSerializable, new()
         {
             using Stream stream = new MemoryStream();
             using StreamWriter writer = new StreamWriter(stream);
@@ -69,7 +73,10 @@ namespace Azure.Core.Serialization
             if (options != null && options.Serializer != null)
             {
                 var obj = options.Serializer.Deserialize(stream, typeof(T), default);
-                return (T?)obj;
+                if (obj is null)
+                    throw new InvalidOperationException();
+                else
+                    return (T)obj;
             }
 
             IJsonSerializable serializable = new T();

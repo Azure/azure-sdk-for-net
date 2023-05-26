@@ -153,9 +153,10 @@ namespace Azure.Core.Samples
                 Weight = 1.1,
                 FoodConsumed = { "kibble", "egg", "peanut butter" },
             };
+            SerializableOptions options = new SerializableOptions();
+            options.Serializer = new NewtonsoftJsonObjectSerializer();
 
-            //modelSerializer example
-            Stream stream = ModelSerializer.Serialize(dog);
+            Stream stream = ModelSerializer.Serialize(dog, options);
             #endregion
         }
 
@@ -164,7 +165,6 @@ namespace Azure.Core.Samples
         public void NewtonSoftDeserialize()
         {
             #region Snippet:NewtonSoft_Deserialize
-            //modelSerializer example
             SerializableOptions options = new SerializableOptions();
             options.Serializer = new NewtonsoftJsonObjectSerializer();
             string json = @"[{""LatinName"":""Animalia"",""Weight"":1.1,""Name"":""Doggo"",""IsHungry"":false,""FoodConsumed"":[""kibble"",""egg"",""peanut butter""],""NumberOfLegs"":4}]";
