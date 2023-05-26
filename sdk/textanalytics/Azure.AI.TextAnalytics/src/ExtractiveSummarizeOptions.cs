@@ -7,12 +7,12 @@ namespace Azure.AI.TextAnalytics
     /// A set of options used to configure extractive summarization, including the display name to use, the maximum
     /// number of sentences to extract, and more.
     /// </summary>
-    public class ExtractSummaryOptions : TextAnalyticsRequestOptions
+    public class ExtractiveSummarizeOptions : TextAnalyticsRequestOptions
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="ExtractSummaryOptions"/> class.
+        /// Initializes a new instance of the <see cref="ExtractiveSummarizeOptions"/> class.
         /// </summary>
-        public ExtractSummaryOptions()
+        public ExtractiveSummarizeOptions()
         {
         }
 

@@ -756,7 +756,7 @@ Samples are provided for each main functional area, and for each area, samples a
 * [Custom Named Entities Recognition][recognize_custom_entities_sample]
 * [Custom Single Label Classification][single_category_classify_sample]
 * [Custom Multi Label Classification][multi_category_classify_sample]
-* [Extractive Summarization][extract_summary_sample]
+* [Extractive Summarization][extractive_summarize_sample]
 * [Abstractive Summarization][abstract_summary_sample]
 
 ### Advanced samples
@@ -823,7 +823,7 @@ This project has adopted the [Microsoft Open Source Code of Conduct][code_of_con
 [recognize_custom_entities_sample]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/textanalytics/Azure.AI.TextAnalytics/samples/Sample8_RecognizeCustomEntities.md
 [single_category_classify_sample]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/textanalytics/Azure.AI.TextAnalytics/samples/Sample9_SingleLabelClassify.md
 [multi_category_classify_sample]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/textanalytics/Azure.AI.TextAnalytics/samples/Sample10_MultiLabelClassify.md
-[extract_summary_sample]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/textanalytics/Azure.AI.TextAnalytics/samples/Sample11_ExtractSummary.md
+[extractive_summarize_sample]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/textanalytics/Azure.AI.TextAnalytics/samples/Sample11_ExtractiveSummarize.md
 [abstract_summary_sample]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/textanalytics/Azure.AI.TextAnalytics/samples/Sample12_AbstractSummary.md
 
 [azure_cli]: https://docs.microsoft.com/cli/azure

@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using NUnit.Framework;
 
 namespace Azure.AI.TextAnalytics.Samples
@@ -10,7 +11,7 @@ namespace Azure.AI.TextAnalytics.Samples
     public partial class TextAnalyticsSamples : TextAnalyticsSampleBase
     {
         [Test]
-        public void ExtractSummary()
+        public async Task ExtractiveSummarizeAsync()
         {
             Uri endpoint = new(TestEnvironment.Endpoint);
             AzureKeyCredential credential = new(TestEnvironment.ApiKey);
@@ -63,15 +64,15 @@ namespace Azure.AI.TextAnalytics.Samples
                 }
             };
 
-            ExtractSummaryOptions options = new()
+            ExtractiveSummarizeOptions options = new()
             {
                 MaxSentenceCount = 5,
                 OrderBy = SummarySentencesOrder.Rank
             };
 
             // Perform the text analysis operation.
-            ExtractSummaryOperation operation = client.StartExtractSummary(batchedDocuments, options);
-            operation.WaitForCompletion();
+            ExtractiveSummarizeOperation operation = client.StartExtractiveSummarize(batchedDocuments, options);
+            await operation.WaitForCompletionAsync();
 
             Console.WriteLine($"The operation has completed.");
             Console.WriteLine();
@@ -85,12 +86,12 @@ namespace Azure.AI.TextAnalytics.Samples
             Console.WriteLine();
 
             // View the operation results.
-            foreach (ExtractSummaryResultCollection documentsInPage in operation.GetValues())
+            await foreach (ExtractiveSummarizeResultCollection documentsInPage in operation.Value)
             {
-                Console.WriteLine($"Extract Summary, model version: \"{documentsInPage.ModelVersion}\"");
+                Console.WriteLine($"Extractive Summarize, model version: \"{documentsInPage.ModelVersion}\"");
                 Console.WriteLine();
 
-                foreach (ExtractSummaryResult documentResult in documentsInPage)
+                foreach (ExtractiveSummarizeResult documentResult in documentsInPage)
                 {
                     if (documentResult.HasError)
                     {

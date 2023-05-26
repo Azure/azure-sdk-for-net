@@ -11,13 +11,13 @@ namespace Azure.AI.TextAnalytics
     /// <summary>
     /// A collection of the results of performing extractive summarization on a given set of documents.
     /// </summary>
-    [DebuggerTypeProxy(typeof(ExtractSummaryResultCollectionDebugView))]
-    public class ExtractSummaryResultCollection : ReadOnlyCollection<ExtractSummaryResult>
+    [DebuggerTypeProxy(typeof(ExtractiveSummarizeResultCollectionDebugView))]
+    public class ExtractiveSummarizeResultCollection : ReadOnlyCollection<ExtractiveSummarizeResult>
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="ExtractSummaryResultCollection"/> class.
+        /// Initializes a new instance of the <see cref="ExtractiveSummarizeResultCollection"/> class.
         /// </summary>
-        internal ExtractSummaryResultCollection(IList<ExtractSummaryResult> list, TextDocumentBatchStatistics statistics, string modelVersion) : base(list)
+        internal ExtractiveSummarizeResultCollection(IList<ExtractiveSummarizeResult> list, TextDocumentBatchStatistics statistics, string modelVersion) : base(list)
         {
             Statistics = statistics;
             ModelVersion = modelVersion;
@@ -39,19 +39,19 @@ namespace Azure.AI.TextAnalytics
         public string ModelVersion { get; }
 
         /// <summary>
-        /// A debugger proxy for the <see cref="ExtractSummaryResultCollection"/> class.
+        /// A debugger proxy for the <see cref="ExtractiveSummarizeResultCollection"/> class.
         /// </summary>
-        internal class ExtractSummaryResultCollectionDebugView
+        internal class ExtractiveSummarizeResultCollectionDebugView
         {
-            private ExtractSummaryResultCollection BaseCollection { get; }
+            private ExtractiveSummarizeResultCollection BaseCollection { get; }
 
-            public ExtractSummaryResultCollectionDebugView(ExtractSummaryResultCollection collection)
+            public ExtractiveSummarizeResultCollectionDebugView(ExtractiveSummarizeResultCollection collection)
             {
                 BaseCollection = collection;
             }
 
             [DebuggerBrowsable(DebuggerBrowsableState.RootHidden)]
-            public List<ExtractSummaryResult> Items
+            public List<ExtractiveSummarizeResult> Items
             {
                 get
                 {

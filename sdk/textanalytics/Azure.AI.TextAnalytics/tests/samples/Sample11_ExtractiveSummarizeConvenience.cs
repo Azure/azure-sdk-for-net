@@ -3,7 +3,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Threading.Tasks;
 using NUnit.Framework;
 
 namespace Azure.AI.TextAnalytics.Samples
@@ -11,13 +10,12 @@ namespace Azure.AI.TextAnalytics.Samples
     public partial class TextAnalyticsSamples : TextAnalyticsSampleBase
     {
         [Test]
-        public async Task ExtractSummaryConvenienceAsync()
+        public void ExtractiveSummarizeConvenience()
         {
             Uri endpoint = new(TestEnvironment.Endpoint);
             AzureKeyCredential credential = new(TestEnvironment.ApiKey);
             TextAnalyticsClient client = new(endpoint, credential, CreateSampleOptions());
 
-            #region Snippet:Sample11_ExtractSummaryConvenienceAsync
             string document =
                 "Windows 365 was in the works before COVID-19 sent companies around the world on a scramble to secure"
                 + " solutions to support employees suddenly forced to work from home, but “what really put the"
@@ -63,14 +61,12 @@ namespace Azure.AI.TextAnalytics.Samples
             };
 
             // Perform the text analysis operation.
-            ExtractSummaryOperation operation = client.StartExtractSummary(batchedDocuments);
-            await operation.WaitForCompletionAsync();
-            #endregion
+            ExtractiveSummarizeOperation operation = client.StartExtractiveSummarize(batchedDocuments);
+            operation.WaitForCompletion();
 
             Console.WriteLine($"The operation has completed.");
             Console.WriteLine();
 
-            #region Snippet:Sample11_ExtractSummaryConvenienceAsync_ViewOperationStatus
             // View the operation status.
             Console.WriteLine($"Created On   : {operation.CreatedOn}");
             Console.WriteLine($"Expires On   : {operation.ExpiresOn}");
@@ -78,16 +74,14 @@ namespace Azure.AI.TextAnalytics.Samples
             Console.WriteLine($"Status       : {operation.Status}");
             Console.WriteLine($"Last Modified: {operation.LastModified}");
             Console.WriteLine();
-            #endregion
 
-            #region Snippet:Sample11_ExtractSummaryConvenienceAsync_ViewResults
             // View the operation results.
-            await foreach (ExtractSummaryResultCollection documentsInPage in operation.Value)
+            foreach (ExtractiveSummarizeResultCollection documentsInPage in operation.GetValues())
             {
-                Console.WriteLine($"Extract Summary, version: \"{documentsInPage.ModelVersion}\"");
+                Console.WriteLine($"Extractive Summarize, model version: \"{documentsInPage.ModelVersion}\"");
                 Console.WriteLine();
 
-                foreach (ExtractSummaryResult documentResult in documentsInPage)
+                foreach (ExtractiveSummarizeResult documentResult in documentsInPage)
                 {
                     if (documentResult.HasError)
                     {
@@ -110,7 +104,6 @@ namespace Azure.AI.TextAnalytics.Samples
                     }
                 }
             }
-            #endregion
         }
     }
 }

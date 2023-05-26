@@ -7,20 +7,20 @@ namespace Azure.AI.TextAnalytics
     /// A set of options used to configure extractive summarization, including the model version to use, the maximum
     /// number of sentences to extract, and more.
     /// </summary>
-    public class ExtractSummaryAction
+    public class ExtractiveSummarizeAction
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="ExtractSummaryAction"/> class.
+        /// Initializes a new instance of the <see cref="ExtractiveSummarizeAction"/> class.
         /// </summary>
-        public ExtractSummaryAction()
+        public ExtractiveSummarizeAction()
         {
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="ExtractSummaryAction"/> class based on the given
-        /// <see cref="ExtractSummaryOptions"/>.
+        /// Initializes a new instance of the <see cref="ExtractiveSummarizeAction"/> class based on the given
+        /// <see cref="ExtractiveSummarizeOptions"/>.
         /// </summary>
-        public ExtractSummaryAction(ExtractSummaryOptions options)
+        public ExtractiveSummarizeAction(ExtractiveSummarizeOptions options)
         {
             ModelVersion = options.ModelVersion;
             DisableServiceLogs = options.DisableServiceLogs;
