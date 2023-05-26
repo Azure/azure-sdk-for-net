@@ -24,6 +24,11 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
             List<TelemetryItem> telemetryItems = new List<TelemetryItem>();
             TelemetryItem telemetryItem;
 
+            if (batchActivity.Count > 0 && azureMonitorResource?.MetricTelemetry != null)
+            {
+                telemetryItems.Add(azureMonitorResource.MetricTelemetry);
+            }
+
             foreach (var activity in batchActivity)
             {
                 try
