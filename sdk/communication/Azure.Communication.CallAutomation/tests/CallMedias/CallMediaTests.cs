@@ -19,12 +19,7 @@ namespace Azure.Communication.CallAutomation.Tests.CallMedias
         private static readonly FileSource _fileSource = new FileSource(new System.Uri("file://path/to/file"));
         private static readonly TextSource _textSource = new TextSource("PlayTTS test text.", "en-US-ElizabethNeural");
         private static readonly SsmlSource _ssmlSource = new SsmlSource("<speak version=\"1.0\" xmlns=\"http://www.w3.org/2001/10/synthesis\" xml:lang=\"en-US\"><voice name=\"en-US-JennyNeural\">Recognize Choice Completed, played through SSML source.</voice></speak>");
-        private static readonly List<PlaySource> _playSources = new List<PlaySource>()
-        {
-            _fileSource,
-            _textSource,
-            _ssmlSource
-        };
+
         private static readonly PlayOptions _fileOptions = new PlayOptions(_fileSource, _target)
         {
             Loop = false,
@@ -43,12 +38,6 @@ namespace Azure.Communication.CallAutomation.Tests.CallMedias
             OperationContext = "context"
         };
 
-        private static readonly PlayOptions _playSourcesOptions = new PlayOptions(_playSources, _target)
-        {
-            Loop = false,
-            OperationContext = "context"
-        };
-
         private static readonly PlayToAllOptions _filePlayToAllOptions = new PlayToAllOptions(_fileSource)
         {
             Loop = false,
@@ -62,12 +51,6 @@ namespace Azure.Communication.CallAutomation.Tests.CallMedias
         };
 
         private static readonly PlayToAllOptions _ssmlPlayToAllOptions = new PlayToAllOptions(_ssmlSource)
-        {
-            Loop = false,
-            OperationContext = "context"
-        };
-
-        private static readonly PlayToAllOptions _playSourcesPlayToAllOptions = new PlayToAllOptions(_playSources)
         {
             Loop = false,
             OperationContext = "context"
@@ -154,7 +137,7 @@ namespace Azure.Communication.CallAutomation.Tests.CallMedias
         [SetUp]
         public void Setup()
         {
-            _fileSource.PlaySourceCacheId = "playSourceCacheId";
+            _fileSource.PlaySourceId = "playSourceId";
         }
 
         private CallMedia GetCallMedia(int responseCode)
@@ -431,14 +414,6 @@ namespace Azure.Communication.CallAutomation.Tests.CallMedias
                 {
                    callMedia => callMedia.PlayToAllAsync(_ssmlPlayToAllOptions)
                 },
-                new Func<CallMedia, Task<Response<PlayResult>>>?[]
-                {
-                   callMedia => callMedia.PlayAsync(_playSourcesOptions)
-                },
-                new Func<CallMedia, Task<Response<PlayResult>>>?[]
-                {
-                   callMedia => callMedia.PlayToAllAsync(_playSourcesPlayToAllOptions)
-                },
             };
         }
 
@@ -507,14 +482,6 @@ namespace Azure.Communication.CallAutomation.Tests.CallMedias
                 new Func<CallMedia, Response<PlayResult>>?[]
                 {
                    callMedia => callMedia.PlayToAll(_ssmlPlayToAllOptions)
-                },
-                new Func<CallMedia, Response<PlayResult>>?[]
-                {
-                   callMedia => callMedia.Play(_playSourcesOptions)
-                },
-                new Func<CallMedia, Response<PlayResult>>?[]
-                {
-                   callMedia => callMedia.PlayToAll(_playSourcesPlayToAllOptions)
                 },
             };
         }

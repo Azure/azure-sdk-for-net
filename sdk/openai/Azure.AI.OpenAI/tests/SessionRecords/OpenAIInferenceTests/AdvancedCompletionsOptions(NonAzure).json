@@ -1,0 +1,453 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://api.openai.com/v1/completions",
+      "RequestMethod": "POST",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "Content-Length": "246",
+        "Content-Type": "application/json",
+        "traceparent": "00-4e07aa8b35f5316ec4fa086f214457de-3e1732d8ed752a1c-00",
+        "User-Agent": "azsdk-net-AI.OpenAI/1.0.0-alpha.20230404.1 (.NET 6.0.15; Microsoft Windows 10.0.25324)",
+        "x-ms-client-request-id": "f7b3eee40ec61fd16ac4d0c73705369e",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "prompt": [
+          "Are bananas especially radioactive?"
+        ],
+        "max_tokens": 512,
+        "temperature": 0.75,
+        "logit_bias": {
+          "25996": -100,
+          "35484": -100,
+          "40058": -100,
+          "15991": -100
+        },
+        "user": "AzureSDKOpenAITests",
+        "logprobs": 1,
+        "echo": true,
+        "best_of": 3,
+        "model": "text-davinci-002"
+      },
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Access-Control-Allow-Origin": "*",
+        "Alt-Svc": [
+          "h3=\u0022:443\u0022",
+          "h3-29=\u0022:443\u0022"
+        ],
+        "Cache-Control": "must-revalidate, no-cache",
+        "CF-Cache-Status": "DYNAMIC",
+        "CF-RAY": "7b2b42914997c4a2-SEA",
+        "Connection": "keep-alive",
+        "Content-Length": "3283",
+        "Content-Type": "application/json",
+        "Date": "Tue, 04 Apr 2023 17:27:07 GMT",
+        "openai-model": "text-davinci-002",
+        "openai-organization": "msft-finetuning-2",
+        "openai-processing-ms": "2555",
+        "openai-version": "2020-10-01",
+        "Server": "cloudflare",
+        "Strict-Transport-Security": "max-age=15724800; includeSubDomains",
+        "x-ratelimit-limit-requests": "3000",
+        "x-ratelimit-limit-tokens": "250000",
+        "x-ratelimit-remaining-requests": "2999",
+        "x-ratelimit-remaining-tokens": "247951",
+        "x-ratelimit-reset-requests": "20ms",
+        "x-ratelimit-reset-tokens": "491ms",
+        "X-Request-ID": "4eec75766ffa63ac6c22601bf916b327"
+      },
+      "ResponseBody": {
+        "id": "cmpl-71eivSNVcEd9EnMkkISsB4rqhr3oc",
+        "object": "text_completion",
+        "created": 1680629225,
+        "model": "text-davinci-002",
+        "choices": [
+          {
+            "text": "Are bananas especially radioactive?\n\nThere is no such thing as \u0022especially radioactive.\u0022 All matter is made up of atoms, which are electrically neutral. However, the nucleus of an atom can be either positive or negative. The positive or negative charge of an atom is called an \u0022ion.\u0022",
+            "index": 0,
+            "logprobs": {
+              "tokens": [
+                "Are",
+                " bananas",
+                " especially",
+                " radioactive",
+                "?",
+                "\n",
+                "\n",
+                "There",
+                " is",
+                " no",
+                " such",
+                " thing",
+                " as",
+                " \u0022",
+                "especially",
+                " radioactive",
+                ".\u0022",
+                " All",
+                " matter",
+                " is",
+                " made",
+                " up",
+                " of",
+                " atoms",
+                ",",
+                " which",
+                " are",
+                " electr",
+                "ically",
+                " neutral",
+                ".",
+                " However",
+                ",",
+                " the",
+                " nucleus",
+                " of",
+                " an",
+                " atom",
+                " can",
+                " be",
+                " either",
+                " positive",
+                " or",
+                " negative",
+                ".",
+                " The",
+                " positive",
+                " or",
+                " negative",
+                " charge",
+                " of",
+                " an",
+                " atom",
+                " is",
+                " called",
+                " an",
+                " \u0022",
+                "ion",
+                ".\u0022"
+              ],
+              "token_logprobs": [
+                null,
+                -14.245208,
+                -11.109661,
+                -6.388697,
+                -0.06369275,
+                -0.00041995506,
+                -8.4157e-6,
+                -0.7773478,
+                -0.000713794,
+                -0.0006728154,
+                -2.2327306,
+                -0.00009174727,
+                -9.012677e-6,
+                -0.45209846,
+                -0.4959718,
+                -0.011229955,
+                -0.045018822,
+                -0.6075512,
+                -0.23713131,
+                -0.045325,
+                -0.040718287,
+                -0.022432948,
+                -1.5006569e-6,
+                -0.0016909376,
+                -8.653179e-6,
+                -0.23506118,
+                -0.54537225,
+                -3.0396936,
+                0.0,
+                -0.0029234888,
+                -0.581757,
+                -0.23802635,
+                0.0,
+                -0.29595867,
+                -0.2528686,
+                -0.000053716885,
+                -0.040603507,
+                -0.00011988616,
+                -0.5815135,
+                -0.37264356,
+                -0.14055008,
+                -1.2132705,
+                -0.00083446794,
+                -0.0005064818,
+                -0.03809624,
+                -0.047369886,
+                -0.7475171,
+                -0.2663985,
+                -0.0000720769,
+                -0.049950294,
+                -0.017079026,
+                -0.1288744,
+                -0.0027178093,
+                -0.0016946406,
+                -0.42686474,
+                -0.71531075,
+                -0.011099581,
+                -0.05029203,
+                -0.00042210176
+              ],
+              "top_logprobs": [
+                null,
+                {
+                  " you": -0.5478915
+                },
+                {
+                  " good": -1.2678344
+                },
+                {
+                  " good": -0.69891167
+                },
+                {
+                  "?": -0.06369275
+                },
+                {
+                  "\n": -0.00041995506
+                },
+                {
+                  "\n": -8.4157e-6
+                },
+                {
+                  "There": -0.7773478
+                },
+                {
+                  " is": -0.000713794
+                },
+                {
+                  " no": -0.0006728154
+                },
+                {
+                  " scientific": -0.51687986
+                },
+                {
+                  " thing": -0.00009174727
+                },
+                {
+                  " as": -9.012677e-6
+                },
+                {
+                  " \u0022": -0.45209846
+                },
+                {
+                  "especially": -0.4959718
+                },
+                {
+                  " radioactive": -0.011229955
+                },
+                {
+                  ".\u0022": -0.045018822
+                },
+                {
+                  " All": -0.6075512
+                },
+                {
+                  " matter": -0.23713131
+                },
+                {
+                  " is": -0.045325
+                },
+                {
+                  " made": -0.040718287
+                },
+                {
+                  " up": -0.022432948
+                },
+                {
+                  " of": -1.5006569e-6
+                },
+                {
+                  " atoms": -0.0016909376
+                },
+                {
+                  ",": -8.653179e-6
+                },
+                {
+                  " which": -0.23506118
+                },
+                {
+                  " are": -0.54537225
+                },
+                {
+                  " in": -1.3746164
+                },
+                {
+                  "ically": 0.0
+                },
+                {
+                  " neutral": -0.0029234888
+                },
+                {
+                  ".": -0.581757
+                },
+                {
+                  " However": -0.23802635
+                },
+                {
+                  ",": 0.0
+                },
+                {
+                  " the": -0.29595867
+                },
+                {
+                  " nucleus": -0.2528686
+                },
+                {
+                  " of": -0.000053716885
+                },
+                {
+                  " an": -0.040603507
+                },
+                {
+                  " atom": -0.00011988616
+                },
+                {
+                  " can": -0.5815135
+                },
+                {
+                  " be": -0.37264356
+                },
+                {
+                  " either": -0.14055008
+                },
+                {
+                  " positively": -0.47303614
+                },
+                {
+                  " or": -0.00083446794
+                },
+                {
+                  " negative": -0.0005064818
+                },
+                {
+                  ".": -0.03809624
+                },
+                {
+                  " The": -0.047369886
+                },
+                {
+                  " positive": -0.7475171
+                },
+                {
+                  " or": -0.2663985
+                },
+                {
+                  " negative": -0.0000720769
+                },
+                {
+                  " charge": -0.049950294
+                },
+                {
+                  " of": -0.017079026
+                },
+                {
+                  " an": -0.1288744
+                },
+                {
+                  " atom": -0.0027178093
+                },
+                {
+                  " is": -0.0016946406
+                },
+                {
+                  " called": -0.42686474
+                },
+                {
+                  " its": -0.69043714
+                },
+                {
+                  " \u0022": -0.011099581
+                },
+                {
+                  "ion": -0.05029203
+                },
+                {
+                  ".\u0022": -0.00042210176
+                }
+              ],
+              "text_offset": [
+                0,
+                3,
+                11,
+                22,
+                34,
+                35,
+                36,
+                37,
+                42,
+                45,
+                48,
+                53,
+                59,
+                62,
+                64,
+                74,
+                86,
+                88,
+                92,
+                99,
+                102,
+                107,
+                110,
+                113,
+                119,
+                120,
+                126,
+                130,
+                137,
+                143,
+                151,
+                152,
+                160,
+                161,
+                165,
+                173,
+                176,
+                179,
+                184,
+                188,
+                191,
+                198,
+                207,
+                210,
+                219,
+                220,
+                224,
+                233,
+                236,
+                245,
+                252,
+                255,
+                258,
+                263,
+                266,
+                273,
+                276,
+                278,
+                281
+              ]
+            },
+            "finish_reason": "stop"
+          }
+        ],
+        "usage": {
+          "prompt_tokens": 5,
+          "completion_tokens": 95,
+          "total_tokens": 100
+        }
+      }
+    }
+  ],
+  "Variables": {
+    "AZURE_AUTHORITY_HOST": "https://login.microsoftonline.com",
+    "OPENAI_CHAT_COMPLETIONS_DEPLOYMENT_ID": "gpt-35-turbo",
+    "OPENAI_DEPLOYMENT_ID": "text-davinci-002",
+    "OPENAI_EMBEDDINGS_DEPLOYMENT_ID": "text-similarity-curie-001",
+    "OPENAI_ENDPOINT": "https://sdk8428.openai.azure.com/",
+    "RandomSeed": "1964224400",
+    "SUBSCRIPTION_ID": "e72e5254-f265-4e95-9bd2-9ee8e7329051"
+  }
+}

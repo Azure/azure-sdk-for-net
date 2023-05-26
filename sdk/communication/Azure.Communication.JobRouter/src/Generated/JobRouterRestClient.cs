@@ -942,7 +942,7 @@ namespace Azure.Communication.JobRouter
             }
         }
 
-        internal HttpMessage CreateDeclineJobActionRequest(string workerId, string offerId)
+        internal HttpMessage CreateDeclineJobActionRequest(string workerId, string offerId, DeclineOfferRequest declineOfferRequest)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -957,15 +957,23 @@ namespace Azure.Communication.JobRouter
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
+            if (declineOfferRequest != null)
+            {
+                request.Headers.Add("Content-Type", "application/json");
+                var content = new Utf8JsonRequestContent();
+                content.JsonWriter.WriteObjectValue(declineOfferRequest);
+                request.Content = content;
+            }
             return message;
         }
 
         /// <summary> Declines an offer to work on a job. </summary>
         /// <param name="workerId"> Id of the worker. </param>
         /// <param name="offerId"> Id of the offer. </param>
+        /// <param name="declineOfferRequest"> Request model for declining offer. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="workerId"/> or <paramref name="offerId"/> is null. </exception>
-        public async Task<Response<object>> DeclineJobActionAsync(string workerId, string offerId, CancellationToken cancellationToken = default)
+        public async Task<Response<object>> DeclineJobActionAsync(string workerId, string offerId, DeclineOfferRequest declineOfferRequest = null, CancellationToken cancellationToken = default)
         {
             if (workerId == null)
             {
@@ -976,7 +984,7 @@ namespace Azure.Communication.JobRouter
                 throw new ArgumentNullException(nameof(offerId));
             }
 
-            using var message = CreateDeclineJobActionRequest(workerId, offerId);
+            using var message = CreateDeclineJobActionRequest(workerId, offerId, declineOfferRequest);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -995,9 +1003,10 @@ namespace Azure.Communication.JobRouter
         /// <summary> Declines an offer to work on a job. </summary>
         /// <param name="workerId"> Id of the worker. </param>
         /// <param name="offerId"> Id of the offer. </param>
+        /// <param name="declineOfferRequest"> Request model for declining offer. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="workerId"/> or <paramref name="offerId"/> is null. </exception>
-        public Response<object> DeclineJobAction(string workerId, string offerId, CancellationToken cancellationToken = default)
+        public Response<object> DeclineJobAction(string workerId, string offerId, DeclineOfferRequest declineOfferRequest = null, CancellationToken cancellationToken = default)
         {
             if (workerId == null)
             {
@@ -1008,7 +1017,7 @@ namespace Azure.Communication.JobRouter
                 throw new ArgumentNullException(nameof(offerId));
             }
 
-            using var message = CreateDeclineJobActionRequest(workerId, offerId);
+            using var message = CreateDeclineJobActionRequest(workerId, offerId, declineOfferRequest);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
