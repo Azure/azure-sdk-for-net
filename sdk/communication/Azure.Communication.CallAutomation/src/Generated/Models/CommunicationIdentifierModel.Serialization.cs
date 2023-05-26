@@ -15,15 +15,15 @@ namespace Azure.Communication
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(RawId))
-            {
-                writer.WritePropertyName("rawId"u8);
-                writer.WriteStringValue(RawId);
-            }
             if (Optional.IsDefined(Kind))
             {
                 writer.WritePropertyName("kind"u8);
                 writer.WriteStringValue(Kind.Value.ToString());
+            }
+            if (Optional.IsDefined(RawId))
+            {
+                writer.WritePropertyName("rawId"u8);
+                writer.WriteStringValue(RawId);
             }
             if (Optional.IsDefined(CommunicationUser))
             {
@@ -49,18 +49,13 @@ namespace Azure.Communication
             {
                 return null;
             }
-            Optional<string> rawId = default;
             Optional<CommunicationIdentifierModelKind> kind = default;
+            Optional<string> rawId = default;
             Optional<CommunicationUserIdentifierModel> communicationUser = default;
             Optional<PhoneNumberIdentifierModel> phoneNumber = default;
             Optional<MicrosoftTeamsUserIdentifierModel> microsoftTeamsUser = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("rawId"u8))
-                {
-                    rawId = property.Value.GetString();
-                    continue;
-                }
                 if (property.NameEquals("kind"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -68,6 +63,11 @@ namespace Azure.Communication
                         continue;
                     }
                     kind = new CommunicationIdentifierModelKind(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("rawId"u8))
+                {
+                    rawId = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("communicationUser"u8))
@@ -98,7 +98,7 @@ namespace Azure.Communication
                     continue;
                 }
             }
-            return new CommunicationIdentifierModel(rawId.Value, Optional.ToNullable(kind), communicationUser.Value, phoneNumber.Value, microsoftTeamsUser.Value);
+            return new CommunicationIdentifierModel(Optional.ToNullable(kind), rawId.Value, communicationUser.Value, phoneNumber.Value, microsoftTeamsUser.Value);
         }
     }
 }

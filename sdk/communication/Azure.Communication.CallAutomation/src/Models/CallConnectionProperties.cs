@@ -19,18 +19,17 @@ namespace Azure.Communication.CallAutomation
             CommunicationIdentifier sourceIdentity,
             PhoneNumberIdentifier sourceCallerIdNumber,
             string sourceDisplayName,
-            string mediaSubscriptionId
-            )
+            CommunicationIdentifier answeredBy)
         {
             CallConnectionId = callConnectionId;
             ServerCallId = serverCallId;
             Targets = targets == null ? new List<CommunicationIdentifier>() : targets.ToList();
             CallConnectionState = callConnectionState == default ? CallConnectionState.Unknown : callConnectionState;
             CallbackUri = callbackUri;
-            SourceIdentity = sourceIdentity;
+            Source = sourceIdentity;
             SourceCallerIdNumber = sourceCallerIdNumber;
             SourceDisplayName = sourceDisplayName;
-            MediaSubscriptionId = mediaSubscriptionId;
+            AnsweredBy = new CommunicationUserIdentifier(answeredBy.RawId);
         }
 
         internal CallConnectionProperties(CallConnectionPropertiesInternal callConnectionPropertiesDtoInternal)
@@ -49,11 +48,10 @@ namespace Azure.Communication.CallAutomation
             }
 
             CallbackUri = new Uri(callConnectionPropertiesDtoInternal.CallbackUri);
-            MediaSubscriptionId = callConnectionPropertiesDtoInternal.MediaSubscriptionId;
-            SourceIdentity = callConnectionPropertiesDtoInternal.SourceIdentity == null? null : CommunicationIdentifierSerializer.Deserialize(callConnectionPropertiesDtoInternal.SourceIdentity);
+            Source = callConnectionPropertiesDtoInternal.Source == null? null : CommunicationIdentifierSerializer.Deserialize(callConnectionPropertiesDtoInternal.Source);
             SourceDisplayName = callConnectionPropertiesDtoInternal.SourceDisplayName;
             CorrelationId = callConnectionPropertiesDtoInternal.CorrelationId;
-            AnsweredByIdentifier = callConnectionPropertiesDtoInternal.AnsweredByIdentifier == null? null : new CommunicationUserIdentifier(callConnectionPropertiesDtoInternal.AnsweredByIdentifier.Id);
+            AnsweredBy = callConnectionPropertiesDtoInternal.AnsweredBy == null? null : new CommunicationUserIdentifier(callConnectionPropertiesDtoInternal.AnsweredBy.Id);
 
             if (callConnectionPropertiesDtoInternal.SourceCallerIdNumber != null)
             {
@@ -71,8 +69,6 @@ namespace Azure.Communication.CallAutomation
         public CallConnectionState CallConnectionState { get; }
         /// <summary> The callback URI. </summary>
         public Uri CallbackUri { get; }
-        /// <summary> SubscriptionId for media streaming. </summary>
-        public string MediaSubscriptionId { get; }
         /// <summary>
         /// Caller ID phone number to appear on the invitee.
         /// </summary>
@@ -84,16 +80,15 @@ namespace Azure.Communication.CallAutomation
         /// <summary>
         /// Source identity.
         /// </summary>
-        public CommunicationIdentifier SourceIdentity { get; }
+        public CommunicationIdentifier Source { get; }
 
         /// <summary>
         /// The correlation ID.
         /// </summary>
         public string CorrelationId { get; }
-
         /// <summary>
         /// Identity of the answering entity. Only populated when identity is provided in the request.
         /// </summary>
-        public CommunicationUserIdentifier AnsweredByIdentifier { get; }
+        public CommunicationUserIdentifier AnsweredBy { get; }
     }
 }

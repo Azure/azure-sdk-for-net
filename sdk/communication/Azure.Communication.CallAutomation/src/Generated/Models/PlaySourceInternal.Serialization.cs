@@ -15,27 +15,17 @@ namespace Azure.Communication.CallAutomation
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("sourceType"u8);
-            writer.WriteStringValue(SourceType.ToString());
-            if (Optional.IsDefined(PlaySourceId))
+            writer.WritePropertyName("kind"u8);
+            writer.WriteStringValue(Kind.ToString());
+            if (Optional.IsDefined(PlaySourceCacheId))
             {
-                writer.WritePropertyName("playSourceId"u8);
-                writer.WriteStringValue(PlaySourceId);
+                writer.WritePropertyName("playSourceCacheId"u8);
+                writer.WriteStringValue(PlaySourceCacheId);
             }
-            if (Optional.IsDefined(FileSource))
+            if (Optional.IsDefined(File))
             {
-                writer.WritePropertyName("fileSource"u8);
-                writer.WriteObjectValue(FileSource);
-            }
-            if (Optional.IsDefined(TextSource))
-            {
-                writer.WritePropertyName("textSource"u8);
-                writer.WriteObjectValue(TextSource);
-            }
-            if (Optional.IsDefined(SsmlSource))
-            {
-                writer.WritePropertyName("ssmlSource"u8);
-                writer.WriteObjectValue(SsmlSource);
+                writer.WritePropertyName("file"u8);
+                writer.WriteObjectValue(File);
             }
             writer.WriteEndObject();
         }

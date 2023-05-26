@@ -24,18 +24,11 @@ namespace Azure.Communication.CallAutomation
         private const string RecognizeInterDigitTimedOutValue = "8532";
         private const string RecognizeDtmfOptionMatchedValue = "8533";
         private const string RecognizePlayPromptFailedValue = "8511";
-
         private const string RecognizeMaxDigitsReceivedValue = "8531";
         private const string RecognizeIncorrectToneDetectedValue = "8534";
         private const string RecognizeStopToneDetectedValue = "8514";
-        private const string RecognizeSpeechOptionMatchedValue = "8545";
-        private const string RecognizeSpeechOptionNotMatchedValue = "8547";
-        private const string RecognizeSpeechNotRecognizedValue = "8563";
-        private const string RecognizeSpeechServiceConnectionErrorValue = "8564";
-
         private const string PlayDownloadFailedValue = "8536";
         private const string PlayInvalidFileFormatValue = "8535";
-        private const string PlayCognitiveServicesPlayErrorValue = "8565";
 
         private const string CompletedSuccessfullyValue = "0";
         private const string UnspecifiedErrorValue = "9999";
@@ -54,24 +47,14 @@ namespace Azure.Communication.CallAutomation
 
         /// <summary> Action failed, play source not working. </summary>
         public static MediaEventReasonCode RecognizeDtmfOptionMatched { get; } = new MediaEventReasonCode(RecognizeDtmfOptionMatchedValue);
-        /// <summary> Speech option matched. </summary>
-        public static MediaEventReasonCode RecognizeSpeechOptionMatched { get; } = new MediaEventReasonCode(RecognizeSpeechOptionMatchedValue);
-        /// <summary> Speech option  not matched. </summary>
-        public static MediaEventReasonCode RecognizeSpeechOptionNotMatched { get; } = new MediaEventReasonCode(RecognizeSpeechOptionNotMatchedValue);
-        /// <summary> Recognize with Choice that incorrect tone detected. </summary>
-        public static MediaEventReasonCode RecognizeIncorrectToneDetected { get; } = new MediaEventReasonCode(RecognizeIncorrectToneDetectedValue);
 
-        /// <summary> Speech not recognized. </summary>
-        public static MediaEventReasonCode RecognizeSpeechNotRecognized { get; } = new MediaEventReasonCode(RecognizeSpeechNotRecognizedValue);
-        /// <summary> Speech service connection error. </summary>
-        public static MediaEventReasonCode RecognizeSpeechServiceConnectionError { get; } = new MediaEventReasonCode(RecognizeSpeechServiceConnectionErrorValue);
+        /// <summary> Recognize with DTMF that incorrect tone detected. </summary>
+        public static MediaEventReasonCode RecognizeIncorrectToneDetected { get; } = new MediaEventReasonCode(RecognizeIncorrectToneDetectedValue);
 
         /// <summary> Action failed, file could not be downloaded. </summary>
         public static MediaEventReasonCode PlayDownloadFailed { get; } = new MediaEventReasonCode(PlayDownloadFailedValue);
         /// <summary> Action failed, file could not be downloaded. </summary>
         public static MediaEventReasonCode PlayInvalidFileFormat { get; } = new MediaEventReasonCode(PlayInvalidFileFormatValue);
-        /// <summary> Action failed, cognitive service error. </summary>
-        public static MediaEventReasonCode PlayCognitiveServicesPlayError { get; } = new MediaEventReasonCode(PlayCognitiveServicesPlayErrorValue);
 
         /// <summary> Action completed successfully. </summary>
         public static MediaEventReasonCode CompletedSuccessfully { get; } = new MediaEventReasonCode (CompletedSuccessfullyValue);

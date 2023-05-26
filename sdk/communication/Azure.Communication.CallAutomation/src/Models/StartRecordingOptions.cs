@@ -61,8 +61,5 @@ namespace Azure.Communication.CallAutomation
         /// ///
         /// </summary>
         public IList<ChannelAffinity> ChannelAffinity { get; set; }
-
-        /// <summary> (Optional) Used to specify external storage for call recording. </summary>
-        public ExternalStorage ExternalStorage { get; set; }
     }
 }

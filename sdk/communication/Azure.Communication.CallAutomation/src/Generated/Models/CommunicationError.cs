@@ -5,44 +5,53 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.Communication.CallAutomation
 {
-    /// <summary> The CommunicationError. </summary>
+    /// <summary> The Communication Services error. </summary>
     internal partial class CommunicationError
     {
         /// <summary> Initializes a new instance of CommunicationError. </summary>
-        internal CommunicationError()
+        /// <param name="code"> The error code. </param>
+        /// <param name="message"> The error message. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="code"/> or <paramref name="message"/> is null. </exception>
+        internal CommunicationError(string code, string message)
         {
+            Argument.AssertNotNull(code, nameof(code));
+            Argument.AssertNotNull(message, nameof(message));
+
+            Code = code;
+            Message = message;
             Details = new ChangeTrackingList<CommunicationError>();
         }
 
         /// <summary> Initializes a new instance of CommunicationError. </summary>
-        /// <param name="code"></param>
-        /// <param name="message"></param>
-        /// <param name="target"></param>
-        /// <param name="details"></param>
-        /// <param name="innererror"></param>
-        internal CommunicationError(string code, string message, string target, IReadOnlyList<CommunicationError> details, CommunicationError innererror)
+        /// <param name="code"> The error code. </param>
+        /// <param name="message"> The error message. </param>
+        /// <param name="target"> The error target. </param>
+        /// <param name="details"> Further details about specific errors that led to this error. </param>
+        /// <param name="innerError"> The inner error if any. </param>
+        internal CommunicationError(string code, string message, string target, IReadOnlyList<CommunicationError> details, CommunicationError innerError)
         {
             Code = code;
             Message = message;
             Target = target;
             Details = details;
-            Innererror = innererror;
+            InnerError = innerError;
         }
 
-        /// <summary> Gets the code. </summary>
+        /// <summary> The error code. </summary>
         public string Code { get; }
-        /// <summary> Gets the message. </summary>
+        /// <summary> The error message. </summary>
         public string Message { get; }
-        /// <summary> Gets the target. </summary>
+        /// <summary> The error target. </summary>
         public string Target { get; }
-        /// <summary> Gets the details. </summary>
+        /// <summary> Further details about specific errors that led to this error. </summary>
         public IReadOnlyList<CommunicationError> Details { get; }
-        /// <summary> Gets the innererror. </summary>
-        public CommunicationError Innererror { get; }
+        /// <summary> The inner error if any. </summary>
+        public CommunicationError InnerError { get; }
     }
 }
