@@ -39,6 +39,11 @@ namespace Azure.ResourceManager.NotificationHubs.Models
         /// </para>
         /// </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public BinaryData Thumbprint { get; set; }
+        [Obsolete("This property is obsolete and will be removed in a future release. Please use `ThumbprintString` instead.", false)]
+        public BinaryData Thumbprint
+        {
+            get { return BinaryData.FromString(ThumbprintString); }
+            set { ThumbprintString = value.ToString(); }
+        }
     }
 }

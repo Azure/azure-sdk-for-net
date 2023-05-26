@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.ComponentModel;
 
 namespace Azure.ResourceManager.IotHub.Models
 {
@@ -37,6 +38,8 @@ namespace Azure.ResourceManager.IotHub.Models
         /// </list>
         /// </para>
         /// </summary>
-        public BinaryData Thumbprint { get; }
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        [Obsolete("This property is obsolete and will be removed in a future release. Please use `ThumbprintString` instead.", false)]
+        public BinaryData Thumbprint => BinaryData.FromString(ThumbprintString);
     }
 }

@@ -251,6 +251,7 @@ namespace Azure.ResourceManager.Automation
         public bool? IsExportable { get { throw null; } }
         public System.DateTimeOffset? LastModifiedOn { get { throw null; } }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        [System.ObsoleteAttribute("This property is obsolete and will be removed in a future release. Please use `ThumbprintString` instead.", false)]
         public System.BinaryData Thumbprint { get { throw null; } }
         public string ThumbprintString { get { throw null; } }
     }
@@ -1359,6 +1360,7 @@ namespace Azure.ResourceManager.Automation.Models
         public bool? IsExportable { get { throw null; } set { } }
         public string Name { get { throw null; } }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        [System.ObsoleteAttribute("This property is obsolete and will be removed in a future release. Please use `ThumbprintString` instead.", false)]
         public System.BinaryData Thumbprint { get { throw null; } set { } }
         public string ThumbprintString { get { throw null; } set { } }
     }

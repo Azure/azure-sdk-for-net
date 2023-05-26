@@ -39,6 +39,7 @@ namespace Azure.ResourceManager.AppService
         /// </para>
         /// </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public BinaryData Thumbprint { get; }
+        [Obsolete("This property is obsolete and will be removed in a future release. Please use `ThumbprintString` instead.", false)]
+        public BinaryData Thumbprint => BinaryData.FromString(ThumbprintString);
     }
 }

@@ -54,6 +54,7 @@ namespace Azure.ResourceManager.AppService
         public string SiteName { get { throw null; } }
         public string SubjectName { get { throw null; } }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        [System.ObsoleteAttribute("This property is obsolete and will be removed in a future release. Please use `ThumbprintString` instead.", false)]
         public System.BinaryData Thumbprint { get { throw null; } }
         public string ThumbprintString { get { throw null; } }
     }
@@ -1121,6 +1122,7 @@ namespace Azure.ResourceManager.AppService
         public string SiteName { get { throw null; } set { } }
         public Azure.ResourceManager.AppService.Models.HostNameBindingSslState? SslState { get { throw null; } set { } }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        [System.ObsoleteAttribute("This property is obsolete and will be removed in a future release. Please use `ThumbprintString` instead.", false)]
         public System.BinaryData Thumbprint { get { throw null; } set { } }
         public string ThumbprintString { get { throw null; } set { } }
         public string VirtualIP { get { throw null; } }
@@ -1361,6 +1363,7 @@ namespace Azure.ResourceManager.AppService
         public string Kind { get { throw null; } set { } }
         public Azure.ResourceManager.AppService.Models.PublicCertificateLocation? PublicCertificateLocation { get { throw null; } set { } }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        [System.ObsoleteAttribute("This property is obsolete and will be removed in a future release. Please use `ThumbprintString` instead.", false)]
         public System.BinaryData Thumbprint { get { throw null; } }
         public string ThumbprintString { get { throw null; } }
     }
@@ -4379,6 +4382,7 @@ namespace Azure.ResourceManager.AppService.Models
         public string SiteName { get { throw null; } }
         public string SubjectName { get { throw null; } }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        [System.ObsoleteAttribute("This property is obsolete and will be removed in a future release. Please use `ThumbprintString` instead.", false)]
         public System.BinaryData Thumbprint { get { throw null; } }
         public string ThumbprintString { get { throw null; } }
     }
@@ -4526,6 +4530,7 @@ namespace Azure.ResourceManager.AppService.Models
         public string SignatureAlgorithm { get { throw null; } }
         public string Subject { get { throw null; } }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        [System.ObsoleteAttribute("This property is obsolete and will be removed in a future release. Please use `ThumbprintString` instead.", false)]
         public System.BinaryData Thumbprint { get { throw null; } }
         public string ThumbprintString { get { throw null; } }
         public int? Version { get { throw null; } }
@@ -6140,6 +6145,7 @@ namespace Azure.ResourceManager.AppService.Models
         public string Name { get { throw null; } set { } }
         public Azure.ResourceManager.AppService.Models.HostNameBindingSslState? SslState { get { throw null; } set { } }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        [System.ObsoleteAttribute("This property is obsolete and will be removed in a future release. Please use `ThumbprintString` instead.", false)]
         public System.BinaryData Thumbprint { get { throw null; } set { } }
         public string ThumbprintString { get { throw null; } set { } }
         public bool? ToUpdate { get { throw null; } set { } }

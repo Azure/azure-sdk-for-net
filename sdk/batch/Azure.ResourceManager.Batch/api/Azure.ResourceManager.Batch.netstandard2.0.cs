@@ -27,6 +27,7 @@ namespace Azure.ResourceManager.Batch
         public System.DateTimeOffset? ProvisioningStateTransitOn { get { throw null; } }
         public string PublicData { get { throw null; } }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        [System.ObsoleteAttribute("This property is obsolete and will be removed in a future release. Please use `ThumbprintString` instead.", false)]
         public System.BinaryData Thumbprint { get { throw null; } set { } }
         public string ThumbprintAlgorithm { get { throw null; } set { } }
         public string ThumbprintString { get { throw null; } set { } }
@@ -428,6 +429,7 @@ namespace Azure.ResourceManager.Batch.Models
         public Azure.ResourceManager.Batch.Models.BatchAccountCertificateFormat? Format { get { throw null; } set { } }
         public string Password { get { throw null; } set { } }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        [System.ObsoleteAttribute("This property is obsolete and will be removed in a future release. Please use `ThumbprintString` instead.", false)]
         public System.BinaryData Thumbprint { get { throw null; } set { } }
         public string ThumbprintAlgorithm { get { throw null; } set { } }
         public string ThumbprintString { get { throw null; } set { } }
