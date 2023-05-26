@@ -80,7 +80,7 @@ namespace Azure.Communication.Chat
         /// <param name="communicationUserIdentifier"> Communication user identifier.</param>
         /// <param name="participants"> List of chat participants </param>
         /// <returns>A new <see cref="ChatMessageContent"/> instance for mocking.</returns>
-        public static ChatMessageContent ChatMessageContent(string message, string topic, CommunicationUserIdentifier communicationUserIdentifier, IReadOnlyList<ChatParticipant> participants) => new ChatMessageContent(message, topic, communicationUserIdentifier, participants);
+        public static ChatMessageContent ChatMessageContent(string message, string topic, CommunicationUserIdentifier communicationUserIdentifier, IEnumerable<ChatParticipant> participants = default) => new ChatMessageContent(message, topic, communicationUserIdentifier, participants);
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ChatThreadProperties"/> class.
@@ -91,7 +91,7 @@ namespace Azure.Communication.Chat
         /// <param name="createdBy"> Created by </param>
         /// <param name="deletedOn"> Deleted on date time </param>
         /// <returns>A new <see cref="ChatThreadProperties"/> instance for mocking.</returns>
-        public static ChatThreadProperties ChatThreadProperties(string id, string topic, DateTimeOffset createdOn, CommunicationIdentifier createdBy, DateTimeOffset deletedOn) => new ChatThreadProperties(id, topic, createdOn, createdBy, deletedOn);
+        public static ChatThreadProperties ChatThreadProperties(string id, string topic = default, DateTimeOffset createdOn = default, CommunicationIdentifier createdBy = default, DateTimeOffset deletedOn = default) => new ChatThreadProperties(id, topic, createdOn, createdBy, deletedOn);
 
         /// <summary>
         /// Initializes a new instance of the <see cref="CreateChatThreadResult"/> class.
@@ -99,7 +99,7 @@ namespace Azure.Communication.Chat
         /// <param name="chatThread"> Thread properties </param>
         /// <param name="invalidParticipants"> List of invalid participants</param>
         /// <returns>A new <see cref="CreateChatThreadResult"/> instance for mocking.</returns>
-        public static CreateChatThreadResult CreateChatThreadResult(ChatThreadProperties chatThread, IReadOnlyList<ChatError> invalidParticipants) => new CreateChatThreadResult(chatThread, invalidParticipants);
+        public static CreateChatThreadResult CreateChatThreadResult(ChatThreadProperties chatThread, IEnumerable<ChatError> invalidParticipants = default) => new CreateChatThreadResult(chatThread, invalidParticipants);
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ChatParticipant"/> class.
@@ -108,7 +108,7 @@ namespace Azure.Communication.Chat
         /// <param name="displayName">Display name for the chat thread member.</param>
         /// <param name="shareHistoryTime"> Time from which the chat history is shared with the member. The timestamp is in ISO8601 format: `yyyy-MM-ddTHH:mm:ssZ`.</param>
         /// <returns>A new <see cref="ChatParticipant"/> instance for mocking.</returns>
-        public static ChatParticipant ChatParticipant(CommunicationIdentifier user, string displayName, DateTimeOffset? shareHistoryTime) => new ChatParticipant(user, displayName, shareHistoryTime);
+        public static ChatParticipant ChatParticipant(CommunicationIdentifier user, string displayName = default, DateTimeOffset? shareHistoryTime = default) => new ChatParticipant(user, displayName, shareHistoryTime);
 
         /// <summary>
         /// Initializes a new instance of the <see cref="SendChatMessageResult"/> class.
