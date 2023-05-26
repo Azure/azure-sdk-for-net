@@ -9,11 +9,12 @@ using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Models;
+using Azure.ResourceManager.SecurityInsights;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
     /// <summary> Represents a dns entity. </summary>
-    public partial class SecurityInsightsDnsEntity : SecurityInsightsEntity
+    public partial class SecurityInsightsDnsEntity : SecurityInsightsEntityData
     {
         /// <summary> Initializes a new instance of SecurityInsightsDnsEntity. </summary>
         public SecurityInsightsDnsEntity()

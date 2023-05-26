@@ -10,16 +10,13 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
-    internal partial class DataConnectorDataTypeCommon : IUtf8JsonSerializable
+    public partial class DataConnectorDataTypeCommon : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(State))
-            {
-                writer.WritePropertyName("state"u8);
-                writer.WriteStringValue(State.Value.ToString());
-            }
+            writer.WritePropertyName("state"u8);
+            writer.WriteStringValue(State.ToString());
             writer.WriteEndObject();
         }
 
@@ -29,20 +26,16 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             {
                 return null;
             }
-            Optional<SecurityInsightsDataTypeConnectionState> state = default;
+            SecurityInsightsDataTypeConnectionState state = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("state"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     state = new SecurityInsightsDataTypeConnectionState(property.Value.GetString());
                     continue;
                 }
             }
-            return new DataConnectorDataTypeCommon(Optional.ToNullable(state));
+            return new DataConnectorDataTypeCommon(state);
         }
     }
 }

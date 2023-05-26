@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure;
 using Azure.Core;
@@ -66,23 +67,45 @@ namespace Azure.ResourceManager.SecurityInsights
                 writer.WritePropertyName("updatedBy"u8);
                 writer.WriteObjectValue(UpdatedBy);
             }
-            if (Optional.IsDefined(ItemsKeyValue))
+            if (Optional.IsCollectionDefined(ItemsKeyValue))
             {
                 writer.WritePropertyName("itemsKeyValue"u8);
+                writer.WriteStartObject();
+                foreach (var item in ItemsKeyValue)
+                {
+                    writer.WritePropertyName(item.Key);
+                    if (item.Value == null)
+                    {
+                        writer.WriteNullValue();
+                        continue;
+                    }
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(ItemsKeyValue);
+				writer.WriteRawValue(item.Value);
 #else
-                JsonSerializer.Serialize(writer, JsonDocument.Parse(ItemsKeyValue.ToString()).RootElement);
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(item.Value.ToString()).RootElement);
 #endif
+                }
+                writer.WriteEndObject();
             }
-            if (Optional.IsDefined(EntityMapping))
+            if (Optional.IsCollectionDefined(EntityMapping))
             {
                 writer.WritePropertyName("entityMapping"u8);
+                writer.WriteStartObject();
+                foreach (var item in EntityMapping)
+                {
+                    writer.WritePropertyName(item.Key);
+                    if (item.Value == null)
+                    {
+                        writer.WriteNullValue();
+                        continue;
+                    }
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(EntityMapping);
+				writer.WriteRawValue(item.Value);
 #else
-                JsonSerializer.Serialize(writer, JsonDocument.Parse(EntityMapping.ToString()).RootElement);
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(item.Value.ToString()).RootElement);
 #endif
+                }
+                writer.WriteEndObject();
             }
             writer.WriteEndObject();
             writer.WriteEndObject();
@@ -107,8 +130,8 @@ namespace Azure.ResourceManager.SecurityInsights
             Optional<DateTimeOffset> updated = default;
             Optional<SecurityInsightsUserInfo> createdBy = default;
             Optional<SecurityInsightsUserInfo> updatedBy = default;
-            Optional<BinaryData> itemsKeyValue = default;
-            Optional<BinaryData> entityMapping = default;
+            Optional<IDictionary<string, BinaryData>> itemsKeyValue = default;
+            Optional<IDictionary<string, BinaryData>> entityMapping = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("etag"u8))
@@ -223,7 +246,19 @@ namespace Azure.ResourceManager.SecurityInsights
                             {
                                 continue;
                             }
-                            itemsKeyValue = BinaryData.FromString(property0.Value.GetRawText());
+                            Dictionary<string, BinaryData> dictionary = new Dictionary<string, BinaryData>();
+                            foreach (var property1 in property0.Value.EnumerateObject())
+                            {
+                                if (property1.Value.ValueKind == JsonValueKind.Null)
+                                {
+                                    dictionary.Add(property1.Name, null);
+                                }
+                                else
+                                {
+                                    dictionary.Add(property1.Name, BinaryData.FromString(property1.Value.GetRawText()));
+                                }
+                            }
+                            itemsKeyValue = dictionary;
                             continue;
                         }
                         if (property0.NameEquals("entityMapping"u8))
@@ -232,14 +267,26 @@ namespace Azure.ResourceManager.SecurityInsights
                             {
                                 continue;
                             }
-                            entityMapping = BinaryData.FromString(property0.Value.GetRawText());
+                            Dictionary<string, BinaryData> dictionary = new Dictionary<string, BinaryData>();
+                            foreach (var property1 in property0.Value.EnumerateObject())
+                            {
+                                if (property1.Value.ValueKind == JsonValueKind.Null)
+                                {
+                                    dictionary.Add(property1.Name, null);
+                                }
+                                else
+                                {
+                                    dictionary.Add(property1.Name, BinaryData.FromString(property1.Value.GetRawText()));
+                                }
+                            }
+                            entityMapping = dictionary;
                             continue;
                         }
                     }
                     continue;
                 }
             }
-            return new SecurityInsightsWatchlistItemData(id, name, type, systemData.Value, watchlistItemType.Value, watchlistItemId.Value, Optional.ToNullable(tenantId), Optional.ToNullable(isDeleted), Optional.ToNullable(created), Optional.ToNullable(updated), createdBy.Value, updatedBy.Value, itemsKeyValue.Value, entityMapping.Value, Optional.ToNullable(etag));
+            return new SecurityInsightsWatchlistItemData(id, name, type, systemData.Value, watchlistItemType.Value, watchlistItemId.Value, Optional.ToNullable(tenantId), Optional.ToNullable(isDeleted), Optional.ToNullable(created), Optional.ToNullable(updated), createdBy.Value, updatedBy.Value, Optional.ToDictionary(itemsKeyValue), Optional.ToDictionary(entityMapping), Optional.ToNullable(etag));
         }
     }
 }

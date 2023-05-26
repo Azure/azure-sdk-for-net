@@ -5,8 +5,14 @@
 
 #nullable disable
 
+using System;
+using System.Threading;
+using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
 using Azure.ResourceManager;
+using Azure.ResourceManager.Resources;
+using Azure.ResourceManager.SecurityInsights.Models;
 
 namespace Azure.ResourceManager.SecurityInsights
 {
@@ -104,39 +110,20 @@ namespace Azure.ResourceManager.SecurityInsights
         }
         #endregion
 
-        #region SecurityInsightsBookmarkResource
+        #region SecurityInsightsEntityResource
         /// <summary>
-        /// Gets an object representing a <see cref="SecurityInsightsBookmarkResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="SecurityInsightsBookmarkResource.CreateResourceIdentifier" /> to create a <see cref="SecurityInsightsBookmarkResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="SecurityInsightsEntityResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="SecurityInsightsEntityResource.CreateResourceIdentifier" /> to create a <see cref="SecurityInsightsEntityResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="SecurityInsightsBookmarkResource" /> object. </returns>
-        public static SecurityInsightsBookmarkResource GetSecurityInsightsBookmarkResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="SecurityInsightsEntityResource" /> object. </returns>
+        public static SecurityInsightsEntityResource GetSecurityInsightsEntityResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                SecurityInsightsBookmarkResource.ValidateResourceId(id);
-                return new SecurityInsightsBookmarkResource(client, id);
-            }
-            );
-        }
-        #endregion
-
-        #region SecurityInsightsDataConnectorResource
-        /// <summary>
-        /// Gets an object representing a <see cref="SecurityInsightsDataConnectorResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="SecurityInsightsDataConnectorResource.CreateResourceIdentifier" /> to create a <see cref="SecurityInsightsDataConnectorResource" /> <see cref="ResourceIdentifier" /> from its components.
-        /// </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="SecurityInsightsDataConnectorResource" /> object. </returns>
-        public static SecurityInsightsDataConnectorResource GetSecurityInsightsDataConnectorResource(this ArmClient client, ResourceIdentifier id)
-        {
-            return client.GetResourceClient(() =>
-            {
-                SecurityInsightsDataConnectorResource.ValidateResourceId(id);
-                return new SecurityInsightsDataConnectorResource(client, id);
+                SecurityInsightsEntityResource.ValidateResourceId(id);
+                return new SecurityInsightsEntityResource(client, id);
             }
             );
         }
@@ -161,6 +148,139 @@ namespace Azure.ResourceManager.SecurityInsights
         }
         #endregion
 
+        #region SecurityInsightsBookmarkResource
+        /// <summary>
+        /// Gets an object representing a <see cref="SecurityInsightsBookmarkResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="SecurityInsightsBookmarkResource.CreateResourceIdentifier" /> to create a <see cref="SecurityInsightsBookmarkResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="SecurityInsightsBookmarkResource" /> object. </returns>
+        public static SecurityInsightsBookmarkResource GetSecurityInsightsBookmarkResource(this ArmClient client, ResourceIdentifier id)
+        {
+            return client.GetResourceClient(() =>
+            {
+                SecurityInsightsBookmarkResource.ValidateResourceId(id);
+                return new SecurityInsightsBookmarkResource(client, id);
+            }
+            );
+        }
+        #endregion
+
+        #region BookmarkRelationResource
+        /// <summary>
+        /// Gets an object representing a <see cref="BookmarkRelationResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="BookmarkRelationResource.CreateResourceIdentifier" /> to create a <see cref="BookmarkRelationResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="BookmarkRelationResource" /> object. </returns>
+        public static BookmarkRelationResource GetBookmarkRelationResource(this ArmClient client, ResourceIdentifier id)
+        {
+            return client.GetResourceClient(() =>
+            {
+                BookmarkRelationResource.ValidateResourceId(id);
+                return new BookmarkRelationResource(client, id);
+            }
+            );
+        }
+        #endregion
+
+        #region EntityRelationResource
+        /// <summary>
+        /// Gets an object representing an <see cref="EntityRelationResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="EntityRelationResource.CreateResourceIdentifier" /> to create an <see cref="EntityRelationResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="EntityRelationResource" /> object. </returns>
+        public static EntityRelationResource GetEntityRelationResource(this ArmClient client, ResourceIdentifier id)
+        {
+            return client.GetResourceClient(() =>
+            {
+                EntityRelationResource.ValidateResourceId(id);
+                return new EntityRelationResource(client, id);
+            }
+            );
+        }
+        #endregion
+
+        #region IncidentRelationResource
+        /// <summary>
+        /// Gets an object representing an <see cref="IncidentRelationResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="IncidentRelationResource.CreateResourceIdentifier" /> to create an <see cref="IncidentRelationResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="IncidentRelationResource" /> object. </returns>
+        public static IncidentRelationResource GetIncidentRelationResource(this ArmClient client, ResourceIdentifier id)
+        {
+            return client.GetResourceClient(() =>
+            {
+                IncidentRelationResource.ValidateResourceId(id);
+                return new IncidentRelationResource(client, id);
+            }
+            );
+        }
+        #endregion
+
+        #region EntityQueryResource
+        /// <summary>
+        /// Gets an object representing an <see cref="EntityQueryResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="EntityQueryResource.CreateResourceIdentifier" /> to create an <see cref="EntityQueryResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="EntityQueryResource" /> object. </returns>
+        public static EntityQueryResource GetEntityQueryResource(this ArmClient client, ResourceIdentifier id)
+        {
+            return client.GetResourceClient(() =>
+            {
+                EntityQueryResource.ValidateResourceId(id);
+                return new EntityQueryResource(client, id);
+            }
+            );
+        }
+        #endregion
+
+        #region EntityQueryTemplateResource
+        /// <summary>
+        /// Gets an object representing an <see cref="EntityQueryTemplateResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="EntityQueryTemplateResource.CreateResourceIdentifier" /> to create an <see cref="EntityQueryTemplateResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="EntityQueryTemplateResource" /> object. </returns>
+        public static EntityQueryTemplateResource GetEntityQueryTemplateResource(this ArmClient client, ResourceIdentifier id)
+        {
+            return client.GetResourceClient(() =>
+            {
+                EntityQueryTemplateResource.ValidateResourceId(id);
+                return new EntityQueryTemplateResource(client, id);
+            }
+            );
+        }
+        #endregion
+
+        #region FileImportResource
+        /// <summary>
+        /// Gets an object representing a <see cref="FileImportResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="FileImportResource.CreateResourceIdentifier" /> to create a <see cref="FileImportResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="FileImportResource" /> object. </returns>
+        public static FileImportResource GetFileImportResource(this ArmClient client, ResourceIdentifier id)
+        {
+            return client.GetResourceClient(() =>
+            {
+                FileImportResource.ValidateResourceId(id);
+                return new FileImportResource(client, id);
+            }
+            );
+        }
+        #endregion
+
         #region SecurityInsightsIncidentCommentResource
         /// <summary>
         /// Gets an object representing a <see cref="SecurityInsightsIncidentCommentResource" /> along with the instance operations that can be performed on it but with no data.
@@ -180,20 +300,58 @@ namespace Azure.ResourceManager.SecurityInsights
         }
         #endregion
 
-        #region SecurityInsightsIncidentRelationResource
+        #region IncidentTaskResource
         /// <summary>
-        /// Gets an object representing a <see cref="SecurityInsightsIncidentRelationResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="SecurityInsightsIncidentRelationResource.CreateResourceIdentifier" /> to create a <see cref="SecurityInsightsIncidentRelationResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing an <see cref="IncidentTaskResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="IncidentTaskResource.CreateResourceIdentifier" /> to create an <see cref="IncidentTaskResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="SecurityInsightsIncidentRelationResource" /> object. </returns>
-        public static SecurityInsightsIncidentRelationResource GetSecurityInsightsIncidentRelationResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="IncidentTaskResource" /> object. </returns>
+        public static IncidentTaskResource GetIncidentTaskResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                SecurityInsightsIncidentRelationResource.ValidateResourceId(id);
-                return new SecurityInsightsIncidentRelationResource(client, id);
+                IncidentTaskResource.ValidateResourceId(id);
+                return new IncidentTaskResource(client, id);
+            }
+            );
+        }
+        #endregion
+
+        #region MetadataModelResource
+        /// <summary>
+        /// Gets an object representing a <see cref="MetadataModelResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="MetadataModelResource.CreateResourceIdentifier" /> to create a <see cref="MetadataModelResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="MetadataModelResource" /> object. </returns>
+        public static MetadataModelResource GetMetadataModelResource(this ArmClient client, ResourceIdentifier id)
+        {
+            return client.GetResourceClient(() =>
+            {
+                MetadataModelResource.ValidateResourceId(id);
+                return new MetadataModelResource(client, id);
+            }
+            );
+        }
+        #endregion
+
+        #region OfficeConsentResource
+        /// <summary>
+        /// Gets an object representing an <see cref="OfficeConsentResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="OfficeConsentResource.CreateResourceIdentifier" /> to create an <see cref="OfficeConsentResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="OfficeConsentResource" /> object. </returns>
+        public static OfficeConsentResource GetOfficeConsentResource(this ArmClient client, ResourceIdentifier id)
+        {
+            return client.GetResourceClient(() =>
+            {
+                OfficeConsentResource.ValidateResourceId(id);
+                return new OfficeConsentResource(client, id);
             }
             );
         }
@@ -237,6 +395,44 @@ namespace Azure.ResourceManager.SecurityInsights
         }
         #endregion
 
+        #region SettingResource
+        /// <summary>
+        /// Gets an object representing a <see cref="SettingResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="SettingResource.CreateResourceIdentifier" /> to create a <see cref="SettingResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="SettingResource" /> object. </returns>
+        public static SettingResource GetSettingResource(this ArmClient client, ResourceIdentifier id)
+        {
+            return client.GetResourceClient(() =>
+            {
+                SettingResource.ValidateResourceId(id);
+                return new SettingResource(client, id);
+            }
+            );
+        }
+        #endregion
+
+        #region SourceControlResource
+        /// <summary>
+        /// Gets an object representing a <see cref="SourceControlResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="SourceControlResource.CreateResourceIdentifier" /> to create a <see cref="SourceControlResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="SourceControlResource" /> object. </returns>
+        public static SourceControlResource GetSourceControlResource(this ArmClient client, ResourceIdentifier id)
+        {
+            return client.GetResourceClient(() =>
+            {
+                SourceControlResource.ValidateResourceId(id);
+                return new SourceControlResource(client, id);
+            }
+            );
+        }
+        #endregion
+
         #region SecurityInsightsThreatIntelligenceIndicatorResource
         /// <summary>
         /// Gets an object representing a <see cref="SecurityInsightsThreatIntelligenceIndicatorResource" /> along with the instance operations that can be performed on it but with no data.
@@ -251,6 +447,25 @@ namespace Azure.ResourceManager.SecurityInsights
             {
                 SecurityInsightsThreatIntelligenceIndicatorResource.ValidateResourceId(id);
                 return new SecurityInsightsThreatIntelligenceIndicatorResource(client, id);
+            }
+            );
+        }
+        #endregion
+
+        #region TriggeredAnalyticsRuleRunResource
+        /// <summary>
+        /// Gets an object representing a <see cref="TriggeredAnalyticsRuleRunResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="TriggeredAnalyticsRuleRunResource.CreateResourceIdentifier" /> to create a <see cref="TriggeredAnalyticsRuleRunResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="TriggeredAnalyticsRuleRunResource" /> object. </returns>
+        public static TriggeredAnalyticsRuleRunResource GetTriggeredAnalyticsRuleRunResource(this ArmClient client, ResourceIdentifier id)
+        {
+            return client.GetResourceClient(() =>
+            {
+                TriggeredAnalyticsRuleRunResource.ValidateResourceId(id);
+                return new TriggeredAnalyticsRuleRunResource(client, id);
             }
             );
         }
@@ -294,6 +509,25 @@ namespace Azure.ResourceManager.SecurityInsights
         }
         #endregion
 
+        #region SecurityInsightsDataConnectorResource
+        /// <summary>
+        /// Gets an object representing a <see cref="SecurityInsightsDataConnectorResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="SecurityInsightsDataConnectorResource.CreateResourceIdentifier" /> to create a <see cref="SecurityInsightsDataConnectorResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="SecurityInsightsDataConnectorResource" /> object. </returns>
+        public static SecurityInsightsDataConnectorResource GetSecurityInsightsDataConnectorResource(this ArmClient client, ResourceIdentifier id)
+        {
+            return client.GetResourceClient(() =>
+            {
+                SecurityInsightsDataConnectorResource.ValidateResourceId(id);
+                return new SecurityInsightsDataConnectorResource(client, id);
+            }
+            );
+        }
+        #endregion
+
         #region OperationalInsightsWorkspaceSecurityInsightsResource
         /// <summary>
         /// Gets an object representing an <see cref="OperationalInsightsWorkspaceSecurityInsightsResource" /> along with the instance operations that can be performed on it but with no data.
@@ -312,5 +546,101 @@ namespace Azure.ResourceManager.SecurityInsights
             );
         }
         #endregion
+
+        /// <summary>
+        /// Get geodata for a single IP address
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.SecurityInsights/enrichment/ip/geodata</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>IPGeodata_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
+        /// <param name="ipAddress"> IP address (v4 or v6) to be enriched. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="ipAddress"/> is null. </exception>
+        public static async Task<Response<EnrichmentIPGeodata>> GetIPGeodatumAsync(this ResourceGroupResource resourceGroupResource, string ipAddress, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(ipAddress, nameof(ipAddress));
+
+            return await GetResourceGroupResourceExtensionClient(resourceGroupResource).GetIPGeodatumAsync(ipAddress, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Get geodata for a single IP address
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.SecurityInsights/enrichment/ip/geodata</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>IPGeodata_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
+        /// <param name="ipAddress"> IP address (v4 or v6) to be enriched. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="ipAddress"/> is null. </exception>
+        public static Response<EnrichmentIPGeodata> GetIPGeodatum(this ResourceGroupResource resourceGroupResource, string ipAddress, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(ipAddress, nameof(ipAddress));
+
+            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetIPGeodatum(ipAddress, cancellationToken);
+        }
+
+        /// <summary>
+        /// Get whois information for a single domain name
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.SecurityInsights/enrichment/domain/whois</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>DomainWhois_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
+        /// <param name="domain"> Domain name to be enriched. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="domain"/> is null. </exception>
+        public static async Task<Response<EnrichmentDomainWhois>> GetDomainWhoisInformationAsync(this ResourceGroupResource resourceGroupResource, string domain, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(domain, nameof(domain));
+
+            return await GetResourceGroupResourceExtensionClient(resourceGroupResource).GetDomainWhoisInformationAsync(domain, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Get whois information for a single domain name
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.SecurityInsights/enrichment/domain/whois</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>DomainWhois_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
+        /// <param name="domain"> Domain name to be enriched. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="domain"/> is null. </exception>
+        public static Response<EnrichmentDomainWhois> GetDomainWhoisInformation(this ResourceGroupResource resourceGroupResource, string domain, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(domain, nameof(domain));
+
+            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetDomainWhoisInformation(domain, cancellationToken);
+        }
     }
 }

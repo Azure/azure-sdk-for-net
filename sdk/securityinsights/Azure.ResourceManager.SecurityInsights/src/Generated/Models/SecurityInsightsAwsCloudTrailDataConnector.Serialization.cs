@@ -31,11 +31,14 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 writer.WritePropertyName("awsRoleArn"u8);
                 writer.WriteStringValue(AwsRoleArn);
             }
-            if (Optional.IsDefined(DataTypes))
+            writer.WritePropertyName("dataTypes"u8);
+            writer.WriteStartObject();
+            if (Optional.IsDefined(Logs))
             {
-                writer.WritePropertyName("dataTypes"u8);
-                writer.WriteObjectValue(DataTypes);
+                writer.WritePropertyName("logs"u8);
+                writer.WriteObjectValue(Logs);
             }
+            writer.WriteEndObject();
             writer.WriteEndObject();
             writer.WriteEndObject();
         }
@@ -53,7 +56,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             ResourceType type = default;
             Optional<SystemData> systemData = default;
             Optional<string> awsRoleArn = default;
-            Optional<AwsCloudTrailDataConnectorDataTypes> dataTypes = default;
+            Optional<AwsCloudTrailDataConnectorDataTypesLogs> logs = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("kind"u8))
@@ -112,16 +115,28 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
+                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            dataTypes = AwsCloudTrailDataConnectorDataTypes.DeserializeAwsCloudTrailDataConnectorDataTypes(property0.Value);
+                            foreach (var property1 in property0.Value.EnumerateObject())
+                            {
+                                if (property1.NameEquals("logs"u8))
+                                {
+                                    if (property1.Value.ValueKind == JsonValueKind.Null)
+                                    {
+                                        continue;
+                                    }
+                                    logs = AwsCloudTrailDataConnectorDataTypesLogs.DeserializeAwsCloudTrailDataConnectorDataTypesLogs(property1.Value);
+                                    continue;
+                                }
+                            }
                             continue;
                         }
                     }
                     continue;
                 }
             }
-            return new SecurityInsightsAwsCloudTrailDataConnector(id, name, type, systemData.Value, kind, Optional.ToNullable(etag), awsRoleArn.Value, dataTypes.Value);
+            return new SecurityInsightsAwsCloudTrailDataConnector(id, name, type, systemData.Value, kind, Optional.ToNullable(etag), awsRoleArn.Value, logs.Value);
         }
     }
 }

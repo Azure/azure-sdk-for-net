@@ -32,14 +32,14 @@ namespace Azure.ResourceManager.SecurityInsights
         /// <param name="systemData"> The systemData. </param>
         /// <param name="kind"> The kind of the entity. </param>
         /// <param name="etag"> Etag of the azure resource. </param>
-        internal SecurityInsightsThreatIntelligenceIndicatorBaseData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ThreatIntelligenceResourceInnerKind kind, ETag? etag) : base(id, name, resourceType, systemData)
+        internal SecurityInsightsThreatIntelligenceIndicatorBaseData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ThreatIntelligenceResourceKindEnum kind, ETag? etag) : base(id, name, resourceType, systemData)
         {
             Kind = kind;
             ETag = etag;
         }
 
         /// <summary> The kind of the entity. </summary>
-        internal ThreatIntelligenceResourceInnerKind Kind { get; set; }
+        internal ThreatIntelligenceResourceKindEnum Kind { get; set; }
         /// <summary> Etag of the azure resource. </summary>
         public ETag? ETag { get; set; }
     }

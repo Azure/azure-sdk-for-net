@@ -10,11 +10,12 @@ using System.Collections.Generic;
 using System.Net;
 using Azure.Core;
 using Azure.ResourceManager.Models;
+using Azure.ResourceManager.SecurityInsights;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
     /// <summary> Represents a mail message entity. </summary>
-    public partial class SecurityInsightsMailMessageEntity : SecurityInsightsEntity
+    public partial class SecurityInsightsMailMessageEntity : SecurityInsightsEntityData
     {
         /// <summary> Initializes a new instance of SecurityInsightsMailMessageEntity. </summary>
         public SecurityInsightsMailMessageEntity()

@@ -138,6 +138,16 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 writer.WritePropertyName("alertDetailsOverride"u8);
                 writer.WriteObjectValue(AlertDetailsOverride);
             }
+            if (Optional.IsCollectionDefined(SentinelEntitiesMappings))
+            {
+                writer.WritePropertyName("sentinelEntitiesMappings"u8);
+                writer.WriteStartArray();
+                foreach (var item in SentinelEntitiesMappings)
+                {
+                    writer.WriteObjectValue(item);
+                }
+                writer.WriteEndArray();
+            }
             writer.WriteEndObject();
             writer.WriteEndObject();
         }
@@ -173,6 +183,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             Optional<IDictionary<string, string>> customDetails = default;
             Optional<IList<SecurityInsightsAlertRuleEntityMapping>> entityMappings = default;
             Optional<SecurityInsightsAlertDetailsOverride> alertDetailsOverride = default;
+            Optional<IList<SentinelEntityMapping>> sentinelEntitiesMappings = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("kind"u8))
@@ -402,11 +413,25 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                             alertDetailsOverride = SecurityInsightsAlertDetailsOverride.DeserializeSecurityInsightsAlertDetailsOverride(property0.Value);
                             continue;
                         }
+                        if (property0.NameEquals("sentinelEntitiesMappings"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            List<SentinelEntityMapping> array = new List<SentinelEntityMapping>();
+                            foreach (var item in property0.Value.EnumerateArray())
+                            {
+                                array.Add(SentinelEntityMapping.DeserializeSentinelEntityMapping(item));
+                            }
+                            sentinelEntitiesMappings = array;
+                            continue;
+                        }
                     }
                     continue;
                 }
             }
-            return new ScheduledAlertRuleTemplate(id, name, type, systemData.Value, kind, Optional.ToNullable(alertRulesCreatedByTemplateCount), Optional.ToNullable(createdDateUTC), Optional.ToNullable(lastUpdatedDateUTC), description.Value, displayName.Value, Optional.ToList(requiredDataConnectors), Optional.ToNullable(status), query.Value, Optional.ToNullable(queryFrequency), Optional.ToNullable(queryPeriod), Optional.ToNullable(severity), Optional.ToNullable(triggerOperator), Optional.ToNullable(triggerThreshold), Optional.ToList(tactics), Optional.ToList(techniques), version.Value, eventGroupingSettings.Value, Optional.ToDictionary(customDetails), Optional.ToList(entityMappings), alertDetailsOverride.Value);
+            return new ScheduledAlertRuleTemplate(id, name, type, systemData.Value, kind, Optional.ToNullable(alertRulesCreatedByTemplateCount), Optional.ToNullable(createdDateUTC), Optional.ToNullable(lastUpdatedDateUTC), description.Value, displayName.Value, Optional.ToList(requiredDataConnectors), Optional.ToNullable(status), query.Value, Optional.ToNullable(queryFrequency), Optional.ToNullable(queryPeriod), Optional.ToNullable(severity), Optional.ToNullable(triggerOperator), Optional.ToNullable(triggerThreshold), Optional.ToList(tactics), Optional.ToList(techniques), version.Value, eventGroupingSettings.Value, Optional.ToDictionary(customDetails), Optional.ToList(entityMappings), alertDetailsOverride.Value, Optional.ToList(sentinelEntitiesMappings));
         }
     }
 }

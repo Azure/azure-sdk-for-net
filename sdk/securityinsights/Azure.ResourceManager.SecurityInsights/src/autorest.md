@@ -10,8 +10,8 @@ csharp: true
 library-name: SecurityInsights
 namespace: Azure.ResourceManager.SecurityInsights
 # default tag is a preview version
-require: https://github.com/Azure/azure-rest-api-specs/blob/e0aca4c32155a2568fdad5cb91028206930f0053/specification/securityinsights/resource-manager/readme.md
-tag: package-2022-11
+require: https://github.com/Azure/azure-rest-api-specs/blob/e5b36233c9e04a1ebf2661496fe880661e4f76c5/specification/securityinsights/resource-manager/readme.md
+tag: package-preview-2023-03
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
 skip-csproj: true

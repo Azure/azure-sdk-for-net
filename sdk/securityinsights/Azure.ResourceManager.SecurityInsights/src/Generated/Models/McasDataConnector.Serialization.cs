@@ -32,11 +32,19 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 writer.WritePropertyName("tenantId"u8);
                 writer.WriteStringValue(TenantId.Value);
             }
-            if (Optional.IsDefined(DataTypes))
+            writer.WritePropertyName("dataTypes"u8);
+            writer.WriteStartObject();
+            if (Optional.IsDefined(Alerts))
             {
-                writer.WritePropertyName("dataTypes"u8);
-                writer.WriteObjectValue(DataTypes);
+                writer.WritePropertyName("alerts"u8);
+                writer.WriteObjectValue(Alerts);
             }
+            if (Optional.IsDefined(DiscoveryLogs))
+            {
+                writer.WritePropertyName("discoveryLogs"u8);
+                writer.WriteObjectValue(DiscoveryLogs);
+            }
+            writer.WriteEndObject();
             writer.WriteEndObject();
             writer.WriteEndObject();
         }
@@ -54,7 +62,8 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             ResourceType type = default;
             Optional<SystemData> systemData = default;
             Optional<Guid> tenantId = default;
-            Optional<McasDataConnectorDataTypes> dataTypes = default;
+            Optional<DataConnectorDataTypeCommon> alerts = default;
+            Optional<DataConnectorDataTypeCommon> discoveryLogs = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("kind"u8))
@@ -117,16 +126,37 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
+                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            dataTypes = McasDataConnectorDataTypes.DeserializeMcasDataConnectorDataTypes(property0.Value);
+                            foreach (var property1 in property0.Value.EnumerateObject())
+                            {
+                                if (property1.NameEquals("alerts"u8))
+                                {
+                                    if (property1.Value.ValueKind == JsonValueKind.Null)
+                                    {
+                                        continue;
+                                    }
+                                    alerts = DataConnectorDataTypeCommon.DeserializeDataConnectorDataTypeCommon(property1.Value);
+                                    continue;
+                                }
+                                if (property1.NameEquals("discoveryLogs"u8))
+                                {
+                                    if (property1.Value.ValueKind == JsonValueKind.Null)
+                                    {
+                                        continue;
+                                    }
+                                    discoveryLogs = DataConnectorDataTypeCommon.DeserializeDataConnectorDataTypeCommon(property1.Value);
+                                    continue;
+                                }
+                            }
                             continue;
                         }
                     }
                     continue;
                 }
             }
-            return new McasDataConnector(id, name, type, systemData.Value, kind, Optional.ToNullable(etag), Optional.ToNullable(tenantId), dataTypes.Value);
+            return new McasDataConnector(id, name, type, systemData.Value, kind, Optional.ToNullable(etag), Optional.ToNullable(tenantId), alerts.Value, discoveryLogs.Value);
         }
     }
 }

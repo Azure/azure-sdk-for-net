@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="kind"> The alert rule kind. </param>
+        /// <param name="kind"> The kind of the alert rule. </param>
         /// <param name="etag"> Etag of the azure resource. </param>
         /// <param name="displayNamesFilter"> the alerts&apos; displayNames on which the cases will be generated. </param>
         /// <param name="displayNamesExcludeFilter"> the alerts&apos; displayNames on which the cases will not be generated. </param>

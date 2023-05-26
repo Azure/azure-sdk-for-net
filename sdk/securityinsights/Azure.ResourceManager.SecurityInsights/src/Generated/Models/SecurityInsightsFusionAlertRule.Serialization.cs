@@ -38,6 +38,26 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 writer.WritePropertyName("enabled"u8);
                 writer.WriteBooleanValue(IsEnabled.Value);
             }
+            if (Optional.IsCollectionDefined(SourceSettings))
+            {
+                writer.WritePropertyName("sourceSettings"u8);
+                writer.WriteStartArray();
+                foreach (var item in SourceSettings)
+                {
+                    writer.WriteObjectValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsCollectionDefined(ScenarioExclusionPatterns))
+            {
+                writer.WritePropertyName("scenarioExclusionPatterns"u8);
+                writer.WriteStartArray();
+                foreach (var item in ScenarioExclusionPatterns)
+                {
+                    writer.WriteObjectValue(item);
+                }
+                writer.WriteEndArray();
+            }
             writer.WriteEndObject();
             writer.WriteEndObject();
         }
@@ -58,6 +78,8 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             Optional<string> description = default;
             Optional<string> displayName = default;
             Optional<bool> enabled = default;
+            Optional<IList<FusionSourceSettings>> sourceSettings = default;
+            Optional<IList<FusionScenarioExclusionPattern>> scenarioExclusionPatterns = default;
             Optional<DateTimeOffset> lastModifiedUtc = default;
             Optional<SecurityInsightsAlertSeverity> severity = default;
             Optional<IReadOnlyList<SecurityInsightsAttackTactic>> tactics = default;
@@ -135,6 +157,34 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                             enabled = property0.Value.GetBoolean();
                             continue;
                         }
+                        if (property0.NameEquals("sourceSettings"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            List<FusionSourceSettings> array = new List<FusionSourceSettings>();
+                            foreach (var item in property0.Value.EnumerateArray())
+                            {
+                                array.Add(FusionSourceSettings.DeserializeFusionSourceSettings(item));
+                            }
+                            sourceSettings = array;
+                            continue;
+                        }
+                        if (property0.NameEquals("scenarioExclusionPatterns"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            List<FusionScenarioExclusionPattern> array = new List<FusionScenarioExclusionPattern>();
+                            foreach (var item in property0.Value.EnumerateArray())
+                            {
+                                array.Add(FusionScenarioExclusionPattern.DeserializeFusionScenarioExclusionPattern(item));
+                            }
+                            scenarioExclusionPatterns = array;
+                            continue;
+                        }
                         if (property0.NameEquals("lastModifiedUtc"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
@@ -185,7 +235,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                     continue;
                 }
             }
-            return new SecurityInsightsFusionAlertRule(id, name, type, systemData.Value, kind, Optional.ToNullable(etag), alertRuleTemplateName.Value, description.Value, displayName.Value, Optional.ToNullable(enabled), Optional.ToNullable(lastModifiedUtc), Optional.ToNullable(severity), Optional.ToList(tactics), Optional.ToList(techniques));
+            return new SecurityInsightsFusionAlertRule(id, name, type, systemData.Value, kind, Optional.ToNullable(etag), alertRuleTemplateName.Value, description.Value, displayName.Value, Optional.ToNullable(enabled), Optional.ToList(sourceSettings), Optional.ToList(scenarioExclusionPatterns), Optional.ToNullable(lastModifiedUtc), Optional.ToNullable(severity), Optional.ToList(tactics), Optional.ToList(techniques));
         }
     }
 }

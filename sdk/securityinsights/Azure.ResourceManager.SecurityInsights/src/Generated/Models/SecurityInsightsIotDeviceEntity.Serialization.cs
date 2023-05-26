@@ -22,6 +22,11 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             writer.WriteStringValue(Kind.ToString());
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
+            if (Optional.IsDefined(Importance))
+            {
+                writer.WritePropertyName("importance"u8);
+                writer.WriteStringValue(Importance.Value.ToString());
+            }
             writer.WriteEndObject();
             writer.WriteEndObject();
         }
@@ -56,6 +61,17 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             Optional<string> ipAddressEntityId = default;
             Optional<IReadOnlyList<SecurityInsightsThreatIntelligence>> threatIntelligence = default;
             Optional<IReadOnlyList<string>> protocols = default;
+            Optional<IReadOnlyList<string>> owners = default;
+            Optional<IReadOnlyList<string>> nicEntityIds = default;
+            Optional<string> site = default;
+            Optional<string> zone = default;
+            Optional<string> sensor = default;
+            Optional<string> deviceSubType = default;
+            Optional<DeviceImportance> importance = default;
+            Optional<string> purdueLayer = default;
+            Optional<bool> isAuthorized = default;
+            Optional<bool> isProgramming = default;
+            Optional<bool> isScanner = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("kind"u8))
@@ -229,11 +245,100 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                             protocols = array;
                             continue;
                         }
+                        if (property0.NameEquals("owners"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            List<string> array = new List<string>();
+                            foreach (var item in property0.Value.EnumerateArray())
+                            {
+                                array.Add(item.GetString());
+                            }
+                            owners = array;
+                            continue;
+                        }
+                        if (property0.NameEquals("nicEntityIds"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            List<string> array = new List<string>();
+                            foreach (var item in property0.Value.EnumerateArray())
+                            {
+                                array.Add(item.GetString());
+                            }
+                            nicEntityIds = array;
+                            continue;
+                        }
+                        if (property0.NameEquals("site"u8))
+                        {
+                            site = property0.Value.GetString();
+                            continue;
+                        }
+                        if (property0.NameEquals("zone"u8))
+                        {
+                            zone = property0.Value.GetString();
+                            continue;
+                        }
+                        if (property0.NameEquals("sensor"u8))
+                        {
+                            sensor = property0.Value.GetString();
+                            continue;
+                        }
+                        if (property0.NameEquals("deviceSubType"u8))
+                        {
+                            deviceSubType = property0.Value.GetString();
+                            continue;
+                        }
+                        if (property0.NameEquals("importance"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            importance = new DeviceImportance(property0.Value.GetString());
+                            continue;
+                        }
+                        if (property0.NameEquals("purdueLayer"u8))
+                        {
+                            purdueLayer = property0.Value.GetString();
+                            continue;
+                        }
+                        if (property0.NameEquals("isAuthorized"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            isAuthorized = property0.Value.GetBoolean();
+                            continue;
+                        }
+                        if (property0.NameEquals("isProgramming"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            isProgramming = property0.Value.GetBoolean();
+                            continue;
+                        }
+                        if (property0.NameEquals("isScanner"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            isScanner = property0.Value.GetBoolean();
+                            continue;
+                        }
                     }
                     continue;
                 }
             }
-            return new SecurityInsightsIotDeviceEntity(id, name, type, systemData.Value, kind, Optional.ToDictionary(additionalData), friendlyName.Value, deviceId.Value, deviceName.Value, source.Value, Optional.ToNullable(iotSecurityAgentId), deviceType.Value, vendor.Value, edgeId.Value, macAddress.Value, model.Value, serialNumber.Value, firmwareVersion.Value, operatingSystem.Value, iotHubEntityId.Value, hostEntityId.Value, ipAddressEntityId.Value, Optional.ToList(threatIntelligence), Optional.ToList(protocols));
+            return new SecurityInsightsIotDeviceEntity(id, name, type, systemData.Value, kind, Optional.ToDictionary(additionalData), friendlyName.Value, deviceId.Value, deviceName.Value, source.Value, Optional.ToNullable(iotSecurityAgentId), deviceType.Value, vendor.Value, edgeId.Value, macAddress.Value, model.Value, serialNumber.Value, firmwareVersion.Value, operatingSystem.Value, iotHubEntityId.Value, hostEntityId.Value, ipAddressEntityId.Value, Optional.ToList(threatIntelligence), Optional.ToList(protocols), Optional.ToList(owners), Optional.ToList(nicEntityIds), site.Value, zone.Value, sensor.Value, deviceSubType.Value, Optional.ToNullable(importance), purdueLayer.Value, Optional.ToNullable(isAuthorized), Optional.ToNullable(isProgramming), Optional.ToNullable(isScanner));
         }
     }
 }

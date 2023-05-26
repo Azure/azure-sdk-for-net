@@ -238,7 +238,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             {
                 return null;
             }
-            ThreatIntelligenceResourceInnerKind kind = default;
+            ThreatIntelligenceResourceKindEnum kind = default;
             Optional<ETag> etag = default;
             ResourceIdentifier id = default;
             string name = default;
@@ -278,7 +278,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             {
                 if (property.NameEquals("kind"u8))
                 {
-                    kind = new ThreatIntelligenceResourceInnerKind(property.Value.GetString());
+                    kind = new ThreatIntelligenceResourceKindEnum(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("etag"u8))

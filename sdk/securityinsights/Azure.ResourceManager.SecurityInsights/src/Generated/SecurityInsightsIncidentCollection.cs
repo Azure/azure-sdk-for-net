@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.SecurityInsights
         }
 
         /// <summary>
-        /// Creates or updates an incident.
+        /// Creates or updates the incident.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.SecurityInsights
         }
 
         /// <summary>
-        /// Creates or updates an incident.
+        /// Creates or updates the incident.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.SecurityInsights
         }
 
         /// <summary>
-        /// Gets a given incident.
+        /// Gets an incident.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -172,7 +172,7 @@ namespace Azure.ResourceManager.SecurityInsights
         }
 
         /// <summary>
-        /// Gets a given incident.
+        /// Gets an incident.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>

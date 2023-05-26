@@ -8,6 +8,7 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.SecurityInsights;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
@@ -19,7 +20,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<SecurityInsightsEntity>> entities = default;
+            Optional<IReadOnlyList<SecurityInsightsEntityData>> entities = default;
             Optional<IReadOnlyList<SecurityInsightsIncidentEntitiesMetadata>> metaData = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -29,10 +30,10 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                     {
                         continue;
                     }
-                    List<SecurityInsightsEntity> array = new List<SecurityInsightsEntity>();
+                    List<SecurityInsightsEntityData> array = new List<SecurityInsightsEntityData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SecurityInsightsEntity.DeserializeSecurityInsightsEntity(item));
+                        array.Add(SecurityInsightsEntityData.DeserializeSecurityInsightsEntityData(item));
                     }
                     entities = array;
                     continue;

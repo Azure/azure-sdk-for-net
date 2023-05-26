@@ -28,26 +28,24 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <param name="systemData"> The systemData. </param>
         /// <param name="kind"> The data connector kind. </param>
         /// <param name="etag"> Etag of the azure resource. </param>
-        /// <param name="dataTypes"> The available data types for the connector. </param>
+        /// <param name="alerts"> Alerts data type connection. </param>
         /// <param name="subscriptionId"> The subscription id to connect to, and get the data from. </param>
-        internal SecurityInsightsAscDataConnector(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DataConnectorKind kind, ETag? etag, SecurityInsightsAlertsDataTypeOfDataConnector dataTypes, string subscriptionId) : base(id, name, resourceType, systemData, kind, etag)
+        internal SecurityInsightsAscDataConnector(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DataConnectorKind kind, ETag? etag, DataConnectorDataTypeCommon alerts, string subscriptionId) : base(id, name, resourceType, systemData, kind, etag)
         {
-            DataTypes = dataTypes;
+            Alerts = alerts;
             SubscriptionId = subscriptionId;
             Kind = kind;
         }
 
-        /// <summary> The available data types for the connector. </summary>
-        internal SecurityInsightsAlertsDataTypeOfDataConnector DataTypes { get; set; }
+        /// <summary> Alerts data type connection. </summary>
+        internal DataConnectorDataTypeCommon Alerts { get; set; }
         /// <summary> Describe whether this data type connection is enabled or not. </summary>
         public SecurityInsightsDataTypeConnectionState? AlertsState
         {
-            get => DataTypes is null ? default : DataTypes.AlertsState;
+            get => Alerts is null ? default(SecurityInsightsDataTypeConnectionState?) : Alerts.State;
             set
             {
-                if (DataTypes is null)
-                    DataTypes = new SecurityInsightsAlertsDataTypeOfDataConnector();
-                DataTypes.AlertsState = value;
+                Alerts = value.HasValue ? new DataConnectorDataTypeCommon(value.Value) : null;
             }
         }
 

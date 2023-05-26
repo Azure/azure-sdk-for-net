@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -18,6 +19,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         {
             AlertProductNames = new ChangeTrackingList<string>();
             Tactics = new ChangeTrackingList<SecurityInsightsAttackTactic>();
+            Techniques = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of SecurityInsightsIncidentAdditionalInfo. </summary>
@@ -26,13 +28,17 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <param name="commentsCount"> The number of comments in the incident. </param>
         /// <param name="alertProductNames"> List of product names of alerts in the incident. </param>
         /// <param name="tactics"> The tactics associated with incident. </param>
-        internal SecurityInsightsIncidentAdditionalInfo(int? alertsCount, int? bookmarksCount, int? commentsCount, IReadOnlyList<string> alertProductNames, IReadOnlyList<SecurityInsightsAttackTactic> tactics)
+        /// <param name="techniques"> The techniques associated with incident&apos;s tactics. </param>
+        /// <param name="providerIncidentUri"> The provider incident url to the incident in Microsoft 365 Defender portal. </param>
+        internal SecurityInsightsIncidentAdditionalInfo(int? alertsCount, int? bookmarksCount, int? commentsCount, IReadOnlyList<string> alertProductNames, IReadOnlyList<SecurityInsightsAttackTactic> tactics, IReadOnlyList<string> techniques, Uri providerIncidentUri)
         {
             AlertsCount = alertsCount;
             BookmarksCount = bookmarksCount;
             CommentsCount = commentsCount;
             AlertProductNames = alertProductNames;
             Tactics = tactics;
+            Techniques = techniques;
+            ProviderIncidentUri = providerIncidentUri;
         }
 
         /// <summary> The number of alerts in the incident. </summary>
@@ -45,5 +51,9 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         public IReadOnlyList<string> AlertProductNames { get; }
         /// <summary> The tactics associated with incident. </summary>
         public IReadOnlyList<SecurityInsightsAttackTactic> Tactics { get; }
+        /// <summary> The techniques associated with incident&apos;s tactics. </summary>
+        public IReadOnlyList<string> Techniques { get; }
+        /// <summary> The provider incident url to the incident in Microsoft 365 Defender portal. </summary>
+        public Uri ProviderIncidentUri { get; }
     }
 }

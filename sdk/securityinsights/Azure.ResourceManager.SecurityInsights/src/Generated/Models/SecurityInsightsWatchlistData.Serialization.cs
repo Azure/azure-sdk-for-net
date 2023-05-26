@@ -45,7 +45,12 @@ namespace Azure.ResourceManager.SecurityInsights
             if (Optional.IsDefined(Source))
             {
                 writer.WritePropertyName("source"u8);
-                writer.WriteStringValue(Source.Value.ToString());
+                writer.WriteStringValue(Source);
+            }
+            if (Optional.IsDefined(SourceType))
+            {
+                writer.WritePropertyName("sourceType"u8);
+                writer.WriteStringValue(SourceType.Value.ToString());
             }
             if (Optional.IsDefined(CreatedOn))
             {
@@ -150,7 +155,8 @@ namespace Azure.ResourceManager.SecurityInsights
             Optional<Guid> watchlistId = default;
             Optional<string> displayName = default;
             Optional<string> provider = default;
-            Optional<Source> source = default;
+            Optional<string> source = default;
+            Optional<SourceType> sourceType = default;
             Optional<DateTimeOffset> created = default;
             Optional<DateTimeOffset> updated = default;
             Optional<SecurityInsightsUserInfo> createdBy = default;
@@ -232,11 +238,16 @@ namespace Azure.ResourceManager.SecurityInsights
                         }
                         if (property0.NameEquals("source"u8))
                         {
+                            source = property0.Value.GetString();
+                            continue;
+                        }
+                        if (property0.NameEquals("sourceType"u8))
+                        {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
                                 continue;
                             }
-                            source = new Source(property0.Value.GetString());
+                            sourceType = new SourceType(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("created"u8))
@@ -364,7 +375,7 @@ namespace Azure.ResourceManager.SecurityInsights
                     continue;
                 }
             }
-            return new SecurityInsightsWatchlistData(id, name, type, systemData.Value, Optional.ToNullable(watchlistId), displayName.Value, provider.Value, Optional.ToNullable(source), Optional.ToNullable(created), Optional.ToNullable(updated), createdBy.Value, updatedBy.Value, description.Value, watchlistType.Value, watchlistAlias.Value, Optional.ToNullable(isDeleted), Optional.ToList(labels), Optional.ToNullable(defaultDuration), Optional.ToNullable(tenantId), Optional.ToNullable(numberOfLinesToSkip), rawContent.Value, itemsSearchKey.Value, contentType.Value, uploadStatus.Value, Optional.ToNullable(etag));
+            return new SecurityInsightsWatchlistData(id, name, type, systemData.Value, Optional.ToNullable(watchlistId), displayName.Value, provider.Value, source.Value, Optional.ToNullable(sourceType), Optional.ToNullable(created), Optional.ToNullable(updated), createdBy.Value, updatedBy.Value, description.Value, watchlistType.Value, watchlistAlias.Value, Optional.ToNullable(isDeleted), Optional.ToList(labels), Optional.ToNullable(defaultDuration), Optional.ToNullable(tenantId), Optional.ToNullable(numberOfLinesToSkip), rawContent.Value, itemsSearchKey.Value, contentType.Value, uploadStatus.Value, Optional.ToNullable(etag));
         }
     }
 }

@@ -26,16 +26,19 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(DataTypes))
-            {
-                writer.WritePropertyName("dataTypes"u8);
-                writer.WriteObjectValue(DataTypes);
-            }
             if (Optional.IsDefined(SubscriptionId))
             {
                 writer.WritePropertyName("subscriptionId"u8);
                 writer.WriteStringValue(SubscriptionId);
             }
+            writer.WritePropertyName("dataTypes"u8);
+            writer.WriteStartObject();
+            if (Optional.IsDefined(Alerts))
+            {
+                writer.WritePropertyName("alerts"u8);
+                writer.WriteObjectValue(Alerts);
+            }
+            writer.WriteEndObject();
             writer.WriteEndObject();
             writer.WriteEndObject();
         }
@@ -52,8 +55,8 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             string name = default;
             ResourceType type = default;
             Optional<SystemData> systemData = default;
-            Optional<SecurityInsightsAlertsDataTypeOfDataConnector> dataTypes = default;
             Optional<string> subscriptionId = default;
+            Optional<DataConnectorDataTypeCommon> alerts = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("kind"u8))
@@ -103,25 +106,37 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
+                        if (property0.NameEquals("subscriptionId"u8))
+                        {
+                            subscriptionId = property0.Value.GetString();
+                            continue;
+                        }
                         if (property0.NameEquals("dataTypes"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
+                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            dataTypes = SecurityInsightsAlertsDataTypeOfDataConnector.DeserializeSecurityInsightsAlertsDataTypeOfDataConnector(property0.Value);
-                            continue;
-                        }
-                        if (property0.NameEquals("subscriptionId"u8))
-                        {
-                            subscriptionId = property0.Value.GetString();
+                            foreach (var property1 in property0.Value.EnumerateObject())
+                            {
+                                if (property1.NameEquals("alerts"u8))
+                                {
+                                    if (property1.Value.ValueKind == JsonValueKind.Null)
+                                    {
+                                        continue;
+                                    }
+                                    alerts = DataConnectorDataTypeCommon.DeserializeDataConnectorDataTypeCommon(property1.Value);
+                                    continue;
+                                }
+                            }
                             continue;
                         }
                     }
                     continue;
                 }
             }
-            return new SecurityInsightsAscDataConnector(id, name, type, systemData.Value, kind, Optional.ToNullable(etag), dataTypes.Value, subscriptionId.Value);
+            return new SecurityInsightsAscDataConnector(id, name, type, systemData.Value, kind, Optional.ToNullable(etag), alerts.Value, subscriptionId.Value);
         }
     }
 }

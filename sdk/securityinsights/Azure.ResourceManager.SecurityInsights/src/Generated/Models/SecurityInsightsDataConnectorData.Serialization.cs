@@ -38,14 +38,27 @@ namespace Azure.ResourceManager.SecurityInsights
             {
                 switch (discriminator.GetString())
                 {
+                    case "APIPolling": return CodelessApiPollingDataConnector.DeserializeCodelessApiPollingDataConnector(element);
                     case "AmazonWebServicesCloudTrail": return SecurityInsightsAwsCloudTrailDataConnector.DeserializeSecurityInsightsAwsCloudTrailDataConnector(element);
+                    case "AmazonWebServicesS3": return AwsS3DataConnector.DeserializeAwsS3DataConnector(element);
                     case "AzureActiveDirectory": return SecurityInsightsAadDataConnector.DeserializeSecurityInsightsAadDataConnector(element);
                     case "AzureAdvancedThreatProtection": return SecurityInsightsAatpDataConnector.DeserializeSecurityInsightsAatpDataConnector(element);
                     case "AzureSecurityCenter": return SecurityInsightsAscDataConnector.DeserializeSecurityInsightsAscDataConnector(element);
+                    case "Dynamics365": return Dynamics365DataConnector.DeserializeDynamics365DataConnector(element);
+                    case "GenericUI": return CodelessUiDataConnector.DeserializeCodelessUiDataConnector(element);
+                    case "IOT": return IotDataConnector.DeserializeIotDataConnector(element);
                     case "MicrosoftCloudAppSecurity": return McasDataConnector.DeserializeMcasDataConnector(element);
                     case "MicrosoftDefenderAdvancedThreatProtection": return MdatpDataConnector.DeserializeMdatpDataConnector(element);
+                    case "MicrosoftPurviewInformationProtection": return MicrosoftPurviewInformationProtectionDataConnector.DeserializeMicrosoftPurviewInformationProtectionDataConnector(element);
+                    case "MicrosoftThreatIntelligence": return MstiDataConnector.DeserializeMstiDataConnector(element);
+                    case "MicrosoftThreatProtection": return MTPDataConnector.DeserializeMTPDataConnector(element);
                     case "Office365": return SecurityInsightsOfficeDataConnector.DeserializeSecurityInsightsOfficeDataConnector(element);
+                    case "Office365Project": return Office365ProjectDataConnector.DeserializeOffice365ProjectDataConnector(element);
+                    case "OfficeATP": return OfficeATPDataConnector.DeserializeOfficeATPDataConnector(element);
+                    case "OfficeIRM": return OfficeIRMDataConnector.DeserializeOfficeIRMDataConnector(element);
+                    case "OfficePowerBI": return OfficePowerBIDataConnector.DeserializeOfficePowerBIDataConnector(element);
                     case "ThreatIntelligence": return SecurityInsightsTIDataConnector.DeserializeSecurityInsightsTIDataConnector(element);
+                    case "ThreatIntelligenceTaxii": return TiTaxiiDataConnector.DeserializeTiTaxiiDataConnector(element);
                 }
             }
             DataConnectorKind kind = default;

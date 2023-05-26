@@ -9,11 +9,12 @@ using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Models;
+using Azure.ResourceManager.SecurityInsights;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
     /// <summary> Represents a Hunting bookmark entity. </summary>
-    public partial class SecurityInsightsHuntingBookmark : SecurityInsightsEntity
+    public partial class SecurityInsightsHuntingBookmark : SecurityInsightsEntityData
     {
         /// <summary> Initializes a new instance of SecurityInsightsHuntingBookmark. </summary>
         public SecurityInsightsHuntingBookmark()

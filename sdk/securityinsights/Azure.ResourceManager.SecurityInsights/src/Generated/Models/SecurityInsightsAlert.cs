@@ -9,11 +9,12 @@ using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Models;
+using Azure.ResourceManager.SecurityInsights;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
     /// <summary> Represents a security alert entity. </summary>
-    public partial class SecurityInsightsAlert : SecurityInsightsEntity
+    public partial class SecurityInsightsAlert : SecurityInsightsEntityData
     {
         /// <summary> Initializes a new instance of SecurityInsightsAlert. </summary>
         public SecurityInsightsAlert()

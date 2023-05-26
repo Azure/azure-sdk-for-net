@@ -44,11 +44,14 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                     writer.WriteNull("tipLookbackPeriod");
                 }
             }
-            if (Optional.IsDefined(DataTypes))
+            writer.WritePropertyName("dataTypes"u8);
+            writer.WriteStartObject();
+            if (Optional.IsDefined(Indicators))
             {
-                writer.WritePropertyName("dataTypes"u8);
-                writer.WriteObjectValue(DataTypes);
+                writer.WritePropertyName("indicators"u8);
+                writer.WriteObjectValue(Indicators);
             }
+            writer.WriteEndObject();
             writer.WriteEndObject();
             writer.WriteEndObject();
         }
@@ -67,7 +70,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             Optional<SystemData> systemData = default;
             Optional<Guid> tenantId = default;
             Optional<DateTimeOffset?> tipLookbackPeriod = default;
-            Optional<TIDataConnectorDataTypes> dataTypes = default;
+            Optional<TIDataConnectorDataTypesIndicators> indicators = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("kind"u8))
@@ -140,16 +143,28 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
+                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            dataTypes = TIDataConnectorDataTypes.DeserializeTIDataConnectorDataTypes(property0.Value);
+                            foreach (var property1 in property0.Value.EnumerateObject())
+                            {
+                                if (property1.NameEquals("indicators"u8))
+                                {
+                                    if (property1.Value.ValueKind == JsonValueKind.Null)
+                                    {
+                                        continue;
+                                    }
+                                    indicators = TIDataConnectorDataTypesIndicators.DeserializeTIDataConnectorDataTypesIndicators(property1.Value);
+                                    continue;
+                                }
+                            }
                             continue;
                         }
                     }
                     continue;
                 }
             }
-            return new SecurityInsightsTIDataConnector(id, name, type, systemData.Value, kind, Optional.ToNullable(etag), Optional.ToNullable(tenantId), Optional.ToNullable(tipLookbackPeriod), dataTypes.Value);
+            return new SecurityInsightsTIDataConnector(id, name, type, systemData.Value, kind, Optional.ToNullable(etag), Optional.ToNullable(tenantId), Optional.ToNullable(tipLookbackPeriod), indicators.Value);
         }
     }
 }

@@ -9,11 +9,12 @@ using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Models;
+using Azure.ResourceManager.SecurityInsights;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
     /// <summary> Represents a host entity. </summary>
-    public partial class SecurityInsightsHostEntity : SecurityInsightsEntity
+    public partial class SecurityInsightsHostEntity : SecurityInsightsEntityData
     {
         /// <summary> Initializes a new instance of SecurityInsightsHostEntity. </summary>
         public SecurityInsightsHostEntity()

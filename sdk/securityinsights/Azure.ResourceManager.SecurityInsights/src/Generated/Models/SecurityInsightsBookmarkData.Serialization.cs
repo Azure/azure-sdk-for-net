@@ -97,6 +97,36 @@ namespace Azure.ResourceManager.SecurityInsights
                 writer.WritePropertyName("incidentInfo"u8);
                 writer.WriteObjectValue(IncidentInfo);
             }
+            if (Optional.IsCollectionDefined(EntityMappings))
+            {
+                writer.WritePropertyName("entityMappings"u8);
+                writer.WriteStartArray();
+                foreach (var item in EntityMappings)
+                {
+                    writer.WriteObjectValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsCollectionDefined(Tactics))
+            {
+                writer.WritePropertyName("tactics"u8);
+                writer.WriteStartArray();
+                foreach (var item in Tactics)
+                {
+                    writer.WriteStringValue(item.ToString());
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsCollectionDefined(Techniques))
+            {
+                writer.WritePropertyName("techniques"u8);
+                writer.WriteStartArray();
+                foreach (var item in Techniques)
+                {
+                    writer.WriteStringValue(item);
+                }
+                writer.WriteEndArray();
+            }
             writer.WriteEndObject();
             writer.WriteEndObject();
         }
@@ -125,6 +155,9 @@ namespace Azure.ResourceManager.SecurityInsights
             Optional<DateTimeOffset> queryStartTime = default;
             Optional<DateTimeOffset> queryEndTime = default;
             Optional<SecurityInsightsBookmarkIncidentInfo> incidentInfo = default;
+            Optional<IList<BookmarkEntityMappings>> entityMappings = default;
+            Optional<IList<SecurityInsightsAttackTactic>> tactics = default;
+            Optional<IList<string>> techniques = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("etag"u8))
@@ -275,11 +308,53 @@ namespace Azure.ResourceManager.SecurityInsights
                             incidentInfo = SecurityInsightsBookmarkIncidentInfo.DeserializeSecurityInsightsBookmarkIncidentInfo(property0.Value);
                             continue;
                         }
+                        if (property0.NameEquals("entityMappings"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            List<BookmarkEntityMappings> array = new List<BookmarkEntityMappings>();
+                            foreach (var item in property0.Value.EnumerateArray())
+                            {
+                                array.Add(BookmarkEntityMappings.DeserializeBookmarkEntityMappings(item));
+                            }
+                            entityMappings = array;
+                            continue;
+                        }
+                        if (property0.NameEquals("tactics"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            List<SecurityInsightsAttackTactic> array = new List<SecurityInsightsAttackTactic>();
+                            foreach (var item in property0.Value.EnumerateArray())
+                            {
+                                array.Add(new SecurityInsightsAttackTactic(item.GetString()));
+                            }
+                            tactics = array;
+                            continue;
+                        }
+                        if (property0.NameEquals("techniques"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            List<string> array = new List<string>();
+                            foreach (var item in property0.Value.EnumerateArray())
+                            {
+                                array.Add(item.GetString());
+                            }
+                            techniques = array;
+                            continue;
+                        }
                     }
                     continue;
                 }
             }
-            return new SecurityInsightsBookmarkData(id, name, type, systemData.Value, Optional.ToNullable(created), createdBy.Value, displayName.Value, Optional.ToList(labels), notes.Value, query.Value, queryResult.Value, Optional.ToNullable(updated), updatedBy.Value, Optional.ToNullable(eventTime), Optional.ToNullable(queryStartTime), Optional.ToNullable(queryEndTime), incidentInfo.Value, Optional.ToNullable(etag));
+            return new SecurityInsightsBookmarkData(id, name, type, systemData.Value, Optional.ToNullable(created), createdBy.Value, displayName.Value, Optional.ToList(labels), notes.Value, query.Value, queryResult.Value, Optional.ToNullable(updated), updatedBy.Value, Optional.ToNullable(eventTime), Optional.ToNullable(queryStartTime), Optional.ToNullable(queryEndTime), incidentInfo.Value, Optional.ToList(entityMappings), Optional.ToList(tactics), Optional.ToList(techniques), Optional.ToNullable(etag));
         }
     }
 }

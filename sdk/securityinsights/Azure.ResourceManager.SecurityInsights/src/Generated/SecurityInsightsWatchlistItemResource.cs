@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.SecurityInsights
         }
 
         /// <summary>
-        /// Get a watchlist item.
+        /// Gets a watchlist, without its watchlist items.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.SecurityInsights
         }
 
         /// <summary>
-        /// Get a watchlist item.
+        /// Gets a watchlist, without its watchlist items.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -219,7 +219,7 @@ namespace Azure.ResourceManager.SecurityInsights
         }
 
         /// <summary>
-        /// Create or update a watchlist item.
+        /// Creates or updates a watchlist item.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -257,7 +257,7 @@ namespace Azure.ResourceManager.SecurityInsights
         }
 
         /// <summary>
-        /// Create or update a watchlist item.
+        /// Creates or updates a watchlist item.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>

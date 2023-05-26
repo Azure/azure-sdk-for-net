@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
@@ -24,6 +25,8 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             Optional<int> commentsCount = default;
             Optional<IReadOnlyList<string>> alertProductNames = default;
             Optional<IReadOnlyList<SecurityInsightsAttackTactic>> tactics = default;
+            Optional<IReadOnlyList<string>> techniques = default;
+            Optional<Uri> providerIncidentUrl = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("alertsCount"u8))
@@ -81,8 +84,31 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                     tactics = array;
                     continue;
                 }
+                if (property.NameEquals("techniques"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<string> array = new List<string>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(item.GetString());
+                    }
+                    techniques = array;
+                    continue;
+                }
+                if (property.NameEquals("providerIncidentUrl"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    providerIncidentUrl = new Uri(property.Value.GetString());
+                    continue;
+                }
             }
-            return new SecurityInsightsIncidentAdditionalInfo(Optional.ToNullable(alertsCount), Optional.ToNullable(bookmarksCount), Optional.ToNullable(commentsCount), Optional.ToList(alertProductNames), Optional.ToList(tactics));
+            return new SecurityInsightsIncidentAdditionalInfo(Optional.ToNullable(alertsCount), Optional.ToNullable(bookmarksCount), Optional.ToNullable(commentsCount), Optional.ToList(alertProductNames), Optional.ToList(tactics), Optional.ToList(techniques), providerIncidentUrl.Value);
         }
     }
 }

@@ -11,8 +11,34 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
-    public partial class SecurityInsightsClientInfo
+    public partial class SecurityInsightsClientInfo : IUtf8JsonSerializable
     {
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        {
+            writer.WriteStartObject();
+            if (Optional.IsDefined(Email))
+            {
+                writer.WritePropertyName("email"u8);
+                writer.WriteStringValue(Email);
+            }
+            if (Optional.IsDefined(Name))
+            {
+                writer.WritePropertyName("name"u8);
+                writer.WriteStringValue(Name);
+            }
+            if (Optional.IsDefined(ObjectId))
+            {
+                writer.WritePropertyName("objectId"u8);
+                writer.WriteStringValue(ObjectId.Value);
+            }
+            if (Optional.IsDefined(UserPrincipalName))
+            {
+                writer.WritePropertyName("userPrincipalName"u8);
+                writer.WriteStringValue(UserPrincipalName);
+            }
+            writer.WriteEndObject();
+        }
+
         internal static SecurityInsightsClientInfo DeserializeSecurityInsightsClientInfo(JsonElement element)
         {
             if (element.ValueKind == JsonValueKind.Null)

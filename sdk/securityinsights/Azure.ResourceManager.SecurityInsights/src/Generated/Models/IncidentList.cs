@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
     internal partial class IncidentList
     {
         /// <summary> Initializes a new instance of IncidentList. </summary>
-        /// <param name="value"> Array of incidents. </param>
+        /// <param name="value"></param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         internal IncidentList(IEnumerable<SecurityInsightsIncidentData> value)
         {
@@ -27,17 +27,17 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         }
 
         /// <summary> Initializes a new instance of IncidentList. </summary>
+        /// <param name="value"></param>
         /// <param name="nextLink"> URL to fetch the next set of incidents. </param>
-        /// <param name="value"> Array of incidents. </param>
-        internal IncidentList(string nextLink, IReadOnlyList<SecurityInsightsIncidentData> value)
+        internal IncidentList(IReadOnlyList<SecurityInsightsIncidentData> value, string nextLink)
         {
-            NextLink = nextLink;
             Value = value;
+            NextLink = nextLink;
         }
 
+        /// <summary> Gets the value. </summary>
+        public IReadOnlyList<SecurityInsightsIncidentData> Value { get; }
         /// <summary> URL to fetch the next set of incidents. </summary>
         public string NextLink { get; }
-        /// <summary> Array of incidents. </summary>
-        public IReadOnlyList<SecurityInsightsIncidentData> Value { get; }
     }
 }

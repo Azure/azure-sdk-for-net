@@ -10,11 +10,12 @@ using System.Collections.Generic;
 using System.Net;
 using Azure.Core;
 using Azure.ResourceManager.Models;
+using Azure.ResourceManager.SecurityInsights;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
     /// <summary> Represents an ip entity. </summary>
-    public partial class SecurityInsightsIPEntity : SecurityInsightsEntity
+    public partial class SecurityInsightsIPEntity : SecurityInsightsEntityData
     {
         /// <summary> Initializes a new instance of SecurityInsightsIPEntity. </summary>
         public SecurityInsightsIPEntity()

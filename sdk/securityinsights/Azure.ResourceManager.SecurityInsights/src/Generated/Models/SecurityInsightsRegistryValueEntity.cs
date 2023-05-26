@@ -9,11 +9,12 @@ using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Models;
+using Azure.ResourceManager.SecurityInsights;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
     /// <summary> Represents a registry value entity. </summary>
-    public partial class SecurityInsightsRegistryValueEntity : SecurityInsightsEntity
+    public partial class SecurityInsightsRegistryValueEntity : SecurityInsightsEntityData
     {
         /// <summary> Initializes a new instance of SecurityInsightsRegistryValueEntity. </summary>
         public SecurityInsightsRegistryValueEntity()

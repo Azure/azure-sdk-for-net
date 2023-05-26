@@ -11,13 +11,8 @@ namespace Azure.ResourceManager.SecurityInsights.Models
     internal partial class OfficeDataConnectorDataTypesTeams : DataConnectorDataTypeCommon
     {
         /// <summary> Initializes a new instance of OfficeDataConnectorDataTypesTeams. </summary>
-        public OfficeDataConnectorDataTypesTeams()
-        {
-        }
-
-        /// <summary> Initializes a new instance of OfficeDataConnectorDataTypesTeams. </summary>
         /// <param name="state"> Describe whether this data type connection is enabled or not. </param>
-        internal OfficeDataConnectorDataTypesTeams(SecurityInsightsDataTypeConnectionState? state) : base(state)
+        public OfficeDataConnectorDataTypesTeams(SecurityInsightsDataTypeConnectionState state) : base(state)
         {
         }
     }

@@ -30,7 +30,9 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             {
                 switch (discriminator.GetString())
                 {
+                    case "Boolean": return BooleanConditionProperties.DeserializeBooleanConditionProperties(element);
                     case "Property": return SecurityInsightsPropertyConditionProperties.DeserializeSecurityInsightsPropertyConditionProperties(element);
+                    case "PropertyArray": return PropertyArrayConditionProperties.DeserializePropertyArrayConditionProperties(element);
                     case "PropertyArrayChanged": return SecurityInsightsPropertyArrayChangedConditionProperties.DeserializeSecurityInsightsPropertyArrayChangedConditionProperties(element);
                     case "PropertyChanged": return SecurityInsightsPropertyChangedConditionProperties.DeserializeSecurityInsightsPropertyChangedConditionProperties(element);
                 }

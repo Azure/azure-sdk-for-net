@@ -9,11 +9,12 @@ using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Models;
+using Azure.ResourceManager.SecurityInsights;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
     /// <summary> Represents a file hash entity. </summary>
-    public partial class SecurityInsightsFileHashEntity : SecurityInsightsEntity
+    public partial class SecurityInsightsFileHashEntity : SecurityInsightsEntityData
     {
         /// <summary> Initializes a new instance of SecurityInsightsFileHashEntity. </summary>
         public SecurityInsightsFileHashEntity()

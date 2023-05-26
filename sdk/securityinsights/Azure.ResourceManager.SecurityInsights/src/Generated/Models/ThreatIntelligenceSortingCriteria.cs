@@ -18,6 +18,6 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <summary> Column name. </summary>
         public string ItemKey { get; set; }
         /// <summary> Sorting order (ascending/descending/unsorted). </summary>
-        public ThreatIntelligenceSortingOrder? SortOrder { get; set; }
+        public ThreatIntelligenceSortingCriteriaEnum? SortOrder { get; set; }
     }
 }

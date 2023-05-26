@@ -46,9 +46,9 @@ namespace Azure.ResourceManager.SecurityInsights
             string name = default;
             ResourceType type = default;
             Optional<SystemData> systemData = default;
+            Optional<string> message = default;
             Optional<DateTimeOffset> createdTimeUtc = default;
             Optional<DateTimeOffset> lastModifiedTimeUtc = default;
-            Optional<string> message = default;
             Optional<SecurityInsightsClientInfo> author = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -94,6 +94,11 @@ namespace Azure.ResourceManager.SecurityInsights
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
+                        if (property0.NameEquals("message"u8))
+                        {
+                            message = property0.Value.GetString();
+                            continue;
+                        }
                         if (property0.NameEquals("createdTimeUtc"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
@@ -112,11 +117,6 @@ namespace Azure.ResourceManager.SecurityInsights
                             lastModifiedTimeUtc = property0.Value.GetDateTimeOffset("O");
                             continue;
                         }
-                        if (property0.NameEquals("message"u8))
-                        {
-                            message = property0.Value.GetString();
-                            continue;
-                        }
                         if (property0.NameEquals("author"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
@@ -130,7 +130,7 @@ namespace Azure.ResourceManager.SecurityInsights
                     continue;
                 }
             }
-            return new SecurityInsightsIncidentCommentData(id, name, type, systemData.Value, Optional.ToNullable(createdTimeUtc), Optional.ToNullable(lastModifiedTimeUtc), message.Value, author.Value, Optional.ToNullable(etag));
+            return new SecurityInsightsIncidentCommentData(id, name, type, systemData.Value, message.Value, Optional.ToNullable(createdTimeUtc), Optional.ToNullable(lastModifiedTimeUtc), author.Value, Optional.ToNullable(etag));
         }
     }
 }

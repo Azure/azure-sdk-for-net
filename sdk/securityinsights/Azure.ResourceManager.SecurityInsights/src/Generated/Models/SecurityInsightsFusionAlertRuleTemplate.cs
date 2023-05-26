@@ -22,6 +22,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             RequiredDataConnectors = new ChangeTrackingList<AlertRuleTemplateDataSource>();
             Tactics = new ChangeTrackingList<SecurityInsightsAttackTactic>();
             Techniques = new ChangeTrackingList<string>();
+            SourceSettings = new ChangeTrackingList<FusionTemplateSourceSetting>();
             Kind = AlertRuleKind.Fusion;
         }
 
@@ -30,7 +31,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="kind"> The alert rule kind. </param>
+        /// <param name="kind"> The kind of the alert rule. </param>
         /// <param name="alertRulesCreatedByTemplateCount"> the number of alert rules that were created by this template. </param>
         /// <param name="createdOn"> The time that this alert rule template has been added. </param>
         /// <param name="lastUpdatedOn"> The time that this alert rule template was last updated. </param>
@@ -40,8 +41,9 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <param name="status"> The alert rule template status. </param>
         /// <param name="severity"> The severity for alerts created by this alert rule. </param>
         /// <param name="tactics"> The tactics of the alert rule template. </param>
-        /// <param name="techniques"> The techniques of the alert rule template. </param>
-        internal SecurityInsightsFusionAlertRuleTemplate(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AlertRuleKind kind, int? alertRulesCreatedByTemplateCount, DateTimeOffset? createdOn, DateTimeOffset? lastUpdatedOn, string description, string displayName, IList<AlertRuleTemplateDataSource> requiredDataConnectors, SecurityInsightsAlertRuleTemplateStatus? status, SecurityInsightsAlertSeverity? severity, IList<SecurityInsightsAttackTactic> tactics, IList<string> techniques) : base(id, name, resourceType, systemData, kind)
+        /// <param name="techniques"> The techniques of the alert rule. </param>
+        /// <param name="sourceSettings"> All supported source signal configurations consumed in fusion detection. </param>
+        internal SecurityInsightsFusionAlertRuleTemplate(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AlertRuleKind kind, int? alertRulesCreatedByTemplateCount, DateTimeOffset? createdOn, DateTimeOffset? lastUpdatedOn, string description, string displayName, IList<AlertRuleTemplateDataSource> requiredDataConnectors, SecurityInsightsAlertRuleTemplateStatus? status, SecurityInsightsAlertSeverity? severity, IList<SecurityInsightsAttackTactic> tactics, IList<string> techniques, IList<FusionTemplateSourceSetting> sourceSettings) : base(id, name, resourceType, systemData, kind)
         {
             AlertRulesCreatedByTemplateCount = alertRulesCreatedByTemplateCount;
             CreatedOn = createdOn;
@@ -53,6 +55,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             Severity = severity;
             Tactics = tactics;
             Techniques = techniques;
+            SourceSettings = sourceSettings;
             Kind = kind;
         }
 
@@ -74,7 +77,9 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         public SecurityInsightsAlertSeverity? Severity { get; set; }
         /// <summary> The tactics of the alert rule template. </summary>
         public IList<SecurityInsightsAttackTactic> Tactics { get; }
-        /// <summary> The techniques of the alert rule template. </summary>
+        /// <summary> The techniques of the alert rule. </summary>
         public IList<string> Techniques { get; }
+        /// <summary> All supported source signal configurations consumed in fusion detection. </summary>
+        public IList<FusionTemplateSourceSetting> SourceSettings { get; }
     }
 }

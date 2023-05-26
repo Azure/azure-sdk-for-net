@@ -20,15 +20,10 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             {
                 return null;
             }
-            Optional<string> nextLink = default;
             IReadOnlyList<SecurityInsightsIncidentCommentData> value = default;
+            Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("nextLink"u8))
-                {
-                    nextLink = property.Value.GetString();
-                    continue;
-                }
                 if (property.NameEquals("value"u8))
                 {
                     List<SecurityInsightsIncidentCommentData> array = new List<SecurityInsightsIncidentCommentData>();
@@ -39,8 +34,13 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                     value = array;
                     continue;
                 }
+                if (property.NameEquals("nextLink"u8))
+                {
+                    nextLink = property.Value.GetString();
+                    continue;
+                }
             }
-            return new IncidentCommentList(nextLink.Value, value);
+            return new IncidentCommentList(value, nextLink.Value);
         }
     }
 }

@@ -27,50 +27,15 @@ namespace Azure.ResourceManager.SecurityInsights
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(Classification))
+            if (Optional.IsDefined(Title))
             {
-                writer.WritePropertyName("classification"u8);
-                writer.WriteStringValue(Classification.Value.ToString());
-            }
-            if (Optional.IsDefined(ClassificationComment))
-            {
-                writer.WritePropertyName("classificationComment"u8);
-                writer.WriteStringValue(ClassificationComment);
-            }
-            if (Optional.IsDefined(ClassificationReason))
-            {
-                writer.WritePropertyName("classificationReason"u8);
-                writer.WriteStringValue(ClassificationReason.Value.ToString());
+                writer.WritePropertyName("title"u8);
+                writer.WriteStringValue(Title);
             }
             if (Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
-            }
-            if (Optional.IsDefined(FirstActivityOn))
-            {
-                writer.WritePropertyName("firstActivityTimeUtc"u8);
-                writer.WriteStringValue(FirstActivityOn.Value, "O");
-            }
-            if (Optional.IsCollectionDefined(Labels))
-            {
-                writer.WritePropertyName("labels"u8);
-                writer.WriteStartArray();
-                foreach (var item in Labels)
-                {
-                    writer.WriteObjectValue(item);
-                }
-                writer.WriteEndArray();
-            }
-            if (Optional.IsDefined(LastActivityOn))
-            {
-                writer.WritePropertyName("lastActivityTimeUtc"u8);
-                writer.WriteStringValue(LastActivityOn.Value, "O");
-            }
-            if (Optional.IsDefined(Owner))
-            {
-                writer.WritePropertyName("owner"u8);
-                writer.WriteObjectValue(Owner);
             }
             if (Optional.IsDefined(Severity))
             {
@@ -82,10 +47,55 @@ namespace Azure.ResourceManager.SecurityInsights
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status.Value.ToString());
             }
-            if (Optional.IsDefined(Title))
+            if (Optional.IsDefined(Classification))
             {
-                writer.WritePropertyName("title"u8);
-                writer.WriteStringValue(Title);
+                writer.WritePropertyName("classification"u8);
+                writer.WriteStringValue(Classification.Value.ToString());
+            }
+            if (Optional.IsDefined(ClassificationReason))
+            {
+                writer.WritePropertyName("classificationReason"u8);
+                writer.WriteStringValue(ClassificationReason.Value.ToString());
+            }
+            if (Optional.IsDefined(ClassificationComment))
+            {
+                writer.WritePropertyName("classificationComment"u8);
+                writer.WriteStringValue(ClassificationComment);
+            }
+            if (Optional.IsDefined(Owner))
+            {
+                writer.WritePropertyName("owner"u8);
+                writer.WriteObjectValue(Owner);
+            }
+            if (Optional.IsCollectionDefined(Labels))
+            {
+                writer.WritePropertyName("labels"u8);
+                writer.WriteStartArray();
+                foreach (var item in Labels)
+                {
+                    writer.WriteObjectValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsDefined(FirstActivityOn))
+            {
+                writer.WritePropertyName("firstActivityTimeUtc"u8);
+                writer.WriteStringValue(FirstActivityOn.Value, "O");
+            }
+            if (Optional.IsDefined(LastActivityOn))
+            {
+                writer.WritePropertyName("lastActivityTimeUtc"u8);
+                writer.WriteStringValue(LastActivityOn.Value, "O");
+            }
+            if (Optional.IsDefined(ProviderName))
+            {
+                writer.WritePropertyName("providerName"u8);
+                writer.WriteStringValue(ProviderName);
+            }
+            if (Optional.IsDefined(TeamInformation))
+            {
+                writer.WritePropertyName("teamInformation"u8);
+                writer.WriteObjectValue(TeamInformation);
             }
             writer.WriteEndObject();
             writer.WriteEndObject();
@@ -102,23 +112,26 @@ namespace Azure.ResourceManager.SecurityInsights
             string name = default;
             ResourceType type = default;
             Optional<SystemData> systemData = default;
-            Optional<SecurityInsightsIncidentAdditionalInfo> additionalData = default;
-            Optional<SecurityInsightsIncidentClassification> classification = default;
-            Optional<string> classificationComment = default;
-            Optional<SecurityInsightsIncidentClassificationReason> classificationReason = default;
-            Optional<DateTimeOffset> createdTimeUtc = default;
+            Optional<string> title = default;
             Optional<string> description = default;
-            Optional<DateTimeOffset> firstActivityTimeUtc = default;
-            Optional<Uri> incidentUrl = default;
-            Optional<int> incidentNumber = default;
-            Optional<IList<SecurityInsightsIncidentLabel>> labels = default;
-            Optional<DateTimeOffset> lastActivityTimeUtc = default;
-            Optional<DateTimeOffset> lastModifiedTimeUtc = default;
-            Optional<SecurityInsightsIncidentOwnerInfo> owner = default;
-            Optional<IReadOnlyList<ResourceIdentifier>> relatedAnalyticRuleIds = default;
             Optional<SecurityInsightsIncidentSeverity> severity = default;
             Optional<SecurityInsightsIncidentStatus> status = default;
-            Optional<string> title = default;
+            Optional<SecurityInsightsIncidentClassification> classification = default;
+            Optional<SecurityInsightsIncidentClassificationReason> classificationReason = default;
+            Optional<string> classificationComment = default;
+            Optional<SecurityInsightsIncidentOwnerInfo> owner = default;
+            Optional<IList<SecurityInsightsIncidentLabel>> labels = default;
+            Optional<DateTimeOffset> firstActivityTimeUtc = default;
+            Optional<DateTimeOffset> lastActivityTimeUtc = default;
+            Optional<DateTimeOffset> lastModifiedTimeUtc = default;
+            Optional<DateTimeOffset> createdTimeUtc = default;
+            Optional<int> incidentNumber = default;
+            Optional<SecurityInsightsIncidentAdditionalInfo> additionalData = default;
+            Optional<IReadOnlyList<ResourceIdentifier>> relatedAnalyticRuleIds = default;
+            Optional<Uri> incidentUrl = default;
+            Optional<string> providerName = default;
+            Optional<string> providerIncidentId = default;
+            Optional<TeamInformation> teamInformation = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("etag"u8))
@@ -163,13 +176,32 @@ namespace Azure.ResourceManager.SecurityInsights
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.NameEquals("additionalData"u8))
+                        if (property0.NameEquals("title"u8))
+                        {
+                            title = property0.Value.GetString();
+                            continue;
+                        }
+                        if (property0.NameEquals("description"u8))
+                        {
+                            description = property0.Value.GetString();
+                            continue;
+                        }
+                        if (property0.NameEquals("severity"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
                                 continue;
                             }
-                            additionalData = SecurityInsightsIncidentAdditionalInfo.DeserializeSecurityInsightsIncidentAdditionalInfo(property0.Value);
+                            severity = new SecurityInsightsIncidentSeverity(property0.Value.GetString());
+                            continue;
+                        }
+                        if (property0.NameEquals("status"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            status = new SecurityInsightsIncidentStatus(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("classification"u8))
@@ -181,11 +213,6 @@ namespace Azure.ResourceManager.SecurityInsights
                             classification = new SecurityInsightsIncidentClassification(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("classificationComment"u8))
-                        {
-                            classificationComment = property0.Value.GetString();
-                            continue;
-                        }
                         if (property0.NameEquals("classificationReason"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
@@ -195,45 +222,18 @@ namespace Azure.ResourceManager.SecurityInsights
                             classificationReason = new SecurityInsightsIncidentClassificationReason(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("createdTimeUtc"u8))
+                        if (property0.NameEquals("classificationComment"u8))
+                        {
+                            classificationComment = property0.Value.GetString();
+                            continue;
+                        }
+                        if (property0.NameEquals("owner"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
                                 continue;
                             }
-                            createdTimeUtc = property0.Value.GetDateTimeOffset("O");
-                            continue;
-                        }
-                        if (property0.NameEquals("description"u8))
-                        {
-                            description = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("firstActivityTimeUtc"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            firstActivityTimeUtc = property0.Value.GetDateTimeOffset("O");
-                            continue;
-                        }
-                        if (property0.NameEquals("incidentUrl"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            incidentUrl = new Uri(property0.Value.GetString());
-                            continue;
-                        }
-                        if (property0.NameEquals("incidentNumber"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            incidentNumber = property0.Value.GetInt32();
+                            owner = SecurityInsightsIncidentOwnerInfo.DeserializeSecurityInsightsIncidentOwnerInfo(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("labels"u8))
@@ -248,6 +248,15 @@ namespace Azure.ResourceManager.SecurityInsights
                                 array.Add(SecurityInsightsIncidentLabel.DeserializeSecurityInsightsIncidentLabel(item));
                             }
                             labels = array;
+                            continue;
+                        }
+                        if (property0.NameEquals("firstActivityTimeUtc"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            firstActivityTimeUtc = property0.Value.GetDateTimeOffset("O");
                             continue;
                         }
                         if (property0.NameEquals("lastActivityTimeUtc"u8))
@@ -268,13 +277,31 @@ namespace Azure.ResourceManager.SecurityInsights
                             lastModifiedTimeUtc = property0.Value.GetDateTimeOffset("O");
                             continue;
                         }
-                        if (property0.NameEquals("owner"u8))
+                        if (property0.NameEquals("createdTimeUtc"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
                                 continue;
                             }
-                            owner = SecurityInsightsIncidentOwnerInfo.DeserializeSecurityInsightsIncidentOwnerInfo(property0.Value);
+                            createdTimeUtc = property0.Value.GetDateTimeOffset("O");
+                            continue;
+                        }
+                        if (property0.NameEquals("incidentNumber"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            incidentNumber = property0.Value.GetInt32();
+                            continue;
+                        }
+                        if (property0.NameEquals("additionalData"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            additionalData = SecurityInsightsIncidentAdditionalInfo.DeserializeSecurityInsightsIncidentAdditionalInfo(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("relatedAnalyticRuleIds"u8))
@@ -298,34 +325,39 @@ namespace Azure.ResourceManager.SecurityInsights
                             relatedAnalyticRuleIds = array;
                             continue;
                         }
-                        if (property0.NameEquals("severity"u8))
+                        if (property0.NameEquals("incidentUrl"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
                                 continue;
                             }
-                            severity = new SecurityInsightsIncidentSeverity(property0.Value.GetString());
+                            incidentUrl = new Uri(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("status"u8))
+                        if (property0.NameEquals("providerName"u8))
+                        {
+                            providerName = property0.Value.GetString();
+                            continue;
+                        }
+                        if (property0.NameEquals("providerIncidentId"u8))
+                        {
+                            providerIncidentId = property0.Value.GetString();
+                            continue;
+                        }
+                        if (property0.NameEquals("teamInformation"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
                                 continue;
                             }
-                            status = new SecurityInsightsIncidentStatus(property0.Value.GetString());
-                            continue;
-                        }
-                        if (property0.NameEquals("title"u8))
-                        {
-                            title = property0.Value.GetString();
+                            teamInformation = TeamInformation.DeserializeTeamInformation(property0.Value);
                             continue;
                         }
                     }
                     continue;
                 }
             }
-            return new SecurityInsightsIncidentData(id, name, type, systemData.Value, additionalData.Value, Optional.ToNullable(classification), classificationComment.Value, Optional.ToNullable(classificationReason), Optional.ToNullable(createdTimeUtc), description.Value, Optional.ToNullable(firstActivityTimeUtc), incidentUrl.Value, Optional.ToNullable(incidentNumber), Optional.ToList(labels), Optional.ToNullable(lastActivityTimeUtc), Optional.ToNullable(lastModifiedTimeUtc), owner.Value, Optional.ToList(relatedAnalyticRuleIds), Optional.ToNullable(severity), Optional.ToNullable(status), title.Value, Optional.ToNullable(etag));
+            return new SecurityInsightsIncidentData(id, name, type, systemData.Value, title.Value, description.Value, Optional.ToNullable(severity), Optional.ToNullable(status), Optional.ToNullable(classification), Optional.ToNullable(classificationReason), classificationComment.Value, owner.Value, Optional.ToList(labels), Optional.ToNullable(firstActivityTimeUtc), Optional.ToNullable(lastActivityTimeUtc), Optional.ToNullable(lastModifiedTimeUtc), Optional.ToNullable(createdTimeUtc), Optional.ToNullable(incidentNumber), additionalData.Value, Optional.ToList(relatedAnalyticRuleIds), incidentUrl.Value, providerName.Value, providerIncidentId.Value, teamInformation.Value, Optional.ToNullable(etag));
         }
     }
 }
