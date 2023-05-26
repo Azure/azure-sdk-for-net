@@ -1,18 +1,8 @@
 # Release History
 
-## 1.1.0-beta.1 (Unreleased)
+## 1.0.0 (2023-05-29) 
 
-### Features Added
-
-### Breaking Changes
-
-### Bugs Fixed
-
-### Other Changes
-
-## 1.0.0 (2023-06-14)
-
-### Features Added
+### Features Added 
 - Outbound calls can now be created without providing a User Identifier. This value can be specified in the CallAutomationClientOption if desired.
 - AnswerCall now accepts OperationContext.
 - Calls can be answered by a specific communication identifier user.
@@ -22,9 +12,9 @@
 - StartRecording now accepts ChannelAffinity.
 - Added EventProcessor, an easy and powerful way to handle Call Automation events. See README for details.
 
-### Breaking Changes
-- AddParticipant and RemoveParticipant now only accept one participant at a time.
-- CallSource has been flattened out.
+### Breaking Changes 
+- AddParticipant and RemoveParticipant now only accept one participant at a time. 
+- CallSource has been flattened out. 
 - CallInvite model replaces previous models for handling outbound calls.
 
 ## 1.0.0-beta.1 (2022-11-07)

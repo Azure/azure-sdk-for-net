@@ -7,21 +7,21 @@
 
 namespace Azure.Communication.CallAutomation
 {
-    /// <summary> The SendDtmfFailed. </summary>
-    public partial class SendDtmfFailed
+    /// <summary> The call transfer accepted event. </summary>
+    public partial class CallTransferAccepted
     {
-        /// <summary> Initializes a new instance of SendDtmfFailed. </summary>
-        internal SendDtmfFailed()
+        /// <summary> Initializes a new instance of CallTransferAccepted. </summary>
+        internal CallTransferAccepted()
         {
         }
 
-        /// <summary> Initializes a new instance of SendDtmfFailed. </summary>
+        /// <summary> Initializes a new instance of CallTransferAccepted. </summary>
         /// <param name="callConnectionId"> Call connection ID. </param>
         /// <param name="serverCallId"> Server call ID. </param>
-        /// <param name="correlationId"> Correlation ID for event to call correlation. </param>
+        /// <param name="correlationId"> Correlation ID for event to call correlation. Also called ChainId for skype chain ID. </param>
         /// <param name="operationContext"> Used by customers when calling mid-call actions to correlate the request to the response event. </param>
         /// <param name="resultInformation"> Contains the resulting SIP code, sub-code and message. </param>
-        internal SendDtmfFailed(string callConnectionId, string serverCallId, string correlationId, string operationContext, ResultInformation resultInformation)
+        internal CallTransferAccepted(string callConnectionId, string serverCallId, string correlationId, string operationContext, ResultInformation resultInformation)
         {
             CallConnectionId = callConnectionId;
             ServerCallId = serverCallId;

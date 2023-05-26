@@ -85,12 +85,11 @@ namespace Azure.Communication.CallAutomation
                     }
                 }
 
-                if (options.ExternalStorage is not null)
-                {
-                    request.ExternalStorage = TranslateExternalStorageToInternal(options.ExternalStorage);
-                }
-
-                return _callRecordingRestClient.StartRecording(request, cancellationToken: cancellationToken);
+                var repeatabilityHeaders = new RepeatabilityHeaders();
+                return _callRecordingRestClient.StartRecording(request,
+                    repeatabilityHeaders.RepeatabilityRequestId,
+                    repeatabilityHeaders.RepeatabilityFirstSent,
+                    cancellationToken: cancellationToken);
             }
             catch (Exception ex)
             {
@@ -142,12 +141,11 @@ namespace Azure.Communication.CallAutomation
                     }
                 }
 
-                if (options.ExternalStorage is not null)
-                {
-                    request.ExternalStorage = TranslateExternalStorageToInternal(options.ExternalStorage);
-                }
-
-                return await _callRecordingRestClient.StartRecordingAsync(request, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var repeatabilityHeaders = new RepeatabilityHeaders();
+                return await _callRecordingRestClient.StartRecordingAsync(request,
+                    repeatabilityHeaders.RepeatabilityRequestId,
+                    repeatabilityHeaders.RepeatabilityFirstSent,
+                    cancellationToken: cancellationToken).ConfigureAwait(false);
             }
             catch (Exception ex)
             {
@@ -621,24 +619,5 @@ namespace Azure.Communication.CallAutomation
                 throw;
             }
         }
-
-        #region private functions
-
-        private static ExternalStorageInternal TranslateExternalStorageToInternal(ExternalStorage externalStorage)
-        {
-            ExternalStorageInternal result = null;
-
-            if (externalStorage is BlobStorage blobStorage)
-            {
-                result = new ExternalStorageInternal(blobStorage.StorageType)
-                {
-                    BlobStorage = new BlobStorageInternal(blobStorage.ContainerUri.AbsoluteUri),
-                };
-            }
-
-            return result;
-        }
-
-        #endregion private functions
     }
 }

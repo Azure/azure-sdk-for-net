@@ -87,11 +87,11 @@ public IActionResult OnMidConnectionCallBackEvent([FromBody] CloudEvent[] events
                     # cast the event into a ParticipantUpdated event and do something with it. Eg. iterate through the participants
                     ParticipantsUpdated updatedEvent = (ParticipantsUpdated)ev;
                     break;
-                case AddParticipantsSucceeded ev:
-                    # logic to handle an AddParticipantsSucceeded event
+                case AddParticipantSucceeded ev:
+                    # logic to handle an AddParticipantSucceeded event
                     break;
-                case AddParticipantsFailed ev:
-                    # logic to handle an AddParticipantsFailed event
+                case AddParticipantFailed ev:
+                    # logic to handle an AddParticipantFailed event
                     break;
                 case CallTransferAccepted ev:
                     # logic to handle CallTransferAccepted event
@@ -155,10 +155,10 @@ CancellationToken token = cts.Token;
 try
 {
     // this will wait until CreateCall is completed or Timesout!
-    CreateCallEventResult eventResult = await createCallResult.WaitForEventAsync(token);
+    CreateCallEventResult eventResult = await createCallResult.WaitForEventProcessorAsync(token);
 
     // Once this is recieved, you know the call is now connected.
-    CallConnected returnedEvent = eventResult.SuccessEvent;
+    CallConnected returnedEvent = eventResult.SuccessResult;
 
     // ...Do more actions, such as Play or AddParticipant, since the call is established...
 }

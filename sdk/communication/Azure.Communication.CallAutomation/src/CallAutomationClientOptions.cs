@@ -16,7 +16,7 @@ namespace Azure.Communication.CallAutomation
         /// <summary>
         /// The latest version of the CallAutomation service.
         /// </summary>
-        internal const ServiceVersion LatestVersion = ServiceVersion.V2023_01_15_Preview;
+        internal const ServiceVersion LatestVersion = ServiceVersion.V2023_03_06;
 
         internal string ApiVersion { get; }
 
@@ -32,7 +32,7 @@ namespace Azure.Communication.CallAutomation
         {
             ApiVersion = version switch
             {
-                ServiceVersion.V2023_01_15_Preview => "2023-01-15-preview",
+                ServiceVersion.V2023_03_06 => "2023-03-06",
                 _ => throw new ArgumentOutOfRangeException(nameof(version)),
             };
         }
@@ -43,10 +43,10 @@ namespace Azure.Communication.CallAutomation
         public enum ServiceVersion
         {
             /// <summary>
-            /// The Beta of the CallAutomation service.
+            /// The GA1 of the CallAutomation service.
             /// </summary>
 #pragma warning disable CA1707 // Identifiers should not contain underscores
-            V2023_01_15_Preview = 1
+            V2023_03_06 = 1
 #pragma warning restore CA1707 // Identifiers should not contain underscores
         }
     }

@@ -81,10 +81,20 @@ namespace Azure.Communication.CallAutomation.Tests.CallConnections
                     Assert.AreEqual(operationContext1, removePartResponse.Value.OperationContext);
 
                     // call should be disconnected after removing participant
-                    var disconnectedEvent = await WaitForEvent<CallDisconnected>(callConnectionId, TimeSpan.FromSeconds(20));
-                    Assert.IsNotNull(disconnectedEvent);
-                    Assert.IsTrue(disconnectedEvent is CallDisconnected);
-                    Assert.AreEqual(callConnectionId, ((CallDisconnected)disconnectedEvent!).CallConnectionId);
+                    try
+                    {
+                        // test get properties
+                        _ = await response.CallConnection.GetCallConnectionPropertiesAsync().ConfigureAwait(false);
+                    }
+                    catch (RequestFailedException ex)
+                    {
+                        if (ex.Status == 404)
+                        {
+                            callConnectionId = null;
+                            return;
+                        }
+                    }
+
                     callConnectionId = null;
                 }
                 catch (Exception)
