@@ -157,7 +157,7 @@ namespace Azure.Communication.JobRouter.Tests.Samples
 
             // A worker can also choose to decline an offer
 
-            Response<DeclineJobOfferResult> declineOffer = await routerClient.DeclineJobOfferAsync(worker.Value.Id, issuedOffer.Id);
+            Response<DeclineJobOfferResult> declineOffer = await routerClient.DeclineJobOfferAsync(new DeclineJobOfferOptions(worker.Value.Id, issuedOffer.Id));
 
             #endregion Snippet:Azure_Communication_JobRouter_Tests_Samples_Crud_DeclineJobOffer_Async
 
