@@ -12,9 +12,9 @@ using Azure.ResourceManager.ServiceBus.Models;
 using Azure.Core;
 using System.Security.Cryptography;
 
-namespace Azure.ResourceManager.ServiceBus.Tests.Helpers
+namespace Azure.ResourceManager.ServiceBus.Tests
 {
-    public class ServiceBusTestBase: ManagementRecordedTestBase<ServiceBusManagementTestEnvironment>
+    public class ServiceBusManagementTestBase : ManagementRecordedTestBase<ServiceBusManagementTestEnvironment>
     {
         public static AzureLocation DefaultLocation => AzureLocation.EastUS2;
         internal const string DefaultNamespaceAuthorizationRule = "RootManageSharedAccessKey";
@@ -26,8 +26,9 @@ namespace Azure.ResourceManager.ServiceBus.Tests.Helpers
         protected const string Key2 = "key5";
         protected const string Key3 = "key6";
 
-        protected ServiceBusTestBase(bool isAsync, RecordedTestMode? mode = default) : base(isAsync, mode)
+        protected ServiceBusManagementTestBase(bool isAsync, RecordedTestMode? mode = default) : base(isAsync, mode)
         {
+            IgnoreNetworkDependencyVersions();
             IgnoreKeyVaultDependencyVersions();
             IgnoreManagedIdentityDependencyVersions();
             // Lazy sanitize fields in the request and response bodies
