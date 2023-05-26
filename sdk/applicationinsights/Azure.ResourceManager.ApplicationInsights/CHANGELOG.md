@@ -2,6 +2,10 @@
 
 ## 1.0.0-beta.3 (2023-05-26)
 
+### Features Added
+
+- Enable the model factory feature for model mocking, more information can be found [here](https://azure.github.io/azure-sdk/dotnet_introduction.html#dotnet-mocking-factory-builder).
+
 ### Breaking Changes
 
 - ComponentLinkedStorageAccountCollection can't be retrieved through ResourceGroupResource any more. Please use ApplicationInsightsComponentResource instead.

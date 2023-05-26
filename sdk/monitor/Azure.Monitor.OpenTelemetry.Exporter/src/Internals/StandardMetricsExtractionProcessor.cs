@@ -7,6 +7,7 @@ using System.Diagnostics;
 using System.Diagnostics.Metrics;
 using Azure.Monitor.OpenTelemetry.Exporter.Models;
 using OpenTelemetry;
+using OpenTelemetry.Metrics;
 
 namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
 {
@@ -14,6 +15,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
     {
         private bool _disposed;
         private AzureMonitorResource? _resource;
+        internal readonly MeterProvider? _meterProvider;
         private readonly Meter _meter;
         private readonly Histogram<double> _requestDuration;
         private readonly Histogram<double> _dependencyDuration;
@@ -26,8 +28,13 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
 
         internal AzureMonitorResource? StandardMetricResource => _resource ??= ParentProvider?.GetResource().CreateAzureMonitorResource();
 
-        internal StandardMetricsExtractionProcessor()
+        internal StandardMetricsExtractionProcessor(AzureMonitorMetricExporter metricExporter)
         {
+            _meterProvider = Sdk.CreateMeterProviderBuilder()
+                .AddMeter(StandardMetricConstants.StandardMetricMeterName)
+                .AddReader(new PeriodicExportingMetricReader(metricExporter)
+                { TemporalityPreference = MetricReaderTemporalityPreference.Delta })
+                .Build();
             _meter = new Meter(StandardMetricConstants.StandardMetricMeterName);
             _requestDuration = _meter.CreateHistogram<double>(StandardMetricConstants.RequestDurationInstrumentName);
             _dependencyDuration = _meter.CreateHistogram<double>(StandardMetricConstants.DependencyDurationInstrumentName);
@@ -111,6 +118,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
                 {
                     try
                     {
+                        _meterProvider?.Dispose();
                         _meter?.Dispose();
                     }
                     catch (Exception)

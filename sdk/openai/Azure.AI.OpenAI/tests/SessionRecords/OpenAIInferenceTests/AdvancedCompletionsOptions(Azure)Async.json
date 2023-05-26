@@ -1,0 +1,262 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://sdk8428.openai.azure.com/openai/deployments/text-davinci-002/completions?api-version=2023-03-15-preview",
+      "RequestMethod": "POST",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "api-key": "***********",
+        "Content-Length": "219",
+        "Content-Type": "application/json",
+        "traceparent": "00-e87db5bb4471b1ab615f99240581baef-f17c21ae988f9cf9-00",
+        "User-Agent": "azsdk-net-AI.OpenAI/1.0.0-alpha.20230404.1 (.NET 6.0.15; Microsoft Windows 10.0.25324)",
+        "x-ms-client-request-id": "7981578560a7ac23a41940fe64bfc26b",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "prompt": [
+          "Are bananas especially radioactive?"
+        ],
+        "max_tokens": 512,
+        "temperature": 0.75,
+        "logit_bias": {
+          "25996": -100,
+          "35484": -100,
+          "40058": -100,
+          "15991": -100
+        },
+        "user": "AzureSDKOpenAITests",
+        "logprobs": 1,
+        "echo": true,
+        "best_of": 3
+      },
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Access-Control-Allow-Origin": "*",
+        "Aicon-Correlation-Id": "4ba0cd2b-42b6-4175-90f9-83201593efca",
+        "apim-request-id": "669944e8-cf7a-4857-8bbf-985940c904a7",
+        "Cache-Control": "must-revalidate, no-cache",
+        "Content-Length": "1775",
+        "Content-Type": "application/json",
+        "Date": "Tue, 04 Apr 2023 17:27:31 GMT",
+        "Openai-Model": "text-davinci-002",
+        "Openai-Processing-Ms": "833.2742",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+        "X-Accel-Buffering": "no",
+        "X-Content-Type-Options": "nosniff",
+        "X-Ms-Client-Request-Id": "7981578560a7ac23a41940fe64bfc26b",
+        "x-ms-region": "East US",
+        "X-Request-ID": "1e2c65a4-e3e0-416a-83e7-d63a874d847c"
+      },
+      "ResponseBody": {
+        "id": "cmpl-71ejLsc40kYJqHR7wkxLdACfVVvj1",
+        "object": "text_completion",
+        "created": 1680629251,
+        "model": "text-davinci-002",
+        "choices": [
+          {
+            "text": "Are bananas especially radioactive?\n\nThere is no scientific evidence to suggest that any fruit, including Banan, is radioactive.",
+            "index": 0,
+            "finish_reason": "stop",
+            "logprobs": {
+              "tokens": [
+                "Are",
+                " bananas",
+                " especially",
+                " radioactive",
+                "?",
+                "\n",
+                "\n",
+                "There",
+                " is",
+                " no",
+                " scientific",
+                " evidence",
+                " to",
+                " suggest",
+                " that",
+                " any",
+                " fruit",
+                ",",
+                " including",
+                " Ban",
+                "an",
+                ",",
+                " is",
+                " radioactive",
+                ".",
+                "\u003C|endoftext|\u003E",
+                "Q",
+                ":",
+                " What"
+              ],
+              "token_logprobs": [
+                0,
+                -14.24502,
+                -11.104932,
+                -6.384836,
+                -0.06387941,
+                -0.00041852458,
+                -0.000008296486,
+                -0.784469,
+                -0.0007318678,
+                -0.00069768965,
+                -0.5142955,
+                -0.0021184618,
+                -0.07509355,
+                -0.43065444,
+                -0.000015448071,
+                -0.21392082,
+                -0.3245847,
+                -0.06323942,
+                -0.00025515142,
+                -0.19753182,
+                -0.47348908,
+                -0.3303705,
+                -0.5555053,
+                -0.9274054,
+                -0.0000074639065,
+                -0.49059415,
+                -1.7827561,
+                -0.15842725,
+                -2.638294
+              ],
+              "top_logprobs": [
+                null,
+                {
+                  " you": -0.5478203
+                },
+                {
+                  " good": -1.2670707
+                },
+                {
+                  " good": -0.6982347
+                },
+                {
+                  "?": -0.06387941
+                },
+                {
+                  "\n": -0.00041852458
+                },
+                {
+                  "\n": -0.000008296486
+                },
+                {
+                  "There": -0.784469
+                },
+                {
+                  " is": -0.0007318678
+                },
+                {
+                  " no": -0.00069768965
+                },
+                {
+                  " scientific": -0.5142955
+                },
+                {
+                  " evidence": -0.0021184618
+                },
+                {
+                  " to": -0.07509355
+                },
+                {
+                  " suggest": -0.43065444
+                },
+                {
+                  " that": -0.000015448071
+                },
+                {
+                  " any": -0.21392082
+                },
+                {
+                  " fruit": -0.3245847
+                },
+                {
+                  ",": -0.06323942
+                },
+                {
+                  " including": -0.00025515142
+                },
+                {
+                  " Ban": -0.19753182
+                },
+                {
+                  "an": -0.47348908
+                },
+                {
+                  ",": -0.3303705
+                },
+                {
+                  " is": -0.5555053
+                },
+                {
+                  " especially": -0.7265368
+                },
+                {
+                  ".": -0.0000074639065
+                },
+                {
+                  "\u003C|endoftext|\u003E": -0.49059415
+                },
+                {
+                  "Q": -1.7827561
+                },
+                {
+                  ":": -0.15842725
+                },
+                {
+                  " How": -1.8076828
+                }
+              ],
+              "text_offset": [
+                0,
+                3,
+                11,
+                22,
+                34,
+                35,
+                36,
+                37,
+                42,
+                45,
+                48,
+                59,
+                68,
+                71,
+                79,
+                84,
+                88,
+                94,
+                95,
+                105,
+                109,
+                111,
+                112,
+                115,
+                127,
+                128,
+                128,
+                128,
+                128
+              ]
+            }
+          }
+        ],
+        "usage": {
+          "completion_tokens": 68,
+          "prompt_tokens": 5,
+          "total_tokens": 73
+        }
+      }
+    }
+  ],
+  "Variables": {
+    "AZURE_AUTHORITY_HOST": "https://login.microsoftonline.com",
+    "OPENAI_CHAT_COMPLETIONS_DEPLOYMENT_ID": "gpt-35-turbo",
+    "OPENAI_DEPLOYMENT_ID": "text-davinci-002",
+    "OPENAI_EMBEDDINGS_DEPLOYMENT_ID": "text-similarity-curie-001",
+    "OPENAI_ENDPOINT": "https://sdk8428.openai.azure.com/",
+    "RandomSeed": "504684658",
+    "SUBSCRIPTION_ID": "e72e5254-f265-4e95-9bd2-9ee8e7329051"
+  }
+}

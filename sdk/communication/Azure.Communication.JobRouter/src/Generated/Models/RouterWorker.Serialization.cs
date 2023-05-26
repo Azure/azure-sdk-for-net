@@ -96,7 +96,7 @@ namespace Azure.Communication.JobRouter.Models
                 return null;
             }
             Optional<string> id = default;
-            Optional<RouterWorkerState> state = default;
+            Optional<WorkerState> state = default;
             Optional<IDictionary<string, object>> queueAssignments = default;
             Optional<int> totalCapacity = default;
             Optional<IDictionary<string, object>> labels = default;
@@ -119,7 +119,7 @@ namespace Azure.Communication.JobRouter.Models
                     {
                         continue;
                     }
-                    state = new RouterWorkerState(property.Value.GetString());
+                    state = property.Value.GetString().ToWorkerState();
                     continue;
                 }
                 if (property.NameEquals("queueAssignments"u8))
