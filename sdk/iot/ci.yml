@@ -7,6 +7,8 @@ trigger:
   paths:
     include:
     - sdk/iot/
+    exclude:
+    - sdk/iot/Azure.ResourceManager.IotFirmwareDefense
 
 pr:
   branches:
@@ -15,6 +17,8 @@ pr:
   paths:
     include:
     - sdk/iot/
+    exclude:
+    - sdk/iot/Azure.ResourceManager.IotFirmwareDefense
 
 extends:
   template: /eng/pipelines/templates/stages/archetype-sdk-client.yml
