@@ -93,6 +93,11 @@ namespace Azure.Core.Dynamic
 
             if (_element.TryGetProperty(name, out MutableJsonElement element))
             {
+                if (element.ValueKind == JsonValueKind.Null)
+                {
+                    return null;
+                }
+
                 return new DynamicData(element, _options);
             }
 
@@ -102,6 +107,11 @@ namespace Azure.Core.Dynamic
             {
                 if (_element.TryGetProperty(ConvertToCamelCase(name), out element))
                 {
+                    if (element.ValueKind == JsonValueKind.Null)
+                    {
+                        return null;
+                    }
+
                     return new DynamicData(element, _options);
                 }
             }
@@ -125,7 +135,14 @@ namespace Azure.Core.Dynamic
                     throw new KeyNotFoundException($"Could not find JSON member with name '{propertyName}'.");
 
                 case int arrayIndex:
-                    return new DynamicData(_element.GetIndexElement(arrayIndex), _options);
+                    MutableJsonElement arrayElement = _element.GetIndexElement(arrayIndex);
+
+                    if (arrayElement.ValueKind == JsonValueKind.Null)
+                    {
+                        return null;
+                    }
+
+                    return new DynamicData(arrayElement, _options);
             }
 
             throw new InvalidOperationException($"Tried to access indexer with an unsupported index type: {index}");
