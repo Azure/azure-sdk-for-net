@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.CostManagement.Models
         /// <summary> Initializes a new instance of SingleScopeBenefitRecommendationProperties. </summary>
         public SingleScopeBenefitRecommendationProperties()
         {
-            Scope = Scope.Single;
+            Scope = BenefitRecommendationScope.Single;
         }
 
         /// <summary> Initializes a new instance of SingleScopeBenefitRecommendationProperties. </summary>
@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.CostManagement.Models
         /// <param name="scope"> Benefit scope. For example, Single or Shared. </param>
         /// <param name="subscriptionId"> The subscription ID that this single scope recommendation is for. Applicable only if recommendation is for &apos;Single&apos; scope. </param>
         /// <param name="resourceGroup"> The resource group that this single scope recommendation is for. Applicable only if recommendation is for &apos;Single&apos; scope and &apos;ResourceGroup&apos; request scope. </param>
-        internal SingleScopeBenefitRecommendationProperties(DateTimeOffset? firstConsumptionOn, DateTimeOffset? lastConsumptionOn, LookBackPeriod? lookBackPeriod, int? totalHours, RecommendationUsageDetails usage, string armSkuName, Term? term, Grain? commitmentGranularity, string currencyCode, decimal? costWithoutBenefit, AllSavingsBenefitDetails recommendationDetails, AllSavingsList allRecommendationDetails, Scope scope, string subscriptionId, string resourceGroup) : base(firstConsumptionOn, lastConsumptionOn, lookBackPeriod, totalHours, usage, armSkuName, term, commitmentGranularity, currencyCode, costWithoutBenefit, recommendationDetails, allRecommendationDetails, scope)
+        internal SingleScopeBenefitRecommendationProperties(DateTimeOffset? firstConsumptionOn, DateTimeOffset? lastConsumptionOn, LookBackPeriod? lookBackPeriod, int? totalHours, RecommendationUsageDetails usage, string armSkuName, BenefitPeriodTerm? term, Grain? commitmentGranularity, string currencyCode, decimal? costWithoutBenefit, AllSavingsBenefitDetails recommendationDetails, AllSavingsList allRecommendationDetails, BenefitRecommendationScope scope, string subscriptionId, string resourceGroup) : base(firstConsumptionOn, lastConsumptionOn, lookBackPeriod, totalHours, usage, armSkuName, term, commitmentGranularity, currencyCode, costWithoutBenefit, recommendationDetails, allRecommendationDetails, scope)
         {
             SubscriptionId = subscriptionId;
             ResourceGroup = resourceGroup;

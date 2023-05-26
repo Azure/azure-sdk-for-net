@@ -58,13 +58,13 @@ namespace Azure.ResourceManager.CostManagement.Models
             Optional<int> totalHours = default;
             Optional<RecommendationUsageDetails> usage = default;
             Optional<string> armSkuName = default;
-            Optional<Term> term = default;
+            Optional<BenefitPeriodTerm> term = default;
             Optional<Grain> commitmentGranularity = default;
             Optional<string> currencyCode = default;
             Optional<decimal> costWithoutBenefit = default;
             Optional<AllSavingsBenefitDetails> recommendationDetails = default;
             Optional<AllSavingsList> allRecommendationDetails = default;
-            Scope scope = default;
+            BenefitRecommendationScope scope = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("firstConsumptionDate"u8))
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.CostManagement.Models
                     {
                         continue;
                     }
-                    term = new Term(property.Value.GetString());
+                    term = new BenefitPeriodTerm(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("commitmentGranularity"u8))
@@ -169,7 +169,7 @@ namespace Azure.ResourceManager.CostManagement.Models
                 }
                 if (property.NameEquals("scope"u8))
                 {
-                    scope = new Scope(property.Value.GetString());
+                    scope = new BenefitRecommendationScope(property.Value.GetString());
                     continue;
                 }
             }

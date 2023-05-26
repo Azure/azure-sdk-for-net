@@ -79,10 +79,13 @@ rename-mapping:
   MetricType: ViewMetricType
   KpiType: ViewKpiType
   ChartType: ViewChartType
+  PivotProperties: ViewPivotProperties
   ErrorDetails: ExportRunErrorDetails
   BenefitKind: BillingAccountBenefitKind
   DaysOfWeek: ScheduledActionDaysOfWeek
   WeeksOfMonth: ScheduledActionWeeksOfMonth
+  Term: BenefitPeriodTerm
+  Scope: BenefitRecommendationScope
 
 directive:
   # [Error][Linked: https://github.com/Azure/autorest.csharp/issues/3288] Found more than 1 candidate for XX 
