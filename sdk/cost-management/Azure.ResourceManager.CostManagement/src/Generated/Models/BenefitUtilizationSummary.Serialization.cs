@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.CostManagement.Models
                     case "SavingsPlan": return SavingsPlanUtilizationSummary.DeserializeSavingsPlanUtilizationSummary(element);
                 }
             }
-            BenefitKind kind = default;
+            BillingAccountBenefitKind kind = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.CostManagement.Models
             {
                 if (property.NameEquals("kind"u8))
                 {
-                    kind = new BenefitKind(property.Value.GetString());
+                    kind = new BillingAccountBenefitKind(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("id"u8))

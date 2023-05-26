@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.CostManagement.Models
             {
                 return null;
             }
-            BenefitKind kind = default;
+            BillingAccountBenefitKind kind = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.CostManagement.Models
             Optional<string> armSkuName = default;
             Optional<string> benefitId = default;
             Optional<string> benefitOrderId = default;
-            Optional<BenefitKind> benefitType = default;
+            Optional<BillingAccountBenefitKind> benefitType = default;
             Optional<DateTimeOffset> usageDate = default;
             Optional<decimal> avgUtilizationPercentage = default;
             Optional<decimal> minUtilizationPercentage = default;
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.CostManagement.Models
             {
                 if (property.NameEquals("kind"u8))
                 {
-                    kind = new BenefitKind(property.Value.GetString());
+                    kind = new BillingAccountBenefitKind(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("id"u8))
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.CostManagement.Models
                             {
                                 continue;
                             }
-                            benefitType = new BenefitKind(property0.Value.GetString());
+                            benefitType = new BillingAccountBenefitKind(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("usageDate"u8))

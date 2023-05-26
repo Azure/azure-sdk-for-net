@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.CostManagement.Models
                 return null;
             }
             Optional<BenefitRecommendationProperties> properties = default;
-            Optional<BenefitKind> kind = default;
+            Optional<BillingAccountBenefitKind> kind = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.CostManagement.Models
                     {
                         continue;
                     }
-                    kind = new BenefitKind(property.Value.GetString());
+                    kind = new BillingAccountBenefitKind(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("id"u8))

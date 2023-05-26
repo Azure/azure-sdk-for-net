@@ -28,12 +28,12 @@ namespace Azure.ResourceManager.CostManagement.Models
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="kind"> Supported values: &apos;SavingsPlan&apos;. </param>
-        internal BenefitUtilizationSummary(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, BenefitKind kind) : base(id, name, resourceType, systemData)
+        internal BenefitUtilizationSummary(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, BillingAccountBenefitKind kind) : base(id, name, resourceType, systemData)
         {
             Kind = kind;
         }
 
         /// <summary> Supported values: &apos;SavingsPlan&apos;. </summary>
-        internal BenefitKind Kind { get; set; }
+        internal BillingAccountBenefitKind Kind { get; set; }
     }
 }

@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.CostManagement.Models
         /// <param name="startOn"> The start date of the summaries data that will be served in the report. </param>
         /// <param name="endOn"> The end date of the summaries data that will be served in the report. </param>
         /// <param name="kind"> The type of benefit data requested. Required for billing account and billing profile scopes. Implied and not to be passed at benefit scopes. Supported values are Reservation and SavingsPlan. </param>
-        internal BenefitUtilizationSummariesRequest(string billingAccountId, string billingProfileId, string benefitOrderId, string benefitId, Grain grain, DateTimeOffset startOn, DateTimeOffset endOn, BenefitKind? kind)
+        internal BenefitUtilizationSummariesRequest(string billingAccountId, string billingProfileId, string benefitOrderId, string benefitId, Grain grain, DateTimeOffset startOn, DateTimeOffset endOn, BillingAccountBenefitKind? kind)
         {
             BillingAccountId = billingAccountId;
             BillingProfileId = billingProfileId;
@@ -59,6 +59,6 @@ namespace Azure.ResourceManager.CostManagement.Models
         /// <summary> The end date of the summaries data that will be served in the report. </summary>
         public DateTimeOffset EndOn { get; set; }
         /// <summary> The type of benefit data requested. Required for billing account and billing profile scopes. Implied and not to be passed at benefit scopes. Supported values are Reservation and SavingsPlan. </summary>
-        public BenefitKind? Kind { get; set; }
+        public BillingAccountBenefitKind? Kind { get; set; }
     }
 }

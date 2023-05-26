@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.CostManagement.Models
         /// <summary> Initializes a new instance of IncludedQuantityUtilizationSummary. </summary>
         public IncludedQuantityUtilizationSummary()
         {
-            Kind = BenefitKind.IncludedQuantity;
+            Kind = BillingAccountBenefitKind.IncludedQuantity;
         }
 
         /// <summary> Initializes a new instance of IncludedQuantityUtilizationSummary. </summary>
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.CostManagement.Models
         /// <param name="benefitType"> The benefit type. Supported values: &apos;SavingsPlan&apos;. </param>
         /// <param name="usageOn"> Date corresponding to the utilization summary record. If the grain of data is monthly, value for this field will be first day of the month. </param>
         /// <param name="utilizationPercentage"> This is the utilized percentage for the benefit ID. </param>
-        internal IncludedQuantityUtilizationSummary(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, BenefitKind kind, string armSkuName, string benefitId, string benefitOrderId, BenefitKind? benefitType, DateTimeOffset? usageOn, decimal? utilizationPercentage) : base(id, name, resourceType, systemData, kind)
+        internal IncludedQuantityUtilizationSummary(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, BillingAccountBenefitKind kind, string armSkuName, string benefitId, string benefitOrderId, BillingAccountBenefitKind? benefitType, DateTimeOffset? usageOn, decimal? utilizationPercentage) : base(id, name, resourceType, systemData, kind)
         {
             ArmSkuName = armSkuName;
             BenefitId = benefitId;
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.CostManagement.Models
         /// <summary> The benefit order ID is the identifier for a benefit purchase. </summary>
         public string BenefitOrderId { get; }
         /// <summary> The benefit type. Supported values: &apos;SavingsPlan&apos;. </summary>
-        public BenefitKind? BenefitType { get; set; }
+        public BillingAccountBenefitKind? BenefitType { get; set; }
         /// <summary> Date corresponding to the utilization summary record. If the grain of data is monthly, value for this field will be first day of the month. </summary>
         public DateTimeOffset? UsageOn { get; }
         /// <summary> This is the utilized percentage for the benefit ID. </summary>

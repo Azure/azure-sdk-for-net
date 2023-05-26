@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.CostManagement.Models
         /// The available derived classes include <see cref="SharedScopeBenefitRecommendationProperties"/> and <see cref="SingleScopeBenefitRecommendationProperties"/>.
         /// </param>
         /// <param name="kind"> Reservation or SavingsPlan. </param>
-        internal BenefitRecommendationModel(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, BenefitRecommendationProperties properties, BenefitKind? kind) : base(id, name, resourceType, systemData)
+        internal BenefitRecommendationModel(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, BenefitRecommendationProperties properties, BillingAccountBenefitKind? kind) : base(id, name, resourceType, systemData)
         {
             Properties = properties;
             Kind = kind;
@@ -42,6 +42,6 @@ namespace Azure.ResourceManager.CostManagement.Models
         /// </summary>
         public BenefitRecommendationProperties Properties { get; set; }
         /// <summary> Reservation or SavingsPlan. </summary>
-        public BenefitKind? Kind { get; set; }
+        public BillingAccountBenefitKind? Kind { get; set; }
     }
 }

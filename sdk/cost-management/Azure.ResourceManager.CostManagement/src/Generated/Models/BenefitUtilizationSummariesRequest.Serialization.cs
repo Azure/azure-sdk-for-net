@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.CostManagement.Models
             Grain grain = default;
             DateTimeOffset startDate = default;
             DateTimeOffset endDate = default;
-            Optional<BenefitKind> kind = default;
+            Optional<BillingAccountBenefitKind> kind = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("billingAccountId"u8))
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.CostManagement.Models
                     {
                         continue;
                     }
-                    kind = new BenefitKind(property.Value.GetString());
+                    kind = new BillingAccountBenefitKind(property.Value.GetString());
                     continue;
                 }
             }

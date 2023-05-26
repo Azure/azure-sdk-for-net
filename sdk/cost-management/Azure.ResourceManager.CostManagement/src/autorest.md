@@ -80,6 +80,7 @@ rename-mapping:
   KpiType: ViewKpiType
   ChartType: ViewChartType
   ErrorDetails: ExportRunErrorDetails
+  BenefitKind: BillingAccountBenefitKind
 
 directive:
   # [Error][Linked: https://github.com/Azure/autorest.csharp/issues/3288] Found more than 1 candidate for XX 
