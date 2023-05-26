@@ -13,20 +13,20 @@ using OpenTelemetry.Trace;
 
 namespace Azure.Monitor.OpenTelemetry.AspNetCore.Perf
 {
-    public class ActivityKindServer : PerfTest<PerfOptions>
+    public class ActivityKindClient : PerfTest<PerfOptions>
     {
         // please refer to https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/template/Azure.Template/perf/TemplateClientTest.cs to write perf test.
         /* How to run
          * Build
             dotnet build -c Release -f <TargetFramework>
          * Run
-         * dotnet run -c Release -f net7.0 --no-build --project <Path to this Project> ActivityKindServer --sync true
+         * dotnet run -c Release -f net7.0 --no-build --project <Path to this Project> ActivityKindClient --sync true
         */
-        private const string ActivitySourceName = nameof(ActivityKindServer);
+        private const string ActivitySourceName = nameof(ActivityKindClient);
         private readonly Batch<Activity> _activityBatch;
         private readonly AzureMonitorTraceExporter _traceExporter;
 
-        public ActivityKindServer(PerfOptions options) : base(options)
+        public ActivityKindClient(PerfOptions options) : base(options)
         {
             Activity.DefaultIdFormat = ActivityIdFormat.W3C;
             Activity.ForceDefaultIdFormat = true;
@@ -47,20 +47,18 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Perf
 
             ActivitySource activitySource = new(ActivitySourceName);
             using var activity = activitySource.StartActivity(
-                "ActivityKindServer",
-                ActivityKind.Server,
+                "ActivityKindClient",
+                ActivityKind.Client,
                 parentContext: new ActivityContext(ActivityTraceId.CreateRandom(), ActivitySpanId.CreateRandom(), ActivityTraceFlags.Recorded),
                 startTime: DateTime.UtcNow);
 
             activity?.SetStatus(Status.Ok);
-            activity?.SetTag(SemanticConventions.AttributeHttpMethod, "Get");
             activity?.SetTag(SemanticConventions.AttributeHttpScheme, "https");
+            activity?.SetTag(SemanticConventions.AttributeHttpMethod, "POST");
             activity?.SetTag(SemanticConventions.AttributeHttpTarget, "api/123");
             activity?.SetTag(SemanticConventions.AttributeHttpFlavor, "1.1");
-            activity?.SetTag(SemanticConventions.AttributeHttpRoute, "api/{searchId}");
-            activity?.SetTag(SemanticConventions.AttributeNetHostName, "localhost");
-            activity?.SetTag(SemanticConventions.AttributeNetHostPort, "9999");
-            activity?.SetTag(SemanticConventions.AttributeHttpUserAgent, "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:72.0) Gecko/20100101 Firefox/72.0");
+            activity?.SetTag(SemanticConventions.AttributeNetPeerName, "localhost");
+            activity?.SetTag(SemanticConventions.AttributeNetPeerPort, "8080");
             activity?.SetTag(SemanticConventions.AttributeHttpStatusCode, 200);
             activity?.Stop();
 
