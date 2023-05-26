@@ -93,7 +93,8 @@ namespace Microsoft.Azure.Management.CosmosDB.Models
         /// managed data centers. These should be added to the seed node lists
         /// of all unmanaged nodes.</param>
         /// <param name="hoursBetweenBackups">Number of hours to wait between
-        /// taking a backup of the cluster.</param>
+        /// taking a backup of the cluster. To disable backups, set this
+        /// property to 0.</param>
         /// <param name="deallocated">Whether the cluster and associated data
         /// centers has been deallocated.</param>
         /// <param name="cassandraAuditLoggingEnabled">Whether Cassandra audit
@@ -250,7 +251,7 @@ namespace Microsoft.Azure.Management.CosmosDB.Models
 
         /// <summary>
         /// Gets or sets number of hours to wait between taking a backup of the
-        /// cluster.
+        /// cluster. To disable backups, set this property to 0.
         /// </summary>
         [JsonProperty(PropertyName = "hoursBetweenBackups")]
         public int? HoursBetweenBackups { get; set; }

@@ -178,9 +178,9 @@ namespace Microsoft.Azure.Management.CosmosDB
             /// <param name='tableName'>
             /// Cosmos DB table name.
             /// </param>
-            public static void DeleteTable(this ITableResourcesOperations operations, string resourceGroupName, string accountName, string tableName)
+            public static TableResourcesDeleteTableHeaders DeleteTable(this ITableResourcesOperations operations, string resourceGroupName, string accountName, string tableName)
             {
-                operations.DeleteTableAsync(resourceGroupName, accountName, tableName).GetAwaiter().GetResult();
+                return operations.DeleteTableAsync(resourceGroupName, accountName, tableName).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -201,9 +201,12 @@ namespace Microsoft.Azure.Management.CosmosDB
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task DeleteTableAsync(this ITableResourcesOperations operations, string resourceGroupName, string accountName, string tableName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<TableResourcesDeleteTableHeaders> DeleteTableAsync(this ITableResourcesOperations operations, string resourceGroupName, string accountName, string tableName, CancellationToken cancellationToken = default(CancellationToken))
             {
-                (await operations.DeleteTableWithHttpMessagesAsync(resourceGroupName, accountName, tableName, null, cancellationToken).ConfigureAwait(false)).Dispose();
+                using (var _result = await operations.DeleteTableWithHttpMessagesAsync(resourceGroupName, accountName, tableName, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Headers;
+                }
             }
 
             /// <summary>
@@ -517,9 +520,9 @@ namespace Microsoft.Azure.Management.CosmosDB
             /// <param name='tableName'>
             /// Cosmos DB table name.
             /// </param>
-            public static void BeginDeleteTable(this ITableResourcesOperations operations, string resourceGroupName, string accountName, string tableName)
+            public static TableResourcesDeleteTableHeaders BeginDeleteTable(this ITableResourcesOperations operations, string resourceGroupName, string accountName, string tableName)
             {
-                operations.BeginDeleteTableAsync(resourceGroupName, accountName, tableName).GetAwaiter().GetResult();
+                return operations.BeginDeleteTableAsync(resourceGroupName, accountName, tableName).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -540,9 +543,12 @@ namespace Microsoft.Azure.Management.CosmosDB
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task BeginDeleteTableAsync(this ITableResourcesOperations operations, string resourceGroupName, string accountName, string tableName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<TableResourcesDeleteTableHeaders> BeginDeleteTableAsync(this ITableResourcesOperations operations, string resourceGroupName, string accountName, string tableName, CancellationToken cancellationToken = default(CancellationToken))
             {
-                (await operations.BeginDeleteTableWithHttpMessagesAsync(resourceGroupName, accountName, tableName, null, cancellationToken).ConfigureAwait(false)).Dispose();
+                using (var _result = await operations.BeginDeleteTableWithHttpMessagesAsync(resourceGroupName, accountName, tableName, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Headers;
+                }
             }
 
             /// <summary>

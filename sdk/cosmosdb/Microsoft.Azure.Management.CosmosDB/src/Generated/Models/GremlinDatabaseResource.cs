@@ -31,9 +31,15 @@ namespace Microsoft.Azure.Management.CosmosDB.Models
         /// Initializes a new instance of the GremlinDatabaseResource class.
         /// </summary>
         /// <param name="id">Name of the Cosmos DB Gremlin database</param>
-        public GremlinDatabaseResource(string id)
+        /// <param name="restoreParameters">Parameters to indicate the
+        /// information about the restore</param>
+        /// <param name="createMode">Enum to indicate the mode of resource
+        /// creation. Possible values include: 'Default', 'Restore'</param>
+        public GremlinDatabaseResource(string id, ResourceRestoreParameters restoreParameters = default(ResourceRestoreParameters), string createMode = default(string))
         {
             Id = id;
+            RestoreParameters = restoreParameters;
+            CreateMode = createMode;
             CustomInit();
         }
 
@@ -47,6 +53,20 @@ namespace Microsoft.Azure.Management.CosmosDB.Models
         /// </summary>
         [JsonProperty(PropertyName = "id")]
         public string Id { get; set; }
+
+        /// <summary>
+        /// Gets or sets parameters to indicate the information about the
+        /// restore
+        /// </summary>
+        [JsonProperty(PropertyName = "restoreParameters")]
+        public ResourceRestoreParameters RestoreParameters { get; set; }
+
+        /// <summary>
+        /// Gets or sets enum to indicate the mode of resource creation.
+        /// Possible values include: 'Default', 'Restore'
+        /// </summary>
+        [JsonProperty(PropertyName = "createMode")]
+        public string CreateMode { get; set; }
 
         /// <summary>
         /// Validate the object.
