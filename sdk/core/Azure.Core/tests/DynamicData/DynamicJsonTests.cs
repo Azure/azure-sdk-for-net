@@ -7,6 +7,8 @@ using System.IO;
 using System.Text.Json;
 using Azure.Core.Dynamic;
 using Azure.Core.GeoJson;
+using Azure.Core.Serialization;
+using Microsoft.CSharp.RuntimeBinder;
 using NUnit.Framework;
 
 namespace Azure.Core.Tests
@@ -153,6 +155,30 @@ namespace Azure.Core.Tests
             Assert.AreEqual(4, (int)jsonData.Foo[0]);
             Assert.AreEqual(5, (int)jsonData.Foo[1]);
             Assert.AreEqual(6, (int)jsonData.Foo[2]);
+        }
+
+        [Test]
+        public void CannotGetOrSetValuesOnAbsentArrays()
+        {
+            dynamic value = BinaryData.FromString("""{"foo": [1, 2]}""").ToDynamicFromJson(DynamicCaseMapping.PascalToCamel);
+
+            Assert.Throws<InvalidOperationException>(() => { int i = value[0]; });
+            Assert.Throws<InvalidOperationException>(() => { value[0] = 1; });
+
+            Assert.Throws<InvalidOperationException>(() => { int i = value.Foo[0][0]; });
+            Assert.Throws<InvalidOperationException>(() => { value.Foo[0][0] = 2; });
+        }
+
+        [Test]
+        public void CannotGetOrSetValuesOnAbsentProperties()
+        {
+            dynamic value = BinaryData.FromString("""{"foo": 1}""").ToDynamicFromJson(DynamicCaseMapping.PascalToCamel);
+
+            Assert.Throws<InvalidOperationException>(() => { int i = value.Foo.Bar.Baz; });
+            Assert.Throws<InvalidOperationException>(() => { value.Foo.Bar.Baz = "hi"; });
+
+            Assert.Throws<RuntimeBinderException>(() => { int i = value.A.B.C; });
+            Assert.Throws<RuntimeBinderException>(() => { value.A.B.C = 1; });
         }
 
         [Test]
