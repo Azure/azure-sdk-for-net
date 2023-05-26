@@ -90,7 +90,9 @@ namespace Azure.Communication.JobRouter.Tests.RouterClients
 
             var updatedQueueResponse =
                 await routerClient.UpdateQueueAsync(queueId, RequestContent.Create(new { Name = (string?)null }));
-            Assert.True(string.IsNullOrWhiteSpace(updatedQueueResponse.Value.Name));
+
+            var queriedQueue = await routerClient.GetQueueAsync(queueId);
+            Assert.True(string.IsNullOrWhiteSpace(queriedQueue.Value.Name));
         }
 
         #endregion Queue Tests

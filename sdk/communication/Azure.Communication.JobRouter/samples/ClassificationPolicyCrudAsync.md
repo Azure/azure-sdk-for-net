@@ -85,10 +85,12 @@ Console.WriteLine($"Classification policy successfully update with new prioritiz
 ## Remove from classification policy
 
 ```C# Snippet:Azure_Communication_JobRouter_Tests_Samples_Crud_UpdateClassificationPolicyRemoveProp_Async
-Response<ClassificationPolicy> updatedClassificationPolicyWithoutName = await routerAdministrationClient.UpdateClassificationPolicyAsync(classificationPolicyId,
+Response updatedClassificationPolicyWithoutName = await routerAdministrationClient.UpdateClassificationPolicyAsync(classificationPolicyId,
     RequestContent.Create(new { Name = (string?)null }));
 
-Console.WriteLine($"Classification policy successfully update: 'Name' has been removed. Status: {string.IsNullOrWhiteSpace(updatedClassificationPolicyWithoutName.Value.Name)}");
+Response<ClassificationPolicy> queriedClassificationPolicyWithoutName = await routerAdministrationClient.GetClassificationPolicyAsync(classificationPolicyId);
+
+Console.WriteLine($"Classification policy successfully updated: 'Name' has been removed. Status: {string.IsNullOrWhiteSpace(queriedClassificationPolicyWithoutName.Value.Name)}");
 ```
 
 ## List classification policies

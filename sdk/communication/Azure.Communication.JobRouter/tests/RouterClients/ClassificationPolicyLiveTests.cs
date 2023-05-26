@@ -269,7 +269,9 @@ namespace Azure.Communication.JobRouter.Tests.RouterClients
             var updatedPolicyResponse = await routerClient.UpdateClassificationPolicyAsync(classificationPolicyId,
                 RequestContent.Create(new { Name = (string?)null }));
 
-            Assert.True(string.IsNullOrWhiteSpace(updatedPolicyResponse.Value.Name));
+            var retrievedPolicy = await routerClient.GetClassificationPolicyAsync(classificationPolicyId);
+
+            Assert.True(string.IsNullOrWhiteSpace(retrievedPolicy.Value.Name));
         }
 
         #endregion Classification Policy Tests

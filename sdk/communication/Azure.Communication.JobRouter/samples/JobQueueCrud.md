@@ -63,10 +63,12 @@ Response<JobQueue> updatedJobQueue = routerAdministrationClient.UpdateQueue(
 ## Remove from queue
 
 ```C# Snippet:Azure_Communication_JobRouter_Tests_Samples_Crud_UpdateQueueRemoveProp
-Response<JobQueue> updatedJobQueueWithoutName = routerAdministrationClient.UpdateQueue(jobQueueId,
+Response updatedJobQueueWithoutName = routerAdministrationClient.UpdateQueue(jobQueueId,
     RequestContent.Create(new { Name = (string?)null }));
 
-Console.WriteLine($"Queue successfully updated: 'Name' has been removed. Status: {string.IsNullOrWhiteSpace(updatedJobQueueWithoutName.Value.Name)}");
+Response<JobQueue> queriedJobQueueWithoutName = routerAdministrationClient.GetQueue(jobQueueId);
+
+Console.WriteLine($"Queue successfully updated: 'Name' has been removed. Status: {string.IsNullOrWhiteSpace(queriedJobQueueWithoutName.Value.Name)}");
 ```
 
 ## List job queues

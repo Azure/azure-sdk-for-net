@@ -8,7 +8,7 @@
 namespace Azure.Communication.JobRouter
 {
     /// <summary> The current state of the worker. </summary>
-    public enum WorkerState
+    public enum RouterWorkerState
     {
         /// <summary> active. </summary>
         Active,

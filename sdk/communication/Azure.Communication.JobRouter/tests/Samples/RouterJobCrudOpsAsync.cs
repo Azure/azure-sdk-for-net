@@ -92,10 +92,12 @@ namespace Azure.Communication.JobRouter.Tests.Samples
 
             #region Snippet:Azure_Communication_JobRouter_Tests_Samples_Crud_UpdateJobRemoveProp_Async
 
-            Response<RouterJob> updatedJobWithoutChannelReference = await routerClient.UpdateJobAsync(jobId,
+            Response updatedJobWithoutChannelReference = await routerClient.UpdateJobAsync(jobId,
                 RequestContent.Create(new { ChannelReference = (string?)null }));
 
-            Console.WriteLine($"Job has been successfully updated. 'ChannelReference' has been removed: {string.IsNullOrWhiteSpace(updatedJobWithoutChannelReference.Value.ChannelReference)}");
+            Response<RouterJob> queriedJobWithoutChannelReference = await routerClient.GetJobAsync(jobId);
+
+            Console.WriteLine($"Job has been successfully updated. 'ChannelReference' has been removed: {string.IsNullOrWhiteSpace(queriedJobWithoutChannelReference.Value.ChannelReference)}");
 
             #endregion Snippet:Azure_Communication_JobRouter_Tests_Samples_Crud_UpdateJobRemoveProp_Async
 

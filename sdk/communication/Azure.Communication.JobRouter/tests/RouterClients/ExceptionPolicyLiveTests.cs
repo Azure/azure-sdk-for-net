@@ -233,7 +233,9 @@ namespace Azure.Communication.JobRouter.Tests.RouterClients
             var updatedExpcetionPolicyResponse = await routerClient.UpdateExceptionPolicyAsync(exceptionPolicyId,
                 RequestContent.Create(new { Name = (string?)null }));
 
-            Assert.True(string.IsNullOrWhiteSpace(updatedExpcetionPolicyResponse.Value.Name));
+            var retrievedPolicy = await routerClient.GetExceptionPolicyAsync(exceptionPolicyId);
+
+            Assert.True(string.IsNullOrWhiteSpace(retrievedPolicy.Value.Name));
         }
 
         #endregion Exception Policy Tests

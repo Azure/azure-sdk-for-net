@@ -410,9 +410,10 @@ namespace Azure.Communication.JobRouter.Tests.RouterClients
             AddForCleanup(new Task(async () => await routerClient.DeleteJobAsync(createJob1.Id)));
 
             var updatedJob1Response = await routerClient.UpdateJobAsync(createJob1.Id, RequestContent.Create(new { ChannelReference = (string?)null }));
-            var updatedJob1 = updatedJob1Response.Value;
 
-            Assert.True(string.IsNullOrWhiteSpace(updatedJob1.ChannelReference));
+            var retrievedJob = await routerClient.GetJobAsync(jobId1);
+
+            Assert.True(string.IsNullOrWhiteSpace(retrievedJob.Value.ChannelReference));
         }
 
         #endregion Job Tests

@@ -348,13 +348,13 @@ using Azure.Core.Pipeline;
 
         /// <summary> Protocol method to use to remove properties from job. </summary>
         /// <param name="jobId"> Id of the job. </param>
-        /// <param name="patchContent"> Request content payload. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <param name="content"> Request content payload. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
-        public virtual async Task<Response<RouterJob>> UpdateJobAsync(
+        public virtual async Task<Response> UpdateJobAsync(
             string jobId,
-            RequestContent patchContent,
-            CancellationToken cancellationToken = default)
+            RequestContent content,
+            RequestContext context = null)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(RouterClient)}.{nameof(UpdateJob)}");
             scope.Start();
@@ -362,8 +362,8 @@ using Azure.Core.Pipeline;
             {
                 return await RestClient.UpsertJobAsync(
                         id: jobId,
-                        patchContent: patchContent,
-                        cancellationToken: cancellationToken)
+                        content: content,
+                        context: context)
                     .ConfigureAwait(false);
             }
             catch (Exception ex)
@@ -375,13 +375,13 @@ using Azure.Core.Pipeline;
 
         /// <summary> Protocol method to use to remove properties from job. </summary>
         /// <param name="jobId"> Id of the job. </param>
-        /// <param name="patchContent"> Request content payload. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <param name="content"> Request content payload. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
-        public virtual Response<RouterJob> UpdateJob(
+        public virtual Response UpdateJob(
             string jobId,
-            RequestContent patchContent,
-            CancellationToken cancellationToken = default)
+            RequestContent content,
+            RequestContext context = null)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(RouterClient)}.{nameof(UpdateJob)}");
             scope.Start();
@@ -389,8 +389,8 @@ using Azure.Core.Pipeline;
             {
                 return RestClient.UpsertJob(
                     id: jobId,
-                    patchContent: patchContent,
-                    cancellationToken: cancellationToken);
+                    content: content,
+                    context: context);
             }
             catch (Exception ex)
             {
@@ -964,7 +964,7 @@ using Azure.Core.Pipeline;
                 var response = await RestClient.DeclineJobActionAsync(
                         workerId: options.WorkerId,
                         offerId: options.OfferId,
-                        declineOfferRequest: new DeclineOfferRequest { ReofferTimeUtc = options.ReofferTimeUtc },
+                        declineJobOfferRequest: new DeclineJobOfferRequest { ReofferTimeUtc = options.ReofferTimeUtc },
                         cancellationToken: cancellationToken)
                     .ConfigureAwait(false);
 
@@ -990,7 +990,7 @@ using Azure.Core.Pipeline;
                 var response = RestClient.DeclineJobAction(
                     workerId: options.WorkerId,
                     offerId: options.OfferId,
-                    declineOfferRequest: new DeclineOfferRequest { ReofferTimeUtc = options.ReofferTimeUtc },
+                    declineJobOfferRequest: new DeclineJobOfferRequest { ReofferTimeUtc = options.ReofferTimeUtc },
                     cancellationToken: cancellationToken);
 
                 return Response.FromValue(new DeclineJobOfferResult(), response.GetRawResponse());
@@ -1199,24 +1199,23 @@ using Azure.Core.Pipeline;
 
         /// <summary> Protocol method to use to remove properties from worker. </summary>
         /// <param name="workerId"> Id of the worker. </param>
-        /// <param name="patchContent"> Request content payload. </param>
-        /// <param name="cancellationToken"> (Optional) The cancellation token to use. </param>
+        /// <param name="content"> Request content payload. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
-        public virtual async Task<Response<RouterWorker>> UpdateWorkerAsync(
+        public virtual async Task<Response> UpdateWorkerAsync(
             string workerId,
-            RequestContent patchContent,
-            CancellationToken cancellationToken = default)
+            RequestContent content,
+            RequestContext context = null)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(RouterClient)}.{nameof(UpdateWorker)}");
             scope.Start();
             try
             {
-                var response = await RestClient.UpsertWorkerAsync(
+                return await RestClient.UpsertWorkerAsync(
                         workerId: workerId,
-                        patchContent: patchContent,
-                        cancellationToken: cancellationToken)
+                        content: content,
+                        context: context)
                     .ConfigureAwait(false);
-                return Response.FromValue(response.Value, response.GetRawResponse());
             }
             catch (Exception ex)
             {
@@ -1227,23 +1226,22 @@ using Azure.Core.Pipeline;
 
         /// <summary> Protocol method to use to remove properties from worker. </summary>
         /// <param name="workerId"> Id of the worker. </param>
-        /// <param name="patchContent"> Request content payload. </param>
-        /// <param name="cancellationToken"> (Optional) The cancellation token to use. </param>
+        /// <param name="content"> Request content payload. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
-        public virtual Response<RouterWorker> UpdateWorker(
+        public virtual Response UpdateWorker(
             string workerId,
-            RequestContent patchContent,
-            CancellationToken cancellationToken = default)
+            RequestContent content,
+            RequestContext context = null)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(RouterClient)}.{nameof(UpdateWorker)}");
             scope.Start();
             try
             {
-                var response = RestClient.UpsertWorker(
+                return RestClient.UpsertWorker(
                     workerId: workerId,
-                    patchContent: patchContent,
-                    cancellationToken: cancellationToken);
-                return Response.FromValue(response.Value, response.GetRawResponse());
+                    content: content,
+                    context: context);
             }
             catch (Exception ex)
             {

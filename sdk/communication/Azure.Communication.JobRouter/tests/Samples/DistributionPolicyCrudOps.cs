@@ -50,10 +50,12 @@ namespace Azure.Communication.JobRouter.Tests.Samples
 
             #region Snippet:Azure_Communication_JobRouter_Tests_Samples_Crud_UpdateDistributionPolicyRemoveProp
 
-            Response<DistributionPolicy> updatedDistributionPolicyWithoutName = routerAdministrationClient.UpdateDistributionPolicy(distributionPolicyId,
+            Response updatedDistributionPolicyWithoutName = routerAdministrationClient.UpdateDistributionPolicy(distributionPolicyId,
                 RequestContent.Create(new { Name = (string?)null }));
 
-            Console.WriteLine($"Distribution policy successfully updated: 'Name' has been removed. Status: Status: {string.IsNullOrWhiteSpace(updatedDistributionPolicyWithoutName.Value.Name)}");
+            Response<DistributionPolicy> queriedDistributionPolicyWithoutName = routerAdministrationClient.GetDistributionPolicy(distributionPolicyId);
+
+            Console.WriteLine($"Distribution policy successfully updated: 'Name' has been removed. Status: Status: {string.IsNullOrWhiteSpace(queriedDistributionPolicyWithoutName.Value.Name)}");
 
             #endregion Snippet:Azure_Communication_JobRouter_Tests_Samples_Crud_UpdateDistributionPolicyRemoveProp
 

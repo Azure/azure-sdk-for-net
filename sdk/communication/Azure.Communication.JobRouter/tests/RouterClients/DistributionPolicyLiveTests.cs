@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Azure.Communication.JobRouter.Models;
 using Azure.Communication.JobRouter.Tests.Infrastructure;
 using Azure.Core;
 using Azure.Core.TestFramework;
@@ -269,7 +270,10 @@ namespace Azure.Communication.JobRouter.Tests.RouterClients
             var updatedDistributionPolicyResponse =
                 await routerClient.UpdateDistributionPolicyAsync(bestWorkerModeDistributionPolicyId,
                     RequestContent.Create(new { Name = (string?)null }));
-            Assert.True(string.IsNullOrWhiteSpace(updatedDistributionPolicyResponse.Value.Name));
+
+            var retrievedPolicy = await routerClient.GetDistributionPolicyAsync(bestWorkerModeDistributionPolicyId);
+
+            Assert.True(string.IsNullOrWhiteSpace(retrievedPolicy.Value.Name));
         }
 
         #endregion sanity checks

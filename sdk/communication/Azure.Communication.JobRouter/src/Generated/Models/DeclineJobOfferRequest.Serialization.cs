@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.Communication.JobRouter
 {
-    public partial class DeclineOfferRequest : IUtf8JsonSerializable
+    public partial class DeclineJobOfferRequest : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
