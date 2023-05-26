@@ -7,20 +7,20 @@ namespace Azure.AI.TextAnalytics
     /// A set of options used to configure abstractive summarization, including the model version to use, the maximum
     /// number of sentences that the resulting summary can have, and more.
     /// </summary>
-    public class AbstractSummaryAction
+    public class AbstractiveSummarizeAction
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="AbstractSummaryAction"/> class.
+        /// Initializes a new instance of the <see cref="AbstractiveSummarizeAction"/> class.
         /// </summary>
-        public AbstractSummaryAction()
+        public AbstractiveSummarizeAction()
         {
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="AbstractSummaryAction"/> class based on the given
-        /// <see cref="AbstractSummaryOptions"/>.
+        /// Initializes a new instance of the <see cref="AbstractiveSummarizeAction"/> class based on the given
+        /// <see cref="AbstractiveSummarizeOptions"/>.
         /// </summary>
-        public AbstractSummaryAction(AbstractSummaryOptions options)
+        public AbstractiveSummarizeAction(AbstractiveSummarizeOptions options)
         {
             ModelVersion = options.ModelVersion;
             DisableServiceLogs = options.DisableServiceLogs;

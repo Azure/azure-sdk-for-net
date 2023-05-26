@@ -16,9 +16,9 @@ The values of the `endpoint` and `apiKey` variables can be retrieved from enviro
 
 ## Summarize one or more documents
 
-To summarize one or more text documents using abstractive summarization, call `StartAbstractSummary` on the `TextAnalyticsClient` by passing the documents as either an `IEnumerable<string>` parameter or an `IEnumerable<TextDocumentInput>` parameter. This returns an `AbstractSummaryOperation`.
+To summarize one or more text documents using abstractive summarization, call `StartAbstractiveSummarize` on the `TextAnalyticsClient` by passing the documents as either an `IEnumerable<string>` parameter or an `IEnumerable<TextDocumentInput>` parameter. This returns an `AbstractiveSummarizeOperation`.
 
-```C# Snippet:Sample12_AbstractSummaryConvenienceAsync
+```C# Snippet:Sample12_AbstractiveSummarizeConvenienceAsync
 string document =
     "Windows 365 was in the works before COVID-19 sent companies around the world on a scramble to secure"
     + " solutions to support employees suddenly forced to work from home, but “what really put the"
@@ -64,13 +64,13 @@ List<string> batchedDocuments = new()
 };
 
 // Perform the text analysis operation.
-AbstractSummaryOperation operation = client.StartAbstractSummary(batchedDocuments);
+AbstractiveSummarizeOperation operation = client.StartAbstractiveSummarize(batchedDocuments);
 await operation.WaitForCompletionAsync();
 ```
 
-The `AbstractSummaryOperation` includes general information about the status of the long-running operation, and it can be queried at any time:
+The `AbstractiveSummarizeOperation` includes general information about the status of the long-running operation, and it can be queried at any time:
 
-```C# Snippet:Sample12_AbstractSummaryConvenienceAsync_ViewOperationStatus
+```C# Snippet:Sample12_AbstractiveSummarizeConvenienceAsync_ViewOperationStatus
 // View the operation status.
 Console.WriteLine($"Created On   : {operation.CreatedOn}");
 Console.WriteLine($"Expires On   : {operation.ExpiresOn}");
@@ -82,14 +82,14 @@ Console.WriteLine();
 
 Once the long-running operation has completed, you can view the results of the abstractive summarization, including any errors that might have occurred:
 
-```C# Snippet:Sample12_AbstractSummaryConvenienceAsync_ViewResults
+```C# Snippet:Sample12_AbstractiveSummarizeConvenienceAsync_ViewResults
 // View the operation results.
-await foreach (AbstractSummaryResultCollection documentsInPage in operation.Value)
+await foreach (AbstractiveSummarizeResultCollection documentsInPage in operation.Value)
 {
-    Console.WriteLine($"Abstract Summary, model version: \"{documentsInPage.ModelVersion}\"");
+    Console.WriteLine($"Abstractive Summarize, model version: \"{documentsInPage.ModelVersion}\"");
     Console.WriteLine();
 
-    foreach (AbstractSummaryResult documentResult in documentsInPage)
+    foreach (AbstractiveSummarizeResult documentResult in documentsInPage)
     {
         if (documentResult.HasError)
         {

@@ -7,12 +7,12 @@ namespace Azure.AI.TextAnalytics
     /// A set of options used to configure abstractive summarization, including the display name to use, the maximum
     /// number of sentences that the resulting summary can have, and more.
     /// </summary>
-    public class AbstractSummaryOptions : TextAnalyticsRequestOptions
+    public class AbstractiveSummarizeOptions : TextAnalyticsRequestOptions
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="AbstractSummaryOptions"/> class.
+        /// Initializes a new instance of the <see cref="AbstractiveSummarizeOptions"/> class.
         /// </summary>
-        public AbstractSummaryOptions()
+        public AbstractiveSummarizeOptions()
         {
         }
 
