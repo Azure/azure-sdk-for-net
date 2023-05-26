@@ -11,15 +11,15 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.CostManagement.Models
 {
-    internal partial class DimensionsListResult
+    internal partial class CostManagementDimensionsListResult
     {
-        internal static DimensionsListResult DeserializeDimensionsListResult(JsonElement element)
+        internal static CostManagementDimensionsListResult DeserializeCostManagementDimensionsListResult(JsonElement element)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<IReadOnlyList<Dimension>> value = default;
+            Optional<IReadOnlyList<CostManagementDimension>> value = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
@@ -28,16 +28,16 @@ namespace Azure.ResourceManager.CostManagement.Models
                     {
                         continue;
                     }
-                    List<Dimension> array = new List<Dimension>();
+                    List<CostManagementDimension> array = new List<CostManagementDimension>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(Dimension.DeserializeDimension(item));
+                        array.Add(CostManagementDimension.DeserializeCostManagementDimension(item));
                     }
                     value = array;
                     continue;
                 }
             }
-            return new DimensionsListResult(Optional.ToList(value));
+            return new CostManagementDimensionsListResult(Optional.ToList(value));
         }
     }
 }

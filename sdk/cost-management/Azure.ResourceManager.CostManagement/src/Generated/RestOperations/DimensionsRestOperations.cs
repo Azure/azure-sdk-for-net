@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.CostManagement
         /// <param name="top"> May be used to limit the number of results to the most recent N dimension data. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="scope"/> is null. </exception>
-        public async Task<Response<DimensionsListResult>> ListAsync(string scope, string filter = null, string expand = null, string skiptoken = null, int? top = null, CancellationToken cancellationToken = default)
+        public async Task<Response<CostManagementDimensionsListResult>> ListAsync(string scope, string filter = null, string expand = null, string skiptoken = null, int? top = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(scope, nameof(scope));
 
@@ -88,13 +88,13 @@ namespace Azure.ResourceManager.CostManagement
             {
                 case 200:
                     {
-                        DimensionsListResult value = default;
+                        CostManagementDimensionsListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = DimensionsListResult.DeserializeDimensionsListResult(document.RootElement);
+                        value = CostManagementDimensionsListResult.DeserializeCostManagementDimensionsListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 204:
-                    return Response.FromValue((DimensionsListResult)null, message.Response);
+                    return Response.FromValue((CostManagementDimensionsListResult)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.CostManagement
         /// <param name="top"> May be used to limit the number of results to the most recent N dimension data. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="scope"/> is null. </exception>
-        public Response<DimensionsListResult> List(string scope, string filter = null, string expand = null, string skiptoken = null, int? top = null, CancellationToken cancellationToken = default)
+        public Response<CostManagementDimensionsListResult> List(string scope, string filter = null, string expand = null, string skiptoken = null, int? top = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(scope, nameof(scope));
 
@@ -118,13 +118,13 @@ namespace Azure.ResourceManager.CostManagement
             {
                 case 200:
                     {
-                        DimensionsListResult value = default;
+                        CostManagementDimensionsListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = DimensionsListResult.DeserializeDimensionsListResult(document.RootElement);
+                        value = CostManagementDimensionsListResult.DeserializeCostManagementDimensionsListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 204:
-                    return Response.FromValue((DimensionsListResult)null, message.Response);
+                    return Response.FromValue((CostManagementDimensionsListResult)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -175,7 +175,7 @@ namespace Azure.ResourceManager.CostManagement
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="externalCloudProviderId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="externalCloudProviderId"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<DimensionsListResult>> ByExternalCloudProviderTypeAsync(ExternalCloudProviderType externalCloudProviderType, string externalCloudProviderId, string filter = null, string expand = null, string skiptoken = null, int? top = null, CancellationToken cancellationToken = default)
+        public async Task<Response<CostManagementDimensionsListResult>> ByExternalCloudProviderTypeAsync(ExternalCloudProviderType externalCloudProviderType, string externalCloudProviderId, string filter = null, string expand = null, string skiptoken = null, int? top = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(externalCloudProviderId, nameof(externalCloudProviderId));
 
@@ -185,9 +185,9 @@ namespace Azure.ResourceManager.CostManagement
             {
                 case 200:
                     {
-                        DimensionsListResult value = default;
+                        CostManagementDimensionsListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = DimensionsListResult.DeserializeDimensionsListResult(document.RootElement);
+                        value = CostManagementDimensionsListResult.DeserializeCostManagementDimensionsListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -205,7 +205,7 @@ namespace Azure.ResourceManager.CostManagement
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="externalCloudProviderId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="externalCloudProviderId"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<DimensionsListResult> ByExternalCloudProviderType(ExternalCloudProviderType externalCloudProviderType, string externalCloudProviderId, string filter = null, string expand = null, string skiptoken = null, int? top = null, CancellationToken cancellationToken = default)
+        public Response<CostManagementDimensionsListResult> ByExternalCloudProviderType(ExternalCloudProviderType externalCloudProviderType, string externalCloudProviderId, string filter = null, string expand = null, string skiptoken = null, int? top = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(externalCloudProviderId, nameof(externalCloudProviderId));
 
@@ -215,9 +215,9 @@ namespace Azure.ResourceManager.CostManagement
             {
                 case 200:
                     {
-                        DimensionsListResult value = default;
+                        CostManagementDimensionsListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = DimensionsListResult.DeserializeDimensionsListResult(document.RootElement);
+                        value = CostManagementDimensionsListResult.DeserializeCostManagementDimensionsListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

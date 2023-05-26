@@ -16,17 +16,17 @@ namespace Azure.ResourceManager.CostManagement.Models
         /// <summary> Initializes a new instance of FileDestination. </summary>
         public FileDestination()
         {
-            FileFormats = new ChangeTrackingList<FileFormat>();
+            FileFormats = new ChangeTrackingList<ScheduledActionFileFormat>();
         }
 
         /// <summary> Initializes a new instance of FileDestination. </summary>
         /// <param name="fileFormats"> Destination of the view data. Currently only CSV format is supported. </param>
-        internal FileDestination(IList<FileFormat> fileFormats)
+        internal FileDestination(IList<ScheduledActionFileFormat> fileFormats)
         {
             FileFormats = fileFormats;
         }
 
         /// <summary> Destination of the view data. Currently only CSV format is supported. </summary>
-        public IList<FileFormat> FileFormats { get; }
+        public IList<ScheduledActionFileFormat> FileFormats { get; }
     }
 }

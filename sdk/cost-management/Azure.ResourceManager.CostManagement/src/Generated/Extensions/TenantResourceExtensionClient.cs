@@ -880,11 +880,11 @@ namespace Azure.ResourceManager.CostManagement
         /// </summary>
         /// <param name="options"> A property bag which contains all the parameters of this method except the LRO qualifier and request context parameter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="Dimension" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<Dimension> ByExternalCloudProviderTypeDimensionsAsync(TenantResourceByExternalCloudProviderTypeDimensionsOptions options, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="CostManagementDimension" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<CostManagementDimension> ByExternalCloudProviderTypeDimensionsAsync(TenantResourceByExternalCloudProviderTypeDimensionsOptions options, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => DimensionsRestClient.CreateByExternalCloudProviderTypeRequest(options.ExternalCloudProviderType, options.ExternalCloudProviderId, options.Filter, options.Expand, options.Skiptoken, options.Top);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, Dimension.DeserializeDimension, DimensionsClientDiagnostics, Pipeline, "TenantResourceExtensionClient.ByExternalCloudProviderTypeDimensions", "value", null, cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, CostManagementDimension.DeserializeCostManagementDimension, DimensionsClientDiagnostics, Pipeline, "TenantResourceExtensionClient.ByExternalCloudProviderTypeDimensions", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -902,11 +902,11 @@ namespace Azure.ResourceManager.CostManagement
         /// </summary>
         /// <param name="options"> A property bag which contains all the parameters of this method except the LRO qualifier and request context parameter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="Dimension" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<Dimension> ByExternalCloudProviderTypeDimensions(TenantResourceByExternalCloudProviderTypeDimensionsOptions options, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="CostManagementDimension" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<CostManagementDimension> ByExternalCloudProviderTypeDimensions(TenantResourceByExternalCloudProviderTypeDimensionsOptions options, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => DimensionsRestClient.CreateByExternalCloudProviderTypeRequest(options.ExternalCloudProviderType, options.ExternalCloudProviderId, options.Filter, options.Expand, options.Skiptoken, options.Top);
-            return PageableHelpers.CreatePageable(FirstPageRequest, null, Dimension.DeserializeDimension, DimensionsClientDiagnostics, Pipeline, "TenantResourceExtensionClient.ByExternalCloudProviderTypeDimensions", "value", null, cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, null, CostManagementDimension.DeserializeCostManagementDimension, DimensionsClientDiagnostics, Pipeline, "TenantResourceExtensionClient.ByExternalCloudProviderTypeDimensions", "value", null, cancellationToken);
         }
 
         /// <summary>

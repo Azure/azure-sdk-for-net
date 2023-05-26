@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.CostManagement
         /// <summary> Destination format of the view data. This is optional. </summary>
         internal FileDestination FileDestination { get; set; }
         /// <summary> Destination of the view data. Currently only CSV format is supported. </summary>
-        public IList<FileFormat> FileFormats
+        public IList<ScheduledActionFileFormat> FileFormats
         {
             get
             {

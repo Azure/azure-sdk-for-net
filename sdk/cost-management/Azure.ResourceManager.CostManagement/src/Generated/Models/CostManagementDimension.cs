@@ -14,16 +14,16 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.CostManagement.Models
 {
     /// <summary> List of Dimension. </summary>
-    public partial class Dimension : ResourceData
+    public partial class CostManagementDimension : ResourceData
     {
-        /// <summary> Initializes a new instance of Dimension. </summary>
-        internal Dimension()
+        /// <summary> Initializes a new instance of CostManagementDimension. </summary>
+        internal CostManagementDimension()
         {
             Data = new ChangeTrackingList<string>();
             Tags = new ChangeTrackingDictionary<string, string>();
         }
 
-        /// <summary> Initializes a new instance of Dimension. </summary>
+        /// <summary> Initializes a new instance of CostManagementDimension. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.CostManagement.Models
         /// <param name="sku"> SKU of the resource. </param>
         /// <param name="eTag"> ETag of the resource. </param>
         /// <param name="tags"> Resource tags. </param>
-        internal Dimension(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string description, bool? filterEnabled, bool? groupingEnabled, IReadOnlyList<string> data, int? total, string category, DateTimeOffset? usageStart, DateTimeOffset? usageEnd, string nextLink, AzureLocation? location, string sku, ETag? eTag, IReadOnlyDictionary<string, string> tags) : base(id, name, resourceType, systemData)
+        internal CostManagementDimension(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string description, bool? filterEnabled, bool? groupingEnabled, IReadOnlyList<string> data, int? total, string category, DateTimeOffset? usageStart, DateTimeOffset? usageEnd, string nextLink, AzureLocation? location, string sku, ETag? eTag, IReadOnlyDictionary<string, string> tags) : base(id, name, resourceType, systemData)
         {
             Description = description;
             FilterEnabled = filterEnabled;

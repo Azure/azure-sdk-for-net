@@ -219,11 +219,11 @@ namespace Azure.ResourceManager.CostManagement
         /// <param name="skiptoken"> Skiptoken is only used if a previous operation returned a partial result. If a previous response contains a nextLink element, the value of the nextLink element will include a skiptoken parameter that specifies a starting point to use for subsequent calls. </param>
         /// <param name="top"> May be used to limit the number of results to the most recent N dimension data. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="Dimension" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<Dimension> GetDimensionsAsync(string filter = null, string expand = null, string skiptoken = null, int? top = null, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="CostManagementDimension" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<CostManagementDimension> GetDimensionsAsync(string filter = null, string expand = null, string skiptoken = null, int? top = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => DimensionsRestClient.CreateListRequest(Id, filter, expand, skiptoken, top);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, Dimension.DeserializeDimension, DimensionsClientDiagnostics, Pipeline, "ArmResourceExtensionClient.GetDimensions", "value", null, cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, CostManagementDimension.DeserializeCostManagementDimension, DimensionsClientDiagnostics, Pipeline, "ArmResourceExtensionClient.GetDimensions", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -244,11 +244,11 @@ namespace Azure.ResourceManager.CostManagement
         /// <param name="skiptoken"> Skiptoken is only used if a previous operation returned a partial result. If a previous response contains a nextLink element, the value of the nextLink element will include a skiptoken parameter that specifies a starting point to use for subsequent calls. </param>
         /// <param name="top"> May be used to limit the number of results to the most recent N dimension data. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="Dimension" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<Dimension> GetDimensions(string filter = null, string expand = null, string skiptoken = null, int? top = null, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="CostManagementDimension" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<CostManagementDimension> GetDimensions(string filter = null, string expand = null, string skiptoken = null, int? top = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => DimensionsRestClient.CreateListRequest(Id, filter, expand, skiptoken, top);
-            return PageableHelpers.CreatePageable(FirstPageRequest, null, Dimension.DeserializeDimension, DimensionsClientDiagnostics, Pipeline, "ArmResourceExtensionClient.GetDimensions", "value", null, cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, null, CostManagementDimension.DeserializeCostManagementDimension, DimensionsClientDiagnostics, Pipeline, "ArmResourceExtensionClient.GetDimensions", "value", null, cancellationToken);
         }
 
         /// <summary>

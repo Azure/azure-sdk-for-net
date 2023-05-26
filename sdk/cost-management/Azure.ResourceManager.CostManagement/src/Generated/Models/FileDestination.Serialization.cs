@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.CostManagement.Models
             {
                 return null;
             }
-            Optional<IList<FileFormat>> fileFormats = default;
+            Optional<IList<ScheduledActionFileFormat>> fileFormats = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("fileFormats"u8))
@@ -44,10 +44,10 @@ namespace Azure.ResourceManager.CostManagement.Models
                     {
                         continue;
                     }
-                    List<FileFormat> array = new List<FileFormat>();
+                    List<ScheduledActionFileFormat> array = new List<ScheduledActionFileFormat>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(new FileFormat(item.GetString()));
+                        array.Add(new ScheduledActionFileFormat(item.GetString()));
                     }
                     fileFormats = array;
                     continue;

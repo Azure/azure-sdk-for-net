@@ -69,6 +69,8 @@ prepend-rp-prefix:
   - AlertsResult
   - AlertStatus
   - AlertType
+  - Dimension
+  - DimensionsListResult
 
 rename-mapping:
   FormatType: ExportFormatType
@@ -84,6 +86,7 @@ rename-mapping:
   BenefitKind: BillingAccountBenefitKind
   DaysOfWeek: ScheduledActionDaysOfWeek
   WeeksOfMonth: ScheduledActionWeeksOfMonth
+  FileFormat: ScheduledActionFileFormat
   Term: BenefitRecommendationPeriodTerm
   Scope: BenefitRecommendationScope
   Grain: BenefitRecommendationUsageGrain

@@ -11,22 +11,22 @@ using Azure.Core;
 namespace Azure.ResourceManager.CostManagement.Models
 {
     /// <summary> Result of listing dimensions. It contains a list of available dimensions. </summary>
-    internal partial class DimensionsListResult
+    internal partial class CostManagementDimensionsListResult
     {
-        /// <summary> Initializes a new instance of DimensionsListResult. </summary>
-        internal DimensionsListResult()
+        /// <summary> Initializes a new instance of CostManagementDimensionsListResult. </summary>
+        internal CostManagementDimensionsListResult()
         {
-            Value = new ChangeTrackingList<Dimension>();
+            Value = new ChangeTrackingList<CostManagementDimension>();
         }
 
-        /// <summary> Initializes a new instance of DimensionsListResult. </summary>
+        /// <summary> Initializes a new instance of CostManagementDimensionsListResult. </summary>
         /// <param name="value"> The list of dimensions. </param>
-        internal DimensionsListResult(IReadOnlyList<Dimension> value)
+        internal CostManagementDimensionsListResult(IReadOnlyList<CostManagementDimension> value)
         {
             Value = value;
         }
 
         /// <summary> The list of dimensions. </summary>
-        public IReadOnlyList<Dimension> Value { get; }
+        public IReadOnlyList<CostManagementDimension> Value { get; }
     }
 }
