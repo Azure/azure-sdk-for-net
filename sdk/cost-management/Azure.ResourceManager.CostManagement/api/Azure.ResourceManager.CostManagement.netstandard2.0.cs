@@ -92,8 +92,8 @@ namespace Azure.ResourceManager.CostManagement
         public static System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.CostManagement.Models.OperationStatus>> ByBillingAccountIdGenerateReservationDetailsReportAsync(this Azure.ResourceManager.Resources.TenantResource tenantResource, Azure.WaitUntil waitUntil, string billingAccountId, string startDate, string endDate, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.ResourceManager.ArmOperation<Azure.ResourceManager.CostManagement.Models.OperationStatus> ByBillingProfileIdGenerateReservationDetailsReport(this Azure.ResourceManager.Resources.TenantResource tenantResource, Azure.WaitUntil waitUntil, string billingAccountId, string billingProfileId, string startDate, string endDate, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.CostManagement.Models.OperationStatus>> ByBillingProfileIdGenerateReservationDetailsReportAsync(this Azure.ResourceManager.Resources.TenantResource tenantResource, Azure.WaitUntil waitUntil, string billingAccountId, string billingProfileId, string startDate, string endDate, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static Azure.Pageable<Azure.ResourceManager.CostManagement.Models.Dimension> ByExternalCloudProviderTypeDimensions(this Azure.ResourceManager.Resources.TenantResource tenantResource, Azure.ResourceManager.CostManagement.Models.TenantResourceByExternalCloudProviderTypeDimensionsOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static Azure.AsyncPageable<Azure.ResourceManager.CostManagement.Models.Dimension> ByExternalCloudProviderTypeDimensionsAsync(this Azure.ResourceManager.Resources.TenantResource tenantResource, Azure.ResourceManager.CostManagement.Models.TenantResourceByExternalCloudProviderTypeDimensionsOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.Pageable<Azure.ResourceManager.CostManagement.Models.CostManagementDimension> ByExternalCloudProviderTypeDimensions(this Azure.ResourceManager.Resources.TenantResource tenantResource, Azure.ResourceManager.CostManagement.Models.TenantResourceByExternalCloudProviderTypeDimensionsOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.AsyncPageable<Azure.ResourceManager.CostManagement.Models.CostManagementDimension> ByExternalCloudProviderTypeDimensionsAsync(this Azure.ResourceManager.Resources.TenantResource tenantResource, Azure.ResourceManager.CostManagement.Models.TenantResourceByExternalCloudProviderTypeDimensionsOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.Response<Azure.ResourceManager.CostManagement.Models.CheckNameAvailabilityResponse> CheckNameAvailabilityByScopeScheduledAction(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier scope, Azure.ResourceManager.CostManagement.Models.CheckNameAvailabilityRequest checkNameAvailabilityRequest, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.CostManagement.Models.CheckNameAvailabilityResponse>> CheckNameAvailabilityByScopeScheduledActionAsync(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier scope, Azure.ResourceManager.CostManagement.Models.CheckNameAvailabilityRequest checkNameAvailabilityRequest, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.Response<Azure.ResourceManager.CostManagement.Models.CheckNameAvailabilityResponse> CheckNameAvailabilityScheduledAction(this Azure.ResourceManager.Resources.TenantResource tenantResource, Azure.ResourceManager.CostManagement.Models.CheckNameAvailabilityRequest checkNameAvailabilityRequest, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -141,8 +141,8 @@ namespace Azure.ResourceManager.CostManagement
         public static Azure.Response<Azure.ResourceManager.CostManagement.CostManagementViewsResource> GetCostManagementViews(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier scope, string viewName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.CostManagement.CostManagementViewsResource>> GetCostManagementViewsAsync(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier scope, string viewName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.ResourceManager.CostManagement.CostManagementViewsResource GetCostManagementViewsResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
-        public static Azure.Pageable<Azure.ResourceManager.CostManagement.Models.Dimension> GetDimensions(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier scope, string filter = null, string expand = null, string skiptoken = null, int? top = default(int?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static Azure.AsyncPageable<Azure.ResourceManager.CostManagement.Models.Dimension> GetDimensionsAsync(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier scope, string filter = null, string expand = null, string skiptoken = null, int? top = default(int?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.Pageable<Azure.ResourceManager.CostManagement.Models.CostManagementDimension> GetDimensions(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier scope, string filter = null, string expand = null, string skiptoken = null, int? top = default(int?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.AsyncPageable<Azure.ResourceManager.CostManagement.Models.CostManagementDimension> GetDimensionsAsync(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier scope, string filter = null, string expand = null, string skiptoken = null, int? top = default(int?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.Response<Azure.ResourceManager.CostManagement.ScheduledActionResource> GetScheduledAction(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier scope, string name, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.CostManagement.ScheduledActionResource>> GetScheduledActionAsync(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier scope, string name, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.ResourceManager.CostManagement.ScheduledActionResource GetScheduledActionResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
@@ -176,7 +176,7 @@ namespace Azure.ResourceManager.CostManagement
         public System.Collections.Generic.IList<Azure.ResourceManager.CostManagement.Models.KpiProperties> Kpis { get { throw null; } }
         public Azure.ResourceManager.CostManagement.Models.ViewMetricType? Metric { get { throw null; } set { } }
         public System.DateTimeOffset? ModifiedOn { get { throw null; } }
-        public System.Collections.Generic.IList<Azure.ResourceManager.CostManagement.Models.PivotProperties> Pivots { get { throw null; } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.CostManagement.Models.ViewPivotProperties> Pivots { get { throw null; } }
         public string Scope { get { throw null; } set { } }
         public Azure.ResourceManager.CostManagement.Models.ReportTimeframeType? Timeframe { get { throw null; } set { } }
         public Azure.ResourceManager.CostManagement.Models.ReportConfigTimePeriod TimePeriod { get { throw null; } set { } }
@@ -231,7 +231,7 @@ namespace Azure.ResourceManager.CostManagement
         public ScheduledActionData() { }
         public string DisplayName { get { throw null; } set { } }
         public Azure.ETag? ETag { get { throw null; } }
-        public System.Collections.Generic.IList<Azure.ResourceManager.CostManagement.Models.FileFormat> FileFormats { get { throw null; } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.CostManagement.Models.ScheduledActionFileFormat> FileFormats { get { throw null; } }
         public Azure.ResourceManager.CostManagement.Models.ScheduledActionKind? Kind { get { throw null; } set { } }
         public Azure.ResourceManager.CostManagement.Models.NotificationProperties Notification { get { throw null; } set { } }
         public string NotificationEmail { get { throw null; } set { } }
@@ -439,46 +439,64 @@ namespace Azure.ResourceManager.CostManagement.Models
         public Azure.ResourceManager.CostManagement.Models.BenefitUtilizationSummaryReportSchema? SecondaryReportUri { get { throw null; } }
         public System.DateTimeOffset? ValidUntil { get { throw null; } }
     }
+    public partial class BenefitRecommendationModel : Azure.ResourceManager.Models.ResourceData
+    {
+        public BenefitRecommendationModel() { }
+        public Azure.ResourceManager.CostManagement.Models.BillingAccountBenefitKind? Kind { get { throw null; } set { } }
+        public Azure.ResourceManager.CostManagement.Models.BenefitRecommendationProperties Properties { get { throw null; } set { } }
+    }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct BenefitKind : System.IEquatable<Azure.ResourceManager.CostManagement.Models.BenefitKind>
+    public readonly partial struct BenefitRecommendationPeriodTerm : System.IEquatable<Azure.ResourceManager.CostManagement.Models.BenefitRecommendationPeriodTerm>
     {
         private readonly object _dummy;
         private readonly int _dummyPrimitive;
-        public BenefitKind(string value) { throw null; }
-        public static Azure.ResourceManager.CostManagement.Models.BenefitKind IncludedQuantity { get { throw null; } }
-        public static Azure.ResourceManager.CostManagement.Models.BenefitKind Reservation { get { throw null; } }
-        public static Azure.ResourceManager.CostManagement.Models.BenefitKind SavingsPlan { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.CostManagement.Models.BenefitKind other) { throw null; }
+        public BenefitRecommendationPeriodTerm(string value) { throw null; }
+        public static Azure.ResourceManager.CostManagement.Models.BenefitRecommendationPeriodTerm P1Y { get { throw null; } }
+        public static Azure.ResourceManager.CostManagement.Models.BenefitRecommendationPeriodTerm P3Y { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.CostManagement.Models.BenefitRecommendationPeriodTerm other) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.CostManagement.Models.BenefitKind left, Azure.ResourceManager.CostManagement.Models.BenefitKind right) { throw null; }
-        public static implicit operator Azure.ResourceManager.CostManagement.Models.BenefitKind (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.CostManagement.Models.BenefitKind left, Azure.ResourceManager.CostManagement.Models.BenefitKind right) { throw null; }
+        public static bool operator ==(Azure.ResourceManager.CostManagement.Models.BenefitRecommendationPeriodTerm left, Azure.ResourceManager.CostManagement.Models.BenefitRecommendationPeriodTerm right) { throw null; }
+        public static implicit operator Azure.ResourceManager.CostManagement.Models.BenefitRecommendationPeriodTerm (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.CostManagement.Models.BenefitRecommendationPeriodTerm left, Azure.ResourceManager.CostManagement.Models.BenefitRecommendationPeriodTerm right) { throw null; }
         public override string ToString() { throw null; }
-    }
-    public partial class BenefitRecommendationModel : Azure.ResourceManager.Models.ResourceData
-    {
-        public BenefitRecommendationModel() { }
-        public Azure.ResourceManager.CostManagement.Models.BenefitKind? Kind { get { throw null; } set { } }
-        public Azure.ResourceManager.CostManagement.Models.BenefitRecommendationProperties Properties { get { throw null; } set { } }
     }
     public abstract partial class BenefitRecommendationProperties
     {
         protected BenefitRecommendationProperties() { }
         public Azure.ResourceManager.CostManagement.Models.AllSavingsList AllRecommendationDetails { get { throw null; } }
         public string ArmSkuName { get { throw null; } }
-        public Azure.ResourceManager.CostManagement.Models.Grain? CommitmentGranularity { get { throw null; } set { } }
+        public Azure.ResourceManager.CostManagement.Models.BenefitRecommendationUsageGrain? CommitmentGranularity { get { throw null; } set { } }
         public decimal? CostWithoutBenefit { get { throw null; } }
         public string CurrencyCode { get { throw null; } }
         public System.DateTimeOffset? FirstConsumptionOn { get { throw null; } }
         public System.DateTimeOffset? LastConsumptionOn { get { throw null; } }
         public Azure.ResourceManager.CostManagement.Models.LookBackPeriod? LookBackPeriod { get { throw null; } set { } }
         public Azure.ResourceManager.CostManagement.Models.AllSavingsBenefitDetails RecommendationDetails { get { throw null; } set { } }
-        public Azure.ResourceManager.CostManagement.Models.Term? Term { get { throw null; } set { } }
+        public Azure.ResourceManager.CostManagement.Models.BenefitRecommendationPeriodTerm? Term { get { throw null; } set { } }
         public int? TotalHours { get { throw null; } }
         public Azure.ResourceManager.CostManagement.Models.RecommendationUsageDetails Usage { get { throw null; } set { } }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct BenefitRecommendationUsageGrain : System.IEquatable<Azure.ResourceManager.CostManagement.Models.BenefitRecommendationUsageGrain>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public BenefitRecommendationUsageGrain(string value) { throw null; }
+        public static Azure.ResourceManager.CostManagement.Models.BenefitRecommendationUsageGrain Daily { get { throw null; } }
+        public static Azure.ResourceManager.CostManagement.Models.BenefitRecommendationUsageGrain Hourly { get { throw null; } }
+        public static Azure.ResourceManager.CostManagement.Models.BenefitRecommendationUsageGrain Monthly { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.CostManagement.Models.BenefitRecommendationUsageGrain other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.CostManagement.Models.BenefitRecommendationUsageGrain left, Azure.ResourceManager.CostManagement.Models.BenefitRecommendationUsageGrain right) { throw null; }
+        public static implicit operator Azure.ResourceManager.CostManagement.Models.BenefitRecommendationUsageGrain (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.CostManagement.Models.BenefitRecommendationUsageGrain left, Azure.ResourceManager.CostManagement.Models.BenefitRecommendationUsageGrain right) { throw null; }
+        public override string ToString() { throw null; }
     }
     public partial class BenefitUtilizationSummariesOperationStatus
     {
@@ -489,14 +507,14 @@ namespace Azure.ResourceManager.CostManagement.Models
     }
     public partial class BenefitUtilizationSummariesRequest
     {
-        public BenefitUtilizationSummariesRequest(Azure.ResourceManager.CostManagement.Models.Grain grain, System.DateTimeOffset startOn, System.DateTimeOffset endOn) { }
+        public BenefitUtilizationSummariesRequest(Azure.ResourceManager.CostManagement.Models.BenefitRecommendationUsageGrain grain, System.DateTimeOffset startOn, System.DateTimeOffset endOn) { }
         public string BenefitId { get { throw null; } set { } }
         public string BenefitOrderId { get { throw null; } set { } }
         public string BillingAccountId { get { throw null; } set { } }
         public string BillingProfileId { get { throw null; } set { } }
         public System.DateTimeOffset EndOn { get { throw null; } set { } }
-        public Azure.ResourceManager.CostManagement.Models.Grain Grain { get { throw null; } set { } }
-        public Azure.ResourceManager.CostManagement.Models.BenefitKind? Kind { get { throw null; } set { } }
+        public Azure.ResourceManager.CostManagement.Models.BenefitRecommendationUsageGrain Grain { get { throw null; } set { } }
+        public Azure.ResourceManager.CostManagement.Models.BillingAccountBenefitKind? Kind { get { throw null; } set { } }
         public System.DateTimeOffset StartOn { get { throw null; } set { } }
     }
     public partial class BenefitUtilizationSummary : Azure.ResourceManager.Models.ResourceData
@@ -526,6 +544,25 @@ namespace Azure.ResourceManager.CostManagement.Models
         public static bool operator ==(Azure.ResourceManager.CostManagement.Models.BenefitUtilizationSummaryReportSchema left, Azure.ResourceManager.CostManagement.Models.BenefitUtilizationSummaryReportSchema right) { throw null; }
         public static implicit operator Azure.ResourceManager.CostManagement.Models.BenefitUtilizationSummaryReportSchema (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.CostManagement.Models.BenefitUtilizationSummaryReportSchema left, Azure.ResourceManager.CostManagement.Models.BenefitUtilizationSummaryReportSchema right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct BillingAccountBenefitKind : System.IEquatable<Azure.ResourceManager.CostManagement.Models.BillingAccountBenefitKind>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public BillingAccountBenefitKind(string value) { throw null; }
+        public static Azure.ResourceManager.CostManagement.Models.BillingAccountBenefitKind IncludedQuantity { get { throw null; } }
+        public static Azure.ResourceManager.CostManagement.Models.BillingAccountBenefitKind Reservation { get { throw null; } }
+        public static Azure.ResourceManager.CostManagement.Models.BillingAccountBenefitKind SavingsPlan { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.CostManagement.Models.BillingAccountBenefitKind other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.CostManagement.Models.BillingAccountBenefitKind left, Azure.ResourceManager.CostManagement.Models.BillingAccountBenefitKind right) { throw null; }
+        public static implicit operator Azure.ResourceManager.CostManagement.Models.BillingAccountBenefitKind (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.CostManagement.Models.BillingAccountBenefitKind left, Azure.ResourceManager.CostManagement.Models.BillingAccountBenefitKind right) { throw null; }
         public override string ToString() { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
@@ -568,6 +605,24 @@ namespace Azure.ResourceManager.CostManagement.Models
         public System.DateTimeOffset? NextRunTimeEstimate { get { throw null; } }
         public bool? PartitionData { get { throw null; } set { } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.CostManagement.Models.ExportRun> RunHistoryValue { get { throw null; } }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct ComparisonOperatorType : System.IEquatable<Azure.ResourceManager.CostManagement.Models.ComparisonOperatorType>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public ComparisonOperatorType(string value) { throw null; }
+        public static Azure.ResourceManager.CostManagement.Models.ComparisonOperatorType Contains { get { throw null; } }
+        public static Azure.ResourceManager.CostManagement.Models.ComparisonOperatorType In { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.CostManagement.Models.ComparisonOperatorType other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.CostManagement.Models.ComparisonOperatorType left, Azure.ResourceManager.CostManagement.Models.ComparisonOperatorType right) { throw null; }
+        public static implicit operator Azure.ResourceManager.CostManagement.Models.ComparisonOperatorType (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.CostManagement.Models.ComparisonOperatorType left, Azure.ResourceManager.CostManagement.Models.ComparisonOperatorType right) { throw null; }
+        public override string ToString() { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct CostManagementAlertCategory : System.IEquatable<Azure.ResourceManager.CostManagement.Models.CostManagementAlertCategory>
@@ -688,32 +743,9 @@ namespace Azure.ResourceManager.CostManagement.Models
         public static bool operator !=(Azure.ResourceManager.CostManagement.Models.CostManagementAlertType left, Azure.ResourceManager.CostManagement.Models.CostManagementAlertType right) { throw null; }
         public override string ToString() { throw null; }
     }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct DaysOfWeek : System.IEquatable<Azure.ResourceManager.CostManagement.Models.DaysOfWeek>
+    public partial class CostManagementDimension : Azure.ResourceManager.Models.ResourceData
     {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public DaysOfWeek(string value) { throw null; }
-        public static Azure.ResourceManager.CostManagement.Models.DaysOfWeek Friday { get { throw null; } }
-        public static Azure.ResourceManager.CostManagement.Models.DaysOfWeek Monday { get { throw null; } }
-        public static Azure.ResourceManager.CostManagement.Models.DaysOfWeek Saturday { get { throw null; } }
-        public static Azure.ResourceManager.CostManagement.Models.DaysOfWeek Sunday { get { throw null; } }
-        public static Azure.ResourceManager.CostManagement.Models.DaysOfWeek Thursday { get { throw null; } }
-        public static Azure.ResourceManager.CostManagement.Models.DaysOfWeek Tuesday { get { throw null; } }
-        public static Azure.ResourceManager.CostManagement.Models.DaysOfWeek Wednesday { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.CostManagement.Models.DaysOfWeek other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.CostManagement.Models.DaysOfWeek left, Azure.ResourceManager.CostManagement.Models.DaysOfWeek right) { throw null; }
-        public static implicit operator Azure.ResourceManager.CostManagement.Models.DaysOfWeek (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.CostManagement.Models.DaysOfWeek left, Azure.ResourceManager.CostManagement.Models.DaysOfWeek right) { throw null; }
-        public override string ToString() { throw null; }
-    }
-    public partial class Dimension : Azure.ResourceManager.Models.ResourceData
-    {
-        internal Dimension() { }
+        internal CostManagementDimension() { }
         public string Category { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<string> Data { get { throw null; } }
         public string Description { get { throw null; } }
@@ -935,23 +967,6 @@ namespace Azure.ResourceManager.CostManagement.Models
         public static bool operator !=(Azure.ResourceManager.CostManagement.Models.ExternalCloudProviderType left, Azure.ResourceManager.CostManagement.Models.ExternalCloudProviderType right) { throw null; }
         public override string ToString() { throw null; }
     }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct FileFormat : System.IEquatable<Azure.ResourceManager.CostManagement.Models.FileFormat>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public FileFormat(string value) { throw null; }
-        public static Azure.ResourceManager.CostManagement.Models.FileFormat Csv { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.CostManagement.Models.FileFormat other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.CostManagement.Models.FileFormat left, Azure.ResourceManager.CostManagement.Models.FileFormat right) { throw null; }
-        public static implicit operator Azure.ResourceManager.CostManagement.Models.FileFormat (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.CostManagement.Models.FileFormat left, Azure.ResourceManager.CostManagement.Models.FileFormat right) { throw null; }
-        public override string ToString() { throw null; }
-    }
     public partial class ForecastAggregation
     {
         public ForecastAggregation(Azure.ResourceManager.CostManagement.Models.FunctionName name, Azure.ResourceManager.CostManagement.Models.FunctionType function) { }
@@ -1105,25 +1120,6 @@ namespace Azure.ResourceManager.CostManagement.Models
         public override string ToString() { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct Grain : System.IEquatable<Azure.ResourceManager.CostManagement.Models.Grain>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public Grain(string value) { throw null; }
-        public static Azure.ResourceManager.CostManagement.Models.Grain Daily { get { throw null; } }
-        public static Azure.ResourceManager.CostManagement.Models.Grain Hourly { get { throw null; } }
-        public static Azure.ResourceManager.CostManagement.Models.Grain Monthly { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.CostManagement.Models.Grain other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.CostManagement.Models.Grain left, Azure.ResourceManager.CostManagement.Models.Grain right) { throw null; }
-        public static implicit operator Azure.ResourceManager.CostManagement.Models.Grain (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.CostManagement.Models.Grain left, Azure.ResourceManager.CostManagement.Models.Grain right) { throw null; }
-        public override string ToString() { throw null; }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct GrainParameter : System.IEquatable<Azure.ResourceManager.CostManagement.Models.GrainParameter>
     {
         private readonly object _dummy;
@@ -1165,7 +1161,7 @@ namespace Azure.ResourceManager.CostManagement.Models
         public string ArmSkuName { get { throw null; } }
         public string BenefitId { get { throw null; } }
         public string BenefitOrderId { get { throw null; } }
-        public Azure.ResourceManager.CostManagement.Models.BenefitKind? BenefitType { get { throw null; } set { } }
+        public Azure.ResourceManager.CostManagement.Models.BillingAccountBenefitKind? BenefitType { get { throw null; } set { } }
         public System.DateTimeOffset? UsageOn { get { throw null; } }
         public decimal? UtilizationPercentage { get { throw null; } }
     }
@@ -1230,30 +1226,6 @@ namespace Azure.ResourceManager.CostManagement.Models
         public static implicit operator Azure.ResourceManager.CostManagement.Models.OperationStatusType (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.CostManagement.Models.OperationStatusType left, Azure.ResourceManager.CostManagement.Models.OperationStatusType right) { throw null; }
         public override string ToString() { throw null; }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct OperatorType : System.IEquatable<Azure.ResourceManager.CostManagement.Models.OperatorType>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public OperatorType(string value) { throw null; }
-        public static Azure.ResourceManager.CostManagement.Models.OperatorType Contains { get { throw null; } }
-        public static Azure.ResourceManager.CostManagement.Models.OperatorType In { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.CostManagement.Models.OperatorType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.CostManagement.Models.OperatorType left, Azure.ResourceManager.CostManagement.Models.OperatorType right) { throw null; }
-        public static implicit operator Azure.ResourceManager.CostManagement.Models.OperatorType (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.CostManagement.Models.OperatorType left, Azure.ResourceManager.CostManagement.Models.OperatorType right) { throw null; }
-        public override string ToString() { throw null; }
-    }
-    public partial class PivotProperties
-    {
-        public PivotProperties() { }
-        public string Name { get { throw null; } set { } }
-        public Azure.ResourceManager.CostManagement.Models.ViewPivotType? ViewPivotType { get { throw null; } set { } }
     }
     public partial class QueryAggregation
     {
@@ -1361,7 +1333,7 @@ namespace Azure.ResourceManager.CostManagement.Models
     {
         public RecommendationUsageDetails() { }
         public System.Collections.Generic.IReadOnlyList<decimal> Charges { get { throw null; } }
-        public Azure.ResourceManager.CostManagement.Models.Grain? UsageGrain { get { throw null; } set { } }
+        public Azure.ResourceManager.CostManagement.Models.BenefitRecommendationUsageGrain? UsageGrain { get { throw null; } set { } }
     }
     public partial class ReportConfigAggregation
     {
@@ -1371,9 +1343,9 @@ namespace Azure.ResourceManager.CostManagement.Models
     }
     public partial class ReportConfigComparisonExpression
     {
-        public ReportConfigComparisonExpression(string name, Azure.ResourceManager.CostManagement.Models.OperatorType @operator, System.Collections.Generic.IEnumerable<string> values) { }
+        public ReportConfigComparisonExpression(string name, Azure.ResourceManager.CostManagement.Models.ComparisonOperatorType @operator, System.Collections.Generic.IEnumerable<string> values) { }
         public string Name { get { throw null; } set { } }
-        public Azure.ResourceManager.CostManagement.Models.OperatorType Operator { get { throw null; } set { } }
+        public Azure.ResourceManager.CostManagement.Models.ComparisonOperatorType Operator { get { throw null; } set { } }
         public System.Collections.Generic.IList<string> Values { get { throw null; } }
     }
     public partial class ReportConfigDataset
@@ -1502,10 +1474,50 @@ namespace Azure.ResourceManager.CostManagement.Models
         public decimal? AvgUtilizationPercentage { get { throw null; } }
         public string BenefitId { get { throw null; } }
         public string BenefitOrderId { get { throw null; } }
-        public Azure.ResourceManager.CostManagement.Models.BenefitKind? BenefitType { get { throw null; } set { } }
+        public Azure.ResourceManager.CostManagement.Models.BillingAccountBenefitKind? BenefitType { get { throw null; } set { } }
         public decimal? MaxUtilizationPercentage { get { throw null; } }
         public decimal? MinUtilizationPercentage { get { throw null; } }
         public System.DateTimeOffset? UsageOn { get { throw null; } }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct ScheduledActionDaysOfWeek : System.IEquatable<Azure.ResourceManager.CostManagement.Models.ScheduledActionDaysOfWeek>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public ScheduledActionDaysOfWeek(string value) { throw null; }
+        public static Azure.ResourceManager.CostManagement.Models.ScheduledActionDaysOfWeek Friday { get { throw null; } }
+        public static Azure.ResourceManager.CostManagement.Models.ScheduledActionDaysOfWeek Monday { get { throw null; } }
+        public static Azure.ResourceManager.CostManagement.Models.ScheduledActionDaysOfWeek Saturday { get { throw null; } }
+        public static Azure.ResourceManager.CostManagement.Models.ScheduledActionDaysOfWeek Sunday { get { throw null; } }
+        public static Azure.ResourceManager.CostManagement.Models.ScheduledActionDaysOfWeek Thursday { get { throw null; } }
+        public static Azure.ResourceManager.CostManagement.Models.ScheduledActionDaysOfWeek Tuesday { get { throw null; } }
+        public static Azure.ResourceManager.CostManagement.Models.ScheduledActionDaysOfWeek Wednesday { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.CostManagement.Models.ScheduledActionDaysOfWeek other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.CostManagement.Models.ScheduledActionDaysOfWeek left, Azure.ResourceManager.CostManagement.Models.ScheduledActionDaysOfWeek right) { throw null; }
+        public static implicit operator Azure.ResourceManager.CostManagement.Models.ScheduledActionDaysOfWeek (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.CostManagement.Models.ScheduledActionDaysOfWeek left, Azure.ResourceManager.CostManagement.Models.ScheduledActionDaysOfWeek right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct ScheduledActionFileFormat : System.IEquatable<Azure.ResourceManager.CostManagement.Models.ScheduledActionFileFormat>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public ScheduledActionFileFormat(string value) { throw null; }
+        public static Azure.ResourceManager.CostManagement.Models.ScheduledActionFileFormat Csv { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.CostManagement.Models.ScheduledActionFileFormat other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.CostManagement.Models.ScheduledActionFileFormat left, Azure.ResourceManager.CostManagement.Models.ScheduledActionFileFormat right) { throw null; }
+        public static implicit operator Azure.ResourceManager.CostManagement.Models.ScheduledActionFileFormat (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.CostManagement.Models.ScheduledActionFileFormat left, Azure.ResourceManager.CostManagement.Models.ScheduledActionFileFormat right) { throw null; }
+        public override string ToString() { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct ScheduledActionKind : System.IEquatable<Azure.ResourceManager.CostManagement.Models.ScheduledActionKind>
@@ -1545,6 +1557,27 @@ namespace Azure.ResourceManager.CostManagement.Models
         public override string ToString() { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct ScheduledActionWeeksOfMonth : System.IEquatable<Azure.ResourceManager.CostManagement.Models.ScheduledActionWeeksOfMonth>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public ScheduledActionWeeksOfMonth(string value) { throw null; }
+        public static Azure.ResourceManager.CostManagement.Models.ScheduledActionWeeksOfMonth First { get { throw null; } }
+        public static Azure.ResourceManager.CostManagement.Models.ScheduledActionWeeksOfMonth Fourth { get { throw null; } }
+        public static Azure.ResourceManager.CostManagement.Models.ScheduledActionWeeksOfMonth Last { get { throw null; } }
+        public static Azure.ResourceManager.CostManagement.Models.ScheduledActionWeeksOfMonth Second { get { throw null; } }
+        public static Azure.ResourceManager.CostManagement.Models.ScheduledActionWeeksOfMonth Third { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.CostManagement.Models.ScheduledActionWeeksOfMonth other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.CostManagement.Models.ScheduledActionWeeksOfMonth left, Azure.ResourceManager.CostManagement.Models.ScheduledActionWeeksOfMonth right) { throw null; }
+        public static implicit operator Azure.ResourceManager.CostManagement.Models.ScheduledActionWeeksOfMonth (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.CostManagement.Models.ScheduledActionWeeksOfMonth left, Azure.ResourceManager.CostManagement.Models.ScheduledActionWeeksOfMonth right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct ScheduleFrequency : System.IEquatable<Azure.ResourceManager.CostManagement.Models.ScheduleFrequency>
     {
         private readonly object _dummy;
@@ -1567,12 +1600,12 @@ namespace Azure.ResourceManager.CostManagement.Models
     {
         public ScheduleProperties(Azure.ResourceManager.CostManagement.Models.ScheduleFrequency frequency, System.DateTimeOffset startOn, System.DateTimeOffset endOn) { }
         public int? DayOfMonth { get { throw null; } set { } }
-        public System.Collections.Generic.IList<Azure.ResourceManager.CostManagement.Models.DaysOfWeek> DaysOfWeek { get { throw null; } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.CostManagement.Models.ScheduledActionDaysOfWeek> DaysOfWeek { get { throw null; } }
         public System.DateTimeOffset EndOn { get { throw null; } set { } }
         public Azure.ResourceManager.CostManagement.Models.ScheduleFrequency Frequency { get { throw null; } set { } }
         public int? HourOfDay { get { throw null; } set { } }
         public System.DateTimeOffset StartOn { get { throw null; } set { } }
-        public System.Collections.Generic.IList<Azure.ResourceManager.CostManagement.Models.WeeksOfMonth> WeeksOfMonth { get { throw null; } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.CostManagement.Models.ScheduledActionWeeksOfMonth> WeeksOfMonth { get { throw null; } }
     }
     public partial class SharedScopeBenefitRecommendationProperties : Azure.ResourceManager.CostManagement.Models.BenefitRecommendationProperties
     {
@@ -1593,24 +1626,6 @@ namespace Azure.ResourceManager.CostManagement.Models
         public string Filter { get { throw null; } set { } }
         public string Skiptoken { get { throw null; } set { } }
         public int? Top { get { throw null; } set { } }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct Term : System.IEquatable<Azure.ResourceManager.CostManagement.Models.Term>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public Term(string value) { throw null; }
-        public static Azure.ResourceManager.CostManagement.Models.Term P1Y { get { throw null; } }
-        public static Azure.ResourceManager.CostManagement.Models.Term P3Y { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.CostManagement.Models.Term other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.CostManagement.Models.Term left, Azure.ResourceManager.CostManagement.Models.Term right) { throw null; }
-        public static implicit operator Azure.ResourceManager.CostManagement.Models.Term (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.CostManagement.Models.Term left, Azure.ResourceManager.CostManagement.Models.Term right) { throw null; }
-        public override string ToString() { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct TimeframeType : System.IEquatable<Azure.ResourceManager.CostManagement.Models.TimeframeType>
@@ -1692,6 +1707,12 @@ namespace Azure.ResourceManager.CostManagement.Models
         public static bool operator !=(Azure.ResourceManager.CostManagement.Models.ViewMetricType left, Azure.ResourceManager.CostManagement.Models.ViewMetricType right) { throw null; }
         public override string ToString() { throw null; }
     }
+    public partial class ViewPivotProperties
+    {
+        public ViewPivotProperties() { }
+        public string Name { get { throw null; } set { } }
+        public Azure.ResourceManager.CostManagement.Models.ViewPivotType? PivotType { get { throw null; } set { } }
+    }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct ViewPivotType : System.IEquatable<Azure.ResourceManager.CostManagement.Models.ViewPivotType>
     {
@@ -1725,27 +1746,6 @@ namespace Azure.ResourceManager.CostManagement.Models
         public static bool operator ==(Azure.ResourceManager.CostManagement.Models.ViewReportType left, Azure.ResourceManager.CostManagement.Models.ViewReportType right) { throw null; }
         public static implicit operator Azure.ResourceManager.CostManagement.Models.ViewReportType (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.CostManagement.Models.ViewReportType left, Azure.ResourceManager.CostManagement.Models.ViewReportType right) { throw null; }
-        public override string ToString() { throw null; }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct WeeksOfMonth : System.IEquatable<Azure.ResourceManager.CostManagement.Models.WeeksOfMonth>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public WeeksOfMonth(string value) { throw null; }
-        public static Azure.ResourceManager.CostManagement.Models.WeeksOfMonth First { get { throw null; } }
-        public static Azure.ResourceManager.CostManagement.Models.WeeksOfMonth Fourth { get { throw null; } }
-        public static Azure.ResourceManager.CostManagement.Models.WeeksOfMonth Last { get { throw null; } }
-        public static Azure.ResourceManager.CostManagement.Models.WeeksOfMonth Second { get { throw null; } }
-        public static Azure.ResourceManager.CostManagement.Models.WeeksOfMonth Third { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.CostManagement.Models.WeeksOfMonth other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.CostManagement.Models.WeeksOfMonth left, Azure.ResourceManager.CostManagement.Models.WeeksOfMonth right) { throw null; }
-        public static implicit operator Azure.ResourceManager.CostManagement.Models.WeeksOfMonth (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.CostManagement.Models.WeeksOfMonth left, Azure.ResourceManager.CostManagement.Models.WeeksOfMonth right) { throw null; }
         public override string ToString() { throw null; }
     }
 }
