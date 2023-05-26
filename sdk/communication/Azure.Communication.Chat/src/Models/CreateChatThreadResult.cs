@@ -20,7 +20,7 @@ namespace Azure.Communication.Chat
         internal CreateChatThreadResult(ChatThreadProperties chatThread, IEnumerable<ChatError> invalidParticipants)
         {
             ChatThread = chatThread;
-            InvalidParticipants = invalidParticipants.ToList();
+            InvalidParticipants = invalidParticipants?.ToList();
         }
 
         /// <summary> Chat thread. </summary>

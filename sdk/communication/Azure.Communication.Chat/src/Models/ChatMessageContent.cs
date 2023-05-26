@@ -26,7 +26,7 @@ namespace Azure.Communication.Chat
             Initiator = communicationUserIdentifier;
             Message = message;
             Topic =topic;
-            Participants = participants.ToList();
+            Participants = participants?.ToList();
         }
 
         /// <summary> Chat message content for type 'text' or 'html' messages. </summary>
