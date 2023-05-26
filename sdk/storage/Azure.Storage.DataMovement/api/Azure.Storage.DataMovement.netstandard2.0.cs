@@ -101,6 +101,16 @@ namespace Azure.Storage.DataMovement
         protected StorageTransferEventArgs(string transferId, bool isRunningSynchronously, System.Threading.CancellationToken cancellationToken) : base (default(bool), default(System.Threading.CancellationToken)) { }
         public string TransferId { get { throw null; } }
     }
+    public partial class StorageTransferProgress
+    {
+        public StorageTransferProgress() { }
+        public long? BytesTransferred { get { throw null; } }
+        public long CompletedCount { get { throw null; } }
+        public long FailedCount { get { throw null; } }
+        public long InProgressCount { get { throw null; } }
+        public long QueuedCount { get { throw null; } }
+        public long SkippedCount { get { throw null; } }
+    }
     public enum StorageTransferStatus
     {
         None = 0,
@@ -139,6 +149,11 @@ namespace Azure.Storage.DataMovement
 }
 namespace Azure.Storage.DataMovement.Models
 {
+    public partial class ProgressHandlerOptions
+    {
+        public ProgressHandlerOptions() { }
+        public bool TrackBytesTransferred { get { throw null; } set { } }
+    }
     public partial class ReadStreamStorageResourceResult
     {
         public ReadStreamStorageResourceResult(System.IO.Stream content) { }
@@ -198,6 +213,8 @@ namespace Azure.Storage.DataMovement.Models
         public Azure.Storage.DataMovement.StorageResourceCreateMode CreateMode { get { throw null; } set { } }
         public long? InitialTransferSize { get { throw null; } set { } }
         public long? MaximumTransferChunkSize { get { throw null; } set { } }
+        public System.IProgress<Azure.Storage.DataMovement.StorageTransferProgress> ProgressHandler { get { throw null; } set { } }
+        public Azure.Storage.DataMovement.Models.ProgressHandlerOptions ProgressHandlerOptions { get { throw null; } set { } }
         public string ResumeFromCheckpointId { get { throw null; } set { } }
         public event Azure.Core.SyncAsyncEventHandler<Azure.Storage.DataMovement.Models.SingleTransferCompletedEventArgs> SingleTransferCompleted { add { } remove { } }
         public event Azure.Core.SyncAsyncEventHandler<Azure.Storage.DataMovement.Models.TransferFailedEventArgs> TransferFailed { add { } remove { } }
