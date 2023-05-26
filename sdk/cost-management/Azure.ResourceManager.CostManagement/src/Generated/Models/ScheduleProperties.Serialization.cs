@@ -64,8 +64,8 @@ namespace Azure.ResourceManager.CostManagement.Models
             }
             ScheduleFrequency frequency = default;
             Optional<int> hourOfDay = default;
-            Optional<IList<DaysOfWeek>> daysOfWeek = default;
-            Optional<IList<WeeksOfMonth>> weeksOfMonth = default;
+            Optional<IList<ScheduledActionDaysOfWeek>> daysOfWeek = default;
+            Optional<IList<ScheduledActionWeeksOfMonth>> weeksOfMonth = default;
             Optional<int> dayOfMonth = default;
             DateTimeOffset startDate = default;
             DateTimeOffset endDate = default;
@@ -91,10 +91,10 @@ namespace Azure.ResourceManager.CostManagement.Models
                     {
                         continue;
                     }
-                    List<DaysOfWeek> array = new List<DaysOfWeek>();
+                    List<ScheduledActionDaysOfWeek> array = new List<ScheduledActionDaysOfWeek>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(new DaysOfWeek(item.GetString()));
+                        array.Add(new ScheduledActionDaysOfWeek(item.GetString()));
                     }
                     daysOfWeek = array;
                     continue;
@@ -105,10 +105,10 @@ namespace Azure.ResourceManager.CostManagement.Models
                     {
                         continue;
                     }
-                    List<WeeksOfMonth> array = new List<WeeksOfMonth>();
+                    List<ScheduledActionWeeksOfMonth> array = new List<ScheduledActionWeeksOfMonth>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(new WeeksOfMonth(item.GetString()));
+                        array.Add(new ScheduledActionWeeksOfMonth(item.GetString()));
                     }
                     weeksOfMonth = array;
                     continue;

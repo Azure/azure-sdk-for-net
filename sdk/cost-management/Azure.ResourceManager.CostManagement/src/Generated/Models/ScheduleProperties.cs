@@ -21,8 +21,8 @@ namespace Azure.ResourceManager.CostManagement.Models
         public ScheduleProperties(ScheduleFrequency frequency, DateTimeOffset startOn, DateTimeOffset endOn)
         {
             Frequency = frequency;
-            DaysOfWeek = new ChangeTrackingList<DaysOfWeek>();
-            WeeksOfMonth = new ChangeTrackingList<WeeksOfMonth>();
+            DaysOfWeek = new ChangeTrackingList<ScheduledActionDaysOfWeek>();
+            WeeksOfMonth = new ChangeTrackingList<ScheduledActionWeeksOfMonth>();
             StartOn = startOn;
             EndOn = endOn;
         }
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.CostManagement.Models
         /// <param name="dayOfMonth"> UTC day on which cost analysis data will be emailed. Must be between 1 and 31. This property is applicable when frequency is Monthly and overrides weeksOfMonth or daysOfWeek. </param>
         /// <param name="startOn"> The start date and time of the scheduled action (UTC). </param>
         /// <param name="endOn"> The end date and time of the scheduled action (UTC). </param>
-        internal ScheduleProperties(ScheduleFrequency frequency, int? hourOfDay, IList<DaysOfWeek> daysOfWeek, IList<WeeksOfMonth> weeksOfMonth, int? dayOfMonth, DateTimeOffset startOn, DateTimeOffset endOn)
+        internal ScheduleProperties(ScheduleFrequency frequency, int? hourOfDay, IList<ScheduledActionDaysOfWeek> daysOfWeek, IList<ScheduledActionWeeksOfMonth> weeksOfMonth, int? dayOfMonth, DateTimeOffset startOn, DateTimeOffset endOn)
         {
             Frequency = frequency;
             HourOfDay = hourOfDay;
@@ -51,9 +51,9 @@ namespace Azure.ResourceManager.CostManagement.Models
         /// <summary> UTC time at which cost analysis data will be emailed. </summary>
         public int? HourOfDay { get; set; }
         /// <summary> Day names in english on which cost analysis data will be emailed. This property is applicable when frequency is Weekly or Monthly. </summary>
-        public IList<DaysOfWeek> DaysOfWeek { get; }
+        public IList<ScheduledActionDaysOfWeek> DaysOfWeek { get; }
         /// <summary> Weeks in which cost analysis data will be emailed. This property is applicable when frequency is Monthly and used in combination with daysOfWeek. </summary>
-        public IList<WeeksOfMonth> WeeksOfMonth { get; }
+        public IList<ScheduledActionWeeksOfMonth> WeeksOfMonth { get; }
         /// <summary> UTC day on which cost analysis data will be emailed. Must be between 1 and 31. This property is applicable when frequency is Monthly and overrides weeksOfMonth or daysOfWeek. </summary>
         public int? DayOfMonth { get; set; }
         /// <summary> The start date and time of the scheduled action (UTC). </summary>
