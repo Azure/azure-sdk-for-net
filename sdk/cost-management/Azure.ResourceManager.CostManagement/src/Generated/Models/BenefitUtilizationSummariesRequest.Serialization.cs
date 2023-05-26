@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.CostManagement.Models
             Optional<string> billingProfileId = default;
             Optional<string> benefitOrderId = default;
             Optional<string> benefitId = default;
-            Grain grain = default;
+            BenefitRecommendationUsageGrain grain = default;
             DateTimeOffset startDate = default;
             DateTimeOffset endDate = default;
             Optional<BillingAccountBenefitKind> kind = default;
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.CostManagement.Models
                 }
                 if (property.NameEquals("grain"u8))
                 {
-                    grain = new Grain(property.Value.GetString());
+                    grain = new BenefitRecommendationUsageGrain(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("startDate"u8))

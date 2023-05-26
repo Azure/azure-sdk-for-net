@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.CostManagement.Models
         /// <param name="recommendationDetails"> The details of the proposed recommendation. </param>
         /// <param name="allRecommendationDetails"> The list of all benefit recommendations with the recommendation details. </param>
         /// <param name="scope"> Benefit scope. For example, Single or Shared. </param>
-        internal BenefitRecommendationProperties(DateTimeOffset? firstConsumptionOn, DateTimeOffset? lastConsumptionOn, LookBackPeriod? lookBackPeriod, int? totalHours, RecommendationUsageDetails usage, string armSkuName, BenefitPeriodTerm? term, Grain? commitmentGranularity, string currencyCode, decimal? costWithoutBenefit, AllSavingsBenefitDetails recommendationDetails, AllSavingsList allRecommendationDetails, BenefitRecommendationScope scope)
+        internal BenefitRecommendationProperties(DateTimeOffset? firstConsumptionOn, DateTimeOffset? lastConsumptionOn, LookBackPeriod? lookBackPeriod, int? totalHours, RecommendationUsageDetails usage, string armSkuName, BenefitRecommendationPeriodTerm? term, BenefitRecommendationUsageGrain? commitmentGranularity, string currencyCode, decimal? costWithoutBenefit, AllSavingsBenefitDetails recommendationDetails, AllSavingsList allRecommendationDetails, BenefitRecommendationScope scope)
         {
             FirstConsumptionOn = firstConsumptionOn;
             LastConsumptionOn = lastConsumptionOn;
@@ -65,9 +65,9 @@ namespace Azure.ResourceManager.CostManagement.Models
         /// <summary> ARM SKU name. &apos;Compute_Savings_Plan&apos; for SavingsPlan. </summary>
         public string ArmSkuName { get; }
         /// <summary> Term period of the benefit. For example, P1Y or P3Y. </summary>
-        public BenefitPeriodTerm? Term { get; set; }
+        public BenefitRecommendationPeriodTerm? Term { get; set; }
         /// <summary> Grain of the proposed commitment amount. Supported values: &apos;Hourly&apos;. </summary>
-        public Grain? CommitmentGranularity { get; set; }
+        public BenefitRecommendationUsageGrain? CommitmentGranularity { get; set; }
         /// <summary> An ISO 4217 currency code identifier for the costs and savings amounts. </summary>
         public string CurrencyCode { get; }
         /// <summary> The current cost without benefit, corresponds to &apos;totalHours&apos; in the look-back period. </summary>

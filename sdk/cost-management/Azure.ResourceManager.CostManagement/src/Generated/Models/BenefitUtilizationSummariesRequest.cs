@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.CostManagement.Models
         /// <param name="grain"> The grain the summaries data is served at in the report. Accepted values are &apos;Daily&apos; or &apos;Monthly&apos;. </param>
         /// <param name="startOn"> The start date of the summaries data that will be served in the report. </param>
         /// <param name="endOn"> The end date of the summaries data that will be served in the report. </param>
-        public BenefitUtilizationSummariesRequest(Grain grain, DateTimeOffset startOn, DateTimeOffset endOn)
+        public BenefitUtilizationSummariesRequest(BenefitRecommendationUsageGrain grain, DateTimeOffset startOn, DateTimeOffset endOn)
         {
             Grain = grain;
             StartOn = startOn;
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.CostManagement.Models
         /// <param name="startOn"> The start date of the summaries data that will be served in the report. </param>
         /// <param name="endOn"> The end date of the summaries data that will be served in the report. </param>
         /// <param name="kind"> The type of benefit data requested. Required for billing account and billing profile scopes. Implied and not to be passed at benefit scopes. Supported values are Reservation and SavingsPlan. </param>
-        internal BenefitUtilizationSummariesRequest(string billingAccountId, string billingProfileId, string benefitOrderId, string benefitId, Grain grain, DateTimeOffset startOn, DateTimeOffset endOn, BillingAccountBenefitKind? kind)
+        internal BenefitUtilizationSummariesRequest(string billingAccountId, string billingProfileId, string benefitOrderId, string benefitId, BenefitRecommendationUsageGrain grain, DateTimeOffset startOn, DateTimeOffset endOn, BillingAccountBenefitKind? kind)
         {
             BillingAccountId = billingAccountId;
             BillingProfileId = billingProfileId;
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.CostManagement.Models
         /// <summary> Benefit id the benefit utilization summaries report is for. Required for benefit id scope. Not supported for benefit order or any billing scopes. </summary>
         public string BenefitId { get; set; }
         /// <summary> The grain the summaries data is served at in the report. Accepted values are &apos;Daily&apos; or &apos;Monthly&apos;. </summary>
-        public Grain Grain { get; set; }
+        public BenefitRecommendationUsageGrain Grain { get; set; }
         /// <summary> The start date of the summaries data that will be served in the report. </summary>
         public DateTimeOffset StartOn { get; set; }
         /// <summary> The end date of the summaries data that will be served in the report. </summary>

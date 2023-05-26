@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.CostManagement.Models
             {
                 return null;
             }
-            Optional<Grain> usageGrain = default;
+            Optional<BenefitRecommendationUsageGrain> usageGrain = default;
             Optional<IReadOnlyList<decimal>> charges = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.CostManagement.Models
                     {
                         continue;
                     }
-                    usageGrain = new Grain(property.Value.GetString());
+                    usageGrain = new BenefitRecommendationUsageGrain(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("charges"u8))

@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.CostManagement.Models
         /// <param name="operator"> The operator to use for comparison. </param>
         /// <param name="values"> Array of values to use for comparison. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="values"/> is null. </exception>
-        public ReportConfigComparisonExpression(string name, OperatorType @operator, IEnumerable<string> values)
+        public ReportConfigComparisonExpression(string name, ComparisonOperatorType @operator, IEnumerable<string> values)
         {
             Argument.AssertNotNull(name, nameof(name));
             Argument.AssertNotNull(values, nameof(values));
@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.CostManagement.Models
         /// <param name="name"> The name of the column to use in comparison. </param>
         /// <param name="operator"> The operator to use for comparison. </param>
         /// <param name="values"> Array of values to use for comparison. </param>
-        internal ReportConfigComparisonExpression(string name, OperatorType @operator, IList<string> values)
+        internal ReportConfigComparisonExpression(string name, ComparisonOperatorType @operator, IList<string> values)
         {
             Name = name;
             Operator = @operator;
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.CostManagement.Models
         /// <summary> The name of the column to use in comparison. </summary>
         public string Name { get; set; }
         /// <summary> The operator to use for comparison. </summary>
-        public OperatorType Operator { get; set; }
+        public ComparisonOperatorType Operator { get; set; }
         /// <summary> Array of values to use for comparison. </summary>
         public IList<string> Values { get; }
     }

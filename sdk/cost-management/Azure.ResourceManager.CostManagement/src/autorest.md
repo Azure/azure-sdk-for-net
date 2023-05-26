@@ -84,8 +84,10 @@ rename-mapping:
   BenefitKind: BillingAccountBenefitKind
   DaysOfWeek: ScheduledActionDaysOfWeek
   WeeksOfMonth: ScheduledActionWeeksOfMonth
-  Term: BenefitPeriodTerm
+  Term: BenefitRecommendationPeriodTerm
   Scope: BenefitRecommendationScope
+  Grain: BenefitRecommendationUsageGrain
+  OperatorType: ComparisonOperatorType
 
 directive:
   # [Error][Linked: https://github.com/Azure/autorest.csharp/issues/3288] Found more than 1 candidate for XX 

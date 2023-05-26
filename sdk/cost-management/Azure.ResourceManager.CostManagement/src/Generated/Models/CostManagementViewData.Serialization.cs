@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.CostManagement
             Optional<AccumulatedType> accumulated = default;
             Optional<ViewMetricType> metric = default;
             Optional<IList<KpiProperties>> kpis = default;
-            Optional<IList<PivotProperties>> pivots = default;
+            Optional<IList<ViewPivotProperties>> pivots = default;
             Optional<ViewReportType> type0 = default;
             Optional<ReportTimeframeType> timeframe = default;
             Optional<ReportConfigTimePeriod> timePeriod = default;
@@ -260,10 +260,10 @@ namespace Azure.ResourceManager.CostManagement
                             {
                                 continue;
                             }
-                            List<PivotProperties> array = new List<PivotProperties>();
+                            List<ViewPivotProperties> array = new List<ViewPivotProperties>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(PivotProperties.DeserializePivotProperties(item));
+                                array.Add(ViewPivotProperties.DeserializeViewPivotProperties(item));
                             }
                             pivots = array;
                             continue;

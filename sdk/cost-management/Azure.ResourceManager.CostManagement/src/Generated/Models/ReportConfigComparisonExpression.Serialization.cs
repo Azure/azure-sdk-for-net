@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.CostManagement.Models
                 return null;
             }
             string name = default;
-            OperatorType @operator = default;
+            ComparisonOperatorType @operator = default;
             IList<string> values = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.CostManagement.Models
                 }
                 if (property.NameEquals("operator"u8))
                 {
-                    @operator = new OperatorType(property.Value.GetString());
+                    @operator = new ComparisonOperatorType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("values"u8))

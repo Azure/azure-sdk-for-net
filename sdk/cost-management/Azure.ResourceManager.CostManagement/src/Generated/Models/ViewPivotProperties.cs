@@ -8,24 +8,24 @@
 namespace Azure.ResourceManager.CostManagement.Models
 {
     /// <summary> Each pivot must contain a &apos;type&apos; and &apos;name&apos;. </summary>
-    public partial class PivotProperties
+    public partial class ViewPivotProperties
     {
-        /// <summary> Initializes a new instance of PivotProperties. </summary>
-        public PivotProperties()
+        /// <summary> Initializes a new instance of ViewPivotProperties. </summary>
+        public ViewPivotProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of PivotProperties. </summary>
-        /// <param name="viewPivotType"> Data type to show in view. </param>
+        /// <summary> Initializes a new instance of ViewPivotProperties. </summary>
+        /// <param name="pivotType"> Data type to show in view. </param>
         /// <param name="name"> Data field to show in view. </param>
-        internal PivotProperties(ViewPivotType? viewPivotType, string name)
+        internal ViewPivotProperties(ViewPivotType? pivotType, string name)
         {
-            ViewPivotType = viewPivotType;
+            PivotType = pivotType;
             Name = name;
         }
 
         /// <summary> Data type to show in view. </summary>
-        public ViewPivotType? ViewPivotType { get; set; }
+        public ViewPivotType? PivotType { get; set; }
         /// <summary> Data field to show in view. </summary>
         public string Name { get; set; }
     }

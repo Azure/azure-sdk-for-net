@@ -58,8 +58,8 @@ namespace Azure.ResourceManager.CostManagement.Models
             Optional<int> totalHours = default;
             Optional<RecommendationUsageDetails> usage = default;
             Optional<string> armSkuName = default;
-            Optional<BenefitPeriodTerm> term = default;
-            Optional<Grain> commitmentGranularity = default;
+            Optional<BenefitRecommendationPeriodTerm> term = default;
+            Optional<BenefitRecommendationUsageGrain> commitmentGranularity = default;
             Optional<string> currencyCode = default;
             Optional<decimal> costWithoutBenefit = default;
             Optional<AllSavingsBenefitDetails> recommendationDetails = default;
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.CostManagement.Models
                     {
                         continue;
                     }
-                    term = new BenefitPeriodTerm(property.Value.GetString());
+                    term = new BenefitRecommendationPeriodTerm(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("commitmentGranularity"u8))
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.CostManagement.Models
                     {
                         continue;
                     }
-                    commitmentGranularity = new Grain(property.Value.GetString());
+                    commitmentGranularity = new BenefitRecommendationUsageGrain(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("currencyCode"u8))

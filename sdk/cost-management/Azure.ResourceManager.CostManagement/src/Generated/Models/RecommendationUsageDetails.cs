@@ -22,14 +22,14 @@ namespace Azure.ResourceManager.CostManagement.Models
         /// <summary> Initializes a new instance of RecommendationUsageDetails. </summary>
         /// <param name="usageGrain"> The grain of the usage. Supported values: &apos;Hourly&apos;. </param>
         /// <param name="charges"> On-demand charges for each hour between firstConsumptionDate and lastConsumptionDate that were used for computing benefit recommendations. </param>
-        internal RecommendationUsageDetails(Grain? usageGrain, IReadOnlyList<decimal> charges)
+        internal RecommendationUsageDetails(BenefitRecommendationUsageGrain? usageGrain, IReadOnlyList<decimal> charges)
         {
             UsageGrain = usageGrain;
             Charges = charges;
         }
 
         /// <summary> The grain of the usage. Supported values: &apos;Hourly&apos;. </summary>
-        public Grain? UsageGrain { get; set; }
+        public BenefitRecommendationUsageGrain? UsageGrain { get; set; }
         /// <summary> On-demand charges for each hour between firstConsumptionDate and lastConsumptionDate that were used for computing benefit recommendations. </summary>
         public IReadOnlyList<decimal> Charges { get; }
     }
