@@ -285,6 +285,7 @@ namespace Azure.Storage.DataMovement
                     expectedLength: totalLength).ConfigureAwait(false);
                 if (successfulCopy)
                 {
+                    ReportBytesWritten(downloadLength);
                     // Queue the work to end the download
                     await QueueChunkToChannelAsync(
                         async () =>

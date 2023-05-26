@@ -305,5 +305,62 @@ namespace Azure.Storage.DataMovement.Tests
                 transferOptions: transferOptions,
                 waitTime: 30);
         }
+
+        //[Ignore("https://github.com/Azure/azure-sdk-for-net/issues/35558")]
+        [Test]
+        [TestCase(0)]
+        [TestCase(150)]
+        public async Task ProgressHandler_PauseResume(int delayInMs)
+        {
+            // Arrange
+            await using DisposingBlobContainer source = await GetTestContainerAsync();
+            using DisposingLocalDirectory destination = DisposingLocalDirectory.GetTestDirectory();
+
+            await PopulateTestContainer(source.Container);
+
+            StorageResourceContainer sourceResource =
+                new BlobStorageResourceContainer(source.Container);
+            StorageResourceContainer destinationResource =
+                new LocalDirectoryStorageResourceContainer(destination.DirectoryPath);
+
+            TransferManager transferManager = new TransferManager();
+
+            TestProgressHandler progressHandler = new TestProgressHandler();
+            TransferOptions transferOptions = new TransferOptions()
+            {
+                ProgressHandler = progressHandler,
+                ProgressHandlerOptions = new ProgressHandlerOptions()
+                {
+                    TrackBytesTransferred = true
+                }
+            };
+
+            // Act - Start transfer
+            DataTransfer transfer = await transferManager.StartTransferAsync(sourceResource, destinationResource, transferOptions);
+
+            // TODO: This can likely be replaced with something better once mocking is in place
+            // Wait for the transfer to start happening
+            await Task.Delay(delayInMs);
+
+            // Pause transfer
+            CancellationTokenSource tokenSource = new CancellationTokenSource(TimeSpan.FromSeconds(10));
+            await transferManager.PauseTransferIfRunningAsync(transfer.Id, tokenSource.Token);
+            Assert.AreEqual(StorageTransferStatus.Paused, transfer.TransferStatus);
+
+            // Let the progress tracker known there was a pause
+            progressHandler.Pause();
+
+            // Resume transfer
+            transferOptions.ResumeFromCheckpointId = transfer.Id;
+            DataTransfer resumeTransfer = await transferManager.StartTransferAsync(sourceResource, destinationResource, transferOptions);
+
+            tokenSource = new CancellationTokenSource(TimeSpan.FromSeconds(10));
+            await resumeTransfer.AwaitCompletion(tokenSource.Token);
+
+            // Assert
+            Assert.AreEqual(StorageTransferStatus.Completed, resumeTransfer.TransferStatus);
+            progressHandler.AssertProgressWithPause(5);
+            progressHandler.AssertBytesTransferred(_expectedBytesTransferred);
+        }
     }
 }
