@@ -305,8 +305,9 @@ namespace Azure.Storage.DataMovement.Tests
                 waitTime: 30);
         }
 
-        //[Ignore("https://github.com/Azure/azure-sdk-for-net/issues/35558")]
+        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/35558")]
         [Test]
+        [LiveOnly] // https://github.com/Azure/azure-sdk-for-net/issues/33082
         [TestCase(0)]
         [TestCase(150)]
         public async Task ProgressHandler_PauseResume(int delayInMs)
