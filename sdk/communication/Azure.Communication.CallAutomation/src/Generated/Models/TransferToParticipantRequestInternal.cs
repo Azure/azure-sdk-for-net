@@ -11,11 +11,11 @@ using Azure.Core;
 
 namespace Azure.Communication.CallAutomation
 {
-    /// <summary> The request payload for transferring call to a participant. </summary>
+    /// <summary> The TransferToParticipantRequest. </summary>
     internal partial class TransferToParticipantRequestInternal
     {
         /// <summary> Initializes a new instance of TransferToParticipantRequestInternal. </summary>
-        /// <param name="targetParticipant"> The identity of the target where call should be transferred to. </param>
+        /// <param name="targetParticipant"></param>
         /// <exception cref="ArgumentNullException"> <paramref name="targetParticipant"/> is null. </exception>
         public TransferToParticipantRequestInternal(CommunicationIdentifierModel targetParticipant)
         {
@@ -24,11 +24,11 @@ namespace Azure.Communication.CallAutomation
             TargetParticipant = targetParticipant;
         }
 
-        /// <summary> The identity of the target where call should be transferred to. </summary>
+        /// <summary> Gets the target participant. </summary>
         public CommunicationIdentifierModel TargetParticipant { get; }
-        /// <summary> Used by customer to send custom context to targets. </summary>
+        /// <summary> Gets or sets the custom context. </summary>
         public CustomContextInternal CustomContext { get; set; }
-        /// <summary> Used by customers when calling mid-call actions to correlate the request to the response event. </summary>
+        /// <summary> Gets or sets the operation context. </summary>
         public string OperationContext { get; set; }
     }
 }

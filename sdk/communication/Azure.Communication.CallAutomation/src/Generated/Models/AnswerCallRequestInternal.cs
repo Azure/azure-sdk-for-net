@@ -11,12 +11,12 @@ using Azure.Core;
 
 namespace Azure.Communication.CallAutomation
 {
-    /// <summary> The request payload for answering the call. </summary>
+    /// <summary> The AnswerCallRequest. </summary>
     internal partial class AnswerCallRequestInternal
     {
         /// <summary> Initializes a new instance of AnswerCallRequestInternal. </summary>
-        /// <param name="incomingCallContext"> The context associated with the call. </param>
-        /// <param name="callbackUri"> The callback uri. </param>
+        /// <param name="incomingCallContext"></param>
+        /// <param name="callbackUri"></param>
         /// <exception cref="ArgumentNullException"> <paramref name="incomingCallContext"/> or <paramref name="callbackUri"/> is null. </exception>
         public AnswerCallRequestInternal(string incomingCallContext, string callbackUri)
         {
@@ -27,17 +27,17 @@ namespace Azure.Communication.CallAutomation
             CallbackUri = callbackUri;
         }
 
-        /// <summary> The context associated with the call. </summary>
+        /// <summary> Gets the incoming call context. </summary>
         public string IncomingCallContext { get; }
-        /// <summary> The callback uri. </summary>
+        /// <summary> Gets the callback uri. </summary>
         public string CallbackUri { get; }
-        /// <summary> A customer set value used to track the answering of a call. </summary>
+        /// <summary> Gets or sets the operation context. </summary>
         public string OperationContext { get; set; }
-        /// <summary> Media Streaming Configuration. </summary>
+        /// <summary> Configuration of Media streaming. </summary>
         public MediaStreamingOptionsInternal MediaStreamingConfiguration { get; set; }
-        /// <summary> The endpoint URL of the Azure Cognitive Services resource attached. </summary>
+        /// <summary> Gets or sets the azure cognitive services endpoint url. </summary>
         public string AzureCognitiveServicesEndpointUrl { get; set; }
-        /// <summary> The identifier of the call automation entity which answers the call. </summary>
+        /// <summary> Gets or sets the answered by identifier. </summary>
         public CommunicationUserIdentifierModel AnsweredByIdentifier { get; set; }
     }
 }

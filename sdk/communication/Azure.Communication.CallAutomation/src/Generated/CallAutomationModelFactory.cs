@@ -22,6 +22,17 @@ namespace Azure.Communication.CallAutomation
             return new TransferCallToParticipantResult(operationContext);
         }
 
+        /// <summary> Initializes a new instance of DialogStateResponse. </summary>
+        /// <param name="dialogId"> The dialog ID. </param>
+        /// <param name="dialogOptions"> Defines options for dialog. </param>
+        /// <param name="dialogInputType"> Determines the type of the dialog. </param>
+        /// <param name="operationContext"> The value to identify context of the operation. </param>
+        /// <returns> A new <see cref="CallAutomation.DialogStateResponse"/> instance for mocking. </returns>
+        public static DialogStateResponse DialogStateResponse(string dialogId = null, DialogOptionsInternal dialogOptions = null, DialogInputType? dialogInputType = null, string operationContext = null)
+        {
+            return new DialogStateResponse(dialogId, dialogOptions, dialogInputType, operationContext);
+        }
+
         /// <summary> Initializes a new instance of MuteParticipantsResponse. </summary>
         /// <param name="operationContext"> The operation context provided by client. </param>
         /// <returns> A new <see cref="CallAutomation.MuteParticipantsResponse"/> instance for mocking. </returns>
@@ -212,6 +223,31 @@ namespace Azure.Communication.CallAutomation
         public static RecognizeCanceled RecognizeCanceled(string callConnectionId = null, string serverCallId = null, string correlationId = null, string operationContext = null)
         {
             return new RecognizeCanceled(callConnectionId, serverCallId, correlationId, operationContext);
+        }
+
+        /// <summary> Initializes a new instance of UserConsent. </summary>
+        /// <param name="recording"></param>
+        /// <returns> A new <see cref="CallAutomation.UserConsent"/> instance for mocking. </returns>
+        public static UserConsent UserConsent(int recording = default)
+        {
+            return new UserConsent(recording);
+        }
+
+        /// <summary> Initializes a new instance of Hangup. </summary>
+        /// <param name="reason"></param>
+        /// <returns> A new <see cref="CallAutomation.Hangup"/> instance for mocking. </returns>
+        public static Hangup Hangup(string reason = null)
+        {
+            return new Hangup(reason);
+        }
+
+        /// <summary> Initializes a new instance of TransferToExternalNumber. </summary>
+        /// <param name="type"></param>
+        /// <param name="transferDestination"></param>
+        /// <returns> A new <see cref="CallAutomation.TransferToExternalNumber"/> instance for mocking. </returns>
+        public static TransferToExternalNumber TransferToExternalNumber(string type = null, string transferDestination = null)
+        {
+            return new TransferToExternalNumber(type, transferDestination);
         }
 
         /// <summary> Initializes a new instance of ContinuousDtmfRecognitionToneFailed. </summary>

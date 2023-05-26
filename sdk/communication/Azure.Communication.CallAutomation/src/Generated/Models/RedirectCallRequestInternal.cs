@@ -11,12 +11,12 @@ using Azure.Core;
 
 namespace Azure.Communication.CallAutomation
 {
-    /// <summary> The request payload for redirecting the call. </summary>
+    /// <summary> The RedirectCallRequest. </summary>
     internal partial class RedirectCallRequestInternal
     {
         /// <summary> Initializes a new instance of RedirectCallRequestInternal. </summary>
-        /// <param name="incomingCallContext"> The context associated with the call. </param>
-        /// <param name="target"> The target identity to redirect the call to. </param>
+        /// <param name="incomingCallContext"></param>
+        /// <param name="target"></param>
         /// <exception cref="ArgumentNullException"> <paramref name="incomingCallContext"/> or <paramref name="target"/> is null. </exception>
         public RedirectCallRequestInternal(string incomingCallContext, CommunicationIdentifierModel target)
         {
@@ -27,11 +27,11 @@ namespace Azure.Communication.CallAutomation
             Target = target;
         }
 
-        /// <summary> The context associated with the call. </summary>
+        /// <summary> Gets the incoming call context. </summary>
         public string IncomingCallContext { get; }
-        /// <summary> The target identity to redirect the call to. </summary>
+        /// <summary> Gets the target. </summary>
         public CommunicationIdentifierModel Target { get; }
-        /// <summary> Used by customer to send custom context to targets. </summary>
+        /// <summary> Gets or sets the custom context. </summary>
         public CustomContextInternal CustomContext { get; set; }
     }
 }

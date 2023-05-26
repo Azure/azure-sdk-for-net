@@ -11,11 +11,11 @@ using Azure.Core;
 
 namespace Azure.Communication.CallAutomation
 {
-    /// <summary> The remove participant by identifier request. </summary>
+    /// <summary> The RemoveParticipantRequest. </summary>
     internal partial class RemoveParticipantRequestInternal
     {
         /// <summary> Initializes a new instance of RemoveParticipantRequestInternal. </summary>
-        /// <param name="participantToRemove"> The participants to be removed from the call. </param>
+        /// <param name="participantToRemove"></param>
         /// <exception cref="ArgumentNullException"> <paramref name="participantToRemove"/> is null. </exception>
         public RemoveParticipantRequestInternal(CommunicationIdentifierModel participantToRemove)
         {
@@ -24,9 +24,9 @@ namespace Azure.Communication.CallAutomation
             ParticipantToRemove = participantToRemove;
         }
 
-        /// <summary> The participants to be removed from the call. </summary>
+        /// <summary> Gets the participant to remove. </summary>
         public CommunicationIdentifierModel ParticipantToRemove { get; }
-        /// <summary> Used by customers when calling mid-call actions to correlate the request to the response event. </summary>
+        /// <summary> Gets or sets the operation context. </summary>
         public string OperationContext { get; set; }
     }
 }
