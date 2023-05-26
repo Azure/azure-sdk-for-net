@@ -5,7 +5,9 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
+using System.Linq;
 using Azure.Core;
 
 namespace Azure.Communication.CallAutomation
@@ -14,22 +16,26 @@ namespace Azure.Communication.CallAutomation
     internal partial class GetParticipantsResponseInternal
     {
         /// <summary> Initializes a new instance of GetParticipantsResponseInternal. </summary>
-        internal GetParticipantsResponseInternal()
+        /// <param name="value"> List of the current participants in the call. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        internal GetParticipantsResponseInternal(IEnumerable<CallParticipantInternal> value)
         {
-            Values = new ChangeTrackingList<CallParticipantInternal>();
+            Argument.AssertNotNull(value, nameof(value));
+
+            Value = value.ToList();
         }
 
         /// <summary> Initializes a new instance of GetParticipantsResponseInternal. </summary>
-        /// <param name="values"> List of the current participants in the call. </param>
+        /// <param name="value"> List of the current participants in the call. </param>
         /// <param name="nextLink"> Continue of the list of participants. </param>
-        internal GetParticipantsResponseInternal(IReadOnlyList<CallParticipantInternal> values, string nextLink)
+        internal GetParticipantsResponseInternal(IReadOnlyList<CallParticipantInternal> value, string nextLink)
         {
-            Values = values;
+            Value = value;
             NextLink = nextLink;
         }
 
         /// <summary> List of the current participants in the call. </summary>
-        public IReadOnlyList<CallParticipantInternal> Values { get; }
+        public IReadOnlyList<CallParticipantInternal> Value { get; }
         /// <summary> Continue of the list of participants. </summary>
         public string NextLink { get; }
     }

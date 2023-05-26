@@ -32,11 +32,6 @@ namespace Azure.Communication.CallAutomation
         public Uri CallbackUri { get; }
 
         /// <summary>
-        /// Media Streaming Configuration.
-        /// </summary>
-        public MediaStreamingOptions MediaStreamingOptions { get; set; }
-
-        /// <summary>
         /// The endpoint uri of the Azure Cognitive Services resource attached
         /// </summary>
         public Uri AzureCognitiveServicesEndpointUri { get; set; }

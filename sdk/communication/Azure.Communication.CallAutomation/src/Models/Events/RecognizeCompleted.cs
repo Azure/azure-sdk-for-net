@@ -134,18 +134,6 @@ namespace Azure.Communication.CallAutomation
                 writer.WritePropertyName("dtmfResult");
                 JsonSerializer.Serialize(writer, dtmfResult, jsonSeializerOptionForObject);
             }
-            else if (RecognitionType == CallMediaRecognitionType.Choices)
-            {
-                ChoiceResult choiceResult = (ChoiceResult)RecognizeResult;
-                writer.WritePropertyName("choiceResult");
-                JsonSerializer.Serialize(writer, choiceResult, jsonSeializerOptionForObject);
-            }
-            else if (RecognitionType == CallMediaRecognitionType.Speech)
-            {
-                SpeechResult speechResult = (SpeechResult)RecognizeResult;
-                writer.WritePropertyName("speechResult");
-                JsonSerializer.Serialize(writer, speechResult, jsonSeializerOptionForObject);
-            }
 
             writer.WriteEndObject();
             writer.Flush();

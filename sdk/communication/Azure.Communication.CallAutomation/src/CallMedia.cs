@@ -82,7 +82,7 @@ namespace Azure.Communication.CallAutomation
             scope.Start();
             try
             {
-                var playOptions = new PlayOptions(playSource, playTo)
+                var playOptions = new PlayOptions(new List<PlaySource> { playSource }, playTo)
                 {
                     Loop = false,
                     OperationContext = null
@@ -145,7 +145,7 @@ namespace Azure.Communication.CallAutomation
             scope.Start();
             try
             {
-                var playOptions = new PlayOptions(playSource, playTo)
+                var playOptions = new PlayOptions(new List<PlaySource> { playSource }, playTo)
                 {
                     Loop = false,
                     OperationContext = null
@@ -169,30 +169,22 @@ namespace Azure.Communication.CallAutomation
 
         private static PlayRequestInternal CreatePlayRequest(PlayOptions options)
         {
-            PlaySourceInternal sourceInternal = TranslatePlaySourceToInternal(options.PlaySource);
+            PlayRequestInternal request = new PlayRequestInternal(options.PlaySources.Select(t => TranslatePlaySourceToInternal(t)).ToList());
 
-            if (sourceInternal != null)
+            request.PlayTo = options.PlayTo.Select(t => CommunicationIdentifierSerializer.Serialize(t)).ToList();
+
+            if (options != null)
             {
-                PlayRequestInternal request = new PlayRequestInternal(sourceInternal);
-                request.PlayTo = options.PlayTo.Select(t => CommunicationIdentifierSerializer.Serialize(t)).ToList();
-
-                if (options != null)
-                {
-                    request.PlayOptions = new PlayOptionsInternal(options.Loop);
-                    request.OperationContext = options.OperationContext;
-                }
-
-                if (request.OperationContext == default)
-                {
-                    request.OperationContext = Guid.NewGuid().ToString();
-                }
-
-                request.CallbackUri = options.CallbackUri?.AbsoluteUri;
-
-                return request;
+                request.PlayOptions = new PlayOptionsInternal(options.Loop);
+                request.OperationContext = options.OperationContext;
             }
 
-            throw new NotSupportedException(options.PlaySource.GetType().Name);
+            if (request.OperationContext == default)
+            {
+                request.OperationContext = Guid.NewGuid().ToString();
+            }
+
+            return request;
         }
 
         /// <summary>
@@ -207,7 +199,7 @@ namespace Azure.Communication.CallAutomation
             scope.Start();
             try
             {
-                PlayOptions playOptions = new PlayOptions(options.PlaySource, Enumerable.Empty<CommunicationIdentifier>());
+                PlayOptions playOptions = new PlayOptions(options.PlaySources, Enumerable.Empty<CommunicationIdentifier>());
                 playOptions.OperationContext = options.OperationContext;
                 playOptions.Loop = options.Loop;
                 playOptions.CallbackUri = options.CallbackUri;
@@ -253,7 +245,7 @@ namespace Azure.Communication.CallAutomation
             scope.Start();
             try
             {
-                PlayOptions playOptions = new PlayOptions(options.PlaySource, Enumerable.Empty<CommunicationIdentifier>());
+                PlayOptions playOptions = new PlayOptions(options.PlaySources, Enumerable.Empty<CommunicationIdentifier>());
                 playOptions.OperationContext = options.OperationContext;
                 playOptions.Loop = options.Loop;
                 playOptions.CallbackUri = options.CallbackUri;
@@ -272,7 +264,7 @@ namespace Azure.Communication.CallAutomation
         /// <param name="playSource"></param>
         /// <param name="cancellationToken"></param>
         /// <returns>Returns <see cref="PlayResult"/>, which can be used to wait for Play's related events.</returns>
-        public virtual Response<PlayResult> PlayToAll(PlaySource playSource, CancellationToken cancellationToken = default)
+        public virtual Response<PlayResult> PlayToAll(PlaySource playSource,  CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallMedia)}.{nameof(PlayToAll)}");
             scope.Start();
@@ -419,7 +411,6 @@ namespace Azure.Communication.CallAutomation
                 request.PlayPrompt = TranslatePlaySourceToInternal(recognizeDtmfOptions.Prompt);
                 request.InterruptCallMediaOperation = recognizeOptions.InterruptCallMediaOperation;
                 request.OperationContext = recognizeOptions.OperationContext == default ? Guid.NewGuid().ToString() : recognizeOptions.OperationContext;
-                request.CallbackUri = recognizeOptions.CallbackUri?.AbsoluteUri;
 
                 return request;
             }
@@ -523,7 +514,6 @@ namespace Azure.Communication.CallAutomation
                 request.PlayPrompt = TranslatePlaySourceToInternal(recognizeSpeechOrDtmfOptions.Prompt);
                 request.InterruptCallMediaOperation = recognizeOptions.InterruptCallMediaOperation;
                 request.OperationContext = recognizeOptions.OperationContext == default ? Guid.NewGuid().ToString() : recognizeOptions.OperationContext;
-                request.CallbackUri = recognizeOptions.CallbackUri?.AbsoluteUri;
 
                 return request;
             }
@@ -540,8 +530,8 @@ namespace Azure.Communication.CallAutomation
             if (playSource != null && playSource is FileSource fileSource)
             {
                 sourceInternal = new PlaySourceInternal(PlaySourceTypeInternal.File);
-                sourceInternal.FileSource = new FileSourceInternal(fileSource.FileUri.AbsoluteUri);
-                sourceInternal.PlaySourceId = fileSource.PlaySourceCacheId;
+                sourceInternal.File = new FileSourceInternal(fileSource.FileUri.AbsoluteUri);
+                sourceInternal.PlaySourceCacheId = fileSource.PlaySourceCacheId;
                 return sourceInternal;
             }
             else if (playSource != null && playSource is TextSource textSource)
@@ -552,7 +542,7 @@ namespace Azure.Communication.CallAutomation
                 sourceInternal.TextSource.VoiceGender = textSource.VoiceGender ?? GenderType.Male;
                 sourceInternal.TextSource.VoiceName = textSource.VoiceName ?? null;
                 sourceInternal.TextSource.CustomVoiceEndpointId = textSource.CustomVoiceEndpointId ?? null;
-                sourceInternal.PlaySourceId = textSource.PlaySourceCacheId;
+                sourceInternal.PlaySourceCacheId = textSource.PlaySourceCacheId;
                 return sourceInternal;
             }
             else if (playSource != null && playSource is SsmlSource ssmlSource)

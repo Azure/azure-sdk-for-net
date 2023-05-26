@@ -64,10 +64,5 @@ namespace Azure.Communication.CallAutomation
 
         /// <summary> Endpoint where the speech custom model was deployed. </summary>
         public string SpeechModelEndpointId { get; set; }
-
-        /// <summary>
-        /// The callback URI override for this transfer call request.
-        /// </summary>
-        public Uri CallbackUri { get; set; }
     }
 }

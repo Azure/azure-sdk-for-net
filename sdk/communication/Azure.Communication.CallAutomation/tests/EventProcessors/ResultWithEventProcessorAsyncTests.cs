@@ -258,7 +258,7 @@ namespace Azure.Communication.CallAutomation.Tests.EventProcessors
             var callConnection = CreateMockCallConnection(successCode, AddParticipantsPayload);
             CallAutomationEventProcessor handler = callConnection.EventProcessor;
 
-            var response = callConnection.GetCallMedia().PlayToAll(new PlayToAllOptions(new FileSource(new Uri(CallBackUri))) { OperationContext = OperationContext });
+            var response = callConnection.GetCallMedia().PlayToAll(new PlayToAllOptions(new List<PlaySource> { new FileSource(new Uri(CallBackUri)) }) { OperationContext = OperationContext });
             Assert.AreEqual(successCode, response.GetRawResponse().Status);
 
             // Create and send event to event processor
@@ -284,7 +284,7 @@ namespace Azure.Communication.CallAutomation.Tests.EventProcessors
             var callConnection = CreateMockCallConnection(successCode, AddParticipantsPayload);
             CallAutomationEventProcessor handler = callConnection.EventProcessor;
 
-            var response = callConnection.GetCallMedia().PlayToAll(new PlayToAllOptions(new FileSource(new Uri(CallBackUri))) { OperationContext = OperationContext });
+            var response = callConnection.GetCallMedia().PlayToAll(new PlayToAllOptions(new List<PlaySource> { new FileSource(new Uri(CallBackUri))}) { OperationContext = OperationContext });
             Assert.AreEqual(successCode, response.GetRawResponse().Status);
 
             // Create and send event to event processor
@@ -514,82 +514,6 @@ namespace Azure.Communication.CallAutomation.Tests.EventProcessors
             Assert.NotNull(returnedResult.FailureResult);
             Assert.IsNull(returnedResult.SuccessResult);
             Assert.AreEqual(typeof(SendDtmfFailed), returnedResult.FailureResult.GetType());
-            Assert.AreEqual(CallConnectionId, returnedResult.FailureResult.CallConnectionId);
-            Assert.AreEqual(OperationContext, returnedResult.FailureResult.OperationContext);
-        }
-
-        [Test]
-        public async Task StartDialogEventResultSuccessTest()
-        {
-            int successCode = (int)HttpStatusCode.Created;
-
-            var callConnection = CreateMockCallConnection(successCode, DialogPayload);
-            CallAutomationEventProcessor handler = callConnection.EventProcessor;
-
-            var dialogContext = new Dictionary<string, object>();
-            var startDialogOptions = new StartDialogOptions(DialogInputType.PowerVirtualAgents, "botAppId", dialogContext)
-            {
-                OperationContext = OperationContext
-            };
-
-            var response = callConnection.GetCallDialog().StartDialog(startDialogOptions);
-            Assert.AreEqual(successCode, response.GetRawResponse().Status);
-
-            // Create and send event to event processor
-            SendAndProcessEvent(handler, new DialogStarted(CallConnectionId, ServerCallId, CorelationId, OperationContext, new ResultInformation(), "dialogId", DialogInputType.PowerVirtualAgents));
-
-            DialogEventResult returnedResult = await response.Value.WaitForEventProcessorAsync();
-
-            // Assert
-            Assert.NotNull(returnedResult);
-            Assert.AreEqual(true, returnedResult.IsSuccess);
-            Assert.NotNull(returnedResult.DialogStartedSuccessEvent);
-            Assert.IsNull(returnedResult.DialogCompletedSuccessResult);
-            Assert.IsNull(returnedResult.DialogConsentSuccessEvent);
-            Assert.IsNull(returnedResult.DialogHangupSuccessEvent);
-            Assert.IsNull(returnedResult.DialogLanguageChangeEvent);
-            Assert.IsNull(returnedResult.DialogSensitivityUpdateEvent);
-            Assert.IsNull(returnedResult.DialogTransferSuccessEvent);
-            Assert.IsNull(returnedResult.FailureResult);
-            Assert.AreEqual(typeof(DialogStarted), returnedResult.DialogStartedSuccessEvent.GetType());
-            Assert.AreEqual(CallConnectionId, returnedResult.DialogStartedSuccessEvent.CallConnectionId);
-            Assert.AreEqual(OperationContext, returnedResult.DialogStartedSuccessEvent.OperationContext);
-        }
-
-        [Test]
-        public async Task StartDialogEventResultFailedTest()
-        {
-            int successCode = (int)HttpStatusCode.Created;
-
-            var callConnection = CreateMockCallConnection(successCode, DialogPayload);
-            CallAutomationEventProcessor handler = callConnection.EventProcessor;
-
-            var dialogContext = new Dictionary<string, object>();
-            var startDialogOptions = new StartDialogOptions(DialogInputType.PowerVirtualAgents, "botAppId", dialogContext)
-            {
-                OperationContext = OperationContext
-            };
-
-            var response = callConnection.GetCallDialog().StartDialog(startDialogOptions);
-            Assert.AreEqual(successCode, response.GetRawResponse().Status);
-
-            // Create and send event to event processor
-            SendAndProcessEvent(handler, new DialogFailed(CallConnectionId, ServerCallId, CorelationId, OperationContext, new ResultInformation(), "dialogId", DialogInputType.PowerVirtualAgents));
-
-            DialogEventResult returnedResult = await response.Value.WaitForEventProcessorAsync();
-
-            // Assert
-            Assert.NotNull(returnedResult);
-            Assert.AreEqual(false, returnedResult.IsSuccess);
-            Assert.IsNull(returnedResult.DialogStartedSuccessEvent);
-            Assert.IsNull(returnedResult.DialogCompletedSuccessResult);
-            Assert.IsNull(returnedResult.DialogConsentSuccessEvent);
-            Assert.IsNull(returnedResult.DialogHangupSuccessEvent);
-            Assert.IsNull(returnedResult.DialogLanguageChangeEvent);
-            Assert.IsNull(returnedResult.DialogSensitivityUpdateEvent);
-            Assert.IsNull(returnedResult.DialogTransferSuccessEvent);
-            Assert.NotNull(returnedResult.FailureResult);
-            Assert.AreEqual(typeof(DialogFailed), returnedResult.FailureResult.GetType());
             Assert.AreEqual(CallConnectionId, returnedResult.FailureResult.CallConnectionId);
             Assert.AreEqual(OperationContext, returnedResult.FailureResult.OperationContext);
         }

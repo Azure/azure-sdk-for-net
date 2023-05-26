@@ -18,7 +18,6 @@ namespace Azure.Communication.CallAutomation
         public TransferToParticipantOptions(PhoneNumberIdentifier targetPhoneNumberIdentity)
         {
             Target = targetPhoneNumberIdentity;
-            CustomContext = new CustomContext(sipHeaders: new Dictionary<string, string>(), null);
         }
 
         /// <summary>
@@ -28,7 +27,6 @@ namespace Azure.Communication.CallAutomation
         public TransferToParticipantOptions(CommunicationUserIdentifier targetIdentity)
         {
             Target = targetIdentity;
-            CustomContext = new CustomContext(sipHeaders: null, voipHeaders: new Dictionary<string, string>());
         }
 
         /// <summary>
@@ -38,7 +36,6 @@ namespace Azure.Communication.CallAutomation
         public TransferToParticipantOptions(MicrosoftTeamsUserIdentifier targetIdentity)
         {
             Target = targetIdentity;
-            CustomContext = new CustomContext(sipHeaders: null, voipHeaders: new Dictionary<string, string>());
         }
 
         /// <summary>
@@ -46,21 +43,6 @@ namespace Azure.Communication.CallAutomation
         /// </summary>
         /// <value></value>
         public CommunicationIdentifier Target { get; }
-
-        /// <summary>
-        /// The operationContext for this transfer call.
-        /// </summary>
-        public string OperationContext { get; set; }
-
-        /// <summary>
-        /// The Custom Context which contains SIP and voip headers
-        /// </summary>
-        public CustomContext CustomContext { get; }
-
-        /// <summary>
-        /// The callee that being transferred
-        /// </summary>
-        public CommunicationIdentifier Transferee { get; set; }
 
         /// <summary>
         /// The callback URI override for this transfer call request.

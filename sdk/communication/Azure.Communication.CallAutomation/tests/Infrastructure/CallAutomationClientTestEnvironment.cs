@@ -17,8 +17,6 @@ namespace Azure.Communication.CallAutomation.Tests.Infrastructure
 
         public const string TargetNumber = "TARGET_PHONE_NUMBER";
 
-        public const string Endpoint = "PMA_Endpoint";
-
         private const string randomResourceIdentifier = "82e890fc-188a-4b67-bb7d-deff073d7d1e";
 
         private string randomAcsUser = $"8:acs:{randomResourceIdentifier}_0000000e-abbe-44ad-9f37-b0a72a616d0b";
@@ -54,11 +52,6 @@ namespace Azure.Communication.CallAutomation.Tests.Infrastructure
         /// The target phone number to call in string formated as "+1<PhoneNumber>".
         /// </summary>
         public string TargetPhoneNumber => GetRecordedVariable(TargetNumber, options => options.IsSecret("+16041234567"));
-
-        /// <summary>
-        /// Endpoint for the targetted PMA in string. If not set, default endpoint is used.
-        /// </summary>
-        public string PMAEndpoint => GetRecordedOptionalVariable(Endpoint, options => options.IsSecret("https://sanitized.com"));
 
         /// <summary>
         /// Dispatcher endpoint for automated testing

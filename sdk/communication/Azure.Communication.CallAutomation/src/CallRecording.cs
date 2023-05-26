@@ -85,11 +85,6 @@ namespace Azure.Communication.CallAutomation
                     }
                 }
 
-                if (options.ExternalStorage is not null)
-                {
-                    request.ExternalStorage = TranslateExternalStorageToInternal(options.ExternalStorage);
-                }
-
                 return _callRecordingRestClient.StartRecording(request, cancellationToken: cancellationToken);
             }
             catch (Exception ex)
@@ -140,11 +135,6 @@ namespace Azure.Communication.CallAutomation
                         }
                         request.ChannelAffinity.Add(newChannelAffinity);
                     }
-                }
-
-                if (options.ExternalStorage is not null)
-                {
-                    request.ExternalStorage = TranslateExternalStorageToInternal(options.ExternalStorage);
                 }
 
                 return await _callRecordingRestClient.StartRecordingAsync(request, cancellationToken: cancellationToken).ConfigureAwait(false);
@@ -621,24 +611,5 @@ namespace Azure.Communication.CallAutomation
                 throw;
             }
         }
-
-        #region private functions
-
-        private static ExternalStorageInternal TranslateExternalStorageToInternal(ExternalStorage externalStorage)
-        {
-            ExternalStorageInternal result = null;
-
-            if (externalStorage is BlobStorage blobStorage)
-            {
-                result = new ExternalStorageInternal(blobStorage.StorageType)
-                {
-                    BlobStorage = new BlobStorageInternal(blobStorage.ContainerUri.AbsoluteUri),
-                };
-            }
-
-            return result;
-        }
-
-        #endregion private functions
     }
 }

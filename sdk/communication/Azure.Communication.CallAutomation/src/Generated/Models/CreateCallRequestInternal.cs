@@ -39,16 +39,10 @@ namespace Azure.Communication.CallAutomation
         /// <summary> Display name of the call if dialing out to a pstn number. </summary>
         public string SourceDisplayName { get; set; }
         /// <summary> The identifier of the source of the call. </summary>
-        public CommunicationUserIdentifierModel SourceIdentity { get; set; }
+        public CommunicationUserIdentifierModel Source { get; set; }
         /// <summary> A customer set value used to track the answering of a call. </summary>
         public string OperationContext { get; set; }
         /// <summary> The callback URI. </summary>
         public string CallbackUri { get; }
-        /// <summary> Media Streaming Configuration. </summary>
-        public MediaStreamingOptionsInternal MediaStreamingConfiguration { get; set; }
-        /// <summary> The identifier of the Cognitive Service resource assigned to this call. </summary>
-        public string AzureCognitiveServicesEndpointUrl { get; set; }
-        /// <summary> Used by customer to send custom context to targets. </summary>
-        public CustomContextInternal CustomContext { get; set; }
     }
 }

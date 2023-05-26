@@ -25,14 +25,8 @@ namespace Azure.Communication.CallAutomation
         /// Determines the sub-type of the recognize operation.
         /// In case of cancel operation the this field is not set and is returned empty
         /// </param>
-        /// <param name="collectTonesResult">
-        /// Defines the result for RecognitionType = Dtmf
-        /// Would be replaced by DtmfResult after server sdk renewed
-        /// </param>
         /// <param name="dtmfResult"> Defines the result for RecognitionType = Dtmf. </param>
-        /// <param name="choiceResult"> Defines the result for RecognitionType = Choices. </param>
-        /// <param name="speechResult"> Defines the result for RecognitionType = Speech and SpeechOrDtmf. </param>
-        internal RecognizeCompletedInternal(string callConnectionId, string serverCallId, string correlationId, string operationContext, ResultInformation resultInformation, CallMediaRecognitionType recognitionType, CollectTonesResult collectTonesResult, DtmfResult dtmfResult, ChoiceResult choiceResult, SpeechResult speechResult)
+        internal RecognizeCompletedInternal(string callConnectionId, string serverCallId, string correlationId, string operationContext, ResultInformation resultInformation, CallMediaRecognitionType recognitionType, DtmfResult dtmfResult)
         {
             CallConnectionId = callConnectionId;
             ServerCallId = serverCallId;
@@ -40,21 +34,9 @@ namespace Azure.Communication.CallAutomation
             OperationContext = operationContext;
             ResultInformation = resultInformation;
             RecognitionType = recognitionType;
-            CollectTonesResult = collectTonesResult;
             DtmfResult = dtmfResult;
-            ChoiceResult = choiceResult;
-            SpeechResult = speechResult;
         }
-        /// <summary>
-        /// Defines the result for RecognitionType = Dtmf
-        /// Would be replaced by DtmfResult after server sdk renewed
-        /// </summary>
-        public CollectTonesResult CollectTonesResult { get; }
         /// <summary> Defines the result for RecognitionType = Dtmf. </summary>
         public DtmfResult DtmfResult { get; }
-        /// <summary> Defines the result for RecognitionType = Choices. </summary>
-        public ChoiceResult ChoiceResult { get; }
-        /// <summary> Defines the result for RecognitionType = Speech and SpeechOrDtmf. </summary>
-        public SpeechResult SpeechResult { get; }
     }
 }
