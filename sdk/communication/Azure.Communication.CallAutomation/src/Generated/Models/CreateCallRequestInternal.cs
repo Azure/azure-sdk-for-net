@@ -13,12 +13,12 @@ using Azure.Core;
 
 namespace Azure.Communication.CallAutomation
 {
-    /// <summary> The request payload for creating the call. </summary>
+    /// <summary> The CreateCallRequest. </summary>
     internal partial class CreateCallRequestInternal
     {
         /// <summary> Initializes a new instance of CreateCallRequestInternal. </summary>
-        /// <param name="targets"> The targets of the call. </param>
-        /// <param name="callbackUri"> The callback URI. </param>
+        /// <param name="targets"></param>
+        /// <param name="callbackUri"></param>
         /// <exception cref="ArgumentNullException"> <paramref name="targets"/> or <paramref name="callbackUri"/> is null. </exception>
         public CreateCallRequestInternal(IEnumerable<CommunicationIdentifierModel> targets, string callbackUri)
         {
@@ -29,26 +29,23 @@ namespace Azure.Communication.CallAutomation
             CallbackUri = callbackUri;
         }
 
-        /// <summary> The targets of the call. </summary>
+        /// <summary> Gets the targets. </summary>
         public IList<CommunicationIdentifierModel> Targets { get; }
-        /// <summary>
-        /// The source caller Id, a phone number, that&apos;s shown to the PSTN participant being invited.
-        /// Required only when calling a PSTN callee.
-        /// </summary>
+        /// <summary> Gets or sets the source caller id number. </summary>
         public PhoneNumberIdentifierModel SourceCallerIdNumber { get; set; }
-        /// <summary> Display name of the call if dialing out to a pstn number. </summary>
+        /// <summary> Gets or sets the source display name. </summary>
         public string SourceDisplayName { get; set; }
-        /// <summary> The identifier of the source of the call. </summary>
+        /// <summary> Gets or sets the source identity. </summary>
         public CommunicationUserIdentifierModel SourceIdentity { get; set; }
-        /// <summary> A customer set value used to track the answering of a call. </summary>
+        /// <summary> Gets or sets the operation context. </summary>
         public string OperationContext { get; set; }
-        /// <summary> The callback URI. </summary>
+        /// <summary> Gets the callback uri. </summary>
         public string CallbackUri { get; }
-        /// <summary> Media Streaming Configuration. </summary>
+        /// <summary> Configuration of Media streaming. </summary>
         public MediaStreamingOptionsInternal MediaStreamingConfiguration { get; set; }
-        /// <summary> The identifier of the Cognitive Service resource assigned to this call. </summary>
+        /// <summary> Gets or sets the azure cognitive services endpoint url. </summary>
         public string AzureCognitiveServicesEndpointUrl { get; set; }
-        /// <summary> Used by customer to send custom context to targets. </summary>
+        /// <summary> Gets or sets the custom context. </summary>
         public CustomContextInternal CustomContext { get; set; }
     }
 }

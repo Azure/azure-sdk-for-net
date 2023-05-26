@@ -64,8 +64,7 @@ namespace Azure.Communication.CallAutomation
             return message;
         }
 
-        /// <summary> Start recording the call. </summary>
-        /// <param name="startCallRecording"> The request body of start call recording request. </param>
+        /// <param name="startCallRecording"> The StartCallRecordingRequest to use. </param>
         /// <param name="repeatabilityRequestID"> If specified, the client directs that the request is repeatable; that is, that the client can make the request multiple times with the same Repeatability-Request-Id and get back an appropriate response without the server executing the request multiple times. The value of the Repeatability-Request-Id is an opaque string representing a client-generated unique identifier for the request. It is a version 4 (random) UUID. </param>
         /// <param name="repeatabilityFirstSent"> If Repeatability-Request-ID header is specified, then Repeatability-First-Sent header must also be specified. The value should be the date and time at which the request was first created, expressed using the IMF-fixdate form of HTTP-date. Example: Sun, 06 Nov 1994 08:49:37 GMT. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -93,8 +92,7 @@ namespace Azure.Communication.CallAutomation
             }
         }
 
-        /// <summary> Start recording the call. </summary>
-        /// <param name="startCallRecording"> The request body of start call recording request. </param>
+        /// <param name="startCallRecording"> The StartCallRecordingRequest to use. </param>
         /// <param name="repeatabilityRequestID"> If specified, the client directs that the request is repeatable; that is, that the client can make the request multiple times with the same Repeatability-Request-Id and get back an appropriate response without the server executing the request multiple times. The value of the Repeatability-Request-Id is an opaque string representing a client-generated unique identifier for the request. It is a version 4 (random) UUID. </param>
         /// <param name="repeatabilityFirstSent"> If Repeatability-Request-ID header is specified, then Repeatability-First-Sent header must also be specified. The value should be the date and time at which the request was first created, expressed using the IMF-fixdate form of HTTP-date. Example: Sun, 06 Nov 1994 08:49:37 GMT. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -137,8 +135,7 @@ namespace Azure.Communication.CallAutomation
             return message;
         }
 
-        /// <summary> Get call recording properties. </summary>
-        /// <param name="recordingId"> The recording id. </param>
+        /// <param name="recordingId"> The String to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="recordingId"/> is null. </exception>
         public async Task<Response<RecordingStateResult>> GetRecordingPropertiesAsync(string recordingId, CancellationToken cancellationToken = default)
@@ -164,8 +161,7 @@ namespace Azure.Communication.CallAutomation
             }
         }
 
-        /// <summary> Get call recording properties. </summary>
-        /// <param name="recordingId"> The recording id. </param>
+        /// <param name="recordingId"> The String to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="recordingId"/> is null. </exception>
         public Response<RecordingStateResult> GetRecordingProperties(string recordingId, CancellationToken cancellationToken = default)
@@ -206,8 +202,7 @@ namespace Azure.Communication.CallAutomation
             return message;
         }
 
-        /// <summary> Stop recording the call. </summary>
-        /// <param name="recordingId"> The recording id. </param>
+        /// <param name="recordingId"> The String to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="recordingId"/> is null. </exception>
         public async Task<Response> StopRecordingAsync(string recordingId, CancellationToken cancellationToken = default)
@@ -228,8 +223,7 @@ namespace Azure.Communication.CallAutomation
             }
         }
 
-        /// <summary> Stop recording the call. </summary>
-        /// <param name="recordingId"> The recording id. </param>
+        /// <param name="recordingId"> The String to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="recordingId"/> is null. </exception>
         public Response StopRecording(string recordingId, CancellationToken cancellationToken = default)
@@ -266,8 +260,7 @@ namespace Azure.Communication.CallAutomation
             return message;
         }
 
-        /// <summary> Pause recording the call. </summary>
-        /// <param name="recordingId"> The recording id. </param>
+        /// <param name="recordingId"> The String to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="recordingId"/> is null. </exception>
         public async Task<Response> PauseRecordingAsync(string recordingId, CancellationToken cancellationToken = default)
@@ -288,8 +281,7 @@ namespace Azure.Communication.CallAutomation
             }
         }
 
-        /// <summary> Pause recording the call. </summary>
-        /// <param name="recordingId"> The recording id. </param>
+        /// <param name="recordingId"> The String to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="recordingId"/> is null. </exception>
         public Response PauseRecording(string recordingId, CancellationToken cancellationToken = default)
@@ -326,8 +318,7 @@ namespace Azure.Communication.CallAutomation
             return message;
         }
 
-        /// <summary> Resume recording the call. </summary>
-        /// <param name="recordingId"> The recording id. </param>
+        /// <param name="recordingId"> The String to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="recordingId"/> is null. </exception>
         public async Task<Response> ResumeRecordingAsync(string recordingId, CancellationToken cancellationToken = default)
@@ -348,8 +339,7 @@ namespace Azure.Communication.CallAutomation
             }
         }
 
-        /// <summary> Resume recording the call. </summary>
-        /// <param name="recordingId"> The recording id. </param>
+        /// <param name="recordingId"> The String to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="recordingId"/> is null. </exception>
         public Response ResumeRecording(string recordingId, CancellationToken cancellationToken = default)

@@ -64,8 +64,7 @@ namespace Azure.Communication.CallAutomation
             return message;
         }
 
-        /// <summary> Create an outbound call. </summary>
-        /// <param name="createCallRequest"> The create call request. </param>
+        /// <param name="createCallRequest"> The CreateCallRequest to use. </param>
         /// <param name="repeatabilityRequestID"> If specified, the client directs that the request is repeatable; that is, that the client can make the request multiple times with the same Repeatability-Request-Id and get back an appropriate response without the server executing the request multiple times. The value of the Repeatability-Request-Id is an opaque string representing a client-generated unique identifier for the request. It is a version 4 (random) UUID. </param>
         /// <param name="repeatabilityFirstSent"> If Repeatability-Request-ID header is specified, then Repeatability-First-Sent header must also be specified. The value should be the date and time at which the request was first created, expressed using the IMF-fixdate form of HTTP-date. Example: Sun, 06 Nov 1994 08:49:37 GMT. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -93,8 +92,7 @@ namespace Azure.Communication.CallAutomation
             }
         }
 
-        /// <summary> Create an outbound call. </summary>
-        /// <param name="createCallRequest"> The create call request. </param>
+        /// <param name="createCallRequest"> The CreateCallRequest to use. </param>
         /// <param name="repeatabilityRequestID"> If specified, the client directs that the request is repeatable; that is, that the client can make the request multiple times with the same Repeatability-Request-Id and get back an appropriate response without the server executing the request multiple times. The value of the Repeatability-Request-Id is an opaque string representing a client-generated unique identifier for the request. It is a version 4 (random) UUID. </param>
         /// <param name="repeatabilityFirstSent"> If Repeatability-Request-ID header is specified, then Repeatability-First-Sent header must also be specified. The value should be the date and time at which the request was first created, expressed using the IMF-fixdate form of HTTP-date. Example: Sun, 06 Nov 1994 08:49:37 GMT. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -148,13 +146,11 @@ namespace Azure.Communication.CallAutomation
             return message;
         }
 
-        /// <summary> Answer a Call. </summary>
-        /// <param name="answerCallRequest"> The answer call request. </param>
+        /// <param name="answerCallRequest"> The AnswerCallRequest to use. </param>
         /// <param name="repeatabilityRequestID"> If specified, the client directs that the request is repeatable; that is, that the client can make the request multiple times with the same Repeatability-Request-Id and get back an appropriate response without the server executing the request multiple times. The value of the Repeatability-Request-Id is an opaque string representing a client-generated unique identifier for the request. It is a version 4 (random) UUID. </param>
         /// <param name="repeatabilityFirstSent"> If Repeatability-Request-ID header is specified, then Repeatability-First-Sent header must also be specified. The value should be the date and time at which the request was first created, expressed using the IMF-fixdate form of HTTP-date. Example: Sun, 06 Nov 1994 08:49:37 GMT. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="answerCallRequest"/> is null. </exception>
-        /// <remarks> Answer a call using the IncomingCallContext from Event Grid. </remarks>
         public async Task<Response<CallConnectionPropertiesInternal>> AnswerCallAsync(AnswerCallRequestInternal answerCallRequest, Guid? repeatabilityRequestID = null, string repeatabilityFirstSent = null, CancellationToken cancellationToken = default)
         {
             if (answerCallRequest == null)
@@ -178,13 +174,11 @@ namespace Azure.Communication.CallAutomation
             }
         }
 
-        /// <summary> Answer a Call. </summary>
-        /// <param name="answerCallRequest"> The answer call request. </param>
+        /// <param name="answerCallRequest"> The AnswerCallRequest to use. </param>
         /// <param name="repeatabilityRequestID"> If specified, the client directs that the request is repeatable; that is, that the client can make the request multiple times with the same Repeatability-Request-Id and get back an appropriate response without the server executing the request multiple times. The value of the Repeatability-Request-Id is an opaque string representing a client-generated unique identifier for the request. It is a version 4 (random) UUID. </param>
         /// <param name="repeatabilityFirstSent"> If Repeatability-Request-ID header is specified, then Repeatability-First-Sent header must also be specified. The value should be the date and time at which the request was first created, expressed using the IMF-fixdate form of HTTP-date. Example: Sun, 06 Nov 1994 08:49:37 GMT. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="answerCallRequest"/> is null. </exception>
-        /// <remarks> Answer a call using the IncomingCallContext from Event Grid. </remarks>
         public Response<CallConnectionPropertiesInternal> AnswerCall(AnswerCallRequestInternal answerCallRequest, Guid? repeatabilityRequestID = null, string repeatabilityFirstSent = null, CancellationToken cancellationToken = default)
         {
             if (answerCallRequest == null)
@@ -234,8 +228,7 @@ namespace Azure.Communication.CallAutomation
             return message;
         }
 
-        /// <summary> Redirect a call. </summary>
-        /// <param name="redirectCallRequest"> The redirect call request. </param>
+        /// <param name="redirectCallRequest"> The RedirectCallRequest to use. </param>
         /// <param name="repeatabilityRequestID"> If specified, the client directs that the request is repeatable; that is, that the client can make the request multiple times with the same Repeatability-Request-Id and get back an appropriate response without the server executing the request multiple times. The value of the Repeatability-Request-Id is an opaque string representing a client-generated unique identifier for the request. It is a version 4 (random) UUID. </param>
         /// <param name="repeatabilityFirstSent"> If Repeatability-Request-ID header is specified, then Repeatability-First-Sent header must also be specified. The value should be the date and time at which the request was first created, expressed using the IMF-fixdate form of HTTP-date. Example: Sun, 06 Nov 1994 08:49:37 GMT. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -258,8 +251,7 @@ namespace Azure.Communication.CallAutomation
             }
         }
 
-        /// <summary> Redirect a call. </summary>
-        /// <param name="redirectCallRequest"> The redirect call request. </param>
+        /// <param name="redirectCallRequest"> The RedirectCallRequest to use. </param>
         /// <param name="repeatabilityRequestID"> If specified, the client directs that the request is repeatable; that is, that the client can make the request multiple times with the same Repeatability-Request-Id and get back an appropriate response without the server executing the request multiple times. The value of the Repeatability-Request-Id is an opaque string representing a client-generated unique identifier for the request. It is a version 4 (random) UUID. </param>
         /// <param name="repeatabilityFirstSent"> If Repeatability-Request-ID header is specified, then Repeatability-First-Sent header must also be specified. The value should be the date and time at which the request was first created, expressed using the IMF-fixdate form of HTTP-date. Example: Sun, 06 Nov 1994 08:49:37 GMT. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -308,8 +300,7 @@ namespace Azure.Communication.CallAutomation
             return message;
         }
 
-        /// <summary> Reject the call. </summary>
-        /// <param name="rejectCallRequest"> The reject call request. </param>
+        /// <param name="rejectCallRequest"> The RejectCallRequest to use. </param>
         /// <param name="repeatabilityRequestID"> If specified, the client directs that the request is repeatable; that is, that the client can make the request multiple times with the same Repeatability-Request-Id and get back an appropriate response without the server executing the request multiple times. The value of the Repeatability-Request-Id is an opaque string representing a client-generated unique identifier for the request. It is a version 4 (random) UUID. </param>
         /// <param name="repeatabilityFirstSent"> If Repeatability-Request-ID header is specified, then Repeatability-First-Sent header must also be specified. The value should be the date and time at which the request was first created, expressed using the IMF-fixdate form of HTTP-date. Example: Sun, 06 Nov 1994 08:49:37 GMT. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -332,8 +323,7 @@ namespace Azure.Communication.CallAutomation
             }
         }
 
-        /// <summary> Reject the call. </summary>
-        /// <param name="rejectCallRequest"> The reject call request. </param>
+        /// <param name="rejectCallRequest"> The RejectCallRequest to use. </param>
         /// <param name="repeatabilityRequestID"> If specified, the client directs that the request is repeatable; that is, that the client can make the request multiple times with the same Repeatability-Request-Id and get back an appropriate response without the server executing the request multiple times. The value of the Repeatability-Request-Id is an opaque string representing a client-generated unique identifier for the request. It is a version 4 (random) UUID. </param>
         /// <param name="repeatabilityFirstSent"> If Repeatability-Request-ID header is specified, then Repeatability-First-Sent header must also be specified. The value should be the date and time at which the request was first created, expressed using the IMF-fixdate form of HTTP-date. Example: Sun, 06 Nov 1994 08:49:37 GMT. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>

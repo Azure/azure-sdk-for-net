@@ -13,14 +13,11 @@ using Azure.Core;
 
 namespace Azure.Communication.CallAutomation
 {
-    /// <summary> The request payload for muting participants from the call. </summary>
+    /// <summary> The MuteParticipantsRequest. </summary>
     internal partial class MuteParticipantsRequestInternal
     {
         /// <summary> Initializes a new instance of MuteParticipantsRequestInternal. </summary>
-        /// <param name="targetParticipants">
-        /// Participants to be muted from the call.
-        /// Only ACS Users are supported.
-        /// </param>
+        /// <param name="targetParticipants"></param>
         /// <exception cref="ArgumentNullException"> <paramref name="targetParticipants"/> is null. </exception>
         public MuteParticipantsRequestInternal(IEnumerable<CommunicationIdentifierModel> targetParticipants)
         {
@@ -29,12 +26,9 @@ namespace Azure.Communication.CallAutomation
             TargetParticipants = targetParticipants.ToList();
         }
 
-        /// <summary>
-        /// Participants to be muted from the call.
-        /// Only ACS Users are supported.
-        /// </summary>
+        /// <summary> Gets the target participants. </summary>
         public IList<CommunicationIdentifierModel> TargetParticipants { get; }
-        /// <summary> Used by customers when calling mid-call actions to correlate the request to the response event. </summary>
+        /// <summary> Gets or sets the operation context. </summary>
         public string OperationContext { get; set; }
     }
 }

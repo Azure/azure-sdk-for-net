@@ -11,11 +11,11 @@ using Azure.Core;
 
 namespace Azure.Communication.CallAutomation
 {
-    /// <summary> The request payload for adding participant to the call. </summary>
+    /// <summary> The AddParticipantRequest. </summary>
     internal partial class AddParticipantRequestInternal
     {
         /// <summary> Initializes a new instance of AddParticipantRequestInternal. </summary>
-        /// <param name="participantToAdd"> The participant to invite. </param>
+        /// <param name="participantToAdd"></param>
         /// <exception cref="ArgumentNullException"> <paramref name="participantToAdd"/> is null. </exception>
         public AddParticipantRequestInternal(CommunicationIdentifierModel participantToAdd)
         {
@@ -24,26 +24,17 @@ namespace Azure.Communication.CallAutomation
             ParticipantToAdd = participantToAdd;
         }
 
-        /// <summary>
-        /// The source caller Id, a phone number, that&apos;s shown to the PSTN participant being invited.
-        /// Required only when inviting a PSTN participant.
-        /// </summary>
+        /// <summary> Gets or sets the source caller id number. </summary>
         public PhoneNumberIdentifierModel SourceCallerIdNumber { get; set; }
-        /// <summary>
-        /// (Optional) The display name of the source that is associated with this invite operation when
-        /// adding a PSTN participant or teams user.  Note: Will not update the display name in the roster.
-        /// </summary>
+        /// <summary> Gets or sets the source display name. </summary>
         public string SourceDisplayName { get; set; }
-        /// <summary> The participant to invite. </summary>
+        /// <summary> Gets the participant to add. </summary>
         public CommunicationIdentifierModel ParticipantToAdd { get; }
-        /// <summary>
-        /// Gets or sets the timeout to wait for the invited participant to pickup.
-        /// The maximum value of this is 180 seconds
-        /// </summary>
+        /// <summary> Gets or sets the invitation timeout in seconds. </summary>
         public int? InvitationTimeoutInSeconds { get; set; }
-        /// <summary> Used by customers when calling mid-call actions to correlate the request to the response event. </summary>
+        /// <summary> Gets or sets the operation context. </summary>
         public string OperationContext { get; set; }
-        /// <summary> Used by customer to send custom context to targets. </summary>
+        /// <summary> Gets or sets the custom context. </summary>
         public CustomContextInternal CustomContext { get; set; }
     }
 }

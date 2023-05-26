@@ -1,5 +1,30 @@
 # Release History
 
+## 1.0.4-alpha.8 (Unreleased)
+ - DialogId is now a string and added to all event classes
+ - code is updated to snapshot from 2023-05-25
+
+## 1.0.3-alpha.7 (Unreleased)
+ - change botId to botAppId, change type from Guid to string
+
+## 1.0.1-alpha.7 (Unreleased)
+ - DialogContext in StartDialogOption is now of type IDictionary<string, object>
+ - StatDialog now takes dialogId of type Guid
+ - Remove TargetParticipant from StartDialogOptions
+
+## 1.0.1-alpha.6 (Unreleased)
+- Added Conversation Conductor events
+
+## 1.0.1-alpha.3 (Unreleased)
+- Added DialogInputType to all events
+
+## 1.0.1-alpha.2 (Unreleased)
+- Replaced pVA with DLGaaS
+- Removed DialogSessionId
+- StopDialog no longer needs any parameters to run
+
+## 1.0.1-alpha.1 (Unreleased)
+
 ## 1.0.0-beta.2 (Unreleased)
 
 ### Features Added

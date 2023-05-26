@@ -19,6 +19,7 @@ namespace Azure.Communication.CallAutomation
         private readonly ClientDiagnostics _clientDiagnostics;
         internal CallConnectionRestClient RestClient { get; }
         internal CallMediaRestClient CallMediaRestClient { get; }
+        internal CallDialogRestClient CallDialogRestClient { get; }
         internal CallAutomationEventProcessor EventProcessor { get; }
 
         /// <summary>
@@ -686,6 +687,22 @@ namespace Azure.Communication.CallAutomation
             try
             {
                 return new CallMedia(CallConnectionId, CallMediaRestClient, _clientDiagnostics, EventProcessor);
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+        }
+
+        /// <summary> Initializes a new instance of CallDialog. <see cref="CallDialog"/></summary>
+        public virtual CallDialog GetCallDialog()
+        {
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallConnection)}.{nameof(GetCallDialog)}");
+            scope.Start();
+            try
+            {
+                return new CallDialog(CallConnectionId, CallDialogRestClient, _clientDiagnostics, EventProcessor);
             }
             catch (Exception ex)
             {
