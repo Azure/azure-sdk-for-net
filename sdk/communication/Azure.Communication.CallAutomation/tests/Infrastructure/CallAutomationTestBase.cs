@@ -23,7 +23,7 @@ namespace Azure.Communication.CallAutomation.Tests.Infrastructure
                                             "}}" +
                                         "]," +
                                         "\"sourceDisplayName\": \"displayName\"," +
-                                        "\"sourceIdentity\":{{" +
+                                        "\"source\":{{" +
                                                   "\"rawId\":\"sourceId\"," +
                                                   "\"kind\":\"communicationUser\"," +
                                                   "\"communicationUser\":{{\"id\":\"sourceId\"}}" +

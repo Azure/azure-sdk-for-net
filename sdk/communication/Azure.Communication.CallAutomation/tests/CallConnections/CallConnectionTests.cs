@@ -26,7 +26,7 @@ namespace Azure.Communication.CallAutomation.Tests.CallConnections
             "}";
 
         private const string GetParticipantsPayload = "{" +
-            "\"values\":[" +
+            "\"value\":[" +
                "{\"identifier\":{\"rawId\":\"participantId1\",\"kind\":\"communicationUser\",\"communicationUser\":{\"id\":\"participantId1\"}},\"isMuted\":false}," +
                "{\"identifier\":{\"rawId\":\"participantId2\",\"kind\":\"phoneNumber\",\"phoneNumber\":{\"value\":\"+11234567\"}},\"isMuted\":true}" +
                "]" +

@@ -67,30 +67,6 @@ namespace Azure.Communication.CallAutomation.Tests.CallAutomationClients
             Assert.AreEqual(CallConnectionId, response.Value.CallConnection.CallConnectionId);
         }
 
-        [TestCaseSource(nameof(TestData_AnswerCall_NoCallbackUri))]
-        public void AnswerCallWithOptions_NullCallbackUri(string incomingCallContext)
-        {
-            CallAutomationClient callAutomationClient = CreateMockCallAutomationClient(200, CreateOrAnswerCallOrGetCallConnectionWithMediaSubscriptionPayload);
-            AnswerCallOptions options = new AnswerCallOptions(incomingCallContext: incomingCallContext, callbackUri: null)
-            {
-            };
-
-            ArgumentException? ex = Assert.ThrowsAsync<ArgumentException>(async () => await callAutomationClient.AnswerCallAsync(options).ConfigureAwait(false));
-            Assert.NotNull(ex);
-        }
-
-        [TestCaseSource(nameof(TestData_AnswerCall_NoCallbackUri))]
-        public void AnswerCallWithOptions_HttpCallbackUri(string incomingCallContext)
-        {
-            CallAutomationClient callAutomationClient = CreateMockCallAutomationClient(200, CreateOrAnswerCallOrGetCallConnectionWithMediaSubscriptionPayload);
-            AnswerCallOptions options = new AnswerCallOptions(incomingCallContext: incomingCallContext, callbackUri: new Uri("http://example.com"))
-            {
-            };
-
-            ArgumentException? ex = Assert.ThrowsAsync<ArgumentException>(async () => await callAutomationClient.AnswerCallAsync(options).ConfigureAwait(false));
-            Assert.NotNull(ex);
-        }
-
         [TestCaseSource(nameof(TestData_AnswerCall))]
         public void AnswerCallAsync_401AuthFailed(string incomingCallContext, Uri callbackUri)
         {
