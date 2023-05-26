@@ -173,7 +173,10 @@ namespace Azure.Storage.DataMovement
                 StorageResourceBase current = enumerator.Current;
                 if (lastResource != default)
                 {
-                    string sourceName = lastResource.Path.Substring(_sourceResourceContainer.Path.Length + 1);
+                    string sourceName = string.IsNullOrEmpty(_sourceResourceContainer.Path)
+                        ? lastResource.Path
+                        : lastResource.Path.Substring(_sourceResourceContainer.Path.Length + 1);
+
                     if (!existingSources.Contains(sourceName))
                     {
                         // Because AsyncEnumerable doesn't let us know which storage resource is the last resource
@@ -210,7 +213,10 @@ namespace Azure.Storage.DataMovement
                 {
                     // Return last part but enable the part to be the last job part of the entire job
                     // so we know that we've finished listing in the container
-                    string lastSourceName = lastResource.Path.Substring(_sourceResourceContainer.Path.Length + 1);
+                    string lastSourceName = string.IsNullOrEmpty(_sourceResourceContainer.Path)
+                        ? lastResource.Path
+                        : lastResource.Path.Substring(_sourceResourceContainer.Path.Length + 1);
+
                     lastPart = await ServiceToServiceJobPart.CreateJobPartAsync(
                             job: this,
                             partNumber: partNumber,

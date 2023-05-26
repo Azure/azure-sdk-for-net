@@ -126,6 +126,8 @@ using Azure.Core.Pipeline;
                     RequestedWorkerSelectors = options.RequestedWorkerSelectors,
                     Tags = options.Tags,
                     Notes = new SortedDictionary<DateTimeOffset, string>(options.Notes),
+                    ScheduledTimeUtc = options.ScheduledTimeUtc,
+                    UnavailableForMatching = options.UnavailableForMatching,
                 };
 
                 return await RestClient.UpsertJobAsync(
@@ -164,6 +166,8 @@ using Azure.Core.Pipeline;
                     RequestedWorkerSelectors = options.RequestedWorkerSelectors,
                     Tags = options.Tags,
                     Notes = new SortedDictionary<DateTimeOffset, string>(options.Notes),
+                    ScheduledTimeUtc = options.ScheduledTimeUtc,
+                    UnavailableForMatching = options.UnavailableForMatching,
                 };
 
                 return RestClient.UpsertJob(
@@ -204,6 +208,8 @@ using Azure.Core.Pipeline;
                     RequestedWorkerSelectors = options.RequestedWorkerSelectors,
                     Tags = options.Tags,
                     Notes = new SortedDictionary<DateTimeOffset, string>(options.Notes),
+                    ScheduledTimeUtc = options.ScheduledTimeUtc,
+                    UnavailableForMatching = options.UnavailableForMatching,
                 };
 
                 return await RestClient.UpsertJobAsync(
@@ -241,6 +247,8 @@ using Azure.Core.Pipeline;
                     RequestedWorkerSelectors = options.RequestedWorkerSelectors,
                     Tags = options.Tags,
                     Notes = new SortedDictionary<DateTimeOffset, string>(options.Notes),
+                    ScheduledTimeUtc = options.ScheduledTimeUtc,
+                    UnavailableForMatching = options.UnavailableForMatching,
                 };
 
                 return RestClient.UpsertJob(
@@ -281,6 +289,8 @@ using Azure.Core.Pipeline;
                     Tags = options.Tags,
                     Notes = new SortedDictionary<DateTimeOffset, string>(options.Notes),
                     DispositionCode = options.DispositionCode,
+                    ScheduledTimeUtc = options.ScheduledTimeUtc,
+                    UnavailableForMatching = options.UnavailableForMatching,
                 };
 
                 return await RestClient.UpsertJobAsync(
@@ -320,6 +330,8 @@ using Azure.Core.Pipeline;
                     Tags = options.Tags,
                     Notes = new SortedDictionary<DateTimeOffset, string>(options.Notes),
                     DispositionCode = options.DispositionCode,
+                    ScheduledTimeUtc = options.ScheduledTimeUtc,
+                    UnavailableForMatching = options.UnavailableForMatching,
                 };
 
                 return RestClient.UpsertJob(
@@ -618,6 +630,9 @@ using Azure.Core.Pipeline;
                             status: options?.Status,
                             queueId: options?.QueueId,
                             channelId: options?.ChannelId,
+                            classificationPolicyId: options?.ClassificationPolicyId,
+                            scheduledBefore: options?.ScheduledBefore,
+                            scheduledAfter: options?.ScheduledAfter,
                             maxPageSize: maxPageSize,
                             cancellationToken: cancellationToken)
                         .ConfigureAwait(false);
@@ -644,6 +659,9 @@ using Azure.Core.Pipeline;
                             status: options?.Status,
                             queueId: options?.QueueId,
                             channelId: options?.ChannelId,
+                            classificationPolicyId: options?.ClassificationPolicyId,
+                            scheduledBefore: options?.ScheduledBefore,
+                            scheduledAfter: options?.ScheduledAfter,
                             maxPageSize: maxPageSize,
                             cancellationToken: cancellationToken)
                         .ConfigureAwait(false);
@@ -678,6 +696,9 @@ using Azure.Core.Pipeline;
                         status: options?.Status,
                         queueId: options?.QueueId,
                         channelId: options?.ChannelId,
+                        classificationPolicyId: options?.ClassificationPolicyId,
+                        scheduledBefore: options?.ScheduledBefore,
+                        scheduledAfter: options?.ScheduledAfter,
                         maxPageSize: maxPageSize,
                         cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
@@ -703,6 +724,9 @@ using Azure.Core.Pipeline;
                             status: options?.Status,
                             queueId: options?.QueueId,
                             channelId: options?.ChannelId,
+                            classificationPolicyId: options?.ClassificationPolicyId,
+                            scheduledBefore: options?.ScheduledBefore,
+                            scheduledAfter: options?.ScheduledAfter,
                             maxPageSize: maxPageSize,
                             cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
@@ -875,22 +899,19 @@ using Azure.Core.Pipeline;
         }
 
         /// <summary> Declines an offer to work on a job. </summary>
-        /// <param name="workerId"> The Id of the Worker. </param>
-        /// <param name="offerId"> The Id of the Job offer. </param>
+        /// <param name="options"> The options for declining a job offer. </param>
         /// <param name="cancellationToken"> (Optional) The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="offerId"/> or <paramref name="workerId"/> is null. </exception>
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
-        public virtual async Task<Response<DeclineJobOfferResult>> DeclineJobOfferAsync(string workerId, string offerId, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<DeclineJobOfferResult>> DeclineJobOfferAsync(DeclineJobOfferOptions options, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrWhiteSpace(offerId, nameof(offerId));
-            Argument.AssertNotNullOrWhiteSpace(workerId, nameof(workerId));
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(RouterClient)}.{nameof(DeclineJobOffer)}");
             scope.Start();
             try
             {
                 var response = await RestClient.DeclineJobActionAsync(
-                        workerId: workerId,
-                        offerId: offerId,
+                        workerId: options.WorkerId,
+                        offerId: options.OfferId,
+                        declineOfferRequest: new DeclineOfferRequest { ReofferTimeUtc = options.ReofferTimeUtc },
                         cancellationToken: cancellationToken)
                     .ConfigureAwait(false);
 
@@ -904,22 +925,19 @@ using Azure.Core.Pipeline;
         }
 
         /// <summary> Declines an offer to work on a job. </summary>
-        /// <param name="workerId"> The Id of the Worker. </param>
-        /// <param name="offerId"> The Id of the Job offer. </param>
+        /// <param name="options"> The options for declining a job offer. </param>
         /// <param name="cancellationToken"> (Optional) The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="offerId"/> or <paramref name="workerId"/> is null. </exception>
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
-        public virtual Response<DeclineJobOfferResult> DeclineJobOffer(string workerId, string offerId, CancellationToken cancellationToken = default)
+        public virtual Response<DeclineJobOfferResult> DeclineJobOffer(DeclineJobOfferOptions options, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrWhiteSpace(offerId, nameof(offerId));
-            Argument.AssertNotNullOrWhiteSpace(workerId, nameof(workerId));
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(RouterClient)}.{nameof(DeclineJobOffer)}");
             scope.Start();
             try
             {
                 var response = RestClient.DeclineJobAction(
-                    workerId: workerId,
-                    offerId: offerId,
+                    workerId: options.WorkerId,
+                    offerId: options.OfferId,
+                    declineOfferRequest: new DeclineOfferRequest { ReofferTimeUtc = options.ReofferTimeUtc },
                     cancellationToken: cancellationToken);
 
                 return Response.FromValue(new DeclineJobOfferResult(), response.GetRawResponse());

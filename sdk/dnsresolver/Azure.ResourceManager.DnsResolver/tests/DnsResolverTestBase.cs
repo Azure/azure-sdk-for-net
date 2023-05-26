@@ -22,10 +22,12 @@ namespace Azure.ResourceManager.DnsResolver.Tests
         protected SubscriptionResource DefaultSubscription { get; private set; }
         public DnsResolverTestBase(bool isAsync) : base(isAsync)
         {
+            IgnoreNetworkDependencyVersions();
         }
 
         public DnsResolverTestBase(bool isAsync, RecordedTestMode mode) : base(isAsync, mode)
         {
+            IgnoreNetworkDependencyVersions();
         }
 
         [SetUp]
@@ -75,20 +77,9 @@ namespace Azure.ResourceManager.DnsResolver.Tests
             //await virtualNetworks.CreateOrUpdateAsync(WaitUntil.Completed, virtualNetworkName, vnet);
             ResourceIdentifier vnetID;
             ResourceIdentifier subnetID;
-            if (Mode == RecordedTestMode.Playback)
-            {
-                subnetID = SubnetResource.CreateResourceIdentifier(resourceGroup.Id.SubscriptionId, resourceGroup.Id.Name, vnetName, SubnetName);
-                vnetID = VirtualNetworkResource.CreateResourceIdentifier(resourceGroup.Id.SubscriptionId, resourceGroup.Id.Name, vnetName);
-            }
-            else
-            {
-                using (Recording.DisableRecording())
-                {
-                    var vnetResource = await resourceGroup.GetVirtualNetworks().CreateOrUpdateAsync(WaitUntil.Completed, vnetName, vnet);
-                    vnetID = vnetResource.Value.Data.Id;
-                    subnetID = vnetResource.Value.Data.Subnets[0].Id;
-                }
-            }
+            var vnetResource = await resourceGroup.GetVirtualNetworks().CreateOrUpdateAsync(WaitUntil.Completed, vnetName, vnet);
+            vnetID = vnetResource.Value.Data.Id;
+            subnetID = vnetResource.Value.Data.Subnets[0].Id;
             DefaultVnetID = vnetID;
             DefaultSubnetID = subnetID;
             return (DefaultVnetID, DefaultSubnetID);

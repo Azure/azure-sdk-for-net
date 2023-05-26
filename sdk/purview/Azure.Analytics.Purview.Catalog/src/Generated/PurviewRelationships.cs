@@ -46,12 +46,21 @@ namespace Azure.Analytics.Purview.Catalog
             _endpoint = endpoint;
         }
 
-        /// <summary> [Protocol Method] Create a new relationship between entities. </summary>
-        /// <param name="content"> The content to send as the body of the request. Details of the request body schema are in the Remarks section below. </param>
+        /// <summary>
+        /// [Protocol Method] Create a new relationship between entities.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
+        /// <returns> The response returned from the service. </returns>
         /// <include file="Docs/PurviewRelationships.xml" path="doc/members/member[@name='CreateAsync(RequestContent,RequestContext)']/*" />
         public virtual async Task<Response> CreateAsync(RequestContent content, RequestContext context = null)
         {
@@ -71,12 +80,21 @@ namespace Azure.Analytics.Purview.Catalog
             }
         }
 
-        /// <summary> [Protocol Method] Create a new relationship between entities. </summary>
-        /// <param name="content"> The content to send as the body of the request. Details of the request body schema are in the Remarks section below. </param>
+        /// <summary>
+        /// [Protocol Method] Create a new relationship between entities.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
+        /// <returns> The response returned from the service. </returns>
         /// <include file="Docs/PurviewRelationships.xml" path="doc/members/member[@name='Create(RequestContent,RequestContext)']/*" />
         public virtual Response Create(RequestContent content, RequestContext context = null)
         {
@@ -96,12 +114,21 @@ namespace Azure.Analytics.Purview.Catalog
             }
         }
 
-        /// <summary> [Protocol Method] Update an existing relationship between entities. </summary>
-        /// <param name="content"> The content to send as the body of the request. Details of the request body schema are in the Remarks section below. </param>
+        /// <summary>
+        /// [Protocol Method] Update an existing relationship between entities.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
+        /// <returns> The response returned from the service. </returns>
         /// <include file="Docs/PurviewRelationships.xml" path="doc/members/member[@name='UpdateAsync(RequestContent,RequestContext)']/*" />
         public virtual async Task<Response> UpdateAsync(RequestContent content, RequestContext context = null)
         {
@@ -121,12 +148,21 @@ namespace Azure.Analytics.Purview.Catalog
             }
         }
 
-        /// <summary> [Protocol Method] Update an existing relationship between entities. </summary>
-        /// <param name="content"> The content to send as the body of the request. Details of the request body schema are in the Remarks section below. </param>
+        /// <summary>
+        /// [Protocol Method] Update an existing relationship between entities.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
+        /// <returns> The response returned from the service. </returns>
         /// <include file="Docs/PurviewRelationships.xml" path="doc/members/member[@name='Update(RequestContent,RequestContext)']/*" />
         public virtual Response Update(RequestContent content, RequestContext context = null)
         {
@@ -146,14 +182,23 @@ namespace Azure.Analytics.Purview.Catalog
             }
         }
 
-        /// <summary> [Protocol Method] Get relationship information between entities by its GUID. </summary>
+        /// <summary>
+        /// [Protocol Method] Get relationship information between entities by its GUID.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="guid"> The globally unique identifier of the relationship. </param>
         /// <param name="extendedInfo"> Limits whether includes extended information. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="guid"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="guid"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
+        /// <returns> The response returned from the service. </returns>
         /// <include file="Docs/PurviewRelationships.xml" path="doc/members/member[@name='GetPurviewRelationshipAsync(string,bool?,RequestContext)']/*" />
         public virtual async Task<Response> GetPurviewRelationshipAsync(string guid, bool? extendedInfo = null, RequestContext context = null)
         {
@@ -173,14 +218,23 @@ namespace Azure.Analytics.Purview.Catalog
             }
         }
 
-        /// <summary> [Protocol Method] Get relationship information between entities by its GUID. </summary>
+        /// <summary>
+        /// [Protocol Method] Get relationship information between entities by its GUID.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="guid"> The globally unique identifier of the relationship. </param>
         /// <param name="extendedInfo"> Limits whether includes extended information. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="guid"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="guid"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
+        /// <returns> The response returned from the service. </returns>
         /// <include file="Docs/PurviewRelationships.xml" path="doc/members/member[@name='GetPurviewRelationship(string,bool?,RequestContext)']/*" />
         public virtual Response GetPurviewRelationship(string guid, bool? extendedInfo = null, RequestContext context = null)
         {
@@ -200,7 +254,16 @@ namespace Azure.Analytics.Purview.Catalog
             }
         }
 
-        /// <summary> [Protocol Method] Delete a relationship between entities by its GUID. </summary>
+        /// <summary>
+        /// [Protocol Method] Delete a relationship between entities by its GUID.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="guid"> The globally unique identifier of the relationship. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="guid"/> is null. </exception>
@@ -226,7 +289,16 @@ namespace Azure.Analytics.Purview.Catalog
             }
         }
 
-        /// <summary> [Protocol Method] Delete a relationship between entities by its GUID. </summary>
+        /// <summary>
+        /// [Protocol Method] Delete a relationship between entities by its GUID.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="guid"> The globally unique identifier of the relationship. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="guid"/> is null. </exception>

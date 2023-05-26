@@ -23,7 +23,7 @@ namespace Azure.Core.Tests
         }
 
         [Test]
-        [Ignore("BinaryOperation fails to bind in net461.")]
+        [Ignore("BinaryOperation fails to bind in net462.")]
         public void CanConvertToIntEnumerableWithChanges_AddAssign()
         {
             dynamic jsonData = DynamicJsonTests.GetDynamicJson("[0, 1, 2, 3]");
@@ -126,8 +126,8 @@ namespace Azure.Core.Tests
         {
             dynamic json = DynamicJsonTests.GetDynamicJson("""
                 {
-                  "Foo" : 0,
-                  "Bar" : true
+                  "foo" : 0,
+                  "bar" : true
                 }
                 """);
 
@@ -149,11 +149,11 @@ namespace Azure.Core.Tests
         {
             dynamic json = DynamicJsonTests.GetDynamicJson("""
                 {
-                    "Array" : [ 0, 1, 2 ],
-                    "Object" : {   
-                        "Zero" : 0,
-                        "One" : 1,
-                        "Two" : 2
+                    "array" : [ 0, 1, 2 ],
+                    "object" : {   
+                        "zero" : 0,
+                        "one" : 1,
+                        "two" : 2
                     }
                 }
                 """);
@@ -165,7 +165,7 @@ namespace Azure.Core.Tests
             }
 
             expected = 0;
-            string[] expectedNames = new string[] { "Zero", "One", "Two" };
+            string[] expectedNames = new string[] { "zero", "one", "two" };
 
             foreach (dynamic property in json.Object)
             {

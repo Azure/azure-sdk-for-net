@@ -6,9 +6,6 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Linq;
-using Azure.Core;
-using Azure.ResourceManager.AppContainers.Models;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.AppContainers
@@ -20,5 +17,9 @@ namespace Azure.ResourceManager.AppContainers
         [Obsolete("This property is obsolete and will be removed in a future release", false)]
         [EditorBrowsable(EditorBrowsableState.Never)]
         public IReadOnlyList<Uri> OutboundIPAddresses { get; }
+
+        /// <summary> WorkloadProfileType for container app. </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public string WorkloadProfileType { get; set; }
     }
 }

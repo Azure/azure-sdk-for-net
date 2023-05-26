@@ -11,8 +11,6 @@ on:
   # pull request merged is the closed event with github.event.pull_request.merged = true
   pull_request_target:
     types: [closed, labeled, opened, reopened, review_requested, synchronize, unlabeled]
-  pull_request_review:
-    types: [submitted]
 
 # This removes all unnecessary permissions, the ones needed will be set below.
 # https://docs.github.com/en/actions/security-guides/automatic-token-authentication#permissions-for-the-github_token
@@ -57,7 +55,7 @@ jobs:
         run: >
           dotnet tool install
           Azure.Sdk.Tools.GitHubEventProcessor
-          --version 1.0.0-dev.20230422.1
+          --version 1.0.0-dev.20230505.2
           --add-source https://pkgs.dev.azure.com/azure-sdk/public/_packaging/azure-sdk-for-net/nuget/v3/index.json
           --global
         shell: bash

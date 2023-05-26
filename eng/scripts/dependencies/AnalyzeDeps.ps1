@@ -76,6 +76,10 @@ Function Save-PkgDep($PkgDeps, $TargetFramework, $DepName, $DepVersion) {
 }
 
 Function Save-Locked($Locked, $DepName, $DepVersion, $Condition) {
+  if (!$DepVersion) {
+    Write-Warning "$DepName in $LockfilePath does not contain a Version property so skipping it."
+    return
+  }
   if (-Not $Locked[$DepName]) {
     $Locked[$DepName] = @{ }
   }
@@ -164,7 +168,7 @@ foreach ($PkgFile in (Get-ChildItem "$PackagesPath/*.nupkg")) {
       }
     } else {
       $Pkgs[$LibraryName]["Deps"].Add(@{name = $DepName; version = ($DepVersions.Keys | Select-Object -first 1) }) | Out-Null
-    }
+    } 
   }
 }
 

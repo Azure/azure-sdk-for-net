@@ -62,7 +62,7 @@ namespace Azure.Core.Json
         /// Looks for a property named propertyName in the current object, returning a value that indicates whether or not such a property exists. When the property exists, its value is assigned to the value argument.
         /// </summary>
         /// <param name="name"></param>
-        /// <param name="value"></param>
+        /// <param name="value">The value to assign to the element.</param>
         /// <returns></returns>
         public bool TryGetProperty(string name, out MutableJsonElement value)
         {
@@ -145,9 +145,11 @@ namespace Azure.Core.Json
                         return true;
                     case JsonElement element:
                         return element.TryGetDouble(out value);
-                    default:
+                    case null:
                         value = default;
                         return false;
+                    default:
+                        return change.AsJsonElement().TryGetDouble(out value);
                 }
             }
 
@@ -172,7 +174,7 @@ namespace Azure.Core.Json
 
         private static string GetFormatExceptionText(string path, Type type)
         {
-            return $"Element at '{path}' cannot be formatted as type '{type.ToString()}.";
+            return $"Element at '{path}' cannot be formatted as type '{type}.";
         }
 
         /// <summary>
@@ -196,9 +198,11 @@ namespace Azure.Core.Json
                         return true;
                     case JsonElement element:
                         return element.TryGetInt32(out value);
-                    default:
+                    case null:
                         value = default;
                         return false;
+                    default:
+                        return change.AsJsonElement().TryGetInt32(out value);
                 }
             }
 
@@ -242,9 +246,11 @@ namespace Azure.Core.Json
                         return true;
                     case JsonElement element:
                         return element.TryGetInt64(out value);
-                    default:
+                    case null:
                         value = default;
                         return false;
+                    default:
+                        return change.AsJsonElement().TryGetInt64(out value);
                 }
             }
 
@@ -288,9 +294,11 @@ namespace Azure.Core.Json
                         return true;
                     case JsonElement element:
                         return element.TryGetSingle(out value);
-                    default:
+                    case null:
                         value = default;
                         return false;
+                    default:
+                        return change.AsJsonElement().TryGetSingle(out value);
                 }
             }
 
@@ -330,10 +338,13 @@ namespace Azure.Core.Json
                         return s;
                     case JsonElement element:
                         return element.GetString();
+                    case null:
+                        return null;
                     default:
-                        if (change.Value == null)
+                        JsonElement el = change.AsJsonElement();
+                        if (el.ValueKind == JsonValueKind.String)
                         {
-                            return null;
+                            return el.GetString();
                         }
                         throw new InvalidOperationException($"Element at '{_path}' is not a string.");
                 }
@@ -353,18 +364,356 @@ namespace Azure.Core.Json
 
             if (Changes.TryGetChange(_path, _highWaterMark, out MutableJsonChange change))
             {
-                switch (change.Value)
+                return change.Value switch
                 {
-                    case bool b:
-                        return b;
-                    case JsonElement element:
-                        return element.GetBoolean();
-                    default:
-                        throw new InvalidOperationException($"Element at '{_path}' is not a bool.");
-                }
+                    bool b => b,
+                    JsonElement element => element.GetBoolean(),
+                    _ => throw new InvalidOperationException($"Element at '{_path}' is not a bool."),
+                };
             }
 
             return _element.GetBoolean();
+        }
+
+        public bool TryGetByte(out byte value)
+        {
+            EnsureValid();
+
+            if (Changes.TryGetChange(_path, _highWaterMark, out MutableJsonChange change))
+            {
+                switch (change.Value)
+                {
+                    case byte b:
+                        value = b;
+                        return true;
+                    case JsonElement element:
+                        return element.TryGetByte(out value);
+                    case null:
+                        value = default;
+                        return false;
+                    default:
+                        return change.AsJsonElement().TryGetByte(out value);
+                }
+            }
+
+            return _element.TryGetByte(out value);
+        }
+
+        public byte GetByte()
+        {
+            if (!TryGetByte(out byte value))
+            {
+                throw new FormatException(GetFormatExceptionText(_path, typeof(byte)));
+            }
+
+            return value;
+        }
+
+        public bool TryGetDateTime(out DateTime value)
+        {
+            EnsureValid();
+
+            if (Changes.TryGetChange(_path, _highWaterMark, out MutableJsonChange change))
+            {
+                switch (change.Value)
+                {
+                    case DateTime d:
+                        value = d;
+                        return true;
+                    case JsonElement element:
+                        return element.TryGetDateTime(out value);
+                    case null:
+                        value = default;
+                        return false;
+                    default:
+                        return change.AsJsonElement().TryGetDateTime(out value);
+                }
+            }
+
+            return _element.TryGetDateTime(out value);
+        }
+
+        public DateTime GetDateTime()
+        {
+            if (!TryGetDateTime(out DateTime value))
+            {
+                throw new FormatException(GetFormatExceptionText(_path, typeof(DateTime)));
+            }
+
+            return value;
+        }
+
+        public bool TryGetDateTimeOffset(out DateTimeOffset value)
+        {
+            EnsureValid();
+
+            if (Changes.TryGetChange(_path, _highWaterMark, out MutableJsonChange change))
+            {
+                switch (change.Value)
+                {
+                    case DateTimeOffset o:
+                        value = o;
+                        return true;
+                        ;
+                    case JsonElement element:
+                        return element.TryGetDateTimeOffset(out value);
+                    case null:
+                        value = default;
+                        return false;
+                    default:
+                        return change.AsJsonElement().TryGetDateTimeOffset(out value);
+                }
+            }
+
+            return _element.TryGetDateTimeOffset(out value);
+        }
+
+        public DateTimeOffset GetDateTimeOffset()
+        {
+            if (!TryGetDateTimeOffset(out DateTimeOffset value))
+            {
+                throw new FormatException(GetFormatExceptionText(_path, typeof(DateTimeOffset)));
+            }
+
+            return value;
+        }
+
+        public bool TryGetDecimal(out decimal value)
+        {
+            EnsureValid();
+
+            if (Changes.TryGetChange(_path, _highWaterMark, out MutableJsonChange change))
+            {
+                switch (change.Value)
+                {
+                    case decimal d:
+                        value = d;
+                        return true;
+                    case JsonElement element:
+                        return element.TryGetDecimal(out value);
+                    case null:
+                        value = default;
+                        return false;
+                    default:
+                        return change.AsJsonElement().TryGetDecimal(out value);
+                }
+            }
+
+            return _element.TryGetDecimal(out value);
+        }
+
+        public decimal GetDecimal()
+        {
+            if (!TryGetDecimal(out decimal value))
+            {
+                throw new FormatException(GetFormatExceptionText(_path, typeof(decimal)));
+            }
+
+            return value;
+        }
+
+        public bool TryGetGuid(out Guid value)
+        {
+            EnsureValid();
+
+            if (Changes.TryGetChange(_path, _highWaterMark, out MutableJsonChange change))
+            {
+                switch (change.Value)
+                {
+                    case Guid g:
+                        value = g;
+                        return true;
+                    case JsonElement element:
+                        return element.TryGetGuid(out value);
+                    case null:
+                        value = default;
+                        return false;
+                    default:
+                        return change.AsJsonElement().TryGetGuid(out value);
+                }
+            }
+
+            return _element.TryGetGuid(out value);
+        }
+
+        public Guid GetGuid()
+        {
+            if (!TryGetGuid(out Guid value))
+            {
+                throw new FormatException(GetFormatExceptionText(_path, typeof(Guid)));
+            }
+
+            return value;
+        }
+
+        public bool TryGetInt16(out short value)
+        {
+            EnsureValid();
+
+            if (Changes.TryGetChange(_path, _highWaterMark, out MutableJsonChange change))
+            {
+                switch (change.Value)
+                {
+                    case short s:
+                        value = s;
+                        return true;
+                    case JsonElement element:
+                        return element.TryGetInt16(out value);
+                    case null:
+                        value = default;
+                        return false;
+                    default:
+                        return change.AsJsonElement().TryGetInt16(out value);
+                }
+            }
+
+            return _element.TryGetInt16(out value);
+        }
+
+        public short GetInt16()
+        {
+            if (!TryGetInt16(out short value))
+            {
+                throw new FormatException(GetFormatExceptionText(_path, typeof(short)));
+            }
+
+            return value;
+        }
+
+        public bool TryGetSByte(out sbyte value)
+        {
+            EnsureValid();
+
+            if (Changes.TryGetChange(_path, _highWaterMark, out MutableJsonChange change))
+            {
+                switch (change.Value)
+                {
+                    case sbyte b:
+                        value = b;
+                        return true;
+                    case JsonElement element:
+                        return element.TryGetSByte(out value);
+                    case null:
+                        value = default;
+                        return false;
+                    default:
+                        return change.AsJsonElement().TryGetSByte(out value);
+                }
+            }
+
+            return _element.TryGetSByte(out value);
+        }
+
+        public sbyte GetSByte()
+        {
+            if (!TryGetSByte(out sbyte value))
+            {
+                throw new FormatException(GetFormatExceptionText(_path, typeof(sbyte)));
+            }
+
+            return value;
+        }
+
+        public bool TryGetUInt16(out ushort value)
+        {
+            EnsureValid();
+
+            if (Changes.TryGetChange(_path, _highWaterMark, out MutableJsonChange change))
+            {
+                switch (change.Value)
+                {
+                    case ushort u:
+                        value = u;
+                        return true;
+                    case JsonElement element:
+                        return element.TryGetUInt16(out value);
+                    case null:
+                        value = default;
+                        return false;
+                    default:
+                        return change.AsJsonElement().TryGetUInt16(out value);
+                }
+            }
+
+            return _element.TryGetUInt16(out value);
+        }
+
+        public ushort GetUInt16()
+        {
+            if (!TryGetUInt16(out ushort value))
+            {
+                throw new FormatException(GetFormatExceptionText(_path, typeof(ushort)));
+            }
+
+            return value;
+        }
+
+        public bool TryGetUInt32(out uint value)
+        {
+            EnsureValid();
+
+            if (Changes.TryGetChange(_path, _highWaterMark, out MutableJsonChange change))
+            {
+                switch (change.Value)
+                {
+                    case uint d:
+                        value = d;
+                        return true;
+                    case JsonElement element:
+                        return element.TryGetUInt32(out value);
+                    case null:
+                        value = default;
+                        return false;
+                    default:
+                        return change.AsJsonElement().TryGetUInt32(out value);
+                }
+            }
+
+            return _element.TryGetUInt32(out value);
+        }
+
+        public uint GetUInt32()
+        {
+            if (!TryGetUInt32(out uint value))
+            {
+                throw new FormatException(GetFormatExceptionText(_path, typeof(uint)));
+            }
+
+            return value;
+        }
+
+        public bool TryGetUInt64(out ulong value)
+        {
+            EnsureValid();
+
+            if (Changes.TryGetChange(_path, _highWaterMark, out MutableJsonChange change))
+            {
+                switch (change.Value)
+                {
+                    case ulong u:
+                        value = u;
+                        return true;
+                    case JsonElement element:
+                        return element.TryGetUInt64(out value);
+                    case null:
+                        value = default;
+                        return false;
+                    default:
+                        return change.AsJsonElement().TryGetUInt64(out value);
+                }
+            }
+
+            return _element.TryGetUInt64(out value);
+        }
+
+        public ulong GetUInt64()
+        {
+            if (!TryGetUInt64(out ulong value))
+            {
+                throw new FormatException(GetFormatExceptionText(_path, typeof(ulong)));
+            }
+
+            return value;
         }
 
         /// <summary>
@@ -395,7 +744,7 @@ namespace Azure.Core.Json
         /// Set the value of the property with the specified name to the passed-in value.  If the property is not already present, it will be created.
         /// </summary>
         /// <param name="name"></param>
-        /// <param name="value"></param>
+        /// <param name="value">The value to assign to the element.</param>
         public MutableJsonElement SetProperty(string name, object value)
         {
             if (TryGetProperty(name, out MutableJsonElement element))
@@ -414,10 +763,10 @@ namespace Azure.Core.Json
 #endif
 
             // If it's not already there, we'll add a change to this element's JsonElement instead.
-            Dictionary<string, object> dict = JsonSerializer.Deserialize<Dictionary<string, object>>(GetRawBytes())!;
+            Dictionary<string, object> dict = JsonSerializer.Deserialize<Dictionary<string, object>>(GetRawBytes(), _root.SerializerOptions)!;
             dict[name] = value;
 
-            byte[] bytes = JsonSerializer.SerializeToUtf8Bytes(dict);
+            byte[] bytes = JsonSerializer.SerializeToUtf8Bytes(dict, _root.SerializerOptions);
             JsonElement newElement = JsonDocument.Parse(bytes).RootElement;
 
             int index = Changes.AddChange(_path, newElement, true);
@@ -446,10 +795,10 @@ namespace Azure.Core.Json
                 throw new InvalidOperationException($"Object does not have property: '{name}'.");
             }
 
-            Dictionary<string, object> dict = JsonSerializer.Deserialize<Dictionary<string, object>>(GetRawBytes())!;
+            Dictionary<string, object> dict = JsonSerializer.Deserialize<Dictionary<string, object>>(GetRawBytes(), _root.SerializerOptions)!;
             dict.Remove(name);
 
-            byte[] bytes = JsonSerializer.SerializeToUtf8Bytes(dict);
+            byte[] bytes = JsonSerializer.SerializeToUtf8Bytes(dict, _root.SerializerOptions);
             JsonElement newElement = JsonDocument.Parse(bytes).RootElement;
 
             Changes.AddChange(_path, newElement, true);
@@ -458,7 +807,7 @@ namespace Azure.Core.Json
         /// <summary>
         /// Sets the value of this element to the passed-in value.
         /// </summary>
-        /// <param name="value"></param>
+        /// <param name="value">The value to assign to the element.</param>
         public void Set(double value)
         {
             EnsureValid();
@@ -469,7 +818,7 @@ namespace Azure.Core.Json
         /// <summary>
         /// Sets the value of this element to the passed-in value.
         /// </summary>
-        /// <param name="value"></param>
+        /// <param name="value">The value to assign to the element.</param>
         public void Set(int value)
         {
             EnsureValid();
@@ -480,7 +829,7 @@ namespace Azure.Core.Json
         /// <summary>
         /// Sets the value of this element to the passed-in value.
         /// </summary>
-        /// <param name="value"></param>
+        /// <param name="value">The value to assign to the element.</param>
         public void Set(long value)
         {
             EnsureValid();
@@ -491,7 +840,7 @@ namespace Azure.Core.Json
         /// <summary>
         /// Sets the value of this element to the passed-in value.
         /// </summary>
-        /// <param name="value"></param>
+        /// <param name="value">The value to assign to the element.</param>
         public void Set(float value)
         {
             EnsureValid();
@@ -502,7 +851,7 @@ namespace Azure.Core.Json
         /// <summary>
         /// Sets the value of this element to the passed-in value.
         /// </summary>
-        /// <param name="value"></param>
+        /// <param name="value">The value to assign to the element.</param>
         public void Set(string value)
         {
             EnsureValid();
@@ -513,7 +862,7 @@ namespace Azure.Core.Json
         /// <summary>
         /// Sets the value of this element to the passed-in value.
         /// </summary>
-        /// <param name="value"></param>
+        /// <param name="value">The value to assign to the element.</param>
         public void Set(bool value)
         {
             EnsureValid();
@@ -526,30 +875,170 @@ namespace Azure.Core.Json
         /// <summary>
         /// Sets the value of this element to the passed-in value.
         /// </summary>
-        /// <param name="value"></param>
+        /// <param name="value">The value to assign to the element.</param>
+        public void Set(byte value)
+        {
+            EnsureValid();
+
+            Changes.AddChange(_path, value, _element.ValueKind != JsonValueKind.Number);
+        }
+
+        /// <summary>
+        /// Sets the value of this element to the passed-in value.
+        /// </summary>
+        /// <param name="value">The value to assign to the element.</param>
+        public void Set(sbyte value)
+        {
+            EnsureValid();
+
+            Changes.AddChange(_path, value, _element.ValueKind != JsonValueKind.Number);
+        }
+
+        /// <summary>
+        /// Sets the value of this element to the passed-in value.
+        /// </summary>
+        /// <param name="value">The value to assign to the element.</param>
+        public void Set(short value)
+        {
+            EnsureValid();
+
+            Changes.AddChange(_path, value, _element.ValueKind != JsonValueKind.Number);
+        }
+
+        /// <summary>
+        /// Sets the value of this element to the passed-in value.
+        /// </summary>
+        /// <param name="value">The value to assign to the element.</param>
+        public void Set(ushort value)
+        {
+            EnsureValid();
+
+            Changes.AddChange(_path, value, _element.ValueKind != JsonValueKind.Number);
+        }
+
+        /// <summary>
+        /// Sets the value of this element to the passed-in value.
+        /// </summary>
+        /// <param name="value">The value to assign to the element.</param>
+        public void Set(uint value)
+        {
+            EnsureValid();
+
+            Changes.AddChange(_path, value, _element.ValueKind != JsonValueKind.Number);
+        }
+
+        /// <summary>
+        /// Sets the value of this element to the passed-in value.
+        /// </summary>
+        /// <param name="value">The value to assign to the element.</param>
+        public void Set(ulong value)
+        {
+            EnsureValid();
+
+            Changes.AddChange(_path, value, _element.ValueKind != JsonValueKind.Number);
+        }
+
+        /// <summary>
+        /// Sets the value of this element to the passed-in value.
+        /// </summary>
+        /// <param name="value">The value to assign to the element.</param>
+        public void Set(decimal value)
+        {
+            EnsureValid();
+
+            Changes.AddChange(_path, value, _element.ValueKind != JsonValueKind.Number);
+        }
+
+        /// <summary>
+        /// Sets the value of this element to the passed-in value.
+        /// </summary>
+        /// <param name="value">The value to assign to the element.</param>
+        public void Set(Guid value)
+        {
+            EnsureValid();
+
+            Changes.AddChange(_path, value, _element.ValueKind != JsonValueKind.String);
+        }
+
+        /// <summary>
+        /// Sets the value of this element to the passed-in value.
+        /// </summary>
+        /// <param name="value">The value to assign to the element.</param>
+        public void Set(DateTime value)
+        {
+            EnsureValid();
+
+            Changes.AddChange(_path, value, _element.ValueKind != JsonValueKind.String);
+        }
+
+        /// <summary>
+        /// Sets the value of this element to the passed-in value.
+        /// </summary>
+        /// <param name="value">The value to assign to the element.</param>
+        public void Set(DateTimeOffset value)
+        {
+            EnsureValid();
+
+            Changes.AddChange(_path, value, _element.ValueKind != JsonValueKind.String);
+        }
+
+        /// <summary>
+        /// Sets the value of this element to the passed-in value.
+        /// </summary>
+        /// <param name="value">The value to assign to the element.</param>
         public void Set(object value)
         {
             EnsureValid();
 
             switch (value)
             {
-                case int i:
-                    Set(i);
-                    break;
-                case double d:
-                    Set(d);
+                case bool b:
+                    Set(b);
                     break;
                 case string s:
                     Set(s);
                     break;
-                case bool b:
+                case byte b:
                     Set(b);
+                    break;
+                case sbyte sb:
+                    Set(sb);
+                    break;
+                case short sh:
+                    Set(sh);
+                    break;
+                case ushort us:
+                    Set(us);
+                    break;
+                case int i:
+                    Set(i);
+                    break;
+                case uint u:
+                    Set(u);
                     break;
                 case long l:
                     Set(l);
                     break;
+                case ulong ul:
+                    Set(ul);
+                    break;
                 case float f:
                     Set(f);
+                    break;
+                case double d:
+                    Set(d);
+                    break;
+                case decimal d:
+                    Set(d);
+                    break;
+                case DateTime d:
+                    Set(d);
+                    break;
+                case DateTimeOffset d:
+                    Set(d);
+                    break;
+                case Guid g:
+                    Set(g);
                     break;
                 case MutableJsonElement e:
                     Set(e);
@@ -569,7 +1058,7 @@ namespace Azure.Core.Json
         /// <summary>
         /// Sets the value of this element to the passed-in value.
         /// </summary>
-        /// <param name="value"></param>
+        /// <param name="value">The value to assign to the element.</param>
         public void Set(MutableJsonElement value)
         {
             EnsureValid();
@@ -596,7 +1085,7 @@ namespace Azure.Core.Json
 
             if (Changes.TryGetChange(_path, _highWaterMark, out MutableJsonChange change))
             {
-                return change.Value?.ToString() ?? "null";
+                return change.AsString();
             }
 
             // Account for changes to descendants of this element as well

@@ -82,6 +82,19 @@ namespace Azure.Storage.DataMovement.Tests
         }
 
         [Test]
+        public void Ctor_Error()
+        {
+            Assert.Catch<ArgumentException>(() =>
+                new LocalFileStorageResource(""));
+
+            Assert.Catch<ArgumentException>(() =>
+                new LocalFileStorageResource("   "));
+
+            Assert.Catch<ArgumentException>(() =>
+                new LocalFileStorageResource(default));
+        }
+
+        [Test]
         public async Task ReadStreamAsync()
         {
             // Arrange

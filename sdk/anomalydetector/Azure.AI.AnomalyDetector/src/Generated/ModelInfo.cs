@@ -32,7 +32,7 @@ namespace Azure.AI.AnomalyDetector
         /// in ISO 8601 format.
         /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="dataSource"/> is null. </exception>
-        public ModelInfo(string dataSource, DateTimeOffset startTime, DateTimeOffset endTime)
+        public ModelInfo(Uri dataSource, DateTimeOffset startTime, DateTimeOffset endTime)
         {
             Argument.AssertNotNull(dataSource, nameof(dataSource));
 
@@ -72,7 +72,7 @@ namespace Azure.AI.AnomalyDetector
         /// <param name="status"> Model status. </param>
         /// <param name="errors"> Error messages after failure to create a model. </param>
         /// <param name="diagnosticsInfo"> Diagnostics information to help inspect the states of a model or variable. </param>
-        internal ModelInfo(string dataSource, DataSchema? dataSchema, DateTimeOffset startTime, DateTimeOffset endTime, string displayName, int? slidingWindow, AlignPolicy alignPolicy, ModelStatus? status, IReadOnlyList<ErrorResponse> errors, DiagnosticsInfo diagnosticsInfo)
+        internal ModelInfo(Uri dataSource, DataSchema? dataSchema, DateTimeOffset startTime, DateTimeOffset endTime, string displayName, int? slidingWindow, AlignPolicy alignPolicy, ModelStatus? status, IReadOnlyList<ErrorResponse> errors, DiagnosticsInfo diagnosticsInfo)
         {
             DataSource = dataSource;
             DataSchema = dataSchema;
@@ -91,7 +91,7 @@ namespace Azure.AI.AnomalyDetector
         /// It either points to an Azure Blob Storage folder or points to a CSV file in
         /// Azure Blob Storage, based on your data schema selection.
         /// </summary>
-        public string DataSource { get; set; }
+        public Uri DataSource { get; set; }
         /// <summary>
         /// Data schema of the input data source. The default
         /// is OneTable.
