@@ -32,11 +32,6 @@ namespace Azure.Communication.CallAutomation
         public Uri CallbackUri { get; }
 
         /// <summary>
-        /// The identifier of the call automation entity which answers the call.
-        /// </summary>
-        public CommunicationUserIdentifier AnsweredBy { get; set; }
-
-        /// <summary>
         /// The operation context.
         /// </summary>
         public string OperationContext { get; set; }

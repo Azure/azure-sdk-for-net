@@ -208,19 +208,7 @@ namespace Azure.Communication.CallAutomation
         {
             AnswerCallRequestInternal request = new AnswerCallRequestInternal(options.IncomingCallContext, options.CallbackUri.AbsoluteUri);
 
-            if (options.AnsweredBy != null)
-            {
-                request.AnsweredBy = new CommunicationUserIdentifierModel(options.AnsweredBy.Id);
-            }
-            else if (Source != null)
-            {
-                request.AnsweredBy = new CommunicationUserIdentifierModel(Source.Id);
-            }
-            else
-            {
-                request.AnsweredBy = null;
-            }
-
+            request.AnsweredBy = Source == null ? null : new CommunicationUserIdentifierModel(Source.Id);
             request.OperationContext = options.OperationContext;
 
             return request;
