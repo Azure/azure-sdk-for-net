@@ -79,7 +79,8 @@ namespace Azure.Communication.JobRouter.Tests.Scenarios
             Assert.AreEqual(createJob.Value.Id, accept.Value.JobId);
             Assert.AreEqual(worker.Value.Id, accept.Value.WorkerId);
 
-            Assert.ThrowsAsync<RequestFailedException>(async () => await client.DeclineJobOfferAsync(worker.Value.Id, offer.Id));
+            Assert.ThrowsAsync<RequestFailedException>(async () => await client.DeclineJobOfferAsync(
+                    new DeclineJobOfferOptions(worker.Value.Id, offer.Id) { ReofferTimeUtc = DateTimeOffset.MinValue }));
 
             var complete = await client.CompleteJobAsync(new CompleteJobOptions(createJob.Value.Id, accept.Value.AssignmentId)
             {

@@ -12,6 +12,28 @@ namespace Azure.AI.OpenAI
 {
     public partial class EmbeddingsOptions : IUtf8JsonSerializable
     {
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        {
+            writer.WriteStartObject();
+            if (Optional.IsDefined(User))
+            {
+                writer.WritePropertyName("user"u8);
+                writer.WriteStringValue(User);
+            }
+            if (Optional.IsDefined(InternalNonAzureModelName))
+            {
+                writer.WritePropertyName("model"u8);
+                writer.WriteStringValue(InternalNonAzureModelName);
+            }
+            writer.WritePropertyName("input"u8);
+            writer.WriteStartArray();
+            foreach (var item in Input)
+            {
+                writer.WriteStringValue(item);
+            }
+            writer.WriteEndArray();
+            writer.WriteEndObject();
+        }
 
         /// <summary> Convert into a Utf8JsonRequestContent. </summary>
         internal virtual RequestContent ToRequestContent()

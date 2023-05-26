@@ -25,10 +25,12 @@ namespace Azure.AI.OpenAI.Samples
         {
             var client = new OpenAIClient("<openAIApiKey>");
 
-            var embeddingsOptions = new EmbeddingsOptions("<input>")
+            var embeddingsOptions = new EmbeddingsOptions(new string[]
+            {
+    "<null>"
+            })
             {
                 User = "<User>",
-                InputType = "<InputType>",
             };
             var result = await client.GetEmbeddingsAsync("<deploymentId>", embeddingsOptions);
         }
@@ -39,19 +41,14 @@ namespace Azure.AI.OpenAI.Samples
         {
             var client = new OpenAIClient("<openAIApiKey>");
 
-            var completionsOptions = new CompletionsOptions()
+            var completionsOptions = new CompletionsOptions(new string[]
             {
-                Prompts =
-{
-        "<null>"
-    },
+    "<null>"
+            })
+            {
                 MaxTokens = 1234,
                 Temperature = 3.14f,
                 NucleusSamplingFactor = 3.14f,
-                TokenSelectionBiases =
-{
-        [0] = 1234,
-    },
                 User = "<User>",
                 ChoicesPerPrompt = 1234,
                 LogProbabilityCount = 1234,
@@ -65,6 +62,35 @@ namespace Azure.AI.OpenAI.Samples
                 GenerationSampleCount = 1234,
             };
             var result = await client.GetCompletionsAsync("<deploymentId>", completionsOptions);
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_GetChatCompletions_Convenience_Async()
+        {
+            var client = new OpenAIClient("<openAIApiKey>");
+
+            var chatCompletionsOptions = new ChatCompletionsOptions(new ChatMessage[]
+            {
+    new ChatMessage(ChatRole.System)
+{
+        Content = "<Content>",
+    }
+            })
+            {
+                MaxTokens = 1234,
+                Temperature = 3.14f,
+                NucleusSamplingFactor = 3.14f,
+                User = "<User>",
+                ChoiceCount = 1234,
+                StopSequences =
+{
+        "<null>"
+    },
+                PresencePenalty = 3.14f,
+                FrequencyPenalty = 3.14f,
+            };
+            var result = await client.GetChatCompletionsAsync("<deploymentId>", chatCompletionsOptions);
         }
     }
 }

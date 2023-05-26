@@ -5,7 +5,9 @@
 
 #nullable disable
 
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
 
 namespace Azure.AI.OpenAI
@@ -16,11 +18,11 @@ namespace Azure.AI.OpenAI
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("messages");
+            writer.WritePropertyName("messages"u8);
             writer.WriteStartArray();
-            foreach (ChatMessage chatMessage in Messages)
+            foreach (var item in Messages)
             {
-                (chatMessage as IUtf8JsonSerializable).Write(writer);
+                writer.WriteObjectValue(item);
             }
             writer.WriteEndArray();
             if (Optional.IsDefined(MaxTokens))
@@ -59,6 +61,7 @@ namespace Azure.AI.OpenAI
                     writer.WriteNull("top_p");
                 }
             }
+            // CUSTOM: serialize <int, int> to <string, int>
             if (Optional.IsCollectionDefined(TokenSelectionBiases))
             {
                 writer.WritePropertyName("logit_bias"u8);
@@ -75,12 +78,12 @@ namespace Azure.AI.OpenAI
                 writer.WritePropertyName("user"u8);
                 writer.WriteStringValue(User);
             }
-            if (Optional.IsDefined(ChoicesPerPrompt))
+            if (Optional.IsDefined(ChoiceCount))
             {
-                if (ChoicesPerPrompt != null)
+                if (ChoiceCount != null)
                 {
                     writer.WritePropertyName("n"u8);
-                    writer.WriteNumberValue(ChoicesPerPrompt.Value);
+                    writer.WriteNumberValue(ChoiceCount.Value);
                 }
                 else
                 {
@@ -121,20 +124,24 @@ namespace Azure.AI.OpenAI
                     writer.WriteNull("frequency_penalty");
                 }
             }
-            if (!string.IsNullOrEmpty(NonAzureModel))
+            if (Optional.IsDefined(InternalShouldStreamResponse))
+            {
+                if (InternalShouldStreamResponse != null)
+                {
+                    writer.WritePropertyName("stream"u8);
+                    writer.WriteBooleanValue(InternalShouldStreamResponse.Value);
+                }
+                else
+                {
+                    writer.WriteNull("stream");
+                }
+            }
+            if (Optional.IsDefined(InternalNonAzureModelName))
             {
                 writer.WritePropertyName("model"u8);
-                writer.WriteStringValue(NonAzureModel);
+                writer.WriteStringValue(InternalNonAzureModelName);
             }
             writer.WriteEndObject();
-        }
-
-        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
-        internal virtual RequestContent ToRequestContent()
-        {
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(this);
-            return content;
         }
     }
 }

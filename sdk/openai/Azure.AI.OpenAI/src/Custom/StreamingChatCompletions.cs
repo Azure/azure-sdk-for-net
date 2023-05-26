@@ -24,11 +24,12 @@ namespace Azure.AI.OpenAI
         private readonly AsyncAutoResetEvent _updateAvailableEvent;
         private bool _streamingTaskComplete;
         private bool _disposedValue;
+        private Exception _pumpException;
 
         /// <summary>
         /// Gets the earliest Completion creation timestamp associated with this streamed response.
         /// </summary>
-        public DateTime Created => GetLocked(() => _baseChatCompletions.First().Created);
+        public DateTimeOffset Created => GetLocked(() => _baseChatCompletions.First().Created);
 
         /// <summary>
         /// Gets the unique identifier associated with this streaming Completions response.
@@ -45,66 +46,75 @@ namespace Azure.AI.OpenAI
             _streamingTaskComplete = false;
             _ = Task.Run(async () =>
             {
-                while (true)
+                try
                 {
-                    SseLine? sseEvent = await _baseResponseReader.TryReadSingleFieldEventAsync().ConfigureAwait(false);
-                    if (sseEvent == null)
+                    while (true)
                     {
-                        _baseResponse.ContentStream?.Dispose();
-                        break;
-                    }
-
-                    ReadOnlyMemory<char> name = sseEvent.Value.FieldName;
-                    if (!name.Span.SequenceEqual("data".AsSpan()))
-                        throw new InvalidDataException();
-
-                    ReadOnlyMemory<char> value = sseEvent.Value.FieldValue;
-                    if (value.Span.SequenceEqual("[DONE]".AsSpan()))
-                    {
-                        _baseResponse.ContentStream?.Dispose();
-                        break;
-                    }
-
-                    JsonDocument sseMessageJson = JsonDocument.Parse(sseEvent.Value.FieldValue);
-                    ChatCompletions chatCompletionsFromSse = ChatCompletions.DeserializeChatCompletions(sseMessageJson.RootElement);
-
-                    lock (_baseCompletionsLock)
-                    {
-                        _baseChatCompletions.Add(chatCompletionsFromSse);
-                    }
-
-                    foreach (ChatChoice chatChoiceFromSse in chatCompletionsFromSse.Choices)
-                    {
-                        lock (_streamingChoicesLock)
+                        SseLine? sseEvent = await _baseResponseReader.TryReadSingleFieldEventAsync().ConfigureAwait(false);
+                        if (sseEvent == null)
                         {
-                            StreamingChatChoice existingStreamingChoice = _streamingChatChoices
-                                .FirstOrDefault(chatChoice => chatChoice.Index == chatChoiceFromSse.Index);
-                            if (existingStreamingChoice == null)
+                            _baseResponse.ContentStream?.Dispose();
+                            break;
+                        }
+
+                        ReadOnlyMemory<char> name = sseEvent.Value.FieldName;
+                        if (!name.Span.SequenceEqual("data".AsSpan()))
+                            throw new InvalidDataException();
+
+                        ReadOnlyMemory<char> value = sseEvent.Value.FieldValue;
+                        if (value.Span.SequenceEqual("[DONE]".AsSpan()))
+                        {
+                            _baseResponse.ContentStream?.Dispose();
+                            break;
+                        }
+
+                        JsonDocument sseMessageJson = JsonDocument.Parse(sseEvent.Value.FieldValue);
+                        ChatCompletions chatCompletionsFromSse = ChatCompletions.DeserializeChatCompletions(sseMessageJson.RootElement);
+
+                        lock (_baseCompletionsLock)
+                        {
+                            _baseChatCompletions.Add(chatCompletionsFromSse);
+                        }
+
+                        foreach (ChatChoice chatChoiceFromSse in chatCompletionsFromSse.Choices)
+                        {
+                            lock (_streamingChoicesLock)
                             {
-                                StreamingChatChoice newStreamingChatChoice = new StreamingChatChoice(chatChoiceFromSse);
-                                _streamingChatChoices.Add(newStreamingChatChoice);
-                                _updateAvailableEvent.Set();
-                            }
-                            else
-                            {
-                                existingStreamingChoice.UpdateFromEventStreamChatChoice(chatChoiceFromSse);
+                                StreamingChatChoice existingStreamingChoice = _streamingChatChoices
+                                    .FirstOrDefault(chatChoice => chatChoice.Index == chatChoiceFromSse.Index);
+                                if (existingStreamingChoice == null)
+                                {
+                                    StreamingChatChoice newStreamingChatChoice = new StreamingChatChoice(chatChoiceFromSse);
+                                    _streamingChatChoices.Add(newStreamingChatChoice);
+                                    _updateAvailableEvent.Set();
+                                }
+                                else
+                                {
+                                    existingStreamingChoice.UpdateFromEventStreamChatChoice(chatChoiceFromSse);
+                                }
                             }
                         }
                     }
-                }
 
-                // Non-Azure OpenAI doesn't always set the FinishReason on streaming choices when multiple prompts are
-                // provided.
-                lock (_streamingChoicesLock)
-                {
-                    foreach (StreamingChatChoice streamingChatChoice in _streamingChatChoices)
+                    // Non-Azure OpenAI doesn't always set the FinishReason on streaming choices when multiple prompts are
+                    // provided.
+                    lock (_streamingChoicesLock)
                     {
-                        streamingChatChoice.StreamingDoneSignalReceived = true;
+                        foreach (StreamingChatChoice streamingChatChoice in _streamingChatChoices)
+                        {
+                            streamingChatChoice.StreamingDoneSignalReceived = true;
+                        }
                     }
                 }
-
-                _streamingTaskComplete = true;
-                _updateAvailableEvent.Set();
+                catch (Exception pumpException)
+                {
+                    _pumpException = pumpException;
+                }
+                finally
+                {
+                    _streamingTaskComplete = true;
+                    _updateAvailableEvent.Set();
+                }
             });
         }
 
@@ -114,6 +124,11 @@ namespace Azure.AI.OpenAI
             bool isFinalIndex = false;
             for (int i = 0; !isFinalIndex && !cancellationToken.IsCancellationRequested; i++)
             {
+                if (_pumpException != null)
+                {
+                    throw _pumpException;
+                }
+
                 bool doneWaiting = false;
                 while (!doneWaiting)
                 {

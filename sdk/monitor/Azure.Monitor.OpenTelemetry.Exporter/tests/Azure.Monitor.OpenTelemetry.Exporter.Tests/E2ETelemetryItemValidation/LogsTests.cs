@@ -2,7 +2,6 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
 using Azure.Monitor.OpenTelemetry.Exporter.Models;
@@ -41,7 +40,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests.E2ETelemetryItemValidation
 
             var logCategoryName = $"logCategoryName{uniqueTestId}";
 
-            ConcurrentBag<TelemetryItem>? telemetryItems = null;
+            List<TelemetryItem>? telemetryItems = null;
 
             var loggerFactory = LoggerFactory.Create(builder =>
             {
@@ -94,7 +93,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests.E2ETelemetryItemValidation
 
             var logCategoryName = $"logCategoryName{uniqueTestId}";
 
-            ConcurrentBag<TelemetryItem>? telemetryItems = null;
+            List<TelemetryItem>? telemetryItems = null;
 
             var loggerFactory = LoggerFactory.Create(builder =>
             {
