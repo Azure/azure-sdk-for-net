@@ -2,7 +2,6 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -18,9 +17,6 @@ namespace Azure.Storage.DataMovement
         private readonly object _statusLock = new object();
         private string _id;
         private StorageTransferStatus _status;
-
-        private long _currentTransferredBytes;
-        private object _lockCurrentBytes = new object();
 
         public TaskCompletionSource<StorageTransferStatus> CompletionSource;
 
@@ -39,7 +35,6 @@ namespace Azure.Storage.DataMovement
         {
             _id = string.IsNullOrEmpty(id) ? Guid.NewGuid().ToString() : id;
             _status = status;
-            _currentTransferredBytes = 0;
             CompletionSource = new TaskCompletionSource<StorageTransferStatus>(
                 _status,
                 TaskCreationOptions.RunContinuationsAsynchronously);
@@ -71,15 +66,6 @@ namespace Azure.Storage.DataMovement
                         StorageTransferStatus.CompletedWithSkippedTransfers == _status ||
                         StorageTransferStatus.CompletedWithFailedTransfers == _status);
             }
-            internal set { }
-        }
-
-        /// <summary>
-        /// Defines how many bytes are transferred to far
-        /// </summary>
-        public long TransferredBytes
-        {
-            get { return _currentTransferredBytes; }
             internal set { }
         }
 
@@ -129,29 +115,6 @@ namespace Azure.Storage.DataMovement
                     return true;
                 }
                 return false;
-            }
-        }
-
-        /// <summary>
-        /// Incrementes the amount of bytes to the current value
-        /// </summary>
-        public void ResetTransferredBytes()
-        {
-            lock (_lockCurrentBytes)
-            {
-                Volatile.Write(ref _currentTransferredBytes, 0);
-            }
-        }
-
-        /// <summary>
-        /// Incrementes the amount of bytes to the current value
-        /// </summary>
-        /// <param name="transferredBytes"></param>
-        public void UpdateTransferBytes(long transferredBytes)
-        {
-            lock (_lockCurrentBytes)
-            {
-                Interlocked.Add(ref _currentTransferredBytes, transferredBytes);
             }
         }
 

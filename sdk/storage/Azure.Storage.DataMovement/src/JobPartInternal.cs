@@ -331,7 +331,6 @@ namespace Azure.Storage.DataMovement
         /// <param name="bytesTransferred"></param>
         internal void ReportBytesWritten(long bytesTransferred)
         {
-            _dataTransfer._state.UpdateTransferBytes(bytesTransferred);
             _progressTracker.IncrementBytesTransferred(bytesTransferred);
         }
 
