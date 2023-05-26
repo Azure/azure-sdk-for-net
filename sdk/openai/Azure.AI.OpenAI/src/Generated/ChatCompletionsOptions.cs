@@ -13,15 +13,20 @@ using Azure.Core;
 namespace Azure.AI.OpenAI
 {
     /// <summary>
-    /// The configuration information for a completions request.
+    /// The configuration information for a chat completions request.
     /// Completions support a wide variety of tasks and generate text that continues from or "completes"
     /// provided prompt data.
     /// </summary>
-    public partial class CompletionsOptions
+    public partial class ChatCompletionsOptions
     {
 
-        /// <summary> Initializes a new instance of CompletionsOptions. </summary>
-        /// <param name="prompts"> The prompts to generate completions from. </param>
+        /// <summary> Initializes a new instance of ChatCompletionsOptions. </summary>
+        /// <param name="messages">
+        /// The collection of context messages associated with this chat completions request.
+        /// Typical usage begins with a chat message for the System role that provides instructions for
+        /// the behavior of the assistant, followed by alternating messages between the User and
+        /// Assistant roles.
+        /// </param>
         /// <param name="maxTokens"> The maximum number of tokens to generate. </param>
         /// <param name="temperature">
         /// The sampling temperature to use that controls the apparent creativity of generated completions.
@@ -49,19 +54,11 @@ namespace Azure.AI.OpenAI
         /// An identifier for the caller or end user of the operation. This may be used for tracking
         /// or rate-limiting purposes.
         /// </param>
-        /// <param name="choicesPerPrompt">
-        /// The number of completions choices that should be generated per provided prompt as part of an
-        /// overall completions response.
+        /// <param name="choiceCount">
+        /// The number of chat completions choices that should be generated for a chat completions
+        /// response.
         /// Because this setting can generate many completions, it may quickly consume your token quota.
         /// Use carefully and ensure reasonable settings for max_tokens and stop.
-        /// </param>
-        /// <param name="logProbabilityCount">
-        /// A value that controls the emission of log probabilities for the provided number of most likely
-        /// tokens within a completions response.
-        /// </param>
-        /// <param name="echo">
-        /// A value specifying whether completions responses should include input prompts as prefixes to
-        /// their generated output.
         /// </param>
         /// <param name="stopSequences"> A collection of textual sequences that will end completions generation. </param>
         /// <param name="presencePenalty">
@@ -76,42 +73,34 @@ namespace Azure.AI.OpenAI
         /// Positive values will make tokens less likely to appear as their frequency increases and
         /// decrease the likelihood of the model repeating the same statements verbatim.
         /// </param>
-        /// <param name="generationSampleCount">
-        /// A value that controls how many completions will be internally generated prior to response
-        /// formulation.
-        /// When used together with n, best_of controls the number of candidate completions and must be
-        /// greater than n.
-        /// Because this setting can generate many completions, it may quickly consume your token quota.
-        /// Use carefully and ensure reasonable settings for max_tokens and stop.
-        /// </param>
         /// <param name="internalShouldStreamResponse"> A value indicating whether chat completions should be streamed for this request. </param>
         /// <param name="internalNonAzureModelName">
         /// The model name to provide as part of this completions request.
         /// Not applicable to Azure OpenAI, where deployment information should be included in the Azure
         /// resource URI that's connected to.
         /// </param>
-        internal CompletionsOptions(IList<string> prompts, int? maxTokens, float? temperature, float? nucleusSamplingFactor, IDictionary<string, int> internalStringKeyedTokenSelectionBiases, string user, int? choicesPerPrompt, int? logProbabilityCount, bool? echo, IList<string> stopSequences, float? presencePenalty, float? frequencyPenalty, int? generationSampleCount, bool? internalShouldStreamResponse, string internalNonAzureModelName)
+        internal ChatCompletionsOptions(IList<ChatMessage> messages, int? maxTokens, float? temperature, float? nucleusSamplingFactor, IDictionary<string, int> internalStringKeyedTokenSelectionBiases, string user, int? choiceCount, IList<string> stopSequences, float? presencePenalty, float? frequencyPenalty, bool? internalShouldStreamResponse, string internalNonAzureModelName)
         {
-            Prompts = prompts;
+            Messages = messages;
             MaxTokens = maxTokens;
             Temperature = temperature;
             NucleusSamplingFactor = nucleusSamplingFactor;
             InternalStringKeyedTokenSelectionBiases = internalStringKeyedTokenSelectionBiases;
             User = user;
-            ChoicesPerPrompt = choicesPerPrompt;
-            LogProbabilityCount = logProbabilityCount;
-            Echo = echo;
+            ChoiceCount = choiceCount;
             StopSequences = stopSequences;
             PresencePenalty = presencePenalty;
             FrequencyPenalty = frequencyPenalty;
-            GenerationSampleCount = generationSampleCount;
             InternalShouldStreamResponse = internalShouldStreamResponse;
             InternalNonAzureModelName = internalNonAzureModelName;
         }
+
         /// <summary>
-        /// An identifier for the caller or end user of the operation. This may be used for tracking
-        /// or rate-limiting purposes.
+        /// The collection of context messages associated with this chat completions request.
+        /// Typical usage begins with a chat message for the System role that provides instructions for
+        /// the behavior of the assistant, followed by alternating messages between the User and
+        /// Assistant roles.
         /// </summary>
-        public string User { get; set; }
+        public IList<ChatMessage> Messages { get; }
     }
 }

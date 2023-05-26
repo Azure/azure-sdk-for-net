@@ -7,29 +7,27 @@
 
 using System.Collections.Generic;
 using System.Text.Json;
-using System.Xml.Linq;
 using Azure;
 using Azure.Core;
 
 namespace Azure.AI.OpenAI
 {
-    public partial class CompletionsLogProbability
+    public partial class CompletionsLogProbabilityModel
     {
-        internal static CompletionsLogProbability DeserializeCompletionsLogProbability(JsonElement element)
+        internal static CompletionsLogProbabilityModel DeserializeCompletionsLogProbabilityModel(JsonElement element)
         {
-            Optional<IReadOnlyList<string>> tokens = default;
-            Optional<IReadOnlyList<float?>> tokenLogprobs = default;
-            Optional<IReadOnlyList<IDictionary<string, float>>> topLogprobs = default;
-            Optional<IReadOnlyList<int>> textOffset = default;
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            IReadOnlyList<string> tokens = default;
+            IReadOnlyList<float?> tokenLogprobs = default;
+            IReadOnlyList<IDictionary<string, float?>> topLogprobs = default;
+            IReadOnlyList<int> textOffset = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("tokens"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
                     List<string> array = new List<string>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
@@ -40,11 +38,6 @@ namespace Azure.AI.OpenAI
                 }
                 if (property.NameEquals("token_logprobs"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
                     List<float?> array = new List<float?>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
@@ -62,12 +55,7 @@ namespace Azure.AI.OpenAI
                 }
                 if (property.NameEquals("top_logprobs"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    List<IDictionary<string, float>> array = new List<IDictionary<string, float>>();
+                    List<IDictionary<string, float?>> array = new List<IDictionary<string, float?>>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
                         if (item.ValueKind == JsonValueKind.Null)
@@ -76,10 +64,17 @@ namespace Azure.AI.OpenAI
                         }
                         else
                         {
-                            Dictionary<string, float> dictionary = new Dictionary<string, float>();
+                            Dictionary<string, float?> dictionary = new Dictionary<string, float?>();
                             foreach (var property0 in item.EnumerateObject())
                             {
-                                dictionary.Add(property0.Name, property0.Value.GetSingle());
+                                if (property0.Value.ValueKind == JsonValueKind.Null)
+                                {
+                                    dictionary.Add(property0.Name, null);
+                                }
+                                else
+                                {
+                                    dictionary.Add(property0.Name, property0.Value.GetSingle());
+                                }
                             }
                             array.Add(dictionary);
                         }
@@ -89,11 +84,6 @@ namespace Azure.AI.OpenAI
                 }
                 if (property.NameEquals("text_offset"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
                     List<int> array = new List<int>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
@@ -103,7 +93,15 @@ namespace Azure.AI.OpenAI
                     continue;
                 }
             }
-            return new CompletionsLogProbability(Optional.ToList(tokens), Optional.ToList(tokenLogprobs), Optional.ToList(topLogprobs), Optional.ToList(textOffset));
+            return new CompletionsLogProbabilityModel(tokens, tokenLogprobs, topLogprobs, textOffset);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static CompletionsLogProbabilityModel FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeCompletionsLogProbabilityModel(document.RootElement);
         }
     }
 }

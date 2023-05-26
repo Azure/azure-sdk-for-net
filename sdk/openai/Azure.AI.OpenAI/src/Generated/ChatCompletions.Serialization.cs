@@ -20,9 +20,9 @@ namespace Azure.AI.OpenAI
             {
                 return null;
             }
-            Optional<string> id = default;
-            Optional<int?> created = default;
-            Optional<IReadOnlyList<ChatChoice>> choices = default;
+            string id = default;
+            int created = default;
+            IReadOnlyList<ChatChoice> choices = default;
             CompletionsUsage usage = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -33,21 +33,11 @@ namespace Azure.AI.OpenAI
                 }
                 if (property.NameEquals("created"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        created = null;
-                        continue;
-                    }
                     created = property.Value.GetInt32();
                     continue;
                 }
                 if (property.NameEquals("choices"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
                     List<ChatChoice> array = new List<ChatChoice>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
@@ -62,7 +52,7 @@ namespace Azure.AI.OpenAI
                     continue;
                 }
             }
-            return new ChatCompletions(id, Optional.ToNullable(created), Optional.ToList(choices), usage);
+            return new ChatCompletions(id, created, choices, usage);
         }
 
         /// <summary> Deserializes the model from a raw response. </summary>
