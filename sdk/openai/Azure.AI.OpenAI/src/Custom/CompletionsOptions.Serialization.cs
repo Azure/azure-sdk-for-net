@@ -5,10 +5,9 @@
 
 #nullable disable
 
-using System;
 using System.Collections.Generic;
-using System.Globalization;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
 
 namespace Azure.AI.OpenAI
@@ -19,7 +18,8 @@ namespace Azure.AI.OpenAI
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Prompts))
+            // CUSTOM: only serialize if prompts is non-empty
+            if (Optional.IsCollectionDefined(Prompts) && Prompts.Count > 0)
             {
                 writer.WritePropertyName("prompt"u8);
                 writer.WriteStartArray();
@@ -65,6 +65,7 @@ namespace Azure.AI.OpenAI
                     writer.WriteNull("top_p");
                 }
             }
+            // CUSTOM: serialize <int, int> to <string, int>
             if (Optional.IsCollectionDefined(TokenSelectionBiases))
             {
                 writer.WritePropertyName("logit_bias"u8);
@@ -163,178 +164,24 @@ namespace Azure.AI.OpenAI
                     writer.WriteNull("best_of");
                 }
             }
-            if (!string.IsNullOrEmpty(NonAzureModel))
+            if (Optional.IsDefined(InternalShouldStreamResponse))
+            {
+                if (InternalShouldStreamResponse != null)
+                {
+                    writer.WritePropertyName("stream"u8);
+                    writer.WriteBooleanValue(InternalShouldStreamResponse.Value);
+                }
+                else
+                {
+                    writer.WriteNull("stream");
+                }
+            }
+            if (Optional.IsDefined(InternalNonAzureModelName))
             {
                 writer.WritePropertyName("model"u8);
-                writer.WriteStringValue(NonAzureModel);
+                writer.WriteStringValue(InternalNonAzureModelName);
             }
             writer.WriteEndObject();
-        }
-
-        internal static CompletionsOptions DeserializeCompletionsOptions(JsonElement element)
-        {
-            if (element.ValueKind == JsonValueKind.Null)
-            {
-                return null;
-            }
-            Optional<IList<string>> prompt = default;
-            Optional<int?> maxTokens = default;
-            Optional<float?> temperature = default;
-            Optional<float?> topP = default;
-            Optional<IDictionary<int, int>> logitBias = default;
-            Optional<string> user = default;
-            Optional<int?> n = default;
-            Optional<int?> logprobs = default;
-            Optional<bool?> echo = default;
-            Optional<IList<string>> stop = default;
-            Optional<float?> presencePenalty = default;
-            Optional<float?> frequencyPenalty = default;
-            Optional<int?> bestOf = default;
-            foreach (var property in element.EnumerateObject())
-            {
-                if (property.NameEquals("prompt"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    List<string> array = new List<string>();
-                    foreach (var item in property.Value.EnumerateArray())
-                    {
-                        array.Add(item.GetString());
-                    }
-                    prompt = array;
-                    continue;
-                }
-                if (property.NameEquals("max_tokens"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        maxTokens = null;
-                        continue;
-                    }
-                    maxTokens = property.Value.GetInt32();
-                    continue;
-                }
-                if (property.NameEquals("temperature"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        temperature = null;
-                        continue;
-                    }
-                    temperature = property.Value.GetSingle();
-                    continue;
-                }
-                if (property.NameEquals("top_p"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        topP = null;
-                        continue;
-                    }
-                    topP = property.Value.GetSingle();
-                    continue;
-                }
-                if (property.NameEquals("logit_bias"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    Dictionary<int, int> dictionary = new Dictionary<int, int>();
-                    foreach (var property0 in property.Value.EnumerateObject())
-                    {
-                        int key = int.Parse(property0.Name, CultureInfo.InvariantCulture.NumberFormat);
-                        dictionary.Add(key, property0.Value.GetInt32());
-                    }
-                    logitBias = dictionary;
-                    continue;
-                }
-                if (property.NameEquals("user"u8))
-                {
-                    user = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("n"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        n = null;
-                        continue;
-                    }
-                    n = property.Value.GetInt32();
-                    continue;
-                }
-                if (property.NameEquals("logprobs"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        logprobs = null;
-                        continue;
-                    }
-                    logprobs = property.Value.GetInt32();
-                    continue;
-                }
-                if (property.NameEquals("echo"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        echo = null;
-                        continue;
-                    }
-                    echo = property.Value.GetBoolean();
-                    continue;
-                }
-                if (property.NameEquals("stop"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    List<string> array = new List<string>();
-                    foreach (var item in property.Value.EnumerateArray())
-                    {
-                        array.Add(item.GetString());
-                    }
-                    stop = array;
-                    continue;
-                }
-                if (property.NameEquals("presence_penalty"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        presencePenalty = null;
-                        continue;
-                    }
-                    presencePenalty = property.Value.GetSingle();
-                    continue;
-                }
-                if (property.NameEquals("frequency_penalty"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        frequencyPenalty = null;
-                        continue;
-                    }
-                    frequencyPenalty = property.Value.GetSingle();
-                    continue;
-                }
-                if (property.NameEquals("best_of"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        bestOf = null;
-                        continue;
-                    }
-                    bestOf = property.Value.GetInt32();
-                    continue;
-                }
-            }
-            return new CompletionsOptions(Optional.ToList(prompt), Optional.ToNullable(maxTokens), Optional.ToNullable(temperature), Optional.ToNullable(topP), Optional.ToDictionary(logitBias), user, Optional.ToNullable(n), Optional.ToNullable(logprobs), string.Empty, Optional.ToNullable(echo), Optional.ToList(stop), string.Empty, 0, Optional.ToNullable(presencePenalty), Optional.ToNullable(frequencyPenalty), Optional.ToNullable(bestOf));
         }
     }
 }

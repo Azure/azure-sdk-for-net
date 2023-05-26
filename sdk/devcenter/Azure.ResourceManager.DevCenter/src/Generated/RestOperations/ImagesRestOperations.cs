@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.DevCenter
         {
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _apiVersion = apiVersion ?? "2022-08-01-preview";
+            _apiVersion = apiVersion ?? "2023-04-01";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
@@ -63,14 +63,14 @@ namespace Azure.ResourceManager.DevCenter
         }
 
         /// <summary> Lists images for a devcenter. </summary>
-        /// <param name="subscriptionId"> Unique identifier of the Azure subscription. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
-        /// <param name="resourceGroupName"> Name of the resource group within the Azure subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="devCenterName"> The name of the devcenter. </param>
         /// <param name="top"> The maximum number of resources to return from the operation. Example: &apos;$top=10&apos;. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="devCenterName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="devCenterName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<ImageListResult>> ListByDevCenterAsync(string subscriptionId, string resourceGroupName, string devCenterName, int? top = null, CancellationToken cancellationToken = default)
+        public async Task<Response<DevCenterImageListResult>> ListByDevCenterAsync(string subscriptionId, string resourceGroupName, string devCenterName, int? top = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -82,9 +82,9 @@ namespace Azure.ResourceManager.DevCenter
             {
                 case 200:
                     {
-                        ImageListResult value = default;
+                        DevCenterImageListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = ImageListResult.DeserializeImageListResult(document.RootElement);
+                        value = DevCenterImageListResult.DeserializeDevCenterImageListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -93,14 +93,14 @@ namespace Azure.ResourceManager.DevCenter
         }
 
         /// <summary> Lists images for a devcenter. </summary>
-        /// <param name="subscriptionId"> Unique identifier of the Azure subscription. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
-        /// <param name="resourceGroupName"> Name of the resource group within the Azure subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="devCenterName"> The name of the devcenter. </param>
         /// <param name="top"> The maximum number of resources to return from the operation. Example: &apos;$top=10&apos;. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="devCenterName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="devCenterName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<ImageListResult> ListByDevCenter(string subscriptionId, string resourceGroupName, string devCenterName, int? top = null, CancellationToken cancellationToken = default)
+        public Response<DevCenterImageListResult> ListByDevCenter(string subscriptionId, string resourceGroupName, string devCenterName, int? top = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -112,9 +112,9 @@ namespace Azure.ResourceManager.DevCenter
             {
                 case 200:
                     {
-                        ImageListResult value = default;
+                        DevCenterImageListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = ImageListResult.DeserializeImageListResult(document.RootElement);
+                        value = DevCenterImageListResult.DeserializeDevCenterImageListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -150,15 +150,15 @@ namespace Azure.ResourceManager.DevCenter
         }
 
         /// <summary> Lists images for a gallery. </summary>
-        /// <param name="subscriptionId"> Unique identifier of the Azure subscription. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
-        /// <param name="resourceGroupName"> Name of the resource group within the Azure subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="devCenterName"> The name of the devcenter. </param>
         /// <param name="galleryName"> The name of the gallery. </param>
         /// <param name="top"> The maximum number of resources to return from the operation. Example: &apos;$top=10&apos;. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="devCenterName"/> or <paramref name="galleryName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="devCenterName"/> or <paramref name="galleryName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<ImageListResult>> ListByGalleryAsync(string subscriptionId, string resourceGroupName, string devCenterName, string galleryName, int? top = null, CancellationToken cancellationToken = default)
+        public async Task<Response<DevCenterImageListResult>> ListByGalleryAsync(string subscriptionId, string resourceGroupName, string devCenterName, string galleryName, int? top = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -171,9 +171,9 @@ namespace Azure.ResourceManager.DevCenter
             {
                 case 200:
                     {
-                        ImageListResult value = default;
+                        DevCenterImageListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = ImageListResult.DeserializeImageListResult(document.RootElement);
+                        value = DevCenterImageListResult.DeserializeDevCenterImageListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -182,15 +182,15 @@ namespace Azure.ResourceManager.DevCenter
         }
 
         /// <summary> Lists images for a gallery. </summary>
-        /// <param name="subscriptionId"> Unique identifier of the Azure subscription. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
-        /// <param name="resourceGroupName"> Name of the resource group within the Azure subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="devCenterName"> The name of the devcenter. </param>
         /// <param name="galleryName"> The name of the gallery. </param>
         /// <param name="top"> The maximum number of resources to return from the operation. Example: &apos;$top=10&apos;. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="devCenterName"/> or <paramref name="galleryName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="devCenterName"/> or <paramref name="galleryName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<ImageListResult> ListByGallery(string subscriptionId, string resourceGroupName, string devCenterName, string galleryName, int? top = null, CancellationToken cancellationToken = default)
+        public Response<DevCenterImageListResult> ListByGallery(string subscriptionId, string resourceGroupName, string devCenterName, string galleryName, int? top = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -203,9 +203,9 @@ namespace Azure.ResourceManager.DevCenter
             {
                 case 200:
                     {
-                        ImageListResult value = default;
+                        DevCenterImageListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = ImageListResult.DeserializeImageListResult(document.RootElement);
+                        value = DevCenterImageListResult.DeserializeDevCenterImageListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -238,15 +238,15 @@ namespace Azure.ResourceManager.DevCenter
         }
 
         /// <summary> Gets a gallery image. </summary>
-        /// <param name="subscriptionId"> Unique identifier of the Azure subscription. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
-        /// <param name="resourceGroupName"> Name of the resource group within the Azure subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="devCenterName"> The name of the devcenter. </param>
         /// <param name="galleryName"> The name of the gallery. </param>
         /// <param name="imageName"> The name of the image. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="devCenterName"/>, <paramref name="galleryName"/> or <paramref name="imageName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="devCenterName"/>, <paramref name="galleryName"/> or <paramref name="imageName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<ImageData>> GetAsync(string subscriptionId, string resourceGroupName, string devCenterName, string galleryName, string imageName, CancellationToken cancellationToken = default)
+        public async Task<Response<DevCenterImageData>> GetAsync(string subscriptionId, string resourceGroupName, string devCenterName, string galleryName, string imageName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -260,28 +260,28 @@ namespace Azure.ResourceManager.DevCenter
             {
                 case 200:
                     {
-                        ImageData value = default;
+                        DevCenterImageData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = ImageData.DeserializeImageData(document.RootElement);
+                        value = DevCenterImageData.DeserializeDevCenterImageData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((ImageData)null, message.Response);
+                    return Response.FromValue((DevCenterImageData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
         }
 
         /// <summary> Gets a gallery image. </summary>
-        /// <param name="subscriptionId"> Unique identifier of the Azure subscription. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
-        /// <param name="resourceGroupName"> Name of the resource group within the Azure subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="devCenterName"> The name of the devcenter. </param>
         /// <param name="galleryName"> The name of the gallery. </param>
         /// <param name="imageName"> The name of the image. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="devCenterName"/>, <paramref name="galleryName"/> or <paramref name="imageName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="devCenterName"/>, <paramref name="galleryName"/> or <paramref name="imageName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<ImageData> Get(string subscriptionId, string resourceGroupName, string devCenterName, string galleryName, string imageName, CancellationToken cancellationToken = default)
+        public Response<DevCenterImageData> Get(string subscriptionId, string resourceGroupName, string devCenterName, string galleryName, string imageName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -295,13 +295,13 @@ namespace Azure.ResourceManager.DevCenter
             {
                 case 200:
                     {
-                        ImageData value = default;
+                        DevCenterImageData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = ImageData.DeserializeImageData(document.RootElement);
+                        value = DevCenterImageData.DeserializeDevCenterImageData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((ImageData)null, message.Response);
+                    return Response.FromValue((DevCenterImageData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -323,14 +323,14 @@ namespace Azure.ResourceManager.DevCenter
 
         /// <summary> Lists images for a devcenter. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="subscriptionId"> Unique identifier of the Azure subscription. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
-        /// <param name="resourceGroupName"> Name of the resource group within the Azure subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="devCenterName"> The name of the devcenter. </param>
         /// <param name="top"> The maximum number of resources to return from the operation. Example: &apos;$top=10&apos;. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="devCenterName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="devCenterName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<ImageListResult>> ListByDevCenterNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string devCenterName, int? top = null, CancellationToken cancellationToken = default)
+        public async Task<Response<DevCenterImageListResult>> ListByDevCenterNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string devCenterName, int? top = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -343,9 +343,9 @@ namespace Azure.ResourceManager.DevCenter
             {
                 case 200:
                     {
-                        ImageListResult value = default;
+                        DevCenterImageListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = ImageListResult.DeserializeImageListResult(document.RootElement);
+                        value = DevCenterImageListResult.DeserializeDevCenterImageListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -355,14 +355,14 @@ namespace Azure.ResourceManager.DevCenter
 
         /// <summary> Lists images for a devcenter. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="subscriptionId"> Unique identifier of the Azure subscription. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
-        /// <param name="resourceGroupName"> Name of the resource group within the Azure subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="devCenterName"> The name of the devcenter. </param>
         /// <param name="top"> The maximum number of resources to return from the operation. Example: &apos;$top=10&apos;. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="devCenterName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="devCenterName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<ImageListResult> ListByDevCenterNextPage(string nextLink, string subscriptionId, string resourceGroupName, string devCenterName, int? top = null, CancellationToken cancellationToken = default)
+        public Response<DevCenterImageListResult> ListByDevCenterNextPage(string nextLink, string subscriptionId, string resourceGroupName, string devCenterName, int? top = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -375,9 +375,9 @@ namespace Azure.ResourceManager.DevCenter
             {
                 case 200:
                     {
-                        ImageListResult value = default;
+                        DevCenterImageListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = ImageListResult.DeserializeImageListResult(document.RootElement);
+                        value = DevCenterImageListResult.DeserializeDevCenterImageListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -401,15 +401,15 @@ namespace Azure.ResourceManager.DevCenter
 
         /// <summary> Lists images for a gallery. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="subscriptionId"> Unique identifier of the Azure subscription. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
-        /// <param name="resourceGroupName"> Name of the resource group within the Azure subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="devCenterName"> The name of the devcenter. </param>
         /// <param name="galleryName"> The name of the gallery. </param>
         /// <param name="top"> The maximum number of resources to return from the operation. Example: &apos;$top=10&apos;. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="devCenterName"/> or <paramref name="galleryName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="devCenterName"/> or <paramref name="galleryName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<ImageListResult>> ListByGalleryNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string devCenterName, string galleryName, int? top = null, CancellationToken cancellationToken = default)
+        public async Task<Response<DevCenterImageListResult>> ListByGalleryNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string devCenterName, string galleryName, int? top = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -423,9 +423,9 @@ namespace Azure.ResourceManager.DevCenter
             {
                 case 200:
                     {
-                        ImageListResult value = default;
+                        DevCenterImageListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = ImageListResult.DeserializeImageListResult(document.RootElement);
+                        value = DevCenterImageListResult.DeserializeDevCenterImageListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -435,15 +435,15 @@ namespace Azure.ResourceManager.DevCenter
 
         /// <summary> Lists images for a gallery. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="subscriptionId"> Unique identifier of the Azure subscription. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
-        /// <param name="resourceGroupName"> Name of the resource group within the Azure subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="devCenterName"> The name of the devcenter. </param>
         /// <param name="galleryName"> The name of the gallery. </param>
         /// <param name="top"> The maximum number of resources to return from the operation. Example: &apos;$top=10&apos;. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="devCenterName"/> or <paramref name="galleryName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="devCenterName"/> or <paramref name="galleryName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<ImageListResult> ListByGalleryNextPage(string nextLink, string subscriptionId, string resourceGroupName, string devCenterName, string galleryName, int? top = null, CancellationToken cancellationToken = default)
+        public Response<DevCenterImageListResult> ListByGalleryNextPage(string nextLink, string subscriptionId, string resourceGroupName, string devCenterName, string galleryName, int? top = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -457,9 +457,9 @@ namespace Azure.ResourceManager.DevCenter
             {
                 case 200:
                     {
-                        ImageListResult value = default;
+                        DevCenterImageListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = ImageListResult.DeserializeImageListResult(document.RootElement);
+                        value = DevCenterImageListResult.DeserializeDevCenterImageListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

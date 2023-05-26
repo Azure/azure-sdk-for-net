@@ -16,5 +16,13 @@ namespace Azure.Communication.Pipeline
             var authPolicy = new CustomHMACAuthenticationPolicy(new AzureKeyCredential(connectionString.GetRequired("accesskey")), stringSign);
             return HttpPipelineBuilder.Build(options, authPolicy);
         }
+
+        public static HttpPipeline CustomBuildHttpPipeline(this ClientOptions options, Uri acsEndpoint, TokenCredential tokenCredential)
+        {
+            string stringSign = acsEndpoint.Host;
+
+            var authPolicy = new CustomBearerTokenAuthenticationPolicy(tokenCredential, "https://communication.azure.com//.default", stringSign);
+            return HttpPipelineBuilder.Build(options, authPolicy);
+        }
     }
 }

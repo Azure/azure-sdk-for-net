@@ -20,7 +20,7 @@ namespace Azure.Communication.CallAutomation
         /// <summary>
         /// The RecognizeResultType of this RecognizeResult.
         /// </summary>
-        public override RecognizeResultType ResultType => RecognizeResultType.CollectTonesResult;
+        public override RecognizeResultType ResultType => RecognizeResultType.DtmfResult;
 
         /// <summary>
         /// Convert the collection of tones to a string like "12345#".
