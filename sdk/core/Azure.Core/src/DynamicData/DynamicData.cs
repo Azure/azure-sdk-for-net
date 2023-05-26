@@ -129,6 +129,11 @@ namespace Azure.Core.Dynamic
                 case string propertyName:
                     if (_element.TryGetProperty(propertyName, out MutableJsonElement element))
                     {
+                        if (element.ValueKind == JsonValueKind.Null)
+                        {
+                            return null;
+                        }
+
                         return new DynamicData(element, _options);
                     }
 
