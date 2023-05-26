@@ -10,11 +10,11 @@ using Azure.Core;
 
 namespace Azure.Communication.CallAutomation
 {
-    /// <summary> The Communication Services error response. </summary>
+    /// <summary> The Communication Services error. </summary>
     internal partial class CommunicationErrorResponse
     {
         /// <summary> Initializes a new instance of CommunicationErrorResponse. </summary>
-        /// <param name="error"></param>
+        /// <param name="error"> The Communication Services error. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="error"/> is null. </exception>
         internal CommunicationErrorResponse(CommunicationError error)
         {
@@ -23,7 +23,7 @@ namespace Azure.Communication.CallAutomation
             Error = error;
         }
 
-        /// <summary> Gets the error. </summary>
+        /// <summary> The Communication Services error. </summary>
         public CommunicationError Error { get; }
     }
 }

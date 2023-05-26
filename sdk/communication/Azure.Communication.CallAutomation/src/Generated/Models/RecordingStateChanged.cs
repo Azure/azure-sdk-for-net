@@ -20,7 +20,7 @@ namespace Azure.Communication.CallAutomation
         /// <summary> Initializes a new instance of RecordingStateChanged. </summary>
         /// <param name="callConnectionId"> Call connection ID. </param>
         /// <param name="serverCallId"> Server call ID. </param>
-        /// <param name="correlationId"> Correlation ID for event to call correlation. Also called ChainId for skype chain ID. </param>
+        /// <param name="correlationId"> Correlation ID for event to call correlation. </param>
         /// <param name="recordingId"> The call recording id. </param>
         /// <param name="state"></param>
         /// <param name="startDateTime"> The time of the recording started. </param>

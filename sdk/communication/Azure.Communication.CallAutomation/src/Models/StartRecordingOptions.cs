@@ -14,34 +14,34 @@ namespace Azure.Communication.CallAutomation
         /// <summary>
         /// Parameters for the Start Recording operation.
         /// </summary>
-        /// <param name="callLocator"> . </param>
+        /// <param name="callLocator">Call locator to locate ongoing call.</param>
         public StartRecordingOptions(CallLocator callLocator)
         {
             CallLocator = callLocator ?? throw new ArgumentNullException(nameof(callLocator));
         }
 
         /// <summary>
-        /// The callLocator.
+        /// The callLocator to locate ongoing call. Use either GroupCallLocator or ServerCallLocator to locate ongoing call.
         /// </summary>
         internal CallLocator CallLocator { get; }
 
         /// <summary>
-        /// The callLocator.
+        /// Callback uri to recieve callback events of this call recording request.
         /// </summary>
         public Uri RecordingStateCallbackUri { get; set; }
 
         /// <summary>
-        /// The recording channel.
+        /// The recording channel of this call recording request.
         /// </summary>
         public RecordingChannel RecordingChannel { get; set; }
 
         /// <summary>
-        /// The recording content.
+        /// The recording content of this call recording request.
         /// </summary>
         public RecordingContent RecordingContent { get; set; }
 
         /// <summary>
-        /// The recording format.
+        /// The recording format of this call recording request.
         /// </summary>
         public RecordingFormat RecordingFormat { get; set; }
 
@@ -58,11 +58,7 @@ namespace Azure.Communication.CallAutomation
         /// The channel affinity of call recording
         /// When &apos;recordingChannelType&apos; is set to &apos;unmixed&apos;, if channelAffinity is not specified, &apos;channel&apos; will be automatically assigned.
         /// Channel-Participant mapping details can be found in the metadata of the recording.
-        /// ///
         /// </summary>
         public IList<ChannelAffinity> ChannelAffinity { get; set; }
-
-        /// <summary> (Optional) Used to specify external storage for call recording. </summary>
-        public ExternalStorage ExternalStorage { get; set; }
     }
 }
