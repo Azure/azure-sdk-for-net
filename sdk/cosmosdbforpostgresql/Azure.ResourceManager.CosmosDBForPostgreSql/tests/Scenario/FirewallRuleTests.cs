@@ -1,5 +1,6 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.TestFramework;
@@ -101,19 +102,19 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql.Tests
         {
             // Create
             string firewallRuleName = Recording.GenerateAssetName("fwrule");
-            var data = new FirewallRuleData("0.0.0.0", "0.0.0.1");
+            var data = new FirewallRuleData("0.0.0.3", "0.0.0.4");
             FirewallRuleCollection firewallRules = _cluster.GetFirewallRules();
             var lro = await firewallRules.CreateOrUpdateAsync(WaitUntil.Completed, firewallRuleName, data);
             FirewallRuleResource firewallRule = lro.Value;
             Assert.AreEqual(firewallRuleName, firewallRule.Data.Name);
 
             // Update
-            var updatedData = new FirewallRuleData("0.0.0.0", "0.0.0.2");
+            var updatedData = new FirewallRuleData("0.0.0.3", "0.0.0.5");
             var updatedLro = await firewallRules.CreateOrUpdateAsync(WaitUntil.Completed, firewallRuleName, updatedData);
-            FirewallRuleResource updatedFirewallRule = updatedLro.Value;
 
             FirewallRuleResource firewallRuleFromGet = await _cluster.GetFirewallRuleAsync(firewallRuleName);
-            Assert.AreEqual(updatedData, firewallRuleFromGet.Data);
+            Assert.AreEqual(updatedData.StartIPAddress, firewallRuleFromGet.Data.StartIPAddress);
+            Assert.AreEqual(updatedData.EndIPAddress, firewallRuleFromGet.Data.EndIPAddress);
         }
 
         [TestCase]
@@ -122,7 +123,7 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql.Tests
         {
             // Create
             string firewallRuleName = Recording.GenerateAssetName("fwrule");
-            var data = new FirewallRuleData("0.0.0.0", "0.0.0.1");
+            var data = new FirewallRuleData("0.0.0.6", "0.0.0.7");
             FirewallRuleCollection firewallRules = _cluster.GetFirewallRules();
             var lro = await firewallRules.CreateOrUpdateAsync(WaitUntil.Completed, firewallRuleName, data);
             FirewallRuleResource firewallRule = lro.Value;
@@ -132,8 +133,8 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql.Tests
             FirewallRuleResource firewallRuleFromGet = await _cluster.GetFirewallRuleAsync(firewallRuleName);
             await firewallRuleFromGet.DeleteAsync(WaitUntil.Completed);
 
-            // List
-            Assert.IsEmpty(_cluster.GetFirewallRules());
+            var ex = Assert.ThrowsAsync<RequestFailedException>(() => _cluster.GetFirewallRuleAsync(firewallRuleName));
+            Assert.AreEqual(404, ex.Status);
         }
     }
 }
