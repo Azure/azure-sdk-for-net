@@ -10,12 +10,18 @@ using Microsoft.Azure.WebJobs.Host.Config;
 using Microsoft.Extensions.Configuration;
 using System.Collections.Generic;
 using Microsoft.Azure.WebJobs.Host.TestCommon;
+using Microsoft.Azure.WebJobs.Extensions.EventGrid.Config;
 
 namespace Microsoft.Azure.WebJobs.Extensions.EventGrid.Tests
 {
     internal static class TestHelpers
     {
         public static IHost NewHost<T>(EventGridExtensionConfigProvider ext = null, Dictionary<string, string> configuration = null)
+        {
+            return NewHost<T>(ext == null ? null : provider => ext, configuration);
+        }
+
+        public static IHost NewHost<T>(Func<IServiceProvider, EventGridExtensionConfigProvider> ext, Dictionary<string, string> configuration = null)
         {
             var builder = new HostBuilder()
            .ConfigureServices(services =>

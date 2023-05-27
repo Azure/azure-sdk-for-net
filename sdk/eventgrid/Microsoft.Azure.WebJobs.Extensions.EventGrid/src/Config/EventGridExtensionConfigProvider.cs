@@ -1,6 +1,16 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using Azure.Core.Pipeline;
+using Azure.Messaging;
+using Azure.Messaging.EventGrid;
+using Microsoft.Azure.WebJobs.Description;
+using Microsoft.Azure.WebJobs.Host.Bindings;
+using Microsoft.Azure.WebJobs.Host.Config;
+using Microsoft.Azure.WebJobs.Host.Executors;
+using Microsoft.Extensions.Logging;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,21 +19,8 @@ using System.Net.Http;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Web;
-using Azure;
-using Azure.Core.Pipeline;
-using Azure.Identity;
-using Azure.Messaging;
-using Azure.Messaging.EventGrid;
-using Microsoft.Azure.WebJobs.Description;
-using Microsoft.Azure.WebJobs.Host.Bindings;
-using Microsoft.Azure.WebJobs.Host.Config;
-using Microsoft.Azure.WebJobs.Host.Executors;
-using Microsoft.Azure.WebJobs.Logging;
-using Microsoft.Extensions.Logging;
-using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
 
-namespace Microsoft.Azure.WebJobs.Extensions.EventGrid
+namespace Microsoft.Azure.WebJobs.Extensions.EventGrid.Config
 {
     /// <summary>
     /// Defines the configuration options for the EventGrid binding.
@@ -34,7 +31,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.EventGrid
     {
         private ILogger _logger;
         private readonly ILoggerFactory _loggerFactory;
-        private readonly Func<EventGridAttribute, IAsyncCollector<object>> _converter;
+        private readonly EventGridAsyncCollectorFactory _collectorFactory;
         private readonly HttpRequestProcessor _httpRequestProcessor;
         private readonly DiagnosticScopeFactory _diagnosticScopeFactory;
 
@@ -43,28 +40,13 @@ namespace Microsoft.Azure.WebJobs.Extensions.EventGrid
         private const string ResourceProviderNamespace = "Microsoft.EventGrid";
         private const string DiagnosticScopeName = "EventGrid.Process";
 
-        // for end to end testing
-        internal EventGridExtensionConfigProvider(
-            Func<EventGridAttribute, IAsyncCollector<object>> converter,
+        // default constructor
+        public EventGridExtensionConfigProvider(
+            EventGridAsyncCollectorFactory collectorFactory,
             HttpRequestProcessor httpRequestProcessor,
             ILoggerFactory loggerFactory)
         {
-            _converter = converter;
-            _httpRequestProcessor = httpRequestProcessor;
-            _loggerFactory = loggerFactory;
-            _diagnosticScopeFactory = new DiagnosticScopeFactory(DiagnosticScopeNamespace, ResourceProviderNamespace, true, false);
-        }
-
-        // default constructor
-        public EventGridExtensionConfigProvider(HttpRequestProcessor httpRequestProcessor, ILoggerFactory loggerFactory)
-        {
-            _converter = (attr =>
-            {
-                if (attr.UseDefaultAzureCredential)
-                    return new EventGridAsyncCollector(new EventGridPublisherClient(new Uri(attr.TopicEndpointUri), new DefaultAzureCredential()));
-
-                return new EventGridAsyncCollector(new EventGridPublisherClient(new Uri(attr.TopicEndpointUri), new AzureKeyCredential(attr.TopicKeySetting)));
-            });
+            _collectorFactory = collectorFactory;
             _httpRequestProcessor = httpRequestProcessor;
             _loggerFactory = loggerFactory;
             _diagnosticScopeFactory = new DiagnosticScopeFactory(DiagnosticScopeNamespace, ResourceProviderNamespace, true, false);
@@ -105,21 +87,8 @@ namespace Microsoft.Azure.WebJobs.Extensions.EventGrid
 
             // Register the output binding
             var rule = context.AddBindingRule<EventGridAttribute>();
-            rule.BindToCollector(_converter);
-            rule.AddValidator((a, t) =>
-            {
-                // if app setting is missing, it will be caught by runtime
-                // this logic tries to validate the practicality of attribute properties
-                if (!a.UseDefaultAzureCredential && string.IsNullOrWhiteSpace(a.TopicKeySetting))
-                {
-                    throw new InvalidOperationException($"The '{nameof(EventGridAttribute.TopicKeySetting)}' property must be the name of an application setting containing the Topic Key");
-                }
-
-                if (!Uri.IsWellFormedUriString(a.TopicEndpointUri, UriKind.Absolute))
-                {
-                    throw new InvalidOperationException($"The '{nameof(EventGridAttribute.TopicEndpointUri)}' property must be a valid absolute Uri");
-                }
-            });
+            rule.BindToCollector(_collectorFactory.CreateCollector);
+            rule.AddValidator((a, t) => _collectorFactory.Validate(a));
         }
 
         private Dictionary<string, EventGridListener> _listeners = new Dictionary<string, EventGridListener>();
@@ -141,7 +110,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.EventGrid
             // which requires webapi.core...but this does not work for .netframework2.0
             // TODO change this once webjobs.script is migrated
             var functionName = HttpUtility.ParseQueryString(req.RequestUri.Query)["functionName"];
-            if (String.IsNullOrEmpty(functionName) || !_listeners.TryGetValue(functionName, out EventGridListener listener))
+            if (string.IsNullOrEmpty(functionName) || !_listeners.TryGetValue(functionName, out EventGridListener listener))
             {
                 _logger.LogInformation($"cannot find function: '{functionName}', available function names: [{string.Join(", ", _listeners.Keys.ToArray())}]");
                 return new HttpResponseMessage(HttpStatusCode.NotFound) { Content = new StringContent($"cannot find function: '{functionName}'") };

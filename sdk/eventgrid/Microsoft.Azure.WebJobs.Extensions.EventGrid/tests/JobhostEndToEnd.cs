@@ -10,6 +10,7 @@ using Azure;
 using Azure.Core.TestFramework;
 using Azure.Messaging;
 using Azure.Messaging.EventGrid;
+using Microsoft.Azure.WebJobs.Extensions.EventGrid.Config;
 using Microsoft.Azure.WebJobs.Extensions.EventGrid.Tests.Common;
 using Microsoft.Azure.WebJobs.Host;
 using Microsoft.Azure.WebJobs.Host.Indexers;
@@ -47,7 +48,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.EventGrid.Tests
             Assert.AreEqual(_functionOut, expectOut);
 
             var categories = host.GetTestLoggerProvider().GetAllLogMessages().Select(p => p.Category);
-            CollectionAssert.Contains(categories, "Microsoft.Azure.WebJobs.Extensions.EventGrid.EventGridExtensionConfigProvider");
+            CollectionAssert.Contains(categories, "Microsoft.Azure.WebJobs.Extensions.EventGrid.Config.EventGridExtensionConfigProvider");
             _functionOut = null;
         }
 
@@ -262,26 +263,28 @@ namespace Microsoft.Azure.WebJobs.Extensions.EventGrid.Tests
         {
             List<EventGridEvent> egOutput = new List<EventGridEvent>();
 
-            Func<EventGridAttribute, IAsyncCollector<object>> objectEventConverter = (attr =>
-            {
-                var mockClient = new Mock<EventGridPublisherClient>();
-                mockClient.Setup(x => x.SendEventsAsync(It.IsAny<IEnumerable<EventGridEvent>>(), It.IsAny<CancellationToken>()))
-                    .Returns((IEnumerable<EventGridEvent> events, CancellationToken cancel) =>
-                    {
-                        foreach (EventGridEvent eve in events)
+            var mockFactory = new Mock<EventGridAsyncCollectorFactory>();
+            mockFactory.Setup(x => x.CreateCollector(It.IsAny<EventGridAttribute>()))
+                .Returns((EventGridAttribute attr) =>
+                {
+                    var mockClient = new Mock<EventGridPublisherClient>();
+                    mockClient.Setup(x => x.SendEventsAsync(It.IsAny<IEnumerable<EventGridEvent>>(), It.IsAny<CancellationToken>()))
+                        .Returns((IEnumerable<EventGridEvent> events, CancellationToken cancel) =>
                         {
-                            egOutput.Add(eve);
-                        }
+                            foreach (EventGridEvent eve in events)
+                            {
+                                egOutput.Add(eve);
+                            }
 
-                        return Task.FromResult<Response>(new MockResponse(200));
-                    });
-                return new EventGridAsyncCollector(mockClient.Object);
-            });
+                            return Task.FromResult<Response>(new MockResponse(200));
+                        });
+                    return new EventGridAsyncCollector(mockClient.Object);
+                });
 
             ILoggerFactory loggerFactory = new LoggerFactory();
             loggerFactory.AddProvider(new TestLoggerProvider());
             // use moq eventgridclient for test extension
-            var customExtension = new EventGridExtensionConfigProvider(objectEventConverter, new HttpRequestProcessor(NullLoggerFactory.Instance.CreateLogger<HttpRequestProcessor>()), loggerFactory);
+            var customExtension = new EventGridExtensionConfigProvider(mockFactory.Object, new HttpRequestProcessor(NullLoggerFactory.Instance.CreateLogger<HttpRequestProcessor>()), loggerFactory);
 
             var configuration = new Dictionary<string, string>
                 {
@@ -380,27 +383,29 @@ namespace Microsoft.Azure.WebJobs.Extensions.EventGrid.Tests
         {
             List<CloudEvent> cloudEvents = new List<CloudEvent>();
 
-            Func<EventGridAttribute, IAsyncCollector<object>> eventConverter = (attr =>
-            {
-                var mockClient = new Mock<EventGridPublisherClient>();
-                mockClient.Setup(x => x.SendEventsAsync(It.IsAny<IEnumerable<CloudEvent>>(), It.IsAny<CancellationToken>()))
-                    .Returns((IEnumerable<CloudEvent> events, CancellationToken cancel) =>
-                    {
-                        foreach (CloudEvent eve in events)
+            var mockFactory = new Mock<EventGridAsyncCollectorFactory>();
+            mockFactory.Setup(x => x.CreateCollector(It.IsAny<EventGridAttribute>()))
+                .Returns((EventGridAttribute attr) =>
+                {
+                    var mockClient = new Mock<EventGridPublisherClient>();
+                    mockClient.Setup(x => x.SendEventsAsync(It.IsAny<IEnumerable<CloudEvent>>(), It.IsAny<CancellationToken>()))
+                        .Returns((IEnumerable<CloudEvent> events, CancellationToken cancel) =>
                         {
-                            cloudEvents.Add(eve);
-                        }
+                            foreach (CloudEvent eve in events)
+                            {
+                                cloudEvents.Add(eve);
+                            }
 
-                        return Task.FromResult<Response>(new MockResponse(200));
-                    });
-                return new EventGridAsyncCollector(mockClient.Object);
-            });
+                            return Task.FromResult<Response>(new MockResponse(200));
+                        });
+                    return new EventGridAsyncCollector(mockClient.Object);
+                });
 
             ILoggerFactory loggerFactory = new LoggerFactory();
             var provider = new TestLoggerProvider();
             loggerFactory.AddProvider(provider);
             // use moq eventgridclient for test extension
-            var customExtension = new EventGridExtensionConfigProvider(eventConverter, new HttpRequestProcessor(NullLoggerFactory.Instance.CreateLogger<HttpRequestProcessor>()), loggerFactory);
+            var customExtension = new EventGridExtensionConfigProvider(mockFactory.Object, new HttpRequestProcessor(NullLoggerFactory.Instance.CreateLogger<HttpRequestProcessor>()), loggerFactory);
 
             var configuration = new Dictionary<string, string>
                 {
@@ -413,7 +418,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.EventGrid.Tests
             await host.GetJobHost().CallAsync($"OutputCloudEventBindingParams.{functionName}");
 
             var categories = provider.GetAllLogMessages().Select(p => p.Category);
-            CollectionAssert.Contains(categories, "Microsoft.Azure.WebJobs.Extensions.EventGrid.EventGridExtensionConfigProvider");
+            CollectionAssert.Contains(categories, "Microsoft.Azure.WebJobs.Extensions.EventGrid.Config.EventGridExtensionConfigProvider");
 
             var expectedEvents = new HashSet<string>(expectedCollection.Split(' '));
             foreach (CloudEvent eve in cloudEvents)
@@ -426,16 +431,18 @@ namespace Microsoft.Azure.WebJobs.Extensions.EventGrid.Tests
         [Test]
         public void InvalidOutputEvent()
         {
-            Func<EventGridAttribute, IAsyncCollector<object>> eventConverter = (attr =>
-            {
-                var mockClient = new Mock<EventGridPublisherClient>();
-                return new EventGridAsyncCollector(mockClient.Object);
-            });
+            var mockFactory = new Mock<EventGridAsyncCollectorFactory>();
+            mockFactory.Setup(x => x.CreateCollector(It.IsAny<EventGridAttribute>()))
+                .Returns((EventGridAttribute attr) =>
+                {
+                    var mockClient = new Mock<EventGridPublisherClient>();
+                    return new EventGridAsyncCollector(mockClient.Object);
+                });
 
             ILoggerFactory loggerFactory = new LoggerFactory();
             loggerFactory.AddProvider(new TestLoggerProvider());
             // use moq eventgridclient for test extension
-            var customExtension = new EventGridExtensionConfigProvider(eventConverter, new HttpRequestProcessor(NullLoggerFactory.Instance.CreateLogger<HttpRequestProcessor>()), loggerFactory);
+            var customExtension = new EventGridExtensionConfigProvider(mockFactory.Object, new HttpRequestProcessor(NullLoggerFactory.Instance.CreateLogger<HttpRequestProcessor>()), loggerFactory);
 
             var configuration = new Dictionary<string, string>
                 {

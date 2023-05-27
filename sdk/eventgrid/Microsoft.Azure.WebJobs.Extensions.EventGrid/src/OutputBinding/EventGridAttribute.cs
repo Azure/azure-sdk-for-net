@@ -22,7 +22,9 @@ namespace Microsoft.Azure.WebJobs.Extensions.EventGrid
         [AppSetting]
         public string TopicKeySetting { get; set; }
 
-        /// <summary>Gets or sets whether to use the DefaultAzureCredential class for authentication.</summary>
-        public bool UseDefaultAzureCredential { get; set; }
+        /// <summary>
+        /// Gets or sets the app setting name that contains the Event Grid topic's connection string.
+        /// </summary>
+        public string Connection { get; set; }
     }
 }
