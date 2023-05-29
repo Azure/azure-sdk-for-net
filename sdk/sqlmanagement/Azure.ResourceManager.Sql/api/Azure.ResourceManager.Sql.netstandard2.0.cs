@@ -8069,7 +8069,7 @@ namespace Azure.ResourceManager.Sql.Models
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Sql.Models.SqlMetricAvailability> MetricAvailabilities { get { throw null; } }
         public Azure.ResourceManager.Sql.Models.SqlMetricName Name { get { throw null; } }
         public Azure.ResourceManager.Sql.Models.SqlMetricPrimaryAggregationType? PrimaryAggregationType { get { throw null; } }
-        public System.Uri ResourceUri { get { throw null; } }
+        public string ResourceUriString { get { throw null; } }
         public Azure.ResourceManager.Sql.Models.SqlMetricDefinitionUnitType? Unit { get { throw null; } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]

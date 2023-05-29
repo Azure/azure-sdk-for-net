@@ -13,7 +13,7 @@ using NUnit.Framework;
 
 namespace Azure.ResourceManager.Sql.Tests.Scenario
 {
-    public class MetricDefinitionsTests : SqlManagementClientBase
+    public class MetricDefinitionsTests : SqlManagementTestBase
     {
         private ResourceGroupResource _resourceGroup;
         private ResourceIdentifier _resourceGroupIdentifier;
