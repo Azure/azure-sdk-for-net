@@ -5,12 +5,14 @@
 
 using System;
 using System.ComponentModel;
-using System.Collections.Generic;
-using System.Text;
 
-namespace Azure.ResourceManager.Sql.Customized.Models
+namespace Azure.ResourceManager.Sql.Models
 {
-    internal class SqlMetricDefinition
+    public partial class SqlMetricDefinition
     {
+        /// <summary> Uri of the resource. </summary>
+        [EditorBrowsableAttribute(EditorBrowsableState.Never)]
+        [ObsoleteAttribute("This property has been replaced by ResourceUriString", false)]
+        public Uri ResourceUri { get; set; }
     }
 }
