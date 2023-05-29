@@ -119,22 +119,22 @@ if ($TypeSpecProjectDirectory -match '^https://github.com/(?<repo>Azure/azure-re
   $CommitHash = $Matches["commit"]
   # TODO support the branch name in url then get the commithash from branch name
 } else {
-  $tspConfigPath = Join-Path $TypeSpecProjectDirectory "tspconfig.yaml"
-  if (!(Test-Path $tspConfigPath)) {
-    Write-Error "Failed to find tspconfig.yaml in '$TypeSpecProjectDirectory'"
-    exit 1
-  }
-  if($TypeSpecProjectDirectory -match "^.*/(?<path>specification/.*)$") {
+  if ($TypeSpecProjectDirectory -match "^.*/(?<path>specification/.*)$") {
     $TypeSpecProjectDirectory = $Matches["path"]
   } else {
     Write-Error "'$TypeSpecProjectDirectory' doesn't have 'specification' in path."
+    exit 1
+  }
+  $tspConfigPath = Join-Path $TypeSpecProjectDirectory "tspconfig.yaml"
+  if (!(Test-Path $tspConfigPath)) {
+    Write-Error "Failed to find tspconfig.yaml in '$TypeSpecProjectDirectory'"
     exit 1
   }
 }
 
 $tspConfigYaml = Get-Content $tspConfigPath -Raw | ConvertFrom-Yaml
 
-# delete the tmp tspconfig.yaml downloaded from github
+# delete the tmporary tspconfig.yaml downloaded from github
 if (Test-Path $tmpTspConfigPath) {
   Remove-Item $tspConfigPath
 }
