@@ -119,15 +119,15 @@ if ($TypeSpecProjectDirectory -match '^https://github.com/(?<repo>Azure/azure-re
   $CommitHash = $Matches["commit"]
   # TODO support the branch name in url then get the commithash from branch name
 } else {
+  $tspConfigPath = Join-Path $TypeSpecProjectDirectory "tspconfig.yaml"
+  if (!(Test-Path $tspConfigPath)) {
+    Write-Error "Failed to find tspconfig.yaml in '$TypeSpecProjectDirectory'"
+    exit 1
+  }
   if ($TypeSpecProjectDirectory -match "^.*/(?<path>specification/.*)$") {
     $TypeSpecProjectDirectory = $Matches["path"]
   } else {
     Write-Error "'$TypeSpecProjectDirectory' doesn't have 'specification' in path."
-    exit 1
-  }
-  $tspConfigPath = Join-Path $TypeSpecProjectDirectory "tspconfig.yaml"
-  if (!(Test-Path $tspConfigPath)) {
-    Write-Error "Failed to find tspconfig.yaml in '$TypeSpecProjectDirectory'"
     exit 1
   }
 }
@@ -145,3 +145,4 @@ $sdkProjectFolder = CreateUpdate-TspLocation $tspConfigYaml $TypeSpecProjectDire
 & "$PSScriptRoot/TypeSpec-Project-Sync.ps1" $sdkProjectFolder
 # call TypeSpec-Project-Generate.ps1
 & "$PSScriptRoot/TypeSpec-Project-Generate.ps1" $sdkProjectFolder
+return $sdkProjectFolder
