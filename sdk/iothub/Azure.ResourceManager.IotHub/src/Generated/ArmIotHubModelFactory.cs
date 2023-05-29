@@ -312,15 +312,15 @@ namespace Azure.ResourceManager.IotHub.Models
         /// <summary> Initializes a new instance of IotHubCertificateProperties. </summary>
         /// <param name="subject"> The certificate&apos;s subject name. </param>
         /// <param name="expireOn"> The certificate&apos;s expiration date and time. </param>
-        /// <param name="thumbprint"> The certificate&apos;s thumbprint. </param>
+        /// <param name="thumbprintString"> The certificate&apos;s thumbprint. </param>
         /// <param name="isVerified"> Determines whether certificate has been verified. </param>
         /// <param name="createdOn"> The certificate&apos;s create date and time. </param>
         /// <param name="updatedOn"> The certificate&apos;s last update date and time. </param>
         /// <param name="certificate"> The certificate content. </param>
         /// <returns> A new <see cref="Models.IotHubCertificateProperties"/> instance for mocking. </returns>
-        public static IotHubCertificateProperties IotHubCertificateProperties(string subject = null, DateTimeOffset? expireOn = null, BinaryData thumbprint = null, bool? isVerified = null, DateTimeOffset? createdOn = null, DateTimeOffset? updatedOn = null, BinaryData certificate = null)
+        public static IotHubCertificateProperties IotHubCertificateProperties(string subject = null, DateTimeOffset? expireOn = null, string thumbprintString = null, bool? isVerified = null, DateTimeOffset? createdOn = null, DateTimeOffset? updatedOn = null, BinaryData certificate = null)
         {
-            return new IotHubCertificateProperties(subject, expireOn, thumbprint, isVerified, createdOn, updatedOn, certificate);
+            return new IotHubCertificateProperties(subject, expireOn, thumbprintString, isVerified, createdOn, updatedOn, certificate);
         }
 
         /// <summary> Initializes a new instance of IotHubCertificateWithNonceDescription. </summary>
@@ -339,16 +339,16 @@ namespace Azure.ResourceManager.IotHub.Models
         /// <summary> Initializes a new instance of IotHubCertificatePropertiesWithNonce. </summary>
         /// <param name="subject"> The certificate&apos;s subject name. </param>
         /// <param name="expireOn"> The certificate&apos;s expiration date and time. </param>
-        /// <param name="thumbprint"> The certificate&apos;s thumbprint. </param>
+        /// <param name="thumbprintString"> The certificate&apos;s thumbprint. </param>
         /// <param name="isVerified"> Determines whether certificate has been verified. </param>
         /// <param name="createdOn"> The certificate&apos;s create date and time. </param>
         /// <param name="updatedOn"> The certificate&apos;s last update date and time. </param>
         /// <param name="verificationCode"> The certificate&apos;s verification code that will be used for proof of possession. </param>
         /// <param name="certificate"> The certificate content. </param>
         /// <returns> A new <see cref="Models.IotHubCertificatePropertiesWithNonce"/> instance for mocking. </returns>
-        public static IotHubCertificatePropertiesWithNonce IotHubCertificatePropertiesWithNonce(string subject = null, DateTimeOffset? expireOn = null, BinaryData thumbprint = null, bool? isVerified = null, DateTimeOffset? createdOn = null, DateTimeOffset? updatedOn = null, string verificationCode = null, BinaryData certificate = null)
+        public static IotHubCertificatePropertiesWithNonce IotHubCertificatePropertiesWithNonce(string subject = null, DateTimeOffset? expireOn = null, string thumbprintString = null, bool? isVerified = null, DateTimeOffset? createdOn = null, DateTimeOffset? updatedOn = null, string verificationCode = null, BinaryData certificate = null)
         {
-            return new IotHubCertificatePropertiesWithNonce(subject, expireOn, thumbprint, isVerified, createdOn, updatedOn, verificationCode, certificate);
+            return new IotHubCertificatePropertiesWithNonce(subject, expireOn, thumbprintString, isVerified, createdOn, updatedOn, verificationCode, certificate);
         }
 
         /// <summary> Initializes a new instance of IotHubPrivateEndpointGroupInformationData. </summary>
