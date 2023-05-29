@@ -36,14 +36,14 @@ function CreateUpdate-TspLocation([System.Object]$tspConfig, [string]$TypeSpecPr
   # Create service-dir if not exist
   $serviceDir = Join-Path $repoRoot $serviceDir
   if (!(Test-Path -Path $serviceDir)) {
-    New-Item -Path $serviceDir -ItemType Directory
+    New-Item -Path $serviceDir -ItemType Directory | Out-Null
     Write-Host "created service folder $serviceDir"
   }
 
   # Create package-dir if not exist
   $packageDir = Join-Path $serviceDir $packageDir
   if (!(Test-Path -Path $packageDir)) {
-    New-Item -Path $packageDir -ItemType Directory
+    New-Item -Path $packageDir -ItemType Directory | Out-Null
     Write-Host "created package folder $packageDir"
   }
 
