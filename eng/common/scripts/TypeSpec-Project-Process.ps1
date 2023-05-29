@@ -143,6 +143,9 @@ $sdkProjectFolder = CreateUpdate-TspLocation $tspConfigYaml $TypeSpecProjectDire
 
 # call TypeSpec-Project-Sync.ps1
 & "$PSScriptRoot/TypeSpec-Project-Sync.ps1" $sdkProjectFolder
+if ($LASTEXITCODE) { exit $LASTEXITCODE }
+
 # call TypeSpec-Project-Generate.ps1
 & "$PSScriptRoot/TypeSpec-Project-Generate.ps1" $sdkProjectFolder
+
 return $sdkProjectFolder
