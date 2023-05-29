@@ -87,22 +87,13 @@ function Get-PackageDir([System.Object]$tspConfig) {
   return $packageDir
 }
 
-$repo = ""
-if ($RepoUrl) {
-  if ($RepoUrl -match "^https://github.com/(?<repo>[^/]*/azure-rest-api-specs(-pr)?).*") {
-    $repo = $Matches["repo"]
-  }
-  else {
-    Write-Host "Parameter 'RepoUrl' has incorrect value: $RepoUrl. It should be similar like 'https://github.com/Azure/azure-rest-api-specs'"
-    exit 1
-  }
-}
-
 $repoRootPath =  (Join-Path $PSScriptRoot .. .. ..)
 $repoRootPath = Resolve-Path $repoRootPath
 $repoRootPath = $repoRootPath -replace "\\", "/"
 $tspConfigPath = Join-Path $repoRootPath 'tspconfig.yaml'
 $tmpTspConfigPath = $tspConfigPath
+$repo = ""
+# remote url scenario
 # example url of tspconfig.yaml: https://github.com/Azure/azure-rest-api-specs-pr/blob/724ccc4d7ef7655c0b4d5c5ac4a5513f19bbef35/specification/containerservice/Fleet.Management/tspconfig.yaml
 if ($TypeSpecProjectDirectory -match '^https://github.com/(?<repo>Azure/azure-rest-api-specs(-pr)?)/blob/(?<commit>[0-9a-f]{40})/(?<path>.*)/tspconfig.yaml$') {
   try {
@@ -119,6 +110,7 @@ if ($TypeSpecProjectDirectory -match '^https://github.com/(?<repo>Azure/azure-re
   $CommitHash = $Matches["commit"]
   # TODO support the branch name in url then get the commithash from branch name
 } else {
+  # local path scenario
   $tspConfigPath = Join-Path $TypeSpecProjectDirectory "tspconfig.yaml"
   if (!(Test-Path $tspConfigPath)) {
     Write-Error "Failed to find tspconfig.yaml in '$TypeSpecProjectDirectory'"
@@ -127,7 +119,22 @@ if ($TypeSpecProjectDirectory -match '^https://github.com/(?<repo>Azure/azure-re
   if ($TypeSpecProjectDirectory -match "^.*/(?<path>specification/.*)$") {
     $TypeSpecProjectDirectory = $Matches["path"]
   } else {
-    Write-Error "'$TypeSpecProjectDirectory' doesn't have 'specification' in path."
+    Write-Error "$TypeSpecProjectDirectory doesn't have 'specification' in path."
+    exit 1
+  }
+  if (!$CommitHash) {
+    Write-Error "Parameter of Commithash is not provided in the local path scenario."
+    exit 1
+  }
+  if (!$RepoUrl) {
+    Write-Error "Parameter of RepoUrl:$RepoUrl is not provided in the local path scenario."
+    exit 1
+  }
+  if ($RepoUrl -match "^https://github.com/(?<repo>[^/]*/azure-rest-api-specs(-pr)?).*") {
+    $repo = $Matches["repo"]
+  }
+  else {
+    Write-Error "Parameter 'RepoUrl' has incorrect value:$RepoUrl. It should be similar like 'https://github.com/Azure/azure-rest-api-specs'"
     exit 1
   }
 }
