@@ -187,7 +187,7 @@ namespace Azure.ResourceManager.Batch.Models
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="thumbprintAlgorithm"> This must match the first portion of the certificate name. Currently required to be &apos;SHA1&apos;. </param>
-        /// <param name="thumbprint"> This must match the thumbprint from the name. </param>
+        /// <param name="thumbprintString"> This must match the thumbprint from the name. </param>
         /// <param name="format"> The format of the certificate - either Pfx or Cer. If omitted, the default is Pfx. </param>
         /// <param name="provisioningState"></param>
         /// <param name="provisioningStateTransitOn"> The time at which the certificate entered its current state. </param>
@@ -197,9 +197,9 @@ namespace Azure.ResourceManager.Batch.Models
         /// <param name="deleteCertificateError"> This is only returned when the certificate provisioningState is &apos;Failed&apos;. </param>
         /// <param name="etag"> The ETag of the resource, used for concurrency statements. </param>
         /// <returns> A new <see cref="Batch.BatchAccountCertificateData"/> instance for mocking. </returns>
-        public static BatchAccountCertificateData BatchAccountCertificateData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string thumbprintAlgorithm = null, BinaryData thumbprint = null, BatchAccountCertificateFormat? format = null, BatchAccountCertificateProvisioningState? provisioningState = null, DateTimeOffset? provisioningStateTransitOn = null, BatchAccountCertificateProvisioningState? previousProvisioningState = null, DateTimeOffset? previousProvisioningStateTransitOn = null, string publicData = null, ResponseError deleteCertificateError = null, ETag? etag = null)
+        public static BatchAccountCertificateData BatchAccountCertificateData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string thumbprintAlgorithm = null, string thumbprintString = null, BatchAccountCertificateFormat? format = null, BatchAccountCertificateProvisioningState? provisioningState = null, DateTimeOffset? provisioningStateTransitOn = null, BatchAccountCertificateProvisioningState? previousProvisioningState = null, DateTimeOffset? previousProvisioningStateTransitOn = null, string publicData = null, ResponseError deleteCertificateError = null, ETag? etag = null)
         {
-            return new BatchAccountCertificateData(id, name, resourceType, systemData, thumbprintAlgorithm, thumbprint, format, provisioningState, provisioningStateTransitOn, previousProvisioningState, previousProvisioningStateTransitOn, publicData, deleteCertificateError, etag);
+            return new BatchAccountCertificateData(id, name, resourceType, systemData, thumbprintAlgorithm, thumbprintString, format, provisioningState, provisioningStateTransitOn, previousProvisioningState, previousProvisioningStateTransitOn, publicData, deleteCertificateError, etag);
         }
 
         /// <summary> Initializes a new instance of BatchAccountCertificateCreateOrUpdateContent. </summary>
@@ -208,15 +208,15 @@ namespace Azure.ResourceManager.Batch.Models
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="thumbprintAlgorithm"> This must match the first portion of the certificate name. Currently required to be &apos;SHA1&apos;. </param>
-        /// <param name="thumbprint"> This must match the thumbprint from the name. </param>
+        /// <param name="thumbprintString"> This must match the thumbprint from the name. </param>
         /// <param name="format"> The format of the certificate - either Pfx or Cer. If omitted, the default is Pfx. </param>
         /// <param name="data"> The maximum size is 10KB. </param>
         /// <param name="password"> This must not be specified if the certificate format is Cer. </param>
         /// <param name="etag"> The ETag of the resource, used for concurrency statements. </param>
         /// <returns> A new <see cref="Models.BatchAccountCertificateCreateOrUpdateContent"/> instance for mocking. </returns>
-        public static BatchAccountCertificateCreateOrUpdateContent BatchAccountCertificateCreateOrUpdateContent(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string thumbprintAlgorithm = null, BinaryData thumbprint = null, BatchAccountCertificateFormat? format = null, BinaryData data = null, string password = null, ETag? etag = null)
+        public static BatchAccountCertificateCreateOrUpdateContent BatchAccountCertificateCreateOrUpdateContent(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string thumbprintAlgorithm = null, string thumbprintString = null, BatchAccountCertificateFormat? format = null, BinaryData data = null, string password = null, ETag? etag = null)
         {
-            return new BatchAccountCertificateCreateOrUpdateContent(id, name, resourceType, systemData, thumbprintAlgorithm, thumbprint, format, data, password, etag);
+            return new BatchAccountCertificateCreateOrUpdateContent(id, name, resourceType, systemData, thumbprintAlgorithm, thumbprintString, format, data, password, etag);
         }
 
         /// <summary> Initializes a new instance of BatchAccountDetectorData. </summary>

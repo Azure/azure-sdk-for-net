@@ -441,16 +441,16 @@ namespace Azure.ResourceManager.Automation.Models
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="thumbprint"> Gets the thumbprint of the certificate. </param>
+        /// <param name="thumbprintString"> Gets the thumbprint of the certificate. </param>
         /// <param name="expireOn"> Gets the expiry time of the certificate. </param>
         /// <param name="isExportable"> Gets the is exportable flag of the certificate. </param>
         /// <param name="createdOn"> Gets the creation time. </param>
         /// <param name="lastModifiedOn"> Gets the last modified time. </param>
         /// <param name="description"> Gets or sets the description. </param>
         /// <returns> A new <see cref="Automation.AutomationCertificateData"/> instance for mocking. </returns>
-        public static AutomationCertificateData AutomationCertificateData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, BinaryData thumbprint = null, DateTimeOffset? expireOn = null, bool? isExportable = null, DateTimeOffset? createdOn = null, DateTimeOffset? lastModifiedOn = null, string description = null)
+        public static AutomationCertificateData AutomationCertificateData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string thumbprintString = null, DateTimeOffset? expireOn = null, bool? isExportable = null, DateTimeOffset? createdOn = null, DateTimeOffset? lastModifiedOn = null, string description = null)
         {
-            return new AutomationCertificateData(id, name, resourceType, systemData, thumbprint, expireOn, isExportable, createdOn, lastModifiedOn, description);
+            return new AutomationCertificateData(id, name, resourceType, systemData, thumbprintString, expireOn, isExportable, createdOn, lastModifiedOn, description);
         }
 
         /// <summary> Initializes a new instance of AutomationConnectionData. </summary>
