@@ -4,6 +4,9 @@
 
 ### Features Added
 
+- Added `NotificationHubApnsCredential.ThumbprintString`, `NotificationHubMpnsCredential.ThumbprintString` to return the hexadecimal string representation of the SHA-1 hash of the certificate.
+  `NotificationHubApnsCredential.Thumbprint`, `NotificationHubMpnsCredential.Thumbprint` have been hidden but are still available.
+
 ### Breaking Changes
 
 ### Bugs Fixed

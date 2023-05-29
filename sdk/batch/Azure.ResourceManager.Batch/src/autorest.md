@@ -16,6 +16,9 @@ skip-csproj: true
 modelerfour:
   flatten-payloads: false
 
+# mgmt-debug: 
+#   show-serialized-names: true
+
 format-by-name-rules:
   'tenantId': 'uuid'
   'ETag': 'etag'
@@ -24,7 +27,6 @@ format-by-name-rules:
   '*Uris': 'Uri'
   'ifMatch': 'etag'
   'locationName': 'azure-location'
-  'thumbprint': 'any'
 
 rename-rules:
   CPU: Cpu
@@ -187,6 +189,8 @@ rename-mapping:
   ResourceFile.autoStorageContainerName: AutoBlobContainerName
   AccountKeyType: BatchAccountKeyType
   BatchAccountRegenerateKeyParameters.keyName: KeyType
+  Certificate.properties.thumbprint: ThumbprintString
+  CertificateCreateOrUpdateParameters.properties.thumbprint: ThumbprintString 
 
 directive:
 # TODO -- remove this and use rename-mapping when it is supported

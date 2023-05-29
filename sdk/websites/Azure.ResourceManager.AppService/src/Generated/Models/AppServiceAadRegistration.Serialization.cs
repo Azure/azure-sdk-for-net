@@ -5,7 +5,6 @@
 
 #nullable disable
 
-using System;
 using System.Text.Json;
 using Azure.Core;
 
@@ -31,14 +30,10 @@ namespace Azure.ResourceManager.AppService.Models
                 writer.WritePropertyName("clientSecretSettingName"u8);
                 writer.WriteStringValue(ClientSecretSettingName);
             }
-            if (Optional.IsDefined(ClientSecretCertificateThumbprint))
+            if (Optional.IsDefined(ClientSecretCertificateThumbprintString))
             {
                 writer.WritePropertyName("clientSecretCertificateThumbprint"u8);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(ClientSecretCertificateThumbprint);
-#else
-                JsonSerializer.Serialize(writer, JsonDocument.Parse(ClientSecretCertificateThumbprint.ToString()).RootElement);
-#endif
+                writer.WriteStringValue(ClientSecretCertificateThumbprintString);
             }
             if (Optional.IsDefined(ClientSecretCertificateSubjectAlternativeName))
             {
@@ -62,7 +57,7 @@ namespace Azure.ResourceManager.AppService.Models
             Optional<string> openIdIssuer = default;
             Optional<string> clientId = default;
             Optional<string> clientSecretSettingName = default;
-            Optional<BinaryData> clientSecretCertificateThumbprint = default;
+            Optional<string> clientSecretCertificateThumbprint = default;
             Optional<string> clientSecretCertificateSubjectAlternativeName = default;
             Optional<string> clientSecretCertificateIssuer = default;
             foreach (var property in element.EnumerateObject())
@@ -84,11 +79,7 @@ namespace Azure.ResourceManager.AppService.Models
                 }
                 if (property.NameEquals("clientSecretCertificateThumbprint"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    clientSecretCertificateThumbprint = BinaryData.FromString(property.Value.GetRawText());
+                    clientSecretCertificateThumbprint = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("clientSecretCertificateSubjectAlternativeName"u8))
