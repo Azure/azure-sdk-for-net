@@ -166,7 +166,7 @@ var client = new ContentSafetyClient(endpoint, credential);
 var body = new AnalyzeImageOptions(new ImageData()
 {
     Content = BinaryData.FromString("<your binary data content>"),
-    BlobUrl = "<BlobUrl>",
+    BlobUrl = new Uri("http://localhost:3000"),
 })
 {
     Categories = 
@@ -189,7 +189,7 @@ var client = new ContentSafetyClient(endpoint, credential);
 var body = new AnalyzeImageOptions(new ImageData()
 {
     Content = BinaryData.FromString("<your binary data content>"),
-    BlobUrl = "<BlobUrl>",
+    BlobUrl = new Uri("http://localhost:3000"),
 })
 {
     Categories = 
@@ -227,7 +227,7 @@ var client = new ContentSafetyClient(endpoint, credential);
 var data = new {
     image = new {
         content = new {},
-        blobUrl = "<blobUrl>",
+        blobUrl = "http://localhost:3000",
     },
     categories = new[] {
         "Hate"
@@ -274,7 +274,7 @@ var client = new ContentSafetyClient(endpoint, credential);
 var data = new {
     image = new {
         content = new {},
-        blobUrl = "<blobUrl>",
+        blobUrl = "http://localhost:3000",
     },
     categories = new[] {
         "Hate"
