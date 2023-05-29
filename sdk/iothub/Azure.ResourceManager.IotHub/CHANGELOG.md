@@ -1,17 +1,17 @@
 # Release History
 
-## 1.1.0-beta.1 (Unreleased)
+## 1.1.0-beta.1 (2023-05-30)
 
 ### Features Added
 
+- Enable the model factory feature for model mocking, more information can be found [here](https://azure.github.io/azure-sdk/dotnet_introduction.html#dotnet-mocking-factory-builder).
 - Added `IotHubCertificateProperties.ThumbprintString`, `IotHubCertificatePropertiesWithNonce.ThumbprintString` to return the hexadecimal string representation of the SHA-1 hash of the certificate.
   `IotHubCertificateProperties.Thumbprint`, `IotHubCertificatePropertiesWithNonce.Thumbprint` have been hidden but are still available.
 
-### Breaking Changes
-
-### Bugs Fixed
-
 ### Other Changes
+
+- Upgraded dependent Azure.Core to 1.32.0.
+- Upgraded dependent Azure.ResourceManager to 1.6.0.
 
 ## 1.0.1 (2023-02-20)
 
