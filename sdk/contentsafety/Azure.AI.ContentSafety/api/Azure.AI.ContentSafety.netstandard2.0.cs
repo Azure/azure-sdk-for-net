@@ -121,7 +121,7 @@ namespace Azure.AI.ContentSafety
     public partial class ImageData
     {
         public ImageData() { }
-        public string BlobUrl { get { throw null; } set { } }
+        public System.Uri BlobUrl { get { throw null; } set { } }
         public System.BinaryData Content { get { throw null; } set { } }
     }
     public partial class RemoveBlockItemsOptions
