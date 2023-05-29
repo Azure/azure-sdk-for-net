@@ -37,7 +37,7 @@ namespace Azure.Communication.JobRouter.Models
         /// <param name="assignedJobs"> A list of assigned jobs attached to this worker. </param>
         /// <param name="loadRatio"> A value indicating the workers capacity. A value of &apos;1&apos; means all capacity is consumed. A value of &apos;0&apos; means no capacity is currently consumed. </param>
         /// <param name="availableForOffers"> A flag indicating this worker is open to receive offers or not. </param>
-        internal RouterWorker(string id, RouterWorkerState? state, IDictionary<string, object> queueAssignments, int? totalCapacity, IDictionary<string, object> labels, IDictionary<string, object> tags, IDictionary<string, ChannelConfiguration> channelConfigurations, IReadOnlyList<JobOffer> offers, IReadOnlyList<WorkerAssignment> assignedJobs, double? loadRatio, bool? availableForOffers)
+        internal RouterWorker(string id, WorkerState? state, IDictionary<string, object> queueAssignments, int? totalCapacity, IDictionary<string, object> labels, IDictionary<string, object> tags, IDictionary<string, ChannelConfiguration> channelConfigurations, IReadOnlyList<JobOffer> offers, IReadOnlyList<WorkerAssignment> assignedJobs, double? loadRatio, bool? availableForOffers)
         {
             Id = id;
             State = state;
@@ -55,7 +55,7 @@ namespace Azure.Communication.JobRouter.Models
         /// <summary> Gets the id. </summary>
         public string Id { get; }
         /// <summary> The current state of the worker. </summary>
-        public RouterWorkerState? State { get; }
+        public WorkerState? State { get; }
         /// <summary> The total capacity score this worker has to manage multiple concurrent jobs. </summary>
         public int? TotalCapacity { get; set; }
         /// <summary> A list of active offers issued to this worker. </summary>

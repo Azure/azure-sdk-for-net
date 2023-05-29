@@ -153,7 +153,7 @@ Console.WriteLine($"Job has been successfully assigned with a worker with assign
 ```C# Snippet:Azure_Communication_JobRouter_Tests_Samples_Crud_DeclineJobOffer_Async
 // A worker can also choose to decline an offer
 
-Response<DeclineJobOfferResult> declineOffer = await routerClient.DeclineJobOfferAsync(worker.Value.Id, issuedOffer.Id);
+Response<DeclineJobOfferResult> declineOffer = await routerClient.DeclineJobOfferAsync(new DeclineJobOfferOptions(worker.Value.Id, issuedOffer.Id));
 ```
 
 ## Complete a job

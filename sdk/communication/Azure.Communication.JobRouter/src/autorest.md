@@ -15,7 +15,7 @@ If any of the new objects needs to be overwritten, add the required changes to t
 tag: package-jobrouter-2022-07-18-preview
 model-namespace: false
 require:
-    -  https://raw.githubusercontent.com/williamzhao87/azure-rest-api-specs/87847c54d92a6f58006265893f080eb7dc8c6510/specification/communication/data-plane/JobRouter/readme.md
+    -  https://raw.githubusercontent.com/williamzhao87/azure-rest-api-specs/81dc62f22cf06d15ce5f3985aff4ec199ec98d79/specification/communication/data-plane/JobRouter/readme.md
 
 generation1-convenience-client: true
 reflect-api-versions: true

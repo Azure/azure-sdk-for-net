@@ -8,12 +8,11 @@ using Azure.Core.TestFramework;
 using Azure.ResourceManager.Storage.Models;
 using Azure.ResourceManager.Network;
 using Azure.ResourceManager.Network.Models;
-using Azure.ResourceManager.Storage.Tests.Helpers;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Storage.Tests
 {
-    public class PrivateEndpointConnectionTests : StorageTestBase
+    public class PrivateEndpointConnectionTests : StorageManagementTestBase
     {
         private ResourceGroupResource _resourceGroup;
         private StorageAccountResource _storageAccount;
@@ -41,17 +40,10 @@ namespace Azure.ResourceManager.Storage.Tests
             await _storageAccount.DeleteAsync(WaitUntil.Completed);
         }
 
-        [Ignore("Depend on Network which will block the pipeline to release new Network package, disable this case temporary")]
         [RecordedTest]
         public async Task CreatePrivateEndpointConnection()
         {
-            if (Mode == RecordedTestMode.Record)
-            {
-                using (Recording.DisableRecording())
-                {
-                    PrivateEndpointResource privateEndpoint = await CreatePrivateEndpoint();
-                }
-            }
+            PrivateEndpointResource privateEndpoint = await CreatePrivateEndpoint();
             List<StoragePrivateEndpointConnectionResource> privateEndpointConnections = await _privateEndpointConnectionCollection.GetAllAsync().ToEnumerableAsync();
             StoragePrivateEndpointConnectionResource privateEndpointConnection = privateEndpointConnections[0];
             Assert.AreEqual(StoragePrivateEndpointServiceConnectionStatus.Pending, privateEndpointConnection.Data.ConnectionState.Status);
@@ -68,34 +60,19 @@ namespace Azure.ResourceManager.Storage.Tests
             Assert.AreEqual(StoragePrivateEndpointServiceConnectionStatus.Approved, privateEndpointConnection.Data.ConnectionState.Status);
         }
 
-        [Ignore("Depend on Network which will block the pipeline to release new Network package, disable this case temporary")]
         [RecordedTest]
         public async Task GetAllPrivateEndpointConnection()
         {
-            if (Mode == RecordedTestMode.Record)
-            {
-                using (Recording.DisableRecording())
-                {
-                    PrivateEndpointResource privateEndpoint = await CreatePrivateEndpoint();
-                    Assert.AreEqual(privateEndpoint.Data.ManualPrivateLinkServiceConnections.Count, 1);
-                }
-            }
+            PrivateEndpointResource privateEndpoint = await CreatePrivateEndpoint();
+            Assert.AreEqual(privateEndpoint.Data.ManualPrivateLinkServiceConnections.Count, 1);
             List<StoragePrivateEndpointConnectionResource> privateEndpointConnections = await _privateEndpointConnectionCollection.GetAllAsync().ToEnumerableAsync();
             Assert.AreEqual(1, privateEndpointConnections.Count);
         }
 
-        [Ignore("Depend on Network which will block the pipeline to release new Network package, disable this case temporary")]
         [RecordedTest]
         public async Task StoragePrivateEndpointConnectionDelete()
         {
-            if (Mode == RecordedTestMode.Record)
-            {
-                using (Recording.DisableRecording())
-                {
-                    PrivateEndpointResource privateEndpoint = await CreatePrivateEndpoint();
-                }
-            }
-
+            PrivateEndpointResource privateEndpoint = await CreatePrivateEndpoint();
             List<StoragePrivateEndpointConnectionResource> privateEndpointConnections = await _privateEndpointConnectionCollection.GetAllAsync().ToEnumerableAsync();
             string name = privateEndpointConnections[0].Data.Name;
             Assert.IsTrue(await _privateEndpointConnectionCollection.ExistsAsync(name));
