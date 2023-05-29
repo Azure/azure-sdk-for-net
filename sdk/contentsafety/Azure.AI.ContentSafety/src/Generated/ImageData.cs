@@ -20,7 +20,7 @@ namespace Azure.AI.ContentSafety
         /// <summary> Initializes a new instance of ImageData. </summary>
         /// <param name="content"> Base64 encoding of image. </param>
         /// <param name="blobUrl"> The blob url of image. </param>
-        internal ImageData(BinaryData content, string blobUrl)
+        internal ImageData(BinaryData content, Uri blobUrl)
         {
             Content = content;
             BlobUrl = blobUrl;
@@ -44,6 +44,6 @@ namespace Azure.AI.ContentSafety
         /// </summary>
         public BinaryData Content { get; set; }
         /// <summary> The blob url of image. </summary>
-        public string BlobUrl { get; set; }
+        public Uri BlobUrl { get; set; }
     }
 }
