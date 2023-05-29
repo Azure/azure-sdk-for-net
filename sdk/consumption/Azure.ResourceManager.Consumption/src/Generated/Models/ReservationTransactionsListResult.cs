@@ -10,7 +10,10 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Consumption.Models
 {
-    /// <summary> Result of listing reservation recommendations. </summary>
+    /// <summary>
+    /// Result of listing reservation recommendations.
+    /// Serialized Name: ReservationTransactionsListResult
+    /// </summary>
     internal partial class ReservationTransactionsListResult
     {
         /// <summary> Initializes a new instance of ReservationTransactionsListResult. </summary>
@@ -20,17 +23,29 @@ namespace Azure.ResourceManager.Consumption.Models
         }
 
         /// <summary> Initializes a new instance of ReservationTransactionsListResult. </summary>
-        /// <param name="value"> The list of reservation recommendations. </param>
-        /// <param name="nextLink"> The link (url) to the next page of results. </param>
+        /// <param name="value">
+        /// The list of reservation recommendations.
+        /// Serialized Name: ReservationTransactionsListResult.value
+        /// </param>
+        /// <param name="nextLink">
+        /// The link (url) to the next page of results.
+        /// Serialized Name: ReservationTransactionsListResult.nextLink
+        /// </param>
         internal ReservationTransactionsListResult(IReadOnlyList<ConsumptionReservationTransaction> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
-        /// <summary> The list of reservation recommendations. </summary>
+        /// <summary>
+        /// The list of reservation recommendations.
+        /// Serialized Name: ReservationTransactionsListResult.value
+        /// </summary>
         public IReadOnlyList<ConsumptionReservationTransaction> Value { get; }
-        /// <summary> The link (url) to the next page of results. </summary>
+        /// <summary>
+        /// The link (url) to the next page of results.
+        /// Serialized Name: ReservationTransactionsListResult.nextLink
+        /// </summary>
         public string NextLink { get; }
     }
 }

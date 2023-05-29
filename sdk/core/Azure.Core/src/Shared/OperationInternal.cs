@@ -94,23 +94,6 @@ namespace Azure.Core
             _internalOperation = new OperationInternal<VoidValue>(new OperationToOperationOfTProxy(operation), clientDiagnostics, rawResponse, operationTypeName ?? operation.GetType().Name, scopeAttributes, fallbackStrategy);
         }
 
-        // TEMP backcompat with AutoRest
-        public OperationInternal(
-            ClientDiagnostics clientDiagnostics,
-            IOperation operation,
-            Response rawResponse,
-            string? operationTypeName = null,
-            IEnumerable<KeyValuePair<string, string>>? scopeAttributes = null,
-            DelayStrategyInternal? fallbackStrategy = null)
-            : base(
-                clientDiagnostics,
-                operationTypeName ?? operation.GetType().Name,
-                scopeAttributes,
-                fallbackStrategy is ExponentialDelayStrategy ? new SequentialDelayStrategy() : (fallbackStrategy is ConstantDelayStrategy) ? new FixedDelayWithNoJitterStrategy() : null)
-        {
-            _internalOperation = new OperationInternal<VoidValue>(clientDiagnostics, new OperationToOperationOfTProxy(operation), rawResponse, operationTypeName ?? operation.GetType().Name, scopeAttributes, fallbackStrategy);
-        }
-
         private OperationInternal(OperationState finalState)
             :base(finalState.RawResponse)
         {

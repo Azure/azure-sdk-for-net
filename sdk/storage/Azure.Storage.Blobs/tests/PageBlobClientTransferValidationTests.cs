@@ -84,5 +84,27 @@ namespace Azure.Storage.Blobs.Tests
         {
             return true;
         }
+
+        #region Test Overrides
+        // base test uses non-512 multiples to help with edge cases. Fix those values here.
+        [Test]
+        public override async Task OpenWriteSuccessfulHashComputation(
+            [ValueSource(nameof(GetValidationAlgorithms))] StorageChecksumAlgorithm algorithm,
+            [Values(Constants.KB)] int streamBufferSize,
+            [Values(512)] int dataSize)
+            => await base.OpenWriteSuccessfulHashComputation(algorithm, streamBufferSize, dataSize);
+
+        [Test]
+        public override async Task OpenWriteSucceedsWithCallerProvidedCrc(
+            [Values(Constants.KB)] int dataSize,
+            [Values(Constants.KB, 512)] int bufferSize)
+            => await base.OpenWriteSucceedsWithCallerProvidedCrc(dataSize, bufferSize);
+
+        [Test]
+        public override async Task OpenWriteFailsOnCallerProvidedCrcMismatch(
+            [Values(Constants.KB)] int dataSize,
+            [Values(Constants.KB, 512)] int bufferSize)
+            => await base.OpenWriteFailsOnCallerProvidedCrcMismatch(dataSize, bufferSize);
+        #endregion
     }
 }

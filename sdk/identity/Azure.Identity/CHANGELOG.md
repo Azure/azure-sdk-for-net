@@ -1,6 +1,6 @@
 # Release History
 
-## 1.9.0-beta.4 (Unreleased)
+## 1.10.0-beta.1 (Unreleased)
 
 ### Features Added
 
@@ -9,6 +9,11 @@
 ### Bugs Fixed
 
 ### Other Changes
+
+## 1.9.0 (2023-05-09)
+
+### Breaking Changes
+- Changed visibility of all environment variable based properties on `EnvironmentCredentialOptions` to internal. These options are again only configurable via environment variables.
 
 ## 1.9.0-beta.3 (2023-04-12)
 

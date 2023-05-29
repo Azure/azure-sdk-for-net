@@ -19,17 +19,22 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
         private const int Version = 2;
         private const int MaxlinksAllowed = 100;
 
-        internal static List<TelemetryItem> OtelToAzureMonitorTrace(Batch<Activity> batchActivity, AzureMonitorResource? resource, string instrumentationKey)
+        internal static List<TelemetryItem> OtelToAzureMonitorTrace(Batch<Activity> batchActivity, AzureMonitorResource? azureMonitorResource, string instrumentationKey)
         {
             List<TelemetryItem> telemetryItems = new List<TelemetryItem>();
             TelemetryItem telemetryItem;
+
+            if (batchActivity.Count > 0 && azureMonitorResource?.MetricTelemetry != null)
+            {
+                telemetryItems.Add(azureMonitorResource.MetricTelemetry);
+            }
 
             foreach (var activity in batchActivity)
             {
                 try
                 {
                     var activityTagsProcessor = EnumerateActivityTags(activity);
-                    telemetryItem = new TelemetryItem(activity, ref activityTagsProcessor, resource, instrumentationKey);
+                    telemetryItem = new TelemetryItem(activity, ref activityTagsProcessor, azureMonitorResource, instrumentationKey);
 
                     // Check for Exceptions events
                     if (activity.Events.Any())
@@ -98,7 +103,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
             {
                 var linksJson = new StringBuilder();
                 linksJson.Append('[');
-                foreach (var link in activity.EnumerateLinks())
+                foreach (ref readonly var link in activity.EnumerateLinks())
                 {
                     linksJson
                         .Append('{')
@@ -181,7 +186,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
 
         private static void AddTelemetryFromActivityEvents(Activity activity, TelemetryItem telemetryItem, List<TelemetryItem> telemetryItems)
         {
-            foreach (var evnt in activity.EnumerateEvents())
+            foreach (ref readonly var evnt in activity.EnumerateEvents())
             {
                 try
                 {
@@ -222,7 +227,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
 
             var messageData = new MessageData(Version, activityEvent.Name);
 
-            foreach (var tag in activityEvent.EnumerateTagObjects())
+            foreach (ref readonly var tag in activityEvent.EnumerateTagObjects())
             {
                 if (tag.Value is Array arrayValue)
                 {
@@ -247,7 +252,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
             string? exceptionStackTrace = null;
             string? exceptionMessage = null;
 
-            foreach (var tag in activityEvent.EnumerateTagObjects())
+            foreach (ref readonly var tag in activityEvent.EnumerateTagObjects())
             {
                 // TODO: see if these can be cached
                 if (tag.Key == SemanticConventions.AttributeExceptionType)

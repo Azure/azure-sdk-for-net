@@ -237,7 +237,10 @@ namespace Azure.ResourceManager.NotificationHubs.Models
         public string CertificateKey { get { throw null; } set { } }
         public System.Uri Endpoint { get { throw null; } set { } }
         public string KeyId { get { throw null; } set { } }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        [System.ObsoleteAttribute("This property is obsolete and will be removed in a future release. Please use `ThumbprintString` instead.", false)]
         public System.BinaryData Thumbprint { get { throw null; } set { } }
+        public string ThumbprintString { get { throw null; } set { } }
         public string Token { get { throw null; } set { } }
     }
     public partial class NotificationHubAvailabilityContent : Azure.ResourceManager.Models.TrackedResourceData
@@ -284,7 +287,10 @@ namespace Azure.ResourceManager.NotificationHubs.Models
         public NotificationHubMpnsCredential() { }
         public string CertificateKey { get { throw null; } set { } }
         public string MpnsCertificate { get { throw null; } set { } }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        [System.ObsoleteAttribute("This property is obsolete and will be removed in a future release. Please use `ThumbprintString` instead.", false)]
         public System.BinaryData Thumbprint { get { throw null; } set { } }
+        public string ThumbprintString { get { throw null; } set { } }
     }
     public partial class NotificationHubNamespaceCreateOrUpdateContent : Azure.ResourceManager.Models.TrackedResourceData
     {

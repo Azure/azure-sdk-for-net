@@ -12,7 +12,11 @@ using Azure.Core;
 
 namespace Azure.AI.OpenAI
 {
-    /// <summary> Expected response schema to embeddings request. </summary>
+    /// <summary>
+    /// Representation of the response data from an embeddings request.
+    /// Embeddings measure the relatedness of text strings and are commonly used for search, clustering,
+    /// recommendations, and other similar scenarios.
+    /// </summary>
     public partial class Embeddings
     {
         /// <summary> Initializes a new instance of Embeddings. </summary>
@@ -30,22 +34,15 @@ namespace Azure.AI.OpenAI
 
         /// <summary> Initializes a new instance of Embeddings. </summary>
         /// <param name="data"> Embedding values for the prompts submitted in the request. </param>
-        /// <param name="model"> ID of the model to use. </param>
         /// <param name="usage"> Usage counts for tokens input using the embeddings API. </param>
-        internal Embeddings(IReadOnlyList<EmbeddingItem> data, string model, EmbeddingsUsage usage)
+        internal Embeddings(IReadOnlyList<EmbeddingItem> data, EmbeddingsUsage usage)
         {
-            Data = data.ToList();
-            Model = model;
+            Data = data;
             Usage = usage;
         }
 
-        /// <summary> Type of the data field. </summary>
-        internal string Object { get; } = "list";
-
         /// <summary> Embedding values for the prompts submitted in the request. </summary>
         public IReadOnlyList<EmbeddingItem> Data { get; }
-        /// <summary> ID of the model to use. </summary>
-        public string Model { get; }
         /// <summary> Usage counts for tokens input using the embeddings API. </summary>
         public EmbeddingsUsage Usage { get; }
     }

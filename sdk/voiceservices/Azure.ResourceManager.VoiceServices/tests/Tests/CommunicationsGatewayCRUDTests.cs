@@ -23,40 +23,40 @@ namespace Azure.ResourceManager.VoiceServices.Tests
             var resourceName = Recording.GenerateAssetName("SDKTest");
 
             // PUT - Create
-            var createOperation = await rg.GetCommunicationsGateways().CreateOrUpdateAsync(WaitUntil.Completed, resourceName, GetDefaultCommunicationsGatewayData());
+            var createOperation = await rg.GetVoiceServicesCommunicationsGateways().CreateOrUpdateAsync(WaitUntil.Completed, resourceName, GetDefaultCommunicationsGatewayData());
             Assert.IsTrue(createOperation.HasCompleted);
             Assert.IsTrue(createOperation.HasValue);
 
             // GET - check it exists
-            var getResponse = await rg.GetCommunicationsGatewayAsync(resourceName);
+            var getResponse = await rg.GetVoiceServicesCommunicationsGatewayAsync(resourceName);
             var communicationsGateway = getResponse.Value;
             Assert.IsNotNull(communicationsGateway);
 
             // PUT - Update
 
             // First, assert that we have only a single codec
-            CollectionAssert.AreEquivalent(new List<TeamsCodec> { TeamsCodec.Pcma }, communicationsGateway.Data.Codecs);
+            CollectionAssert.AreEquivalent(new List<VoiceServicesTeamsCodec> { VoiceServicesTeamsCodec.Pcma }, communicationsGateway.Data.Codecs);
 
             var updatedCommunicationsGatewayData = GetDefaultCommunicationsGatewayData();
-            updatedCommunicationsGatewayData.Codecs.Add(TeamsCodec.Pcmu);
-            var putOperation = await rg.GetCommunicationsGateways().CreateOrUpdateAsync(WaitUntil.Completed, resourceName, updatedCommunicationsGatewayData);
+            updatedCommunicationsGatewayData.Codecs.Add(VoiceServicesTeamsCodec.Pcmu);
+            var putOperation = await rg.GetVoiceServicesCommunicationsGateways().CreateOrUpdateAsync(WaitUntil.Completed, resourceName, updatedCommunicationsGatewayData);
             Assert.IsTrue(putOperation.HasCompleted);
             Assert.IsTrue(putOperation.HasValue);
 
             // GET - check the updated Codecs
-            getResponse = await rg.GetCommunicationsGatewayAsync(resourceName);
+            getResponse = await rg.GetVoiceServicesCommunicationsGatewayAsync(resourceName);
             communicationsGateway = getResponse.Value;
             Assert.IsNotNull(communicationsGateway);
-            CollectionAssert.AreEquivalent(new List<TeamsCodec> { TeamsCodec.Pcma, TeamsCodec.Pcmu }, communicationsGateway.Data.Codecs);
+            CollectionAssert.AreEquivalent(new List<VoiceServicesTeamsCodec> { VoiceServicesTeamsCodec.Pcma, VoiceServicesTeamsCodec.Pcmu }, communicationsGateway.Data.Codecs);
 
             // PATCH
-            var patch = new CommunicationsGatewayPatch();
+            var patch = new VoiceServicesCommunicationsGatewayPatch();
             patch.Tags.Add("tagKey", "tagValue");
             var patchOperation = await communicationsGateway.UpdateAsync(patch);
             Assert.IsNotNull(patchOperation.Value);
 
             // GET - check the updated tags
-            getResponse = await rg.GetCommunicationsGatewayAsync(resourceName);
+            getResponse = await rg.GetVoiceServicesCommunicationsGatewayAsync(resourceName);
             communicationsGateway = getResponse.Value;
             Assert.IsNotNull(communicationsGateway);
             Assert.AreEqual("tagValue", communicationsGateway.Data.Tags["tagKey"]);

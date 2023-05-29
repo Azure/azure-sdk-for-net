@@ -26,8 +26,11 @@ namespace Azure.ResourceManager.Batch
         public Azure.ResourceManager.Batch.Models.BatchAccountCertificateProvisioningState? ProvisioningState { get { throw null; } }
         public System.DateTimeOffset? ProvisioningStateTransitOn { get { throw null; } }
         public string PublicData { get { throw null; } }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        [System.ObsoleteAttribute("This property is obsolete and will be removed in a future release. Please use `ThumbprintString` instead.", false)]
         public System.BinaryData Thumbprint { get { throw null; } set { } }
         public string ThumbprintAlgorithm { get { throw null; } set { } }
+        public string ThumbprintString { get { throw null; } set { } }
     }
     public partial class BatchAccountCertificateResource : Azure.ResourceManager.ArmResource
     {
@@ -425,8 +428,11 @@ namespace Azure.ResourceManager.Batch.Models
         public Azure.ETag? ETag { get { throw null; } }
         public Azure.ResourceManager.Batch.Models.BatchAccountCertificateFormat? Format { get { throw null; } set { } }
         public string Password { get { throw null; } set { } }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        [System.ObsoleteAttribute("This property is obsolete and will be removed in a future release. Please use `ThumbprintString` instead.", false)]
         public System.BinaryData Thumbprint { get { throw null; } set { } }
         public string ThumbprintAlgorithm { get { throw null; } set { } }
+        public string ThumbprintString { get { throw null; } set { } }
     }
     public enum BatchAccountCertificateFormat
     {
@@ -771,7 +777,7 @@ namespace Azure.ResourceManager.Batch.Models
     public partial class BatchIPRule
     {
         public BatchIPRule(string value) { }
-        public Azure.ResourceManager.Batch.Models.BatchIPRuleAction Action { get { throw null; } set { } }
+        public Azure.ResourceManager.Batch.Models.BatchIPRuleAction Action { get { throw null; } [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)] set { } }
         public string Value { get { throw null; } set { } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
@@ -1041,7 +1047,7 @@ namespace Azure.ResourceManager.Batch.Models
         public BatchVmContainerConfiguration() { }
         public System.Collections.Generic.IList<string> ContainerImageNames { get { throw null; } }
         public System.Collections.Generic.IList<Azure.ResourceManager.Batch.Models.BatchVmContainerRegistry> ContainerRegistries { get { throw null; } }
-        public Azure.ResourceManager.Batch.Models.BatchVmContainerType ContainerType { get { throw null; } set { } }
+        public Azure.ResourceManager.Batch.Models.BatchVmContainerType ContainerType { get { throw null; } [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)] set { } }
     }
     public partial class BatchVmContainerRegistry
     {

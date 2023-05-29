@@ -34,6 +34,11 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
         public DocumentClassifierDetails Value { get; }
 
         /// <summary>
+        /// The identifier of the classifier this instance is associated with.
+        /// </summary>
+        public string ClassifierId => Value.ClassifierId;
+
+        /// <summary>
         /// Builds a classifier using the specified <see cref="DocumentModelAdministrationClient"/> and the specified set of training files. A
         /// <see cref="DisposableDocumentClassifier"/> instance is returned. Upon disposal, the associated classifier will be deleted.
         /// </summary>
@@ -52,6 +57,6 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
         /// <summary>
         /// Deletes the classifier this instance is associated with.
         /// </summary>
-        public async ValueTask DisposeAsync() => await _client.DeleteDocumentClassifierAsync(Value.ClassifierId);
+        public async ValueTask DisposeAsync() => await _client.DeleteDocumentClassifierAsync(ClassifierId);
     }
 }

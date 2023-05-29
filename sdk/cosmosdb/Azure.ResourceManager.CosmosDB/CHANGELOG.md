@@ -1,14 +1,18 @@
 # Release History
 
-## 1.4.0-beta.1 (Unreleased)
+## 1.4.0-beta.2 (Unreleased)
+
+### Bugs Fixed
+- Fixed an issue that `System.UriFormatException` is thrown when `Uri` type field is empty during serialization of `CosmosDBAccountData`.
+
+## 1.4.0-beta.1 (2023-04-28)
 
 ### Features Added
 
-### Breaking Changes
-
-### Bugs Fixed
-
-### Other Changes
+- Updated Microsoft.DocumentDB RP API version to `2022-11-15-preview`
+- Added support for restoring deleted table and gremlin resources within the same account 
+- Added support for cross region restore
+- Added support for enabling burst capacity of the CosmosDB account
 
 ## 1.3.0 (2023-04-11)
 

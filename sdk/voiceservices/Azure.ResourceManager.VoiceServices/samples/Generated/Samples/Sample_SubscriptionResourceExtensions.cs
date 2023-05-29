@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.VoiceServices.Samples
         // CheckLocalNameAvailability
         [NUnit.Framework.Test]
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task CheckLocalNameAvailability_CheckLocalNameAvailability()
+        public async Task CheckVoiceServicesNameAvailability_CheckLocalNameAvailability()
         {
             // Generated from example definition: specification/voiceservices/resource-manager/Microsoft.VoiceServices/stable/2023-01-31/examples/NameAvailability_CheckLocal.json
             // this example is just showing the usage of "NameAvailability_CheckLocal" operation, for the dependent resources, they will have to be created separately.
@@ -39,12 +39,12 @@ namespace Azure.ResourceManager.VoiceServices.Samples
 
             // invoke the operation
             AzureLocation location = new AzureLocation("useast");
-            CheckNameAvailabilityContent content = new CheckNameAvailabilityContent()
+            VoiceServicesCheckNameAvailabilityContent content = new VoiceServicesCheckNameAvailabilityContent()
             {
                 Name = "myname",
-                ResourceType = "Microsoft.VoiceServices/CommunicationsGateway",
+                ResourceType = new ResourceType("Microsoft.VoiceServices/CommunicationsGateway"),
             };
-            CheckNameAvailabilityResponse result = await subscriptionResource.CheckLocalNameAvailabilityAsync(location, content);
+            VoiceServicesCheckNameAvailabilityResult result = await subscriptionResource.CheckVoiceServicesNameAvailabilityAsync(location, content);
 
             Console.WriteLine($"Succeeded: {result}");
         }
