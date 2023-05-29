@@ -5,7 +5,6 @@
 
 #nullable disable
 
-using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
@@ -62,7 +61,7 @@ namespace Azure.ResourceManager.AppService
             ResourceType type = default;
             Optional<SystemData> systemData = default;
             Optional<ResourceIdentifier> vnetResourceId = default;
-            Optional<BinaryData> certThumbprint = default;
+            Optional<string> certThumbprint = default;
             Optional<string> certBlob = default;
             Optional<IReadOnlyList<AppServiceVirtualNetworkRoute>> routes = default;
             Optional<bool> resyncRequired = default;
@@ -119,11 +118,7 @@ namespace Azure.ResourceManager.AppService
                         }
                         if (property0.NameEquals("certThumbprint"u8))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            certThumbprint = BinaryData.FromString(property0.Value.GetRawText());
+                            certThumbprint = property0.Value.GetString();
                             continue;
                         }
                         if (property0.NameEquals("certBlob"u8))

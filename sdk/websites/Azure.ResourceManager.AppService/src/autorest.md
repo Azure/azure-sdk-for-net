@@ -18,6 +18,9 @@ skip-csproj: true
 modelerfour:
   flatten-payloads: false
 
+# mgmt-debug: 
+#  show-serialized-names: true
+
 list-exception:
 - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/serverfarms/{name}/hybridConnectionNamespaces/{namespaceName}/relays/{relayName}
 - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/hybridConnectionNamespaces/{namespaceName}/relays/{relayName}
@@ -132,8 +135,6 @@ format-by-name-rules:
   '*Uri': 'Uri'
   '*Uris': 'Uri'
   'serverFarmId': 'arm-id'
-  'thumbprint': 'any'
-  '*Thumbprint': 'any'
 
 keep-plural-enums:
 - StackPreferredOS
@@ -548,6 +549,16 @@ rename-mapping:
   WebJobCollection: WebJobCListResult
   WorkerPoolCollection: AppServiceWorkerPoolListResult
   HybridConnection.properties.relayArmUri: relayArmId|arm-id
+  AzureActiveDirectoryRegistration.clientSecretCertificateThumbprint: ClientSecretCertificateThumbprintString 
+  Certificate.properties.thumbprint: ThumbprintString
+  CertificateDetails.thumbprint: ThumbprintString
+  CertificatePatchResource.properties.thumbprint: ThumbprintString
+  HostNameBinding.properties.thumbprint: ThumbprintString
+  HostNameSslState.thumbprint: ThumbprintString
+  PublicCertificate.properties.thumbprint: ThumbprintString
+  SiteAuthSettings.properties.clientSecretCertificateThumbprint: ClientSecretCertificateThumbprintString
+  VnetInfoResource.properties.certThumbprint: CertThumbprintString
+  VnetInfo.certThumbprint: CertThumbprintString
 
 prepend-rp-prefix:
   - ApiDefinitionInfo
