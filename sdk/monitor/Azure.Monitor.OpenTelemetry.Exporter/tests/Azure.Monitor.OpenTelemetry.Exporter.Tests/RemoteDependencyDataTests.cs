@@ -87,7 +87,18 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             var remoteDependencyData = new RemoteDependencyData(2, activity, ref activityTagsProcessor);
 
             Assert.True(activityTagsProcessor.HasAzureNamespace);
-            Assert.Equal(activity.Kind == ActivityKind.Internal ? "InProc | DemoAzureResource" : "DemoAzureResource", remoteDependencyData.Type);
+            if (activity.Kind == ActivityKind.Internal)
+            {
+                Assert.Equal("InProc | DemoAzureResource", remoteDependencyData.Type);
+            }
+            else if (activity.Kind == ActivityKind.Producer)
+            {
+                Assert.Equal("Queue Message | DemoAzureResource", remoteDependencyData.Type);
+            }
+            else
+            {
+                Assert.Equal("DemoAzureResource", remoteDependencyData.Type);
+            }
         }
 
         [Fact]

@@ -5,6 +5,8 @@
 ### Features Added
 
 - Enable the model factory feature for model mocking, more information can be found [here](https://azure.github.io/azure-sdk/dotnet_introduction.html#dotnet-mocking-factory-builder).
+- Added `BatchAccountCertificateData.ThumbprintString`, `BatchAccountCertificateCreateOrUpdateContent.ThumbprintString` to return the hexadecimal string representation of the SHA-1 hash of the certificate.
+  `BatchAccountCertificateData.Thumbprint`, `BatchAccountCertificateCreateOrUpdateContent.Thumbprint` have been hidden but are still available.
 
 ### Other Changes
 

@@ -8,6 +8,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Azure.Communication.JobRouter.Models;
 using Azure.Communication.JobRouter.Tests.Infrastructure;
+using Azure.Core;
 using Azure.Core.TestFramework;
 using NUnit.Framework;
 
@@ -385,6 +386,34 @@ namespace Azure.Communication.JobRouter.Tests.RouterClients
             Assert.AreEqual(createJob.Id, queuedJob.Value.Id);
             Assert.AreEqual(1, queuedJob.Value.Priority); // default value
             Assert.AreEqual(createQueue1.Id, queuedJob.Value.QueueId); // from queue selector in classification policy
+        }
+
+        [Test]
+        public async Task CreateJobAndRemoveProperty()
+        {
+            RouterClient routerClient = CreateRouterClientWithConnectionString();
+            var channelId = GenerateUniqueId($"{nameof(CreateJobAndRemoveProperty)}-Channel");
+
+            // Setup queue
+            var createQueueResponse = await CreateQueueAsync(nameof(CreateJobAndRemoveProperty));
+            var createQueue = createQueueResponse.Value;
+
+            // Create 1 job
+            var jobId1 = GenerateUniqueId($"{IdPrefix}{nameof(CreateJobAndRemoveProperty)}1");
+            var createJob1Response = await routerClient.CreateJobAsync(
+                new CreateJobOptions(jobId1, channelId, createQueue.Id)
+                {
+                    Priority = 1,
+                    ChannelReference = "IncorrectValue",
+                });
+            var createJob1 = createJob1Response.Value;
+            AddForCleanup(new Task(async () => await routerClient.DeleteJobAsync(createJob1.Id)));
+
+            var updatedJob1Response = await routerClient.UpdateJobAsync(createJob1.Id, RequestContent.Create(new { ChannelReference = (string?)null }));
+
+            var retrievedJob = await routerClient.GetJobAsync(jobId1);
+
+            Assert.True(string.IsNullOrWhiteSpace(retrievedJob.Value.ChannelReference));
         }
 
         #endregion Job Tests

@@ -103,7 +103,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
             {
                 var linksJson = new StringBuilder();
                 linksJson.Append('[');
-                foreach (var link in activity.EnumerateLinks())
+                foreach (ref readonly var link in activity.EnumerateLinks())
                 {
                     linksJson
                         .Append('{')
@@ -186,7 +186,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
 
         private static void AddTelemetryFromActivityEvents(Activity activity, TelemetryItem telemetryItem, List<TelemetryItem> telemetryItems)
         {
-            foreach (var evnt in activity.EnumerateEvents())
+            foreach (ref readonly var evnt in activity.EnumerateEvents())
             {
                 try
                 {
@@ -227,7 +227,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
 
             var messageData = new MessageData(Version, activityEvent.Name);
 
-            foreach (var tag in activityEvent.EnumerateTagObjects())
+            foreach (ref readonly var tag in activityEvent.EnumerateTagObjects())
             {
                 if (tag.Value is Array arrayValue)
                 {
@@ -252,7 +252,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
             string? exceptionStackTrace = null;
             string? exceptionMessage = null;
 
-            foreach (var tag in activityEvent.EnumerateTagObjects())
+            foreach (ref readonly var tag in activityEvent.EnumerateTagObjects())
             {
                 // TODO: see if these can be cached
                 if (tag.Key == SemanticConventions.AttributeExceptionType)

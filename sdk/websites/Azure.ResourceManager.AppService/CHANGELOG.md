@@ -4,6 +4,27 @@
 
 ### Features Added
 
+- Added `AppCertificateData.ThumbprintString` to return the hexadecimal string representation of the SHA-1 hash of the certificate.
+  `AppCertificateData.Thumbprint` has been hidden but is still available.
+- Added `AppServiceVirtualNetworkData.CertThumbprintString` to return the hexadecimal string representation of the SHA-1 hash of the certificate.
+  `AppServiceVirtualNetworkData.CertThumbprint` has been hidden but is still available.
+- Added `HostNameBindingData.ThumbprintString` to return the hexadecimal string representation of the SHA-1 hash of the certificate.
+  `HostNameBindingData.Thumbprint` has been hidden but is still available.
+- Added `AppCertificatePatch.ThumbprintString` to return the hexadecimal string representation of the SHA-1 hash of the certificate.
+  `AppCertificatePatch.Thumbprint` has been hidden but is still available.
+- Added `AppServiceAadRegistration.ClientSecretCertificateThumbprintString` to return the hexadecimal string representation of the SHA-1 hash of the certificate.
+  `AppServiceAadRegistration.ClientSecretCertificateThumbprint` has been hidden but is still available.
+- Added `AppServiceCertificateDetails.ThumbprintString` to return the hexadecimal string representation of the SHA-1 hash of the certificate.
+  `AppServiceCertificateDetails.Thumbprint` has been hidden but is still available.
+- Added `AppServiceVirtualNetworkProperties.CertThumbprintString` to return the hexadecimal string representation of the SHA-1 hash of the certificate.
+  `AppServiceVirtualNetworkProperties.CertThumbprint` has been hidden but is still available.
+- Added `HostNameSslState.ThumbprintString` to return the hexadecimal string representation of the SHA-1 hash of the certificate.
+  `HostNameSslState.Thumbprint` has been hidden but is still available.
+- Added `SiteAuthSettings.ClientSecretCertificateThumbprintString` to return the hexadecimal string representation of the SHA-1 hash of the certificate.
+  `SiteAuthSettings.ClientSecretCertificateThumbprint` has been hidden but is still available.
+- Added `PublicCertificateData.ThumbprintString` to return the hexadecimal string representation of the SHA-1 hash of the certificate.
+  `PublicCertificateData.Thumbprint` has been hidden but is still available.
+
 ### Breaking Changes
 
 ### Bugs Fixed

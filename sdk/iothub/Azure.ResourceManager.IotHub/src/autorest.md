@@ -16,6 +16,9 @@ skip-csproj: true
 modelerfour:
   flatten-payloads: false
 
+# mgmt-debug: 
+#   show-serialized-names: true
+
 override-operation-name:
   IotHubResource_CheckNameAvailability: CheckIotHubNameAvailability
   ResourceProviderCommon_GetSubscriptionQuota: GetIotHubUserSubscriptionQuota
@@ -56,6 +59,8 @@ rename-mapping:
   RoutingServiceBusTopicEndpointProperties.endpointUri: Endpoint
   RoutingStorageContainerProperties.endpointUri: Endpoint
   IotHubSkuDescription.resourceType: -|resource-type
+  CertificateProperties.thumbprint: ThumbprintString
+  CertificatePropertiesWithNonce.thumbprint: ThumbprintString
 
 prepend-rp-prefix:
   - AuthenticationType
@@ -101,7 +106,6 @@ format-by-name-rules:
   'location': 'azure-location'
   '*Uri': 'Uri'
   '*Uris': 'Uri'
-  'thumbprint': 'any'
   'certificate': 'any'
   'UserAssignedIdentity': 'arm-id'
 
