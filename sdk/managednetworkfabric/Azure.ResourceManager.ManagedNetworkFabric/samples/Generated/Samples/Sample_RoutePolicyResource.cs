@@ -12,11 +12,11 @@ using Azure;
 using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager;
-using Azure.ResourceManager.Azure.ResourceManager.ManagedNetworkFabric;
-using Azure.ResourceManager.Azure.ResourceManager.ManagedNetworkFabric.Models;
+using Azure.ResourceManager.ManagedNetworkFabric;
+using Azure.ResourceManager.ManagedNetworkFabric.Models;
 using Azure.ResourceManager.Resources;
 
-namespace Azure.ResourceManager.Azure.ResourceManager.ManagedNetworkFabric.Samples
+namespace Azure.ResourceManager.ManagedNetworkFabric.Samples
 {
     public partial class Sample_RoutePolicyResource
     {
@@ -38,15 +38,15 @@ namespace Azure.ResourceManager.Azure.ResourceManager.ManagedNetworkFabric.Sampl
             string subscriptionId = "aaaaa";
             string resourceGroupName = "rgRoutePolicies";
             string routePolicyName = "aaaaaaa";
-            ResourceIdentifier routePolicyResourceId = ManagedNetworkFabric.RoutePolicyResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, routePolicyName);
-            ManagedNetworkFabric.RoutePolicyResource routePolicy = client.GetRoutePolicyResource(routePolicyResourceId);
+            ResourceIdentifier routePolicyResourceId = RoutePolicyResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, routePolicyName);
+            RoutePolicyResource routePolicy = client.GetRoutePolicyResource(routePolicyResourceId);
 
             // invoke the operation
-            ManagedNetworkFabric.RoutePolicyResource result = await routePolicy.GetAsync();
+            RoutePolicyResource result = await routePolicy.GetAsync();
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            ManagedNetworkFabric.RoutePolicyData resourceData = result.Data;
+            RoutePolicyData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -69,11 +69,11 @@ namespace Azure.ResourceManager.Azure.ResourceManager.ManagedNetworkFabric.Sampl
             string subscriptionId = "aaaaa";
             string resourceGroupName = "rgRoutePolicies";
             string routePolicyName = "aaaaaaaaaaaaaaaaaaaaa";
-            ResourceIdentifier routePolicyResourceId = ManagedNetworkFabric.RoutePolicyResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, routePolicyName);
-            ManagedNetworkFabric.RoutePolicyResource routePolicy = client.GetRoutePolicyResource(routePolicyResourceId);
+            ResourceIdentifier routePolicyResourceId = RoutePolicyResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, routePolicyName);
+            RoutePolicyResource routePolicy = client.GetRoutePolicyResource(routePolicyResourceId);
 
             // invoke the operation
-            ManagedNetworkFabric.Models.RoutePolicyPatch patch = new ManagedNetworkFabric.Models.RoutePolicyPatch()
+            RoutePolicyPatch patch = new RoutePolicyPatch()
             {
                 Properties = BinaryData.FromObjectAsJson(new Dictionary<string, object>()
                 {
@@ -83,12 +83,12 @@ namespace Azure.ResourceManager.Azure.ResourceManager.ManagedNetworkFabric.Sampl
 ["key1917"] = "aaaaaaaaaaaaa",
 },
             };
-            ArmOperation<ManagedNetworkFabric.RoutePolicyResource> lro = await routePolicy.UpdateAsync(WaitUntil.Completed, patch);
-            ManagedNetworkFabric.RoutePolicyResource result = lro.Value;
+            ArmOperation<RoutePolicyResource> lro = await routePolicy.UpdateAsync(WaitUntil.Completed, patch);
+            RoutePolicyResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            ManagedNetworkFabric.RoutePolicyData resourceData = result.Data;
+            RoutePolicyData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -111,8 +111,8 @@ namespace Azure.ResourceManager.Azure.ResourceManager.ManagedNetworkFabric.Sampl
             string subscriptionId = "aaaaa";
             string resourceGroupName = "rgRoutePolicies";
             string routePolicyName = "aaaaaaaaaaaaaaaa";
-            ResourceIdentifier routePolicyResourceId = ManagedNetworkFabric.RoutePolicyResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, routePolicyName);
-            ManagedNetworkFabric.RoutePolicyResource routePolicy = client.GetRoutePolicyResource(routePolicyResourceId);
+            ResourceIdentifier routePolicyResourceId = RoutePolicyResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, routePolicyName);
+            RoutePolicyResource routePolicy = client.GetRoutePolicyResource(routePolicyResourceId);
 
             // invoke the operation
             await routePolicy.DeleteAsync(WaitUntil.Completed);
@@ -140,11 +140,11 @@ namespace Azure.ResourceManager.Azure.ResourceManager.ManagedNetworkFabric.Sampl
             SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
 
             // invoke the operation and iterate over the result
-            await foreach (ManagedNetworkFabric.RoutePolicyResource item in subscriptionResource.GetRoutePoliciesAsync())
+            await foreach (RoutePolicyResource item in subscriptionResource.GetRoutePoliciesAsync())
             {
                 // the variable item is a resource, you could call other operations on this instance as well
                 // but just for demo, we get its data from this resource instance
-                ManagedNetworkFabric.RoutePolicyData resourceData = item.Data;
+                RoutePolicyData resourceData = item.Data;
                 // for demo we just print out the id
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }

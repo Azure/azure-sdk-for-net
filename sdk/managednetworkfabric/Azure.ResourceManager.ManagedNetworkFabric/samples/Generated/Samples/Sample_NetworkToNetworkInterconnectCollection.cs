@@ -11,10 +11,10 @@ using Azure;
 using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager;
-using Azure.ResourceManager.Azure.ResourceManager.ManagedNetworkFabric;
-using Azure.ResourceManager.Azure.ResourceManager.ManagedNetworkFabric.Models;
+using Azure.ResourceManager.ManagedNetworkFabric;
+using Azure.ResourceManager.ManagedNetworkFabric.Models;
 
-namespace Azure.ResourceManager.Azure.ResourceManager.ManagedNetworkFabric.Samples
+namespace Azure.ResourceManager.ManagedNetworkFabric.Samples
 {
     public partial class Sample_NetworkToNetworkInterconnectCollection
     {
@@ -36,23 +36,23 @@ namespace Azure.ResourceManager.Azure.ResourceManager.ManagedNetworkFabric.Sampl
             string subscriptionId = "subscriptionId";
             string resourceGroupName = "resourceGroupName";
             string networkFabricName = "FabricName";
-            ResourceIdentifier networkFabricResourceId = ManagedNetworkFabric.NetworkFabricResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, networkFabricName);
-            ManagedNetworkFabric.NetworkFabricResource networkFabric = client.GetNetworkFabricResource(networkFabricResourceId);
+            ResourceIdentifier networkFabricResourceId = NetworkFabricResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, networkFabricName);
+            NetworkFabricResource networkFabric = client.GetNetworkFabricResource(networkFabricResourceId);
 
             // get the collection of this NetworkToNetworkInterconnectResource
-            ManagedNetworkFabric.NetworkToNetworkInterconnectCollection collection = networkFabric.GetNetworkToNetworkInterconnects();
+            NetworkToNetworkInterconnectCollection collection = networkFabric.GetNetworkToNetworkInterconnects();
 
             // invoke the operation
             string networkToNetworkInterconnectName = "DefaultNNI";
-            ManagedNetworkFabric.NetworkToNetworkInterconnectData data = new ManagedNetworkFabric.NetworkToNetworkInterconnectData()
+            NetworkToNetworkInterconnectData data = new NetworkToNetworkInterconnectData()
             {
                 IsManagementType = BooleanEnumProperty.True,
                 UseOptionB = BooleanEnumProperty.False,
-                Layer2Configuration = new ManagedNetworkFabric.Models.NetworkToNetworkInterconnectPropertiesLayer2Configuration(1500)
+                Layer2Configuration = new NetworkToNetworkInterconnectPropertiesLayer2Configuration(1500)
                 {
                     PortCount = 10,
                 },
-                Layer3Configuration = new ManagedNetworkFabric.Models.Layer3Configuration()
+                Layer3Configuration = new Layer3Configuration()
                 {
                     ImportRoutePolicyId = "/subscriptions/subscriptionId/resourceGroups/resourceGroupName/providers/Microsoft.ManagedNetworkFabric/routePolicies/routePolicyName1",
                     ExportRoutePolicyId = "/subscriptions/subscriptionId/resourceGroups/resourceGroupName/providers/Microsoft.ManagedNetworkFabric/routePolicies/routePolicyName2",
@@ -64,12 +64,12 @@ namespace Azure.ResourceManager.Azure.ResourceManager.ManagedNetworkFabric.Sampl
                     SecondaryIPv6Prefix = "3FFE:FFFF:0:CD30::a4/126",
                 },
             };
-            ArmOperation<ManagedNetworkFabric.NetworkToNetworkInterconnectResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, networkToNetworkInterconnectName, data);
-            ManagedNetworkFabric.NetworkToNetworkInterconnectResource result = lro.Value;
+            ArmOperation<NetworkToNetworkInterconnectResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, networkToNetworkInterconnectName, data);
+            NetworkToNetworkInterconnectResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            ManagedNetworkFabric.NetworkToNetworkInterconnectData resourceData = result.Data;
+            NetworkToNetworkInterconnectData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -92,19 +92,19 @@ namespace Azure.ResourceManager.Azure.ResourceManager.ManagedNetworkFabric.Sampl
             string subscriptionId = "subscriptionId";
             string resourceGroupName = "resourceGroupName";
             string networkFabricName = "FabricName";
-            ResourceIdentifier networkFabricResourceId = ManagedNetworkFabric.NetworkFabricResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, networkFabricName);
-            ManagedNetworkFabric.NetworkFabricResource networkFabric = client.GetNetworkFabricResource(networkFabricResourceId);
+            ResourceIdentifier networkFabricResourceId = NetworkFabricResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, networkFabricName);
+            NetworkFabricResource networkFabric = client.GetNetworkFabricResource(networkFabricResourceId);
 
             // get the collection of this NetworkToNetworkInterconnectResource
-            ManagedNetworkFabric.NetworkToNetworkInterconnectCollection collection = networkFabric.GetNetworkToNetworkInterconnects();
+            NetworkToNetworkInterconnectCollection collection = networkFabric.GetNetworkToNetworkInterconnects();
 
             // invoke the operation
             string networkToNetworkInterconnectName = "DefaultNNI";
-            ManagedNetworkFabric.NetworkToNetworkInterconnectResource result = await collection.GetAsync(networkToNetworkInterconnectName);
+            NetworkToNetworkInterconnectResource result = await collection.GetAsync(networkToNetworkInterconnectName);
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            ManagedNetworkFabric.NetworkToNetworkInterconnectData resourceData = result.Data;
+            NetworkToNetworkInterconnectData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -127,11 +127,11 @@ namespace Azure.ResourceManager.Azure.ResourceManager.ManagedNetworkFabric.Sampl
             string subscriptionId = "subscriptionId";
             string resourceGroupName = "resourceGroupName";
             string networkFabricName = "FabricName";
-            ResourceIdentifier networkFabricResourceId = ManagedNetworkFabric.NetworkFabricResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, networkFabricName);
-            ManagedNetworkFabric.NetworkFabricResource networkFabric = client.GetNetworkFabricResource(networkFabricResourceId);
+            ResourceIdentifier networkFabricResourceId = NetworkFabricResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, networkFabricName);
+            NetworkFabricResource networkFabric = client.GetNetworkFabricResource(networkFabricResourceId);
 
             // get the collection of this NetworkToNetworkInterconnectResource
-            ManagedNetworkFabric.NetworkToNetworkInterconnectCollection collection = networkFabric.GetNetworkToNetworkInterconnects();
+            NetworkToNetworkInterconnectCollection collection = networkFabric.GetNetworkToNetworkInterconnects();
 
             // invoke the operation
             string networkToNetworkInterconnectName = "DefaultNNI";
@@ -158,18 +158,18 @@ namespace Azure.ResourceManager.Azure.ResourceManager.ManagedNetworkFabric.Sampl
             string subscriptionId = "subscriptionId";
             string resourceGroupName = "resourceGroupName";
             string networkFabricName = "FabricName";
-            ResourceIdentifier networkFabricResourceId = ManagedNetworkFabric.NetworkFabricResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, networkFabricName);
-            ManagedNetworkFabric.NetworkFabricResource networkFabric = client.GetNetworkFabricResource(networkFabricResourceId);
+            ResourceIdentifier networkFabricResourceId = NetworkFabricResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, networkFabricName);
+            NetworkFabricResource networkFabric = client.GetNetworkFabricResource(networkFabricResourceId);
 
             // get the collection of this NetworkToNetworkInterconnectResource
-            ManagedNetworkFabric.NetworkToNetworkInterconnectCollection collection = networkFabric.GetNetworkToNetworkInterconnects();
+            NetworkToNetworkInterconnectCollection collection = networkFabric.GetNetworkToNetworkInterconnects();
 
             // invoke the operation and iterate over the result
-            await foreach (ManagedNetworkFabric.NetworkToNetworkInterconnectResource item in collection.GetAllAsync())
+            await foreach (NetworkToNetworkInterconnectResource item in collection.GetAllAsync())
             {
                 // the variable item is a resource, you could call other operations on this instance as well
                 // but just for demo, we get its data from this resource instance
-                ManagedNetworkFabric.NetworkToNetworkInterconnectData resourceData = item.Data;
+                NetworkToNetworkInterconnectData resourceData = item.Data;
                 // for demo we just print out the id
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }

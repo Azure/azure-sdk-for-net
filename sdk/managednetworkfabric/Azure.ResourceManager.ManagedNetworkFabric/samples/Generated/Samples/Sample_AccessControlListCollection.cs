@@ -11,11 +11,11 @@ using Azure;
 using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager;
-using Azure.ResourceManager.Azure.ResourceManager.ManagedNetworkFabric;
-using Azure.ResourceManager.Azure.ResourceManager.ManagedNetworkFabric.Models;
+using Azure.ResourceManager.ManagedNetworkFabric;
+using Azure.ResourceManager.ManagedNetworkFabric.Models;
 using Azure.ResourceManager.Resources;
 
-namespace Azure.ResourceManager.Azure.ResourceManager.ManagedNetworkFabric.Samples
+namespace Azure.ResourceManager.ManagedNetworkFabric.Samples
 {
     public partial class Sample_AccessControlListCollection
     {
@@ -40,20 +40,20 @@ namespace Azure.ResourceManager.Azure.ResourceManager.ManagedNetworkFabric.Sampl
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
 
             // get the collection of this AccessControlListResource
-            ManagedNetworkFabric.AccessControlListCollection collection = resourceGroupResource.GetAccessControlLists();
+            AccessControlListCollection collection = resourceGroupResource.GetAccessControlLists();
 
             // invoke the operation
             string accessControlListName = "aclOne";
-            ManagedNetworkFabric.AccessControlListData data = new ManagedNetworkFabric.AccessControlListData(new AzureLocation("EastUs"), AddressFamily.IPv4, new ManagedNetworkFabric.Models.AccessControlListPropertiesConditionsItem[]
+            AccessControlListData data = new AccessControlListData(new AzureLocation("EastUs"), AddressFamily.IPv4, new AccessControlListPropertiesConditionsItem[]
             {
-new ManagedNetworkFabric.Models.AccessControlListPropertiesConditionsItem(3,ConditionActionType.Allow,"1.1.1.1","21","2.2.2.2","65000",6)
+new AccessControlListPropertiesConditionsItem(3,ConditionActionType.Allow,"1.1.1.1","21","2.2.2.2","65000",6)
             });
-            ArmOperation<ManagedNetworkFabric.AccessControlListResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, accessControlListName, data);
-            ManagedNetworkFabric.AccessControlListResource result = lro.Value;
+            ArmOperation<AccessControlListResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, accessControlListName, data);
+            AccessControlListResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            ManagedNetworkFabric.AccessControlListData resourceData = result.Data;
+            AccessControlListData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -79,15 +79,15 @@ new ManagedNetworkFabric.Models.AccessControlListPropertiesConditionsItem(3,Cond
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
 
             // get the collection of this AccessControlListResource
-            ManagedNetworkFabric.AccessControlListCollection collection = resourceGroupResource.GetAccessControlLists();
+            AccessControlListCollection collection = resourceGroupResource.GetAccessControlLists();
 
             // invoke the operation
             string accessControlListName = "aclOne";
-            ManagedNetworkFabric.AccessControlListResource result = await collection.GetAsync(accessControlListName);
+            AccessControlListResource result = await collection.GetAsync(accessControlListName);
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            ManagedNetworkFabric.AccessControlListData resourceData = result.Data;
+            AccessControlListData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -113,7 +113,7 @@ new ManagedNetworkFabric.Models.AccessControlListPropertiesConditionsItem(3,Cond
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
 
             // get the collection of this AccessControlListResource
-            ManagedNetworkFabric.AccessControlListCollection collection = resourceGroupResource.GetAccessControlLists();
+            AccessControlListCollection collection = resourceGroupResource.GetAccessControlLists();
 
             // invoke the operation
             string accessControlListName = "aclOne";
@@ -143,14 +143,14 @@ new ManagedNetworkFabric.Models.AccessControlListPropertiesConditionsItem(3,Cond
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
 
             // get the collection of this AccessControlListResource
-            ManagedNetworkFabric.AccessControlListCollection collection = resourceGroupResource.GetAccessControlLists();
+            AccessControlListCollection collection = resourceGroupResource.GetAccessControlLists();
 
             // invoke the operation and iterate over the result
-            await foreach (ManagedNetworkFabric.AccessControlListResource item in collection.GetAllAsync())
+            await foreach (AccessControlListResource item in collection.GetAllAsync())
             {
                 // the variable item is a resource, you could call other operations on this instance as well
                 // but just for demo, we get its data from this resource instance
-                ManagedNetworkFabric.AccessControlListData resourceData = item.Data;
+                AccessControlListData resourceData = item.Data;
                 // for demo we just print out the id
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }

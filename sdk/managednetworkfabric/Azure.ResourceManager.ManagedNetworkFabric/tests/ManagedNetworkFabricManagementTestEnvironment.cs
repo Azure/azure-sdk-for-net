@@ -5,7 +5,7 @@ using Azure.Core.TestFramework;
 
 namespace Azure.ResourceManager.ManagedNetworkFabric.Tests
 {
-    public class Azure.ResourceManager.ManagedNetworkFabricManagementTestEnvironment : TestEnvironment
+    public class ManagedNetworkFabricManagementTestEnvironment : TestEnvironment
     {
     }
 }

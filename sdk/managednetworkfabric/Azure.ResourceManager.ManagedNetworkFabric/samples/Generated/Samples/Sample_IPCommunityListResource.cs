@@ -11,11 +11,11 @@ using Azure;
 using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager;
-using Azure.ResourceManager.Azure.ResourceManager.ManagedNetworkFabric;
-using Azure.ResourceManager.Azure.ResourceManager.ManagedNetworkFabric.Models;
+using Azure.ResourceManager.ManagedNetworkFabric;
+using Azure.ResourceManager.ManagedNetworkFabric.Models;
 using Azure.ResourceManager.Resources;
 
-namespace Azure.ResourceManager.Azure.ResourceManager.ManagedNetworkFabric.Samples
+namespace Azure.ResourceManager.ManagedNetworkFabric.Samples
 {
     public partial class Sample_IPCommunityListResource
     {
@@ -37,15 +37,15 @@ namespace Azure.ResourceManager.Azure.ResourceManager.ManagedNetworkFabric.Sampl
             string subscriptionId = "subscriptionId";
             string resourceGroupName = "resourceGroupName";
             string ipCommunityListName = "IpCommunityList1";
-            ResourceIdentifier ipCommunityListResourceId = ManagedNetworkFabric.IPCommunityListResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, ipCommunityListName);
-            ManagedNetworkFabric.IPCommunityListResource ipCommunityList = client.GetIPCommunityListResource(ipCommunityListResourceId);
+            ResourceIdentifier ipCommunityListResourceId = IPCommunityListResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, ipCommunityListName);
+            IPCommunityListResource ipCommunityList = client.GetIPCommunityListResource(ipCommunityListResourceId);
 
             // invoke the operation
-            ManagedNetworkFabric.IPCommunityListResource result = await ipCommunityList.GetAsync();
+            IPCommunityListResource result = await ipCommunityList.GetAsync();
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            ManagedNetworkFabric.IPCommunityListData resourceData = result.Data;
+            IPCommunityListData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -68,16 +68,16 @@ namespace Azure.ResourceManager.Azure.ResourceManager.ManagedNetworkFabric.Sampl
             string subscriptionId = "subscriptionId";
             string resourceGroupName = "resourceGroupName";
             string ipCommunityListName = "IpCommunityList1";
-            ResourceIdentifier ipCommunityListResourceId = ManagedNetworkFabric.IPCommunityListResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, ipCommunityListName);
-            ManagedNetworkFabric.IPCommunityListResource ipCommunityList = client.GetIPCommunityListResource(ipCommunityListResourceId);
+            ResourceIdentifier ipCommunityListResourceId = IPCommunityListResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, ipCommunityListName);
+            IPCommunityListResource ipCommunityList = client.GetIPCommunityListResource(ipCommunityListResourceId);
 
             // invoke the operation
-            ManagedNetworkFabric.Models.IPCommunityListPatch patch = new ManagedNetworkFabric.Models.IPCommunityListPatch();
-            ManagedNetworkFabric.IPCommunityListResource result = await ipCommunityList.UpdateAsync(patch);
+            IPCommunityListPatch patch = new IPCommunityListPatch();
+            IPCommunityListResource result = await ipCommunityList.UpdateAsync(patch);
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            ManagedNetworkFabric.IPCommunityListData resourceData = result.Data;
+            IPCommunityListData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -100,8 +100,8 @@ namespace Azure.ResourceManager.Azure.ResourceManager.ManagedNetworkFabric.Sampl
             string subscriptionId = "subscriptionId";
             string resourceGroupName = "resourceGroupName";
             string ipCommunityListName = "IpCommunityList1";
-            ResourceIdentifier ipCommunityListResourceId = ManagedNetworkFabric.IPCommunityListResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, ipCommunityListName);
-            ManagedNetworkFabric.IPCommunityListResource ipCommunityList = client.GetIPCommunityListResource(ipCommunityListResourceId);
+            ResourceIdentifier ipCommunityListResourceId = IPCommunityListResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, ipCommunityListName);
+            IPCommunityListResource ipCommunityList = client.GetIPCommunityListResource(ipCommunityListResourceId);
 
             // invoke the operation
             await ipCommunityList.DeleteAsync(WaitUntil.Completed);
@@ -129,11 +129,11 @@ namespace Azure.ResourceManager.Azure.ResourceManager.ManagedNetworkFabric.Sampl
             SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
 
             // invoke the operation and iterate over the result
-            await foreach (ManagedNetworkFabric.IPCommunityListResource item in subscriptionResource.GetIPCommunityListsAsync())
+            await foreach (IPCommunityListResource item in subscriptionResource.GetIPCommunityListsAsync())
             {
                 // the variable item is a resource, you could call other operations on this instance as well
                 // but just for demo, we get its data from this resource instance
-                ManagedNetworkFabric.IPCommunityListData resourceData = item.Data;
+                IPCommunityListData resourceData = item.Data;
                 // for demo we just print out the id
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }

@@ -12,11 +12,11 @@ using Azure;
 using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager;
-using Azure.ResourceManager.Azure.ResourceManager.ManagedNetworkFabric;
-using Azure.ResourceManager.Azure.ResourceManager.ManagedNetworkFabric.Models;
+using Azure.ResourceManager.ManagedNetworkFabric;
+using Azure.ResourceManager.ManagedNetworkFabric.Models;
 using Azure.ResourceManager.Resources;
 
-namespace Azure.ResourceManager.Azure.ResourceManager.ManagedNetworkFabric.Samples
+namespace Azure.ResourceManager.ManagedNetworkFabric.Samples
 {
     public partial class Sample_L2IsolationDomainResource
     {
@@ -38,15 +38,15 @@ namespace Azure.ResourceManager.Azure.ResourceManager.ManagedNetworkFabric.Sampl
             string subscriptionId = "subscriptionId";
             string resourceGroupName = "resourceGroupName";
             string l2IsolationDomainName = "l2IsolationDomainName";
-            ResourceIdentifier l2IsolationDomainResourceId = ManagedNetworkFabric.L2IsolationDomainResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, l2IsolationDomainName);
-            ManagedNetworkFabric.L2IsolationDomainResource l2IsolationDomain = client.GetL2IsolationDomainResource(l2IsolationDomainResourceId);
+            ResourceIdentifier l2IsolationDomainResourceId = L2IsolationDomainResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, l2IsolationDomainName);
+            L2IsolationDomainResource l2IsolationDomain = client.GetL2IsolationDomainResource(l2IsolationDomainResourceId);
 
             // invoke the operation
-            ManagedNetworkFabric.L2IsolationDomainResource result = await l2IsolationDomain.GetAsync();
+            L2IsolationDomainResource result = await l2IsolationDomain.GetAsync();
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            ManagedNetworkFabric.L2IsolationDomainData resourceData = result.Data;
+            L2IsolationDomainData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -69,20 +69,20 @@ namespace Azure.ResourceManager.Azure.ResourceManager.ManagedNetworkFabric.Sampl
             string subscriptionId = "subscriptionId";
             string resourceGroupName = "resourceGroupName";
             string l2IsolationDomainName = "l2IsolationDomainName";
-            ResourceIdentifier l2IsolationDomainResourceId = ManagedNetworkFabric.L2IsolationDomainResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, l2IsolationDomainName);
-            ManagedNetworkFabric.L2IsolationDomainResource l2IsolationDomain = client.GetL2IsolationDomainResource(l2IsolationDomainResourceId);
+            ResourceIdentifier l2IsolationDomainResourceId = L2IsolationDomainResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, l2IsolationDomainName);
+            L2IsolationDomainResource l2IsolationDomain = client.GetL2IsolationDomainResource(l2IsolationDomainResourceId);
 
             // invoke the operation
-            ManagedNetworkFabric.Models.L2IsolationDomainPatch patch = new ManagedNetworkFabric.Models.L2IsolationDomainPatch()
+            L2IsolationDomainPatch patch = new L2IsolationDomainPatch()
             {
                 Mtu = 9000,
             };
-            ArmOperation<ManagedNetworkFabric.L2IsolationDomainResource> lro = await l2IsolationDomain.UpdateAsync(WaitUntil.Completed, patch);
-            ManagedNetworkFabric.L2IsolationDomainResource result = lro.Value;
+            ArmOperation<L2IsolationDomainResource> lro = await l2IsolationDomain.UpdateAsync(WaitUntil.Completed, patch);
+            L2IsolationDomainResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            ManagedNetworkFabric.L2IsolationDomainData resourceData = result.Data;
+            L2IsolationDomainData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -105,8 +105,8 @@ namespace Azure.ResourceManager.Azure.ResourceManager.ManagedNetworkFabric.Sampl
             string subscriptionId = "subscriptionId";
             string resourceGroupName = "resourceGroupName";
             string l2IsolationDomainName = "example-l2domain";
-            ResourceIdentifier l2IsolationDomainResourceId = ManagedNetworkFabric.L2IsolationDomainResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, l2IsolationDomainName);
-            ManagedNetworkFabric.L2IsolationDomainResource l2IsolationDomain = client.GetL2IsolationDomainResource(l2IsolationDomainResourceId);
+            ResourceIdentifier l2IsolationDomainResourceId = L2IsolationDomainResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, l2IsolationDomainName);
+            L2IsolationDomainResource l2IsolationDomain = client.GetL2IsolationDomainResource(l2IsolationDomainResourceId);
 
             // invoke the operation
             await l2IsolationDomain.DeleteAsync(WaitUntil.Completed);
@@ -132,11 +132,11 @@ namespace Azure.ResourceManager.Azure.ResourceManager.ManagedNetworkFabric.Sampl
             string subscriptionId = "subscriptionId";
             string resourceGroupName = "resourceGroupName";
             string l2IsolationDomainName = "l2IsolationDomainName";
-            ResourceIdentifier l2IsolationDomainResourceId = ManagedNetworkFabric.L2IsolationDomainResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, l2IsolationDomainName);
-            ManagedNetworkFabric.L2IsolationDomainResource l2IsolationDomain = client.GetL2IsolationDomainResource(l2IsolationDomainResourceId);
+            ResourceIdentifier l2IsolationDomainResourceId = L2IsolationDomainResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, l2IsolationDomainName);
+            L2IsolationDomainResource l2IsolationDomain = client.GetL2IsolationDomainResource(l2IsolationDomainResourceId);
 
             // invoke the operation
-            ManagedNetworkFabric.Models.UpdateAdministrativeState body = new ManagedNetworkFabric.Models.UpdateAdministrativeState()
+            UpdateAdministrativeState body = new UpdateAdministrativeState()
             {
                 State = AdministrativeState.Enable,
                 ResourceIds =
@@ -167,11 +167,11 @@ namespace Azure.ResourceManager.Azure.ResourceManager.ManagedNetworkFabric.Sampl
             string subscriptionId = "subscriptionId";
             string resourceGroupName = "resourceGroupName";
             string l2IsolationDomainName = "example-l2domain";
-            ResourceIdentifier l2IsolationDomainResourceId = ManagedNetworkFabric.L2IsolationDomainResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, l2IsolationDomainName);
-            ManagedNetworkFabric.L2IsolationDomainResource l2IsolationDomain = client.GetL2IsolationDomainResource(l2IsolationDomainResourceId);
+            ResourceIdentifier l2IsolationDomainResourceId = L2IsolationDomainResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, l2IsolationDomainName);
+            L2IsolationDomainResource l2IsolationDomain = client.GetL2IsolationDomainResource(l2IsolationDomainResourceId);
 
             // invoke the operation
-            ManagedNetworkFabric.Models.EnableDisableOnResources body = new ManagedNetworkFabric.Models.EnableDisableOnResources()
+            EnableDisableOnResources body = new EnableDisableOnResources()
             {
                 ResourceIds =
 {
@@ -201,11 +201,11 @@ namespace Azure.ResourceManager.Azure.ResourceManager.ManagedNetworkFabric.Sampl
             string subscriptionId = "qc";
             string resourceGroupName = "rgL2IsolationDomains";
             string l2IsolationDomainName = "oz";
-            ResourceIdentifier l2IsolationDomainResourceId = ManagedNetworkFabric.L2IsolationDomainResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, l2IsolationDomainName);
-            ManagedNetworkFabric.L2IsolationDomainResource l2IsolationDomain = client.GetL2IsolationDomainResource(l2IsolationDomainResourceId);
+            ResourceIdentifier l2IsolationDomainResourceId = L2IsolationDomainResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, l2IsolationDomainName);
+            L2IsolationDomainResource l2IsolationDomain = client.GetL2IsolationDomainResource(l2IsolationDomainResourceId);
 
             // invoke the operation
-            ManagedNetworkFabric.Models.EnableDisableOnResources body = new ManagedNetworkFabric.Models.EnableDisableOnResources()
+            EnableDisableOnResources body = new EnableDisableOnResources()
             {
                 ResourceIds =
 {
@@ -235,12 +235,12 @@ namespace Azure.ResourceManager.Azure.ResourceManager.ManagedNetworkFabric.Sampl
             string subscriptionId = "subscriptionId";
             string resourceGroupName = "resourceGroupName";
             string l2IsolationDomainName = "l2IsolationDomainName";
-            ResourceIdentifier l2IsolationDomainResourceId = ManagedNetworkFabric.L2IsolationDomainResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, l2IsolationDomainName);
-            ManagedNetworkFabric.L2IsolationDomainResource l2IsolationDomain = client.GetL2IsolationDomainResource(l2IsolationDomainResourceId);
+            ResourceIdentifier l2IsolationDomainResourceId = L2IsolationDomainResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, l2IsolationDomainName);
+            L2IsolationDomainResource l2IsolationDomain = client.GetL2IsolationDomainResource(l2IsolationDomainResourceId);
 
             // invoke the operation
-            ArmOperation<IDictionary<string, ManagedNetworkFabric.Models.ARPProperties>> lro = await l2IsolationDomain.GetArpEntriesAsync(WaitUntil.Completed);
-            IDictionary<string, ManagedNetworkFabric.Models.ARPProperties> result = lro.Value;
+            ArmOperation<IDictionary<string, ARPProperties>> lro = await l2IsolationDomain.GetArpEntriesAsync(WaitUntil.Completed);
+            IDictionary<string, ARPProperties> result = lro.Value;
 
             Console.WriteLine($"Succeeded: {result}");
         }
@@ -265,11 +265,11 @@ namespace Azure.ResourceManager.Azure.ResourceManager.ManagedNetworkFabric.Sampl
             SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
 
             // invoke the operation and iterate over the result
-            await foreach (ManagedNetworkFabric.L2IsolationDomainResource item in subscriptionResource.GetL2IsolationDomainsAsync())
+            await foreach (L2IsolationDomainResource item in subscriptionResource.GetL2IsolationDomainsAsync())
             {
                 // the variable item is a resource, you could call other operations on this instance as well
                 // but just for demo, we get its data from this resource instance
-                ManagedNetworkFabric.L2IsolationDomainData resourceData = item.Data;
+                L2IsolationDomainData resourceData = item.Data;
                 // for demo we just print out the id
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }

@@ -389,19 +389,6 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             return new GetDeviceStatusProperties(operationalStatus, powerCycleState, serialNumber);
         }
 
-        /// <summary> Initializes a new instance of GetDynamicInterfaceMapsPropertiesItem. </summary>
-        /// <param name="administrativeState"> The interface administrative state. </param>
-        /// <param name="operationalStatus"> The interface operational status. </param>
-        /// <param name="phyStatus"> The physical status. </param>
-        /// <param name="transceiverStatus"> The interface transceiver type. Example: up or down. </param>
-        /// <param name="connectedTo"> Connected to ARM resource or external interface. </param>
-        /// <param name="name"> The interface name. </param>
-        /// <returns> A new <see cref="Models.GetDynamicInterfaceMapsPropertiesItem"/> instance for mocking. </returns>
-        public static GetDynamicInterfaceMapsPropertiesItem GetDynamicInterfaceMapsPropertiesItem(EnabledDisabledState? administrativeState = null, string operationalStatus = null, string phyStatus = null, string transceiverStatus = null, string connectedTo = null, string name = null)
-        {
-            return new GetDynamicInterfaceMapsPropertiesItem(administrativeState, operationalStatus, phyStatus, transceiverStatus, connectedTo, name);
-        }
-
         /// <summary> Initializes a new instance of InterfaceStatus. </summary>
         /// <param name="administrativeState"> The interface administrative state. </param>
         /// <param name="operationalStatus"> The interface operational status. </param>

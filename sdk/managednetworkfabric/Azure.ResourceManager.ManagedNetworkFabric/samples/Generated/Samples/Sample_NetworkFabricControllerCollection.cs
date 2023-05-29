@@ -11,11 +11,11 @@ using Azure;
 using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager;
-using Azure.ResourceManager.Azure.ResourceManager.ManagedNetworkFabric;
-using Azure.ResourceManager.Azure.ResourceManager.ManagedNetworkFabric.Models;
+using Azure.ResourceManager.ManagedNetworkFabric;
+using Azure.ResourceManager.ManagedNetworkFabric.Models;
 using Azure.ResourceManager.Resources;
 
-namespace Azure.ResourceManager.Azure.ResourceManager.ManagedNetworkFabric.Samples
+namespace Azure.ResourceManager.ManagedNetworkFabric.Samples
 {
     public partial class Sample_NetworkFabricControllerCollection
     {
@@ -40,34 +40,34 @@ namespace Azure.ResourceManager.Azure.ResourceManager.ManagedNetworkFabric.Sampl
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
 
             // get the collection of this NetworkFabricControllerResource
-            ManagedNetworkFabric.NetworkFabricControllerCollection collection = resourceGroupResource.GetNetworkFabricControllers();
+            NetworkFabricControllerCollection collection = resourceGroupResource.GetNetworkFabricControllers();
 
             // invoke the operation
             string networkFabricControllerName = "NetworkControllerName";
-            ManagedNetworkFabric.NetworkFabricControllerData data = new ManagedNetworkFabric.NetworkFabricControllerData(new AzureLocation("eastus"))
+            NetworkFabricControllerData data = new NetworkFabricControllerData(new AzureLocation("eastus"))
             {
                 Annotation = "lab 1",
                 InfrastructureExpressRouteConnections =
 {
-new ManagedNetworkFabric.Models.ExpressRouteConnectionInformation("/subscriptions/xxxxx/resourceGroups/resourceGroupName/providers/Microsoft.Network/expressRouteCircuits/expressRouteCircuitName","xxxxxxx")
+new ExpressRouteConnectionInformation("/subscriptions/xxxxx/resourceGroups/resourceGroupName/providers/Microsoft.Network/expressRouteCircuits/expressRouteCircuitName","xxxxxxx")
 },
                 WorkloadExpressRouteConnections =
 {
-new ManagedNetworkFabric.Models.ExpressRouteConnectionInformation("/subscriptions/xxxxx/resourceGroups/resourceGroupName/providers/Microsoft.Network/expressRouteCircuits/expressRouteCircuitName","xxxxx")
+new ExpressRouteConnectionInformation("/subscriptions/xxxxx/resourceGroups/resourceGroupName/providers/Microsoft.Network/expressRouteCircuits/expressRouteCircuitName","xxxxx")
 },
-                ManagedResourceGroupConfiguration = new ManagedNetworkFabric.Models.NetworkFabricControllerPropertiesManagedResourceGroupConfiguration()
+                ManagedResourceGroupConfiguration = new NetworkFabricControllerPropertiesManagedResourceGroupConfiguration()
                 {
                     Name = "managedResourceGroupName",
                     Location = new AzureLocation("eastus"),
                 },
                 IPv4AddressSpace = "172.253.0.0/19",
             };
-            ArmOperation<ManagedNetworkFabric.NetworkFabricControllerResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, networkFabricControllerName, data);
-            ManagedNetworkFabric.NetworkFabricControllerResource result = lro.Value;
+            ArmOperation<NetworkFabricControllerResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, networkFabricControllerName, data);
+            NetworkFabricControllerResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            ManagedNetworkFabric.NetworkFabricControllerData resourceData = result.Data;
+            NetworkFabricControllerData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -93,15 +93,15 @@ new ManagedNetworkFabric.Models.ExpressRouteConnectionInformation("/subscription
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
 
             // get the collection of this NetworkFabricControllerResource
-            ManagedNetworkFabric.NetworkFabricControllerCollection collection = resourceGroupResource.GetNetworkFabricControllers();
+            NetworkFabricControllerCollection collection = resourceGroupResource.GetNetworkFabricControllers();
 
             // invoke the operation
             string networkFabricControllerName = "networkFabricControllerName";
-            ManagedNetworkFabric.NetworkFabricControllerResource result = await collection.GetAsync(networkFabricControllerName);
+            NetworkFabricControllerResource result = await collection.GetAsync(networkFabricControllerName);
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            ManagedNetworkFabric.NetworkFabricControllerData resourceData = result.Data;
+            NetworkFabricControllerData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -127,7 +127,7 @@ new ManagedNetworkFabric.Models.ExpressRouteConnectionInformation("/subscription
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
 
             // get the collection of this NetworkFabricControllerResource
-            ManagedNetworkFabric.NetworkFabricControllerCollection collection = resourceGroupResource.GetNetworkFabricControllers();
+            NetworkFabricControllerCollection collection = resourceGroupResource.GetNetworkFabricControllers();
 
             // invoke the operation
             string networkFabricControllerName = "networkFabricControllerName";
@@ -157,14 +157,14 @@ new ManagedNetworkFabric.Models.ExpressRouteConnectionInformation("/subscription
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
 
             // get the collection of this NetworkFabricControllerResource
-            ManagedNetworkFabric.NetworkFabricControllerCollection collection = resourceGroupResource.GetNetworkFabricControllers();
+            NetworkFabricControllerCollection collection = resourceGroupResource.GetNetworkFabricControllers();
 
             // invoke the operation and iterate over the result
-            await foreach (ManagedNetworkFabric.NetworkFabricControllerResource item in collection.GetAllAsync())
+            await foreach (NetworkFabricControllerResource item in collection.GetAllAsync())
             {
                 // the variable item is a resource, you could call other operations on this instance as well
                 // but just for demo, we get its data from this resource instance
-                ManagedNetworkFabric.NetworkFabricControllerData resourceData = item.Data;
+                NetworkFabricControllerData resourceData = item.Data;
                 // for demo we just print out the id
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }

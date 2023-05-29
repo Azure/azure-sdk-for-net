@@ -11,10 +11,10 @@ using Azure;
 using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager;
-using Azure.ResourceManager.Azure.ResourceManager.ManagedNetworkFabric;
-using Azure.ResourceManager.Azure.ResourceManager.ManagedNetworkFabric.Models;
+using Azure.ResourceManager.ManagedNetworkFabric;
+using Azure.ResourceManager.ManagedNetworkFabric.Models;
 
-namespace Azure.ResourceManager.Azure.ResourceManager.ManagedNetworkFabric.Samples
+namespace Azure.ResourceManager.ManagedNetworkFabric.Samples
 {
     public partial class Sample_ExternalNetworkCollection
     {
@@ -36,17 +36,17 @@ namespace Azure.ResourceManager.Azure.ResourceManager.ManagedNetworkFabric.Sampl
             string subscriptionId = "subscriptionId";
             string resourceGroupName = "resourceGroupName";
             string l3IsolationDomainName = "example-l3domain";
-            ResourceIdentifier l3IsolationDomainResourceId = ManagedNetworkFabric.L3IsolationDomainResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, l3IsolationDomainName);
-            ManagedNetworkFabric.L3IsolationDomainResource l3IsolationDomain = client.GetL3IsolationDomainResource(l3IsolationDomainResourceId);
+            ResourceIdentifier l3IsolationDomainResourceId = L3IsolationDomainResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, l3IsolationDomainName);
+            L3IsolationDomainResource l3IsolationDomain = client.GetL3IsolationDomainResource(l3IsolationDomainResourceId);
 
             // get the collection of this ExternalNetworkResource
-            ManagedNetworkFabric.ExternalNetworkCollection collection = l3IsolationDomain.GetExternalNetworks();
+            ExternalNetworkCollection collection = l3IsolationDomain.GetExternalNetworks();
 
             // invoke the operation
             string externalNetworkName = "example-externalnetwork";
-            ManagedNetworkFabric.ExternalNetworkData data = new ManagedNetworkFabric.ExternalNetworkData(PeeringOption.OptionA)
+            ExternalNetworkData data = new ExternalNetworkData(PeeringOption.OptionA)
             {
-                OptionBProperties = new ManagedNetworkFabric.Models.OptionBProperties()
+                OptionBProperties = new OptionBProperties()
                 {
                     ImportRouteTargets =
 {
@@ -57,12 +57,12 @@ namespace Azure.ResourceManager.Azure.ResourceManager.ManagedNetworkFabric.Sampl
 "65046:10039"
 },
                 },
-                OptionAProperties = new ManagedNetworkFabric.Models.ExternalNetworkPropertiesOptionAProperties()
+                OptionAProperties = new ExternalNetworkPropertiesOptionAProperties()
                 {
                     Mtu = 1500,
                     VlanId = 1001,
                     PeerASN = 65047,
-                    BfdConfiguration = new ManagedNetworkFabric.Models.BfdConfiguration(),
+                    BfdConfiguration = new BfdConfiguration(),
                     PrimaryIPv4Prefix = "10.1.1.0/30",
                     PrimaryIPv6Prefix = "3FFE:FFFF:0:CD30::a0/126",
                     SecondaryIPv4Prefix = "10.1.1.4/30",
@@ -71,12 +71,12 @@ namespace Azure.ResourceManager.Azure.ResourceManager.ManagedNetworkFabric.Sampl
                 ImportRoutePolicyId = "/subscriptions/subscriptionId/resourceGroups/resourceGroupName/providers/Microsoft.ManagedNetworkFabric/routePolicies/routePolicyName",
                 ExportRoutePolicyId = "/subscriptions/subscriptionId/resourceGroups/resourceGroupName/providers/Microsoft.ManagedNetworkFabric/routePolicies/routePolicyName",
             };
-            ArmOperation<ManagedNetworkFabric.ExternalNetworkResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, externalNetworkName, data);
-            ManagedNetworkFabric.ExternalNetworkResource result = lro.Value;
+            ArmOperation<ExternalNetworkResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, externalNetworkName, data);
+            ExternalNetworkResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            ManagedNetworkFabric.ExternalNetworkData resourceData = result.Data;
+            ExternalNetworkData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -99,19 +99,19 @@ namespace Azure.ResourceManager.Azure.ResourceManager.ManagedNetworkFabric.Sampl
             string subscriptionId = "subscriptionId";
             string resourceGroupName = "resourceGroupName";
             string l3IsolationDomainName = "example-l3domain";
-            ResourceIdentifier l3IsolationDomainResourceId = ManagedNetworkFabric.L3IsolationDomainResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, l3IsolationDomainName);
-            ManagedNetworkFabric.L3IsolationDomainResource l3IsolationDomain = client.GetL3IsolationDomainResource(l3IsolationDomainResourceId);
+            ResourceIdentifier l3IsolationDomainResourceId = L3IsolationDomainResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, l3IsolationDomainName);
+            L3IsolationDomainResource l3IsolationDomain = client.GetL3IsolationDomainResource(l3IsolationDomainResourceId);
 
             // get the collection of this ExternalNetworkResource
-            ManagedNetworkFabric.ExternalNetworkCollection collection = l3IsolationDomain.GetExternalNetworks();
+            ExternalNetworkCollection collection = l3IsolationDomain.GetExternalNetworks();
 
             // invoke the operation
             string externalNetworkName = "example-externalnetwork";
-            ManagedNetworkFabric.ExternalNetworkResource result = await collection.GetAsync(externalNetworkName);
+            ExternalNetworkResource result = await collection.GetAsync(externalNetworkName);
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            ManagedNetworkFabric.ExternalNetworkData resourceData = result.Data;
+            ExternalNetworkData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -134,11 +134,11 @@ namespace Azure.ResourceManager.Azure.ResourceManager.ManagedNetworkFabric.Sampl
             string subscriptionId = "subscriptionId";
             string resourceGroupName = "resourceGroupName";
             string l3IsolationDomainName = "example-l3domain";
-            ResourceIdentifier l3IsolationDomainResourceId = ManagedNetworkFabric.L3IsolationDomainResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, l3IsolationDomainName);
-            ManagedNetworkFabric.L3IsolationDomainResource l3IsolationDomain = client.GetL3IsolationDomainResource(l3IsolationDomainResourceId);
+            ResourceIdentifier l3IsolationDomainResourceId = L3IsolationDomainResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, l3IsolationDomainName);
+            L3IsolationDomainResource l3IsolationDomain = client.GetL3IsolationDomainResource(l3IsolationDomainResourceId);
 
             // get the collection of this ExternalNetworkResource
-            ManagedNetworkFabric.ExternalNetworkCollection collection = l3IsolationDomain.GetExternalNetworks();
+            ExternalNetworkCollection collection = l3IsolationDomain.GetExternalNetworks();
 
             // invoke the operation
             string externalNetworkName = "example-externalnetwork";
@@ -165,18 +165,18 @@ namespace Azure.ResourceManager.Azure.ResourceManager.ManagedNetworkFabric.Sampl
             string subscriptionId = "subscriptionId";
             string resourceGroupName = "resourceGroupName";
             string l3IsolationDomainName = "example-l3domain";
-            ResourceIdentifier l3IsolationDomainResourceId = ManagedNetworkFabric.L3IsolationDomainResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, l3IsolationDomainName);
-            ManagedNetworkFabric.L3IsolationDomainResource l3IsolationDomain = client.GetL3IsolationDomainResource(l3IsolationDomainResourceId);
+            ResourceIdentifier l3IsolationDomainResourceId = L3IsolationDomainResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, l3IsolationDomainName);
+            L3IsolationDomainResource l3IsolationDomain = client.GetL3IsolationDomainResource(l3IsolationDomainResourceId);
 
             // get the collection of this ExternalNetworkResource
-            ManagedNetworkFabric.ExternalNetworkCollection collection = l3IsolationDomain.GetExternalNetworks();
+            ExternalNetworkCollection collection = l3IsolationDomain.GetExternalNetworks();
 
             // invoke the operation and iterate over the result
-            await foreach (ManagedNetworkFabric.ExternalNetworkResource item in collection.GetAllAsync())
+            await foreach (ExternalNetworkResource item in collection.GetAllAsync())
             {
                 // the variable item is a resource, you could call other operations on this instance as well
                 // but just for demo, we get its data from this resource instance
-                ManagedNetworkFabric.ExternalNetworkData resourceData = item.Data;
+                ExternalNetworkData resourceData = item.Data;
                 // for demo we just print out the id
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }

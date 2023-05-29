@@ -10,17 +10,17 @@ using System.Threading.Tasks;
 
 namespace Azure.ResourceManager.ManagedNetworkFabric.Tests
 {
-    public class Azure.ResourceManager.ManagedNetworkFabricManagementTestBase : ManagementRecordedTestBase<Azure.ResourceManager.ManagedNetworkFabricManagementTestEnvironment>
+    public class ManagedNetworkFabricManagementTestBase : ManagementRecordedTestBase<ManagedNetworkFabricManagementTestEnvironment>
     {
         protected ArmClient Client { get; private set; }
         protected SubscriptionResource DefaultSubscription { get; private set; }
 
-        protected Azure.ResourceManager.ManagedNetworkFabricManagementTestBase(bool isAsync, RecordedTestMode mode)
+        protected ManagedNetworkFabricManagementTestBase(bool isAsync, RecordedTestMode mode)
         : base(isAsync, mode)
         {
         }
 
-        protected Azure.ResourceManager.ManagedNetworkFabricManagementTestBase(bool isAsync)
+        protected ManagedNetworkFabricManagementTestBase(bool isAsync)
             : base(isAsync)
         {
         }

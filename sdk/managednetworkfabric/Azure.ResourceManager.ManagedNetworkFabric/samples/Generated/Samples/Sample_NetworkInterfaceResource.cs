@@ -11,10 +11,10 @@ using Azure;
 using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager;
-using Azure.ResourceManager.Azure.ResourceManager.ManagedNetworkFabric;
-using Azure.ResourceManager.Azure.ResourceManager.ManagedNetworkFabric.Models;
+using Azure.ResourceManager.ManagedNetworkFabric;
+using Azure.ResourceManager.ManagedNetworkFabric.Models;
 
-namespace Azure.ResourceManager.Azure.ResourceManager.ManagedNetworkFabric.Samples
+namespace Azure.ResourceManager.ManagedNetworkFabric.Samples
 {
     public partial class Sample_NetworkInterfaceResource
     {
@@ -37,15 +37,15 @@ namespace Azure.ResourceManager.Azure.ResourceManager.ManagedNetworkFabric.Sampl
             string resourceGroupName = "resourceGroupName";
             string networkDeviceName = "networkDeviceName";
             string networkInterfaceName = "networkInterfaceName";
-            ResourceIdentifier networkInterfaceResourceId = ManagedNetworkFabric.NetworkInterfaceResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, networkDeviceName, networkInterfaceName);
-            ManagedNetworkFabric.NetworkInterfaceResource networkInterface = client.GetNetworkInterfaceResource(networkInterfaceResourceId);
+            ResourceIdentifier networkInterfaceResourceId = NetworkInterfaceResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, networkDeviceName, networkInterfaceName);
+            NetworkInterfaceResource networkInterface = client.GetNetworkInterfaceResource(networkInterfaceResourceId);
 
             // invoke the operation
-            ManagedNetworkFabric.NetworkInterfaceResource result = await networkInterface.GetAsync();
+            NetworkInterfaceResource result = await networkInterface.GetAsync();
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            ManagedNetworkFabric.NetworkInterfaceData resourceData = result.Data;
+            NetworkInterfaceData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -69,20 +69,20 @@ namespace Azure.ResourceManager.Azure.ResourceManager.ManagedNetworkFabric.Sampl
             string resourceGroupName = "resourceGroupName";
             string networkDeviceName = "networkDeviceName";
             string networkInterfaceName = "networkInterfaceName";
-            ResourceIdentifier networkInterfaceResourceId = ManagedNetworkFabric.NetworkInterfaceResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, networkDeviceName, networkInterfaceName);
-            ManagedNetworkFabric.NetworkInterfaceResource networkInterface = client.GetNetworkInterfaceResource(networkInterfaceResourceId);
+            ResourceIdentifier networkInterfaceResourceId = NetworkInterfaceResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, networkDeviceName, networkInterfaceName);
+            NetworkInterfaceResource networkInterface = client.GetNetworkInterfaceResource(networkInterfaceResourceId);
 
             // invoke the operation
-            ManagedNetworkFabric.Models.NetworkInterfacePatch patch = new ManagedNetworkFabric.Models.NetworkInterfacePatch()
+            NetworkInterfacePatch patch = new NetworkInterfacePatch()
             {
                 Annotation = "null",
             };
-            ArmOperation<ManagedNetworkFabric.NetworkInterfaceResource> lro = await networkInterface.UpdateAsync(WaitUntil.Completed, patch);
-            ManagedNetworkFabric.NetworkInterfaceResource result = lro.Value;
+            ArmOperation<NetworkInterfaceResource> lro = await networkInterface.UpdateAsync(WaitUntil.Completed, patch);
+            NetworkInterfaceResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            ManagedNetworkFabric.NetworkInterfaceData resourceData = result.Data;
+            NetworkInterfaceData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -106,8 +106,8 @@ namespace Azure.ResourceManager.Azure.ResourceManager.ManagedNetworkFabric.Sampl
             string resourceGroupName = "resourceGroupName";
             string networkDeviceName = "networkDeviceName";
             string networkInterfaceName = "networkInterfaceName";
-            ResourceIdentifier networkInterfaceResourceId = ManagedNetworkFabric.NetworkInterfaceResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, networkDeviceName, networkInterfaceName);
-            ManagedNetworkFabric.NetworkInterfaceResource networkInterface = client.GetNetworkInterfaceResource(networkInterfaceResourceId);
+            ResourceIdentifier networkInterfaceResourceId = NetworkInterfaceResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, networkDeviceName, networkInterfaceName);
+            NetworkInterfaceResource networkInterface = client.GetNetworkInterfaceResource(networkInterfaceResourceId);
 
             // invoke the operation
             await networkInterface.DeleteAsync(WaitUntil.Completed);
@@ -134,12 +134,12 @@ namespace Azure.ResourceManager.Azure.ResourceManager.ManagedNetworkFabric.Sampl
             string resourceGroupName = "resourceGroupName";
             string networkDeviceName = "networkDeviceName";
             string networkInterfaceName = "networkInterfaceName";
-            ResourceIdentifier networkInterfaceResourceId = ManagedNetworkFabric.NetworkInterfaceResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, networkDeviceName, networkInterfaceName);
-            ManagedNetworkFabric.NetworkInterfaceResource networkInterface = client.GetNetworkInterfaceResource(networkInterfaceResourceId);
+            ResourceIdentifier networkInterfaceResourceId = NetworkInterfaceResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, networkDeviceName, networkInterfaceName);
+            NetworkInterfaceResource networkInterface = client.GetNetworkInterfaceResource(networkInterfaceResourceId);
 
             // invoke the operation
-            ArmOperation<ManagedNetworkFabric.Models.InterfaceStatus> lro = await networkInterface.GetStatusAsync(WaitUntil.Completed);
-            ManagedNetworkFabric.Models.InterfaceStatus result = lro.Value;
+            ArmOperation<InterfaceStatus> lro = await networkInterface.GetStatusAsync(WaitUntil.Completed);
+            InterfaceStatus result = lro.Value;
 
             Console.WriteLine($"Succeeded: {result}");
         }
@@ -163,11 +163,11 @@ namespace Azure.ResourceManager.Azure.ResourceManager.ManagedNetworkFabric.Sampl
             string resourceGroupName = "resourceGroupName";
             string networkDeviceName = "networkDeviceName";
             string networkInterfaceName = "networkInterfaceName";
-            ResourceIdentifier networkInterfaceResourceId = ManagedNetworkFabric.NetworkInterfaceResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, networkDeviceName, networkInterfaceName);
-            ManagedNetworkFabric.NetworkInterfaceResource networkInterface = client.GetNetworkInterfaceResource(networkInterfaceResourceId);
+            ResourceIdentifier networkInterfaceResourceId = NetworkInterfaceResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, networkDeviceName, networkInterfaceName);
+            NetworkInterfaceResource networkInterface = client.GetNetworkInterfaceResource(networkInterfaceResourceId);
 
             // invoke the operation
-            ManagedNetworkFabric.Models.UpdateAdministrativeState body = new ManagedNetworkFabric.Models.UpdateAdministrativeState()
+            UpdateAdministrativeState body = new UpdateAdministrativeState()
             {
                 State = AdministrativeState.Enable,
             };

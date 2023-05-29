@@ -11,11 +11,11 @@ using Azure;
 using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager;
-using Azure.ResourceManager.Azure.ResourceManager.ManagedNetworkFabric;
-using Azure.ResourceManager.Azure.ResourceManager.ManagedNetworkFabric.Models;
+using Azure.ResourceManager.ManagedNetworkFabric;
+using Azure.ResourceManager.ManagedNetworkFabric.Models;
 using Azure.ResourceManager.Resources;
 
-namespace Azure.ResourceManager.Azure.ResourceManager.ManagedNetworkFabric.Samples
+namespace Azure.ResourceManager.ManagedNetworkFabric.Samples
 {
     public partial class Sample_RoutePolicyCollection
     {
@@ -40,20 +40,20 @@ namespace Azure.ResourceManager.Azure.ResourceManager.ManagedNetworkFabric.Sampl
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
 
             // get the collection of this RoutePolicyResource
-            ManagedNetworkFabric.RoutePolicyCollection collection = resourceGroupResource.GetRoutePolicies();
+            RoutePolicyCollection collection = resourceGroupResource.GetRoutePolicies();
 
             // invoke the operation
             string routePolicyName = "example RoutePolicy";
-            ManagedNetworkFabric.RoutePolicyData data = new ManagedNetworkFabric.RoutePolicyData(new AzureLocation("EastUS"))
+            RoutePolicyData data = new RoutePolicyData(new AzureLocation("EastUS"))
             {
                 Annotation = "example routepolicy",
                 Description = "RPexample",
                 Conditions =
 {
-new ManagedNetworkFabric.Models.RoutePolicyPropertiesConditionsItem()
+new RoutePolicyPropertiesConditionsItem()
 {
 SequenceNumber = 7,
-Match = new ManagedNetworkFabric.Models.RoutePolicyPropertiesConditionsItemMatch()
+Match = new RoutePolicyPropertiesConditionsItemMatch()
 {
 AccessControlListIds =
 {
@@ -68,10 +68,10 @@ IPExtendedCommunityListIds =
 ""
 },
 },
-Action = new ManagedNetworkFabric.Models.RoutePolicyConditionsItemAction()
+Action = new RoutePolicyConditionsItemAction()
 {
 Action = "allow",
-Sets = new ManagedNetworkFabric.Models.RoutePolicyPropertiesConditionsProperties()
+Sets = new RoutePolicyPropertiesConditionsProperties()
 {
 IPCommunityListIds =
 {
@@ -91,12 +91,12 @@ Annotation = "",
 ["key8254"] = "",
 },
             };
-            ArmOperation<ManagedNetworkFabric.RoutePolicyResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, routePolicyName, data);
-            ManagedNetworkFabric.RoutePolicyResource result = lro.Value;
+            ArmOperation<RoutePolicyResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, routePolicyName, data);
+            RoutePolicyResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            ManagedNetworkFabric.RoutePolicyData resourceData = result.Data;
+            RoutePolicyData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -122,15 +122,15 @@ Annotation = "",
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
 
             // get the collection of this RoutePolicyResource
-            ManagedNetworkFabric.RoutePolicyCollection collection = resourceGroupResource.GetRoutePolicies();
+            RoutePolicyCollection collection = resourceGroupResource.GetRoutePolicies();
 
             // invoke the operation
             string routePolicyName = "aaaaaaa";
-            ManagedNetworkFabric.RoutePolicyResource result = await collection.GetAsync(routePolicyName);
+            RoutePolicyResource result = await collection.GetAsync(routePolicyName);
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            ManagedNetworkFabric.RoutePolicyData resourceData = result.Data;
+            RoutePolicyData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -156,7 +156,7 @@ Annotation = "",
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
 
             // get the collection of this RoutePolicyResource
-            ManagedNetworkFabric.RoutePolicyCollection collection = resourceGroupResource.GetRoutePolicies();
+            RoutePolicyCollection collection = resourceGroupResource.GetRoutePolicies();
 
             // invoke the operation
             string routePolicyName = "aaaaaaa";
@@ -186,14 +186,14 @@ Annotation = "",
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
 
             // get the collection of this RoutePolicyResource
-            ManagedNetworkFabric.RoutePolicyCollection collection = resourceGroupResource.GetRoutePolicies();
+            RoutePolicyCollection collection = resourceGroupResource.GetRoutePolicies();
 
             // invoke the operation and iterate over the result
-            await foreach (ManagedNetworkFabric.RoutePolicyResource item in collection.GetAllAsync())
+            await foreach (RoutePolicyResource item in collection.GetAllAsync())
             {
                 // the variable item is a resource, you could call other operations on this instance as well
                 // but just for demo, we get its data from this resource instance
-                ManagedNetworkFabric.RoutePolicyData resourceData = item.Data;
+                RoutePolicyData resourceData = item.Data;
                 // for demo we just print out the id
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }

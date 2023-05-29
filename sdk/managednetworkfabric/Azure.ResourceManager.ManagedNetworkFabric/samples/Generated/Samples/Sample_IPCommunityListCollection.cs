@@ -11,11 +11,11 @@ using Azure;
 using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager;
-using Azure.ResourceManager.Azure.ResourceManager.ManagedNetworkFabric;
-using Azure.ResourceManager.Azure.ResourceManager.ManagedNetworkFabric.Models;
+using Azure.ResourceManager.ManagedNetworkFabric;
+using Azure.ResourceManager.ManagedNetworkFabric.Models;
 using Azure.ResourceManager.Resources;
 
-namespace Azure.ResourceManager.Azure.ResourceManager.ManagedNetworkFabric.Samples
+namespace Azure.ResourceManager.ManagedNetworkFabric.Samples
 {
     public partial class Sample_IPCommunityListCollection
     {
@@ -40,11 +40,11 @@ namespace Azure.ResourceManager.Azure.ResourceManager.ManagedNetworkFabric.Sampl
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
 
             // get the collection of this IPCommunityListResource
-            ManagedNetworkFabric.IPCommunityListCollection collection = resourceGroupResource.GetIPCommunityLists();
+            IPCommunityListCollection collection = resourceGroupResource.GetIPCommunityLists();
 
             // invoke the operation
             string ipCommunityListName = "aaaaa";
-            ManagedNetworkFabric.IPCommunityListData data = new ManagedNetworkFabric.IPCommunityListData(new AzureLocation("EastUS"))
+            IPCommunityListData data = new IPCommunityListData(new AzureLocation("EastUS"))
             {
                 Annotation = "aaaa",
                 Action = CommunityActionType.Allow,
@@ -53,14 +53,14 @@ namespace Azure.ResourceManager.Azure.ResourceManager.ManagedNetworkFabric.Sampl
                 Export = ExportBoolean.True,
                 CommunityMembers =
 {
-new ManagedNetworkFabric.Models.IPCommunityListPropertiesCommunityMembersItem("1234:5678")
+new IPCommunityListPropertiesCommunityMembersItem("1234:5678")
 {
 Annotation = "app2",
 }
 },
                 EvpnEsImportRouteTargets =
 {
-new ManagedNetworkFabric.Models.IPCommunityListPropertiesEvpnEsImportRouteTargetsItem("1.1.1")
+new IPCommunityListPropertiesEvpnEsImportRouteTargetsItem("1.1.1")
 {
 Annotation = "app1",
 }
@@ -70,12 +70,12 @@ Annotation = "app1",
 ["key2814"] = "",
 },
             };
-            ArmOperation<ManagedNetworkFabric.IPCommunityListResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, ipCommunityListName, data);
-            ManagedNetworkFabric.IPCommunityListResource result = lro.Value;
+            ArmOperation<IPCommunityListResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, ipCommunityListName, data);
+            IPCommunityListResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            ManagedNetworkFabric.IPCommunityListData resourceData = result.Data;
+            IPCommunityListData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -101,15 +101,15 @@ Annotation = "app1",
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
 
             // get the collection of this IPCommunityListResource
-            ManagedNetworkFabric.IPCommunityListCollection collection = resourceGroupResource.GetIPCommunityLists();
+            IPCommunityListCollection collection = resourceGroupResource.GetIPCommunityLists();
 
             // invoke the operation
             string ipCommunityListName = "IpCommunityList1";
-            ManagedNetworkFabric.IPCommunityListResource result = await collection.GetAsync(ipCommunityListName);
+            IPCommunityListResource result = await collection.GetAsync(ipCommunityListName);
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            ManagedNetworkFabric.IPCommunityListData resourceData = result.Data;
+            IPCommunityListData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -135,7 +135,7 @@ Annotation = "app1",
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
 
             // get the collection of this IPCommunityListResource
-            ManagedNetworkFabric.IPCommunityListCollection collection = resourceGroupResource.GetIPCommunityLists();
+            IPCommunityListCollection collection = resourceGroupResource.GetIPCommunityLists();
 
             // invoke the operation
             string ipCommunityListName = "IpCommunityList1";
@@ -165,14 +165,14 @@ Annotation = "app1",
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
 
             // get the collection of this IPCommunityListResource
-            ManagedNetworkFabric.IPCommunityListCollection collection = resourceGroupResource.GetIPCommunityLists();
+            IPCommunityListCollection collection = resourceGroupResource.GetIPCommunityLists();
 
             // invoke the operation and iterate over the result
-            await foreach (ManagedNetworkFabric.IPCommunityListResource item in collection.GetAllAsync())
+            await foreach (IPCommunityListResource item in collection.GetAllAsync())
             {
                 // the variable item is a resource, you could call other operations on this instance as well
                 // but just for demo, we get its data from this resource instance
-                ManagedNetworkFabric.IPCommunityListData resourceData = item.Data;
+                IPCommunityListData resourceData = item.Data;
                 // for demo we just print out the id
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }

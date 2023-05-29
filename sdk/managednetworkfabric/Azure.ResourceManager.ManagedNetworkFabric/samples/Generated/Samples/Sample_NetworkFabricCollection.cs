@@ -11,11 +11,11 @@ using Azure;
 using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager;
-using Azure.ResourceManager.Azure.ResourceManager.ManagedNetworkFabric;
-using Azure.ResourceManager.Azure.ResourceManager.ManagedNetworkFabric.Models;
+using Azure.ResourceManager.ManagedNetworkFabric;
+using Azure.ResourceManager.ManagedNetworkFabric.Models;
 using Azure.ResourceManager.Resources;
 
-namespace Azure.ResourceManager.Azure.ResourceManager.ManagedNetworkFabric.Samples
+namespace Azure.ResourceManager.ManagedNetworkFabric.Samples
 {
     public partial class Sample_NetworkFabricCollection
     {
@@ -40,11 +40,11 @@ namespace Azure.ResourceManager.Azure.ResourceManager.ManagedNetworkFabric.Sampl
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
 
             // get the collection of this NetworkFabricResource
-            ManagedNetworkFabric.NetworkFabricCollection collection = resourceGroupResource.GetNetworkFabrics();
+            NetworkFabricCollection collection = resourceGroupResource.GetNetworkFabrics();
 
             // invoke the operation
             string networkFabricName = "FabricName";
-            ManagedNetworkFabric.NetworkFabricData data = new ManagedNetworkFabric.NetworkFabricData(new AzureLocation("eastus"))
+            NetworkFabricData data = new NetworkFabricData(new AzureLocation("eastus"))
             {
                 NetworkFabricSku = "M4-A400-A100-C16-aa",
                 RackCount = 4,
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.Azure.ResourceManager.ManagedNetworkFabric.Sampl
                 IPv6Prefix = "3FFE:FFFF:0:CD40::/59",
                 FabricASN = 29249,
                 NetworkFabricControllerId = "/subscriptions/subscriptionId/resourceGroups/resourceGroupName/providers/Microsoft.ManagedNetworkFabric/networkFabricControllers/fabricControllerName",
-                TerminalServerConfiguration = new ManagedNetworkFabric.Models.NetworkFabricPropertiesTerminalServerConfiguration()
+                TerminalServerConfiguration = new NetworkFabricPropertiesTerminalServerConfiguration()
                 {
                     Username = "username",
                     Password = "xxxx",
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.Azure.ResourceManager.ManagedNetworkFabric.Sampl
                     SecondaryIPv4Prefix = "20.0.0.13/30",
                     SecondaryIPv6Prefix = "3FFE:FFFF:0:CD30::ac/126",
                 },
-                ManagementNetworkConfiguration = new ManagedNetworkFabric.Models.NetworkFabricPropertiesManagementNetworkConfiguration(new ManagedNetworkFabric.Models.NetworkFabricPropertiesManagementNetworkConfigurationInfrastructureVpnConfiguration(new ManagedNetworkFabric.Models.NetworkFabricOptionBProperties(new string[]
+                ManagementNetworkConfiguration = new NetworkFabricPropertiesManagementNetworkConfiguration(new NetworkFabricPropertiesManagementNetworkConfigurationInfrastructureVpnConfiguration(new NetworkFabricOptionBProperties(new string[]
             {
 "65046:10039"
             }, new string[]
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.Azure.ResourceManager.ManagedNetworkFabric.Sampl
                 {
                     PeeringOption = PeeringOption.OptionA,
                     OptionAProperties = null,
-                }, new ManagedNetworkFabric.Models.NetworkFabricPropertiesManagementNetworkConfigurationWorkloadVpnConfiguration(new ManagedNetworkFabric.Models.NetworkFabricOptionBProperties(new string[]
+                }, new NetworkFabricPropertiesManagementNetworkConfigurationWorkloadVpnConfiguration(new NetworkFabricOptionBProperties(new string[]
             {
 "65046:10050"
             }, new string[]
@@ -85,12 +85,12 @@ namespace Azure.ResourceManager.Azure.ResourceManager.ManagedNetworkFabric.Sampl
                     OptionAProperties = null,
                 }),
             };
-            ArmOperation<ManagedNetworkFabric.NetworkFabricResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, networkFabricName, data);
-            ManagedNetworkFabric.NetworkFabricResource result = lro.Value;
+            ArmOperation<NetworkFabricResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, networkFabricName, data);
+            NetworkFabricResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            ManagedNetworkFabric.NetworkFabricData resourceData = result.Data;
+            NetworkFabricData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -116,15 +116,15 @@ namespace Azure.ResourceManager.Azure.ResourceManager.ManagedNetworkFabric.Sampl
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
 
             // get the collection of this NetworkFabricResource
-            ManagedNetworkFabric.NetworkFabricCollection collection = resourceGroupResource.GetNetworkFabrics();
+            NetworkFabricCollection collection = resourceGroupResource.GetNetworkFabrics();
 
             // invoke the operation
             string networkFabricName = "FabricName";
-            ManagedNetworkFabric.NetworkFabricResource result = await collection.GetAsync(networkFabricName);
+            NetworkFabricResource result = await collection.GetAsync(networkFabricName);
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            ManagedNetworkFabric.NetworkFabricData resourceData = result.Data;
+            NetworkFabricData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -150,7 +150,7 @@ namespace Azure.ResourceManager.Azure.ResourceManager.ManagedNetworkFabric.Sampl
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
 
             // get the collection of this NetworkFabricResource
-            ManagedNetworkFabric.NetworkFabricCollection collection = resourceGroupResource.GetNetworkFabrics();
+            NetworkFabricCollection collection = resourceGroupResource.GetNetworkFabrics();
 
             // invoke the operation
             string networkFabricName = "FabricName";
@@ -180,14 +180,14 @@ namespace Azure.ResourceManager.Azure.ResourceManager.ManagedNetworkFabric.Sampl
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
 
             // get the collection of this NetworkFabricResource
-            ManagedNetworkFabric.NetworkFabricCollection collection = resourceGroupResource.GetNetworkFabrics();
+            NetworkFabricCollection collection = resourceGroupResource.GetNetworkFabrics();
 
             // invoke the operation and iterate over the result
-            await foreach (ManagedNetworkFabric.NetworkFabricResource item in collection.GetAllAsync())
+            await foreach (NetworkFabricResource item in collection.GetAllAsync())
             {
                 // the variable item is a resource, you could call other operations on this instance as well
                 // but just for demo, we get its data from this resource instance
-                ManagedNetworkFabric.NetworkFabricData resourceData = item.Data;
+                NetworkFabricData resourceData = item.Data;
                 // for demo we just print out the id
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }

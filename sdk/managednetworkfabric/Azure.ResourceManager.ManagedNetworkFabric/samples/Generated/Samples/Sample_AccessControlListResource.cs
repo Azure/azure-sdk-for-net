@@ -11,11 +11,11 @@ using Azure;
 using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager;
-using Azure.ResourceManager.Azure.ResourceManager.ManagedNetworkFabric;
-using Azure.ResourceManager.Azure.ResourceManager.ManagedNetworkFabric.Models;
+using Azure.ResourceManager.ManagedNetworkFabric;
+using Azure.ResourceManager.ManagedNetworkFabric.Models;
 using Azure.ResourceManager.Resources;
 
-namespace Azure.ResourceManager.Azure.ResourceManager.ManagedNetworkFabric.Samples
+namespace Azure.ResourceManager.ManagedNetworkFabric.Samples
 {
     public partial class Sample_AccessControlListResource
     {
@@ -37,15 +37,15 @@ namespace Azure.ResourceManager.Azure.ResourceManager.ManagedNetworkFabric.Sampl
             string subscriptionId = "subscriptionId";
             string resourceGroupName = "resourceGroupName";
             string accessControlListName = "aclOne";
-            ResourceIdentifier accessControlListResourceId = ManagedNetworkFabric.AccessControlListResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, accessControlListName);
-            ManagedNetworkFabric.AccessControlListResource accessControlList = client.GetAccessControlListResource(accessControlListResourceId);
+            ResourceIdentifier accessControlListResourceId = AccessControlListResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, accessControlListName);
+            AccessControlListResource accessControlList = client.GetAccessControlListResource(accessControlListResourceId);
 
             // invoke the operation
-            ManagedNetworkFabric.AccessControlListResource result = await accessControlList.GetAsync();
+            AccessControlListResource result = await accessControlList.GetAsync();
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            ManagedNetworkFabric.AccessControlListData resourceData = result.Data;
+            AccessControlListData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -68,23 +68,23 @@ namespace Azure.ResourceManager.Azure.ResourceManager.ManagedNetworkFabric.Sampl
             string subscriptionId = "subscriptionId";
             string resourceGroupName = "resourceGroupName";
             string accessControlListName = "aclOne";
-            ResourceIdentifier accessControlListResourceId = ManagedNetworkFabric.AccessControlListResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, accessControlListName);
-            ManagedNetworkFabric.AccessControlListResource accessControlList = client.GetAccessControlListResource(accessControlListResourceId);
+            ResourceIdentifier accessControlListResourceId = AccessControlListResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, accessControlListName);
+            AccessControlListResource accessControlList = client.GetAccessControlListResource(accessControlListResourceId);
 
             // invoke the operation
-            ManagedNetworkFabric.Models.AccessControlListPatch patch = new ManagedNetworkFabric.Models.AccessControlListPatch()
+            AccessControlListPatch patch = new AccessControlListPatch()
             {
                 AddressFamily = AddressFamily.IPv4,
                 Conditions =
 {
-new ManagedNetworkFabric.Models.AccessControlListPatchPropertiesConditionsItem(4,ConditionActionType.Allow,"1.1.1.2","21","2.2.2.3","65000",6)
+new AccessControlListPatchPropertiesConditionsItem(4,ConditionActionType.Allow,"1.1.1.2","21","2.2.2.3","65000",6)
 },
             };
-            ManagedNetworkFabric.AccessControlListResource result = await accessControlList.UpdateAsync(patch);
+            AccessControlListResource result = await accessControlList.UpdateAsync(patch);
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            ManagedNetworkFabric.AccessControlListData resourceData = result.Data;
+            AccessControlListData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -107,8 +107,8 @@ new ManagedNetworkFabric.Models.AccessControlListPatchPropertiesConditionsItem(4
             string subscriptionId = "subscriptionId";
             string resourceGroupName = "subscriptionId";
             string accessControlListName = "aclOne";
-            ResourceIdentifier accessControlListResourceId = ManagedNetworkFabric.AccessControlListResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, accessControlListName);
-            ManagedNetworkFabric.AccessControlListResource accessControlList = client.GetAccessControlListResource(accessControlListResourceId);
+            ResourceIdentifier accessControlListResourceId = AccessControlListResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, accessControlListName);
+            AccessControlListResource accessControlList = client.GetAccessControlListResource(accessControlListResourceId);
 
             // invoke the operation
             await accessControlList.DeleteAsync(WaitUntil.Completed);
@@ -136,11 +136,11 @@ new ManagedNetworkFabric.Models.AccessControlListPatchPropertiesConditionsItem(4
             SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
 
             // invoke the operation and iterate over the result
-            await foreach (ManagedNetworkFabric.AccessControlListResource item in subscriptionResource.GetAccessControlListsAsync())
+            await foreach (AccessControlListResource item in subscriptionResource.GetAccessControlListsAsync())
             {
                 // the variable item is a resource, you could call other operations on this instance as well
                 // but just for demo, we get its data from this resource instance
-                ManagedNetworkFabric.AccessControlListData resourceData = item.Data;
+                AccessControlListData resourceData = item.Data;
                 // for demo we just print out the id
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }

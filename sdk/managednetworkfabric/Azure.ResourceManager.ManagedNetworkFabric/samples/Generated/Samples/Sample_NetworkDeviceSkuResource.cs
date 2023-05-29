@@ -10,9 +10,9 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager;
-using Azure.ResourceManager.Azure.ResourceManager.ManagedNetworkFabric;
+using Azure.ResourceManager.ManagedNetworkFabric;
 
-namespace Azure.ResourceManager.Azure.ResourceManager.ManagedNetworkFabric.Samples
+namespace Azure.ResourceManager.ManagedNetworkFabric.Samples
 {
     public partial class Sample_NetworkDeviceSkuResource
     {
@@ -33,15 +33,15 @@ namespace Azure.ResourceManager.Azure.ResourceManager.ManagedNetworkFabric.Sampl
             // for more information of creating NetworkDeviceSkuResource, please refer to the document of NetworkDeviceSkuResource
             string subscriptionId = "subscriptionId";
             string networkDeviceSkuName = "DefaultSku";
-            ResourceIdentifier networkDeviceSkuResourceId = ManagedNetworkFabric.NetworkDeviceSkuResource.CreateResourceIdentifier(subscriptionId, networkDeviceSkuName);
-            ManagedNetworkFabric.NetworkDeviceSkuResource networkDeviceSku = client.GetNetworkDeviceSkuResource(networkDeviceSkuResourceId);
+            ResourceIdentifier networkDeviceSkuResourceId = NetworkDeviceSkuResource.CreateResourceIdentifier(subscriptionId, networkDeviceSkuName);
+            NetworkDeviceSkuResource networkDeviceSku = client.GetNetworkDeviceSkuResource(networkDeviceSkuResourceId);
 
             // invoke the operation
-            ManagedNetworkFabric.NetworkDeviceSkuResource result = await networkDeviceSku.GetAsync();
+            NetworkDeviceSkuResource result = await networkDeviceSku.GetAsync();
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            ManagedNetworkFabric.NetworkDeviceSkuData resourceData = result.Data;
+            NetworkDeviceSkuData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }

@@ -11,10 +11,10 @@ using Azure;
 using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager;
-using Azure.ResourceManager.Azure.ResourceManager.ManagedNetworkFabric;
-using Azure.ResourceManager.Azure.ResourceManager.ManagedNetworkFabric.Models;
+using Azure.ResourceManager.ManagedNetworkFabric;
+using Azure.ResourceManager.ManagedNetworkFabric.Models;
 
-namespace Azure.ResourceManager.Azure.ResourceManager.ManagedNetworkFabric.Samples
+namespace Azure.ResourceManager.ManagedNetworkFabric.Samples
 {
     public partial class Sample_InternalNetworkResource
     {
@@ -37,15 +37,15 @@ namespace Azure.ResourceManager.Azure.ResourceManager.ManagedNetworkFabric.Sampl
             string resourceGroupName = "resourceGroupName";
             string l3IsolationDomainName = "example-l3domain";
             string internalNetworkName = "example-internalnetwork";
-            ResourceIdentifier internalNetworkResourceId = ManagedNetworkFabric.InternalNetworkResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, l3IsolationDomainName, internalNetworkName);
-            ManagedNetworkFabric.InternalNetworkResource internalNetwork = client.GetInternalNetworkResource(internalNetworkResourceId);
+            ResourceIdentifier internalNetworkResourceId = InternalNetworkResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, l3IsolationDomainName, internalNetworkName);
+            InternalNetworkResource internalNetwork = client.GetInternalNetworkResource(internalNetworkResourceId);
 
             // invoke the operation
-            ManagedNetworkFabric.InternalNetworkResource result = await internalNetwork.GetAsync();
+            InternalNetworkResource result = await internalNetwork.GetAsync();
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            ManagedNetworkFabric.InternalNetworkData resourceData = result.Data;
+            InternalNetworkData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -69,48 +69,48 @@ namespace Azure.ResourceManager.Azure.ResourceManager.ManagedNetworkFabric.Sampl
             string resourceGroupName = "resourceGroupName";
             string l3IsolationDomainName = "example-l3domain";
             string internalNetworkName = "example-internalnetwork";
-            ResourceIdentifier internalNetworkResourceId = ManagedNetworkFabric.InternalNetworkResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, l3IsolationDomainName, internalNetworkName);
-            ManagedNetworkFabric.InternalNetworkResource internalNetwork = client.GetInternalNetworkResource(internalNetworkResourceId);
+            ResourceIdentifier internalNetworkResourceId = InternalNetworkResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, l3IsolationDomainName, internalNetworkName);
+            InternalNetworkResource internalNetwork = client.GetInternalNetworkResource(internalNetworkResourceId);
 
             // invoke the operation
-            ManagedNetworkFabric.Models.InternalNetworkPatch patch = new ManagedNetworkFabric.Models.InternalNetworkPatch()
+            InternalNetworkPatch patch = new InternalNetworkPatch()
             {
                 Mtu = 1500,
                 ConnectedIPv4Subnets =
 {
-new ManagedNetworkFabric.Models.InternalNetworkPatchablePropertiesConnectedIPv4SubnetsItem()
+new InternalNetworkPatchablePropertiesConnectedIPv4SubnetsItem()
 {
 Prefix = "10.0.0.0/24",
 }
 },
                 ConnectedIPv6Subnets =
 {
-new ManagedNetworkFabric.Models.InternalNetworkPatchablePropertiesConnectedIPv6SubnetsItem()
+new InternalNetworkPatchablePropertiesConnectedIPv6SubnetsItem()
 {
 Prefix = "3FFE:FFFF:0:CD30::a0/29",
 }
 },
-                StaticRouteConfiguration = new ManagedNetworkFabric.Models.InternalNetworkPatchablePropertiesStaticRouteConfiguration()
+                StaticRouteConfiguration = new InternalNetworkPatchablePropertiesStaticRouteConfiguration()
                 {
-                    BfdConfiguration = new ManagedNetworkFabric.Models.BfdConfiguration(),
+                    BfdConfiguration = new BfdConfiguration(),
                     IPv4Routes =
 {
-new ManagedNetworkFabric.Models.InternalNetworkPatchablePropertiesStaticRouteConfigurationIPv4RoutesItem("10.1.0.0/24",new string[]
+new InternalNetworkPatchablePropertiesStaticRouteConfigurationIPv4RoutesItem("10.1.0.0/24",new string[]
 {
 "10.0.0.1"
 })
 },
                     IPv6Routes =
 {
-new ManagedNetworkFabric.Models.InternalNetworkPatchablePropertiesStaticRouteConfigurationIPv6RoutesItem("2fff::/64",new string[]
+new InternalNetworkPatchablePropertiesStaticRouteConfigurationIPv6RoutesItem("2fff::/64",new string[]
 {
 "2ffe::1"
 })
 },
                 },
-                BgpConfiguration = new ManagedNetworkFabric.Models.InternalNetworkPatchablePropertiesBgpConfiguration(6)
+                BgpConfiguration = new InternalNetworkPatchablePropertiesBgpConfiguration(6)
                 {
-                    BfdConfiguration = new ManagedNetworkFabric.Models.BfdConfiguration(),
+                    BfdConfiguration = new BfdConfiguration(),
                     DefaultRouteOriginate = BooleanEnumProperty.True,
                     AllowAS = 1,
                     AllowASOverride = AllowASOverride.Enable,
@@ -124,14 +124,14 @@ new ManagedNetworkFabric.Models.InternalNetworkPatchablePropertiesStaticRouteCon
 },
                     IPv4NeighborAddress =
 {
-new ManagedNetworkFabric.Models.InternalNetworkPatchablePropertiesBgpConfigurationIPv4NeighborAddressItem()
+new InternalNetworkPatchablePropertiesBgpConfigurationIPv4NeighborAddressItem()
 {
 Address = "10.1.0.0",
 }
 },
                     IPv6NeighborAddress =
 {
-new ManagedNetworkFabric.Models.InternalNetworkPatchablePropertiesBgpConfigurationIPv6NeighborAddressItem()
+new InternalNetworkPatchablePropertiesBgpConfigurationIPv6NeighborAddressItem()
 {
 Address = "2fff::",
 }
@@ -140,12 +140,12 @@ Address = "2fff::",
                 ImportRoutePolicyId = "/subscriptions/subscriptionId/resourceGroups/resourceGroupName/providers/Microsoft.ManagedNetworkFabric/routePolicies/routePolicyName1",
                 ExportRoutePolicyId = "/subscriptions/subscriptionId/resourceGroups/resourceGroupName/providers/Microsoft.ManagedNetworkFabric/routePolicies/routePolicyName2",
             };
-            ArmOperation<ManagedNetworkFabric.InternalNetworkResource> lro = await internalNetwork.UpdateAsync(WaitUntil.Completed, patch);
-            ManagedNetworkFabric.InternalNetworkResource result = lro.Value;
+            ArmOperation<InternalNetworkResource> lro = await internalNetwork.UpdateAsync(WaitUntil.Completed, patch);
+            InternalNetworkResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            ManagedNetworkFabric.InternalNetworkData resourceData = result.Data;
+            InternalNetworkData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -169,8 +169,8 @@ Address = "2fff::",
             string resourceGroupName = "resourceGroupName";
             string l3IsolationDomainName = "example-l3domain";
             string internalNetworkName = "example-internalnetwork";
-            ResourceIdentifier internalNetworkResourceId = ManagedNetworkFabric.InternalNetworkResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, l3IsolationDomainName, internalNetworkName);
-            ManagedNetworkFabric.InternalNetworkResource internalNetwork = client.GetInternalNetworkResource(internalNetworkResourceId);
+            ResourceIdentifier internalNetworkResourceId = InternalNetworkResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, l3IsolationDomainName, internalNetworkName);
+            InternalNetworkResource internalNetwork = client.GetInternalNetworkResource(internalNetworkResourceId);
 
             // invoke the operation
             await internalNetwork.DeleteAsync(WaitUntil.Completed);
@@ -197,11 +197,11 @@ Address = "2fff::",
             string resourceGroupName = "resourceGroupName";
             string l3IsolationDomainName = "example-l3domain";
             string internalNetworkName = "example-internalnetwork";
-            ResourceIdentifier internalNetworkResourceId = ManagedNetworkFabric.InternalNetworkResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, l3IsolationDomainName, internalNetworkName);
-            ManagedNetworkFabric.InternalNetworkResource internalNetwork = client.GetInternalNetworkResource(internalNetworkResourceId);
+            ResourceIdentifier internalNetworkResourceId = InternalNetworkResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, l3IsolationDomainName, internalNetworkName);
+            InternalNetworkResource internalNetwork = client.GetInternalNetworkResource(internalNetworkResourceId);
 
             // invoke the operation
-            ManagedNetworkFabric.Models.UpdateAdministrativeState body = new ManagedNetworkFabric.Models.UpdateAdministrativeState()
+            UpdateAdministrativeState body = new UpdateAdministrativeState()
             {
                 State = AdministrativeState.Enable,
                 ResourceIds =
@@ -233,11 +233,11 @@ Address = "2fff::",
             string resourceGroupName = "resourceGroupName";
             string l3IsolationDomainName = "example-l3domain";
             string internalNetworkName = "example-internalnetwork";
-            ResourceIdentifier internalNetworkResourceId = ManagedNetworkFabric.InternalNetworkResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, l3IsolationDomainName, internalNetworkName);
-            ManagedNetworkFabric.InternalNetworkResource internalNetwork = client.GetInternalNetworkResource(internalNetworkResourceId);
+            ResourceIdentifier internalNetworkResourceId = InternalNetworkResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, l3IsolationDomainName, internalNetworkName);
+            InternalNetworkResource internalNetwork = client.GetInternalNetworkResource(internalNetworkResourceId);
 
             // invoke the operation
-            ManagedNetworkFabric.Models.UpdateAdministrativeState body = new ManagedNetworkFabric.Models.UpdateAdministrativeState()
+            UpdateAdministrativeState body = new UpdateAdministrativeState()
             {
                 State = AdministrativeState.Enable,
                 ResourceIds =
@@ -269,11 +269,11 @@ Address = "2fff::",
             string resourceGroupName = "resourceGroupName";
             string l3IsolationDomainName = "example-l3domain";
             string internalNetworkName = "example-internalnetwork";
-            ResourceIdentifier internalNetworkResourceId = ManagedNetworkFabric.InternalNetworkResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, l3IsolationDomainName, internalNetworkName);
-            ManagedNetworkFabric.InternalNetworkResource internalNetwork = client.GetInternalNetworkResource(internalNetworkResourceId);
+            ResourceIdentifier internalNetworkResourceId = InternalNetworkResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, l3IsolationDomainName, internalNetworkName);
+            InternalNetworkResource internalNetwork = client.GetInternalNetworkResource(internalNetworkResourceId);
 
             // invoke the operation
-            ManagedNetworkFabric.Models.UpdateAdministrativeState body = new ManagedNetworkFabric.Models.UpdateAdministrativeState()
+            UpdateAdministrativeState body = new UpdateAdministrativeState()
             {
                 State = AdministrativeState.Enable,
                 ResourceIds =
@@ -305,11 +305,11 @@ Address = "2fff::",
             string resourceGroupName = "resourceGroupName";
             string l3IsolationDomainName = "example-l3domain";
             string internalNetworkName = "example-internalnetwork";
-            ResourceIdentifier internalNetworkResourceId = ManagedNetworkFabric.InternalNetworkResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, l3IsolationDomainName, internalNetworkName);
-            ManagedNetworkFabric.InternalNetworkResource internalNetwork = client.GetInternalNetworkResource(internalNetworkResourceId);
+            ResourceIdentifier internalNetworkResourceId = InternalNetworkResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, l3IsolationDomainName, internalNetworkName);
+            InternalNetworkResource internalNetwork = client.GetInternalNetworkResource(internalNetworkResourceId);
 
             // invoke the operation
-            ManagedNetworkFabric.Models.EnableDisableOnResources body = new ManagedNetworkFabric.Models.EnableDisableOnResources()
+            EnableDisableOnResources body = new EnableDisableOnResources()
             {
                 ResourceIds =
 {
@@ -340,11 +340,11 @@ Address = "2fff::",
             string resourceGroupName = "resourceGroupName";
             string l3IsolationDomainName = "example-l3domain";
             string internalNetworkName = "example-internalnetwork";
-            ResourceIdentifier internalNetworkResourceId = ManagedNetworkFabric.InternalNetworkResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, l3IsolationDomainName, internalNetworkName);
-            ManagedNetworkFabric.InternalNetworkResource internalNetwork = client.GetInternalNetworkResource(internalNetworkResourceId);
+            ResourceIdentifier internalNetworkResourceId = InternalNetworkResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, l3IsolationDomainName, internalNetworkName);
+            InternalNetworkResource internalNetwork = client.GetInternalNetworkResource(internalNetworkResourceId);
 
             // invoke the operation
-            ManagedNetworkFabric.Models.EnableDisableOnResources body = new ManagedNetworkFabric.Models.EnableDisableOnResources()
+            EnableDisableOnResources body = new EnableDisableOnResources()
             {
                 ResourceIds =
 {
@@ -375,11 +375,11 @@ Address = "2fff::",
             string resourceGroupName = "resourceGroupName";
             string l3IsolationDomainName = "example-l3domain";
             string internalNetworkName = "example-internalnetwork";
-            ResourceIdentifier internalNetworkResourceId = ManagedNetworkFabric.InternalNetworkResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, l3IsolationDomainName, internalNetworkName);
-            ManagedNetworkFabric.InternalNetworkResource internalNetwork = client.GetInternalNetworkResource(internalNetworkResourceId);
+            ResourceIdentifier internalNetworkResourceId = InternalNetworkResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, l3IsolationDomainName, internalNetworkName);
+            InternalNetworkResource internalNetwork = client.GetInternalNetworkResource(internalNetworkResourceId);
 
             // invoke the operation
-            ManagedNetworkFabric.Models.UpdateAdministrativeState body = new ManagedNetworkFabric.Models.UpdateAdministrativeState()
+            UpdateAdministrativeState body = new UpdateAdministrativeState()
             {
                 State = AdministrativeState.Enable,
                 ResourceIds =

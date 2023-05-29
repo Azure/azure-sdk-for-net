@@ -10,10 +10,10 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager;
-using Azure.ResourceManager.Azure.ResourceManager.ManagedNetworkFabric;
+using Azure.ResourceManager.ManagedNetworkFabric;
 using Azure.ResourceManager.Resources;
 
-namespace Azure.ResourceManager.Azure.ResourceManager.ManagedNetworkFabric.Samples
+namespace Azure.ResourceManager.ManagedNetworkFabric.Samples
 {
     public partial class Sample_NetworkDeviceSkuCollection
     {
@@ -37,15 +37,15 @@ namespace Azure.ResourceManager.Azure.ResourceManager.ManagedNetworkFabric.Sampl
             SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
 
             // get the collection of this NetworkDeviceSkuResource
-            ManagedNetworkFabric.NetworkDeviceSkuCollection collection = subscriptionResource.GetNetworkDeviceSkus();
+            NetworkDeviceSkuCollection collection = subscriptionResource.GetNetworkDeviceSkus();
 
             // invoke the operation
             string networkDeviceSkuName = "DefaultSku";
-            ManagedNetworkFabric.NetworkDeviceSkuResource result = await collection.GetAsync(networkDeviceSkuName);
+            NetworkDeviceSkuResource result = await collection.GetAsync(networkDeviceSkuName);
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            ManagedNetworkFabric.NetworkDeviceSkuData resourceData = result.Data;
+            NetworkDeviceSkuData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.Azure.ResourceManager.ManagedNetworkFabric.Sampl
             SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
 
             // get the collection of this NetworkDeviceSkuResource
-            ManagedNetworkFabric.NetworkDeviceSkuCollection collection = subscriptionResource.GetNetworkDeviceSkus();
+            NetworkDeviceSkuCollection collection = subscriptionResource.GetNetworkDeviceSkus();
 
             // invoke the operation
             string networkDeviceSkuName = "DefaultSku";
@@ -99,14 +99,14 @@ namespace Azure.ResourceManager.Azure.ResourceManager.ManagedNetworkFabric.Sampl
             SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
 
             // get the collection of this NetworkDeviceSkuResource
-            ManagedNetworkFabric.NetworkDeviceSkuCollection collection = subscriptionResource.GetNetworkDeviceSkus();
+            NetworkDeviceSkuCollection collection = subscriptionResource.GetNetworkDeviceSkus();
 
             // invoke the operation and iterate over the result
-            await foreach (ManagedNetworkFabric.NetworkDeviceSkuResource item in collection.GetAllAsync())
+            await foreach (NetworkDeviceSkuResource item in collection.GetAllAsync())
             {
                 // the variable item is a resource, you could call other operations on this instance as well
                 // but just for demo, we get its data from this resource instance
-                ManagedNetworkFabric.NetworkDeviceSkuData resourceData = item.Data;
+                NetworkDeviceSkuData resourceData = item.Data;
                 // for demo we just print out the id
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }

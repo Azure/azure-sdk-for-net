@@ -12,11 +12,11 @@ using Azure;
 using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager;
-using Azure.ResourceManager.Azure.ResourceManager.ManagedNetworkFabric;
-using Azure.ResourceManager.Azure.ResourceManager.ManagedNetworkFabric.Models;
+using Azure.ResourceManager.ManagedNetworkFabric;
+using Azure.ResourceManager.ManagedNetworkFabric.Models;
 using Azure.ResourceManager.Resources;
 
-namespace Azure.ResourceManager.Azure.ResourceManager.ManagedNetworkFabric.Samples
+namespace Azure.ResourceManager.ManagedNetworkFabric.Samples
 {
     public partial class Sample_NetworkRackResource
     {
@@ -38,15 +38,15 @@ namespace Azure.ResourceManager.Azure.ResourceManager.ManagedNetworkFabric.Sampl
             string subscriptionId = "subscriptionId";
             string resourceGroupName = "resourceGroupName";
             string networkRackName = "networkRackName";
-            ResourceIdentifier networkRackResourceId = ManagedNetworkFabric.NetworkRackResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, networkRackName);
-            ManagedNetworkFabric.NetworkRackResource networkRack = client.GetNetworkRackResource(networkRackResourceId);
+            ResourceIdentifier networkRackResourceId = NetworkRackResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, networkRackName);
+            NetworkRackResource networkRack = client.GetNetworkRackResource(networkRackResourceId);
 
             // invoke the operation
-            ManagedNetworkFabric.NetworkRackResource result = await networkRack.GetAsync();
+            NetworkRackResource result = await networkRack.GetAsync();
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            ManagedNetworkFabric.NetworkRackData resourceData = result.Data;
+            NetworkRackData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -69,11 +69,11 @@ namespace Azure.ResourceManager.Azure.ResourceManager.ManagedNetworkFabric.Sampl
             string subscriptionId = "subscriptionId";
             string resourceGroupName = "resourceGroupName";
             string networkRackName = "networkRackName";
-            ResourceIdentifier networkRackResourceId = ManagedNetworkFabric.NetworkRackResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, networkRackName);
-            ManagedNetworkFabric.NetworkRackResource networkRack = client.GetNetworkRackResource(networkRackResourceId);
+            ResourceIdentifier networkRackResourceId = NetworkRackResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, networkRackName);
+            NetworkRackResource networkRack = client.GetNetworkRackResource(networkRackResourceId);
 
             // invoke the operation
-            ManagedNetworkFabric.Models.NetworkRackPatch patch = new ManagedNetworkFabric.Models.NetworkRackPatch()
+            NetworkRackPatch patch = new NetworkRackPatch()
             {
                 Properties = BinaryData.FromObjectAsJson(new Dictionary<string, object>()
                 {
@@ -83,12 +83,12 @@ namespace Azure.ResourceManager.Azure.ResourceManager.ManagedNetworkFabric.Sampl
 ["keyID"] = "keyValue",
 },
             };
-            ArmOperation<ManagedNetworkFabric.NetworkRackResource> lro = await networkRack.UpdateAsync(WaitUntil.Completed, patch);
-            ManagedNetworkFabric.NetworkRackResource result = lro.Value;
+            ArmOperation<NetworkRackResource> lro = await networkRack.UpdateAsync(WaitUntil.Completed, patch);
+            NetworkRackResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            ManagedNetworkFabric.NetworkRackData resourceData = result.Data;
+            NetworkRackData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -111,8 +111,8 @@ namespace Azure.ResourceManager.Azure.ResourceManager.ManagedNetworkFabric.Sampl
             string subscriptionId = "subscriptionId";
             string resourceGroupName = "resourceGroupName";
             string networkRackName = "networkRackName";
-            ResourceIdentifier networkRackResourceId = ManagedNetworkFabric.NetworkRackResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, networkRackName);
-            ManagedNetworkFabric.NetworkRackResource networkRack = client.GetNetworkRackResource(networkRackResourceId);
+            ResourceIdentifier networkRackResourceId = NetworkRackResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, networkRackName);
+            NetworkRackResource networkRack = client.GetNetworkRackResource(networkRackResourceId);
 
             // invoke the operation
             await networkRack.DeleteAsync(WaitUntil.Completed);
@@ -140,11 +140,11 @@ namespace Azure.ResourceManager.Azure.ResourceManager.ManagedNetworkFabric.Sampl
             SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
 
             // invoke the operation and iterate over the result
-            await foreach (ManagedNetworkFabric.NetworkRackResource item in subscriptionResource.GetNetworkRacksAsync())
+            await foreach (NetworkRackResource item in subscriptionResource.GetNetworkRacksAsync())
             {
                 // the variable item is a resource, you could call other operations on this instance as well
                 // but just for demo, we get its data from this resource instance
-                ManagedNetworkFabric.NetworkRackData resourceData = item.Data;
+                NetworkRackData resourceData = item.Data;
                 // for demo we just print out the id
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }

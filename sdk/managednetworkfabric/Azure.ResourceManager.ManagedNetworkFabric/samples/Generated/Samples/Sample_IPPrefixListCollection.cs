@@ -11,11 +11,11 @@ using Azure;
 using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager;
-using Azure.ResourceManager.Azure.ResourceManager.ManagedNetworkFabric;
-using Azure.ResourceManager.Azure.ResourceManager.ManagedNetworkFabric.Models;
+using Azure.ResourceManager.ManagedNetworkFabric;
+using Azure.ResourceManager.ManagedNetworkFabric.Models;
 using Azure.ResourceManager.Resources;
 
-namespace Azure.ResourceManager.Azure.ResourceManager.ManagedNetworkFabric.Samples
+namespace Azure.ResourceManager.ManagedNetworkFabric.Samples
 {
     public partial class Sample_IPPrefixListCollection
     {
@@ -40,17 +40,17 @@ namespace Azure.ResourceManager.Azure.ResourceManager.ManagedNetworkFabric.Sampl
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
 
             // get the collection of this IPPrefixListResource
-            ManagedNetworkFabric.IPPrefixListCollection collection = resourceGroupResource.GetIPPrefixLists();
+            IPPrefixListCollection collection = resourceGroupResource.GetIPPrefixLists();
 
             // invoke the operation
             string ipPrefixListName = "IpPrefixList1";
-            ManagedNetworkFabric.IPPrefixListData data = new ManagedNetworkFabric.IPPrefixListData(new AzureLocation("EastUS"), PrefixActionType.Allow, 19, "1.1.1.0/24");
-            ArmOperation<ManagedNetworkFabric.IPPrefixListResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, ipPrefixListName, data);
-            ManagedNetworkFabric.IPPrefixListResource result = lro.Value;
+            IPPrefixListData data = new IPPrefixListData(new AzureLocation("EastUS"), PrefixActionType.Allow, 19, "1.1.1.0/24");
+            ArmOperation<IPPrefixListResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, ipPrefixListName, data);
+            IPPrefixListResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            ManagedNetworkFabric.IPPrefixListData resourceData = result.Data;
+            IPPrefixListData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -76,15 +76,15 @@ namespace Azure.ResourceManager.Azure.ResourceManager.ManagedNetworkFabric.Sampl
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
 
             // get the collection of this IPPrefixListResource
-            ManagedNetworkFabric.IPPrefixListCollection collection = resourceGroupResource.GetIPPrefixLists();
+            IPPrefixListCollection collection = resourceGroupResource.GetIPPrefixLists();
 
             // invoke the operation
             string ipPrefixListName = "IpPrefixList1";
-            ManagedNetworkFabric.IPPrefixListResource result = await collection.GetAsync(ipPrefixListName);
+            IPPrefixListResource result = await collection.GetAsync(ipPrefixListName);
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            ManagedNetworkFabric.IPPrefixListData resourceData = result.Data;
+            IPPrefixListData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.Azure.ResourceManager.ManagedNetworkFabric.Sampl
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
 
             // get the collection of this IPPrefixListResource
-            ManagedNetworkFabric.IPPrefixListCollection collection = resourceGroupResource.GetIPPrefixLists();
+            IPPrefixListCollection collection = resourceGroupResource.GetIPPrefixLists();
 
             // invoke the operation
             string ipPrefixListName = "IpPrefixList1";
@@ -140,14 +140,14 @@ namespace Azure.ResourceManager.Azure.ResourceManager.ManagedNetworkFabric.Sampl
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
 
             // get the collection of this IPPrefixListResource
-            ManagedNetworkFabric.IPPrefixListCollection collection = resourceGroupResource.GetIPPrefixLists();
+            IPPrefixListCollection collection = resourceGroupResource.GetIPPrefixLists();
 
             // invoke the operation and iterate over the result
-            await foreach (ManagedNetworkFabric.IPPrefixListResource item in collection.GetAllAsync())
+            await foreach (IPPrefixListResource item in collection.GetAllAsync())
             {
                 // the variable item is a resource, you could call other operations on this instance as well
                 // but just for demo, we get its data from this resource instance
-                ManagedNetworkFabric.IPPrefixListData resourceData = item.Data;
+                IPPrefixListData resourceData = item.Data;
                 // for demo we just print out the id
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }

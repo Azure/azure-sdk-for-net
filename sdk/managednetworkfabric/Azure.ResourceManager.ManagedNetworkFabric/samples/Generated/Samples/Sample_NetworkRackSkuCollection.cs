@@ -10,10 +10,10 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager;
-using Azure.ResourceManager.Azure.ResourceManager.ManagedNetworkFabric;
+using Azure.ResourceManager.ManagedNetworkFabric;
 using Azure.ResourceManager.Resources;
 
-namespace Azure.ResourceManager.Azure.ResourceManager.ManagedNetworkFabric.Samples
+namespace Azure.ResourceManager.ManagedNetworkFabric.Samples
 {
     public partial class Sample_NetworkRackSkuCollection
     {
@@ -37,15 +37,15 @@ namespace Azure.ResourceManager.Azure.ResourceManager.ManagedNetworkFabric.Sampl
             SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
 
             // get the collection of this NetworkRackSkuResource
-            ManagedNetworkFabric.NetworkRackSkuCollection collection = subscriptionResource.GetNetworkRackSkus();
+            NetworkRackSkuCollection collection = subscriptionResource.GetNetworkRackSkus();
 
             // invoke the operation
             string networkRackSkuName = "networkRackSkuName";
-            ManagedNetworkFabric.NetworkRackSkuResource result = await collection.GetAsync(networkRackSkuName);
+            NetworkRackSkuResource result = await collection.GetAsync(networkRackSkuName);
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            ManagedNetworkFabric.NetworkRackSkuData resourceData = result.Data;
+            NetworkRackSkuData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.Azure.ResourceManager.ManagedNetworkFabric.Sampl
             SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
 
             // get the collection of this NetworkRackSkuResource
-            ManagedNetworkFabric.NetworkRackSkuCollection collection = subscriptionResource.GetNetworkRackSkus();
+            NetworkRackSkuCollection collection = subscriptionResource.GetNetworkRackSkus();
 
             // invoke the operation
             string networkRackSkuName = "networkRackSkuName";
@@ -99,14 +99,14 @@ namespace Azure.ResourceManager.Azure.ResourceManager.ManagedNetworkFabric.Sampl
             SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
 
             // get the collection of this NetworkRackSkuResource
-            ManagedNetworkFabric.NetworkRackSkuCollection collection = subscriptionResource.GetNetworkRackSkus();
+            NetworkRackSkuCollection collection = subscriptionResource.GetNetworkRackSkus();
 
             // invoke the operation and iterate over the result
-            await foreach (ManagedNetworkFabric.NetworkRackSkuResource item in collection.GetAllAsync())
+            await foreach (NetworkRackSkuResource item in collection.GetAllAsync())
             {
                 // the variable item is a resource, you could call other operations on this instance as well
                 // but just for demo, we get its data from this resource instance
-                ManagedNetworkFabric.NetworkRackSkuData resourceData = item.Data;
+                NetworkRackSkuData resourceData = item.Data;
                 // for demo we just print out the id
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }

@@ -11,11 +11,11 @@ using Azure;
 using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager;
-using Azure.ResourceManager.Azure.ResourceManager.ManagedNetworkFabric;
-using Azure.ResourceManager.Azure.ResourceManager.ManagedNetworkFabric.Models;
+using Azure.ResourceManager.ManagedNetworkFabric;
+using Azure.ResourceManager.ManagedNetworkFabric.Models;
 using Azure.ResourceManager.Resources;
 
-namespace Azure.ResourceManager.Azure.ResourceManager.ManagedNetworkFabric.Samples
+namespace Azure.ResourceManager.ManagedNetworkFabric.Samples
 {
     public partial class Sample_NetworkFabricControllerResource
     {
@@ -37,15 +37,15 @@ namespace Azure.ResourceManager.Azure.ResourceManager.ManagedNetworkFabric.Sampl
             string subscriptionId = "subscriptionId";
             string resourceGroupName = "resourceGroupName";
             string networkFabricControllerName = "networkFabricControllerName";
-            ResourceIdentifier networkFabricControllerResourceId = ManagedNetworkFabric.NetworkFabricControllerResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, networkFabricControllerName);
-            ManagedNetworkFabric.NetworkFabricControllerResource networkFabricController = client.GetNetworkFabricControllerResource(networkFabricControllerResourceId);
+            ResourceIdentifier networkFabricControllerResourceId = NetworkFabricControllerResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, networkFabricControllerName);
+            NetworkFabricControllerResource networkFabricController = client.GetNetworkFabricControllerResource(networkFabricControllerResourceId);
 
             // invoke the operation
-            ManagedNetworkFabric.NetworkFabricControllerResource result = await networkFabricController.GetAsync();
+            NetworkFabricControllerResource result = await networkFabricController.GetAsync();
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            ManagedNetworkFabric.NetworkFabricControllerData resourceData = result.Data;
+            NetworkFabricControllerData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -68,23 +68,23 @@ namespace Azure.ResourceManager.Azure.ResourceManager.ManagedNetworkFabric.Sampl
             string subscriptionId = "subscriptionId";
             string resourceGroupName = "resourceGroupName";
             string networkFabricControllerName = "networkFabricControllerName";
-            ResourceIdentifier networkFabricControllerResourceId = ManagedNetworkFabric.NetworkFabricControllerResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, networkFabricControllerName);
-            ManagedNetworkFabric.NetworkFabricControllerResource networkFabricController = client.GetNetworkFabricControllerResource(networkFabricControllerResourceId);
+            ResourceIdentifier networkFabricControllerResourceId = NetworkFabricControllerResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, networkFabricControllerName);
+            NetworkFabricControllerResource networkFabricController = client.GetNetworkFabricControllerResource(networkFabricControllerResourceId);
 
             // invoke the operation
-            ManagedNetworkFabric.Models.NetworkFabricControllerPatch patch = new ManagedNetworkFabric.Models.NetworkFabricControllerPatch()
+            NetworkFabricControllerPatch patch = new NetworkFabricControllerPatch()
             {
                 WorkloadExpressRouteConnections =
 {
-new ManagedNetworkFabric.Models.ExpressRouteConnectionInformation("/subscriptions/xxxxx/resourceGroups/resourceGroupName/providers/Microsoft.Network/expressRouteCircuits/expressRouteCircuitName","xxxxxxx")
+new ExpressRouteConnectionInformation("/subscriptions/xxxxx/resourceGroups/resourceGroupName/providers/Microsoft.Network/expressRouteCircuits/expressRouteCircuitName","xxxxxxx")
 },
             };
-            ArmOperation<ManagedNetworkFabric.NetworkFabricControllerResource> lro = await networkFabricController.UpdateAsync(WaitUntil.Completed, patch);
-            ManagedNetworkFabric.NetworkFabricControllerResource result = lro.Value;
+            ArmOperation<NetworkFabricControllerResource> lro = await networkFabricController.UpdateAsync(WaitUntil.Completed, patch);
+            NetworkFabricControllerResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            ManagedNetworkFabric.NetworkFabricControllerData resourceData = result.Data;
+            NetworkFabricControllerData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -107,8 +107,8 @@ new ManagedNetworkFabric.Models.ExpressRouteConnectionInformation("/subscription
             string subscriptionId = "subscriptionId";
             string resourceGroupName = "resourceGroupName";
             string networkFabricControllerName = "networkFabricControllerName";
-            ResourceIdentifier networkFabricControllerResourceId = ManagedNetworkFabric.NetworkFabricControllerResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, networkFabricControllerName);
-            ManagedNetworkFabric.NetworkFabricControllerResource networkFabricController = client.GetNetworkFabricControllerResource(networkFabricControllerResourceId);
+            ResourceIdentifier networkFabricControllerResourceId = NetworkFabricControllerResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, networkFabricControllerName);
+            NetworkFabricControllerResource networkFabricController = client.GetNetworkFabricControllerResource(networkFabricControllerResourceId);
 
             // invoke the operation
             await networkFabricController.DeleteAsync(WaitUntil.Completed);
@@ -136,11 +136,11 @@ new ManagedNetworkFabric.Models.ExpressRouteConnectionInformation("/subscription
             SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
 
             // invoke the operation and iterate over the result
-            await foreach (ManagedNetworkFabric.NetworkFabricControllerResource item in subscriptionResource.GetNetworkFabricControllersAsync())
+            await foreach (NetworkFabricControllerResource item in subscriptionResource.GetNetworkFabricControllersAsync())
             {
                 // the variable item is a resource, you could call other operations on this instance as well
                 // but just for demo, we get its data from this resource instance
-                ManagedNetworkFabric.NetworkFabricControllerData resourceData = item.Data;
+                NetworkFabricControllerData resourceData = item.Data;
                 // for demo we just print out the id
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
@@ -166,8 +166,8 @@ new ManagedNetworkFabric.Models.ExpressRouteConnectionInformation("/subscription
             string subscriptionId = "subscriptionId";
             string resourceGroupName = "resourceGroupName";
             string networkFabricControllerName = "networkFabricControllerName";
-            ResourceIdentifier networkFabricControllerResourceId = ManagedNetworkFabric.NetworkFabricControllerResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, networkFabricControllerName);
-            ManagedNetworkFabric.NetworkFabricControllerResource networkFabricController = client.GetNetworkFabricControllerResource(networkFabricControllerResourceId);
+            ResourceIdentifier networkFabricControllerResourceId = NetworkFabricControllerResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, networkFabricControllerName);
+            NetworkFabricControllerResource networkFabricController = client.GetNetworkFabricControllerResource(networkFabricControllerResourceId);
 
             // invoke the operation
             await networkFabricController.EnableWorkloadManagementNetworkAsync(WaitUntil.Completed);
@@ -193,8 +193,8 @@ new ManagedNetworkFabric.Models.ExpressRouteConnectionInformation("/subscription
             string subscriptionId = "subscriptionId";
             string resourceGroupName = "resourceGroupName";
             string networkFabricControllerName = "networkFabricControllerName";
-            ResourceIdentifier networkFabricControllerResourceId = ManagedNetworkFabric.NetworkFabricControllerResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, networkFabricControllerName);
-            ManagedNetworkFabric.NetworkFabricControllerResource networkFabricController = client.GetNetworkFabricControllerResource(networkFabricControllerResourceId);
+            ResourceIdentifier networkFabricControllerResourceId = NetworkFabricControllerResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, networkFabricControllerName);
+            NetworkFabricControllerResource networkFabricController = client.GetNetworkFabricControllerResource(networkFabricControllerResourceId);
 
             // invoke the operation
             await networkFabricController.DisableWorkloadManagementNetworkAsync(WaitUntil.Completed);

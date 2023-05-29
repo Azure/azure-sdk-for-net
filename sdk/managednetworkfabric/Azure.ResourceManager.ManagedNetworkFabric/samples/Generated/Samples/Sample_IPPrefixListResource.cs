@@ -11,11 +11,11 @@ using Azure;
 using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager;
-using Azure.ResourceManager.Azure.ResourceManager.ManagedNetworkFabric;
-using Azure.ResourceManager.Azure.ResourceManager.ManagedNetworkFabric.Models;
+using Azure.ResourceManager.ManagedNetworkFabric;
+using Azure.ResourceManager.ManagedNetworkFabric.Models;
 using Azure.ResourceManager.Resources;
 
-namespace Azure.ResourceManager.Azure.ResourceManager.ManagedNetworkFabric.Samples
+namespace Azure.ResourceManager.ManagedNetworkFabric.Samples
 {
     public partial class Sample_IPPrefixListResource
     {
@@ -37,15 +37,15 @@ namespace Azure.ResourceManager.Azure.ResourceManager.ManagedNetworkFabric.Sampl
             string subscriptionId = "subscriptionId";
             string resourceGroupName = "resourceGroupName";
             string ipPrefixListName = "IpPrefixList1";
-            ResourceIdentifier ipPrefixListResourceId = ManagedNetworkFabric.IPPrefixListResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, ipPrefixListName);
-            ManagedNetworkFabric.IPPrefixListResource ipPrefixList = client.GetIPPrefixListResource(ipPrefixListResourceId);
+            ResourceIdentifier ipPrefixListResourceId = IPPrefixListResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, ipPrefixListName);
+            IPPrefixListResource ipPrefixList = client.GetIPPrefixListResource(ipPrefixListResourceId);
 
             // invoke the operation
-            ManagedNetworkFabric.IPPrefixListResource result = await ipPrefixList.GetAsync();
+            IPPrefixListResource result = await ipPrefixList.GetAsync();
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            ManagedNetworkFabric.IPPrefixListData resourceData = result.Data;
+            IPPrefixListData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -68,16 +68,16 @@ namespace Azure.ResourceManager.Azure.ResourceManager.ManagedNetworkFabric.Sampl
             string subscriptionId = "subscriptionId";
             string resourceGroupName = "resourceGroupName";
             string ipPrefixListName = "IpPrefixList1";
-            ResourceIdentifier ipPrefixListResourceId = ManagedNetworkFabric.IPPrefixListResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, ipPrefixListName);
-            ManagedNetworkFabric.IPPrefixListResource ipPrefixList = client.GetIPPrefixListResource(ipPrefixListResourceId);
+            ResourceIdentifier ipPrefixListResourceId = IPPrefixListResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, ipPrefixListName);
+            IPPrefixListResource ipPrefixList = client.GetIPPrefixListResource(ipPrefixListResourceId);
 
             // invoke the operation
-            ManagedNetworkFabric.Models.IPPrefixListPatch patch = new ManagedNetworkFabric.Models.IPPrefixListPatch();
-            ManagedNetworkFabric.IPPrefixListResource result = await ipPrefixList.UpdateAsync(patch);
+            IPPrefixListPatch patch = new IPPrefixListPatch();
+            IPPrefixListResource result = await ipPrefixList.UpdateAsync(patch);
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            ManagedNetworkFabric.IPPrefixListData resourceData = result.Data;
+            IPPrefixListData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -100,8 +100,8 @@ namespace Azure.ResourceManager.Azure.ResourceManager.ManagedNetworkFabric.Sampl
             string subscriptionId = "subscriptionId";
             string resourceGroupName = "resourceGroupName";
             string ipPrefixListName = "IpPrefixList1";
-            ResourceIdentifier ipPrefixListResourceId = ManagedNetworkFabric.IPPrefixListResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, ipPrefixListName);
-            ManagedNetworkFabric.IPPrefixListResource ipPrefixList = client.GetIPPrefixListResource(ipPrefixListResourceId);
+            ResourceIdentifier ipPrefixListResourceId = IPPrefixListResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, ipPrefixListName);
+            IPPrefixListResource ipPrefixList = client.GetIPPrefixListResource(ipPrefixListResourceId);
 
             // invoke the operation
             await ipPrefixList.DeleteAsync(WaitUntil.Completed);
@@ -129,11 +129,11 @@ namespace Azure.ResourceManager.Azure.ResourceManager.ManagedNetworkFabric.Sampl
             SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
 
             // invoke the operation and iterate over the result
-            await foreach (ManagedNetworkFabric.IPPrefixListResource item in subscriptionResource.GetIPPrefixListsAsync())
+            await foreach (IPPrefixListResource item in subscriptionResource.GetIPPrefixListsAsync())
             {
                 // the variable item is a resource, you could call other operations on this instance as well
                 // but just for demo, we get its data from this resource instance
-                ManagedNetworkFabric.IPPrefixListData resourceData = item.Data;
+                IPPrefixListData resourceData = item.Data;
                 // for demo we just print out the id
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }

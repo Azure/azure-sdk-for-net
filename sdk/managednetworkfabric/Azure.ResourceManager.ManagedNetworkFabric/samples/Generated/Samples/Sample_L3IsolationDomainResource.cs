@@ -11,11 +11,11 @@ using Azure;
 using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager;
-using Azure.ResourceManager.Azure.ResourceManager.ManagedNetworkFabric;
-using Azure.ResourceManager.Azure.ResourceManager.ManagedNetworkFabric.Models;
+using Azure.ResourceManager.ManagedNetworkFabric;
+using Azure.ResourceManager.ManagedNetworkFabric.Models;
 using Azure.ResourceManager.Resources;
 
-namespace Azure.ResourceManager.Azure.ResourceManager.ManagedNetworkFabric.Samples
+namespace Azure.ResourceManager.ManagedNetworkFabric.Samples
 {
     public partial class Sample_L3IsolationDomainResource
     {
@@ -37,15 +37,15 @@ namespace Azure.ResourceManager.Azure.ResourceManager.ManagedNetworkFabric.Sampl
             string subscriptionId = "subscriptionId";
             string resourceGroupName = "resourceGroupName";
             string l3IsolationDomainName = "example-l3domain";
-            ResourceIdentifier l3IsolationDomainResourceId = ManagedNetworkFabric.L3IsolationDomainResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, l3IsolationDomainName);
-            ManagedNetworkFabric.L3IsolationDomainResource l3IsolationDomain = client.GetL3IsolationDomainResource(l3IsolationDomainResourceId);
+            ResourceIdentifier l3IsolationDomainResourceId = L3IsolationDomainResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, l3IsolationDomainName);
+            L3IsolationDomainResource l3IsolationDomain = client.GetL3IsolationDomainResource(l3IsolationDomainResourceId);
 
             // invoke the operation
-            ManagedNetworkFabric.L3IsolationDomainResource result = await l3IsolationDomain.GetAsync();
+            L3IsolationDomainResource result = await l3IsolationDomain.GetAsync();
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            ManagedNetworkFabric.L3IsolationDomainData resourceData = result.Data;
+            L3IsolationDomainData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -68,43 +68,43 @@ namespace Azure.ResourceManager.Azure.ResourceManager.ManagedNetworkFabric.Sampl
             string subscriptionId = "subscriptionId";
             string resourceGroupName = "resourceGroupName";
             string l3IsolationDomainName = "example-l3domain";
-            ResourceIdentifier l3IsolationDomainResourceId = ManagedNetworkFabric.L3IsolationDomainResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, l3IsolationDomainName);
-            ManagedNetworkFabric.L3IsolationDomainResource l3IsolationDomain = client.GetL3IsolationDomainResource(l3IsolationDomainResourceId);
+            ResourceIdentifier l3IsolationDomainResourceId = L3IsolationDomainResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, l3IsolationDomainName);
+            L3IsolationDomainResource l3IsolationDomain = client.GetL3IsolationDomainResource(l3IsolationDomainResourceId);
 
             // invoke the operation
-            ManagedNetworkFabric.Models.L3IsolationDomainPatch patch = new ManagedNetworkFabric.Models.L3IsolationDomainPatch()
+            L3IsolationDomainPatch patch = new L3IsolationDomainPatch()
             {
                 RedistributeConnectedSubnets = RedistributeConnectedSubnet.True,
                 RedistributeStaticRoutes = RedistributeStaticRoute.False,
-                AggregateRouteConfiguration = new ManagedNetworkFabric.Models.L3IsolationDomainPatchPropertiesAggregateRouteConfiguration()
+                AggregateRouteConfiguration = new L3IsolationDomainPatchPropertiesAggregateRouteConfiguration()
                 {
                     IPv4Routes =
 {
-new ManagedNetworkFabric.Models.L3IsolationDomainPatchPropertiesAggregateRouteConfigurationIPv4RoutesItem()
+new L3IsolationDomainPatchPropertiesAggregateRouteConfigurationIPv4RoutesItem()
 {
 Prefix = "10.0.0.0/24",
 }
 },
                     IPv6Routes =
 {
-new ManagedNetworkFabric.Models.L3IsolationDomainPatchPropertiesAggregateRouteConfigurationIPv6RoutesItem()
+new L3IsolationDomainPatchPropertiesAggregateRouteConfigurationIPv6RoutesItem()
 {
 Prefix = "3FFE:FFFF:0:CD30::a0/29",
 }
 },
                 },
                 Description = "creating L3 isolation domain",
-                ConnectedSubnetRoutePolicy = new ManagedNetworkFabric.Models.L3IsolationDomainPatchPropertiesConnectedSubnetRoutePolicy()
+                ConnectedSubnetRoutePolicy = new L3IsolationDomainPatchPropertiesConnectedSubnetRoutePolicy()
                 {
                     ExportRoutePolicyId = "/subscriptions/subscriptionId/resourceGroups/resourceGroupName/providers/Microsoft.ManagedNetworkFabric/routePolicies/routePolicyName",
                 },
             };
-            ArmOperation<ManagedNetworkFabric.L3IsolationDomainResource> lro = await l3IsolationDomain.UpdateAsync(WaitUntil.Completed, patch);
-            ManagedNetworkFabric.L3IsolationDomainResource result = lro.Value;
+            ArmOperation<L3IsolationDomainResource> lro = await l3IsolationDomain.UpdateAsync(WaitUntil.Completed, patch);
+            L3IsolationDomainResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            ManagedNetworkFabric.L3IsolationDomainData resourceData = result.Data;
+            L3IsolationDomainData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -127,8 +127,8 @@ Prefix = "3FFE:FFFF:0:CD30::a0/29",
             string subscriptionId = "subscriptionId";
             string resourceGroupName = "resourceGroupName";
             string l3IsolationDomainName = "example-l3domain";
-            ResourceIdentifier l3IsolationDomainResourceId = ManagedNetworkFabric.L3IsolationDomainResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, l3IsolationDomainName);
-            ManagedNetworkFabric.L3IsolationDomainResource l3IsolationDomain = client.GetL3IsolationDomainResource(l3IsolationDomainResourceId);
+            ResourceIdentifier l3IsolationDomainResourceId = L3IsolationDomainResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, l3IsolationDomainName);
+            L3IsolationDomainResource l3IsolationDomain = client.GetL3IsolationDomainResource(l3IsolationDomainResourceId);
 
             // invoke the operation
             await l3IsolationDomain.DeleteAsync(WaitUntil.Completed);
@@ -156,11 +156,11 @@ Prefix = "3FFE:FFFF:0:CD30::a0/29",
             SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
 
             // invoke the operation and iterate over the result
-            await foreach (ManagedNetworkFabric.L3IsolationDomainResource item in subscriptionResource.GetL3IsolationDomainsAsync())
+            await foreach (L3IsolationDomainResource item in subscriptionResource.GetL3IsolationDomainsAsync())
             {
                 // the variable item is a resource, you could call other operations on this instance as well
                 // but just for demo, we get its data from this resource instance
-                ManagedNetworkFabric.L3IsolationDomainData resourceData = item.Data;
+                L3IsolationDomainData resourceData = item.Data;
                 // for demo we just print out the id
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
@@ -186,11 +186,11 @@ Prefix = "3FFE:FFFF:0:CD30::a0/29",
             string subscriptionId = "subscriptionId";
             string resourceGroupName = "resourceGroupName";
             string l3IsolationDomainName = "example-l3domain";
-            ResourceIdentifier l3IsolationDomainResourceId = ManagedNetworkFabric.L3IsolationDomainResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, l3IsolationDomainName);
-            ManagedNetworkFabric.L3IsolationDomainResource l3IsolationDomain = client.GetL3IsolationDomainResource(l3IsolationDomainResourceId);
+            ResourceIdentifier l3IsolationDomainResourceId = L3IsolationDomainResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, l3IsolationDomainName);
+            L3IsolationDomainResource l3IsolationDomain = client.GetL3IsolationDomainResource(l3IsolationDomainResourceId);
 
             // invoke the operation
-            ManagedNetworkFabric.Models.UpdateAdministrativeState body = new ManagedNetworkFabric.Models.UpdateAdministrativeState()
+            UpdateAdministrativeState body = new UpdateAdministrativeState()
             {
                 State = AdministrativeState.Enable,
                 ResourceIds =
@@ -221,11 +221,11 @@ Prefix = "3FFE:FFFF:0:CD30::a0/29",
             string subscriptionId = "subscriptionId";
             string resourceGroupName = "resourceGroupName";
             string l3IsolationDomainName = "example-l3domain";
-            ResourceIdentifier l3IsolationDomainResourceId = ManagedNetworkFabric.L3IsolationDomainResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, l3IsolationDomainName);
-            ManagedNetworkFabric.L3IsolationDomainResource l3IsolationDomain = client.GetL3IsolationDomainResource(l3IsolationDomainResourceId);
+            ResourceIdentifier l3IsolationDomainResourceId = L3IsolationDomainResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, l3IsolationDomainName);
+            L3IsolationDomainResource l3IsolationDomain = client.GetL3IsolationDomainResource(l3IsolationDomainResourceId);
 
             // invoke the operation
-            ManagedNetworkFabric.Models.UpdateAdministrativeState body = new ManagedNetworkFabric.Models.UpdateAdministrativeState()
+            UpdateAdministrativeState body = new UpdateAdministrativeState()
             {
                 State = AdministrativeState.Enable,
                 ResourceIds =
@@ -256,11 +256,11 @@ Prefix = "3FFE:FFFF:0:CD30::a0/29",
             string subscriptionId = "subscriptionId";
             string resourceGroupName = "resourceGroupName";
             string l3IsolationDomainName = "l3IsolationDomainName";
-            ResourceIdentifier l3IsolationDomainResourceId = ManagedNetworkFabric.L3IsolationDomainResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, l3IsolationDomainName);
-            ManagedNetworkFabric.L3IsolationDomainResource l3IsolationDomain = client.GetL3IsolationDomainResource(l3IsolationDomainResourceId);
+            ResourceIdentifier l3IsolationDomainResourceId = L3IsolationDomainResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, l3IsolationDomainName);
+            L3IsolationDomainResource l3IsolationDomain = client.GetL3IsolationDomainResource(l3IsolationDomainResourceId);
 
             // invoke the operation
-            ManagedNetworkFabric.Models.EnableDisableOnResources body = new ManagedNetworkFabric.Models.EnableDisableOnResources()
+            EnableDisableOnResources body = new EnableDisableOnResources()
             {
                 ResourceIds =
 {
@@ -290,11 +290,11 @@ Prefix = "3FFE:FFFF:0:CD30::a0/29",
             string subscriptionId = "subscriptionId";
             string resourceGroupName = "resourceGroupName";
             string l3IsolationDomainName = "example-l3domain";
-            ResourceIdentifier l3IsolationDomainResourceId = ManagedNetworkFabric.L3IsolationDomainResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, l3IsolationDomainName);
-            ManagedNetworkFabric.L3IsolationDomainResource l3IsolationDomain = client.GetL3IsolationDomainResource(l3IsolationDomainResourceId);
+            ResourceIdentifier l3IsolationDomainResourceId = L3IsolationDomainResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, l3IsolationDomainName);
+            L3IsolationDomainResource l3IsolationDomain = client.GetL3IsolationDomainResource(l3IsolationDomainResourceId);
 
             // invoke the operation
-            ManagedNetworkFabric.Models.EnableDisableOnResources body = new ManagedNetworkFabric.Models.EnableDisableOnResources()
+            EnableDisableOnResources body = new EnableDisableOnResources()
             {
                 ResourceIds =
 {

@@ -10,9 +10,9 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager;
-using Azure.ResourceManager.Azure.ResourceManager.ManagedNetworkFabric;
+using Azure.ResourceManager.ManagedNetworkFabric;
 
-namespace Azure.ResourceManager.Azure.ResourceManager.ManagedNetworkFabric.Samples
+namespace Azure.ResourceManager.ManagedNetworkFabric.Samples
 {
     public partial class Sample_NetworkFabricSkuResource
     {
@@ -33,15 +33,15 @@ namespace Azure.ResourceManager.Azure.ResourceManager.ManagedNetworkFabric.Sampl
             // for more information of creating NetworkFabricSkuResource, please refer to the document of NetworkFabricSkuResource
             string subscriptionId = "subscriptionId";
             string networkFabricSkuName = "networkFabricSkuName";
-            ResourceIdentifier networkFabricSkuResourceId = ManagedNetworkFabric.NetworkFabricSkuResource.CreateResourceIdentifier(subscriptionId, networkFabricSkuName);
-            ManagedNetworkFabric.NetworkFabricSkuResource networkFabricSku = client.GetNetworkFabricSkuResource(networkFabricSkuResourceId);
+            ResourceIdentifier networkFabricSkuResourceId = NetworkFabricSkuResource.CreateResourceIdentifier(subscriptionId, networkFabricSkuName);
+            NetworkFabricSkuResource networkFabricSku = client.GetNetworkFabricSkuResource(networkFabricSkuResourceId);
 
             // invoke the operation
-            ManagedNetworkFabric.NetworkFabricSkuResource result = await networkFabricSku.GetAsync();
+            NetworkFabricSkuResource result = await networkFabricSku.GetAsync();
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            ManagedNetworkFabric.NetworkFabricSkuData resourceData = result.Data;
+            NetworkFabricSkuData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }

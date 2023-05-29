@@ -11,11 +11,11 @@ using Azure;
 using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager;
-using Azure.ResourceManager.Azure.ResourceManager.ManagedNetworkFabric;
-using Azure.ResourceManager.Azure.ResourceManager.ManagedNetworkFabric.Models;
+using Azure.ResourceManager.ManagedNetworkFabric;
+using Azure.ResourceManager.ManagedNetworkFabric.Models;
 using Azure.ResourceManager.Resources;
 
-namespace Azure.ResourceManager.Azure.ResourceManager.ManagedNetworkFabric.Samples
+namespace Azure.ResourceManager.ManagedNetworkFabric.Samples
 {
     public partial class Sample_NetworkDeviceCollection
     {
@@ -40,11 +40,11 @@ namespace Azure.ResourceManager.Azure.ResourceManager.ManagedNetworkFabric.Sampl
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
 
             // get the collection of this NetworkDeviceResource
-            ManagedNetworkFabric.NetworkDeviceCollection collection = resourceGroupResource.GetNetworkDevices();
+            NetworkDeviceCollection collection = resourceGroupResource.GetNetworkDevices();
 
             // invoke the operation
             string networkDeviceName = "networkDeviceName";
-            ManagedNetworkFabric.NetworkDeviceData data = new ManagedNetworkFabric.NetworkDeviceData(new AzureLocation("eastus"))
+            NetworkDeviceData data = new NetworkDeviceData(new AzureLocation("eastus"))
             {
                 Annotation = "null",
                 HostName = "networkDeviceName",
@@ -56,12 +56,12 @@ namespace Azure.ResourceManager.Azure.ResourceManager.ManagedNetworkFabric.Sampl
 ["keyID"] = "keyValue",
 },
             };
-            ArmOperation<ManagedNetworkFabric.NetworkDeviceResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, networkDeviceName, data);
-            ManagedNetworkFabric.NetworkDeviceResource result = lro.Value;
+            ArmOperation<NetworkDeviceResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, networkDeviceName, data);
+            NetworkDeviceResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            ManagedNetworkFabric.NetworkDeviceData resourceData = result.Data;
+            NetworkDeviceData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -87,15 +87,15 @@ namespace Azure.ResourceManager.Azure.ResourceManager.ManagedNetworkFabric.Sampl
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
 
             // get the collection of this NetworkDeviceResource
-            ManagedNetworkFabric.NetworkDeviceCollection collection = resourceGroupResource.GetNetworkDevices();
+            NetworkDeviceCollection collection = resourceGroupResource.GetNetworkDevices();
 
             // invoke the operation
             string networkDeviceName = "networkDeviceName";
-            ManagedNetworkFabric.NetworkDeviceResource result = await collection.GetAsync(networkDeviceName);
+            NetworkDeviceResource result = await collection.GetAsync(networkDeviceName);
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            ManagedNetworkFabric.NetworkDeviceData resourceData = result.Data;
+            NetworkDeviceData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.Azure.ResourceManager.ManagedNetworkFabric.Sampl
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
 
             // get the collection of this NetworkDeviceResource
-            ManagedNetworkFabric.NetworkDeviceCollection collection = resourceGroupResource.GetNetworkDevices();
+            NetworkDeviceCollection collection = resourceGroupResource.GetNetworkDevices();
 
             // invoke the operation
             string networkDeviceName = "networkDeviceName";
@@ -151,14 +151,14 @@ namespace Azure.ResourceManager.Azure.ResourceManager.ManagedNetworkFabric.Sampl
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
 
             // get the collection of this NetworkDeviceResource
-            ManagedNetworkFabric.NetworkDeviceCollection collection = resourceGroupResource.GetNetworkDevices();
+            NetworkDeviceCollection collection = resourceGroupResource.GetNetworkDevices();
 
             // invoke the operation and iterate over the result
-            await foreach (ManagedNetworkFabric.NetworkDeviceResource item in collection.GetAllAsync())
+            await foreach (NetworkDeviceResource item in collection.GetAllAsync())
             {
                 // the variable item is a resource, you could call other operations on this instance as well
                 // but just for demo, we get its data from this resource instance
-                ManagedNetworkFabric.NetworkDeviceData resourceData = item.Data;
+                NetworkDeviceData resourceData = item.Data;
                 // for demo we just print out the id
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }

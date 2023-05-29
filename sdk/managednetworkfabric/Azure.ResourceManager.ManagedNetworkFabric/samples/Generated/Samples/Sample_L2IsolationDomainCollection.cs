@@ -11,10 +11,10 @@ using Azure;
 using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager;
-using Azure.ResourceManager.Azure.ResourceManager.ManagedNetworkFabric;
+using Azure.ResourceManager.ManagedNetworkFabric;
 using Azure.ResourceManager.Resources;
 
-namespace Azure.ResourceManager.Azure.ResourceManager.ManagedNetworkFabric.Samples
+namespace Azure.ResourceManager.ManagedNetworkFabric.Samples
 {
     public partial class Sample_L2IsolationDomainCollection
     {
@@ -39,22 +39,22 @@ namespace Azure.ResourceManager.Azure.ResourceManager.ManagedNetworkFabric.Sampl
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
 
             // get the collection of this L2IsolationDomainResource
-            ManagedNetworkFabric.L2IsolationDomainCollection collection = resourceGroupResource.GetL2IsolationDomains();
+            L2IsolationDomainCollection collection = resourceGroupResource.GetL2IsolationDomains();
 
             // invoke the operation
             string l2IsolationDomainName = "example-l2domain";
-            ManagedNetworkFabric.L2IsolationDomainData data = new ManagedNetworkFabric.L2IsolationDomainData(new AzureLocation("eastus"))
+            L2IsolationDomainData data = new L2IsolationDomainData(new AzureLocation("eastus"))
             {
                 NetworkFabricId = "/subscriptions/xxxxxx/resourceGroups/resourcegroupname/providers/Microsoft.ManagedNetworkFabric/networkFabrics/FabricName",
                 VlanId = 501,
                 Mtu = 1500,
             };
-            ArmOperation<ManagedNetworkFabric.L2IsolationDomainResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, l2IsolationDomainName, data);
-            ManagedNetworkFabric.L2IsolationDomainResource result = lro.Value;
+            ArmOperation<L2IsolationDomainResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, l2IsolationDomainName, data);
+            L2IsolationDomainResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            ManagedNetworkFabric.L2IsolationDomainData resourceData = result.Data;
+            L2IsolationDomainData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -80,15 +80,15 @@ namespace Azure.ResourceManager.Azure.ResourceManager.ManagedNetworkFabric.Sampl
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
 
             // get the collection of this L2IsolationDomainResource
-            ManagedNetworkFabric.L2IsolationDomainCollection collection = resourceGroupResource.GetL2IsolationDomains();
+            L2IsolationDomainCollection collection = resourceGroupResource.GetL2IsolationDomains();
 
             // invoke the operation
             string l2IsolationDomainName = "l2IsolationDomainName";
-            ManagedNetworkFabric.L2IsolationDomainResource result = await collection.GetAsync(l2IsolationDomainName);
+            L2IsolationDomainResource result = await collection.GetAsync(l2IsolationDomainName);
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            ManagedNetworkFabric.L2IsolationDomainData resourceData = result.Data;
+            L2IsolationDomainData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.Azure.ResourceManager.ManagedNetworkFabric.Sampl
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
 
             // get the collection of this L2IsolationDomainResource
-            ManagedNetworkFabric.L2IsolationDomainCollection collection = resourceGroupResource.GetL2IsolationDomains();
+            L2IsolationDomainCollection collection = resourceGroupResource.GetL2IsolationDomains();
 
             // invoke the operation
             string l2IsolationDomainName = "l2IsolationDomainName";
@@ -144,14 +144,14 @@ namespace Azure.ResourceManager.Azure.ResourceManager.ManagedNetworkFabric.Sampl
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
 
             // get the collection of this L2IsolationDomainResource
-            ManagedNetworkFabric.L2IsolationDomainCollection collection = resourceGroupResource.GetL2IsolationDomains();
+            L2IsolationDomainCollection collection = resourceGroupResource.GetL2IsolationDomains();
 
             // invoke the operation and iterate over the result
-            await foreach (ManagedNetworkFabric.L2IsolationDomainResource item in collection.GetAllAsync())
+            await foreach (L2IsolationDomainResource item in collection.GetAllAsync())
             {
                 // the variable item is a resource, you could call other operations on this instance as well
                 // but just for demo, we get its data from this resource instance
-                ManagedNetworkFabric.L2IsolationDomainData resourceData = item.Data;
+                L2IsolationDomainData resourceData = item.Data;
                 // for demo we just print out the id
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }

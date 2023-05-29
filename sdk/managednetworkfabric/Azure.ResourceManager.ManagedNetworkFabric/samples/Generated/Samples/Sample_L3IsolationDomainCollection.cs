@@ -11,11 +11,11 @@ using Azure;
 using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager;
-using Azure.ResourceManager.Azure.ResourceManager.ManagedNetworkFabric;
-using Azure.ResourceManager.Azure.ResourceManager.ManagedNetworkFabric.Models;
+using Azure.ResourceManager.ManagedNetworkFabric;
+using Azure.ResourceManager.ManagedNetworkFabric.Models;
 using Azure.ResourceManager.Resources;
 
-namespace Azure.ResourceManager.Azure.ResourceManager.ManagedNetworkFabric.Samples
+namespace Azure.ResourceManager.ManagedNetworkFabric.Samples
 {
     public partial class Sample_L3IsolationDomainCollection
     {
@@ -40,44 +40,44 @@ namespace Azure.ResourceManager.Azure.ResourceManager.ManagedNetworkFabric.Sampl
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
 
             // get the collection of this L3IsolationDomainResource
-            ManagedNetworkFabric.L3IsolationDomainCollection collection = resourceGroupResource.GetL3IsolationDomains();
+            L3IsolationDomainCollection collection = resourceGroupResource.GetL3IsolationDomains();
 
             // invoke the operation
             string l3IsolationDomainName = "example-l3domain";
-            ManagedNetworkFabric.L3IsolationDomainData data = new ManagedNetworkFabric.L3IsolationDomainData(new AzureLocation("eastus"))
+            L3IsolationDomainData data = new L3IsolationDomainData(new AzureLocation("eastus"))
             {
                 RedistributeConnectedSubnets = RedistributeConnectedSubnet.True,
                 RedistributeStaticRoutes = RedistributeStaticRoute.False,
-                AggregateRouteConfiguration = new ManagedNetworkFabric.Models.L3IsolationDomainPatchPropertiesAggregateRouteConfiguration()
+                AggregateRouteConfiguration = new L3IsolationDomainPatchPropertiesAggregateRouteConfiguration()
                 {
                     IPv4Routes =
 {
-new ManagedNetworkFabric.Models.L3IsolationDomainPatchPropertiesAggregateRouteConfigurationIPv4RoutesItem()
+new L3IsolationDomainPatchPropertiesAggregateRouteConfigurationIPv4RoutesItem()
 {
 Prefix = "10.0.0.0/24",
 }
 },
                     IPv6Routes =
 {
-new ManagedNetworkFabric.Models.L3IsolationDomainPatchPropertiesAggregateRouteConfigurationIPv6RoutesItem()
+new L3IsolationDomainPatchPropertiesAggregateRouteConfigurationIPv6RoutesItem()
 {
 Prefix = "10.0.0.1",
 }
 },
                 },
                 Description = "creating L3 isolation domain",
-                ConnectedSubnetRoutePolicy = new ManagedNetworkFabric.Models.L3IsolationDomainPatchPropertiesConnectedSubnetRoutePolicy()
+                ConnectedSubnetRoutePolicy = new L3IsolationDomainPatchPropertiesConnectedSubnetRoutePolicy()
                 {
                     ExportRoutePolicyId = "/subscriptions/subscriptionId/resourceGroups/resourceGroupName/providers/Microsoft.ManagedNetworkFabric/routePolicies/routePolicyName2",
                 },
                 NetworkFabricId = "/subscriptions/xxxxxx/resourceGroups/resourcegroupname/providers/Microsoft.ManagedNetworkFabric/networkFabrics/FabricName",
             };
-            ArmOperation<ManagedNetworkFabric.L3IsolationDomainResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, l3IsolationDomainName, data);
-            ManagedNetworkFabric.L3IsolationDomainResource result = lro.Value;
+            ArmOperation<L3IsolationDomainResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, l3IsolationDomainName, data);
+            L3IsolationDomainResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            ManagedNetworkFabric.L3IsolationDomainData resourceData = result.Data;
+            L3IsolationDomainData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -103,15 +103,15 @@ Prefix = "10.0.0.1",
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
 
             // get the collection of this L3IsolationDomainResource
-            ManagedNetworkFabric.L3IsolationDomainCollection collection = resourceGroupResource.GetL3IsolationDomains();
+            L3IsolationDomainCollection collection = resourceGroupResource.GetL3IsolationDomains();
 
             // invoke the operation
             string l3IsolationDomainName = "example-l3domain";
-            ManagedNetworkFabric.L3IsolationDomainResource result = await collection.GetAsync(l3IsolationDomainName);
+            L3IsolationDomainResource result = await collection.GetAsync(l3IsolationDomainName);
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            ManagedNetworkFabric.L3IsolationDomainData resourceData = result.Data;
+            L3IsolationDomainData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -137,7 +137,7 @@ Prefix = "10.0.0.1",
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
 
             // get the collection of this L3IsolationDomainResource
-            ManagedNetworkFabric.L3IsolationDomainCollection collection = resourceGroupResource.GetL3IsolationDomains();
+            L3IsolationDomainCollection collection = resourceGroupResource.GetL3IsolationDomains();
 
             // invoke the operation
             string l3IsolationDomainName = "example-l3domain";
@@ -167,14 +167,14 @@ Prefix = "10.0.0.1",
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
 
             // get the collection of this L3IsolationDomainResource
-            ManagedNetworkFabric.L3IsolationDomainCollection collection = resourceGroupResource.GetL3IsolationDomains();
+            L3IsolationDomainCollection collection = resourceGroupResource.GetL3IsolationDomains();
 
             // invoke the operation and iterate over the result
-            await foreach (ManagedNetworkFabric.L3IsolationDomainResource item in collection.GetAllAsync())
+            await foreach (L3IsolationDomainResource item in collection.GetAllAsync())
             {
                 // the variable item is a resource, you could call other operations on this instance as well
                 // but just for demo, we get its data from this resource instance
-                ManagedNetworkFabric.L3IsolationDomainData resourceData = item.Data;
+                L3IsolationDomainData resourceData = item.Data;
                 // for demo we just print out the id
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }

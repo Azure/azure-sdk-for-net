@@ -2,7 +2,7 @@
 
 Run `dotnet build /t:GenerateTests` to generate code.
 
-# Azure.ResourceManager.Azure.ResourceManager.ManagedNetworkFabric.Tests
+# Azure.ResourceManager.ManagedNetworkFabric.Tests
 
 > see https://aka.ms/autorest
 ``` yaml

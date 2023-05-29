@@ -11,10 +11,10 @@ using Azure;
 using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager;
-using Azure.ResourceManager.Azure.ResourceManager.ManagedNetworkFabric;
+using Azure.ResourceManager.ManagedNetworkFabric;
 using Azure.ResourceManager.Resources;
 
-namespace Azure.ResourceManager.Azure.ResourceManager.ManagedNetworkFabric.Samples
+namespace Azure.ResourceManager.ManagedNetworkFabric.Samples
 {
     public partial class Sample_NetworkRackCollection
     {
@@ -39,11 +39,11 @@ namespace Azure.ResourceManager.Azure.ResourceManager.ManagedNetworkFabric.Sampl
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
 
             // get the collection of this NetworkRackResource
-            ManagedNetworkFabric.NetworkRackCollection collection = resourceGroupResource.GetNetworkRacks();
+            NetworkRackCollection collection = resourceGroupResource.GetNetworkRacks();
 
             // invoke the operation
             string networkRackName = "networkRackName";
-            ManagedNetworkFabric.NetworkRackData data = new ManagedNetworkFabric.NetworkRackData(new AzureLocation("eastus"), "RackSKU", "/subscriptions/subscriptionId/resourceGroups/resourceGroupName/providers/Microsoft.ManagedNetworkFabric/networkFabrics/networkFabricName")
+            NetworkRackData data = new NetworkRackData(new AzureLocation("eastus"), "RackSKU", "/subscriptions/subscriptionId/resourceGroups/resourceGroupName/providers/Microsoft.ManagedNetworkFabric/networkFabrics/networkFabricName")
             {
                 Annotation = "null",
                 Tags =
@@ -51,12 +51,12 @@ namespace Azure.ResourceManager.Azure.ResourceManager.ManagedNetworkFabric.Sampl
 ["keyID"] = "keyValue",
 },
             };
-            ArmOperation<ManagedNetworkFabric.NetworkRackResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, networkRackName, data);
-            ManagedNetworkFabric.NetworkRackResource result = lro.Value;
+            ArmOperation<NetworkRackResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, networkRackName, data);
+            NetworkRackResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            ManagedNetworkFabric.NetworkRackData resourceData = result.Data;
+            NetworkRackData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -82,15 +82,15 @@ namespace Azure.ResourceManager.Azure.ResourceManager.ManagedNetworkFabric.Sampl
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
 
             // get the collection of this NetworkRackResource
-            ManagedNetworkFabric.NetworkRackCollection collection = resourceGroupResource.GetNetworkRacks();
+            NetworkRackCollection collection = resourceGroupResource.GetNetworkRacks();
 
             // invoke the operation
             string networkRackName = "networkRackName";
-            ManagedNetworkFabric.NetworkRackResource result = await collection.GetAsync(networkRackName);
+            NetworkRackResource result = await collection.GetAsync(networkRackName);
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            ManagedNetworkFabric.NetworkRackData resourceData = result.Data;
+            NetworkRackData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.Azure.ResourceManager.ManagedNetworkFabric.Sampl
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
 
             // get the collection of this NetworkRackResource
-            ManagedNetworkFabric.NetworkRackCollection collection = resourceGroupResource.GetNetworkRacks();
+            NetworkRackCollection collection = resourceGroupResource.GetNetworkRacks();
 
             // invoke the operation
             string networkRackName = "networkRackName";
@@ -146,14 +146,14 @@ namespace Azure.ResourceManager.Azure.ResourceManager.ManagedNetworkFabric.Sampl
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
 
             // get the collection of this NetworkRackResource
-            ManagedNetworkFabric.NetworkRackCollection collection = resourceGroupResource.GetNetworkRacks();
+            NetworkRackCollection collection = resourceGroupResource.GetNetworkRacks();
 
             // invoke the operation and iterate over the result
-            await foreach (ManagedNetworkFabric.NetworkRackResource item in collection.GetAllAsync())
+            await foreach (NetworkRackResource item in collection.GetAllAsync())
             {
                 // the variable item is a resource, you could call other operations on this instance as well
                 // but just for demo, we get its data from this resource instance
-                ManagedNetworkFabric.NetworkRackData resourceData = item.Data;
+                NetworkRackData resourceData = item.Data;
                 // for demo we just print out the id
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }

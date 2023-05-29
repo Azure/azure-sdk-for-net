@@ -6,17 +6,16 @@
 #nullable disable
 
 using System;
-using System.Collections.Generic;
 using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager;
-using Azure.ResourceManager.Azure.ResourceManager.ManagedNetworkFabric;
-using Azure.ResourceManager.Azure.ResourceManager.ManagedNetworkFabric.Models;
+using Azure.ResourceManager.ManagedNetworkFabric;
+using Azure.ResourceManager.ManagedNetworkFabric.Models;
 using Azure.ResourceManager.Resources;
 
-namespace Azure.ResourceManager.Azure.ResourceManager.ManagedNetworkFabric.Samples
+namespace Azure.ResourceManager.ManagedNetworkFabric.Samples
 {
     public partial class Sample_NetworkDeviceResource
     {
@@ -38,15 +37,15 @@ namespace Azure.ResourceManager.Azure.ResourceManager.ManagedNetworkFabric.Sampl
             string subscriptionId = "subscriptionId";
             string resourceGroupName = "resourceGroupName";
             string networkDeviceName = "networkDeviceName";
-            ResourceIdentifier networkDeviceResourceId = ManagedNetworkFabric.NetworkDeviceResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, networkDeviceName);
-            ManagedNetworkFabric.NetworkDeviceResource networkDevice = client.GetNetworkDeviceResource(networkDeviceResourceId);
+            ResourceIdentifier networkDeviceResourceId = NetworkDeviceResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, networkDeviceName);
+            NetworkDeviceResource networkDevice = client.GetNetworkDeviceResource(networkDeviceResourceId);
 
             // invoke the operation
-            ManagedNetworkFabric.NetworkDeviceResource result = await networkDevice.GetAsync();
+            NetworkDeviceResource result = await networkDevice.GetAsync();
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            ManagedNetworkFabric.NetworkDeviceData resourceData = result.Data;
+            NetworkDeviceData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -69,11 +68,11 @@ namespace Azure.ResourceManager.Azure.ResourceManager.ManagedNetworkFabric.Sampl
             string subscriptionId = "subscriptionId";
             string resourceGroupName = "resourceGroupName";
             string networkDeviceName = "networkDeviceName";
-            ResourceIdentifier networkDeviceResourceId = ManagedNetworkFabric.NetworkDeviceResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, networkDeviceName);
-            ManagedNetworkFabric.NetworkDeviceResource networkDevice = client.GetNetworkDeviceResource(networkDeviceResourceId);
+            ResourceIdentifier networkDeviceResourceId = NetworkDeviceResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, networkDeviceName);
+            NetworkDeviceResource networkDevice = client.GetNetworkDeviceResource(networkDeviceResourceId);
 
             // invoke the operation
-            ManagedNetworkFabric.Models.NetworkDevicePatch patch = new ManagedNetworkFabric.Models.NetworkDevicePatch()
+            NetworkDevicePatch patch = new NetworkDevicePatch()
             {
                 Tags =
 {
@@ -83,12 +82,12 @@ namespace Azure.ResourceManager.Azure.ResourceManager.ManagedNetworkFabric.Sampl
                 HostName = "networkDeviceName",
                 SerialNumber = "Arista;DCS-7280PR3-24;12.05;JPE21330382",
             };
-            ArmOperation<ManagedNetworkFabric.NetworkDeviceResource> lro = await networkDevice.UpdateAsync(WaitUntil.Completed, patch);
-            ManagedNetworkFabric.NetworkDeviceResource result = lro.Value;
+            ArmOperation<NetworkDeviceResource> lro = await networkDevice.UpdateAsync(WaitUntil.Completed, patch);
+            NetworkDeviceResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            ManagedNetworkFabric.NetworkDeviceData resourceData = result.Data;
+            NetworkDeviceData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -111,8 +110,8 @@ namespace Azure.ResourceManager.Azure.ResourceManager.ManagedNetworkFabric.Sampl
             string subscriptionId = "subscriptionId";
             string resourceGroupName = "resourceGroupName";
             string networkDeviceName = "networkDeviceName";
-            ResourceIdentifier networkDeviceResourceId = ManagedNetworkFabric.NetworkDeviceResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, networkDeviceName);
-            ManagedNetworkFabric.NetworkDeviceResource networkDevice = client.GetNetworkDeviceResource(networkDeviceResourceId);
+            ResourceIdentifier networkDeviceResourceId = NetworkDeviceResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, networkDeviceName);
+            NetworkDeviceResource networkDevice = client.GetNetworkDeviceResource(networkDeviceResourceId);
 
             // invoke the operation
             await networkDevice.DeleteAsync(WaitUntil.Completed);
@@ -140,11 +139,11 @@ namespace Azure.ResourceManager.Azure.ResourceManager.ManagedNetworkFabric.Sampl
             SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
 
             // invoke the operation and iterate over the result
-            await foreach (ManagedNetworkFabric.NetworkDeviceResource item in subscriptionResource.GetNetworkDevicesAsync())
+            await foreach (NetworkDeviceResource item in subscriptionResource.GetNetworkDevicesAsync())
             {
                 // the variable item is a resource, you could call other operations on this instance as well
                 // but just for demo, we get its data from this resource instance
-                ManagedNetworkFabric.NetworkDeviceData resourceData = item.Data;
+                NetworkDeviceData resourceData = item.Data;
                 // for demo we just print out the id
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
@@ -170,8 +169,8 @@ namespace Azure.ResourceManager.Azure.ResourceManager.ManagedNetworkFabric.Sampl
             string subscriptionId = "subscriptionId";
             string resourceGroupName = "resourceGroupName";
             string networkDeviceName = "networkDeviceName";
-            ResourceIdentifier networkDeviceResourceId = ManagedNetworkFabric.NetworkDeviceResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, networkDeviceName);
-            ManagedNetworkFabric.NetworkDeviceResource networkDevice = client.GetNetworkDeviceResource(networkDeviceResourceId);
+            ResourceIdentifier networkDeviceResourceId = NetworkDeviceResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, networkDeviceName);
+            NetworkDeviceResource networkDevice = client.GetNetworkDeviceResource(networkDeviceResourceId);
 
             // invoke the operation
             await networkDevice.RebootAsync(WaitUntil.Completed);
@@ -197,8 +196,8 @@ namespace Azure.ResourceManager.Azure.ResourceManager.ManagedNetworkFabric.Sampl
             string subscriptionId = "subscriptionId";
             string resourceGroupName = "resourceGroupName";
             string networkDeviceName = "networkDeviceName";
-            ResourceIdentifier networkDeviceResourceId = ManagedNetworkFabric.NetworkDeviceResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, networkDeviceName);
-            ManagedNetworkFabric.NetworkDeviceResource networkDevice = client.GetNetworkDeviceResource(networkDeviceResourceId);
+            ResourceIdentifier networkDeviceResourceId = NetworkDeviceResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, networkDeviceName);
+            NetworkDeviceResource networkDevice = client.GetNetworkDeviceResource(networkDeviceResourceId);
 
             // invoke the operation
             await networkDevice.RestoreConfigAsync(WaitUntil.Completed);
@@ -224,11 +223,11 @@ namespace Azure.ResourceManager.Azure.ResourceManager.ManagedNetworkFabric.Sampl
             string subscriptionId = "subscriptionId";
             string resourceGroupName = "resourceGroupName";
             string networkDeviceName = "networkDeviceName";
-            ResourceIdentifier networkDeviceResourceId = ManagedNetworkFabric.NetworkDeviceResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, networkDeviceName);
-            ManagedNetworkFabric.NetworkDeviceResource networkDevice = client.GetNetworkDeviceResource(networkDeviceResourceId);
+            ResourceIdentifier networkDeviceResourceId = NetworkDeviceResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, networkDeviceName);
+            NetworkDeviceResource networkDevice = client.GetNetworkDeviceResource(networkDeviceResourceId);
 
             // invoke the operation
-            ManagedNetworkFabric.Models.UpdateVersionProperties body = new ManagedNetworkFabric.Models.UpdateVersionProperties("DefaultSku");
+            UpdateVersionProperties body = new UpdateVersionProperties("DefaultSku");
             await networkDevice.UpdateVersionAsync(WaitUntil.Completed, body);
 
             Console.WriteLine($"Succeeded");
@@ -252,12 +251,12 @@ namespace Azure.ResourceManager.Azure.ResourceManager.ManagedNetworkFabric.Sampl
             string subscriptionId = "subscriptionId";
             string resourceGroupName = "resourceGroupName";
             string networkDeviceName = "networkDeviceName";
-            ResourceIdentifier networkDeviceResourceId = ManagedNetworkFabric.NetworkDeviceResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, networkDeviceName);
-            ManagedNetworkFabric.NetworkDeviceResource networkDevice = client.GetNetworkDeviceResource(networkDeviceResourceId);
+            ResourceIdentifier networkDeviceResourceId = NetworkDeviceResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, networkDeviceName);
+            NetworkDeviceResource networkDevice = client.GetNetworkDeviceResource(networkDeviceResourceId);
 
             // invoke the operation
-            ArmOperation<ManagedNetworkFabric.Models.SupportPackageProperties> lro = await networkDevice.GenerateSupportPackageAsync(WaitUntil.Completed);
-            ManagedNetworkFabric.Models.SupportPackageProperties result = lro.Value;
+            ArmOperation<SupportPackageProperties> lro = await networkDevice.GenerateSupportPackageAsync(WaitUntil.Completed);
+            SupportPackageProperties result = lro.Value;
 
             Console.WriteLine($"Succeeded: {result}");
         }
@@ -280,11 +279,11 @@ namespace Azure.ResourceManager.Azure.ResourceManager.ManagedNetworkFabric.Sampl
             string subscriptionId = "subscriptionId";
             string resourceGroupName = "resourceGroupName";
             string networkDeviceName = "networkDeviceName";
-            ResourceIdentifier networkDeviceResourceId = ManagedNetworkFabric.NetworkDeviceResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, networkDeviceName);
-            ManagedNetworkFabric.NetworkDeviceResource networkDevice = client.GetNetworkDeviceResource(networkDeviceResourceId);
+            ResourceIdentifier networkDeviceResourceId = NetworkDeviceResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, networkDeviceName);
+            NetworkDeviceResource networkDevice = client.GetNetworkDeviceResource(networkDeviceResourceId);
 
             // invoke the operation
-            ManagedNetworkFabric.Models.UpdatePowerCycleProperties body = new ManagedNetworkFabric.Models.UpdatePowerCycleProperties(PowerEnd.Primary, State.On);
+            UpdatePowerCycleProperties body = new UpdatePowerCycleProperties(PowerEnd.Primary, State.On);
             await networkDevice.UpdatePowerCycleAsync(WaitUntil.Completed, body);
 
             Console.WriteLine($"Succeeded");
@@ -308,40 +307,12 @@ namespace Azure.ResourceManager.Azure.ResourceManager.ManagedNetworkFabric.Sampl
             string subscriptionId = "subscriptionId";
             string resourceGroupName = "resourceGroupName";
             string networkDeviceName = "networkDeviceName";
-            ResourceIdentifier networkDeviceResourceId = ManagedNetworkFabric.NetworkDeviceResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, networkDeviceName);
-            ManagedNetworkFabric.NetworkDeviceResource networkDevice = client.GetNetworkDeviceResource(networkDeviceResourceId);
+            ResourceIdentifier networkDeviceResourceId = NetworkDeviceResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, networkDeviceName);
+            NetworkDeviceResource networkDevice = client.GetNetworkDeviceResource(networkDeviceResourceId);
 
             // invoke the operation
-            ArmOperation<ManagedNetworkFabric.Models.GetDeviceStatusProperties> lro = await networkDevice.GetStatusAsync(WaitUntil.Completed);
-            ManagedNetworkFabric.Models.GetDeviceStatusProperties result = lro.Value;
-
-            Console.WriteLine($"Succeeded: {result}");
-        }
-
-        // NetworkDevices_getDynamicInterfaceMaps_MaximumSet_Gen
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task GetDynamicInterfaceMaps_NetworkDevicesGetDynamicInterfaceMapsMaximumSetGen()
-        {
-            // Generated from example definition: specification/managednetworkfabric/resource-manager/Microsoft.ManagedNetworkFabric/preview/2023-02-01-preview/examples/NetworkDevices_getDynamicInterfaceMaps_MaximumSet_Gen.json
-            // this example is just showing the usage of "NetworkDevices_getDynamicInterfaceMaps" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this NetworkDeviceResource created on azure
-            // for more information of creating NetworkDeviceResource, please refer to the document of NetworkDeviceResource
-            string subscriptionId = "subscriptionId";
-            string resourceGroupName = "resourceGroupName";
-            string networkDeviceName = "networkDeviceName";
-            ResourceIdentifier networkDeviceResourceId = ManagedNetworkFabric.NetworkDeviceResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, networkDeviceName);
-            ManagedNetworkFabric.NetworkDeviceResource networkDevice = client.GetNetworkDeviceResource(networkDeviceResourceId);
-
-            // invoke the operation
-            ArmOperation<IList<ManagedNetworkFabric.Models.GetDynamicInterfaceMapsPropertiesItem>> lro = await networkDevice.GetDynamicInterfaceMapsAsync(WaitUntil.Completed);
-            IList<ManagedNetworkFabric.Models.GetDynamicInterfaceMapsPropertiesItem> result = lro.Value;
+            ArmOperation<GetDeviceStatusProperties> lro = await networkDevice.GetStatusAsync(WaitUntil.Completed);
+            GetDeviceStatusProperties result = lro.Value;
 
             Console.WriteLine($"Succeeded: {result}");
         }
