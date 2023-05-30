@@ -1,6 +1,9 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.Core.Serialization
 {
     /// <summary>
@@ -23,9 +26,14 @@ namespace Azure.Core.Serialization
         /// </summary>
         public bool PrettyPrint { get; set; }
 
+        ///// <summary>
+        ///// todo
+        ///// </summary>
+        //public ObjectSerializer? Serializer { get; set; }
+
         /// <summary>
-        /// todo
+        /// TODO
         /// </summary>
-        public ObjectSerializer? Serializer { get; set; }
+        public Dictionary<Type, ObjectSerializer>? Serializers { get; set; }
     }
 }

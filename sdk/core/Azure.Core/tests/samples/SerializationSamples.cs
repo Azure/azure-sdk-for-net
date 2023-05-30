@@ -154,7 +154,7 @@ namespace Azure.Core.Samples
                 FoodConsumed = { "kibble", "egg", "peanut butter" },
             };
             SerializableOptions options = new SerializableOptions();
-            options.Serializer = new NewtonsoftJsonObjectSerializer();
+            options.Serializers.Add(typeof(DogListProperty), new NewtonsoftJsonObjectSerializer());
 
             Stream stream = ModelSerializer.Serialize(dog, options);
             #endregion
@@ -166,7 +166,7 @@ namespace Azure.Core.Samples
         {
             #region Snippet:NewtonSoft_Deserialize
             SerializableOptions options = new SerializableOptions();
-            options.Serializer = new NewtonsoftJsonObjectSerializer();
+            options.Serializers.Add(typeof(DogListProperty), new NewtonsoftJsonObjectSerializer());
             string json = @"[{""LatinName"":""Animalia"",""Weight"":1.1,""Name"":""Doggo"",""IsHungry"":false,""FoodConsumed"":[""kibble"",""egg"",""peanut butter""],""NumberOfLegs"":4}]";
 
             DogListProperty dog = ModelSerializer.Deserialize<DogListProperty>(json, options);

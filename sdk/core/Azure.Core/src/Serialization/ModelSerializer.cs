@@ -20,10 +20,14 @@ namespace Azure.Core.Serialization
         /// <returns></returns>
         public static Stream Serialize<T>(T model, SerializableOptions? options = default) where T : IJsonSerializable, new()
         {
-            // if options.Serializer is set
-            if (options != null && options.Serializer != null)
+            // if options.Serializers is set and the model is in the dictionary, use the serializer
+            if (options != null && options.Serializers != null && typeof(T) != null)
             {
-                System.BinaryData data = options.Serializer.Serialize(model);
+                ObjectSerializer serializer;
+                if (!options.Serializers.TryGetValue(typeof(T), out serializer))
+                    throw new InvalidOperationException();
+
+                System.BinaryData data = serializer.Serialize(model);
                 return data.ToStream();
             }
 
@@ -42,9 +46,9 @@ namespace Azure.Core.Serialization
         /// <returns></returns>
         public static T Deserialize<T>(Stream stream, SerializableOptions? options = default) where T : IJsonSerializable, new()
         {
-            if (options != null && options.Serializer != null)
+            if (options != null && options.Serializers != null)
             {
-                var obj = options.Serializer.Deserialize(stream, typeof(T), default);
+                var obj = options.Serializers[typeof(T)].Deserialize(stream, typeof(T), default);
                 if (obj is null)
                     throw new InvalidOperationException();
                 else
@@ -70,9 +74,9 @@ namespace Azure.Core.Serialization
             writer.Write(json);
             stream.Position = 0;
 
-            if (options != null && options.Serializer != null)
+            if (options != null && options.Serializers != null)
             {
-                var obj = options.Serializer.Deserialize(stream, typeof(T), default);
+                var obj = options.Serializers[typeof(T)].Deserialize(stream, typeof(T), default);
                 if (obj is null)
                     throw new InvalidOperationException();
                 else

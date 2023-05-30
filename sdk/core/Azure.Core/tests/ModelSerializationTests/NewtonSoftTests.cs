@@ -24,11 +24,11 @@ namespace Azure.Core.Tests.ModelSerializationTests
         {
             Stream stream = new MemoryStream();
             string serviceResponse =
-                "{\"latinName\":\"Animalia\",\"weight\":2.3,\"name\":\"Rabbit\",\"isHungry\":false}";
+                "{\"latinName\":\"Animalia\",\"weight\":2.5,\"name\":\"Rabbit\",\"isHungry\":false}";
 
             StringBuilder expectedSerialized = new StringBuilder("{");
             expectedSerialized.Append("\"IsHungry\":false,");
-            expectedSerialized.Append("\"Weight\":2.3,");
+            expectedSerialized.Append("\"Weight\":2.5,");
             if (!ignoreReadOnly)
             {
                 expectedSerialized.Append("\"LatinName\":\"Animalia\",");
@@ -45,10 +45,10 @@ namespace Azure.Core.Tests.ModelSerializationTests
                 {
                     ContractResolver = new IgnoreReadOnlyPropertiesResolver()
                 };
-                options.Serializer = new NewtonsoftJsonObjectSerializer(settings);
+                options.Serializers.Add(typeof(Animal), new NewtonsoftJsonObjectSerializer(settings));
             }
             else
-                options.Serializer = new NewtonsoftJsonObjectSerializer();
+                options.Serializers.Add(typeof(Animal), new NewtonsoftJsonObjectSerializer());
 
             var model = ModelSerializer.Deserialize<Animal>(new MemoryStream(Encoding.UTF8.GetBytes(serviceResponse)), options: options);
 
@@ -58,10 +58,7 @@ namespace Azure.Core.Tests.ModelSerializationTests
             }
             Assert.That(model.Name, Is.EqualTo("Rabbit"));
             Assert.IsFalse(model.IsHungry);
-
-#if NET6_0_OR_GREATER
-            Assert.That(model.Weight, Is.EqualTo(2.3));
-#endif
+            Assert.That(model.Weight, Is.EqualTo(2.5));
 
             stream = ModelSerializer.Serialize<Animal>(model, options);
             stream.Position = 0;
