@@ -739,7 +739,6 @@ namespace Azure.Communication.PhoneNumbers.Tests
             Assert.IsNotNull(operatorInfoResults.Value?.Results);
             Assert.AreEqual(1, operatorInfoResults.Value?.Results.Count);
             Assert.AreEqual(phoneNumber, operatorInfoResults.Value?.Results[0].PhoneNumber);
-            Console.WriteLine("OperatorInfo " + operatorInfoResults.Value?.Results[0].ToString());
         }
 
         [Test]

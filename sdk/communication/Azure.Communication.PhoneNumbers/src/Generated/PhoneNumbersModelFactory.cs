@@ -130,11 +130,12 @@ namespace Azure.Communication.PhoneNumbers
         /// <summary> Initializes a new instance of OperatorInformation. </summary>
         /// <param name="phoneNumber"> E.164 formatted string representation of the phone number. </param>
         /// <param name="numberType"> Type of service associated with the phone number. </param>
+        /// <param name="isoCountryCode"> ISO country code associated with the phone number. </param>
         /// <param name="operatorDetails"> Represents metadata describing the operator of a phone number. </param>
         /// <returns> A new <see cref="PhoneNumbers.OperatorInformation"/> instance for mocking. </returns>
-        public static OperatorInformation OperatorInformation(string phoneNumber = null, OperatorNumberType? numberType = null, OperatorDetails operatorDetails = null)
+        public static OperatorInformation OperatorInformation(string phoneNumber = null, OperatorNumberType? numberType = null, string isoCountryCode = null, OperatorDetails operatorDetails = null)
         {
-            return new OperatorInformation(phoneNumber, numberType, operatorDetails);
+            return new OperatorInformation(phoneNumber, numberType, isoCountryCode, operatorDetails);
         }
 
         /// <summary> Initializes a new instance of OperatorDetails. </summary>
