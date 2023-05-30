@@ -305,7 +305,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
         {
             if (activity.Links != null && activity.Links.Any())
             {
-                if (TryGetAverageTimeInQueueForBatchAndAddLinksToProperties(activity, ref UnMappedTags,out long enqueuedTime))
+                if (TryGetAverageTimeInQueueForBatchAndAddLinksToProperties(activity, ref UnMappedTags, out long enqueuedTime))
                 {
                     measurements["timeSinceEnqueued"] = enqueuedTime;
                 }
