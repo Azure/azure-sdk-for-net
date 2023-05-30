@@ -120,7 +120,8 @@ if ($TypeSpecProjectDirectory -match '^https://github.com/(?<repo>Azure/azure-re
     Write-Error "Failed to find tspconfig.yaml in '$TypeSpecProjectDirectory'"
     exit 1
   }
-  if ($TypeSpecProjectDirectory -match "^.*[\\/](?<path>specification[\\/].*)$") {
+  $TypeSpecProjectDirectory = $TypeSpecProjectDirectory.Replace("\", "/")
+  if ($TypeSpecProjectDirectory -match "^.*/(?<path>specification/.*)$") {
     $TypeSpecProjectDirectory = $Matches["path"]
   } else {
     Write-Error "$TypeSpecProjectDirectory doesn't have 'specification' in path."
