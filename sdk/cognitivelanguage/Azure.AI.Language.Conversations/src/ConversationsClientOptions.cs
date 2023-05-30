@@ -29,7 +29,7 @@ namespace Azure.AI.Language.Conversations
         /// Gets or sets the audience to use for authentication with Azure Active Directory (AAD). The audience is not considered when using a shared key.
         /// </summary>
         /// <value>If <c>null</c>, <see cref="ConversationsAudience.AzurePublicCloud" /> will be assumed.</value>
-        public ConversationsAudience? Audience { get; set; }
+        internal ConversationsAudience? Audience { get; set; }
 
         internal string Version { get; }
 
