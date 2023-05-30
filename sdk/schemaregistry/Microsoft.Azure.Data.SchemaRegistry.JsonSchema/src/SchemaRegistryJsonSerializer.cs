@@ -15,8 +15,9 @@ using System.Text.Json;
 namespace Microsoft.Azure.Data.SchemaRegistry.JsonSchema
 {
     /// <summary>
-    /// A <see cref="SchemaRegistryJsonSerializer"/> uses the <see cref="SchemaRegistryClient"/> to
-    /// serialize and deserialize Json payloads.
+    /// A <see cref="SchemaRegistryJsonSerializer"/> serializes and deserializes JSON payloads using <see cref="System.Text.Json"/>.
+    /// It requires an implemented <see cref="SchemaRegistryJsonSchemaGenerator"/> and a <see cref="SchemaRegistryClient"/> in order
+    /// to enrich any message of a type inherited from <see cref="MessageContent"/> with the Schema ID. TODO.
     /// </summary>
     public class SchemaRegistryJsonSerializer
     {
@@ -29,10 +30,10 @@ namespace Microsoft.Azure.Data.SchemaRegistry.JsonSchema
         /// <summary>
         /// Initializes a new instance of the <see cref="SchemaRegistryJsonSerializer"/>. This constructor can only be used to create an
         /// instance which will be used for deserialization. In order to serialize (or both serialize and deserialize) you will need to use
-        /// one of the constructors that have a <code>groupName</code> parameter.
+        /// one of the constructors that have a <c>groupName</c> parameter.
         /// </summary>
         /// <param name="client">The <see cref="SchemaRegistryClient"/> instance to use for looking up schemas.</param>
-        /// <param name="jsonSchemaGenerator">TODO</param>
+        /// <param name="jsonSchemaGenerator">The instance inherited from <see cref="SchemaRegistryJsonSchemaGenerator"/> to use to generate and validate JSON schemas.</param>
         /// <exception cref="ArgumentNullException"></exception>
         public SchemaRegistryJsonSerializer(SchemaRegistryClient client, SchemaRegistryJsonSchemaGenerator jsonSchemaGenerator)
             : this(client, null, jsonSchemaGenerator)
@@ -45,7 +46,7 @@ namespace Microsoft.Azure.Data.SchemaRegistry.JsonSchema
         /// </summary>
         /// <param name="client">The <see cref="SchemaRegistryClient"/> instance to use for looking up schemas.</param>
         /// <param name="groupName">The Schema Registry group name that contains the schemas that will be used to serialize.</param>
-        /// <param name="jsonSchemaGenerator">The class that will be used to generate schemas from .NET types and validate deserialized data.</param>
+        /// <param name="jsonSchemaGenerator">The instance inherited from <see cref="SchemaRegistryJsonSchemaGenerator"/> to use to generate and validate JSON schemas.</param>
         /// <exception cref="ArgumentNullException"></exception>
         public SchemaRegistryJsonSerializer(SchemaRegistryClient client, string groupName, SchemaRegistryJsonSchemaGenerator jsonSchemaGenerator)
         {
@@ -70,22 +71,22 @@ namespace Microsoft.Azure.Data.SchemaRegistry.JsonSchema
 
         #region Serialize
         /// <summary>
-        /// Serializes the message data as Json and stores it in <see cref="MessageContent.Data"/>. The <see cref="MessageContent.ContentType"/>
+        /// Serializes the message data as JSON and stores it in <see cref="MessageContent.Data"/>. The <see cref="MessageContent.ContentType"/>
         /// will be set to "application/json+schemaId" where schemaId is the ID of the schema that was generated from the type.
         /// </summary>
-        /// <param name="data">The data to serialize to Json and serialize into the message.</param>
+        /// <param name="data">The data to serialize to JSON and serialize into the message.</param>
         /// <param name="cancellationToken">An optional <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
         /// <typeparam name="TMessage">The <see cref="MessageContent"/> type to serialize the data into.</typeparam>
         /// <typeparam name="TData">The type of the data to serialize.</typeparam>
         /// <exception cref="InvalidOperationException">
-        ///   This can occur if the <code>groupName</code> was not specified when constructing the <see cref="SchemaRegistryJsonSerializer"/>.
+        ///   This can occur if the <c>groupName</c> was not specified when constructing the <see cref="SchemaRegistryJsonSerializer"/>.
         ///   It can also occur if the <typeparamref name="TMessage"/> type does not have a public parameterless constructor.
         /// </exception>
         /// <exception cref="RequestFailedException">
         ///   An error occurred while attempting to communicate with the Schema Registry service.
         /// </exception>
         /// <exception cref="Exception">
-        ///   The data did not adhere to the Json schema, or the schema itself was invalid.
+        ///   The data did not adhere to the JSON schema, or the schema itself was invalid.
         ///   The <see cref="Exception.InnerException"/> will contain the underlying exception from the <see cref="SchemaRegistryJsonSchemaGenerator"/> class.
         /// </exception>
         public TMessage Serialize<TMessage, TData>(
@@ -94,22 +95,22 @@ namespace Microsoft.Azure.Data.SchemaRegistry.JsonSchema
             => (TMessage) SerializeInternalAsync(data, null, null, typeof(TData), typeof(TMessage), false, cancellationToken).EnsureCompleted();
 
         /// <summary>
-        /// serializes the message data as Json and stores it in <see cref="MessageContent.Data"/>. The <see cref="MessageContent.ContentType"/>
+        /// Serializes the message data as JSON and stores it in <see cref="MessageContent.Data"/>. The <see cref="MessageContent.ContentType"/>
         /// will be set to "application/json+schemaId" where schemaId is the ID of the schema that was generated from the type.
         /// </summary>
-        /// <param name="data">The data to serialize to Json and serialize into the message.</param>
+        /// <param name="data">The data to serialize to JSON and serialize into the message.</param>
         /// <param name="cancellationToken">An optional <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
         /// <typeparam name="TMessage">The <see cref="MessageContent"/> type to serialize the data into.</typeparam>
         /// <typeparam name="TData">The type of the data to serialize.</typeparam>
         /// <exception cref="InvalidOperationException">
-        ///   This can occur if the <code>groupName</code> was not specified when constructing the <see cref="SchemaRegistryJsonSerializer"/>.
+        ///   This can occur if the <c>groupName</c> was not specified when constructing the <see cref="SchemaRegistryJsonSerializer"/>.
         ///   It can also occur if the <typeparamref name="TMessage"/> type does not have a public parameterless constructor.
         /// </exception>
         /// <exception cref="RequestFailedException">
         ///   An error occurred while attempting to communicate with the Schema Registry service.
         /// </exception>
         /// <exception cref="Exception">
-        ///   The data did not adhere to the Json schema, or the schema itself was invalid.
+        ///   The data did not adhere to the JSON schema, or the schema itself was invalid.
         ///   The <see cref="Exception.InnerException"/> will contain the underlying exception from the <see cref="SchemaRegistryJsonSchemaGenerator"/> class.
         /// </exception>
         public async ValueTask<TMessage> SerializeAsync<TMessage, TData>(
@@ -118,10 +119,10 @@ namespace Microsoft.Azure.Data.SchemaRegistry.JsonSchema
             => (TMessage) await SerializeInternalAsync(data, null, null, typeof(TData), typeof(TMessage), true, cancellationToken).ConfigureAwait(false);
 
         /// <summary>
-        /// serializes the message data as Json and stores it in <see cref="MessageContent.Data"/>. The <see cref="MessageContent.ContentType"/>
+        /// Serializes the message data as JSON and stores it in <see cref="MessageContent.Data"/>. The <see cref="MessageContent.ContentType"/>
         /// will be set to "application/json+schemaId" where schemaId is the ID of the schema that was generated from the type.
         /// </summary>
-        /// <param name="data">The data to serialize to Json and serialize into the message.</param>
+        /// <param name="data">The data to serialize to JSON and serialize into the message.</param>
         /// <param name="dataType">The type of the data to serialize. If left blank, the type will be determined at runtime by
         /// calling <see cref="Object.GetType"/>.</param>
         /// <param name="messageType">The type of message to serialize the data into. Must extend from <see cref="MessageContent"/>, and
@@ -129,14 +130,14 @@ namespace Microsoft.Azure.Data.SchemaRegistry.JsonSchema
         /// If left blank, the data will be serialized into a <see cref="MessageContent"/> instance.</param>
         /// <param name="cancellationToken">An optional <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
         /// <exception cref="InvalidOperationException">
-        ///   This can occur if the <code>groupName</code> was not specified when constructing the <see cref="SchemaRegistryJsonSerializer"/>.
+        ///   This can occur if the <c>groupName</c> was not specified when constructing the <see cref="SchemaRegistryJsonSerializer"/>.
         ///   It can also occur if the <paramref name="messageType"/> does not have a public parameterless constructor.
         /// </exception>
         /// <exception cref="RequestFailedException">
         ///   An error occurred while attempting to communicate with the Schema Registry service.
         /// </exception>
         /// <exception cref="Exception">
-        ///   The data did not adhere to the Json schema, or the schema itself was invalid.
+        ///   The data did not adhere to the JSON schema, or the schema itself was invalid.
         ///   The <see cref="Exception.InnerException"/> will contain the underlying exception from the <see cref="SchemaRegistryJsonSchemaGenerator"/> class.
         /// </exception>
         public MessageContent Serialize(
@@ -147,10 +148,10 @@ namespace Microsoft.Azure.Data.SchemaRegistry.JsonSchema
             => SerializeInternalAsync(data, null, null, dataType, messageType, false, cancellationToken).EnsureCompleted();
 
         /// <summary>
-        /// serializes the message data as Json and stores it in <see cref="MessageContent.Data"/>. The <see cref="MessageContent.ContentType"/>
+        /// Serializes the message data as JSON and stores it in <see cref="MessageContent.Data"/>. The <see cref="MessageContent.ContentType"/>
         /// will be set to "application/json+schemaId" where schemaId is the ID of the schema that was generated from the type.
         /// </summary>
-        /// <param name="data">The data to serialize to Json and serialize into the message.</param>
+        /// <param name="data">The data to serialize to JSON and serialize into the message.</param>
         /// <param name="dataType">The type of the data to serialize. If left blank, the type will be determined at runtime by
         /// calling <see cref="Object.GetType"/>.</param>
         /// <param name="messageType">The type of message to serialize the data into. Must extend from <see cref="MessageContent"/>, and
@@ -158,14 +159,14 @@ namespace Microsoft.Azure.Data.SchemaRegistry.JsonSchema
         /// If left blank, the data will be serialized into a <see cref="MessageContent"/> instance.</param>
         /// <param name="cancellationToken">An optional <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
         /// <exception cref="InvalidOperationException">
-        ///   This can occur if the <code>groupName</code> was not specified when constructing the <see cref="SchemaRegistryJsonSerializer"/>.
+        ///   This can occur if the <c>groupName</c> was not specified when constructing the <see cref="SchemaRegistryJsonSerializer"/>.
         ///   It can also occur if the <paramref name="messageType"/> does not have a public parameterless constructor.
         /// </exception>
         /// <exception cref="RequestFailedException">
         ///   An error occurred while attempting to communicate with the Schema Registry service.
         /// </exception>
         /// <exception cref="Exception">
-        ///   The data did not adhere to the Json schema, or the schema itself was invalid.
+        ///   The data did not adhere to the JSON schema, or the schema itself was invalid.
         ///   The <see cref="Exception.InnerException"/> will contain the underlying exception from the <see cref="SchemaRegistryJsonSchemaGenerator"/> class.
         /// </exception>
         public async ValueTask<MessageContent> SerializeAsync(
@@ -176,23 +177,28 @@ namespace Microsoft.Azure.Data.SchemaRegistry.JsonSchema
             => await SerializeInternalAsync(data, null, null, dataType, messageType, true, cancellationToken).ConfigureAwait(false);
 
         /// <summary>
-        /// serializes the message data as Json and stores it in <see cref="MessageContent.Data"/>. The <see cref="MessageContent.ContentType"/>
-        /// will be set to "application/json+schemaId" where schemaId is the ID of the schema used to serialize the data.
+        /// Serializes the message data as JSON and stores it in <see cref="MessageContent.Data"/>. The <see cref="MessageContent.ContentType"/>
+        /// will be set to "application/json+schemaId" where schemaId is the ID of the schema.
         /// </summary>
+        /// <remarks>
+        /// This method doesn't generate the schema from <typeparamref name="TData"/>, it instead uses the schema retrieved using the
+        /// <see cref="SchemaRegistryClient"/>. It is recommended to implement <see cref="SchemaRegistryJsonSchemaGenerator.ValidateAgainstSchema(object, Type, string)"/>
+        /// to validate <paramref name="data"/> adheres to its intended schema.
+        /// </remarks>
         /// <typeparam name="TMessage">The <see cref="MessageContent"/> type to serialize the data into.</typeparam>
         /// <typeparam name="TData">The type of the data to serialize.</typeparam>
-        /// <param name="data">The data to serialize to Json and serialize into the message.</param>
-        /// <param name="schemaId">TODO.</param>
-        /// <param name="cancellationToken">An optional <see cref="CancellationToken"/> instance to signal the request to cancel the operation</param>
+        /// <param name="data">The data to serialize to JSON and serialize into the message.</param>
+        /// <param name="schemaId">The ID of the schema to use when serializing the data.</param>
+        /// <param name="cancellationToken">An optional <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
         /// <exception cref="InvalidOperationException">
-        ///   This can occur if the <code>groupName</code> was not specified when constructing the <see cref="SchemaRegistryJsonSerializer"/>.
+        ///   This can occur if the <c>groupName</c> was not specified when constructing the <see cref="SchemaRegistryJsonSerializer"/>.
         ///   It can also occur if the <typeparamref name="TMessage"/> does not have a public parameterless constructor.
         /// </exception>
         /// <exception cref="RequestFailedException">
         ///   An error occurred while attempting to communicate with the Schema Registry service.
         /// </exception>
         /// <exception cref="Exception">
-        ///   The data did not adhere to the Json schema, or the schema itself was invalid.
+        ///   The data did not adhere to the JSON schema, or the schema itself was invalid.
         ///   The <see cref="Exception.InnerException"/> will contain the underlying exception from the <see cref="SchemaRegistryJsonSchemaGenerator"/> class.
         /// </exception>
         public TMessage SerializeWithSchemaId<TMessage, TData>(
@@ -202,23 +208,28 @@ namespace Microsoft.Azure.Data.SchemaRegistry.JsonSchema
             => (TMessage)SerializeInternalAsync(data, schemaId: schemaId, null, typeof(TData), typeof(TMessage), false, cancellationToken).EnsureCompleted();
 
         /// <summary>
-        /// serializes the message data as Json and stores it in <see cref="MessageContent.Data"/>. The <see cref="MessageContent.ContentType"/>
-        /// will be set to "application/json+schemaId" where schemaId is the ID of the schema used to serialize the data.
+        /// Serializes the message data as JSON and stores it in <see cref="MessageContent.Data"/>. The <see cref="MessageContent.ContentType"/>
+        /// will be set to "application/json+schemaId" where schemaId is the ID of the schema.
         /// </summary>
-        /// <param name="data">The data to serialize to Json and serialize into the message.</param>
-        /// <param name="schemaId">TODO.</param>
+        /// <remarks>
+        /// This method doesn't generate the schema from <typeparamref name="TData"/>, it instead uses the schema retrieved using the
+        /// <see cref="SchemaRegistryClient"/>. It is recommended to implement <see cref="SchemaRegistryJsonSchemaGenerator.ValidateAgainstSchema(object, Type, string)"/>
+        /// to validate <paramref name="data"/> adheres to its intended schema.
+        /// </remarks>
+        /// <param name="data">The data to serialize to JSON and serialize into the message.</param>
+        /// <param name="schemaId">The ID of the schema to use when serializing the data.</param>
         /// <param name="cancellationToken">An optional <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
         /// <typeparam name="TMessage">The <see cref="MessageContent"/> type to serialize the data into.</typeparam>
         /// <typeparam name="TData">The type of the data to serialize.</typeparam>
         /// <exception cref="InvalidOperationException">
-        ///   This can occur if the <code>groupName</code> was not specified when constructing the <see cref="SchemaRegistryJsonSerializer"/>.
+        ///   This can occur if the <c>groupName</c> was not specified when constructing the <see cref="SchemaRegistryJsonSerializer"/>.
         ///   It can also occur if the <typeparamref name="TMessage"/> type does not have a public parameterless constructor.
         /// </exception>
         /// <exception cref="RequestFailedException">
         ///   An error occurred while attempting to communicate with the Schema Registry service.
         /// </exception>
         /// <exception cref="Exception">
-        ///   The data did not adhere to the Json schema, or the schema itself was invalid.
+        ///   The data did not adhere to the JSON schema, or the schema itself was invalid.
         ///   The <see cref="Exception.InnerException"/> will contain the underlying exception from the <see cref="SchemaRegistryJsonSchemaGenerator"/> class.
         /// </exception>
         public async ValueTask<TMessage> SerializeWithSchemaIdAsync<TMessage, TData>(
@@ -228,11 +239,16 @@ namespace Microsoft.Azure.Data.SchemaRegistry.JsonSchema
             => (TMessage)await SerializeInternalAsync(data, schemaId: schemaId, null, typeof(TData), typeof(TMessage), true, cancellationToken).ConfigureAwait(false);
 
         /// <summary>
-        /// serializes the message data as Json and stores it in <see cref="MessageContent.Data"/>. The <see cref="MessageContent.ContentType"/>
-        /// will be set to "application/json+schemaId" where schemaId is the ID of the schema used to serialize the data.
+        /// Serializes the message data as JSON and stores it in <see cref="MessageContent.Data"/>. The <see cref="MessageContent.ContentType"/>
+        /// will be set to "application/json+schemaId" where schemaId is the ID of the schema.
         /// </summary>
-        /// <param name="data">The data to serialize to Json and serialize into the message.</param>
-        /// <param name="schemaId">TODO.</param>
+        /// <remarks>
+        /// This method doesn't generate the schema from <paramref name="dataType"/>, it instead uses the schema retrieved using the
+        /// <see cref="SchemaRegistryClient"/>. It is recommended to implement <see cref="SchemaRegistryJsonSchemaGenerator.ValidateAgainstSchema(object, Type, string)"/>
+        /// to validate <paramref name="data"/> adheres to its intended schema.
+        /// </remarks>
+        /// <param name="data">The data to serialize to JSON and serialize into the message.</param>
+        /// <param name="schemaId">The ID of the schema to use when serializing the data.</param>
         /// <param name="dataType">The type of the data to serialize. If left blank, the type will be determined at runtime by
         /// calling <see cref="Object.GetType"/>.</param>
         /// <param name="messageType">The type of message to serialize the data into. Must extend from <see cref="MessageContent"/>, and
@@ -240,14 +256,14 @@ namespace Microsoft.Azure.Data.SchemaRegistry.JsonSchema
         /// If left blank, the data will be serialized into a <see cref="MessageContent"/> instance.</param>
         /// <param name="cancellationToken">An optional <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
         /// <exception cref="InvalidOperationException">
-        ///   This can occur if the <code>groupName</code> was not specified when constructing the <see cref="SchemaRegistryJsonSerializer"/>.
+        ///   This can occur if the <c>groupName</c> was not specified when constructing the <see cref="SchemaRegistryJsonSerializer"/>.
         ///   It can also occur if the <paramref name="messageType"/> does not have a public parameterless constructor.
         /// </exception>
         /// <exception cref="RequestFailedException">
         ///   An error occurred while attempting to communicate with the Schema Registry service.
         /// </exception>
         /// <exception cref="Exception">
-        ///   The data did not adhere to the Json schema, or the schema itself was invalid.
+        ///   The data did not adhere to the JSON schema, or the schema itself was invalid.
         ///   The <see cref="Exception.InnerException"/> will contain the underlying exception from the <see cref="SchemaRegistryJsonSchemaGenerator"/> class.
         /// </exception>
         public MessageContent SerializeWithSchemaId(
@@ -259,11 +275,16 @@ namespace Microsoft.Azure.Data.SchemaRegistry.JsonSchema
             => SerializeInternalAsync(data, schemaId: schemaId, null, dataType, messageType, false, cancellationToken).EnsureCompleted();
 
         /// <summary>
-        /// serializes the message data as Json and stores it in <see cref="MessageContent.Data"/>. The <see cref="MessageContent.ContentType"/>
-        /// will be set to "application/json+schemaId" where schemaId is the ID of the schema used to serialize the data.
+        /// Serializes the message data as JSON and stores it in <see cref="MessageContent.Data"/>. The <see cref="MessageContent.ContentType"/>
+        /// will be set to "application/json+schemaId" where schemaId is the ID of the schema.
         /// </summary>
-        /// <param name="data">The data to serialize to Json and serialize into the message.</param>
-        /// <param name="schemaId">TODO.</param>
+        /// <remarks>
+        /// This method doesn't generate the schema from <paramref name="dataType"/>, it instead uses the schema retrieved using the
+        /// <see cref="SchemaRegistryClient"/>. It is recommended to implement <see cref="SchemaRegistryJsonSchemaGenerator.ValidateAgainstSchema(object, Type, string)"/>
+        /// to validate <paramref name="data"/> adheres to its intended schema.
+        /// </remarks>
+        /// <param name="data">The data to serialize to JSON and serialize into the message.</param>
+        /// <param name="schemaId">The ID of the schema to use when serializing the data.</param>
         /// <param name="dataType">The type of the data to serialize. If left blank, the type will be determined at runtime by
         /// calling <see cref="Object.GetType"/>.</param>
         /// <param name="messageType">The type of message to serialize the data into. Must extend from <see cref="MessageContent"/>, and
@@ -271,14 +292,14 @@ namespace Microsoft.Azure.Data.SchemaRegistry.JsonSchema
         /// If left blank, the data will be serialized into a <see cref="MessageContent"/> instance.</param>
         /// <param name="cancellationToken">An optional <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
         /// <exception cref="InvalidOperationException">
-        ///   This can occur if the <code>groupName</code> was not specified when constructing the <see cref="SchemaRegistryJsonSerializer"/>.
+        ///   This can occur if the <c>groupName</c> was not specified when constructing the <see cref="SchemaRegistryJsonSerializer"/>.
         ///   It can also occur if the <paramref name="messageType"/> does not have a public parameterless constructor.
         /// </exception>
         /// <exception cref="RequestFailedException">
         ///   An error occurred while attempting to communicate with the Schema Registry service.
         /// </exception>
         /// <exception cref="Exception">
-        ///   The data did not adhere to the Json schema, or the schema itself was invalid.
+        ///   The data did not adhere to the JSON schema, or the schema itself was invalid.
         ///   The <see cref="Exception.InnerException"/> will contain the underlying exception from the <see cref="SchemaRegistryJsonSchemaGenerator"/> class.
         /// </exception>
         public async ValueTask<MessageContent> SerializeWithSchemaIdAsync(
@@ -381,6 +402,10 @@ namespace Microsoft.Azure.Data.SchemaRegistry.JsonSchema
                     return (schemaId, data);
                 }
             }
+            catch (RequestFailedException)
+            {
+                throw;
+            }
             catch (Exception ex)
             {
                 throw new Exception(
@@ -417,7 +442,7 @@ namespace Microsoft.Azure.Data.SchemaRegistry.JsonSchema
 
             _schemaToIdMap.AddOrUpdate(schemaString, schemaId, schemaString.Length);
             _idToSchemaMap.AddOrUpdate(schemaId, schemaString, schemaString.Length);
-            // TODO - log that cache was updated
+            SchemaRegistryJsonEventSource.Log.CacheUpdated(_idToSchemaMap, _schemaToIdMap);
         }
 
         private async Task<string> GetSchemaIdAsync(string schema, string schemaName, bool async, CancellationToken cancellationToken)
@@ -435,7 +460,7 @@ namespace Microsoft.Azure.Data.SchemaRegistry.JsonSchema
 
             _schemaToIdMap.AddOrUpdate(schema, id, schema.Length);
             _idToSchemaMap.AddOrUpdate(id, schema, schema.Length);
-            // TODO - log that cache was updated
+            SchemaRegistryJsonEventSource.Log.CacheUpdated(_idToSchemaMap, _schemaToIdMap);
             return id;
         }
         #endregion
@@ -465,7 +490,7 @@ namespace Microsoft.Azure.Data.SchemaRegistry.JsonSchema
             => (TData) DeserializeMessageDataInternalAsync(content.Data, typeof(TData), content.ContentType, false, cancellationToken).EnsureCompleted();
 
         /// <summary>
-        /// deserializes the message data into the specified type using the schema information populated in <see cref="MessageContent.ContentType"/>.
+        /// Deserializes the message data into the specified type using the schema information populated in <see cref="MessageContent.ContentType"/>.
         /// </summary>
         /// <param name="content">The content to deserialize.</param>
         /// <param name="cancellationToken">An optional <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
@@ -646,7 +671,7 @@ namespace Microsoft.Azure.Data.SchemaRegistry.JsonSchema
             _idToSchemaMap.AddOrUpdate(schemaId, schemaDefinition, schemaDefinition.Length);
             _schemaToIdMap.AddOrUpdate(schemaDefinition, schemaId, schemaDefinition.Length);
 
-            // TODO - log that cache was updated
+            SchemaRegistryJsonEventSource.Log.CacheUpdated(_idToSchemaMap, _schemaToIdMap);
             return schemaDefinition;
         }
         #endregion
