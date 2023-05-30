@@ -220,8 +220,10 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
 
         private ActivityLink AddActivityLink(long enqueuedTime)
         {
-            ActivityTagsCollection tags = new ActivityTagsCollection();
-            tags.Add("enqueuedTime", enqueuedTime.ToString());
+            ActivityTagsCollection tags = new ActivityTagsCollection
+            {
+                { "enqueuedTime", enqueuedTime.ToString() }
+            };
             var link = new ActivityLink(new ActivityContext(ActivityTraceId.CreateRandom(), ActivitySpanId.CreateRandom(), ActivityTraceFlags.None, null), tags);
 
             return link;
