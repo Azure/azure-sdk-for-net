@@ -48,7 +48,7 @@ namespace Azure.Communication.CallAutomation
         /// <param name="startDialogOptions">Configuration attributes for starting dialog.</param>
         /// <param name="cancellationToken"></param>
         /// <returns>Returns <see cref="DialogResult"/>, which can be used to wait for Dialog's related events.</returns>
-        public virtual async Task<Response<DialogResult>> StartDialogAsync(string dialogId, StartDialogOptions startDialogOptions, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<DialogResult>> StartDialogAsync(StartDialogOptions startDialogOptions, string dialogId = "", CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallDialog)}.{nameof(StartDialog)}");
             scope.Start();
@@ -58,7 +58,7 @@ namespace Azure.Communication.CallAutomation
 
                 var response = await CallDialogRestClient.StartDialogAsync
                     (CallConnectionId,
-                    dialogId,
+                    dialogId == "" ? Guid.NewGuid().ToString() : dialogId,
                     request,
                     cancellationToken).ConfigureAwait(false);
 
@@ -81,7 +81,7 @@ namespace Azure.Communication.CallAutomation
         /// <param name="cancellationToken"></param>
         /// <param name="dialogId">The dialog id.</param>
         /// <returns>Returns <see cref="DialogResult"/>, which can be used to wait for Dialog's related events.</returns>
-        public virtual Response<DialogResult> StartDialog(string dialogId, StartDialogOptions startDialogOptions, CancellationToken cancellationToken = default)
+        public virtual Response<DialogResult> StartDialog(StartDialogOptions startDialogOptions, string dialogId = "", CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallDialog)}.{nameof(StartDialog)}");
             scope.Start();
@@ -91,7 +91,7 @@ namespace Azure.Communication.CallAutomation
 
                 var response = CallDialogRestClient.StartDialog
                     (CallConnectionId,
-                    dialogId,
+                    dialogId == "" ? Guid.NewGuid().ToString() : dialogId,
                     request,
                     cancellationToken);
 
