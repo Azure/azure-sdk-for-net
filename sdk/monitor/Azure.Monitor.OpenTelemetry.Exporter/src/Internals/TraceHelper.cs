@@ -317,7 +317,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
             avgTimeInQueue = 0;
             var linksCount = 0;
             long startEpochTime = requestStartTime.ToUnixTimeMilliseconds();
-            foreach (ActivityLink link in links)
+            foreach (ref readonly var link in activity.EnumerateLinks())
             {
                 if (!TryGetEnqueuedTime(link, out var msgEnqueuedTime))
                 {
