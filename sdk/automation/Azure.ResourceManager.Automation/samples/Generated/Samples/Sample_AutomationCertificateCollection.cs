@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.Automation.Samples
             AutomationCertificateCreateOrUpdateContent content = new AutomationCertificateCreateOrUpdateContent("testCert", "base 64 value of cert")
             {
                 Description = "Sample Cert",
-                Thumbprint = BinaryData.FromString("thumbprint of cert"),
+                ThumbprintString = "thumbprint of cert",
                 IsExportable = false,
             };
             ArmOperation<AutomationCertificateResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, certificateName, content);

@@ -4,6 +4,9 @@
 
 ### Features Added
 
+- Added `IotHubCertificateProperties.ThumbprintString`, `IotHubCertificatePropertiesWithNonce.ThumbprintString` to return the hexadecimal string representation of the SHA-1 hash of the certificate.
+  `IotHubCertificateProperties.Thumbprint`, `IotHubCertificatePropertiesWithNonce.Thumbprint` have been hidden but are still available.
+
 ### Breaking Changes
 
 ### Bugs Fixed

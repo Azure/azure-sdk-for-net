@@ -11,9 +11,9 @@ using Azure.ResourceManager.Resources.Models;
 using Azure.ResourceManager.Sql.Models;
 using NUnit.Framework;
 
-namespace Azure.ResourceManager.Sql.Tests.Scenario
+namespace Azure.ResourceManager.Sql.Tests
 {
-    public class SqlDatabaseTests : SqlManagementClientBase
+    public class SqlDatabaseTests : SqlManagementTestBase
     {
         private ResourceGroupResource _resourceGroup;
         private ResourceIdentifier _resourceGroupIdentifier;
