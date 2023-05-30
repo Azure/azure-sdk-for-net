@@ -41,6 +41,10 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Models
 
             TraceHelper.AddActivityLinksToProperties(activity, ref activityTagsProcessor.UnMappedTags);
             TraceHelper.AddPropertiesToTelemetry(Properties, ref activityTagsProcessor.UnMappedTags);
+            if (activity.Kind == ActivityKind.Consumer)
+            {
+                TraceHelper.AddEnqueuedTimeToMeasurements(activity, Measurements);
+            }
         }
 
         internal static bool IsSuccess(Activity activity, string? responseCode, OperationType operationType)

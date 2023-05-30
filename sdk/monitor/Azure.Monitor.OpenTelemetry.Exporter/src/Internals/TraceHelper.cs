@@ -300,5 +300,55 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
                 BaseData = exceptionData,
             };
         }
+
+        internal static void AddEnqueuedTimeToMeasurements(Activity activity, IDictionary<string, double> measurements)
+        {
+            if (activity.Links != null && activity.Links.Any())
+            {
+                if (TryGetAverageTimeInQueueForBatch(activity.Links, activity.StartTimeUtc, out long enqueuedTime))
+                {
+                    measurements["timeSinceEnqueued"] = enqueuedTime;
+                }
+            }
+        }
+
+        private static bool TryGetAverageTimeInQueueForBatch(IEnumerable<ActivityLink> links, DateTimeOffset requestStartTime, out long avgTimeInQueue)
+        {
+            avgTimeInQueue = 0;
+            var linksCount = 0;
+            long startEpochTime = requestStartTime.ToUnixTimeMilliseconds();
+            foreach (ActivityLink link in links)
+            {
+                if (!TryGetEnqueuedTime(link, out var msgEnqueuedTime))
+                {
+                    // instrumentation does not consistently report enqueued time, ignoring whole span
+                    return false;
+                }
+
+                avgTimeInQueue += Math.Max(startEpochTime - msgEnqueuedTime, 0);
+
+                linksCount++;
+            }
+
+            avgTimeInQueue /= linksCount;
+            return true;
+        }
+
+        private static bool TryGetEnqueuedTime(ActivityLink link, out long enqueuedTime)
+        {
+            enqueuedTime = 0;
+            if (link.Tags != null && link.Tags.Any())
+            {
+                foreach (var attribute in link.Tags)
+                {
+                    if (attribute.Key == "enqueuedTime")
+                    {
+                        return long.TryParse(attribute.Value?.ToString(), out enqueuedTime);
+                    }
+                }
+            }
+
+            return false;
+        }
     }
 }
