@@ -7,8 +7,8 @@ azure-arm: true
 csharp: true
 library-name: SelfHelp
 namespace: Azure.ResourceManager.SelfHelp
-require: https://github.com/Azure/azure-rest-api-specs/blob/4f6418dca8c15697489bbe6f855558bb79ca5bf5/specification/help/resource-manager/readme.md
-tag: package-2023-01-01-preview
+require: https://github.com/Azure/azure-rest-api-specs/blob/2ced92ea3d86dbe78f1927a8c4c89767cb48e46a/specification/help/resource-manager/readme.md
+tag: package-2023-06-01
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
 skip-csproj: true

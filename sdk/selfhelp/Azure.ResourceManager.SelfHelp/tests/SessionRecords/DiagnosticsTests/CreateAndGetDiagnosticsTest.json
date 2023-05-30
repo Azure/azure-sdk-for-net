@@ -1,53 +1,39 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c?api-version=2021-01-01",
+      "RequestUri": "https://management.azure.com/subscriptions/6bded6d5-a6af-43e1-96d3-bf71f6f5f8ba?api-version=2021-01-01",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "Connection": "keep-alive",
-        "traceparent": "00-e5af58d0b9ae1841954bb28e85e7960d-19dff985c1412e40-00",
-        "User-Agent": "azsdk-net-ResourceManager/1.4.0 (.NET Framework 4.8.9139.0; Microsoft Windows 10.0.22621 )",
-        "x-ms-client-request-id": "0e2a2b01ff406e97c806df7d1085b01d",
+        "traceparent": "00-ab80f6995b43f1eb78b28329d2188b0b-f8ff10bc48a3f122-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.6.0 (.NET 6.0.16; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "b355bf73b09a9c12e567c22c3ff85643",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
       "StatusCode": 200,
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
-        "Content-Length": "748",
+        "Content-Length": "417",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Thu, 04 May 2023 08:26:05 GMT",
+        "Date": "Tue, 30 May 2023 14:42:03 GMT",
         "Expires": "-1",
         "Pragma": "no-cache",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-correlation-request-id": "7c85f81a-24de-4ba5-823c-3abc70b0f408",
-        "x-ms-ratelimit-remaining-subscription-reads": "11999",
-        "x-ms-request-id": "7c85f81a-24de-4ba5-823c-3abc70b0f408",
-        "x-ms-routing-request-id": "SOUTHEASTASIA:20230504T082606Z:7c85f81a-24de-4ba5-823c-3abc70b0f408"
+        "x-ms-correlation-request-id": "ae13c3da-8753-4bc5-8d55-03566772747c",
+        "x-ms-ratelimit-remaining-subscription-reads": "11991",
+        "x-ms-request-id": "ae13c3da-8753-4bc5-8d55-03566772747c",
+        "x-ms-routing-request-id": "EASTUS:20230530T144203Z:ae13c3da-8753-4bc5-8d55-03566772747c"
       },
       "ResponseBody": {
-        "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c",
+        "id": "/subscriptions/6bded6d5-a6af-43e1-96d3-bf71f6f5f8ba",
         "authorizationSource": "RoleBased",
         "managedByTenants": [],
-        "tags": {
-          "TagKey-9823": "TagValue-1254",
-          "TagKey-3481": "TagValue-320",
-          "TagKey-4926": "TagValue-1187",
-          "TagKey-751": "TagValue-3921",
-          "TagKey-1866": "TagValue-8559",
-          "TagKey-3094": "TagValue-9190",
-          "TagKey-2449": "TagValue-9",
-          "TagKey-8379": "TagValue-164",
-          "TagKey-7470": "TagValue-2205",
-          "TagKey-4236": "TagValue-3698",
-          "TagKey-5316": "TagValue-2725"
-        },
-        "subscriptionId": "db1ab6f0-4769-4b27-930e-01e2ef9c123c",
+        "subscriptionId": "6bded6d5-a6af-43e1-96d3-bf71f6f5f8ba",
         "tenantId": "72f988bf-86f1-41af-91ab-2d7cd011db47",
-        "displayName": ".NET Mgmt SDK Test with TTL = 1 Day",
+        "displayName": "Azure Triage Resource Provider - Test",
         "state": "Enabled",
         "subscriptionPolicies": {
           "locationPlacementId": "Internal_2014-09-01",
@@ -57,16 +43,16 @@
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/DiagnosticsRp-Gateway-Public-Dev-Global/providers/Microsoft.KeyVault/vaults/DiagRpGwPubDev2/providers/Microsoft.Help/diagnostics/testResource5852?api-version=2023-01-01-preview",
+      "RequestUri": "https://management.azure.com/subscriptions/6bded6d5-a6af-43e1-96d3-bf71f6f5f8ba/resourceGroups/DiagnosticsRp-Gateway-Public-Dev-Global/providers/Microsoft.KeyVault/vaults/DiagRpGwPubDev/providers/Microsoft.Help/diagnostics/testResource5439?api-version=2023-06-01",
       "RequestMethod": "PUT",
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
         "Content-Length": "107",
         "Content-Type": "application/json",
-        "traceparent": "00-65d808c80b8ebf4ebe1cf92c00f9a703-741db445596f9246-00",
-        "User-Agent": "azsdk-net-ResourceManager.SelfHelp/1.0.0-alpha.20230504.1 (.NET Framework 4.8.9139.0; Microsoft Windows 10.0.22621 )",
-        "x-ms-client-request-id": "40015945e18bedb733893997d29b69c2",
+        "traceparent": "00-44cdc87de030631ec24db5a0a1b7e722-42a829b2cbef8f49-00",
+        "User-Agent": "azsdk-net-ResourceManager.SelfHelp/1.0.0-alpha.20230530.1 (.NET 6.0.16; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "87a341050ca4ffcc5d112e6413dd7aad",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
@@ -83,70 +69,70 @@
       },
       "StatusCode": 201,
       "ResponseHeaders": {
-        "Azure-AsyncOperation": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Help/Diagnostics/testResource5852/operationResults/4e6f1426-baa8-45b9-b1ea-0fdbf436e4db?api-version=2023-01-01-preview",
+        "Azure-AsyncOperation": "https://management.azure.com/subscriptions/6bded6d5-a6af-43e1-96d3-bf71f6f5f8ba/providers/Microsoft.Help/Diagnostics/testResource5439/operationResults/bb5fc2d7-97a1-414f-9775-971b776669d8?api-version=2023-06-01",
         "Cache-Control": "no-cache",
-        "Content-Length": "372",
+        "Content-Length": "371",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Thu, 04 May 2023 08:26:06 GMT",
+        "Date": "Tue, 30 May 2023 14:42:04 GMT",
         "Expires": "-1",
-        "Location": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Help/Diagnostics/testResource5852/operationResults/4e6f1426-baa8-45b9-b1ea-0fdbf436e4db?api-version=2023-01-01-preview",
+        "Location": "https://management.azure.com/subscriptions/6bded6d5-a6af-43e1-96d3-bf71f6f5f8ba/providers/Microsoft.Help/Diagnostics/testResource5439/operationResults/bb5fc2d7-97a1-414f-9775-971b776669d8?api-version=2023-06-01",
         "Pragma": "no-cache",
         "Server": "Microsoft-IIS/10.0",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-correlation-request-id": "0f235793-b52d-4dbc-bdc7-6933712326c0",
-        "x-ms-ratelimit-remaining-subscription-resource-requests": "74",
-        "x-ms-request-id": "0f235793-b52d-4dbc-bdc7-6933712326c0",
-        "x-ms-routing-request-id": "SOUTHEASTASIA:20230504T082607Z:0f235793-b52d-4dbc-bdc7-6933712326c0",
+        "x-ms-correlation-request-id": "23f5b4cc-9150-4fff-8ce0-aa877ccee87f",
+        "x-ms-ratelimit-remaining-subscription-resource-requests": "72",
+        "x-ms-request-id": "23f5b4cc-9150-4fff-8ce0-aa877ccee87f",
+        "x-ms-routing-request-id": "EASTUS:20230530T144204Z:23f5b4cc-9150-4fff-8ce0-aa877ccee87f",
         "X-Powered-By": "ASP.NET"
       },
       "ResponseBody": {
-        "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/DiagnosticsRp-Gateway-Public-Dev-Global/providers/Microsoft.KeyVault/vaults/DiagRpGwPubDev2/providers/Microsoft.Help/diagnostics/testResource5852",
-        "name": "testResource5852",
+        "id": "/subscriptions/6bded6d5-a6af-43e1-96d3-bf71f6f5f8ba/resourceGroups/DiagnosticsRp-Gateway-Public-Dev-Global/providers/Microsoft.KeyVault/vaults/DiagRpGwPubDev/providers/Microsoft.Help/diagnostics/testResource5439",
+        "name": "testResource5439",
         "type": "Microsoft.Help/Diagnostics",
         "properties": {
           "provisioningState": "Running",
-          "acceptedAt": "2023-05-04T08:26:07.1998094Z"
+          "acceptedAt": "2023-05-30T14:42:04.5957939Z"
         }
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/DiagnosticsRp-Gateway-Public-Dev-Global/providers/Microsoft.KeyVault/vaults/DiagRpGwPubDev2/providers/Microsoft.Help/diagnostics/testResource5852?api-version=2023-01-01-preview",
+      "RequestUri": "https://management.azure.com/subscriptions/6bded6d5-a6af-43e1-96d3-bf71f6f5f8ba/resourceGroups/DiagnosticsRp-Gateway-Public-Dev-Global/providers/Microsoft.KeyVault/vaults/DiagRpGwPubDev/providers/Microsoft.Help/diagnostics/testResource5439?api-version=2023-06-01",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "traceparent": "00-a1bfc07c77084948af0a5f6097b8e510-0f6ff0f17afb2544-00",
-        "User-Agent": "azsdk-net-ResourceManager.SelfHelp/1.0.0-alpha.20230504.1 (.NET Framework 4.8.9139.0; Microsoft Windows 10.0.22621 )",
-        "x-ms-client-request-id": "d5effe893d174a7672210c765ed7f66b",
+        "traceparent": "00-23d851b5600254902f1f8d284ae693c4-a951dd8825a2214a-00",
+        "User-Agent": "azsdk-net-ResourceManager.SelfHelp/1.0.0-alpha.20230530.1 (.NET 6.0.16; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "6c7677b758cfb3cf89b33d9ee438d18a",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
       "StatusCode": 200,
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
-        "Content-Length": "2315",
+        "Content-Length": "2314",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Thu, 04 May 2023 08:26:07 GMT",
+        "Date": "Tue, 30 May 2023 14:42:05 GMT",
         "Expires": "-1",
         "Pragma": "no-cache",
         "Server": "Microsoft-IIS/10.0",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "Vary": "Accept-Encoding",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-correlation-request-id": "d064f5ad-10b2-40dc-bdf7-5bb407fa715a",
-        "x-ms-ratelimit-remaining-subscription-resource-requests": "73",
-        "x-ms-request-id": "d064f5ad-10b2-40dc-bdf7-5bb407fa715a",
-        "x-ms-routing-request-id": "SOUTHEASTASIA:20230504T082607Z:d064f5ad-10b2-40dc-bdf7-5bb407fa715a",
+        "x-ms-correlation-request-id": "fe86be59-28f7-4a7c-871c-c547f27cb024",
+        "x-ms-ratelimit-remaining-subscription-resource-requests": "71",
+        "x-ms-request-id": "fe86be59-28f7-4a7c-871c-c547f27cb024",
+        "x-ms-routing-request-id": "EASTUS:20230530T144205Z:fe86be59-28f7-4a7c-871c-c547f27cb024",
         "X-Powered-By": "ASP.NET"
       },
       "ResponseBody": {
-        "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/DiagnosticsRp-Gateway-Public-Dev-Global/providers/Microsoft.KeyVault/vaults/DiagRpGwPubDev2/providers/Microsoft.Help/diagnostics/testResource5852",
-        "name": "testResource5852",
+        "id": "/subscriptions/6bded6d5-a6af-43e1-96d3-bf71f6f5f8ba/resourceGroups/DiagnosticsRp-Gateway-Public-Dev-Global/providers/Microsoft.KeyVault/vaults/DiagRpGwPubDev/providers/Microsoft.Help/diagnostics/testResource5439",
+        "name": "testResource5439",
         "type": "Microsoft.Help/Diagnostics",
         "properties": {
           "provisioningState": "Succeeded",
-          "acceptedAt": "2023-05-04T08:26:07.1998094Z",
+          "acceptedAt": "2023-05-30T14:42:04.5957939Z",
           "diagnostics": [
             {
               "solutionId": "Demo2InsightV2",
@@ -166,9 +152,9 @@
     }
   ],
   "Variables": {
-    "AZURE_AUTHORITY_HOST": "https://login.microsoftonline.com/",
-    "RandomSeed": "1707420500",
+    "AZURE_AUTHORITY_HOST": "https://login.microsoftonline.com",
+    "RandomSeed": "1027507658",
     "RESOURCE_MANAGER_URL": null,
-    "SUBSCRIPTION_ID": "db1ab6f0-4769-4b27-930e-01e2ef9c123c"
+    "SUBSCRIPTION_ID": "6bded6d5-a6af-43e1-96d3-bf71f6f5f8ba"
   }
 }
