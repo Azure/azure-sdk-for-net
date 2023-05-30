@@ -106,7 +106,7 @@ namespace Microsoft.Azure.Data.SchemaRegistry.JsonSchema.Tests.Samples
             // the schema Id will be included as a parameter of the content type
             Console.WriteLine(eventData.ContentType);
 
-            // the serialized Avro data will be stored in the EventBody
+            // the serialized JSON data will be stored in the EventBody
             Console.WriteLine(eventData.EventBody);
 #endif
             #endregion

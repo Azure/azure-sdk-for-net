@@ -18,7 +18,7 @@ namespace Microsoft.Azure.Data.SchemaRegistry.JsonSchema
     internal class SchemaRegistryJsonEventSource : AzureEventSource
     {
         /// <summary>The name to use for the event source.</summary>
-        private const string EventSourceName = "Microsoft-Azure-Data-SchemaRegistry-ApacheAvro";
+        private const string EventSourceName = "Microsoft-Azure-Data-SchemaRegistry-JsonSchema";
 
         internal const int CacheUpdatedEvent = 1;
 

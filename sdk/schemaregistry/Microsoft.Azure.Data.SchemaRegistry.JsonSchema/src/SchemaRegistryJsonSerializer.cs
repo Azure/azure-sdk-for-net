@@ -17,14 +17,18 @@ namespace Microsoft.Azure.Data.SchemaRegistry.JsonSchema
     /// <summary>
     /// A <see cref="SchemaRegistryJsonSerializer"/> serializes and deserializes JSON payloads using <see cref="System.Text.Json"/>.
     /// It requires an implemented <see cref="SchemaRegistryJsonSchemaGenerator"/> and a <see cref="SchemaRegistryClient"/> in order
-    /// to enrich any message of a type inherited from <see cref="MessageContent"/> with the Schema ID. TODO.
+    /// to enrich any message type inherited from <see cref="MessageContent"/> with the Schema ID.
     /// </summary>
+    /// <remarks>
+    /// Having an independently-defined <see cref="SchemaRegistryJsonSchemaGenerator"/> allows any JSON schema generation or validation
+    /// library to be used.
+    /// </remarks>
     public class SchemaRegistryJsonSerializer
     {
         private readonly SchemaRegistryClient _client;
         private readonly string _groupName;
         private readonly SchemaRegistryJsonSchemaGenerator _jsonSchemaGenerator;
-        private const string JsonMimeType = "application/json"; //TODO: confirm
+        private const string JsonMimeType = "application/json";
         private const int CacheCapacity = 128;
 
         /// <summary>
@@ -380,7 +384,7 @@ namespace Microsoft.Azure.Data.SchemaRegistry.JsonSchema
 
                 if (!isValid)
                 {
-                    throw new Exception($"Data type {dataType} is not valid according to the schema definition, {schemaString}"); // TODO: maybe don't print the string?
+                    throw new Exception($"Data type {dataType} is not valid according to the schema definition, {schemaString}");
                 }
 
                 if (async)
