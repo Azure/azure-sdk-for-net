@@ -4,6 +4,7 @@
 using Azure.Data.SchemaRegistry;
 using Azure.Test.Perf;
 using Microsoft.Azure.Data.SchemaRegistry.JsonSchema.Tests;
+using System;
 
 namespace Microsoft.Azure.Data.SchemaRegistry.JsonSchema.Perf
 {
@@ -11,6 +12,8 @@ namespace Microsoft.Azure.Data.SchemaRegistry.JsonSchema.Perf
     {
         private readonly SchemaRegistryClient _client;
         private readonly SchemaRegistryJsonSerializerTestEnvironment _environment;
+        private static readonly string _schema = "{\r\n  \"$schema\": \"http://json-schema.org/draft-04/schema#\",\r\n  \"title\": \"Employee\",\r\n  \"type\": \"object\",\r\n  \"additionalProperties\": false,\r\n  \"properties\": {\r\n    \"Age\": {\r\n      \"type\": \"integer\",\r\n      \"format\": \"int32\"\r\n    },\r\n    \"Name\": {\r\n      \"type\": [\r\n        \"null\",\r\n        \"string\"\r\n      ]\r\n    }\r\n  }\r\n}";
+
         protected SchemaRegistryJsonSerializer Serializer { get; }
 
         public SchemaRegistryJsonSerializerPerfTestBase(SizeCountOptions options) : base(options)
@@ -18,11 +21,18 @@ namespace Microsoft.Azure.Data.SchemaRegistry.JsonSchema.Perf
             _environment = new SchemaRegistryJsonSerializerTestEnvironment();
             _client = new SchemaRegistryClient(_environment.SchemaRegistryEndpoint, _environment.Credential);
 
-            // TODO: what do we want to use as the standardized schema generator, maybe hard code?
-            //Serializer = new SchemaRegistryJsonSerializer(
-            //    _client,
+            Serializer = new SchemaRegistryJsonSerializer(
+                _client,
+                _environment.SchemaRegistryGroup,
+                new SampleJsonGenerator());
+        }
 
-            //    _environment.SchemaRegistryGroup);
+        private class SampleJsonGenerator : SchemaRegistryJsonSchemaGenerator
+        {
+            public override string GenerateSchemaFromObject(Type dataType)
+            {
+                return _schema;
+            }
         }
     }
 }
