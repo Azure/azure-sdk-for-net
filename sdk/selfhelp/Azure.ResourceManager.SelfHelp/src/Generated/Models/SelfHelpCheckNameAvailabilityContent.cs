@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using Azure.Core;
+
 namespace Azure.ResourceManager.SelfHelp.Models
 {
     /// <summary>
@@ -27,6 +29,6 @@ namespace Azure.ResourceManager.SelfHelp.Models
         /// The resource type.
         /// Serialized Name: CheckNameAvailabilityRequest.type
         /// </summary>
-        public string ResourceType { get; set; }
+        public ResourceType? ResourceType { get; set; }
     }
 }
