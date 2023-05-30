@@ -142,6 +142,13 @@ rename-mapping:
   TrackedResourceModificationDetails.deploymentId: -|arm-id
   PolicyTrackedResourcesResourceType: PolicyTrackedResourceType
 
+models-to-treat-empty-string-as-null:
+  - PolicyAssignmentSummary
+  - PolicyDetails
+  - PolicyEvent
+  - PolicyReference
+  - PolicyState
+
 directive:
   # TODO: Autorest.csharp should combine these redundancy methods into the scope one automatically.
   - from: remediations.json
