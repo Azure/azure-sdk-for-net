@@ -9,5 +9,11 @@ Run `dotnet build /t:GenerateTests` to generate code.
 require: ../src/autorest.md
 include-x-ms-examples-original-file: true
 testgen:
-  sample: false
+  sample: true
+  skipped-operations:
+  - BenefitRecommendations_List 
+  - Forecast_Usage
+  - Dimensions_List
+  - Query_Usage
+  - ScheduledActions_CheckNameAvailabilityByScope
 ```
