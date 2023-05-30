@@ -301,37 +301,83 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
             };
         }
 
-        internal static void AddEnqueuedTimeToMeasurements(Activity activity, IDictionary<string, double> measurements)
+        internal static void AddEnqueuedTimeToMeasurementsAndAddLinksToProperties(Activity activity, IDictionary<string, double> measurements, ref AzMonList UnMappedTags)
         {
             if (activity.Links != null && activity.Links.Any())
             {
-                if (TryGetAverageTimeInQueueForBatch(activity, out long enqueuedTime))
+                if (TryGetAverageTimeInQueueForBatchAndAddLinksToProperties(activity, ref UnMappedTags,out long enqueuedTime))
                 {
                     measurements["timeSinceEnqueued"] = enqueuedTime;
                 }
             }
         }
 
-        private static bool TryGetAverageTimeInQueueForBatch(Activity activity, out long avgTimeInQueue)
+        private static bool TryGetAverageTimeInQueueForBatchAndAddLinksToProperties(Activity activity, ref AzMonList UnMappedTags, out long avgTimeInQueue)
         {
             avgTimeInQueue = 0;
             var linksCount = 0;
             DateTimeOffset startTime = activity.StartTimeUtc;
             long startEpochTime = startTime.ToUnixTimeMilliseconds();
+            bool isEnqueuedTimeCalculated = true;
+
+            string msLinks = "_MS.links";
+            var linksJson = new StringBuilder();
+            linksJson.Append('[');
             foreach (ref readonly var link in activity.EnumerateLinks())
             {
                 if (!TryGetEnqueuedTime(link, out var msgEnqueuedTime))
                 {
                     // instrumentation does not consistently report enqueued time, ignoring whole span
-                    return false;
+                    isEnqueuedTimeCalculated = false;
                 }
 
                 avgTimeInQueue += Math.Max(startEpochTime - msgEnqueuedTime, 0);
 
                 linksCount++;
+
+                if (linksCount <= MaxlinksAllowed)
+                {
+                    linksJson
+                        .Append('{')
+                        .Append("\"operation_Id\":")
+                        .Append('\"')
+                        .Append(link.Context.TraceId.ToHexString())
+                        .Append('\"')
+                        .Append(',');
+                    linksJson
+                        .Append("\"id\":")
+                        .Append('\"')
+                        .Append(link.Context.SpanId.ToHexString())
+                        .Append('\"');
+                    linksJson.Append("},");
+                }
             }
 
-            avgTimeInQueue /= linksCount;
+            if (linksJson.Length > 0)
+            {
+                // trim trailing comma - json does not support it
+                linksJson.Remove(linksJson.Length - 1, 1);
+            }
+
+            linksJson.Append(']');
+
+            AzMonList.Add(ref UnMappedTags, new KeyValuePair<string, object?>(msLinks, linksJson.ToString()));
+
+            if (MaxlinksAllowed < linksCount)
+            {
+                AzureMonitorExporterEventSource.Log.WriteInformational("ActivityLinksIgnored", $"Max count of {MaxlinksAllowed} has reached.");
+            }
+
+            if (isEnqueuedTimeCalculated)
+            {
+                avgTimeInQueue /= linksCount;
+            }
+            else
+            {
+                avgTimeInQueue = 0;
+                return false;
+            }
+
             return true;
         }
 

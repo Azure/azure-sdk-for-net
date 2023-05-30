@@ -39,12 +39,16 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Models
             Properties = new ChangeTrackingDictionary<string, string>();
             Measurements = new ChangeTrackingDictionary<string, double>();
 
-            TraceHelper.AddActivityLinksToProperties(activity, ref activityTagsProcessor.UnMappedTags);
-            TraceHelper.AddPropertiesToTelemetry(Properties, ref activityTagsProcessor.UnMappedTags);
             if (activity.Kind == ActivityKind.Consumer)
             {
-                TraceHelper.AddEnqueuedTimeToMeasurements(activity, Measurements);
+                TraceHelper.AddEnqueuedTimeToMeasurementsAndAddLinksToProperties(activity, Measurements, ref activityTagsProcessor.UnMappedTags);
             }
+            else
+            {
+                TraceHelper.AddActivityLinksToProperties(activity, ref activityTagsProcessor.UnMappedTags);
+            }
+
+            TraceHelper.AddPropertiesToTelemetry(Properties, ref activityTagsProcessor.UnMappedTags);
         }
 
         internal static bool IsSuccess(Activity activity, string? responseCode, OperationType operationType)
