@@ -5,6 +5,7 @@ using System;
 using System.Collections;
 using System.Threading.Tasks;
 using Azure.Core;
+using Azure.Core.Dynamic;
 using Azure.Core.TestFramework;
 using NUnit.Framework;
 
@@ -45,7 +46,7 @@ namespace Azure.AI.Language.Conversations.Tests
             Assert.IsNotNull(response);
 
             // deserialize
-            dynamic conversationalTaskResult = response.Content.ToDynamicFromJson();
+            dynamic conversationalTaskResult = response.Content.ToDynamicFromJson(DynamicCaseMapping.PascalToCamel);
             Assert.IsNotNull(conversationalTaskResult);
 
             // assert - prediction type
@@ -91,7 +92,7 @@ namespace Azure.AI.Language.Conversations.Tests
             Assert.IsNotNull(response);
 
             // deserialize
-            dynamic conversationalTaskResult = response.Content.ToDynamicFromJson();
+            dynamic conversationalTaskResult = response.Content.ToDynamicFromJson(DynamicCaseMapping.PascalToCamel);
             Assert.IsNotNull(conversationalTaskResult);
 
             // assert - prediction type
@@ -148,7 +149,7 @@ namespace Azure.AI.Language.Conversations.Tests
             Assert.IsNotNull(response);
 
             // deserialize
-            dynamic conversationalTaskResult = response.Content.ToDynamicFromJson();
+            dynamic conversationalTaskResult = response.Content.ToDynamicFromJson(DynamicCaseMapping.PascalToCamel);
             Assert.IsNotNull(conversationalTaskResult);
 
             // assert - prediction type
@@ -200,7 +201,7 @@ namespace Azure.AI.Language.Conversations.Tests
             Assert.IsNotNull(response);
 
             // deserialize
-            dynamic conversationalTaskResult = response.Content.ToDynamicFromJson();
+            dynamic conversationalTaskResult = response.Content.ToDynamicFromJson(DynamicCaseMapping.PascalToCamel);
             Assert.IsNotNull(conversationalTaskResult);
 
             // assert - prediction type
@@ -255,7 +256,7 @@ namespace Azure.AI.Language.Conversations.Tests
 
             Response response = await client.AnalyzeConversationAsync(RequestContent.Create(data));
 
-            dynamic conversationalTaskResult = response.Content.ToDynamicFromJson();
+            dynamic conversationalTaskResult = response.Content.ToDynamicFromJson(DynamicCaseMapping.PascalToCamel);
             Assert.That((string)conversationalTaskResult.Result.Prediction.TopIntent, Is.EqualTo("Send"));
         }
 
@@ -321,7 +322,7 @@ namespace Azure.AI.Language.Conversations.Tests
 
             Operation<BinaryData> analyzeConversationOperation = await Client.AnalyzeConversationAsync(WaitUntil.Completed, RequestContent.Create(data));
 
-            dynamic jobResults = analyzeConversationOperation.Value.ToDynamicFromJson();
+            dynamic jobResults = analyzeConversationOperation.Value.ToDynamicFromJson(DynamicCaseMapping.PascalToCamel);
             Assert.NotNull(jobResults);
 
             foreach (dynamic analyzeConversationSummarization in jobResults.Tasks.Items)

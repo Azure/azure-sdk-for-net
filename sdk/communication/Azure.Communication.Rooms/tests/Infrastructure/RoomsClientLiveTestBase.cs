@@ -77,8 +77,8 @@ namespace Azure.Communication.Rooms.Tests
         protected RoomsClient CreateClientWithAzureKeyCredential(bool isInstrumented = true)
         {
             var client = new RoomsClient(
-                    TestEnvironment.LiveTestStaticEndpoint,
-                     new AzureKeyCredential(TestEnvironment.LiveTestStaticAccessKey),
+                    TestEnvironment.CommunicationRoomsEndpoint,
+                     new AzureKeyCredential(TestEnvironment.CommunicationRoomsAccessKey),
                     CreateRoomsClientOptionsWithCorrelationVectorLogs(RoomsClientOptions.ServiceVersion.V2023_03_31_Preview));
 
             return isInstrumented ? InstrumentClient(client) : client;
@@ -92,7 +92,7 @@ namespace Azure.Communication.Rooms.Tests
         protected RoomsClient CreateClientWithTokenCredential(bool isInstrumented = true)
         {
             var client = new RoomsClient(
-                    TestEnvironment.LiveTestStaticEndpoint,
+                    TestEnvironment.CommunicationRoomsEndpoint,
                     (Mode == RecordedTestMode.Playback) ? new MockCredential() : new DefaultAzureCredential(),
                     CreateRoomsClientOptionsWithCorrelationVectorLogs(RoomsClientOptions.ServiceVersion.V2023_03_31_Preview));
 

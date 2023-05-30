@@ -26,7 +26,7 @@ namespace Azure.Maps.Search.Models
 
         /// <summary>
         /// One of:
-        /// <list>
+        /// <list type="bullet">
         /// <item><description> POI </description></item>
         /// <item><description> Street </description></item>
         /// <item><description> Geography </description></item>

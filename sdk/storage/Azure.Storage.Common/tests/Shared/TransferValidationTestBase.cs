@@ -8,6 +8,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.TestFramework;
+using FastSerialization;
 using NUnit.Framework;
 
 namespace Azure.Storage.Test.Shared
@@ -796,6 +797,66 @@ namespace Azure.Storage.Test.Shared
                 await writeStream.WriteAsync(data, 0, data.Length);
             }
             checksumPipelineAssertion.CheckRequest = false;
+        }
+
+        [Test]
+        public virtual async Task OpenWriteSucceedsWithCallerProvidedCrc(
+            [Values(Constants.KB)] int dataSize,
+            [Values(Constants.KB, 200)] int bufferSize)
+        {
+            await using IDisposingContainer<TContainerClient> disposingContainer = await GetDisposingContainerAsync();
+
+            // Arrange
+            byte[] data = GetRandomBuffer(dataSize);
+            Memory<byte> dataCrc = Checksum(data, StorageChecksumAlgorithm.StorageCrc64);
+            UploadTransferValidationOptions validationOptions = new()
+            {
+                ChecksumAlgorithm = StorageChecksumAlgorithm.StorageCrc64,
+                PrecalculatedChecksum = dataCrc
+            };
+
+            var client = await GetResourceClientAsync(
+                disposingContainer.Container,
+                resourceLength: dataSize,
+                createResource: true);
+            Stream writeStream = await OpenWriteAsync(client, validationOptions, bufferSize);
+
+            for (int i = 0; i < dataSize; i += bufferSize)
+            {
+                await writeStream.WriteAsync(data, i, Math.Min(bufferSize, data.Length - i));
+            }
+
+            Assert.DoesNotThrow(writeStream.Dispose);
+        }
+
+        [Test]
+        public virtual async Task OpenWriteFailsOnCallerProvidedCrcMismatch(
+            [Values(Constants.KB)] int dataSize,
+            [Values(Constants.KB, 200)] int bufferSize)
+        {
+            await using IDisposingContainer<TContainerClient> disposingContainer = await GetDisposingContainerAsync();
+
+            // Arrange
+            byte[] data = GetRandomBuffer(dataSize);
+            Memory<byte> garbageDataCrc = new Memory<byte>(GetRandomBuffer(Constants.StorageCrc64SizeInBytes));
+            UploadTransferValidationOptions validationOptions = new()
+            {
+                ChecksumAlgorithm = StorageChecksumAlgorithm.StorageCrc64,
+                PrecalculatedChecksum = garbageDataCrc
+            };
+
+            var client = await GetResourceClientAsync(
+                disposingContainer.Container,
+                resourceLength: dataSize,
+                createResource: true);
+            Stream writeStream = await OpenWriteAsync(client, validationOptions, bufferSize);
+
+            for (int i = 0; i < dataSize; i += bufferSize)
+            {
+                await writeStream.WriteAsync(data, i, Math.Min(bufferSize, data.Length - i));
+            }
+
+            Assert.Throws<InvalidDataException>(writeStream.Dispose);
         }
         #endregion
 
@@ -1868,6 +1929,15 @@ namespace Azure.Storage.Test.Shared
             {
                 Assert.Fail($"Expected: No Exception to be thrown\nBut was: {e}");
             }
+        }
+        #endregion
+
+        #region Inlines
+        private Memory<byte> Checksum(ReadOnlySpan<byte> data, StorageChecksumAlgorithm algorithm)
+        {
+            IHasher hasher = ContentHasher.GetHasherFromAlgorithmId(algorithm);
+            hasher?.AppendHash(data);
+            return hasher?.GetFinalHash() ?? Memory<byte>.Empty;
         }
         #endregion
     }

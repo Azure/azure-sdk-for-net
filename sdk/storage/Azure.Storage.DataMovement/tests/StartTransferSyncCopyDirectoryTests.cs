@@ -63,12 +63,13 @@ namespace Azure.Storage.DataMovement.Tests
             TransferManager transferManager = new TransferManager(transferManagerOptions);
 
             StorageResourceContainer sourceResource =
-                new BlobDirectoryStorageResourceContainer(container, sourceBlobPrefix);
+                new BlobStorageResourceContainer(container, new() { DirectoryPrefix = sourceBlobPrefix });
             StorageResourceContainer destinationResource =
-                new BlobDirectoryStorageResourceContainer(container, destinationBlobPrefix,
+                new BlobStorageResourceContainer(container,
                 new BlobStorageResourceContainerOptions()
                 {
                     CopyMethod = TransferCopyMethod.SyncCopy,
+                    DirectoryPrefix = destinationBlobPrefix,
                 });
 
             DataTransfer transfer = await transferManager.StartTransferAsync(sourceResource, destinationResource, options);
@@ -224,11 +225,12 @@ namespace Azure.Storage.DataMovement.Tests
             string folder = CreateRandomDirectory(testDirectory.DirectoryPath);
 
             // Set up destination client
-            StorageResourceContainer destinationResource = new BlobDirectoryStorageResourceContainer(test.Container, dirName);
-            StorageResourceContainer sourceResource = new BlobDirectoryStorageResourceContainer(test.Container, dirName2,
+            StorageResourceContainer destinationResource = new BlobStorageResourceContainer(test.Container, new() { DirectoryPrefix = dirName });
+            StorageResourceContainer sourceResource = new BlobStorageResourceContainer(test.Container,
                 new BlobStorageResourceContainerOptions()
                 {
                     CopyMethod = TransferCopyMethod.AsyncCopy,
+                    DirectoryPrefix = dirName2,
                 });
 
             TransferManagerOptions managerOptions = new TransferManagerOptions()
@@ -490,11 +492,12 @@ namespace Azure.Storage.DataMovement.Tests
             await CreateBlobDirectoryTree(containerClient, sourceFolderPath, sourceBlobPrefix, size);
 
             // Create new source block blob.
-            StorageResourceContainer sourceResource = new BlobDirectoryStorageResourceContainer(containerClient, sourceBlobPrefix);
-            StorageResourceContainer destinationResource = new BlobDirectoryStorageResourceContainer(containerClient, destBlobPrefix,
+            StorageResourceContainer sourceResource = new BlobStorageResourceContainer(containerClient, new() { DirectoryPrefix = sourceBlobPrefix });
+            StorageResourceContainer destinationResource = new BlobStorageResourceContainer(containerClient,
                 new BlobStorageResourceContainerOptions()
                 {
-                    CopyMethod = TransferCopyMethod.SyncCopy
+                    CopyMethod = TransferCopyMethod.SyncCopy,
+                    DirectoryPrefix = destBlobPrefix,
                 });
 
             // If we want a failure condition to happen
