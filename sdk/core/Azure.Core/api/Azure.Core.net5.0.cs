@@ -411,6 +411,11 @@ namespace Azure.Core
         public static bool operator !=(Azure.Core.ContentType left, Azure.Core.ContentType right) { throw null; }
         public override string ToString() { throw null; }
     }
+    public partial class DefaultTransportOptions
+    {
+        public DefaultTransportOptions() { }
+        public bool AllowAutoRedirect { get { throw null; } set { } }
+    }
     public abstract partial class DelayStrategy
     {
         protected DelayStrategy(System.TimeSpan? maxDelay = default(System.TimeSpan?), double jitterFactor = 0.2) { }
@@ -1087,6 +1092,7 @@ namespace Azure.Core.Pipeline
     public partial class HttpPipelineTransportOptions
     {
         public HttpPipelineTransportOptions() { }
+        public bool AllowAutoRedirect { get { throw null; } set { } }
         public System.Collections.Generic.IList<System.Security.Cryptography.X509Certificates.X509Certificate2> ClientCertificates { get { throw null; } }
         public System.Func<Azure.Core.Pipeline.ServerCertificateCustomValidationArgs, bool>? ServerCertificateCustomValidationCallback { get { throw null; } set { } }
     }

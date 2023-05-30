@@ -17,7 +17,7 @@ namespace Azure.Core.Pipeline
         /// </summary>
         public HttpPipelineTransportOptions()
         {
-            // suppress false postive of NetAnalyzers: error CA1416: This call site is reachable on all platforms. 'X509Certificate2' is unsupported on: 'browser'.
+            // suppress false positive of NetAnalyzers: error CA1416: This call site is reachable on all platforms. 'X509Certificate2' is unsupported on: 'browser'.
 #pragma warning disable CA1416
             ClientCertificates = new List<X509Certificate2>();
 #pragma warning restore CA1416
@@ -33,5 +33,10 @@ namespace Azure.Core.Pipeline
         /// </summary>
         /// <value></value>
         public IList<X509Certificate2> ClientCertificates { get; }
+
+        /// <summary>
+        /// Gets or sets a value that indicates whether the transport should follow redirection responses.
+        /// </summary>
+        public bool AllowAutoRedirect { get; set; }
     }
 }
