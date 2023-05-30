@@ -10,10 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.SelfHelp.Models
 {
-    /// <summary>
-    /// Properties returned with in an insight.
-    /// Serialized Name: Diagnostic
-    /// </summary>
+    /// <summary> Properties returned with in an insight. </summary>
     public partial class SelfHelpDiagnosticInfo
     {
         /// <summary> Initializes a new instance of SelfHelpDiagnosticInfo. </summary>
@@ -23,22 +20,10 @@ namespace Azure.ResourceManager.SelfHelp.Models
         }
 
         /// <summary> Initializes a new instance of SelfHelpDiagnosticInfo. </summary>
-        /// <param name="solutionId">
-        /// Solution Id
-        /// Serialized Name: Diagnostic.solutionId
-        /// </param>
-        /// <param name="diagnosticStatus">
-        /// Denotes the status of the diagnostic resource.
-        /// Serialized Name: Diagnostic.status
-        /// </param>
-        /// <param name="diagnosticInsights">
-        /// The problems (if any) detected by this insight.
-        /// Serialized Name: Diagnostic.insights
-        /// </param>
-        /// <param name="errorInfo">
-        /// Error definition.
-        /// Serialized Name: Diagnostic.error
-        /// </param>
+        /// <param name="solutionId"> Solution Id. </param>
+        /// <param name="diagnosticStatus"> Denotes the status of the diagnostic resource. </param>
+        /// <param name="diagnosticInsights"> The problems (if any) detected by this insight. </param>
+        /// <param name="errorInfo"> Error definition. </param>
         internal SelfHelpDiagnosticInfo(string solutionId, SelfHelpDiagnosticStatus? diagnosticStatus, IReadOnlyList<SelfHelpDiagnosticInsight> diagnosticInsights, SelfHelpError errorInfo)
         {
             SolutionId = solutionId;
@@ -47,25 +32,13 @@ namespace Azure.ResourceManager.SelfHelp.Models
             ErrorInfo = errorInfo;
         }
 
-        /// <summary>
-        /// Solution Id
-        /// Serialized Name: Diagnostic.solutionId
-        /// </summary>
+        /// <summary> Solution Id. </summary>
         public string SolutionId { get; }
-        /// <summary>
-        /// Denotes the status of the diagnostic resource.
-        /// Serialized Name: Diagnostic.status
-        /// </summary>
+        /// <summary> Denotes the status of the diagnostic resource. </summary>
         public SelfHelpDiagnosticStatus? DiagnosticStatus { get; }
-        /// <summary>
-        /// The problems (if any) detected by this insight.
-        /// Serialized Name: Diagnostic.insights
-        /// </summary>
+        /// <summary> The problems (if any) detected by this insight. </summary>
         public IReadOnlyList<SelfHelpDiagnosticInsight> DiagnosticInsights { get; }
-        /// <summary>
-        /// Error definition.
-        /// Serialized Name: Diagnostic.error
-        /// </summary>
+        /// <summary> Error definition. </summary>
         public SelfHelpError ErrorInfo { get; }
     }
 }

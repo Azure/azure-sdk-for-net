@@ -18,18 +18,9 @@ namespace Azure.ResourceManager.SelfHelp.Models
     public static partial class ArmSelfHelpModelFactory
     {
         /// <summary> Initializes a new instance of SelfHelpCheckNameAvailabilityResult. </summary>
-        /// <param name="isNameAvailable">
-        /// Returns true or false depending on the availability of the name
-        /// Serialized Name: CheckNameAvailabilityResponse.nameAvailable
-        /// </param>
-        /// <param name="notAvailableReason">
-        /// Reason for why value is not available. This field is returned if nameAvailable is false.
-        /// Serialized Name: CheckNameAvailabilityResponse.reason
-        /// </param>
-        /// <param name="errorMessage">
-        /// Gets an error message explaining the &apos;reason&apos; value with more details. This field is returned iif nameAvailable is false.
-        /// Serialized Name: CheckNameAvailabilityResponse.message
-        /// </param>
+        /// <param name="isNameAvailable"> Returns true or false depending on the availability of the name. </param>
+        /// <param name="notAvailableReason"> Reason for why value is not available. This field is returned if nameAvailable is false. </param>
+        /// <param name="errorMessage"> Gets an error message explaining the &apos;reason&apos; value with more details. This field is returned iif nameAvailable is false. </param>
         /// <returns> A new <see cref="Models.SelfHelpCheckNameAvailabilityResult"/> instance for mocking. </returns>
         public static SelfHelpCheckNameAvailabilityResult SelfHelpCheckNameAvailabilityResult(bool? isNameAvailable = null, string notAvailableReason = null, string errorMessage = null)
         {
@@ -41,26 +32,11 @@ namespace Azure.ResourceManager.SelfHelp.Models
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="globalParameters">
-        /// Global parameters that can be passed to all solutionIds.
-        /// Serialized Name: DiagnosticResource.properties.globalParameters
-        /// </param>
-        /// <param name="diagnosticInsights">
-        /// SolutionIds that are needed to be invoked.
-        /// Serialized Name: DiagnosticResource.properties.insights
-        /// </param>
-        /// <param name="acceptedTime">
-        /// Diagnostic Request Accepted time.
-        /// Serialized Name: DiagnosticResource.properties.acceptedAt
-        /// </param>
-        /// <param name="provisioningState">
-        /// Status of diagnostic provisioning.
-        /// Serialized Name: DiagnosticResource.properties.provisioningState
-        /// </param>
-        /// <param name="diagnostics">
-        /// Array of Diagnostics.
-        /// Serialized Name: DiagnosticResource.properties.diagnostics
-        /// </param>
+        /// <param name="globalParameters"> Global parameters that can be passed to all solutionIds. </param>
+        /// <param name="diagnosticInsights"> SolutionIds that are needed to be invoked. </param>
+        /// <param name="acceptedTime"> Diagnostic Request Accepted time. </param>
+        /// <param name="provisioningState"> Status of diagnostic provisioning. </param>
+        /// <param name="diagnostics"> Array of Diagnostics. </param>
         /// <returns> A new <see cref="SelfHelp.SelfHelpDiagnosticData"/> instance for mocking. </returns>
         public static SelfHelpDiagnosticData SelfHelpDiagnosticData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> globalParameters = null, IEnumerable<SelfHelpDiagnosticInvocation> diagnosticInsights = null, string acceptedTime = null, SelfHelpProvisioningState? provisioningState = null, IEnumerable<SelfHelpDiagnosticInfo> diagnostics = null)
         {
@@ -72,22 +48,10 @@ namespace Azure.ResourceManager.SelfHelp.Models
         }
 
         /// <summary> Initializes a new instance of SelfHelpDiagnosticInfo. </summary>
-        /// <param name="solutionId">
-        /// Solution Id
-        /// Serialized Name: Diagnostic.solutionId
-        /// </param>
-        /// <param name="diagnosticStatus">
-        /// Denotes the status of the diagnostic resource.
-        /// Serialized Name: Diagnostic.status
-        /// </param>
-        /// <param name="diagnosticInsights">
-        /// The problems (if any) detected by this insight.
-        /// Serialized Name: Diagnostic.insights
-        /// </param>
-        /// <param name="errorInfo">
-        /// Error definition.
-        /// Serialized Name: Diagnostic.error
-        /// </param>
+        /// <param name="solutionId"> Solution Id. </param>
+        /// <param name="diagnosticStatus"> Denotes the status of the diagnostic resource. </param>
+        /// <param name="diagnosticInsights"> The problems (if any) detected by this insight. </param>
+        /// <param name="errorInfo"> Error definition. </param>
         /// <returns> A new <see cref="Models.SelfHelpDiagnosticInfo"/> instance for mocking. </returns>
         public static SelfHelpDiagnosticInfo SelfHelpDiagnosticInfo(string solutionId = null, SelfHelpDiagnosticStatus? diagnosticStatus = null, IEnumerable<SelfHelpDiagnosticInsight> diagnosticInsights = null, SelfHelpError errorInfo = null)
         {
@@ -97,22 +61,10 @@ namespace Azure.ResourceManager.SelfHelp.Models
         }
 
         /// <summary> Initializes a new instance of SelfHelpDiagnosticInsight. </summary>
-        /// <param name="insightId">
-        /// Article id.
-        /// Serialized Name: Insight.id
-        /// </param>
-        /// <param name="insightTitle">
-        /// This insight&apos;s title.
-        /// Serialized Name: Insight.title
-        /// </param>
-        /// <param name="insightResults">
-        /// Detailed result content.
-        /// Serialized Name: Insight.results
-        /// </param>
-        /// <param name="insightImportanceLevel">
-        /// Importance level of the insight.
-        /// Serialized Name: Insight.importanceLevel
-        /// </param>
+        /// <param name="insightId"> Article id. </param>
+        /// <param name="insightTitle"> This insight&apos;s title. </param>
+        /// <param name="insightResults"> Detailed result content. </param>
+        /// <param name="insightImportanceLevel"> Importance level of the insight. </param>
         /// <returns> A new <see cref="Models.SelfHelpDiagnosticInsight"/> instance for mocking. </returns>
         public static SelfHelpDiagnosticInsight SelfHelpDiagnosticInsight(string insightId = null, string insightTitle = null, string insightResults = null, SelfHelpImportanceLevel? insightImportanceLevel = null)
         {
@@ -120,22 +72,10 @@ namespace Azure.ResourceManager.SelfHelp.Models
         }
 
         /// <summary> Initializes a new instance of SelfHelpError. </summary>
-        /// <param name="errorCode">
-        /// Service specific error code which serves as the substatus for the HTTP error code.
-        /// Serialized Name: Error.code
-        /// </param>
-        /// <param name="errorType">
-        /// Service specific error type which serves as additional context for the error herein.
-        /// Serialized Name: Error.type
-        /// </param>
-        /// <param name="errorMessage">
-        /// Description of the error.
-        /// Serialized Name: Error.message
-        /// </param>
-        /// <param name="errorDetails">
-        /// An array of additional nested error response info objects, as described by this contract.
-        /// Serialized Name: Error.details
-        /// </param>
+        /// <param name="errorCode"> Service specific error code which serves as the substatus for the HTTP error code. </param>
+        /// <param name="errorType"> Service specific error type which serves as additional context for the error herein. </param>
+        /// <param name="errorMessage"> Description of the error. </param>
+        /// <param name="errorDetails"> An array of additional nested error response info objects, as described by this contract. </param>
         /// <returns> A new <see cref="Models.SelfHelpError"/> instance for mocking. </returns>
         public static SelfHelpError SelfHelpError(string errorCode = null, string errorType = null, string errorMessage = null, IEnumerable<SelfHelpError> errorDetails = null)
         {
@@ -149,22 +89,10 @@ namespace Azure.ResourceManager.SelfHelp.Models
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="solutionId">
-        /// Solution Id.
-        /// Serialized Name: SolutionMetadataResource.properties.solutionId
-        /// </param>
-        /// <param name="solutionType">
-        /// Solution Type.
-        /// Serialized Name: SolutionMetadataResource.properties.solutionType
-        /// </param>
-        /// <param name="solutionDescription">
-        /// A detailed description of solution.
-        /// Serialized Name: SolutionMetadataResource.properties.description
-        /// </param>
-        /// <param name="requiredParameterSets">
-        /// Required parameters for invoking this particular solution.
-        /// Serialized Name: SolutionMetadataResource.properties.requiredParameterSets
-        /// </param>
+        /// <param name="solutionId"> Solution Id. </param>
+        /// <param name="solutionType"> Solution Type. </param>
+        /// <param name="solutionDescription"> A detailed description of solution. </param>
+        /// <param name="requiredParameterSets"> Required parameters for invoking this particular solution. </param>
         /// <returns> A new <see cref="Models.SelfHelpSolutionMetadata"/> instance for mocking. </returns>
         public static SelfHelpSolutionMetadata SelfHelpSolutionMetadata(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string solutionId = null, string solutionType = null, string solutionDescription = null, IEnumerable<IList<string>> requiredParameterSets = null)
         {

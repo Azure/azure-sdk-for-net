@@ -10,10 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.SelfHelp.Models
 {
-    /// <summary>
-    /// Solution Invocation with additional params needed for invocation.
-    /// Serialized Name: DiagnosticInvocation
-    /// </summary>
+    /// <summary> Solution Invocation with additional params needed for invocation. </summary>
     public partial class SelfHelpDiagnosticInvocation
     {
         /// <summary> Initializes a new instance of SelfHelpDiagnosticInvocation. </summary>
@@ -23,29 +20,17 @@ namespace Azure.ResourceManager.SelfHelp.Models
         }
 
         /// <summary> Initializes a new instance of SelfHelpDiagnosticInvocation. </summary>
-        /// <param name="solutionId">
-        /// Solution Id to invoke.
-        /// Serialized Name: DiagnosticInvocation.solutionId
-        /// </param>
-        /// <param name="additionalParameters">
-        /// Additional parameters required to invoke the solutionId.
-        /// Serialized Name: DiagnosticInvocation.additionalParameters
-        /// </param>
+        /// <param name="solutionId"> Solution Id to invoke. </param>
+        /// <param name="additionalParameters"> Additional parameters required to invoke the solutionId. </param>
         internal SelfHelpDiagnosticInvocation(string solutionId, IDictionary<string, string> additionalParameters)
         {
             SolutionId = solutionId;
             AdditionalParameters = additionalParameters;
         }
 
-        /// <summary>
-        /// Solution Id to invoke.
-        /// Serialized Name: DiagnosticInvocation.solutionId
-        /// </summary>
+        /// <summary> Solution Id to invoke. </summary>
         public string SolutionId { get; set; }
-        /// <summary>
-        /// Additional parameters required to invoke the solutionId.
-        /// Serialized Name: DiagnosticInvocation.additionalParameters
-        /// </summary>
+        /// <summary> Additional parameters required to invoke the solutionId. </summary>
         public IDictionary<string, string> AdditionalParameters { get; }
     }
 }

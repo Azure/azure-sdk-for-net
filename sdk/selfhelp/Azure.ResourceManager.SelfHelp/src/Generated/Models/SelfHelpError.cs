@@ -10,10 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.SelfHelp.Models
 {
-    /// <summary>
-    /// Error definition.
-    /// Serialized Name: Error
-    /// </summary>
+    /// <summary> Error definition. </summary>
     public partial class SelfHelpError
     {
         /// <summary> Initializes a new instance of SelfHelpError. </summary>
@@ -23,22 +20,10 @@ namespace Azure.ResourceManager.SelfHelp.Models
         }
 
         /// <summary> Initializes a new instance of SelfHelpError. </summary>
-        /// <param name="errorCode">
-        /// Service specific error code which serves as the substatus for the HTTP error code.
-        /// Serialized Name: Error.code
-        /// </param>
-        /// <param name="errorType">
-        /// Service specific error type which serves as additional context for the error herein.
-        /// Serialized Name: Error.type
-        /// </param>
-        /// <param name="errorMessage">
-        /// Description of the error.
-        /// Serialized Name: Error.message
-        /// </param>
-        /// <param name="errorDetails">
-        /// An array of additional nested error response info objects, as described by this contract.
-        /// Serialized Name: Error.details
-        /// </param>
+        /// <param name="errorCode"> Service specific error code which serves as the substatus for the HTTP error code. </param>
+        /// <param name="errorType"> Service specific error type which serves as additional context for the error herein. </param>
+        /// <param name="errorMessage"> Description of the error. </param>
+        /// <param name="errorDetails"> An array of additional nested error response info objects, as described by this contract. </param>
         internal SelfHelpError(string errorCode, string errorType, string errorMessage, IReadOnlyList<SelfHelpError> errorDetails)
         {
             ErrorCode = errorCode;
@@ -47,25 +32,13 @@ namespace Azure.ResourceManager.SelfHelp.Models
             ErrorDetails = errorDetails;
         }
 
-        /// <summary>
-        /// Service specific error code which serves as the substatus for the HTTP error code.
-        /// Serialized Name: Error.code
-        /// </summary>
+        /// <summary> Service specific error code which serves as the substatus for the HTTP error code. </summary>
         public string ErrorCode { get; }
-        /// <summary>
-        /// Service specific error type which serves as additional context for the error herein.
-        /// Serialized Name: Error.type
-        /// </summary>
+        /// <summary> Service specific error type which serves as additional context for the error herein. </summary>
         public string ErrorType { get; }
-        /// <summary>
-        /// Description of the error.
-        /// Serialized Name: Error.message
-        /// </summary>
+        /// <summary> Description of the error. </summary>
         public string ErrorMessage { get; }
-        /// <summary>
-        /// An array of additional nested error response info objects, as described by this contract.
-        /// Serialized Name: Error.details
-        /// </summary>
+        /// <summary> An array of additional nested error response info objects, as described by this contract. </summary>
         public IReadOnlyList<SelfHelpError> ErrorDetails { get; }
     }
 }

@@ -15,7 +15,6 @@ namespace Azure.ResourceManager.SelfHelp
     /// <summary>
     /// A class representing the SelfHelpDiagnostic data model.
     /// Diagnostic resource
-    /// Serialized Name: DiagnosticResource
     /// </summary>
     public partial class SelfHelpDiagnosticData : ResourceData
     {
@@ -32,26 +31,11 @@ namespace Azure.ResourceManager.SelfHelp
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="globalParameters">
-        /// Global parameters that can be passed to all solutionIds.
-        /// Serialized Name: DiagnosticResource.properties.globalParameters
-        /// </param>
-        /// <param name="diagnosticInsights">
-        /// SolutionIds that are needed to be invoked.
-        /// Serialized Name: DiagnosticResource.properties.insights
-        /// </param>
-        /// <param name="acceptedTime">
-        /// Diagnostic Request Accepted time.
-        /// Serialized Name: DiagnosticResource.properties.acceptedAt
-        /// </param>
-        /// <param name="provisioningState">
-        /// Status of diagnostic provisioning.
-        /// Serialized Name: DiagnosticResource.properties.provisioningState
-        /// </param>
-        /// <param name="diagnostics">
-        /// Array of Diagnostics.
-        /// Serialized Name: DiagnosticResource.properties.diagnostics
-        /// </param>
+        /// <param name="globalParameters"> Global parameters that can be passed to all solutionIds. </param>
+        /// <param name="diagnosticInsights"> SolutionIds that are needed to be invoked. </param>
+        /// <param name="acceptedTime"> Diagnostic Request Accepted time. </param>
+        /// <param name="provisioningState"> Status of diagnostic provisioning. </param>
+        /// <param name="diagnostics"> Array of Diagnostics. </param>
         internal SelfHelpDiagnosticData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> globalParameters, IList<SelfHelpDiagnosticInvocation> diagnosticInsights, string acceptedTime, SelfHelpProvisioningState? provisioningState, IReadOnlyList<SelfHelpDiagnosticInfo> diagnostics) : base(id, name, resourceType, systemData)
         {
             GlobalParameters = globalParameters;
@@ -61,30 +45,15 @@ namespace Azure.ResourceManager.SelfHelp
             Diagnostics = diagnostics;
         }
 
-        /// <summary>
-        /// Global parameters that can be passed to all solutionIds.
-        /// Serialized Name: DiagnosticResource.properties.globalParameters
-        /// </summary>
+        /// <summary> Global parameters that can be passed to all solutionIds. </summary>
         public IDictionary<string, string> GlobalParameters { get; }
-        /// <summary>
-        /// SolutionIds that are needed to be invoked.
-        /// Serialized Name: DiagnosticResource.properties.insights
-        /// </summary>
+        /// <summary> SolutionIds that are needed to be invoked. </summary>
         public IList<SelfHelpDiagnosticInvocation> DiagnosticInsights { get; }
-        /// <summary>
-        /// Diagnostic Request Accepted time.
-        /// Serialized Name: DiagnosticResource.properties.acceptedAt
-        /// </summary>
+        /// <summary> Diagnostic Request Accepted time. </summary>
         public string AcceptedTime { get; }
-        /// <summary>
-        /// Status of diagnostic provisioning.
-        /// Serialized Name: DiagnosticResource.properties.provisioningState
-        /// </summary>
+        /// <summary> Status of diagnostic provisioning. </summary>
         public SelfHelpProvisioningState? ProvisioningState { get; }
-        /// <summary>
-        /// Array of Diagnostics.
-        /// Serialized Name: DiagnosticResource.properties.diagnostics
-        /// </summary>
+        /// <summary> Array of Diagnostics. </summary>
         public IReadOnlyList<SelfHelpDiagnosticInfo> Diagnostics { get; }
     }
 }

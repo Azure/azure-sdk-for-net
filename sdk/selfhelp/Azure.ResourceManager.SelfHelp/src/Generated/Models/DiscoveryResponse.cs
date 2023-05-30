@@ -10,10 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.SelfHelp.Models
 {
-    /// <summary>
-    /// Discovery response.
-    /// Serialized Name: DiscoveryResponse
-    /// </summary>
+    /// <summary> Discovery response. </summary>
     internal partial class DiscoveryResponse
     {
         /// <summary> Initializes a new instance of DiscoveryResponse. </summary>
@@ -23,29 +20,17 @@ namespace Azure.ResourceManager.SelfHelp.Models
         }
 
         /// <summary> Initializes a new instance of DiscoveryResponse. </summary>
-        /// <param name="solutionMetaData">
-        /// The list of solution metadata.
-        /// Serialized Name: DiscoveryResponse.value
-        /// </param>
-        /// <param name="nextLink">
-        /// The link used to get the next page of solution metadata.
-        /// Serialized Name: DiscoveryResponse.nextLink
-        /// </param>
+        /// <param name="solutionMetaData"> The list of solution metadata. </param>
+        /// <param name="nextLink"> The link used to get the next page of solution metadata. </param>
         internal DiscoveryResponse(IReadOnlyList<SelfHelpSolutionMetadata> solutionMetaData, string nextLink)
         {
             SolutionMetaData = solutionMetaData;
             NextLink = nextLink;
         }
 
-        /// <summary>
-        /// The list of solution metadata.
-        /// Serialized Name: DiscoveryResponse.value
-        /// </summary>
+        /// <summary> The list of solution metadata. </summary>
         public IReadOnlyList<SelfHelpSolutionMetadata> SolutionMetaData { get; }
-        /// <summary>
-        /// The link used to get the next page of solution metadata.
-        /// Serialized Name: DiscoveryResponse.nextLink
-        /// </summary>
+        /// <summary> The link used to get the next page of solution metadata. </summary>
         public string NextLink { get; }
     }
 }

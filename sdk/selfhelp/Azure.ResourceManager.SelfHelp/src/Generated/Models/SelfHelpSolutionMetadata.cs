@@ -11,10 +11,7 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.SelfHelp.Models
 {
-    /// <summary>
-    /// Solution Metadata resource
-    /// Serialized Name: SolutionMetadataResource
-    /// </summary>
+    /// <summary> Solution Metadata resource. </summary>
     public partial class SelfHelpSolutionMetadata : ResourceData
     {
         /// <summary> Initializes a new instance of SelfHelpSolutionMetadata. </summary>
@@ -28,22 +25,10 @@ namespace Azure.ResourceManager.SelfHelp.Models
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="solutionId">
-        /// Solution Id.
-        /// Serialized Name: SolutionMetadataResource.properties.solutionId
-        /// </param>
-        /// <param name="solutionType">
-        /// Solution Type.
-        /// Serialized Name: SolutionMetadataResource.properties.solutionType
-        /// </param>
-        /// <param name="solutionDescription">
-        /// A detailed description of solution.
-        /// Serialized Name: SolutionMetadataResource.properties.description
-        /// </param>
-        /// <param name="requiredParameterSets">
-        /// Required parameters for invoking this particular solution.
-        /// Serialized Name: SolutionMetadataResource.properties.requiredParameterSets
-        /// </param>
+        /// <param name="solutionId"> Solution Id. </param>
+        /// <param name="solutionType"> Solution Type. </param>
+        /// <param name="solutionDescription"> A detailed description of solution. </param>
+        /// <param name="requiredParameterSets"> Required parameters for invoking this particular solution. </param>
         internal SelfHelpSolutionMetadata(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string solutionId, string solutionType, string solutionDescription, IList<IList<string>> requiredParameterSets) : base(id, name, resourceType, systemData)
         {
             SolutionId = solutionId;
@@ -52,25 +37,13 @@ namespace Azure.ResourceManager.SelfHelp.Models
             RequiredParameterSets = requiredParameterSets;
         }
 
-        /// <summary>
-        /// Solution Id.
-        /// Serialized Name: SolutionMetadataResource.properties.solutionId
-        /// </summary>
+        /// <summary> Solution Id. </summary>
         public string SolutionId { get; set; }
-        /// <summary>
-        /// Solution Type.
-        /// Serialized Name: SolutionMetadataResource.properties.solutionType
-        /// </summary>
+        /// <summary> Solution Type. </summary>
         public string SolutionType { get; set; }
-        /// <summary>
-        /// A detailed description of solution.
-        /// Serialized Name: SolutionMetadataResource.properties.description
-        /// </summary>
+        /// <summary> A detailed description of solution. </summary>
         public string SolutionDescription { get; set; }
-        /// <summary>
-        /// Required parameters for invoking this particular solution.
-        /// Serialized Name: SolutionMetadataResource.properties.requiredParameterSets
-        /// </summary>
+        /// <summary> Required parameters for invoking this particular solution. </summary>
         public IList<IList<string>> RequiredParameterSets { get; }
     }
 }

@@ -7,10 +7,7 @@
 
 namespace Azure.ResourceManager.SelfHelp.Models
 {
-    /// <summary>
-    /// Response for whether the requested resource name is available or not.
-    /// Serialized Name: CheckNameAvailabilityResponse
-    /// </summary>
+    /// <summary> Response for whether the requested resource name is available or not. </summary>
     public partial class SelfHelpCheckNameAvailabilityResult
     {
         /// <summary> Initializes a new instance of SelfHelpCheckNameAvailabilityResult. </summary>
@@ -19,18 +16,9 @@ namespace Azure.ResourceManager.SelfHelp.Models
         }
 
         /// <summary> Initializes a new instance of SelfHelpCheckNameAvailabilityResult. </summary>
-        /// <param name="isNameAvailable">
-        /// Returns true or false depending on the availability of the name
-        /// Serialized Name: CheckNameAvailabilityResponse.nameAvailable
-        /// </param>
-        /// <param name="notAvailableReason">
-        /// Reason for why value is not available. This field is returned if nameAvailable is false.
-        /// Serialized Name: CheckNameAvailabilityResponse.reason
-        /// </param>
-        /// <param name="errorMessage">
-        /// Gets an error message explaining the &apos;reason&apos; value with more details. This field is returned iif nameAvailable is false.
-        /// Serialized Name: CheckNameAvailabilityResponse.message
-        /// </param>
+        /// <param name="isNameAvailable"> Returns true or false depending on the availability of the name. </param>
+        /// <param name="notAvailableReason"> Reason for why value is not available. This field is returned if nameAvailable is false. </param>
+        /// <param name="errorMessage"> Gets an error message explaining the &apos;reason&apos; value with more details. This field is returned iif nameAvailable is false. </param>
         internal SelfHelpCheckNameAvailabilityResult(bool? isNameAvailable, string notAvailableReason, string errorMessage)
         {
             IsNameAvailable = isNameAvailable;
@@ -38,20 +26,11 @@ namespace Azure.ResourceManager.SelfHelp.Models
             ErrorMessage = errorMessage;
         }
 
-        /// <summary>
-        /// Returns true or false depending on the availability of the name
-        /// Serialized Name: CheckNameAvailabilityResponse.nameAvailable
-        /// </summary>
+        /// <summary> Returns true or false depending on the availability of the name. </summary>
         public bool? IsNameAvailable { get; }
-        /// <summary>
-        /// Reason for why value is not available. This field is returned if nameAvailable is false.
-        /// Serialized Name: CheckNameAvailabilityResponse.reason
-        /// </summary>
+        /// <summary> Reason for why value is not available. This field is returned if nameAvailable is false. </summary>
         public string NotAvailableReason { get; }
-        /// <summary>
-        /// Gets an error message explaining the &apos;reason&apos; value with more details. This field is returned iif nameAvailable is false.
-        /// Serialized Name: CheckNameAvailabilityResponse.message
-        /// </summary>
+        /// <summary> Gets an error message explaining the &apos;reason&apos; value with more details. This field is returned iif nameAvailable is false. </summary>
         public string ErrorMessage { get; }
     }
 }
