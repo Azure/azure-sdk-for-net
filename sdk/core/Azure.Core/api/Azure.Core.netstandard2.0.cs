@@ -522,7 +522,7 @@ namespace Azure.Core
     public partial class RedirectPolicyOptions
     {
         public RedirectPolicyOptions() { }
-        public bool IsAutoRedirectEnabled { get { throw null; } set { } }
+        public bool IsClientRedirectEnabled { get { throw null; } set { } }
     }
     public abstract partial class Request : System.IDisposable
     {
@@ -1093,7 +1093,7 @@ namespace Azure.Core.Pipeline
     {
         public HttpPipelineTransportOptions() { }
         public System.Collections.Generic.IList<System.Security.Cryptography.X509Certificates.X509Certificate2> ClientCertificates { get { throw null; } }
-        public bool IsAutoRedirectEnabled { get { throw null; } set { } }
+        public bool IsClientRedirectEnabled { get { throw null; } set { } }
         public System.Func<Azure.Core.Pipeline.ServerCertificateCustomValidationArgs, bool>? ServerCertificateCustomValidationCallback { get { throw null; } set { } }
     }
     public sealed partial class RedirectPolicy : Azure.Core.Pipeline.HttpPipelinePolicy

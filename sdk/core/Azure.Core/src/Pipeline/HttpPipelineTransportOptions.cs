@@ -40,6 +40,6 @@ namespace Azure.Core.Pipeline
         /// <value>
         /// <c>true</c> if the redirect policy should follow redirection responses; otherwise <c>false</c>. The default value is <c>false</c>.
         /// </value>
-        public bool IsAutoRedirectEnabled { get; set; }
+        public bool IsClientRedirectEnabled { get; set; }
     }
 }
