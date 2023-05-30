@@ -300,6 +300,25 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             Assert.Equal(activity.Kind == ActivityKind.Server ? 2 : 1, activityTagsProcessor.UnMappedTags.Length);
         }
 
+        [Theory]
+        [InlineData(ActivityKind.Client)]
+        [InlineData(ActivityKind.Server)]
+        public void ActivityTagsProcessor_CategorizeTags_ExtractsAuthUserId(ActivityKind activityKind)
+        {
+            var activityTagsProcessor = new ActivityTagsProcessor();
+
+            IEnumerable<KeyValuePair<string, object?>> tagObjects = new Dictionary<string, object?>
+            {
+                [SemanticConventions.AttributeEnduserId] = "TestUser",
+            };
+
+            using var activity = CreateTestActivity(tagObjects, activityKind);
+            activityTagsProcessor.CategorizeTags(activity);
+
+            Assert.True(activityTagsProcessor.HasEndUserId);
+            Assert.Equal("TestUser", AzMonList.GetTagValue(ref activityTagsProcessor.MappedTags, SemanticConventions.AttributeEnduserId)?.ToString());
+        }
+
         private static Activity CreateTestActivity(IEnumerable<KeyValuePair<string, object?>>? additionalAttributes = null, ActivityKind activityKind = ActivityKind.Server)
         {
             var startTimestamp = DateTime.UtcNow;

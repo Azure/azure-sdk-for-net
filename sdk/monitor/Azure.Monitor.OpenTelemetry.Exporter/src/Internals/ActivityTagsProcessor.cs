@@ -39,6 +39,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
             [SemanticConventions.AttributeComponent] = OperationType.Common,
             ["otel.status_code"] = OperationType.Common,
             ["sampleRate"] = OperationType.Common,
+            [SemanticConventions.AttributeEnduserId] = OperationType.Common,
 
             [SemanticConventions.AttributeRpcService] = OperationType.Rpc,
             [SemanticConventions.AttributeRpcSystem] = OperationType.Rpc,
@@ -60,8 +61,6 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
             [SemanticConventions.AttributeMessagingDestinationKind] = OperationType.Messaging,
             [SemanticConventions.AttributeMessagingTempDestination] = OperationType.Messaging,
             [SemanticConventions.AttributeMessagingUrl] = OperationType.Messaging,
-
-            [SemanticConventions.AttributeEnduserId] = OperationType.Common,
         };
 
         public AzMonList MappedTags;
@@ -70,6 +69,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
         public OperationType activityType { get; private set; }
 
         public bool HasAzureNamespace { get; private set; } = false;
+        public bool HasEndUserId { get; private set; } = false;
 
         public ActivityTagsProcessor()
         {
@@ -108,6 +108,11 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
                 // and then continue to the next iteration.
                 if (_currentActivityType == OperationType.Common)
                 {
+                    if (tag.Key == SemanticConventions.AttributeEnduserId)
+                    {
+                        this.HasEndUserId = true;
+                    }
+
                     AzMonList.Add(ref MappedTags, tag);
                     continue;
                 }
