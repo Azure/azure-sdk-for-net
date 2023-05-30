@@ -17,15 +17,8 @@ namespace Azure.Health.Insights.ClinicalMatching
             writer.WriteStartObject();
             if (Optional.IsDefined(AcceptedSex))
             {
-                if (AcceptedSex != null)
-                {
-                    writer.WritePropertyName("acceptedSex"u8);
-                    writer.WriteStringValue(AcceptedSex.Value.ToString());
-                }
-                else
-                {
-                    writer.WriteNull("acceptedSex");
-                }
+                writer.WritePropertyName("acceptedSex"u8);
+                writer.WriteStringValue(AcceptedSex.Value.ToString());
             }
             if (Optional.IsDefined(AcceptedAgeRange))
             {

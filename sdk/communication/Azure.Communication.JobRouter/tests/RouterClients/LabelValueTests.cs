@@ -138,5 +138,13 @@ namespace Azure.Communication.JobRouter.Tests.RouterClients
             var testValue = new LabelValue(input);
             Assert.AreEqual(labelValue, testValue);
         }
+
+        [Test]
+        public void LabelValueOverrideToString()
+        {
+            string input = "1";
+            var labelValue = new LabelValue(input);
+            Assert.AreEqual(labelValue.ToString(), labelValue.Value.ToString());
+        }
     }
 }

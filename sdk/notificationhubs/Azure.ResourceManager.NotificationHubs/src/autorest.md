@@ -16,6 +16,9 @@ skip-csproj: true
 modelerfour:
   flatten-payloads: false
 
+# mgmt-debug: 
+#   show-serialized-names: true
+
 request-path-to-resource-name:
   /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NotificationHubs/namespaces/{namespaceName}/AuthorizationRules/{authorizationRuleName}: NotificationHubNamespaceAuthorizationRule
   /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NotificationHubs/namespaces/{namespaceName}/notificationHubs/{notificationHubName}/AuthorizationRules/{authorizationRuleName}: NotificationHubAuthorizationRule
@@ -58,6 +61,8 @@ rename-mapping:
   Sku: NotificationHubSku
   SkuName: NotificationHubSkuName
   SharedAccessAuthorizationRuleCreateOrUpdateParameters: SharedAccessAuthorizationRuleCreateOrUpdateContent
+  ApnsCredential.properties.thumbprint: ThumbprintString
+  MpnsCredential.properties.thumbprint: ThumbprintString
 
 override-operation-name:
   NotificationHubs_CheckNotificationHubAvailability: CheckNotificationHubAvailability
@@ -69,7 +74,6 @@ format-by-name-rules:
   'location': 'azure-location'
   '*Uri': 'Uri'
   '*Uris': 'Uri'
-  'Thumbprint': 'any'
 
 rename-rules:
   CPU: Cpu

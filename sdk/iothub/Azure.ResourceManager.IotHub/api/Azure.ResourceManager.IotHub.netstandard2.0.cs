@@ -328,7 +328,10 @@ namespace Azure.ResourceManager.IotHub.Models
         public System.DateTimeOffset? ExpireOn { get { throw null; } }
         public bool? IsVerified { get { throw null; } set { } }
         public string Subject { get { throw null; } }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        [System.ObsoleteAttribute("This property is obsolete and will be removed in a future release. Please use `ThumbprintString` instead.", false)]
         public System.BinaryData Thumbprint { get { throw null; } }
+        public string ThumbprintString { get { throw null; } }
         public System.DateTimeOffset? UpdatedOn { get { throw null; } }
     }
     public partial class IotHubCertificatePropertiesWithNonce
@@ -339,7 +342,10 @@ namespace Azure.ResourceManager.IotHub.Models
         public System.DateTimeOffset? ExpireOn { get { throw null; } }
         public bool? IsVerified { get { throw null; } }
         public string Subject { get { throw null; } }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        [System.ObsoleteAttribute("This property is obsolete and will be removed in a future release. Please use `ThumbprintString` instead.", false)]
         public System.BinaryData Thumbprint { get { throw null; } }
+        public string ThumbprintString { get { throw null; } }
         public System.DateTimeOffset? UpdatedOn { get { throw null; } }
         public string VerificationCode { get { throw null; } }
     }

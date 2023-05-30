@@ -76,7 +76,7 @@ function Login([string]$subscription, [string]$clusterGroup, [switch]$skipPushIm
     if (!$skipPushImages) {
         $registry = RunOrExitOnFailure az acr list -g $clusterGroup --subscription $subscription -o json
         $registryName = ($registry | ConvertFrom-Json).name
-        RunOrExitOnFailure az acr login -n $registryName
+        RunOrExitOnFailure az acr login -n $registryName --subscription $subscription
     }
 }
 
@@ -385,6 +385,21 @@ function CheckDependencies()
     $minHelmVersion = [AzureEngSemanticVersion]::new($MIN_HELM_VERSION)
     if ($helmVersion.CompareTo($minHelmVersion) -lt 0) {
         throw "Please update helm to version >= $MIN_HELM_VERSION (current version: $helmVersionString)`nAdditional information for updating helm version can be found here: https://helm.sh/docs/intro/install/"
+    }
+
+    # Ensure docker is running via command and handle command hangs
+    if (!$skipPushImages) {
+        $LastErrorActionPreference = $ErrorActionPreference
+        $ErrorActionPreference = 'Continue'
+        $job = Start-Job { docker ps; return $LASTEXITCODE }
+        $result = $job | Wait-Job -Timeout 5 | Receive-Job
+
+        $ErrorActionPreference = $LastErrorActionPreference
+        $job | Remove-Job -Force
+
+        if (($result -eq $null -and $job.State -ne "Completed") -or ($result | Select -Last 1) -ne 0) {
+            throw "Docker does not appear to be running. Start/restart docker."
+        }
     }
 
     if ($shouldError) {

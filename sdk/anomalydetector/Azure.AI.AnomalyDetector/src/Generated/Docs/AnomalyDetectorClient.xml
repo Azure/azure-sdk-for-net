@@ -465,7 +465,7 @@ Console.WriteLine(result.GetProperty("confidenceScores")[0].ToString());
 ]]></code>
 </example>
     </member>
-    <member name="GetMultivariateBatchDetectionResultAsync(string,CancellationToken)">
+    <member name="GetMultivariateBatchDetectionResultAsync(Guid,CancellationToken)">
 <example>
 This sample shows how to call GetMultivariateBatchDetectionResultAsync with required parameters.
 <code><![CDATA[
@@ -473,11 +473,11 @@ var credential = new AzureKeyCredential("<key>");
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new AnomalyDetectorClient(endpoint, credential);
 
-var result = await client.GetMultivariateBatchDetectionResultAsync("<resultId>");
+var result = await client.GetMultivariateBatchDetectionResultAsync(Guid.NewGuid());
 ]]></code>
 </example>
     </member>
-    <member name="GetMultivariateBatchDetectionResult(string,CancellationToken)">
+    <member name="GetMultivariateBatchDetectionResult(Guid,CancellationToken)">
 <example>
 This sample shows how to call GetMultivariateBatchDetectionResult with required parameters.
 <code><![CDATA[
@@ -485,11 +485,11 @@ var credential = new AzureKeyCredential("<key>");
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new AnomalyDetectorClient(endpoint, credential);
 
-var result = client.GetMultivariateBatchDetectionResult("<resultId>");
+var result = client.GetMultivariateBatchDetectionResult(Guid.NewGuid());
 ]]></code>
 </example>
     </member>
-    <member name="GetMultivariateBatchDetectionResultAsync(string,RequestContext)">
+    <member name="GetMultivariateBatchDetectionResultAsync(Guid,RequestContext)">
 <example>
 This sample shows how to call GetMultivariateBatchDetectionResultAsync with required parameters and parse the result.
 <code><![CDATA[
@@ -497,7 +497,7 @@ var credential = new AzureKeyCredential("<key>");
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new AnomalyDetectorClient(endpoint, credential);
 
-Response response = await client.GetMultivariateBatchDetectionResultAsync("<resultId>", new RequestContext());
+Response response = await client.GetMultivariateBatchDetectionResultAsync(Guid.NewGuid(), new RequestContext());
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("resultId").ToString());
@@ -525,7 +525,7 @@ Console.WriteLine(result.GetProperty("results")[0].GetProperty("errors")[0].GetP
 ]]></code>
 </example>
     </member>
-    <member name="GetMultivariateBatchDetectionResult(string,RequestContext)">
+    <member name="GetMultivariateBatchDetectionResult(Guid,RequestContext)">
 <example>
 This sample shows how to call GetMultivariateBatchDetectionResult with required parameters and parse the result.
 <code><![CDATA[
@@ -533,7 +533,7 @@ var credential = new AzureKeyCredential("<key>");
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new AnomalyDetectorClient(endpoint, credential);
 
-Response response = client.GetMultivariateBatchDetectionResult("<resultId>", new RequestContext());
+Response response = client.GetMultivariateBatchDetectionResult(Guid.NewGuid(), new RequestContext());
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("resultId").ToString());
@@ -569,7 +569,7 @@ var credential = new AzureKeyCredential("<key>");
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new AnomalyDetectorClient(endpoint, credential);
 
-var modelInfo = new ModelInfo("<dataSource>", DateTimeOffset.UtcNow, DateTimeOffset.UtcNow)
+var modelInfo = new ModelInfo(new Uri("http://localhost:3000"), DateTimeOffset.UtcNow, DateTimeOffset.UtcNow)
 {
     DataSchema = DataSchema.OneTable,
     DisplayName = "<DisplayName>",
@@ -593,7 +593,7 @@ var credential = new AzureKeyCredential("<key>");
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new AnomalyDetectorClient(endpoint, credential);
 
-var modelInfo = new ModelInfo("<dataSource>", DateTimeOffset.UtcNow, DateTimeOffset.UtcNow)
+var modelInfo = new ModelInfo(new Uri("http://localhost:3000"), DateTimeOffset.UtcNow, DateTimeOffset.UtcNow)
 {
     DataSchema = DataSchema.OneTable,
     DisplayName = "<DisplayName>",
@@ -618,7 +618,7 @@ var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new AnomalyDetectorClient(endpoint, credential);
 
 var data = new {
-    dataSource = "<dataSource>",
+    dataSource = "http://localhost:3000",
     startTime = "2022-05-10T14:57:31.2311892-04:00",
     endTime = "2022-05-10T14:57:31.2311892-04:00",
 };
@@ -637,7 +637,7 @@ var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new AnomalyDetectorClient(endpoint, credential);
 
 var data = new {
-    dataSource = "<dataSource>",
+    dataSource = "http://localhost:3000",
     dataSchema = "OneTable",
     startTime = "2022-05-10T14:57:31.2311892-04:00",
     endTime = "2022-05-10T14:57:31.2311892-04:00",
@@ -689,7 +689,7 @@ var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new AnomalyDetectorClient(endpoint, credential);
 
 var data = new {
-    dataSource = "<dataSource>",
+    dataSource = "http://localhost:3000",
     startTime = "2022-05-10T14:57:31.2311892-04:00",
     endTime = "2022-05-10T14:57:31.2311892-04:00",
 };
@@ -708,7 +708,7 @@ var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new AnomalyDetectorClient(endpoint, credential);
 
 var data = new {
-    dataSource = "<dataSource>",
+    dataSource = "http://localhost:3000",
     dataSchema = "OneTable",
     startTime = "2022-05-10T14:57:31.2311892-04:00",
     endTime = "2022-05-10T14:57:31.2311892-04:00",
@@ -885,7 +885,7 @@ var credential = new AzureKeyCredential("<key>");
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new AnomalyDetectorClient(endpoint, credential);
 
-var options = new MultivariateBatchDetectionOptions("<dataSource>", DateTimeOffset.UtcNow, DateTimeOffset.UtcNow)
+var options = new MultivariateBatchDetectionOptions(new Uri("http://localhost:3000"), DateTimeOffset.UtcNow, DateTimeOffset.UtcNow)
 {
     TopContributorCount = 1234,
 };
@@ -901,7 +901,7 @@ var credential = new AzureKeyCredential("<key>");
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new AnomalyDetectorClient(endpoint, credential);
 
-var options = new MultivariateBatchDetectionOptions("<dataSource>", DateTimeOffset.UtcNow, DateTimeOffset.UtcNow)
+var options = new MultivariateBatchDetectionOptions(new Uri("http://localhost:3000"), DateTimeOffset.UtcNow, DateTimeOffset.UtcNow)
 {
     TopContributorCount = 1234,
 };
@@ -918,7 +918,7 @@ var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new AnomalyDetectorClient(endpoint, credential);
 
 var data = new {
-    dataSource = "<dataSource>",
+    dataSource = "http://localhost:3000",
     startTime = "2022-05-10T14:57:31.2311892-04:00",
     endTime = "2022-05-10T14:57:31.2311892-04:00",
 };
@@ -940,7 +940,7 @@ var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new AnomalyDetectorClient(endpoint, credential);
 
 var data = new {
-    dataSource = "<dataSource>",
+    dataSource = "http://localhost:3000",
     topContributorCount = 1234,
     startTime = "2022-05-10T14:57:31.2311892-04:00",
     endTime = "2022-05-10T14:57:31.2311892-04:00",
@@ -983,7 +983,7 @@ var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new AnomalyDetectorClient(endpoint, credential);
 
 var data = new {
-    dataSource = "<dataSource>",
+    dataSource = "http://localhost:3000",
     startTime = "2022-05-10T14:57:31.2311892-04:00",
     endTime = "2022-05-10T14:57:31.2311892-04:00",
 };
@@ -1005,7 +1005,7 @@ var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new AnomalyDetectorClient(endpoint, credential);
 
 var data = new {
-    dataSource = "<dataSource>",
+    dataSource = "http://localhost:3000",
     topContributorCount = 1234,
     startTime = "2022-05-10T14:57:31.2311892-04:00",
     endTime = "2022-05-10T14:57:31.2311892-04:00",

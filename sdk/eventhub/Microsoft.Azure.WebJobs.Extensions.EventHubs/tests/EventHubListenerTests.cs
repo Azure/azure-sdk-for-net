@@ -379,6 +379,142 @@ namespace Microsoft.Azure.WebJobs.EventHubs.UnitTests
                 Times.Once);
         }
 
+        /// <summary>
+        /// If the partition processor token is signaled, we should NOT checkpoint as the partition ownership
+        /// has been lost.
+        /// </summary>
+        [Test]
+        public async Task ProcessEvents_OwnershipLost_DoesNotCheckpoint()
+        {
+            var partitionContext = EventHubTests.GetPartitionContext();
+            var options = new EventHubOptions();
+
+            var processor = new Mock<EventProcessorHost>(MockBehavior.Strict);
+            processor.Setup(p => p.CheckpointAsync(partitionContext.PartitionId, It.IsAny<EventData>(), It.IsAny<CancellationToken>())).Returns(Task.CompletedTask);
+            processor.Setup(p => p.GetLastReadCheckpoint(It.IsAny<string>())).Returns(default(CheckpointInfo));
+
+            partitionContext.ProcessorHost = processor.Object;
+            var loggerMock = new Mock<ILogger>();
+            var executor = new Mock<ITriggeredFunctionExecutor>(MockBehavior.Strict);
+
+            var eventProcessor = new EventHubListener.PartitionProcessor(options, executor.Object, loggerMock.Object, true);
+
+            List<EventData> events = new List<EventData>();
+            List<FunctionResult> results = new List<FunctionResult>();
+            for (int i = 0; i < 10; i++)
+            {
+                events.Add(new EventData(new byte[0]));
+                results.Add(new FunctionResult(true));
+            }
+
+            int execution = 0;
+            var cts = new CancellationTokenSource();
+
+            executor.Setup(p => p.TryExecuteAsync(It.IsAny<TriggeredFunctionData>(), It.IsAny<CancellationToken>())).ReturnsAsync(() =>
+            {
+                if (execution == 0)
+                {
+                    eventProcessor.CloseAsync(partitionContext, ProcessingStoppedReason.OwnershipLost).GetAwaiter().GetResult();
+                }
+                var result = results[execution++];
+                return result;
+            });
+
+            await eventProcessor.ProcessEventsAsync(partitionContext, events, cts.Token);
+
+            processor.Verify(
+                p => p.CheckpointAsync(partitionContext.PartitionId, It.IsAny<EventData>(), It.IsAny<CancellationToken>()),
+                Times.Never);
+        }
+
+        /// <summary>
+        /// If function execution succeeds when the function host is shutting down, we should NOT checkpoint.
+        /// </summary>
+        [Test]
+        public async Task ProcessEvents_Succeeds_ShuttingDown_DoesNotCheckpoint()
+        {
+            var partitionContext = EventHubTests.GetPartitionContext();
+            var options = new EventHubOptions();
+
+            var processor = new Mock<EventProcessorHost>(MockBehavior.Strict);
+            processor.Setup(p => p.CheckpointAsync(partitionContext.PartitionId, It.IsAny<EventData>(), It.IsAny<CancellationToken>())).Returns(Task.CompletedTask);
+            processor.Setup(p => p.GetLastReadCheckpoint(It.IsAny<string>())).Returns(default(CheckpointInfo));
+            partitionContext.ProcessorHost = processor.Object;
+
+            List<EventData> events = new List<EventData>();
+            List<FunctionResult> results = new List<FunctionResult>();
+            for (int i = 0; i < 10; i++)
+            {
+                events.Add(new EventData(new byte[0]));
+                results.Add(new FunctionResult(true));
+            }
+
+            var executor = new Mock<ITriggeredFunctionExecutor>(MockBehavior.Strict);
+            int execution = 0;
+            var loggerMock = new Mock<ILogger>();
+            var eventProcessor = new EventHubListener.PartitionProcessor(options, executor.Object, loggerMock.Object, true);
+
+            executor.Setup(p => p.TryExecuteAsync(It.IsAny<TriggeredFunctionData>(), It.IsAny<CancellationToken>())).ReturnsAsync(() =>
+            {
+                if (execution == 0)
+                {
+                    eventProcessor.CloseAsync(partitionContext, ProcessingStoppedReason.Shutdown).GetAwaiter().GetResult();
+                }
+                var result = results[execution++];
+                return result;
+            });
+
+            await eventProcessor.ProcessEventsAsync(partitionContext, events, CancellationToken.None);
+
+            processor.Verify(
+                p => p.CheckpointAsync(partitionContext.PartitionId, It.IsAny<EventData>(), It.IsAny<CancellationToken>()),
+                Times.Never);
+        }
+
+        /// <summary>
+        /// If function execution fails when the function host is shutting down, we should NOT checkpoint.
+        /// </summary>
+        [Test]
+        public async Task ProcessEvents_Fails_ShuttingDown_DoesNotCheckpoint()
+        {
+            var partitionContext = EventHubTests.GetPartitionContext();
+            var options = new EventHubOptions();
+
+            var processor = new Mock<EventProcessorHost>(MockBehavior.Strict);
+            processor.Setup(p => p.CheckpointAsync(partitionContext.PartitionId, It.IsAny<EventData>(), It.IsAny<CancellationToken>())).Returns(Task.CompletedTask);
+            processor.Setup(p => p.GetLastReadCheckpoint(It.IsAny<string>())).Returns(default(CheckpointInfo));
+            partitionContext.ProcessorHost = processor.Object;
+
+            List<EventData> events = new List<EventData>();
+            List<FunctionResult> results = new List<FunctionResult>();
+            for (int i = 0; i < 10; i++)
+            {
+                events.Add(new EventData(new byte[0]));
+                results.Add(new FunctionResult(false));
+            }
+
+            var executor = new Mock<ITriggeredFunctionExecutor>(MockBehavior.Strict);
+            int execution = 0;
+            var loggerMock = new Mock<ILogger>();
+            var eventProcessor = new EventHubListener.PartitionProcessor(options, executor.Object, loggerMock.Object, true);
+
+            executor.Setup(p => p.TryExecuteAsync(It.IsAny<TriggeredFunctionData>(), It.IsAny<CancellationToken>())).ReturnsAsync(() =>
+            {
+                if (execution == 0)
+                {
+                    eventProcessor.CloseAsync(partitionContext, ProcessingStoppedReason.Shutdown).GetAwaiter().GetResult();
+                }
+                var result = results[execution++];
+                return result;
+            });
+
+            await eventProcessor.ProcessEventsAsync(partitionContext, events, CancellationToken.None);
+
+            processor.Verify(
+                p => p.CheckpointAsync(partitionContext.PartitionId, It.IsAny<EventData>(), It.IsAny<CancellationToken>()),
+                Times.Never);
+        }
+
         [Test]
         public async Task CloseAsync_Shutdown_DoesNotCheckpoint()
         {

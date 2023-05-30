@@ -4,9 +4,14 @@
 
 ### Features Added
 
+- Added `AutomationCertificateData.ThumbprintString`, `AutomationCertificateCreateOrUpdateContent.ThumbprintString` to return the hexadecimal string representation of the SHA-1 hash of the certificate.
+  `AutomationCertificateData.Thumbprint`, `AutomationCertificateCreateOrUpdateContent.Thumbprint` have been hidden but are still available.
+
 ### Breaking Changes
 
 ### Bugs Fixed
+
+- Fixed an issue that `System.UriFormatException` is thrown when `Uri` type field is empty during serialization of `AutomationWebhookData`.
 
 ### Other Changes
 

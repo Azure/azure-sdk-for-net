@@ -1,18 +1,19 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using Azure.Monitor.OpenTelemetry.Exporter.Internals;
-using Azure.Monitor.OpenTelemetry.Exporter.Models;
-using OpenTelemetry.Metrics;
-using OpenTelemetry;
-using Xunit;
-using Azure.Monitor.OpenTelemetry.Exporter.Tests.CommonTestFramework;
-using OpenTelemetry.Trace;
-using System.Collections.Concurrent;
+using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
-using System;
 using System.Threading;
+using OpenTelemetry.Resources;
+using Azure.Monitor.OpenTelemetry.Exporter.Internals;
+using Azure.Monitor.OpenTelemetry.Exporter.Models;
+using Azure.Monitor.OpenTelemetry.Exporter.Tests.CommonTestFramework;
+using OpenTelemetry;
+using OpenTelemetry.Metrics;
+using OpenTelemetry.Trace;
+using Xunit;
 
 namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
 {
@@ -22,22 +23,20 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
         public void ValidateRequestDurationMetric()
         {
             var activitySource = new ActivitySource(nameof(StandardMetricTests.ValidateRequestDurationMetric));
-            var traceTelemetryItems = new ConcurrentBag<TelemetryItem>();
-            var metricTelemetryItems = new ConcurrentBag<TelemetryItem>();
+            var traceTelemetryItems = new List<TelemetryItem>();
+            var metricTelemetryItems = new List<TelemetryItem>();
 
-            var standardMetricCustomProcessor = new StandardMetricsExtractionProcessor();
+            var standardMetricCustomProcessor = new StandardMetricsExtractionProcessor(new AzureMonitorMetricExporter(new MockTransmitter(metricTelemetryItems)));
+
+            var traceServiceName = new KeyValuePair<string, object>("service.name", "trace.service");
+            var resourceAttributes = new KeyValuePair<string, object>[] { traceServiceName };
 
             using var tracerProvider = Sdk.CreateTracerProviderBuilder()
                 .SetSampler(new AlwaysOnSampler())
+                .SetResourceBuilder(ResourceBuilder.CreateDefault().AddAttributes(resourceAttributes))
                 .AddSource(nameof(StandardMetricTests.ValidateRequestDurationMetric))
                 .AddProcessor(standardMetricCustomProcessor)
                 .AddProcessor(new BatchActivityExportProcessor(new AzureMonitorTraceExporter(new MockTransmitter(traceTelemetryItems))))
-                .Build();
-
-            using var meterProvider = Sdk.CreateMeterProviderBuilder()
-                 .AddMeter(StandardMetricConstants.StandardMetricMeterName)
-                .AddReader(new PeriodicExportingMetricReader(new AzureMonitorMetricExporter(new MockTransmitter(metricTelemetryItems)))
-                { TemporalityPreference = MetricReaderTemporalityPreference.Delta })
                 .Build();
 
             using (var activity = activitySource.StartActivity("Test", ActivityKind.Server))
@@ -49,10 +48,10 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
 
             WaitForActivityExport(traceTelemetryItems);
 
-            meterProvider?.ForceFlush();
+            standardMetricCustomProcessor._meterProvider?.ForceFlush();
 
             // Standard Metrics + Resource Metrics.
-            Assert.Equal(2, metricTelemetryItems.Count);
+            Assert.Single(metricTelemetryItems);
 
             var metricTelemetry = metricTelemetryItems.Last()!;
             Assert.Equal("MetricData", metricTelemetry.Data.BaseType);
@@ -64,7 +63,8 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             Assert.True(metricData.Properties.TryGetValue(StandardMetricConstants.IsAutoCollectedKey, out var isAutoCollectedFlag));
             Assert.Equal("True", isAutoCollectedFlag);
             Assert.True(metricData.Properties.TryGetValue(StandardMetricConstants.CloudRoleInstanceKey, out _));
-            Assert.True(metricData.Properties.TryGetValue(StandardMetricConstants.CloudRoleNameKey, out _));
+            Assert.True(metricData.Properties.TryGetValue(StandardMetricConstants.CloudRoleNameKey, out var cloudRoleName));
+            Assert.Equal("trace.service", cloudRoleName);
             Assert.True(metricData.Properties.TryGetValue(StandardMetricConstants.MetricIdKey, out var metricId));
             Assert.Equal(StandardMetricConstants.RequestDurationMetricIdValue, metricId);
         }
@@ -73,22 +73,20 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
         public void ValidateDependencyDurationMetric()
         {
             var activitySource = new ActivitySource(nameof(StandardMetricTests.ValidateDependencyDurationMetric));
-            var traceTelemetryItems = new ConcurrentBag<TelemetryItem>();
-            var metricTelemetryItems = new ConcurrentBag<TelemetryItem>();
+            var traceTelemetryItems = new List<TelemetryItem>();
+            var metricTelemetryItems = new List<TelemetryItem>();
 
-            var standardMetricCustomProcessor = new StandardMetricsExtractionProcessor();
+            var standardMetricCustomProcessor = new StandardMetricsExtractionProcessor(new AzureMonitorMetricExporter(new MockTransmitter(metricTelemetryItems)));
+
+            var traceServiceName = new KeyValuePair<string, object>("service.name", "trace.service");
+            var resourceAttributes = new KeyValuePair<string, object>[] { traceServiceName };
 
             using var tracerProvider = Sdk.CreateTracerProviderBuilder()
                 .SetSampler(new AlwaysOnSampler())
+                .SetResourceBuilder(ResourceBuilder.CreateDefault().AddAttributes(resourceAttributes))
                 .AddSource(nameof(StandardMetricTests.ValidateDependencyDurationMetric))
                 .AddProcessor(standardMetricCustomProcessor)
                 .AddProcessor(new BatchActivityExportProcessor(new AzureMonitorTraceExporter(new MockTransmitter(traceTelemetryItems))))
-                .Build();
-
-            using var meterProvider = Sdk.CreateMeterProviderBuilder()
-                 .AddMeter(StandardMetricConstants.StandardMetricMeterName)
-                .AddReader(new PeriodicExportingMetricReader(new AzureMonitorMetricExporter(new MockTransmitter(metricTelemetryItems)))
-                { TemporalityPreference = MetricReaderTemporalityPreference.Delta })
                 .Build();
 
             using (var activity = activitySource.StartActivity("Test", ActivityKind.Client))
@@ -102,10 +100,10 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
 
             WaitForActivityExport(traceTelemetryItems);
 
-            meterProvider?.ForceFlush();
+            standardMetricCustomProcessor._meterProvider?.ForceFlush();
 
             // Standard Metrics + Resource Metrics.
-            Assert.Equal(2, metricTelemetryItems.Count);
+            Assert.Single(metricTelemetryItems);
 
             var metricTelemetry = metricTelemetryItems.Last()!;
             Assert.Equal("MetricData", metricTelemetry.Data.BaseType);
@@ -117,7 +115,8 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             Assert.True(metricData.Properties.TryGetValue(StandardMetricConstants.IsAutoCollectedKey, out var isAutoCollectedFlag));
             Assert.Equal("True", isAutoCollectedFlag);
             Assert.True(metricData.Properties.TryGetValue(StandardMetricConstants.CloudRoleInstanceKey, out _));
-            Assert.True(metricData.Properties.TryGetValue(StandardMetricConstants.CloudRoleNameKey, out _));
+            Assert.True(metricData.Properties.TryGetValue(StandardMetricConstants.CloudRoleNameKey, out var cloudRoleName));
+            Assert.Equal("trace.service", cloudRoleName);
             Assert.True(metricData.Properties.TryGetValue(StandardMetricConstants.MetricIdKey, out var metricId));
             Assert.Equal(StandardMetricConstants.DependencyDurationMetricIdValue, metricId);
             Assert.True(metricData.Properties.TryGetValue(StandardMetricConstants.DependencyTypeKey, out var dependencyType));
@@ -126,7 +125,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             Assert.Equal("www.foo.com", dependencyTarget);
         }
 
-        private void WaitForActivityExport(ConcurrentBag<TelemetryItem> traceTelemetryItems)
+        private void WaitForActivityExport(List<TelemetryItem> traceTelemetryItems)
         {
             var result = SpinWait.SpinUntil(
                 condition: () =>

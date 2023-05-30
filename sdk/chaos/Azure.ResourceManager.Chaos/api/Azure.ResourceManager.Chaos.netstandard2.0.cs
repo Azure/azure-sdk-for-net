@@ -411,7 +411,7 @@ namespace Azure.ResourceManager.Chaos.Models
     {
         public TargetReference(string id) { }
         public string Id { get { throw null; } set { } }
-        public Azure.ResourceManager.Chaos.Models.TargetReferenceType ReferenceType { get { throw null; } set { } }
+        public Azure.ResourceManager.Chaos.Models.TargetReferenceType ReferenceType { get { throw null; } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct TargetReferenceType : System.IEquatable<Azure.ResourceManager.Chaos.Models.TargetReferenceType>

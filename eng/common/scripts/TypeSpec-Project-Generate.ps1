@@ -5,8 +5,8 @@ param (
     [Parameter(Position=0)]
     [ValidateNotNullOrEmpty()]
     [string] $ProjectDirectory,
-    [Parameter(Position=1)]
-    [string] $typespecAdditionalOptions ## addtional typespec emitter options, separated by semicolon if more than one, e.g. option1=value1;option2=value2
+    [string] $TypespecAdditionalOptions = $null, ## addtional typespec emitter options, separated by semicolon if more than one, e.g. option1=value1;option2=value2
+    [switch] $SaveInputs = $false ## saves the temporary files during execution, default false
 )
 
 $ErrorActionPreference = "Stop"
@@ -80,12 +80,17 @@ try {
         }
     }
     $typespecCompileCommand = "npx tsp compile $mainTypeSpecFile --emit $emitterName$emitterAdditionalOptions"
-    if ($typespecAdditionalOptions) {
-        $options = $typespecAdditionalOptions.Split(";");
+    if ($TypespecAdditionalOptions) {
+        $options = $TypespecAdditionalOptions.Split(";");
         foreach ($option in $options) {
             $typespecCompileCommand += " --option $emitterName.$option"
         }
     }
+
+    if ($SaveInputs) {
+        $typespecCompileCommand += " --option $emitterName.save-inputs=true"
+    }
+
     Write-Host($typespecCompileCommand)
     Invoke-Expression $typespecCompileCommand
 
@@ -95,7 +100,7 @@ finally {
     Pop-Location
 }
 
-$shouldCleanUp = $configuration["cleanup"] ?? $true
+$shouldCleanUp = !$SaveInputs
 if ($shouldCleanUp) {
     Remove-Item $tempFolder -Recurse -Force
 }

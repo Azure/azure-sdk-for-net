@@ -1160,6 +1160,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         public static Azure.Analytics.Synapse.Artifacts.Models.LinkTableStatus LinkTableStatus(string id = null, string status = null, string errorMessage = null, object startTime = null, object stopTime = null, string linkTableId = null, string errorCode = null, System.DateTimeOffset? lastProcessedData = default(System.DateTimeOffset?), System.DateTimeOffset? lastTransactionCommitTime = default(System.DateTimeOffset?)) { throw null; }
         public static Azure.Analytics.Synapse.Artifacts.Models.ManagedIdentity ManagedIdentity(string principalId = null, System.Guid? tenantId = default(System.Guid?), Azure.Analytics.Synapse.Artifacts.Models.ResourceIdentityType? type = default(Azure.Analytics.Synapse.Artifacts.Models.ResourceIdentityType?)) { throw null; }
         public static Azure.Analytics.Synapse.Artifacts.Models.ManagedIntegrationRuntime ManagedIntegrationRuntime(Azure.Analytics.Synapse.Artifacts.Models.IntegrationRuntimeType type = default(Azure.Analytics.Synapse.Artifacts.Models.IntegrationRuntimeType), string description = null, System.Collections.Generic.IDictionary<string, object> additionalProperties = null, Azure.Analytics.Synapse.Artifacts.Models.IntegrationRuntimeState? state = default(Azure.Analytics.Synapse.Artifacts.Models.IntegrationRuntimeState?), Azure.Analytics.Synapse.Artifacts.Models.ManagedVirtualNetworkReference managedVirtualNetwork = null, Azure.Analytics.Synapse.Artifacts.Models.IntegrationRuntimeComputeProperties computeProperties = null, Azure.Analytics.Synapse.Artifacts.Models.IntegrationRuntimeSsisProperties ssisProperties = null) { throw null; }
+        public static Azure.Analytics.Synapse.Artifacts.Models.ManagedVirtualNetworkReference ManagedVirtualNetworkReference(Azure.Analytics.Synapse.Artifacts.Models.ManagedVirtualNetworkReferenceType type = default(Azure.Analytics.Synapse.Artifacts.Models.ManagedVirtualNetworkReferenceType), string referenceName = null) { throw null; }
         public static Azure.Analytics.Synapse.Artifacts.Models.MetastoreRegistrationResponse MetastoreRegistrationResponse(Azure.Analytics.Synapse.Artifacts.Models.RequestStatus? status = default(Azure.Analytics.Synapse.Artifacts.Models.RequestStatus?)) { throw null; }
         public static Azure.Analytics.Synapse.Artifacts.Models.MetastoreRequestSuccessResponse MetastoreRequestSuccessResponse(Azure.Analytics.Synapse.Artifacts.Models.ResourceStatus? status = default(Azure.Analytics.Synapse.Artifacts.Models.ResourceStatus?)) { throw null; }
         public static Azure.Analytics.Synapse.Artifacts.Models.MetastoreUpdationResponse MetastoreUpdationResponse(Azure.Analytics.Synapse.Artifacts.Models.RequestStatus? status = default(Azure.Analytics.Synapse.Artifacts.Models.RequestStatus?)) { throw null; }
@@ -1199,7 +1200,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         public static Azure.Analytics.Synapse.Artifacts.Models.TriggerSubscriptionOperationStatus TriggerSubscriptionOperationStatus(string triggerName = null, Azure.Analytics.Synapse.Artifacts.Models.EventSubscriptionStatus? status = default(Azure.Analytics.Synapse.Artifacts.Models.EventSubscriptionStatus?)) { throw null; }
         public static Azure.Analytics.Synapse.Artifacts.Models.TumblingWindowTrigger TumblingWindowTrigger(string description = null, Azure.Analytics.Synapse.Artifacts.Models.TriggerRuntimeState? runtimeState = default(Azure.Analytics.Synapse.Artifacts.Models.TriggerRuntimeState?), System.Collections.Generic.IEnumerable<object> annotations = null, System.Collections.Generic.IDictionary<string, object> additionalProperties = null, Azure.Analytics.Synapse.Artifacts.Models.TriggerPipelineReference pipeline = null, Azure.Analytics.Synapse.Artifacts.Models.TumblingWindowFrequency frequency = default(Azure.Analytics.Synapse.Artifacts.Models.TumblingWindowFrequency), int interval = 0, System.DateTimeOffset startTime = default(System.DateTimeOffset), System.DateTimeOffset? endTime = default(System.DateTimeOffset?), object delay = null, int maxConcurrency = 0, Azure.Analytics.Synapse.Artifacts.Models.RetryPolicy retryPolicy = null, System.Collections.Generic.IEnumerable<Azure.Analytics.Synapse.Artifacts.Models.DependencyReference> dependsOn = null) { throw null; }
         public static Azure.Analytics.Synapse.Artifacts.Models.Workspace Workspace(string id = null, string name = null, string type = null, System.Collections.Generic.IDictionary<string, string> tags = null, string location = null, Azure.Analytics.Synapse.Artifacts.Models.ManagedIdentity identity = null, Azure.Analytics.Synapse.Artifacts.Models.DataLakeStorageAccountDetails defaultDataLakeStorage = null, string sqlAdministratorLoginPassword = null, string managedResourceGroupName = null, string provisioningState = null, string sqlAdministratorLogin = null, Azure.Analytics.Synapse.Artifacts.Models.VirtualNetworkProfile virtualNetworkProfile = null, System.Collections.Generic.IDictionary<string, string> connectivityEndpoints = null, string managedVirtualNetwork = null, System.Collections.Generic.IEnumerable<Azure.Analytics.Synapse.Artifacts.Models.PrivateEndpointConnection> privateEndpointConnections = null, Azure.Analytics.Synapse.Artifacts.Models.EncryptionDetails encryption = null, System.Guid? workspaceUID = default(System.Guid?), System.Collections.Generic.IReadOnlyDictionary<string, object> extraProperties = null, Azure.Analytics.Synapse.Artifacts.Models.ManagedVirtualNetworkSettings managedVirtualNetworkSettings = null, Azure.Analytics.Synapse.Artifacts.Models.WorkspaceRepositoryConfiguration workspaceRepositoryConfiguration = null, Azure.Analytics.Synapse.Artifacts.Models.PurviewConfiguration purviewConfiguration = null, string adlaResourceId = null) { throw null; }
-        public static Azure.Analytics.Synapse.Artifacts.Models.WorkspaceIdentity WorkspaceIdentity(string type = null, string principalId = null, string tenantId = null) { throw null; }
+        public static Azure.Analytics.Synapse.Artifacts.Models.WorkspaceIdentity WorkspaceIdentity(Azure.Analytics.Synapse.Artifacts.Models.WorkspaceIdentityType type = default(Azure.Analytics.Synapse.Artifacts.Models.WorkspaceIdentityType), string principalId = null, string tenantId = null) { throw null; }
     }
     public partial class AsanaLinkedService : Azure.Analytics.Synapse.Artifacts.Models.LinkedService
     {
@@ -4604,7 +4605,24 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
     {
         public ManagedVirtualNetworkReference(string referenceName) { }
         public string ReferenceName { get { throw null; } set { } }
-        public string Type { get { throw null; } set { } }
+        public Azure.Analytics.Synapse.Artifacts.Models.ManagedVirtualNetworkReferenceType Type { get { throw null; } }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct ManagedVirtualNetworkReferenceType : System.IEquatable<Azure.Analytics.Synapse.Artifacts.Models.ManagedVirtualNetworkReferenceType>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public ManagedVirtualNetworkReferenceType(string value) { throw null; }
+        public static Azure.Analytics.Synapse.Artifacts.Models.ManagedVirtualNetworkReferenceType ManagedVirtualNetworkReference { get { throw null; } }
+        public bool Equals(Azure.Analytics.Synapse.Artifacts.Models.ManagedVirtualNetworkReferenceType other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.Analytics.Synapse.Artifacts.Models.ManagedVirtualNetworkReferenceType left, Azure.Analytics.Synapse.Artifacts.Models.ManagedVirtualNetworkReferenceType right) { throw null; }
+        public static implicit operator Azure.Analytics.Synapse.Artifacts.Models.ManagedVirtualNetworkReferenceType (string value) { throw null; }
+        public static bool operator !=(Azure.Analytics.Synapse.Artifacts.Models.ManagedVirtualNetworkReferenceType left, Azure.Analytics.Synapse.Artifacts.Models.ManagedVirtualNetworkReferenceType right) { throw null; }
+        public override string ToString() { throw null; }
     }
     public partial class ManagedVirtualNetworkSettings
     {
@@ -8177,7 +8195,24 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         public WorkspaceIdentity() { }
         public string PrincipalId { get { throw null; } }
         public string TenantId { get { throw null; } }
-        public string Type { get { throw null; } set { } }
+        public Azure.Analytics.Synapse.Artifacts.Models.WorkspaceIdentityType Type { get { throw null; } }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct WorkspaceIdentityType : System.IEquatable<Azure.Analytics.Synapse.Artifacts.Models.WorkspaceIdentityType>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public WorkspaceIdentityType(string value) { throw null; }
+        public static Azure.Analytics.Synapse.Artifacts.Models.WorkspaceIdentityType SystemAssigned { get { throw null; } }
+        public bool Equals(Azure.Analytics.Synapse.Artifacts.Models.WorkspaceIdentityType other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.Analytics.Synapse.Artifacts.Models.WorkspaceIdentityType left, Azure.Analytics.Synapse.Artifacts.Models.WorkspaceIdentityType right) { throw null; }
+        public static implicit operator Azure.Analytics.Synapse.Artifacts.Models.WorkspaceIdentityType (string value) { throw null; }
+        public static bool operator !=(Azure.Analytics.Synapse.Artifacts.Models.WorkspaceIdentityType left, Azure.Analytics.Synapse.Artifacts.Models.WorkspaceIdentityType right) { throw null; }
+        public override string ToString() { throw null; }
     }
     public partial class WorkspaceKeyDetails
     {

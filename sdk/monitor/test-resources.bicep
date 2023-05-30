@@ -172,69 +172,6 @@ resource dataCollectionRuleRoleAssignment 'Microsoft.Authorization/roleAssignmen
   }
 }
 
-var storageAccountName  = '${uniqueString(utc)}'
-resource storageAccount 'Microsoft.Storage/storageAccounts@2021-09-01' = {
-  name: storageAccountName
-  location: location
-    sku: {
-    name: 'Standard_RAGRS'
-  }
-  kind: 'StorageV2'
-  properties: {
-    defaultToOAuthAuthentication: false
-    allowCrossTenantReplication: true
-    minimumTlsVersion: 'TLS1_2'
-    allowBlobPublicAccess: true
-    allowSharedKeyAccess: true
-    networkAcls: {
-      bypass: 'AzureServices'
-      virtualNetworkRules: []
-      ipRules: []
-      defaultAction: 'Allow'
-    }
-    supportsHttpsTrafficOnly: true
-    encryption: {
-      services: {
-        file: {
-          keyType: 'Account'
-          enabled: true
-        }
-        blob: {
-          keyType: 'Account'
-          enabled: true
-        }
-      }
-      keySource: 'Microsoft.Storage'
-    }
-    accessTier: 'Hot'
-    roleDefinitionId: resourceId('Microsoft.Authorization/roleDefinitions', logReaderRoleId)
-  }
-  resource blobServices 'blobServices' = {
-    name: 'default'
-    properties: {
-      changeFeed: {
-        enabled: false
-      }
-      restorePolicy: {
-        enabled: false
-      }
-      containerDeleteRetentionPolicy: {
-        enabled: true
-        days: 7
-      }
-      cors: {
-        corsRules: []
-      }
-      deleteRetentionPolicy: {
-        allowPermanentDelete: false
-        enabled: true
-        days: 7
-      }
-      isVersioningEnabled: false
-    }
-  }
-}
-
 output CONNECTION_STRING string = baseName_resource.properties.ConnectionString
 output APPLICATION_ID string = baseName_resource.properties.AppId
 output WORKSPACE_ID string = primaryWorkspace.properties.customerId
@@ -249,6 +186,6 @@ output INGESTION_STREAM_NAME string = streamName
 output INGESTION_TABLE_NAME string = table.name
 output INGESTION_DATA_COLLECTION_RULE_ID string = dataCollectionRule.id
 output INGESTION_DATA_COLLECTION_RULE_IMMUTABLE_ID string = dataCollectionRule.properties.immutableId
-output STORAGE_ACCOUNT_NAME string = storageAccountName
-output STORAGE_ID string = storageAccount.id
 output RESOURCE_ID string = resourceGroup().id
+output WORKSPACE_PRIMARY_RESOURCE_ID string = primaryWorkspace.id
+output WORKSPACE_SECONDARY_RESOURCE_ID string = secondaryWorkspace.id
