@@ -1,9 +1,10 @@
 # Release History
 
-## 1.1.0-beta.1 (Unreleased)
+## 1.1.0-beta.1 (2023-05-31)
 
 ### Features Added
 
+- Enable the model factory feature for model mocking, more information can be found [here](https://azure.github.io/azure-sdk/dotnet_introduction.html#dotnet-mocking-factory-builder).
 - Added `AppCertificateData.ThumbprintString` to return the hexadecimal string representation of the SHA-1 hash of the certificate.
   `AppCertificateData.Thumbprint` has been hidden but is still available.
 - Added `AppServiceVirtualNetworkData.CertThumbprintString` to return the hexadecimal string representation of the SHA-1 hash of the certificate.
@@ -24,12 +25,11 @@
   `SiteAuthSettings.ClientSecretCertificateThumbprint` has been hidden but is still available.
 - Added `PublicCertificateData.ThumbprintString` to return the hexadecimal string representation of the SHA-1 hash of the certificate.
   `PublicCertificateData.Thumbprint` has been hidden but is still available.
-
-### Breaking Changes
-
-### Bugs Fixed
-
+  
 ### Other Changes
+
+- Upgraded dependent Azure.Core to 1.32.0.
+- Upgraded dependent Azure.ResourceManager to 1.6.0.
 
 ## 1.0.2 (2023-04-27)
 
