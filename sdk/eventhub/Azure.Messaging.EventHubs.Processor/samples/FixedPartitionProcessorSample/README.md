@@ -1,17 +1,14 @@
 # Fixed Partition Event Hub Processor
 
-I was working with a customer to build a processing pipeline with multiple stages. Stage 1 would read data from an Event Hub and publish data to another Event Hub. Stage 2 would read data from that Event Hub and publish data to another Event Hub. And so on - each stage would read the output of the prior stage for its input.
+This sample could be useful to anyone wanting to implement a custom Event Hub processor to meet a unqiue set of requirements. In this specific case, this processor was designed to meet the following requirements:
 
-- Stage 1 had a very high throughput requirement which would benefit from batching and needed to checkpoint.
-- Stage 2 needed to read data from the previous 24 hours into memory, so no checkpoint requirement. Since data is kept in memory, it was critical that the partitions not be reassigned.
-- Stage 3 was writing events to a database so batching was a requirement as well as checkpointing. It would be processing data in intervals that were not synchronized across the consumers, but it was required that the data not be processed by multiple consumers. There are several ways to meet this requirement, but one easy way is to ensure that partitions are not reassigned.
+- __Fixed Number of Partitions__. This processor allows you to specify the number of partitions that each consumer will process. It will not attempt to take ownership of any additional partitions, leaving those for other consumers. In cases where the reassignment of partitions would be problematic, this can be important.
 
-Given those requirements, the EventProcessorClient will not work for the following reason:
+- __Batching__. In some cases, such as writing records to a database, it may be significantly more performant to write records in batches rather than one at a time.
 
-- It does not support batching.
-- It does not prevent partition reassignment.
+- __Lazy Checkpointing__. If a solution already has a way to address duplicate events, it may be more efficient to checkpoint less frequently. In this case, the processor will checkpoint every few seconds instead of on every event or batch.
 
-The FixedPartitionEventHubProcessor can address those issues, but it has one other major difference from EventProcessorClient - it requires you to specify the number of partitions that each consumer will process. The EventProcessorClient is flexible in that if it has one consumer, it will be allowed to grab all partitions, and if it has more consumers, they are allowed to steal partitions to become more equitable. As you can see from our requirements for Stage 2 and 3, we need to prevent this "greedy" behavior.
+- __Dedicated Ownership__. Unlike the EventProcessorClient, this processor does not allow other consumers to steal partitions. If a consumer stores content in memory, stealing partitions may be very disruptive.
 
 ## Get This Sample Running
 

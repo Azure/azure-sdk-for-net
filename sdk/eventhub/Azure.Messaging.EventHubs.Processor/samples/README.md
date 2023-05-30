@@ -79,6 +79,9 @@ For the event processor client to make use of Azure Storage blobs for checkpoint
 - [Mocking Client Types](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/eventhub/Azure.Messaging.EventHubs.Processor/samples/Sample08_MockingClientTypes.md)  
   A demonstration of how to mock the types in the Event Hubs Processor client library, focusing on common application scenarios.
 
+- [FixedPartitionProcessorSample](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/eventhub/Azure.Messaging.EventHubs.Processor/samples/FixedPartitionProcessorSample)
+  A sample that demonstrates how to write a custom `EventProcessor` that uses a fixed number of partitions, batching, and lazy checkpointing.
+
 ## Contributing  
 
 This project welcomes contributions and suggestions.  Most contributions require you to agree to a Contributor License Agreement (CLA) declaring that you have the right to, and actually do, grant us the rights to use your contribution. For details, visit https://cla.microsoft.com.
