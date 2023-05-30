@@ -34,9 +34,12 @@ namespace Azure.Core.Pipeline
         /// <value></value>
         public IList<X509Certificate2> ClientCertificates { get; }
 
-        /// <summary>
-        /// Gets or sets a value that indicates whether the transport should follow redirection responses.
+         /// <summary>
+        /// Gets or sets a value that indicates whether the redirect policy should follow redirection responses.
         /// </summary>
-        public bool AllowAutoRedirect { get; set; }
+        /// <value>
+        /// <c>true</c> if the redirect policy should follow redirection responses; otherwise <c>false</c>. The default value is <c>false</c>.
+        /// </value>
+        public bool IsAutoRedirectEnabled { get; set; }
     }
 }

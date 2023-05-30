@@ -380,8 +380,8 @@ namespace Azure.Core
         protected ClientOptions() { }
         protected ClientOptions(Azure.Core.DiagnosticsOptions? diagnostics) { }
         public static Azure.Core.ClientOptions Default { get { throw null; } }
-        public Azure.Core.DefaultTransportOptions? DefaultTransportOptions { get { throw null; } set { } }
         public Azure.Core.DiagnosticsOptions Diagnostics { get { throw null; } }
+        public Azure.Core.RedirectPolicyOptions? RedirectPolicyOptions { get { throw null; } set { } }
         public Azure.Core.RetryOptions Retry { get { throw null; } }
         public Azure.Core.Pipeline.HttpPipelinePolicy? RetryPolicy { get { throw null; } set { } }
         public Azure.Core.Pipeline.HttpPipelineTransport Transport { get { throw null; } set { } }
@@ -410,11 +410,6 @@ namespace Azure.Core
         public static implicit operator Azure.Core.ContentType (string contentType) { throw null; }
         public static bool operator !=(Azure.Core.ContentType left, Azure.Core.ContentType right) { throw null; }
         public override string ToString() { throw null; }
-    }
-    public partial class DefaultTransportOptions
-    {
-        public DefaultTransportOptions() { }
-        public bool AllowAutoRedirect { get { throw null; } set { } }
     }
     public abstract partial class DelayStrategy
     {
@@ -523,6 +518,11 @@ namespace Azure.Core
     {
         public static Azure.Response[] Parse(Azure.Response response, bool expectCrLf, System.Threading.CancellationToken cancellationToken) { throw null; }
         public static System.Threading.Tasks.Task<Azure.Response[]> ParseAsync(Azure.Response response, bool expectCrLf, System.Threading.CancellationToken cancellationToken) { throw null; }
+    }
+    public partial class RedirectPolicyOptions
+    {
+        public RedirectPolicyOptions() { }
+        public bool IsAutoRedirectEnabled { get { throw null; } set { } }
     }
     public abstract partial class Request : System.IDisposable
     {
@@ -1092,8 +1092,8 @@ namespace Azure.Core.Pipeline
     public partial class HttpPipelineTransportOptions
     {
         public HttpPipelineTransportOptions() { }
-        public bool AllowAutoRedirect { get { throw null; } set { } }
         public System.Collections.Generic.IList<System.Security.Cryptography.X509Certificates.X509Certificate2> ClientCertificates { get { throw null; } }
+        public bool IsAutoRedirectEnabled { get { throw null; } set { } }
         public System.Func<Azure.Core.Pipeline.ServerCertificateCustomValidationArgs, bool>? ServerCertificateCustomValidationCallback { get { throw null; } set { } }
     }
     public sealed partial class RedirectPolicy : Azure.Core.Pipeline.HttpPipelinePolicy
