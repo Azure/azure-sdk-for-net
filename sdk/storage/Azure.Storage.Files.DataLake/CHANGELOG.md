@@ -1,6 +1,6 @@
 # Release History
 
-## 12.15.0-beta.1 (Unreleased)
+## 12.15.0-beta.1 (2023-05-30)
 - Added support for service version 2023-01-03.
 - Added Owner, Group, and Permissions properties to PathProperties.
 - Added EncryptionContext property to DataLakeFileUploadOptions.
