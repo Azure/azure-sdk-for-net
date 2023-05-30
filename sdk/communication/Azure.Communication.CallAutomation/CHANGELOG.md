@@ -1,5 +1,9 @@
 # Release History
 
+## 1.0.9-beta.2 (Unreleased)
+- Fix CallDialog creation
+- Fix Dialog event parsing
+
 ## 1.0.4-alpha.8 (Unreleased)
  - DialogId is now a string and added to all event classes
  - code is updated to snapshot from 2023-05-25
