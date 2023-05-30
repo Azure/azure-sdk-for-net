@@ -12,6 +12,8 @@
 
 ## 1.0.2 (2023-05-30)
 
+### Other Changes
+
 - New properties to ClusterReportedProperties object
 - More enum to provisioningState
 - AddedsystemData property to the cluster object
