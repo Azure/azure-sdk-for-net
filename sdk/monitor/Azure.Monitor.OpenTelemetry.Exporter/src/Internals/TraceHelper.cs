@@ -305,18 +305,19 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
         {
             if (activity.Links != null && activity.Links.Any())
             {
-                if (TryGetAverageTimeInQueueForBatch(activity.Links, activity.StartTimeUtc, out long enqueuedTime))
+                if (TryGetAverageTimeInQueueForBatch(activity, out long enqueuedTime))
                 {
                     measurements["timeSinceEnqueued"] = enqueuedTime;
                 }
             }
         }
 
-        private static bool TryGetAverageTimeInQueueForBatch(IEnumerable<ActivityLink> links, DateTimeOffset requestStartTime, out long avgTimeInQueue)
+        private static bool TryGetAverageTimeInQueueForBatch(Activity activity, out long avgTimeInQueue)
         {
             avgTimeInQueue = 0;
             var linksCount = 0;
-            long startEpochTime = requestStartTime.ToUnixTimeMilliseconds();
+            DateTimeOffset startTime = activity.StartTimeUtc;
+            long startEpochTime = startTime.ToUnixTimeMilliseconds();
             foreach (ref readonly var link in activity.EnumerateLinks())
             {
                 if (!TryGetEnqueuedTime(link, out var msgEnqueuedTime))
