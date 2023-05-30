@@ -20,7 +20,7 @@ namespace Microsoft.Azure.Data.SchemaRegistry.JsonSchema
     /// to enrich any message type inherited from <see cref="MessageContent"/> with the Schema ID.
     /// </summary>
     /// <remarks>
-    /// Having an independently-defined <see cref="SchemaRegistryJsonSchemaGenerator"/> allows any JSON schema generation or validation
+    /// Taking in an implementation of <see cref="SchemaRegistryJsonSchemaGenerator"/> allows any JSON schema generation or validation
     /// library to be used.
     /// </remarks>
     public class SchemaRegistryJsonSerializer
