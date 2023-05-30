@@ -6,6 +6,10 @@
 
 - Enable the model factory feature for model mocking, more information can be found [here](https://azure.github.io/azure-sdk/dotnet_introduction.html#dotnet-mocking-factory-builder).
 
+### Bugs Fixed
+
+- Fixed an issue that exception throws when ResourceIdentifier type field is empty during deserialization of PolicyDetails.
+
 ### Other Changes
 
 - Upgraded dependent Azure.Core to 1.32.0.
