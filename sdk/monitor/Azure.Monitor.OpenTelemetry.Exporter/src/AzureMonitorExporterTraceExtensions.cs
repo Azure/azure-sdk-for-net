@@ -72,7 +72,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
 
                 return new CompositeProcessor<Activity>(new BaseProcessor<Activity>[]
                 {
-                    new StandardMetricsExtractionProcessor(),
+                    new StandardMetricsExtractionProcessor(new AzureMonitorMetricExporter(exporterOptions)),
                     new BatchActivityExportProcessor(new AzureMonitorTraceExporter(exporterOptions))
                 });
             });
