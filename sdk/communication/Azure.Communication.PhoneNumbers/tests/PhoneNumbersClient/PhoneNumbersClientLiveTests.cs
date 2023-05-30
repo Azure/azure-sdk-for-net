@@ -727,7 +727,12 @@ namespace Azure.Communication.PhoneNumbers.Tests
         public async Task SearchOperatorInformation()
         {
             var client = CreateClient();
-            var phoneNumber = "+14251234567";
+            var phoneNumber = "+448006406643";
+
+            if (TestEnvironment.Mode == RecordedTestMode.Playback)
+            {
+                phoneNumber = SanitizeValue;
+            }
 
             var operatorInfoResults = await client.SearchOperatorInformationAsync(new[] { phoneNumber });
             Assert.IsNotNull(operatorInfoResults);

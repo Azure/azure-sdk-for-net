@@ -6,11 +6,11 @@
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "traceparent": "00-42816f60ef94c10a6c5f43348a75bc07-4fb8f0f1ed13ba8e-00",
-        "User-Agent": "azsdk-net-Communication.PhoneNumbers/1.2.0-alpha.20230525.1 (.NET 7.0.5; Microsoft Windows 10.0.22621)",
-        "x-ms-client-request-id": "4be174a76cd87e38b9fa81712a35e38f",
+        "traceparent": "00-65a8d8c9e6cda7b05d5ba1f5e23e84d7-b641932be7414a65-00",
+        "User-Agent": "azsdk-net-Communication.PhoneNumbers/1.2.0-alpha.20230530.1 (.NET 7.0.5; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "26cb5c92be972e495edf67f76ae4766f",
         "x-ms-content-sha256": "Sanitized",
-        "x-ms-date": "Thu, 25 May 2023 19:06:18 GMT",
+        "x-ms-date": "Tue, 30 May 2023 21:52:42 GMT",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
@@ -20,12 +20,12 @@
         "Cache-Control": "max-age=21600, private, stale-while-revalidate=86400",
         "Content-Length": "182",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Thu, 25 May 2023 19:06:27 GMT",
-        "MS-CV": "CEAm0qewxEmmsNzbCIxIOQ.0",
+        "Date": "Tue, 30 May 2023 21:52:50 GMT",
+        "MS-CV": "EXEJPYak6k\u002BziFvrPY7coQ.0",
         "Strict-Transport-Security": "max-age=2592000",
-        "X-Azure-Ref": "0qrFvZAAAAADACQLr5zEWRKmR/WoEKHc8V1NURURHRTAxMDgAOWZjN2I1MTktYThjYy00Zjg5LTkzNWUtYzkxNDhhZTA5ZTgx",
+        "X-Azure-Ref": "0KnB2ZAAAAACOoL7fsGdPS6jNQq3hbz\u002BAV1NURURHRTA4MDgAOWZjN2I1MTktYThjYy00Zjg5LTkzNWUtYzkxNDhhZTA5ZTgx",
         "X-Cache": "CONFIG_NOCACHE",
-        "X-Processing-Time": "9676ms"
+        "X-Processing-Time": "8943ms"
       },
       "ResponseBody": {
         "areaCodes": [
@@ -60,6 +60,6 @@
   ],
   "Variables": {
     "COMMUNICATION_LIVETEST_STATIC_CONNECTION_STRING": "endpoint=https://smstestapp.communication.azure.com/;accesskey=Kg==",
-    "RandomSeed": "1667685577"
+    "RandomSeed": "1787076823"
   }
 }

@@ -6,11 +6,11 @@
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "traceparent": "00-a94be88af27549722daee35cfbbe0e81-ae9222af8ba16b61-00",
-        "User-Agent": "azsdk-net-Communication.PhoneNumbers/1.2.0-alpha.20230525.1 (.NET 7.0.5; Microsoft Windows 10.0.22621)",
-        "x-ms-client-request-id": "4f82ed80d5646b8915f854fda18a2633",
+        "traceparent": "00-e6bdc7fe2fa11751e62e5a5f5749b650-0f2b2cf277730469-00",
+        "User-Agent": "azsdk-net-Communication.PhoneNumbers/1.2.0-alpha.20230530.1 (.NET 7.0.5; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "7ce38da6482bee72788eee49f3463a7c",
         "x-ms-content-sha256": "Sanitized",
-        "x-ms-date": "Thu, 25 May 2023 19:07:36 GMT",
+        "x-ms-date": "Tue, 30 May 2023 21:53:59 GMT",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
@@ -18,13 +18,13 @@
       "ResponseHeaders": {
         "api-supported-versions": "2021-03-07, 2022-01-11-preview2, 2022-06-01-preview, 2022-12-01, 2022-12-02-preview2, 2023-05-01-preview",
         "Content-Type": "application/json",
-        "Date": "Thu, 25 May 2023 19:07:37 GMT",
-        "MS-CV": "n3npB6xneUainXZXM5pqCQ.0",
+        "Date": "Tue, 30 May 2023 21:54:00 GMT",
+        "MS-CV": "o3zqLWQM10qDIdqswhKlXA.0",
         "Strict-Transport-Security": "max-age=2592000",
         "Transfer-Encoding": "chunked",
-        "X-Azure-Ref": "0\u002BLFvZAAAAADi94qGyy25Tq/puJoV8jAOV1NURURHRTAxMDgAOWZjN2I1MTktYThjYy00Zjg5LTkzNWUtYzkxNDhhZTA5ZTgx",
+        "X-Azure-Ref": "0d3B2ZAAAAACWZdQSocVcTrGB2Fe3ja59V1NURURHRTA4MDgAOWZjN2I1MTktYThjYy00Zjg5LTkzNWUtYzkxNDhhZTA5ZTgx",
         "X-Cache": "CONFIG_NOCACHE",
-        "X-Processing-Time": "1999ms"
+        "X-Processing-Time": "2241ms"
       },
       "ResponseBody": {
         "error": {
@@ -40,6 +40,6 @@
   ],
   "Variables": {
     "COMMUNICATION_LIVETEST_STATIC_CONNECTION_STRING": "endpoint=https://smstestapp.communication.azure.com/;accesskey=Kg==",
-    "RandomSeed": "553247947"
+    "RandomSeed": "978906550"
   }
 }

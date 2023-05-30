@@ -6,24 +6,24 @@
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "User-Agent": "azsdk-net-Communication.PhoneNumbers/1.2.0-alpha.20230525.1 (.NET 7.0.5; Microsoft Windows 10.0.22621)",
-        "x-ms-client-request-id": "31be82ea443d7f2a3e587e1eb08aad3a",
+        "User-Agent": "azsdk-net-Communication.PhoneNumbers/1.2.0-alpha.20230530.1 (.NET 7.0.5; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "2a3cc11850ec3001cc08b920ffc7f0ed",
         "x-ms-content-sha256": "Sanitized",
-        "x-ms-date": "Thu, 25 May 2023 19:05:15 GMT",
+        "x-ms-date": "Tue, 30 May 2023 21:50:41 GMT",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
       "StatusCode": 200,
       "ResponseHeaders": {
         "api-supported-versions": "2021-03-07, 2022-01-11-preview2, 2022-06-01-preview, 2022-12-01, 2022-12-02-preview2, 2023-05-01-preview",
-        "Content-Length": "309",
+        "Content-Length": "300",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Thu, 25 May 2023 19:05:17 GMT",
-        "MS-CV": "73vXrJvFVUGhwtcShelqzQ.0",
+        "Date": "Tue, 30 May 2023 21:50:43 GMT",
+        "MS-CV": "Qnb9wLxnpEOgo2m/GcsgjA.0",
         "Strict-Transport-Security": "max-age=2592000",
-        "X-Azure-Ref": "0bLFvZAAAAACAy0/VpFJ8QJWZKIMyJJk\u002BV1NURURHRTAxMDgAOWZjN2I1MTktYThjYy00Zjg5LTkzNWUtYzkxNDhhZTA5ZTgx",
+        "X-Azure-Ref": "0sW92ZAAAAAB8/gKMOY6NQr9\u002B7v5m4E0NV1NURURHRTA4MDgAOWZjN2I1MTktYThjYy00Zjg5LTkzNWUtYzkxNDhhZTA5ZTgx",
         "X-Cache": "CONFIG_NOCACHE",
-        "X-Processing-Time": "1888ms"
+        "X-Processing-Time": "2005ms"
       },
       "ResponseBody": {
         "id": "Sanitized",
@@ -31,8 +31,8 @@
         "countryCode": "US",
         "phoneNumberType": "tollFree",
         "capabilities": {
-          "calling": "outbound",
-          "sms": "inbound\u002Boutbound"
+          "calling": "inbound",
+          "sms": "outbound"
         },
         "assignmentType": "application",
         "purchaseDate": "2021-06-23T23:31:47.0550566\u002B00:00",
@@ -47,6 +47,6 @@
   "Variables": {
     "AZURE_PHONE_NUMBER_WINDOWS_2019_NETCORE31": "\u002B14255550123",
     "COMMUNICATION_LIVETEST_STATIC_CONNECTION_STRING": "endpoint=https://smstestapp.communication.azure.com/;accesskey=Kg==",
-    "RandomSeed": "517024574"
+    "RandomSeed": "591187395"
   }
 }
