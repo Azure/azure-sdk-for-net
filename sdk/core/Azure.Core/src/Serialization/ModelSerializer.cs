@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
 using System.IO;
 
 namespace Azure.Core.Serialization
@@ -11,7 +12,7 @@ namespace Azure.Core.Serialization
     public static class ModelSerializer
     {
         /// <summary>
-        /// Serailize a model.
+        /// Serialize a model.
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <param name="model"></param>
@@ -19,6 +20,13 @@ namespace Azure.Core.Serialization
         /// <returns></returns>
         public static Stream Serialize<T>(T model, SerializableOptions? options = default) where T : IJsonSerializable, new()
         {
+            // if options.Serializer is set
+            if (options != null && options.Serializer != null)
+            {
+                System.BinaryData data = options.Serializer.Serialize(model);
+                return data.ToStream();
+            }
+
             IJsonSerializable serializable = (model ??= new T()) as IJsonSerializable;
             Stream stream = new MemoryStream();
             serializable.Serialize(stream, options);
@@ -34,6 +42,15 @@ namespace Azure.Core.Serialization
         /// <returns></returns>
         public static T Deserialize<T>(Stream stream, SerializableOptions? options = default) where T : IJsonSerializable, new()
         {
+            if (options != null && options.Serializer != null)
+            {
+                var obj = options.Serializer.Deserialize(stream, typeof(T), default);
+                if (obj is null)
+                    throw new InvalidOperationException();
+                else
+                    return (T)obj;
+            }
+
             IJsonSerializable serializable = new T();
             serializable.Deserialize(stream, options);
             return (T)serializable;
@@ -52,6 +69,15 @@ namespace Azure.Core.Serialization
             using StreamWriter writer = new StreamWriter(stream);
             writer.Write(json);
             stream.Position = 0;
+
+            if (options != null && options.Serializer != null)
+            {
+                var obj = options.Serializer.Deserialize(stream, typeof(T), default);
+                if (obj is null)
+                    throw new InvalidOperationException();
+                else
+                    return (T)obj;
+            }
 
             IJsonSerializable serializable = new T();
             serializable.Deserialize(stream, options);

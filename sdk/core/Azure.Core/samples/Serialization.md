@@ -99,11 +99,8 @@ DogListProperty dog = new DogListProperty
     FoodConsumed = { "kibble", "egg", "peanut butter" },
 };
 
-//stj example
+//STJ example
 string json = JsonSerializer.Serialize(dog);
-
-//modelSerializer example
-Stream stream = ModelSerializer.Serialize(dog);
 ```
 
 Deserialization
@@ -113,9 +110,6 @@ string json = "{\"latinName\":\"Animalia\",\"weight\":1.1,\"name\":\"Doggo\",\"i
 
 //stj example
 DogListProperty dog = JsonSerializer.Deserialize<DogListProperty>(json);
-
-//modelSerializer example
-DogListProperty dog2 = ModelSerializer.Deserialize<DogListProperty>(json);
 ```
 
 ## Using static deserializer
@@ -130,4 +124,55 @@ string serviceResponse =
 Animal model = Animal.StaticDeserialize(new MemoryStream(Encoding.UTF8.GetBytes(serviceResponse)), options: options);
 ```
 
+## Using ModelSerializer
 
+Serialize would use the Try/Do examples from above. We would use Interface form the Serializable but potentially have static method for Deserialize. 
+When using Static Deserialize, an empty Model does not have to be created first as we can deserialize directly into a new instance.
+
+Serialization
+```C# Snippet:ModelSerializer_Serialize
+DogListProperty dog = new DogListProperty
+{
+    Name = "Doggo",
+    IsHungry = true,
+    Weight = 1.1,
+    FoodConsumed = { "kibble", "egg", "peanut butter" },
+};
+
+Stream stream = ModelSerializer.Serialize(dog);
+```
+
+Deserialization
+```C# Snippet:ModelSerializer_Deserialize
+string json = @"[{""LatinName"":""Animalia"",""Weight"":1.1,""Name"":""Doggo"",""IsHungry"":false,""FoodConsumed"":[""kibble"",""egg"",""peanut butter""],""NumberOfLegs"":4}]";
+
+DogListProperty dog = ModelSerializer.Deserialize<DogListProperty>(json);
+```
+
+## Using ModelSerializer for NewtonSoftJson
+By using the ModelSerializer class, a new instance of Dog does not need to be created before calling Deserialize. Also added ObjectSerializer to Options class so different kinds of Serializers can be used.
+
+Serialization
+```C# Snippet:NewtonSoft_Serialize
+DogListProperty dog = new DogListProperty
+{
+    Name = "Doggo",
+    IsHungry = true,
+    Weight = 1.1,
+    FoodConsumed = { "kibble", "egg", "peanut butter" },
+};
+SerializableOptions options = new SerializableOptions();
+options.Serializer = new NewtonsoftJsonObjectSerializer();
+
+Stream stream = ModelSerializer.Serialize(dog, options);
+```
+
+Deserialization
+
+```C# Snippet:NewtonSoft_Deserialize
+SerializableOptions options = new SerializableOptions();
+options.Serializer = new NewtonsoftJsonObjectSerializer();
+string json = @"[{""LatinName"":""Animalia"",""Weight"":1.1,""Name"":""Doggo"",""IsHungry"":false,""FoodConsumed"":[""kibble"",""egg"",""peanut butter""],""NumberOfLegs"":4}]";
+
+DogListProperty dog = ModelSerializer.Deserialize<DogListProperty>(json, options);
+```

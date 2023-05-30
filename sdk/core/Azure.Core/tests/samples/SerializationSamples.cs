@@ -2,18 +2,13 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Text;
 using System.Text.Json;
-using System.Threading.Tasks;
 using Azure.Core.Experimental.Tests;
 using Azure.Core.Serialization;
 using Azure.Core.TestFramework;
 using Azure.Core.Tests.ModelSerializationTests;
-using Azure.Identity;
-using Azure.Security.KeyVault.Secrets;
 using NUnit.Framework;
 
 namespace Azure.Core.Samples
@@ -116,11 +111,8 @@ namespace Azure.Core.Samples
                 FoodConsumed = { "kibble", "egg", "peanut butter" },
             };
 
-            //stj example
+            //STJ example
             string json = JsonSerializer.Serialize(dog);
-
-            //modelSerializer example
-            Stream stream = ModelSerializer.Serialize(dog);
             #endregion
         }
 
@@ -133,9 +125,6 @@ namespace Azure.Core.Samples
 
             //stj example
             DogListProperty dog = JsonSerializer.Deserialize<DogListProperty>(json);
-
-            //modelSerializer example
-            DogListProperty dog2 = ModelSerializer.Deserialize<DogListProperty>(json);
             #endregion
         }
 
@@ -149,6 +138,66 @@ namespace Azure.Core.Samples
                 "{\"latinName\":\"Animalia\",\"weight\":2.3,\"name\":\"Rabbit\",\"isHungry\":false,\"numberOfLegs\":4}";
 
             Animal model = Animal.StaticDeserialize(new MemoryStream(Encoding.UTF8.GetBytes(serviceResponse)), options: options);
+            #endregion
+        }
+
+        [Test]
+        [Ignore("Only verifying that the sample builds")]
+        public void NewtonSoftSerialize()
+        {
+            #region Snippet:NewtonSoft_Serialize
+            DogListProperty dog = new DogListProperty
+            {
+                Name = "Doggo",
+                IsHungry = true,
+                Weight = 1.1,
+                FoodConsumed = { "kibble", "egg", "peanut butter" },
+            };
+            SerializableOptions options = new SerializableOptions();
+            options.Serializer = new NewtonsoftJsonObjectSerializer();
+
+            Stream stream = ModelSerializer.Serialize(dog, options);
+            #endregion
+        }
+
+        [Test]
+        [Ignore("Only verifying that the sample builds")]
+        public void NewtonSoftDeserialize()
+        {
+            #region Snippet:NewtonSoft_Deserialize
+            SerializableOptions options = new SerializableOptions();
+            options.Serializer = new NewtonsoftJsonObjectSerializer();
+            string json = @"[{""LatinName"":""Animalia"",""Weight"":1.1,""Name"":""Doggo"",""IsHungry"":false,""FoodConsumed"":[""kibble"",""egg"",""peanut butter""],""NumberOfLegs"":4}]";
+
+            DogListProperty dog = ModelSerializer.Deserialize<DogListProperty>(json, options);
+            #endregion
+        }
+
+        [Test]
+        [Ignore("Only verifying that the sample builds")]
+        public void ModelSerializerSerialize()
+        {
+            #region Snippet:ModelSerializer_Serialize
+            DogListProperty dog = new DogListProperty
+            {
+                Name = "Doggo",
+                IsHungry = true,
+                Weight = 1.1,
+                FoodConsumed = { "kibble", "egg", "peanut butter" },
+            };
+
+            Stream stream = ModelSerializer.Serialize(dog);
+            #endregion
+        }
+
+        [Test]
+        [Ignore("Only verifying that the sample builds")]
+        public void ModelSerializerDeserialize()
+        {
+            #region Snippet:ModelSerializer_Deserialize
+            string json = @"[{""LatinName"":""Animalia"",""Weight"":1.1,""Name"":""Doggo"",""IsHungry"":false,""FoodConsumed"":[""kibble"",""egg"",""peanut butter""],""NumberOfLegs"":4}]";
+
+            DogListProperty dog = ModelSerializer.Deserialize<DogListProperty>(json);
             #endregion
         }
     }
