@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
 using Azure.ResourceManager.Redis.Models;
@@ -32,6 +33,7 @@ namespace Azure.ResourceManager.Redis.Tests
             await SetCollectionsAsync();
 
             var redisCacheName = Recording.GenerateAssetName("RedisBegin");
+            var storageSubscriptionId = "7c4785eb-d3cf-4349-b811-8d756312d1ff";
             var parameter = new RedisCreateOrUpdateContent(DefaultLocation, new RedisSku(RedisSkuName.Basic, RedisSkuFamily.BasicOrStandard, 0));
 
             var responseCreate = (await Collection.CreateOrUpdateAsync(WaitUntil.Completed, redisCacheName, parameter)).Value;
@@ -49,7 +51,9 @@ namespace Azure.ResourceManager.Redis.Tests
             {
                 RedisConfiguration = new RedisCommonConfiguration()
                 {
-                    MaxMemoryPolicy = "allkeys-lru"
+                    MaxMemoryPolicy = "allkeys-lru",
+                    PreferredDataPersistenceAuthMethod = "ManagedIdentity",
+                    StorageSubscriptionId = storageSubscriptionId
                 },
                 EnableNonSslPort = true
             };
@@ -65,6 +69,7 @@ namespace Azure.ResourceManager.Redis.Tests
             Assert.AreEqual(6379, responseUpdate.Data.Port);
             Assert.AreEqual(6380, responseUpdate.Data.SslPort);
             Assert.IsTrue(responseUpdate.Data.EnableNonSslPort);
+            Assert.AreEqual(storageSubscriptionId, responseUpdate.Data.RedisConfiguration.StorageSubscriptionId);
 
             await responseUpdate.DeleteAsync(WaitUntil.Completed);
             var falseResult = (await Collection.ExistsAsync(redisCacheName)).Value;
