@@ -277,8 +277,7 @@ namespace Microsoft.Azure.Data.SchemaRegistry.JsonSchema.Tests
             var groupName = TestEnvironment.SchemaRegistryGroup;
 
             var serializer = new SchemaRegistryJsonSerializer(client, groupName, new SampleJsonGenerator());
-            Assert.That(
-                async () => await serializer.SerializeAsync(new UnregisteredEmployee { Age = 42, Name = "Caketown" }), Throws.InstanceOf<Exception>().And.Property(nameof(Exception.InnerException)).InstanceOf<RequestFailedException>());
+            Assert.ThrowsAsync<RequestFailedException>(async () => await serializer.SerializeAsync(new UnregisteredEmployee { Age = 42, Name = "Caketown" }));
         }
 
         [RecordedTest]
