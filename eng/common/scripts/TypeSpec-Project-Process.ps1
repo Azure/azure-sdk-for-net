@@ -59,11 +59,15 @@ function CreateUpdate-TspLocation([System.Object]$tspConfig, [string]$TypeSpecPr
 
   # Update tsp-location.yaml
   $tspLocationYaml["commit"] = $CommitHash
+  Write-Host "updated tsp-location.yaml commit to $CommitHash"
   $tspLocationYaml["repo"] = $repo
+  Write-Host "updated tsp-location.yaml repo to $repo"
   $tspLocationYaml["directory"] = $TypeSpecProjectDirectory
+  Write-Host "updated tsp-location.yaml directory to $TypeSpecProjectDirectory"
   $tspLocationYaml["additionalDirectories"] = $additionalDirs
+  Write-Host "updated tsp-location.yaml additionalDirectories to $additionalDirs"
   $tspLocationYaml |ConvertTo-Yaml | Out-File $tspLocationYamlPath
-  Write-Host "updated tsp-location.yaml in $packageDir"
+  Write-Host "finished updating tsp-location.yaml in $packageDir"
   return $packageDir
 }
 
@@ -116,7 +120,7 @@ if ($TypeSpecProjectDirectory -match '^https://github.com/(?<repo>Azure/azure-re
     Write-Error "Failed to find tspconfig.yaml in '$TypeSpecProjectDirectory'"
     exit 1
   }
-  if ($TypeSpecProjectDirectory -match "^.*/(?<path>specification/.*)$") {
+  if ($TypeSpecProjectDirectory -match "^.*[\\/](?<path>specification[\\/].*)$") {
     $TypeSpecProjectDirectory = $Matches["path"]
   } else {
     Write-Error "$TypeSpecProjectDirectory doesn't have 'specification' in path."
@@ -149,10 +153,12 @@ if (Test-Path $tmpTspConfigPath) {
 $sdkProjectFolder = CreateUpdate-TspLocation $tspConfigYaml $TypeSpecProjectDirectory $CommitHash $repo $repoRootPath
 
 # call TypeSpec-Project-Sync.ps1
-& "$PSScriptRoot/TypeSpec-Project-Sync.ps1" $sdkProjectFolder
+$syncScript = Join-Path $PSScriptRoot TypeSpec-Project-Sync.ps1
+& $syncScript $sdkProjectFolder
 if ($LASTEXITCODE) { exit $LASTEXITCODE }
 
 # call TypeSpec-Project-Generate.ps1
-& "$PSScriptRoot/TypeSpec-Project-Generate.ps1" $sdkProjectFolder
+$generateScript = Join-Path $PSScriptRoot TypeSpec-Project-Generate.ps1
+& $generateScript $sdkProjectFolder
 
 return $sdkProjectFolder
