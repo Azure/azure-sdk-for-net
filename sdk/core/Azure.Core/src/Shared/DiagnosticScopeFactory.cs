@@ -45,7 +45,7 @@ namespace Azure.Core.Pipeline
 
         public bool IsActivityEnabled { get; }
 
-        public DiagnosticScope CreateScope(string name, DiagnosticScope.ActivityKind kind = DiagnosticScope.ActivityKind.Internal)
+        public DiagnosticScope CreateScope(string name, DiagnosticScope.ActivityKind kind = DiagnosticScope.ActivityKind.Internal, string? displayName = null)
         {
             if (_source == null)
             {
@@ -58,7 +58,8 @@ namespace Azure.Core.Pipeline
                                 diagnosticSourceArgs: null,
                                 activitySource: GetActivitySource(_source.Name, name),
                                 kind: kind,
-                                suppressNestedClientActivities: _suppressNestedClientActivities);
+                                suppressNestedClientActivities: _suppressNestedClientActivities,
+                                displayName: displayName);
 
             if (_resourceProviderNamespace != null)
             {

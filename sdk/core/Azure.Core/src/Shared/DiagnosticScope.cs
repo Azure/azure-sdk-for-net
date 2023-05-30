@@ -24,7 +24,8 @@ namespace Azure.Core.Pipeline
         private readonly ActivityAdapter? _activityAdapter;
         private readonly bool _suppressNestedClientActivities;
 
-        internal DiagnosticScope(string scopeName, DiagnosticListener source, object? diagnosticSourceArgs, object? activitySource, ActivityKind kind, bool suppressNestedClientActivities)
+        internal DiagnosticScope(string scopeName, DiagnosticListener source, object? diagnosticSourceArgs, object? activitySource, ActivityKind kind, bool suppressNestedClientActivities,
+            string? displayName = null)
         {
             // ActivityKind.Internal and Client both can represent public API calls depending on the SDK
             _suppressNestedClientActivities = (kind == ActivityKind.Client || kind == ActivityKind.Internal) ? suppressNestedClientActivities : false;
@@ -42,7 +43,8 @@ namespace Azure.Core.Pipeline
                                                     diagnosticSource: source,
                                                     activityName: scopeName,
                                                     kind: kind,
-                                                    diagnosticSourceArgs: diagnosticSourceArgs) : null;
+                                                    diagnosticSourceArgs: diagnosticSourceArgs,
+                                                    displayName: displayName) : null;
         }
 
         public bool IsEnabled { get; }
@@ -181,14 +183,16 @@ namespace Azure.Core.Pipeline
             private List<Activity>? _links;
             private string? _traceparent;
             private string? _tracestate;
+            private string? _displayName;
 
-            public ActivityAdapter(object? activitySource, DiagnosticSource diagnosticSource, string activityName, ActivityKind kind, object? diagnosticSourceArgs)
+            public ActivityAdapter(object? activitySource, DiagnosticSource diagnosticSource, string activityName, ActivityKind kind, object? diagnosticSourceArgs, string? displayName)
             {
                 _activitySource = activitySource;
                 _diagnosticSource = diagnosticSource;
                 _activityName = activityName;
                 _kind = kind;
                 _diagnosticSourceArgs = diagnosticSourceArgs;
+                _displayName = displayName;
             }
 
             public void AddTag(string name, object value)
@@ -334,6 +338,8 @@ namespace Azure.Core.Pipeline
 
                 _diagnosticSource.Write(_activityName + ".Start", _diagnosticSourceArgs ?? _currentActivity);
 
+                _currentActivity.SetDisplayName(_displayName);
+
                 return _currentActivity;
             }
 
@@ -435,6 +441,7 @@ namespace Azure.Core.Pipeline
         private static Action<Activity, string, object>? SetCustomPropertyMethod;
         private static readonly ParameterExpression ActivityParameter = Expression.Parameter(typeof(Activity));
         private static MethodInfo? ParseActivityContextMethod;
+        private static Action<Activity, string>? SetDisplayNameMethod;
 
         public static object? GetCustomProperty(this Activity activity, string propertyName)
         {
@@ -564,6 +571,30 @@ namespace Azure.Core.Pipeline
                 }
             }
             return GetAllDataRequestedMethod(activity);
+        }
+
+        public static void SetDisplayName(this Activity activity, string? displayName)
+        {
+            if (displayName != null)
+            {
+                if (SetDisplayNameMethod == null)
+                {
+                    var method = typeof(Activity).GetProperty("DisplayName")?.SetMethod;
+                    if (method == null)
+                    {
+                        SetDisplayNameMethod = (_, _) => { };
+                    }
+                    else
+                    {
+                        var displayNameParameter = Expression.Parameter(typeof(string));
+                        var convertedParameter = Expression.Convert(displayNameParameter, method.GetParameters()[0].ParameterType);
+                        SetDisplayNameMethod = Expression.Lambda<Action<Activity, string>>(
+                            Expression.Call(ActivityParameter, method, convertedParameter),
+                            ActivityParameter, displayNameParameter).Compile();
+                    }
+                }
+                SetDisplayNameMethod(activity, displayName);
+            }
         }
 
         public static void SetTraceState(this Activity activity, string? tracestate)
