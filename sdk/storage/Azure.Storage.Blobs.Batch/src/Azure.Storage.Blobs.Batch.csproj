@@ -23,9 +23,6 @@
   <ItemGroup>
     <ProjectReference Include="$(MSBuildThisFileDirectory)..\..\Azure.Storage.Common\src\Azure.Storage.Common.csproj" />
     <ProjectReference Include="$(MSBuildThisFileDirectory)..\..\Azure.Storage.Blobs\src\Azure.Storage.Blobs.csproj" />
-    <!--Temp until Azure.Core 1.32.0 ships-->
-    <ProjectReference Include="..\..\..\core\Azure.Core\src\Azure.Core.csproj" />
-    <!--End Temp-->
   </ItemGroup>
   <ItemGroup>
     <Compile Include="$(AzureCoreSharedSources)AzureResourceProviderNamespaceAttribute.cs" LinkBase="Shared\Core" />
