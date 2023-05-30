@@ -59,7 +59,7 @@ This library provides a serializer, `SchemaRegistryJsonSerializer` that interact
 
 ## Examples
 
-## Implementation of `SchemaRegistryJsonSchemaGenerator` using `Newtonsoft.Json.Schema`
+## Implementation of `SchemaRegistryJsonSchemaGenerator`
 
 ```C# Snippet:SampleSchemaRegistryJsonSchemaGeneratorImplementation
 internal class SampleJsonGenerator : SchemaRegistryJsonSchemaGenerator
