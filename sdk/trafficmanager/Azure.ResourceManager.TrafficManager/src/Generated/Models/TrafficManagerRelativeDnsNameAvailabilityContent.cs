@@ -10,10 +10,10 @@ using Azure.Core;
 namespace Azure.ResourceManager.TrafficManager.Models
 {
     /// <summary> Parameters supplied to check Traffic Manager name operation. </summary>
-    public partial class TrafficManagerRelativeDnsNameAvailabilityParameters
+    public partial class TrafficManagerRelativeDnsNameAvailabilityContent
     {
-        /// <summary> Initializes a new instance of TrafficManagerRelativeDnsNameAvailabilityParameters. </summary>
-        public TrafficManagerRelativeDnsNameAvailabilityParameters()
+        /// <summary> Initializes a new instance of TrafficManagerRelativeDnsNameAvailabilityContent. </summary>
+        public TrafficManagerRelativeDnsNameAvailabilityContent()
         {
         }
 

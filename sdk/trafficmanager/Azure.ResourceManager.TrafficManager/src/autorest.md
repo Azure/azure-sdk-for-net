@@ -80,6 +80,7 @@ rename-rules:
 
 override-operation-name:
   Profiles_CheckTrafficManagerRelativeDnsNameAvailability: CheckTrafficManagerRelativeDnsNameAvailability
+  Profiles_checkTrafficManagerNameAvailabilityV2: CheckTrafficManagerNameAvailabilityV2
 
 directive:
   - from: trafficmanager.json

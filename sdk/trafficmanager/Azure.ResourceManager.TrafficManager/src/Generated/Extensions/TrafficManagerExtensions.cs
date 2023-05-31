@@ -239,14 +239,14 @@ namespace Azure.ResourceManager.TrafficManager
         /// </list>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="trafficManagerRelativeDnsNameAvailabilityParameters"> The Traffic Manager name parameters supplied to the CheckTrafficManagerNameAvailability operation. </param>
+        /// <param name="content"> The Traffic Manager name parameters supplied to the CheckTrafficManagerNameAvailability operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="trafficManagerRelativeDnsNameAvailabilityParameters"/> is null. </exception>
-        public static async Task<Response<TrafficManagerNameAvailabilityResult>> CheckTrafficManagerNameAvailabilityV2ProfileAsync(this SubscriptionResource subscriptionResource, TrafficManagerRelativeDnsNameAvailabilityParameters trafficManagerRelativeDnsNameAvailabilityParameters, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public static async Task<Response<TrafficManagerNameAvailabilityResult>> CheckTrafficManagerNameAvailabilityV2Async(this SubscriptionResource subscriptionResource, TrafficManagerRelativeDnsNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(trafficManagerRelativeDnsNameAvailabilityParameters, nameof(trafficManagerRelativeDnsNameAvailabilityParameters));
+            Argument.AssertNotNull(content, nameof(content));
 
-            return await GetSubscriptionResourceExtensionClient(subscriptionResource).CheckTrafficManagerNameAvailabilityV2ProfileAsync(trafficManagerRelativeDnsNameAvailabilityParameters, cancellationToken).ConfigureAwait(false);
+            return await GetSubscriptionResourceExtensionClient(subscriptionResource).CheckTrafficManagerNameAvailabilityV2Async(content, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -263,14 +263,14 @@ namespace Azure.ResourceManager.TrafficManager
         /// </list>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="trafficManagerRelativeDnsNameAvailabilityParameters"> The Traffic Manager name parameters supplied to the CheckTrafficManagerNameAvailability operation. </param>
+        /// <param name="content"> The Traffic Manager name parameters supplied to the CheckTrafficManagerNameAvailability operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="trafficManagerRelativeDnsNameAvailabilityParameters"/> is null. </exception>
-        public static Response<TrafficManagerNameAvailabilityResult> CheckTrafficManagerNameAvailabilityV2Profile(this SubscriptionResource subscriptionResource, TrafficManagerRelativeDnsNameAvailabilityParameters trafficManagerRelativeDnsNameAvailabilityParameters, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public static Response<TrafficManagerNameAvailabilityResult> CheckTrafficManagerNameAvailabilityV2(this SubscriptionResource subscriptionResource, TrafficManagerRelativeDnsNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(trafficManagerRelativeDnsNameAvailabilityParameters, nameof(trafficManagerRelativeDnsNameAvailabilityParameters));
+            Argument.AssertNotNull(content, nameof(content));
 
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).CheckTrafficManagerNameAvailabilityV2Profile(trafficManagerRelativeDnsNameAvailabilityParameters, cancellationToken);
+            return GetSubscriptionResourceExtensionClient(subscriptionResource).CheckTrafficManagerNameAvailabilityV2(content, cancellationToken);
         }
 
         /// <summary>
@@ -337,14 +337,14 @@ namespace Azure.ResourceManager.TrafficManager
         /// </list>
         /// </summary>
         /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
-        /// <param name="trafficManagerRelativeDnsNameAvailabilityParameters"> The Traffic Manager name parameters supplied to the CheckTrafficManagerNameAvailability operation. </param>
+        /// <param name="content"> The Traffic Manager name parameters supplied to the CheckTrafficManagerNameAvailability operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="trafficManagerRelativeDnsNameAvailabilityParameters"/> is null. </exception>
-        public static async Task<Response<TrafficManagerNameAvailabilityResult>> CheckTrafficManagerRelativeDnsNameAvailabilityAsync(this TenantResource tenantResource, TrafficManagerRelativeDnsNameAvailabilityParameters trafficManagerRelativeDnsNameAvailabilityParameters, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public static async Task<Response<TrafficManagerNameAvailabilityResult>> CheckTrafficManagerRelativeDnsNameAvailabilityAsync(this TenantResource tenantResource, TrafficManagerRelativeDnsNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(trafficManagerRelativeDnsNameAvailabilityParameters, nameof(trafficManagerRelativeDnsNameAvailabilityParameters));
+            Argument.AssertNotNull(content, nameof(content));
 
-            return await GetTenantResourceExtensionClient(tenantResource).CheckTrafficManagerRelativeDnsNameAvailabilityAsync(trafficManagerRelativeDnsNameAvailabilityParameters, cancellationToken).ConfigureAwait(false);
+            return await GetTenantResourceExtensionClient(tenantResource).CheckTrafficManagerRelativeDnsNameAvailabilityAsync(content, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -361,14 +361,14 @@ namespace Azure.ResourceManager.TrafficManager
         /// </list>
         /// </summary>
         /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
-        /// <param name="trafficManagerRelativeDnsNameAvailabilityParameters"> The Traffic Manager name parameters supplied to the CheckTrafficManagerNameAvailability operation. </param>
+        /// <param name="content"> The Traffic Manager name parameters supplied to the CheckTrafficManagerNameAvailability operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="trafficManagerRelativeDnsNameAvailabilityParameters"/> is null. </exception>
-        public static Response<TrafficManagerNameAvailabilityResult> CheckTrafficManagerRelativeDnsNameAvailability(this TenantResource tenantResource, TrafficManagerRelativeDnsNameAvailabilityParameters trafficManagerRelativeDnsNameAvailabilityParameters, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public static Response<TrafficManagerNameAvailabilityResult> CheckTrafficManagerRelativeDnsNameAvailability(this TenantResource tenantResource, TrafficManagerRelativeDnsNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(trafficManagerRelativeDnsNameAvailabilityParameters, nameof(trafficManagerRelativeDnsNameAvailabilityParameters));
+            Argument.AssertNotNull(content, nameof(content));
 
-            return GetTenantResourceExtensionClient(tenantResource).CheckTrafficManagerRelativeDnsNameAvailability(trafficManagerRelativeDnsNameAvailabilityParameters, cancellationToken);
+            return GetTenantResourceExtensionClient(tenantResource).CheckTrafficManagerRelativeDnsNameAvailability(content, cancellationToken);
         }
     }
 }

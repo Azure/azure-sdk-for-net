@@ -63,15 +63,15 @@ namespace Azure.ResourceManager.TrafficManager
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="trafficManagerRelativeDnsNameAvailabilityParameters"> The Traffic Manager name parameters supplied to the CheckTrafficManagerNameAvailability operation. </param>
+        /// <param name="content"> The Traffic Manager name parameters supplied to the CheckTrafficManagerNameAvailability operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<TrafficManagerNameAvailabilityResult>> CheckTrafficManagerNameAvailabilityV2ProfileAsync(TrafficManagerRelativeDnsNameAvailabilityParameters trafficManagerRelativeDnsNameAvailabilityParameters, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<TrafficManagerNameAvailabilityResult>> CheckTrafficManagerNameAvailabilityV2Async(TrafficManagerRelativeDnsNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            using var scope = TrafficManagerProfileProfilesClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.CheckTrafficManagerNameAvailabilityV2Profile");
+            using var scope = TrafficManagerProfileProfilesClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.CheckTrafficManagerNameAvailabilityV2");
             scope.Start();
             try
             {
-                var response = await TrafficManagerProfileProfilesRestClient.CheckTrafficManagerNameAvailabilityV2Async(Id.SubscriptionId, trafficManagerRelativeDnsNameAvailabilityParameters, cancellationToken).ConfigureAwait(false);
+                var response = await TrafficManagerProfileProfilesRestClient.CheckTrafficManagerNameAvailabilityV2Async(Id.SubscriptionId, content, cancellationToken).ConfigureAwait(false);
                 return response;
             }
             catch (Exception e)
@@ -94,15 +94,15 @@ namespace Azure.ResourceManager.TrafficManager
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="trafficManagerRelativeDnsNameAvailabilityParameters"> The Traffic Manager name parameters supplied to the CheckTrafficManagerNameAvailability operation. </param>
+        /// <param name="content"> The Traffic Manager name parameters supplied to the CheckTrafficManagerNameAvailability operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<TrafficManagerNameAvailabilityResult> CheckTrafficManagerNameAvailabilityV2Profile(TrafficManagerRelativeDnsNameAvailabilityParameters trafficManagerRelativeDnsNameAvailabilityParameters, CancellationToken cancellationToken = default)
+        public virtual Response<TrafficManagerNameAvailabilityResult> CheckTrafficManagerNameAvailabilityV2(TrafficManagerRelativeDnsNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            using var scope = TrafficManagerProfileProfilesClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.CheckTrafficManagerNameAvailabilityV2Profile");
+            using var scope = TrafficManagerProfileProfilesClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.CheckTrafficManagerNameAvailabilityV2");
             scope.Start();
             try
             {
-                var response = TrafficManagerProfileProfilesRestClient.CheckTrafficManagerNameAvailabilityV2(Id.SubscriptionId, trafficManagerRelativeDnsNameAvailabilityParameters, cancellationToken);
+                var response = TrafficManagerProfileProfilesRestClient.CheckTrafficManagerNameAvailabilityV2(Id.SubscriptionId, content, cancellationToken);
                 return response;
             }
             catch (Exception e)

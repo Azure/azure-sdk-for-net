@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.TrafficManager
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
-        internal HttpMessage CreateCheckTrafficManagerRelativeDnsNameAvailabilityRequest(TrafficManagerRelativeDnsNameAvailabilityParameters trafficManagerRelativeDnsNameAvailabilityParameters)
+        internal HttpMessage CreateCheckTrafficManagerRelativeDnsNameAvailabilityRequest(TrafficManagerRelativeDnsNameAvailabilityContent content)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -49,22 +49,22 @@ namespace Azure.ResourceManager.TrafficManager
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(trafficManagerRelativeDnsNameAvailabilityParameters);
-            request.Content = content;
+            var content0 = new Utf8JsonRequestContent();
+            content0.JsonWriter.WriteObjectValue(content);
+            request.Content = content0;
             _userAgent.Apply(message);
             return message;
         }
 
         /// <summary> Checks the availability of a Traffic Manager Relative DNS name. </summary>
-        /// <param name="trafficManagerRelativeDnsNameAvailabilityParameters"> The Traffic Manager name parameters supplied to the CheckTrafficManagerNameAvailability operation. </param>
+        /// <param name="content"> The Traffic Manager name parameters supplied to the CheckTrafficManagerNameAvailability operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="trafficManagerRelativeDnsNameAvailabilityParameters"/> is null. </exception>
-        public async Task<Response<TrafficManagerNameAvailabilityResult>> CheckTrafficManagerRelativeDnsNameAvailabilityAsync(TrafficManagerRelativeDnsNameAvailabilityParameters trafficManagerRelativeDnsNameAvailabilityParameters, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public async Task<Response<TrafficManagerNameAvailabilityResult>> CheckTrafficManagerRelativeDnsNameAvailabilityAsync(TrafficManagerRelativeDnsNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(trafficManagerRelativeDnsNameAvailabilityParameters, nameof(trafficManagerRelativeDnsNameAvailabilityParameters));
+            Argument.AssertNotNull(content, nameof(content));
 
-            using var message = CreateCheckTrafficManagerRelativeDnsNameAvailabilityRequest(trafficManagerRelativeDnsNameAvailabilityParameters);
+            using var message = CreateCheckTrafficManagerRelativeDnsNameAvailabilityRequest(content);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -81,14 +81,14 @@ namespace Azure.ResourceManager.TrafficManager
         }
 
         /// <summary> Checks the availability of a Traffic Manager Relative DNS name. </summary>
-        /// <param name="trafficManagerRelativeDnsNameAvailabilityParameters"> The Traffic Manager name parameters supplied to the CheckTrafficManagerNameAvailability operation. </param>
+        /// <param name="content"> The Traffic Manager name parameters supplied to the CheckTrafficManagerNameAvailability operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="trafficManagerRelativeDnsNameAvailabilityParameters"/> is null. </exception>
-        public Response<TrafficManagerNameAvailabilityResult> CheckTrafficManagerRelativeDnsNameAvailability(TrafficManagerRelativeDnsNameAvailabilityParameters trafficManagerRelativeDnsNameAvailabilityParameters, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public Response<TrafficManagerNameAvailabilityResult> CheckTrafficManagerRelativeDnsNameAvailability(TrafficManagerRelativeDnsNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(trafficManagerRelativeDnsNameAvailabilityParameters, nameof(trafficManagerRelativeDnsNameAvailabilityParameters));
+            Argument.AssertNotNull(content, nameof(content));
 
-            using var message = CreateCheckTrafficManagerRelativeDnsNameAvailabilityRequest(trafficManagerRelativeDnsNameAvailabilityParameters);
+            using var message = CreateCheckTrafficManagerRelativeDnsNameAvailabilityRequest(content);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.TrafficManager
             }
         }
 
-        internal HttpMessage CreateCheckTrafficManagerNameAvailabilityV2Request(string subscriptionId, TrafficManagerRelativeDnsNameAvailabilityParameters trafficManagerRelativeDnsNameAvailabilityParameters)
+        internal HttpMessage CreateCheckTrafficManagerNameAvailabilityV2Request(string subscriptionId, TrafficManagerRelativeDnsNameAvailabilityContent content)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -118,25 +118,25 @@ namespace Azure.ResourceManager.TrafficManager
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(trafficManagerRelativeDnsNameAvailabilityParameters);
-            request.Content = content;
+            var content0 = new Utf8JsonRequestContent();
+            content0.JsonWriter.WriteObjectValue(content);
+            request.Content = content0;
             _userAgent.Apply(message);
             return message;
         }
 
         /// <summary> Checks the availability of a Traffic Manager Relative DNS name. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
-        /// <param name="trafficManagerRelativeDnsNameAvailabilityParameters"> The Traffic Manager name parameters supplied to the CheckTrafficManagerNameAvailability operation. </param>
+        /// <param name="content"> The Traffic Manager name parameters supplied to the CheckTrafficManagerNameAvailability operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="trafficManagerRelativeDnsNameAvailabilityParameters"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<TrafficManagerNameAvailabilityResult>> CheckTrafficManagerNameAvailabilityV2Async(string subscriptionId, TrafficManagerRelativeDnsNameAvailabilityParameters trafficManagerRelativeDnsNameAvailabilityParameters, CancellationToken cancellationToken = default)
+        public async Task<Response<TrafficManagerNameAvailabilityResult>> CheckTrafficManagerNameAvailabilityV2Async(string subscriptionId, TrafficManagerRelativeDnsNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNull(trafficManagerRelativeDnsNameAvailabilityParameters, nameof(trafficManagerRelativeDnsNameAvailabilityParameters));
+            Argument.AssertNotNull(content, nameof(content));
 
-            using var message = CreateCheckTrafficManagerNameAvailabilityV2Request(subscriptionId, trafficManagerRelativeDnsNameAvailabilityParameters);
+            using var message = CreateCheckTrafficManagerNameAvailabilityV2Request(subscriptionId, content);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -154,16 +154,16 @@ namespace Azure.ResourceManager.TrafficManager
 
         /// <summary> Checks the availability of a Traffic Manager Relative DNS name. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
-        /// <param name="trafficManagerRelativeDnsNameAvailabilityParameters"> The Traffic Manager name parameters supplied to the CheckTrafficManagerNameAvailability operation. </param>
+        /// <param name="content"> The Traffic Manager name parameters supplied to the CheckTrafficManagerNameAvailability operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="trafficManagerRelativeDnsNameAvailabilityParameters"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<TrafficManagerNameAvailabilityResult> CheckTrafficManagerNameAvailabilityV2(string subscriptionId, TrafficManagerRelativeDnsNameAvailabilityParameters trafficManagerRelativeDnsNameAvailabilityParameters, CancellationToken cancellationToken = default)
+        public Response<TrafficManagerNameAvailabilityResult> CheckTrafficManagerNameAvailabilityV2(string subscriptionId, TrafficManagerRelativeDnsNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNull(trafficManagerRelativeDnsNameAvailabilityParameters, nameof(trafficManagerRelativeDnsNameAvailabilityParameters));
+            Argument.AssertNotNull(content, nameof(content));
 
-            using var message = CreateCheckTrafficManagerNameAvailabilityV2Request(subscriptionId, trafficManagerRelativeDnsNameAvailabilityParameters);
+            using var message = CreateCheckTrafficManagerNameAvailabilityV2Request(subscriptionId, content);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
