@@ -1,14 +1,14 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://fakeHost.api.wus2.digitaltwins.azure.net/digitaltwins/someNonExistantTwin?api-version=2023-02-27-preview",
+      "RequestUri": "https://fakeHost.api.wus2.digitaltwins.azure.net/digitaltwins/someNonExistantTwin?api-version=2023-06-30",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "traceparent": "00-f52ac8ff1784684db3548050c8cbbbae-223880f0a0ae7744-00",
-        "User-Agent": "azsdk-net-DigitalTwins.Core/1.5.0-alpha.20230209.1 (.NET Framework 4.8.9105.0; Microsoft Windows 10.0.22621 )",
-        "x-ms-client-request-id": "9adab89918e681ccef91d7aacfd8e3a7",
+        "traceparent": "00-88e22b749e6791d09486c1dcdea5c63b-d81f77143933c94a-00",
+        "User-Agent": "azsdk-net-DigitalTwins.Core/1.5.0-alpha.20230518.1 (.NET 6.0.16; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "fd1fe5c399375d45ef75548c0f40206c",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
@@ -16,10 +16,11 @@
       "ResponseHeaders": {
         "Content-Length": "273",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Wed, 15 Feb 2023 18:25:49 GMT",
-        "mise-correlation-id": "62394da9-eda1-494f-ae90-6d769be84396",
+        "Date": "Thu, 18 May 2023 23:08:06 GMT",
+        "mise-correlation-id": "fb7b177c-cbd5-40ce-9c74-9b6b791bc8da",
         "Strict-Transport-Security": "max-age=2592000",
-        "traceresponse": "00-f52ac8ff1784684db3548050c8cbbbae-0f57b3c3e6ad2004-01"
+        "traceresponse": "00-88e22b749e6791d09486c1dcdea5c63b-298abb9634de2ece-01",
+        "x-ms-error-code": "DigitalTwinNotFound"
       },
       "ResponseBody": {
         "error": {
@@ -30,8 +31,8 @@
     }
   ],
   "Variables": {
-    "AZURE_AUTHORITY_HOST": "https://login.microsoftonline.com/",
+    "AZURE_AUTHORITY_HOST": null,
     "DIGITALTWINS_URL": "https://fakeHost.api.wus2.digitaltwins.azure.net",
-    "RandomSeed": "802696752"
+    "RandomSeed": "277510068"
   }
 }

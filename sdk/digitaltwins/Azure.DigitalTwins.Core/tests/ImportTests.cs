@@ -22,6 +22,8 @@ namespace Azure.DigitalTwins.Core.Tests
         {
         }
 
+        private readonly TimeSpan _delay = TimeSpan.FromSeconds(10);
+
         [Test]
         public async Task Import_Lifecycle()
         {
@@ -60,6 +62,13 @@ namespace Azure.DigitalTwins.Core.Tests
                 Assert.IsNotNull(cancelResponse);
                 var rawCancelResponse = cancelResponse.GetRawResponse();
                 Assert.AreEqual((int)HttpStatusCode.OK, rawCancelResponse.Status);
+
+                //Check if job has reached terminal state
+                do
+                {
+                    getResponse = await client.GetImportJobsByIdAsync(jobId).ConfigureAwait(false);
+                    await WaitIfLiveAsync(_delay);
+                } while (getResponse.Value?.Status == ImportJobStatus.Running || getResponse.Value?.Status == ImportJobStatus.Cancelling || getResponse.Value?.Status == ImportJobStatus.Notstarted);
 
                 // validate DELETE job
                 var deleteResponse = await client.DeleteImportJobsAsync(jobId).ConfigureAwait(false);

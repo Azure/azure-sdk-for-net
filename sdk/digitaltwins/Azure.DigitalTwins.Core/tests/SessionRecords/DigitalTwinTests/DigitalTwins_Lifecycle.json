@@ -1,42 +1,43 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://fakeHost.api.wus2.digitaltwins.azure.net/digitaltwins/roomTwin179024429?api-version=2023-02-27-preview",
+      "RequestUri": "https://fakeHost.api.wus2.digitaltwins.azure.net/digitaltwins/roomTwin1129787712?api-version=2023-06-30",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "traceparent": "00-b389385edb30e3419d03d328a794ca02-9ccbbc21f41e784b-00",
-        "User-Agent": "azsdk-net-DigitalTwins.Core/1.5.0-alpha.20230209.1 (.NET Framework 4.8.9105.0; Microsoft Windows 10.0.22621 )",
-        "x-ms-client-request-id": "25cda5988c6d434947a1be8383245feb",
+        "traceparent": "00-0ee611fd343079135847b2c864058f10-ff26dd9054540535-00",
+        "User-Agent": "azsdk-net-DigitalTwins.Core/1.5.0-alpha.20230518.1 (.NET 6.0.16; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "e306b3a91f4a04b49e99bfbed01044b1",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
       "StatusCode": 404,
       "ResponseHeaders": {
-        "Content-Length": "271",
+        "Content-Length": "272",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Wed, 15 Feb 2023 18:25:40 GMT",
-        "mise-correlation-id": "f6fc5279-3ef0-47a8-b1e3-d6288cac54ad",
+        "Date": "Thu, 18 May 2023 23:08:00 GMT",
+        "mise-correlation-id": "e4bf1f90-4d23-48d6-b22d-033cc22e8034",
         "Strict-Transport-Security": "max-age=2592000",
-        "traceresponse": "00-b389385edb30e3419d03d328a794ca02-612c0529a3ab5456-01"
+        "traceresponse": "00-0ee611fd343079135847b2c864058f10-761088d015955b5d-01",
+        "x-ms-error-code": "DigitalTwinNotFound"
       },
       "ResponseBody": {
         "error": {
           "code": "DigitalTwinNotFound",
-          "message": "There is no digital twin instance that exists with the ID roomTwin179024429. Please verify that the twin id is valid and ensure that the twin is not deleted. See section on querying the twins https://aka.ms/adtv2query."
+          "message": "There is no digital twin instance that exists with the ID roomTwin1129787712. Please verify that the twin id is valid and ensure that the twin is not deleted. See section on querying the twins https://aka.ms/adtv2query."
         }
       }
     },
     {
-      "RequestUri": "https://fakeHost.api.wus2.digitaltwins.azure.net/models/dtmi%3Aexample%3Afloor%3B12583575?includeModelDefinition=true\u0026api-version=2023-02-27-preview",
+      "RequestUri": "https://fakeHost.api.wus2.digitaltwins.azure.net/models/dtmi%3Aexample%3Afloor%3B11145503?includeModelDefinition=true\u0026api-version=2023-06-30",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "traceparent": "00-f77f129869689d49860c22b189545c61-4ce673b458fb0047-00",
-        "User-Agent": "azsdk-net-DigitalTwins.Core/1.5.0-alpha.20230209.1 (.NET Framework 4.8.9105.0; Microsoft Windows 10.0.22621 )",
-        "x-ms-client-request-id": "2eb1d2807a1cf7f42b30d7e7346beb15",
+        "traceparent": "00-e9f4e75233d34f0530ec23a3165921b0-e44215778d364e11-00",
+        "User-Agent": "azsdk-net-DigitalTwins.Core/1.5.0-alpha.20230518.1 (.NET 6.0.16; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "29533708bdaf8999cfefc8a70e4872ed",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
@@ -44,27 +45,28 @@
       "ResponseHeaders": {
         "Content-Length": "212",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Wed, 15 Feb 2023 18:25:40 GMT",
-        "mise-correlation-id": "a41c742e-f5e4-4f01-a09f-fed7cda713f6",
+        "Date": "Thu, 18 May 2023 23:08:00 GMT",
+        "mise-correlation-id": "968eb507-c393-40b2-b8d9-aedfa444babf",
         "Strict-Transport-Security": "max-age=2592000",
-        "traceresponse": "00-f77f129869689d49860c22b189545c61-a964f5bc82a61cb9-01"
+        "traceresponse": "00-e9f4e75233d34f0530ec23a3165921b0-ef80a0f17a4c652e-01",
+        "x-ms-error-code": "ModelNotFound"
       },
       "ResponseBody": {
         "error": {
           "code": "ModelNotFound",
-          "message": "There is no Model(s) available that matches the provided id(s) dtmi:example:floor;12583575. Check that the Model ID provided is valid by doing a Model_List API call."
+          "message": "There is no Model(s) available that matches the provided id(s) dtmi:example:floor;11145503. Check that the Model ID provided is valid by doing a Model_List API call."
         }
       }
     },
     {
-      "RequestUri": "https://fakeHost.api.wus2.digitaltwins.azure.net/models/dtmi%3Aexample%3Aroom%3B120310444?includeModelDefinition=true\u0026api-version=2023-02-27-preview",
+      "RequestUri": "https://fakeHost.api.wus2.digitaltwins.azure.net/models/dtmi%3Aexample%3Aroom%3B112610678?includeModelDefinition=true\u0026api-version=2023-06-30",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "traceparent": "00-d6d0684020d965439458a0a6cb0ce3c9-7fb4b91de5dab540-00",
-        "User-Agent": "azsdk-net-DigitalTwins.Core/1.5.0-alpha.20230209.1 (.NET Framework 4.8.9105.0; Microsoft Windows 10.0.22621 )",
-        "x-ms-client-request-id": "3549a6888998627fd0f57caddc033cd1",
+        "traceparent": "00-2a49eb4d068b910134022ccf878a865b-4c8365ccaf8fc959-00",
+        "User-Agent": "azsdk-net-DigitalTwins.Core/1.5.0-alpha.20230518.1 (.NET 6.0.16; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "7d103b3c3a858ea2a3e59394c52a5547",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
@@ -72,68 +74,102 @@
       "ResponseHeaders": {
         "Content-Length": "212",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Wed, 15 Feb 2023 18:25:40 GMT",
-        "mise-correlation-id": "4cdbd283-a80e-4971-a2f8-fc17224db9c9",
+        "Date": "Thu, 18 May 2023 23:08:01 GMT",
+        "mise-correlation-id": "547a480a-9588-4a75-8e8d-9d5079eb85a9",
         "Strict-Transport-Security": "max-age=2592000",
-        "traceresponse": "00-d6d0684020d965439458a0a6cb0ce3c9-8b9e461c2b3cf4e0-01"
+        "traceresponse": "00-2a49eb4d068b910134022ccf878a865b-57103916575d4698-01",
+        "x-ms-error-code": "ModelNotFound"
       },
       "ResponseBody": {
         "error": {
           "code": "ModelNotFound",
-          "message": "There is no Model(s) available that matches the provided id(s) dtmi:example:room;120310444. Check that the Model ID provided is valid by doing a Model_List API call."
+          "message": "There is no Model(s) available that matches the provided id(s) dtmi:example:room;112610678. Check that the Model ID provided is valid by doing a Model_List API call."
         }
       }
     },
     {
-      "RequestUri": "https://fakeHost.api.wus2.digitaltwins.azure.net/models?api-version=2023-02-27-preview",
+      "RequestUri": "https://fakeHost.api.wus2.digitaltwins.azure.net/models?api-version=2023-06-30",
       "RequestMethod": "POST",
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
         "Content-Length": "804",
         "Content-Type": "application/json",
-        "traceparent": "00-a3cbb7e36210dc448c7d5cfccdaaab29-ef379d5097605f45-00",
-        "User-Agent": "azsdk-net-DigitalTwins.Core/1.5.0-alpha.20230209.1 (.NET Framework 4.8.9105.0; Microsoft Windows 10.0.22621 )",
-        "x-ms-client-request-id": "4a072cc77bfed82b2d425c725c1336d3",
+        "traceparent": "00-03b023d4567f72ac09c5b5427c7e6fc5-7e5a672002064bfe-00",
+        "User-Agent": "azsdk-net-DigitalTwins.Core/1.5.0-alpha.20230518.1 (.NET 6.0.16; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "8ea6d009fa176df5597a2feb5c90514c",
         "x-ms-return-client-request-id": "true"
       },
-      "RequestBody": "[{    \u0022@id\u0022: \u0022dtmi:example:room;120310444\u0022,    \u0022@type\u0022: \u0022Interface\u0022,    \u0022displayName\u0022: \u0022Room\u0022,    \u0022description\u0022: \u0022An enclosure inside a building.\u0022,    \u0022contents\u0022: [        {            \u0022@type\u0022: \u0022Relationship\u0022,            \u0022name\u0022: \u0022containedIn\u0022,            \u0022target\u0022: \u0022dtmi:example:floor;12583575\u0022        },        {            \u0022@type\u0022: \u0022Property\u0022,            \u0022name\u0022: \u0022Temperature\u0022,            \u0022schema\u0022: \u0022double\u0022        },        {            \u0022@type\u0022: \u0022Property\u0022,            \u0022name\u0022: \u0022Humidity\u0022,            \u0022schema\u0022: \u0022double\u0022        },        {            \u0022@type\u0022: \u0022Property\u0022,            \u0022name\u0022: \u0022IsOccupied\u0022,            \u0022schema\u0022: \u0022boolean\u0022        },        {            \u0022@type\u0022: \u0022Property\u0022,            \u0022name\u0022: \u0022EmployeeId\u0022,            \u0022schema\u0022: \u0022string\u0022        }    ],    \u0022@context\u0022: \u0022dtmi:dtdl:context;2\u0022}]",
+      "RequestBody": "[{    \u0022@id\u0022: \u0022dtmi:example:room;112610678\u0022,    \u0022@type\u0022: \u0022Interface\u0022,    \u0022displayName\u0022: \u0022Room\u0022,    \u0022description\u0022: \u0022An enclosure inside a building.\u0022,    \u0022contents\u0022: [        {            \u0022@type\u0022: \u0022Relationship\u0022,            \u0022name\u0022: \u0022containedIn\u0022,            \u0022target\u0022: \u0022dtmi:example:floor;11145503\u0022        },        {            \u0022@type\u0022: \u0022Property\u0022,            \u0022name\u0022: \u0022Temperature\u0022,            \u0022schema\u0022: \u0022double\u0022        },        {            \u0022@type\u0022: \u0022Property\u0022,            \u0022name\u0022: \u0022Humidity\u0022,            \u0022schema\u0022: \u0022double\u0022        },        {            \u0022@type\u0022: \u0022Property\u0022,            \u0022name\u0022: \u0022IsOccupied\u0022,            \u0022schema\u0022: \u0022boolean\u0022        },        {            \u0022@type\u0022: \u0022Property\u0022,            \u0022name\u0022: \u0022EmployeeId\u0022,            \u0022schema\u0022: \u0022string\u0022        }    ],    \u0022@context\u0022: \u0022dtmi:dtdl:context;2\u0022}]",
       "StatusCode": 201,
       "ResponseHeaders": {
         "Content-Length": "193",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Wed, 15 Feb 2023 18:25:40 GMT",
-        "mise-correlation-id": "d2198365-a5d4-42cd-acd4-c766f50957c9",
+        "Date": "Thu, 18 May 2023 23:08:01 GMT",
+        "mise-correlation-id": "3bf10b64-ce3f-4a00-934a-3e1664980624",
         "Strict-Transport-Security": "max-age=2592000",
-        "traceresponse": "00-a3cbb7e36210dc448c7d5cfccdaaab29-eea96705cf1ad6fd-01"
+        "traceresponse": "00-03b023d4567f72ac09c5b5427c7e6fc5-a438a93f9ed01a61-01"
       },
-      "ResponseBody": "[{\u0022id\u0022:\u0022dtmi:example:room;120310444\u0022,\u0022description\u0022:{\u0022en\u0022:\u0022An enclosure inside a building.\u0022},\u0022displayName\u0022:{\u0022en\u0022:\u0022Room\u0022},\u0022decommissioned\u0022:false,\u0022uploadTime\u0022:\u00222023-02-15T18:25:41.3272123\u002B00:00\u0022}]"
+      "ResponseBody": "[{\u0022id\u0022:\u0022dtmi:example:room;112610678\u0022,\u0022description\u0022:{\u0022en\u0022:\u0022An enclosure inside a building.\u0022},\u0022displayName\u0022:{\u0022en\u0022:\u0022Room\u0022},\u0022decommissioned\u0022:false,\u0022uploadTime\u0022:\u00222023-05-18T23:08:01.5277611\u002B00:00\u0022}]"
     },
     {
-      "RequestUri": "https://fakeHost.api.wus2.digitaltwins.azure.net/models?api-version=2023-02-27-preview",
+      "RequestUri": "https://fakeHost.api.wus2.digitaltwins.azure.net/models?api-version=2023-06-30",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "traceparent": "00-d25a8197d11e3a4bba62de21b696568f-842768c32db21248-00",
-        "User-Agent": "azsdk-net-DigitalTwins.Core/1.5.0-alpha.20230209.1 (.NET Framework 4.8.9105.0; Microsoft Windows 10.0.22621 )",
-        "x-ms-client-request-id": "b89b2e6ecda249e831cc4c85774a4e2c",
+        "traceparent": "00-53d994cee7a30abd72fd5cf0e92854ec-592d374e4b67a55c-00",
+        "User-Agent": "azsdk-net-DigitalTwins.Core/1.5.0-alpha.20230518.1 (.NET 6.0.16; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "09d474d015a0fd83b19a0bd805f40ac4",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
       "StatusCode": 200,
       "ResponseHeaders": {
-        "Content-Length": "7973",
+        "Content-Length": "4646",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Wed, 15 Feb 2023 18:25:40 GMT",
-        "mise-correlation-id": "fa200e58-1ca3-4cf7-b009-004d274817f4",
+        "Date": "Thu, 18 May 2023 23:08:01 GMT",
+        "mise-correlation-id": "52de32e4-4680-46a0-8cac-160e3e58fc41",
         "Strict-Transport-Security": "max-age=2592000",
-        "traceresponse": "00-d25a8197d11e3a4bba62de21b696568f-534983104b62a3cb-01"
+        "traceresponse": "00-53d994cee7a30abd72fd5cf0e92854ec-b093c52c790af173-01"
       },
       "ResponseBody": {
         "value": [
           {
-            "id": "dtmi:example:room;113146068",
+            "id": "dtmi:com:microsoft:azure:iot:demomodel900;1",
+            "description": {
+              "en": "This is the description of model"
+            },
+            "displayName": {
+              "en": "This is the display name"
+            },
+            "decommissioned": false,
+            "uploadTime": "2023-05-18T00:40:07.4729517\u002B00:00"
+          },
+          {
+            "id": "dtmi:com:microsoft:azure:iot:model0;1",
+            "description": {
+              "en": "This is the description of model"
+            },
+            "displayName": {
+              "en": "This is the display name"
+            },
+            "decommissioned": false,
+            "uploadTime": "2023-05-18T00:50:17.6199536\u002B00:00"
+          },
+          {
+            "id": "dtmi:com:microsoft:azure:iot:model1;1",
+            "description": {
+              "en": "This is the description of model"
+            },
+            "displayName": {
+              "en": "This is the display name"
+            },
+            "decommissioned": false,
+            "uploadTime": "2023-05-18T00:50:17.6199978\u002B00:00"
+          },
+          {
+            "id": "dtmi:example:room;157166615",
             "description": {
               "en": "An enclosure inside a building."
             },
@@ -141,10 +177,10 @@
               "en": "Room"
             },
             "decommissioned": false,
-            "uploadTime": "2023-02-15T17:42:08.2255171\u002B00:00"
+            "uploadTime": "2023-05-18T19:05:17.2077633\u002B00:00"
           },
           {
-            "id": "dtmi:example:room;130376293",
+            "id": "dtmi:example:room;116388785",
             "description": {
               "en": "An enclosure inside a building."
             },
@@ -152,10 +188,10 @@
               "en": "Room"
             },
             "decommissioned": false,
-            "uploadTime": "2023-02-15T17:42:08.3082608\u002B00:00"
+            "uploadTime": "2023-05-18T19:05:17.5012549\u002B00:00"
           },
           {
-            "id": "dtmi:example:Ward;111396979",
+            "id": "dtmi:example:Ward;112570519",
             "description": {
               "en": "A separate partition in a building, made of rooms and hallways."
             },
@@ -163,10 +199,10 @@
               "en": "Ward"
             },
             "decommissioned": false,
-            "uploadTime": "2023-02-15T17:42:25.7271358\u002B00:00"
+            "uploadTime": "2023-05-18T19:05:24.1911536\u002B00:00"
           },
           {
-            "id": "dtmi:example:Ward;120811652",
+            "id": "dtmi:example:Ward;144044622",
             "description": {
               "en": "A separate partition in a building, made of rooms and hallways."
             },
@@ -174,10 +210,10 @@
               "en": "Ward"
             },
             "decommissioned": false,
-            "uploadTime": "2023-02-15T17:42:26.2181307\u002B00:00"
+            "uploadTime": "2023-05-18T19:05:24.5014954\u002B00:00"
           },
           {
-            "id": "dtmi:example:Ward;111944630",
+            "id": "dtmi:example:Ward;177557074",
             "description": {
               "en": "A separate partition in a building, made of rooms and hallways."
             },
@@ -185,10 +221,10 @@
               "en": "Ward"
             },
             "decommissioned": false,
-            "uploadTime": "2023-02-15T17:42:29.5424254\u002B00:00"
+            "uploadTime": "2023-05-18T19:05:27.6588992\u002B00:00"
           },
           {
-            "id": "dtmi:example:Ward;112073544",
+            "id": "dtmi:example:Ward;17591460",
             "description": {
               "en": "A separate partition in a building, made of rooms and hallways."
             },
@@ -196,10 +232,10 @@
               "en": "Ward"
             },
             "decommissioned": false,
-            "uploadTime": "2023-02-15T17:42:29.8541021\u002B00:00"
+            "uploadTime": "2023-05-18T19:05:27.8311766\u002B00:00"
           },
           {
-            "id": "dtmi:example:room;165057984",
+            "id": "dtmi:example:room;174924936",
             "description": {
               "en": "An enclosure inside a building."
             },
@@ -207,10 +243,10 @@
               "en": "Room"
             },
             "decommissioned": false,
-            "uploadTime": "2023-02-15T17:44:37.3959394\u002B00:00"
+            "uploadTime": "2023-05-18T23:07:52.9266624\u002B00:00"
           },
           {
-            "id": "dtmi:example:room;115926940",
+            "id": "dtmi:example:room;169555682",
             "description": {
               "en": "An enclosure inside a building."
             },
@@ -218,10 +254,10 @@
               "en": "Room"
             },
             "decommissioned": false,
-            "uploadTime": "2023-02-15T17:44:37.3968756\u002B00:00"
+            "uploadTime": "2023-05-18T23:07:53.2154519\u002B00:00"
           },
           {
-            "id": "dtmi:example:Ward;113886128",
+            "id": "dtmi:example:Ward;116517557",
             "description": {
               "en": "A separate partition in a building, made of rooms and hallways."
             },
@@ -229,10 +265,10 @@
               "en": "Ward"
             },
             "decommissioned": false,
-            "uploadTime": "2023-02-15T17:44:53.3546645\u002B00:00"
+            "uploadTime": "2023-05-18T23:07:59.4244184\u002B00:00"
           },
           {
-            "id": "dtmi:example:Ward;120506366",
+            "id": "dtmi:example:Ward;120046142",
             "description": {
               "en": "A separate partition in a building, made of rooms and hallways."
             },
@@ -240,263 +276,10 @@
               "en": "Ward"
             },
             "decommissioned": false,
-            "uploadTime": "2023-02-15T17:44:53.5714124\u002B00:00"
+            "uploadTime": "2023-05-18T23:07:59.494959\u002B00:00"
           },
           {
-            "id": "dtmi:example:Ward;153368627",
-            "description": {
-              "en": "A separate partition in a building, made of rooms and hallways."
-            },
-            "displayName": {
-              "en": "Ward"
-            },
-            "decommissioned": false,
-            "uploadTime": "2023-02-15T17:44:56.8797517\u002B00:00"
-          },
-          {
-            "id": "dtmi:example:Ward;117890161",
-            "description": {
-              "en": "A separate partition in a building, made of rooms and hallways."
-            },
-            "displayName": {
-              "en": "Ward"
-            },
-            "decommissioned": false,
-            "uploadTime": "2023-02-15T17:44:57.0472773\u002B00:00"
-          },
-          {
-            "id": "dtmi:example:room;120885389",
-            "description": {
-              "en": "An enclosure inside a building."
-            },
-            "displayName": {
-              "en": "Room"
-            },
-            "decommissioned": false,
-            "uploadTime": "2023-02-15T17:47:04.296829\u002B00:00"
-          },
-          {
-            "id": "dtmi:example:Ward;142917365",
-            "description": {
-              "en": "A separate partition in a building, made of rooms and hallways."
-            },
-            "displayName": {
-              "en": "Ward"
-            },
-            "decommissioned": false,
-            "uploadTime": "2023-02-15T17:47:12.3380258\u002B00:00"
-          },
-          {
-            "id": "dtmi:example:Ward;132435477",
-            "description": {
-              "en": "A separate partition in a building, made of rooms and hallways."
-            },
-            "displayName": {
-              "en": "Ward"
-            },
-            "decommissioned": false,
-            "uploadTime": "2023-02-15T17:47:16.4834273\u002B00:00"
-          },
-          {
-            "id": "dtmi:example:Ward;119549692",
-            "description": {
-              "en": "A separate partition in a building, made of rooms and hallways."
-            },
-            "displayName": {
-              "en": "Ward"
-            },
-            "decommissioned": false,
-            "uploadTime": "2023-02-15T17:47:18.0885989\u002B00:00"
-          },
-          {
-            "id": "dtmi:example:Ward;114788743",
-            "description": {
-              "en": "A separate partition in a building, made of rooms and hallways."
-            },
-            "displayName": {
-              "en": "Ward"
-            },
-            "decommissioned": false,
-            "uploadTime": "2023-02-15T17:47:22.1031356\u002B00:00"
-          },
-          {
-            "id": "dtmi:example:room;115502926",
-            "description": {
-              "en": "An enclosure inside a building."
-            },
-            "displayName": {
-              "en": "Room"
-            },
-            "decommissioned": false,
-            "uploadTime": "2023-02-15T18:13:37.9323898\u002B00:00"
-          },
-          {
-            "id": "dtmi:example:room;119127316",
-            "description": {
-              "en": "An enclosure inside a building."
-            },
-            "displayName": {
-              "en": "Room"
-            },
-            "decommissioned": false,
-            "uploadTime": "2023-02-15T18:19:29.4859339\u002B00:00"
-          },
-          {
-            "id": "dtmi:example:room;110808897",
-            "description": {
-              "en": "An enclosure inside a building."
-            },
-            "displayName": {
-              "en": "Room"
-            },
-            "decommissioned": false,
-            "uploadTime": "2023-02-15T18:19:29.4892526\u002B00:00"
-          },
-          {
-            "id": "dtmi:example:Ward;113442483",
-            "description": {
-              "en": "A separate partition in a building, made of rooms and hallways."
-            },
-            "displayName": {
-              "en": "Ward"
-            },
-            "decommissioned": false,
-            "uploadTime": "2023-02-15T18:19:47.3903679\u002B00:00"
-          },
-          {
-            "id": "dtmi:example:Ward;111236483",
-            "description": {
-              "en": "A separate partition in a building, made of rooms and hallways."
-            },
-            "displayName": {
-              "en": "Ward"
-            },
-            "decommissioned": false,
-            "uploadTime": "2023-02-15T18:19:47.5190649\u002B00:00"
-          },
-          {
-            "id": "dtmi:example:Ward;171329972",
-            "description": {
-              "en": "A separate partition in a building, made of rooms and hallways."
-            },
-            "displayName": {
-              "en": "Ward"
-            },
-            "decommissioned": false,
-            "uploadTime": "2023-02-15T18:19:51.6719026\u002B00:00"
-          },
-          {
-            "id": "dtmi:example:Ward;121207090",
-            "description": {
-              "en": "A separate partition in a building, made of rooms and hallways."
-            },
-            "displayName": {
-              "en": "Ward"
-            },
-            "decommissioned": false,
-            "uploadTime": "2023-02-15T18:19:51.6728832\u002B00:00"
-          },
-          {
-            "id": "dtmi:example:room;115468175",
-            "description": {
-              "en": "An enclosure inside a building."
-            },
-            "displayName": {
-              "en": "Room"
-            },
-            "decommissioned": false,
-            "uploadTime": "2023-02-15T18:22:25.0899758\u002B00:00"
-          },
-          {
-            "id": "dtmi:example:room;195024426",
-            "description": {
-              "en": "An enclosure inside a building."
-            },
-            "displayName": {
-              "en": "Room"
-            },
-            "decommissioned": false,
-            "uploadTime": "2023-02-15T18:22:25.2571192\u002B00:00"
-          },
-          {
-            "id": "dtmi:example:Ward;115130902",
-            "description": {
-              "en": "A separate partition in a building, made of rooms and hallways."
-            },
-            "displayName": {
-              "en": "Ward"
-            },
-            "decommissioned": false,
-            "uploadTime": "2023-02-15T18:22:44.6330022\u002B00:00"
-          },
-          {
-            "id": "dtmi:example:Ward;115239161",
-            "description": {
-              "en": "A separate partition in a building, made of rooms and hallways."
-            },
-            "displayName": {
-              "en": "Ward"
-            },
-            "decommissioned": false,
-            "uploadTime": "2023-02-15T18:22:44.966975\u002B00:00"
-          },
-          {
-            "id": "dtmi:example:Ward;112979790",
-            "description": {
-              "en": "A separate partition in a building, made of rooms and hallways."
-            },
-            "displayName": {
-              "en": "Ward"
-            },
-            "decommissioned": false,
-            "uploadTime": "2023-02-15T18:22:49.5845333\u002B00:00"
-          },
-          {
-            "id": "dtmi:example:Ward;110503292",
-            "description": {
-              "en": "A separate partition in a building, made of rooms and hallways."
-            },
-            "displayName": {
-              "en": "Ward"
-            },
-            "decommissioned": false,
-            "uploadTime": "2023-02-15T18:22:49.7450602\u002B00:00"
-          },
-          {
-            "id": "dtmi:example:room;160848362",
-            "description": {
-              "en": "An enclosure inside a building."
-            },
-            "displayName": {
-              "en": "Room"
-            },
-            "decommissioned": false,
-            "uploadTime": "2023-02-15T18:25:30.1180168\u002B00:00"
-          },
-          {
-            "id": "dtmi:example:floor;11898893",
-            "description": {
-              "en": "A building story."
-            },
-            "displayName": {
-              "en": "Floor"
-            },
-            "decommissioned": false,
-            "uploadTime": "2023-02-15T18:25:38.9353846\u002B00:00"
-          },
-          {
-            "id": "dtmi:example:room;164149489",
-            "description": {
-              "en": "An enclosure inside a building."
-            },
-            "displayName": {
-              "en": "Room"
-            },
-            "decommissioned": false,
-            "uploadTime": "2023-02-15T18:25:38.9354084\u002B00:00"
-          },
-          {
-            "id": "dtmi:example:hvac;110281833",
+            "id": "dtmi:example:Hvac;114456631",
             "description": {
               "en": "A heating, ventilation, and air conditioning unit."
             },
@@ -504,32 +287,21 @@
               "en": "HVAC"
             },
             "decommissioned": false,
-            "uploadTime": "2023-02-15T18:25:38.9354949\u002B00:00"
+            "uploadTime": "2023-05-18T23:08:00.6917947\u002B00:00"
           },
           {
-            "id": "dtmi:example:floor;11731737",
+            "id": "dtmi:example:Ward;112571175",
             "description": {
-              "en": "A building story."
+              "en": "A separate partition in a building, made of rooms and hallways."
             },
             "displayName": {
-              "en": "Floor"
+              "en": "Ward"
             },
             "decommissioned": false,
-            "uploadTime": "2023-02-15T18:25:41.3214093\u002B00:00"
+            "uploadTime": "2023-05-18T23:08:00.6918109\u002B00:00"
           },
           {
-            "id": "dtmi:example:room;120464425",
-            "description": {
-              "en": "An enclosure inside a building."
-            },
-            "displayName": {
-              "en": "Room"
-            },
-            "decommissioned": false,
-            "uploadTime": "2023-02-15T18:25:41.3214348\u002B00:00"
-          },
-          {
-            "id": "dtmi:example:hvac;114832867",
+            "id": "dtmi:example:Hvac;114423819",
             "description": {
               "en": "A heating, ventilation, and air conditioning unit."
             },
@@ -537,10 +309,32 @@
               "en": "HVAC"
             },
             "decommissioned": false,
-            "uploadTime": "2023-02-15T18:25:41.3214515\u002B00:00"
+            "uploadTime": "2023-05-18T23:08:00.730465\u002B00:00"
           },
           {
-            "id": "dtmi:example:room;120310444",
+            "id": "dtmi:example:Ward;164401743",
+            "description": {
+              "en": "A separate partition in a building, made of rooms and hallways."
+            },
+            "displayName": {
+              "en": "Ward"
+            },
+            "decommissioned": false,
+            "uploadTime": "2023-05-18T23:08:00.730481\u002B00:00"
+          },
+          {
+            "id": "dtmi:example:floor;11542347",
+            "description": {
+              "en": "A building story."
+            },
+            "displayName": {
+              "en": "Floor"
+            },
+            "decommissioned": false,
+            "uploadTime": "2023-05-18T23:08:01.3614937\u002B00:00"
+          },
+          {
+            "id": "dtmi:example:room;110818524",
             "description": {
               "en": "An enclosure inside a building."
             },
@@ -548,23 +342,56 @@
               "en": "Room"
             },
             "decommissioned": false,
-            "uploadTime": "2023-02-15T18:25:41.3272123\u002B00:00"
+            "uploadTime": "2023-05-18T23:08:01.3615264\u002B00:00"
+          },
+          {
+            "id": "dtmi:example:hvac;144750225",
+            "description": {
+              "en": "A heating, ventilation, and air conditioning unit."
+            },
+            "displayName": {
+              "en": "HVAC"
+            },
+            "decommissioned": false,
+            "uploadTime": "2023-05-18T23:08:01.3615414\u002B00:00"
+          },
+          {
+            "id": "dtmi:example:room;111442405",
+            "description": {
+              "en": "An enclosure inside a building."
+            },
+            "displayName": {
+              "en": "Room"
+            },
+            "decommissioned": false,
+            "uploadTime": "2023-05-18T23:08:01.5234885\u002B00:00"
+          },
+          {
+            "id": "dtmi:example:room;112610678",
+            "description": {
+              "en": "An enclosure inside a building."
+            },
+            "displayName": {
+              "en": "Room"
+            },
+            "decommissioned": false,
+            "uploadTime": "2023-05-18T23:08:01.5277611\u002B00:00"
           }
         ],
         "nextLink": null
       }
     },
     {
-      "RequestUri": "https://fakeHost.api.wus2.digitaltwins.azure.net/digitaltwins/roomTwin179024429?api-version=2023-02-27-preview",
+      "RequestUri": "https://fakeHost.api.wus2.digitaltwins.azure.net/digitaltwins/roomTwin1129787712?api-version=2023-06-30",
       "RequestMethod": "PUT",
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
         "Content-Length": "154",
         "Content-Type": "application/json",
-        "traceparent": "00-fc6b078e5899904f8e0fdf98e07df9d7-64b87eebd0297d44-00",
-        "User-Agent": "azsdk-net-DigitalTwins.Core/1.5.0-alpha.20230209.1 (.NET Framework 4.8.9105.0; Microsoft Windows 10.0.22621 )",
-        "x-ms-client-request-id": "3e6d169bcae30c577b7007562c0d06bd",
+        "traceparent": "00-7bfba88f48718027f448854b22ca14fe-ec97543789f1e72d-00",
+        "User-Agent": "azsdk-net-DigitalTwins.Core/1.5.0-alpha.20230518.1 (.NET 6.0.16; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "770560735fcc414445a3230a0ab63113",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
@@ -575,93 +402,93 @@
         "IsOccupied": true,
         "EmployeeId": "Employee1",
         "$metadata": {
-          "$model": "dtmi:example:room;120310444"
+          "$model": "dtmi:example:room;112610678"
         }
       },
       "StatusCode": 200,
       "ResponseHeaders": {
-        "Content-Length": "509",
+        "Content-Length": "510",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Wed, 15 Feb 2023 18:25:41 GMT",
-        "ETag": "W/\u00228553a34a-8036-4c73-bbdb-4d65e696afb5\u0022",
-        "mise-correlation-id": "f358017d-1df7-4544-9eed-e57611bae771",
+        "Date": "Thu, 18 May 2023 23:08:01 GMT",
+        "ETag": "W/\u00224c11d709-8c0c-48e5-ab87-06379d0fba6e\u0022",
+        "mise-correlation-id": "8d0b8869-a276-47f3-a36c-a2367010fa31",
         "Strict-Transport-Security": "max-age=2592000",
-        "traceresponse": "00-fc6b078e5899904f8e0fdf98e07df9d7-682a8ab6e3fec5e6-01"
+        "traceresponse": "00-7bfba88f48718027f448854b22ca14fe-38e092caaebf17b8-01"
       },
       "ResponseBody": {
-        "$dtId": "roomTwin179024429",
-        "$etag": "W/\u00228553a34a-8036-4c73-bbdb-4d65e696afb5\u0022",
+        "$dtId": "roomTwin1129787712",
+        "$etag": "W/\u00224c11d709-8c0c-48e5-ab87-06379d0fba6e\u0022",
         "Temperature": 80,
         "Humidity": 25,
         "IsOccupied": true,
         "EmployeeId": "Employee1",
         "$metadata": {
-          "$model": "dtmi:example:room;120310444",
-          "$lastUpdateTime": "2023-02-15T18:25:41.8170944Z",
+          "$model": "dtmi:example:room;112610678",
+          "$lastUpdateTime": "2023-05-18T23:08:01.8369799Z",
           "Temperature": {
-            "lastUpdateTime": "2023-02-15T18:25:41.8170944Z"
+            "lastUpdateTime": "2023-05-18T23:08:01.8369799Z"
           },
           "Humidity": {
-            "lastUpdateTime": "2023-02-15T18:25:41.8170944Z"
+            "lastUpdateTime": "2023-05-18T23:08:01.8369799Z"
           },
           "IsOccupied": {
-            "lastUpdateTime": "2023-02-15T18:25:41.8170944Z"
+            "lastUpdateTime": "2023-05-18T23:08:01.8369799Z"
           },
           "EmployeeId": {
-            "lastUpdateTime": "2023-02-15T18:25:41.8170944Z"
+            "lastUpdateTime": "2023-05-18T23:08:01.8369799Z"
           }
         }
       }
     },
     {
-      "RequestUri": "https://fakeHost.api.wus2.digitaltwins.azure.net/digitaltwins/roomTwin179024429?api-version=2023-02-27-preview",
+      "RequestUri": "https://fakeHost.api.wus2.digitaltwins.azure.net/digitaltwins/roomTwin1129787712?api-version=2023-06-30",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "traceparent": "00-917e7d3ead60274aa2274294ab090f67-bb804b09c0407d40-00",
-        "User-Agent": "azsdk-net-DigitalTwins.Core/1.5.0-alpha.20230209.1 (.NET Framework 4.8.9105.0; Microsoft Windows 10.0.22621 )",
-        "x-ms-client-request-id": "ae3ea9be8367f92e44be18322fa561e2",
+        "traceparent": "00-cd13e62ff7850d652a9a3f757aad3272-2839e381addfeb59-00",
+        "User-Agent": "azsdk-net-DigitalTwins.Core/1.5.0-alpha.20230518.1 (.NET 6.0.16; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "50c346934c56f3a64da8dd7cee1d6864",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
       "StatusCode": 200,
       "ResponseHeaders": {
-        "Content-Length": "509",
+        "Content-Length": "510",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Wed, 15 Feb 2023 18:25:41 GMT",
-        "ETag": "W/\u00228553a34a-8036-4c73-bbdb-4d65e696afb5\u0022",
-        "mise-correlation-id": "d8fe466d-9e01-4612-bab8-ca9c76e4f9a4",
+        "Date": "Thu, 18 May 2023 23:08:01 GMT",
+        "ETag": "W/\u00224c11d709-8c0c-48e5-ab87-06379d0fba6e\u0022",
+        "mise-correlation-id": "6c5a7ef0-a9d7-480f-bd0e-65fe9f027417",
         "Strict-Transport-Security": "max-age=2592000",
-        "traceresponse": "00-917e7d3ead60274aa2274294ab090f67-345a31a987e98d1e-01"
+        "traceresponse": "00-cd13e62ff7850d652a9a3f757aad3272-427edd366890a0ac-01"
       },
       "ResponseBody": {
-        "$dtId": "roomTwin179024429",
-        "$etag": "W/\u00228553a34a-8036-4c73-bbdb-4d65e696afb5\u0022",
+        "$dtId": "roomTwin1129787712",
+        "$etag": "W/\u00224c11d709-8c0c-48e5-ab87-06379d0fba6e\u0022",
         "Temperature": 80,
         "Humidity": 25,
         "IsOccupied": true,
         "EmployeeId": "Employee1",
         "$metadata": {
-          "$model": "dtmi:example:room;120310444",
-          "$lastUpdateTime": "2023-02-15T18:25:41.8170944Z",
+          "$model": "dtmi:example:room;112610678",
+          "$lastUpdateTime": "2023-05-18T23:08:01.8369799Z",
           "Temperature": {
-            "lastUpdateTime": "2023-02-15T18:25:41.8170944Z"
+            "lastUpdateTime": "2023-05-18T23:08:01.8369799Z"
           },
           "Humidity": {
-            "lastUpdateTime": "2023-02-15T18:25:41.8170944Z"
+            "lastUpdateTime": "2023-05-18T23:08:01.8369799Z"
           },
           "IsOccupied": {
-            "lastUpdateTime": "2023-02-15T18:25:41.8170944Z"
+            "lastUpdateTime": "2023-05-18T23:08:01.8369799Z"
           },
           "EmployeeId": {
-            "lastUpdateTime": "2023-02-15T18:25:41.8170944Z"
+            "lastUpdateTime": "2023-05-18T23:08:01.8369799Z"
           }
         }
       }
     },
     {
-      "RequestUri": "https://fakeHost.api.wus2.digitaltwins.azure.net/digitaltwins/roomTwin179024429?api-version=2023-02-27-preview",
+      "RequestUri": "https://fakeHost.api.wus2.digitaltwins.azure.net/digitaltwins/roomTwin1129787712?api-version=2023-06-30",
       "RequestMethod": "PATCH",
       "RequestHeaders": {
         "Accept": "application/json",
@@ -669,99 +496,100 @@
         "Content-Length": "230",
         "Content-Type": "application/json-patch\u002Bjson",
         "If-Match": "*",
-        "traceparent": "00-cbbe0c0da262ee48bbb94ce112f4475b-ed848984a714ed4f-00",
-        "User-Agent": "azsdk-net-DigitalTwins.Core/1.5.0-alpha.20230209.1 (.NET Framework 4.8.9105.0; Microsoft Windows 10.0.22621 )",
-        "x-ms-client-request-id": "45d72ff3f7a5a3efd68f3c32c6921c24",
+        "traceparent": "00-50934b04e7b5a3494148a5c7769cb119-2e8cbd86b2ba1c4b-00",
+        "User-Agent": "azsdk-net-DigitalTwins.Core/1.5.0-alpha.20230518.1 (.NET 6.0.16; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "fc786b70da8a71803092c3fdf179f3fb",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": "[{\u0022op\u0022:\u0022add\u0022,\u0022path\u0022:\u0022/Humidity\u0022,\u0022value\u0022:30},{\u0022op\u0022:\u0022replace\u0022,\u0022path\u0022:\u0022/Temperature\u0022,\u0022value\u0022:70},{\u0022op\u0022:\u0022replace\u0022,\u0022path\u0022:\u0022/$metadata/Temperature/sourceTime\u0022,\u0022value\u0022:\u00222022-01-20T02:03:00.0943478Z\u0022},{\u0022op\u0022:\u0022remove\u0022,\u0022path\u0022:\u0022/EmployeeId\u0022}]",
       "StatusCode": 204,
       "ResponseHeaders": {
         "Content-Length": "0",
-        "Date": "Wed, 15 Feb 2023 18:25:41 GMT",
-        "ETag": "W/\u002255eda647-eb58-4d91-9459-46582ad00c9d\u0022",
-        "mise-correlation-id": "a3d250d3-2e81-41a1-82f4-53f46afa4f8d",
+        "Date": "Thu, 18 May 2023 23:08:01 GMT",
+        "ETag": "W/\u0022e195b925-400f-4bcb-81d8-09b1b614a6f8\u0022",
+        "mise-correlation-id": "5716cfb1-f5d2-4ac5-8355-b99f3608462b",
         "Strict-Transport-Security": "max-age=2592000",
-        "traceresponse": "00-cbbe0c0da262ee48bbb94ce112f4475b-06ac913cf598b90e-01"
+        "traceresponse": "00-50934b04e7b5a3494148a5c7769cb119-b453874103c226a0-01"
       },
       "ResponseBody": null
     },
     {
-      "RequestUri": "https://fakeHost.api.wus2.digitaltwins.azure.net/digitaltwins/roomTwin179024429?api-version=2023-02-27-preview",
+      "RequestUri": "https://fakeHost.api.wus2.digitaltwins.azure.net/digitaltwins/roomTwin1129787712?api-version=2023-06-30",
       "RequestMethod": "DELETE",
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "traceparent": "00-2edebfdc1ae83a429e30945771a73f08-75b5102d6a5e9544-00",
-        "User-Agent": "azsdk-net-DigitalTwins.Core/1.5.0-alpha.20230209.1 (.NET Framework 4.8.9105.0; Microsoft Windows 10.0.22621 )",
-        "x-ms-client-request-id": "cec68fc5a00c17c5e774fa25b224ddd6",
+        "traceparent": "00-ed118dac92ecd59d32a25d28844f204e-dc82b0bbc8b9b781-00",
+        "User-Agent": "azsdk-net-DigitalTwins.Core/1.5.0-alpha.20230518.1 (.NET 6.0.16; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "bf44f768b931276eba112a2382c75227",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
       "StatusCode": 204,
       "ResponseHeaders": {
         "Content-Length": "0",
-        "Date": "Wed, 15 Feb 2023 18:25:41 GMT",
-        "mise-correlation-id": "c2c96f01-91d1-467b-8ca8-ed87a320d37d",
+        "Date": "Thu, 18 May 2023 23:08:01 GMT",
+        "mise-correlation-id": "69860922-7d9e-4d13-8492-299e179dadf3",
         "Strict-Transport-Security": "max-age=2592000",
-        "traceresponse": "00-2edebfdc1ae83a429e30945771a73f08-dd4159f4fc239df2-01"
+        "traceresponse": "00-ed118dac92ecd59d32a25d28844f204e-26702a6be5eddc50-01"
       },
       "ResponseBody": null
     },
     {
-      "RequestUri": "https://fakeHost.api.wus2.digitaltwins.azure.net/digitaltwins/roomTwin179024429?api-version=2023-02-27-preview",
+      "RequestUri": "https://fakeHost.api.wus2.digitaltwins.azure.net/digitaltwins/roomTwin1129787712?api-version=2023-06-30",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "traceparent": "00-c6ea18dc06771e40afa032083fa282aa-58355b691798ef4c-00",
-        "User-Agent": "azsdk-net-DigitalTwins.Core/1.5.0-alpha.20230209.1 (.NET Framework 4.8.9105.0; Microsoft Windows 10.0.22621 )",
-        "x-ms-client-request-id": "fc62240ec036c717ba9ad8d847fc32b1",
+        "traceparent": "00-0be2ab4e158778a3691662f6c37cef10-135bfa5eae927f00-00",
+        "User-Agent": "azsdk-net-DigitalTwins.Core/1.5.0-alpha.20230518.1 (.NET 6.0.16; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "9f99bf3a353db989c65220c388a801d4",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
       "StatusCode": 404,
       "ResponseHeaders": {
-        "Content-Length": "271",
+        "Content-Length": "272",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Wed, 15 Feb 2023 18:25:41 GMT",
-        "mise-correlation-id": "2da9cef5-e6a0-488d-869a-f147cef4da63",
+        "Date": "Thu, 18 May 2023 23:08:01 GMT",
+        "mise-correlation-id": "aed37c83-9110-40fd-814c-9cbe3e82ab4a",
         "Strict-Transport-Security": "max-age=2592000",
-        "traceresponse": "00-c6ea18dc06771e40afa032083fa282aa-05d0de2a40bc913a-01"
+        "traceresponse": "00-0be2ab4e158778a3691662f6c37cef10-b8771d7306bc3b44-01",
+        "x-ms-error-code": "DigitalTwinNotFound"
       },
       "ResponseBody": {
         "error": {
           "code": "DigitalTwinNotFound",
-          "message": "There is no digital twin instance that exists with the ID roomTwin179024429. Please verify that the twin id is valid and ensure that the twin is not deleted. See section on querying the twins https://aka.ms/adtv2query."
+          "message": "There is no digital twin instance that exists with the ID roomTwin1129787712. Please verify that the twin id is valid and ensure that the twin is not deleted. See section on querying the twins https://aka.ms/adtv2query."
         }
       }
     },
     {
-      "RequestUri": "https://fakeHost.api.wus2.digitaltwins.azure.net/models/dtmi%3Aexample%3Aroom%3B120310444?api-version=2023-02-27-preview",
+      "RequestUri": "https://fakeHost.api.wus2.digitaltwins.azure.net/models/dtmi%3Aexample%3Aroom%3B112610678?api-version=2023-06-30",
       "RequestMethod": "DELETE",
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "traceparent": "00-a45cbcdc3acd7741a499718b477c35b6-ed37200fb7265b4f-00",
-        "User-Agent": "azsdk-net-DigitalTwins.Core/1.5.0-alpha.20230209.1 (.NET Framework 4.8.9105.0; Microsoft Windows 10.0.22621 )",
-        "x-ms-client-request-id": "a06cf4a192de53d66abf5e31fdc9f1b1",
+        "traceparent": "00-568a3774b355c92900a9340cd4d4a12d-59e414e18097e9d0-00",
+        "User-Agent": "azsdk-net-DigitalTwins.Core/1.5.0-alpha.20230518.1 (.NET 6.0.16; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "f714e2b5a9d9b633fc514278af5cef68",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
       "StatusCode": 204,
       "ResponseHeaders": {
         "Content-Length": "0",
-        "Date": "Wed, 15 Feb 2023 18:25:42 GMT",
-        "mise-correlation-id": "c30de304-120f-4040-8990-d1dffb8509f4",
+        "Date": "Thu, 18 May 2023 23:08:01 GMT",
+        "mise-correlation-id": "664e9e67-aa2a-45d1-98fb-18461b955b94",
         "Strict-Transport-Security": "max-age=2592000",
-        "traceresponse": "00-a45cbcdc3acd7741a499718b477c35b6-81fbc998ba781077-01"
+        "traceresponse": "00-568a3774b355c92900a9340cd4d4a12d-7db8a390783718ee-01"
       },
       "ResponseBody": null
     }
   ],
   "Variables": {
-    "AZURE_AUTHORITY_HOST": "https://login.microsoftonline.com/",
+    "AZURE_AUTHORITY_HOST": null,
     "DIGITALTWINS_URL": "https://fakeHost.api.wus2.digitaltwins.azure.net",
-    "RandomSeed": "1509623971"
+    "RandomSeed": "1412925078"
   }
 }

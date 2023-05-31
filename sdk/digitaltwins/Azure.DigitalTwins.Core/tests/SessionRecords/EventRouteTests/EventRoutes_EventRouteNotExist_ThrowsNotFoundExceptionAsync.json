@@ -1,15 +1,14 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://fakeHost.api.wus2.digitaltwins.azure.net/eventroutes/someNonExistantEventRoute?api-version=2023-02-27-preview",
+      "RequestUri": "https://fakeHost.api.wus2.digitaltwins.azure.net/eventroutes/someNonExistantEventRoute?api-version=2023-06-30",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "Connection": "keep-alive",
-        "traceparent": "00-f5fc9ed8392e6743959bd4b66301165c-bc8d097bd1df2e49-00",
-        "User-Agent": "azsdk-net-DigitalTwins.Core/1.5.0-alpha.20230209.1 (.NET Framework 4.8.9105.0; Microsoft Windows 10.0.22621 )",
-        "x-ms-client-request-id": "3fd6626a2d871ab78f82b9d6f21e2d33",
+        "traceparent": "00-93ad83634c46d318f1ac125f921438a4-5060af2b00728bbe-00",
+        "User-Agent": "azsdk-net-DigitalTwins.Core/1.5.0-alpha.20230518.1 (.NET 6.0.16; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "6c478bbc8ba02d16dfe3e69d1ea7cfd0",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
@@ -17,10 +16,11 @@
       "ResponseHeaders": {
         "Content-Length": "223",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Wed, 15 Feb 2023 18:25:29 GMT",
-        "mise-correlation-id": "11fcbc4f-d596-45cc-a245-4ff451b3ba8a",
+        "Date": "Thu, 18 May 2023 23:07:52 GMT",
+        "mise-correlation-id": "05dfbd03-1505-416a-adda-ec1cdc524b4d",
         "Strict-Transport-Security": "max-age=2592000",
-        "traceresponse": "00-f5fc9ed8392e6743959bd4b66301165c-e7d584cc4aa51c5f-01"
+        "traceresponse": "00-93ad83634c46d318f1ac125f921438a4-9a81aa27577a2485-01",
+        "x-ms-error-code": "EventRouteNotFound"
       },
       "ResponseBody": {
         "error": {
@@ -31,8 +31,8 @@
     }
   ],
   "Variables": {
-    "AZURE_AUTHORITY_HOST": "https://login.microsoftonline.com/",
+    "AZURE_AUTHORITY_HOST": null,
     "DIGITALTWINS_URL": "https://fakeHost.api.wus2.digitaltwins.azure.net",
-    "RandomSeed": "1457633858"
+    "RandomSeed": "1462666550"
   }
 }
