@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Monitor.Models
         /// <summary> the collection of automatic scaling profiles that specify different scaling parameters for different time periods. A maximum of 20 profiles can be specified. </summary>
         public IList<AutoscaleProfile> Profiles { get; }
         /// <summary> the collection of notifications. </summary>
-        public IList<AutoscaleNotification> Notifications { get; set; }
+        public IList<AutoscaleNotification> Notifications { get; }
         /// <summary> the enabled flag. Specifies whether automatic scaling is enabled for the resource. The default value is &apos;false&apos;. </summary>
         public bool? IsEnabled { get; set; }
         /// <summary> the predictive autoscale policy mode. </summary>
