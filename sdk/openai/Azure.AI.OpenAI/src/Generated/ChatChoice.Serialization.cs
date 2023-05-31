@@ -58,7 +58,7 @@ namespace Azure.AI.OpenAI
                     continue;
                 }
             }
-            return new ChatChoice(message, index, Optional.ToNullable(finishReason), delta);
+            return new ChatChoice(message.Value, index, Optional.ToNullable(finishReason), delta.Value);
         }
 
         /// <summary> Deserializes the model from a raw response. </summary>

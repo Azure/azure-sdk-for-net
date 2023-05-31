@@ -54,7 +54,7 @@ namespace Azure.AI.OpenAI
                     continue;
                 }
             }
-            return new Choice(text, index, logprobs, Optional.ToNullable(finishReason));
+            return new Choice(text, index, logprobs.Value, Optional.ToNullable(finishReason));
         }
 
         /// <summary> Deserializes the model from a raw response. </summary>
