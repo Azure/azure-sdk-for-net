@@ -103,10 +103,10 @@ namespace Azure.ResourceManager.ConfidentialLedger.Samples
             {
                 Properties = new ManagedCCFProperties()
                 {
-                    DeploymentType = new DeploymentType()
+                    DeploymentType = new ConfidentialLedgerDeploymentType()
                     {
-                        LanguageRuntime = LanguageRuntime.CPP,
-                        AppSourceUri = "https://myaccount.blob.core.windows.net/storage/mccfsource?sv=2022-02-11%st=2022-03-11",
+                        LanguageRuntime = ConfidentialLedgerLanguageRuntime.CPP,
+                        AppSourceUri = new Uri("https://myaccount.blob.core.windows.net/storage/mccfsource?sv=2022-02-11%st=2022-03-11"),
                     },
                 },
                 Tags =

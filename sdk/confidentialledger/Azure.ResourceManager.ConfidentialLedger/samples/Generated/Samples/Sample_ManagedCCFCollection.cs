@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.ConfidentialLedger.Samples
                 {
                     MemberIdentityCertificates =
 {
-new MemberIdentityCertificate()
+new ConfidentialLedgerMemberIdentityCertificate()
 {
 Certificate = "-----BEGIN CERTIFICATE-----MIIBsjCCATigAwIBAgIUZWIbyG79TniQLd2UxJuU74tqrKcwCgYIKoZIzj0EAwMwEDEOMAwGA1UEAwwFdXNlcjAwHhcNMjEwMzE2MTgwNjExWhcNMjIwMzE2MTgwNjExWjAQMQ4wDAYDVQQDDAV1c2VyMDB2MBAGByqGSM49AgEGBSuBBAAiA2IABBiWSo/j8EFit7aUMm5lF+lUmCu+IgfnpFD+7QMgLKtxRJ3aGSqgS/GpqcYVGddnODtSarNE/HyGKUFUolLPQ5ybHcouUk0kyfA7XMeSoUA4lBz63Wha8wmXo+NdBRo39qNTMFEwHQYDVR0OBBYEFPtuhrwgGjDFHeUUT4nGsXaZn69KMB8GA1UdIwQYMBaAFPtuhrwgGjDFHeUUT4nGsXaZn69KMA8GA1UdEwEB/wQFMAMBAf8wCgYIKoZIzj0EAwMDaAAwZQIxAOnozm2CyqRwSSQLls5r+mUHRGRyXHXwYtM4Dcst/VEZdmS9fqvHRCHbjUlO/+HNfgIwMWZ4FmsjD3wnPxONOm9YdVn/PRD7SsPRPbOjwBiE4EBGaHDsLjYAGDSGi7NJnSkA-----END CERTIFICATE-----",
 Encryptionkey = "ledgerencryptionkey",
@@ -124,10 +124,10 @@ Tags = BinaryData.FromObjectAsJson(new Dictionary<string, object>()
 ["additionalProps1"] = "additional properties"}),
 }
 },
-                    DeploymentType = new DeploymentType()
+                    DeploymentType = new ConfidentialLedgerDeploymentType()
                     {
-                        LanguageRuntime = LanguageRuntime.CPP,
-                        AppSourceUri = "https://myaccount.blob.core.windows.net/storage/mccfsource?sv=2022-02-11%st=2022-03-11",
+                        LanguageRuntime = ConfidentialLedgerLanguageRuntime.CPP,
+                        AppSourceUri = new Uri("https://myaccount.blob.core.windows.net/storage/mccfsource?sv=2022-02-11%st=2022-03-11"),
                     },
                     NodeCount = 5,
                 },
