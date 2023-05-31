@@ -16,6 +16,9 @@ skip-csproj: true
 modelerfour:
   flatten-payloads: false
 
+# mgmt-debug:
+#   show-serialized-names: true
+
 format-by-name-rules:
   '*TenantId': 'uuid'
   'etag': 'etag'
@@ -67,6 +70,9 @@ prepend-rp-prefix:
   - SkuMappings
   - UpdateList
   - PublisherCollection
+  - ExtensionInstanceView
+  - StatusLevelTypes
+
 rename-mapping:
   Extension: ArcExtension
   Extension.properties.extensionParameters.autoUpgradeMinorVersion: ShouldAutoUpgradeMinorVersion

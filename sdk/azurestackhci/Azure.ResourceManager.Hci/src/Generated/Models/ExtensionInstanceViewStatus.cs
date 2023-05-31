@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.Hci.Models
         /// <param name="displayStatus"> The short localizable label for the status. </param>
         /// <param name="message"> The detailed status message, including for alerts and error messages. </param>
         /// <param name="time"> The time of the status. </param>
-        internal ExtensionInstanceViewStatus(string code, StatusLevelType? level, string displayStatus, string message, DateTimeOffset? time)
+        internal ExtensionInstanceViewStatus(string code, HciStatusLevelType? level, string displayStatus, string message, DateTimeOffset? time)
         {
             Code = code;
             Level = level;
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.Hci.Models
         /// <summary> The status code. </summary>
         public string Code { get; }
         /// <summary> The level code. </summary>
-        public StatusLevelType? Level { get; }
+        public HciStatusLevelType? Level { get; }
         /// <summary> The short localizable label for the status. </summary>
         public string DisplayStatus { get; }
         /// <summary> The detailed status message, including for alerts and error messages. </summary>

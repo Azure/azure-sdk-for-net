@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.Hci.Models
         /// <param name="typeHandlerVersion"> Specifies the version of the script handler. </param>
         /// <param name="state"> State of Arc Extension in this node. </param>
         /// <param name="instanceView"> The extension instance view. </param>
-        internal PerNodeExtensionState(string name, string extension, string typeHandlerVersion, NodeExtensionState? state, ExtensionInstanceView instanceView)
+        internal PerNodeExtensionState(string name, string extension, string typeHandlerVersion, NodeExtensionState? state, HciExtensionInstanceView instanceView)
         {
             Name = name;
             Extension = extension;
@@ -39,6 +39,6 @@ namespace Azure.ResourceManager.Hci.Models
         /// <summary> State of Arc Extension in this node. </summary>
         public NodeExtensionState? State { get; }
         /// <summary> The extension instance view. </summary>
-        public ExtensionInstanceView InstanceView { get; }
+        public HciExtensionInstanceView InstanceView { get; }
     }
 }

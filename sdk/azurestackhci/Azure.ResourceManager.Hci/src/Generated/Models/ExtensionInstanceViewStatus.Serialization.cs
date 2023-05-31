@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.Hci.Models
                 return null;
             }
             Optional<string> code = default;
-            Optional<StatusLevelType> level = default;
+            Optional<HciStatusLevelType> level = default;
             Optional<string> displayStatus = default;
             Optional<string> message = default;
             Optional<DateTimeOffset> time = default;
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Hci.Models
                     {
                         continue;
                     }
-                    level = new StatusLevelType(property.Value.GetString());
+                    level = new HciStatusLevelType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("displayStatus"u8))

@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Hci.Models
             Optional<string> extension = default;
             Optional<string> typeHandlerVersion = default;
             Optional<NodeExtensionState> state = default;
-            Optional<ExtensionInstanceView> instanceView = default;
+            Optional<HciExtensionInstanceView> instanceView = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.Hci.Models
                     {
                         continue;
                     }
-                    instanceView = ExtensionInstanceView.DeserializeExtensionInstanceView(property.Value);
+                    instanceView = HciExtensionInstanceView.DeserializeHciExtensionInstanceView(property.Value);
                     continue;
                 }
             }

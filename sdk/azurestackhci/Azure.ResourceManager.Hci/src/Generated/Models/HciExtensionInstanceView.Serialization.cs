@@ -10,9 +10,9 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Hci.Models
 {
-    public partial class ExtensionInstanceView
+    public partial class HciExtensionInstanceView
     {
-        internal static ExtensionInstanceView DeserializeExtensionInstanceView(JsonElement element)
+        internal static HciExtensionInstanceView DeserializeHciExtensionInstanceView(JsonElement element)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.Hci.Models
                     continue;
                 }
             }
-            return new ExtensionInstanceView(name.Value, type.Value, typeHandlerVersion.Value, status.Value);
+            return new HciExtensionInstanceView(name.Value, type.Value, typeHandlerVersion.Value, status.Value);
         }
     }
 }
