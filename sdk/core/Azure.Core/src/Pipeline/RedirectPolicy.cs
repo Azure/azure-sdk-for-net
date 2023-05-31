@@ -17,10 +17,15 @@ namespace Azure.Core.Pipeline
         private readonly int _maxAutomaticRedirections;
         internal bool AllowAutoRedirects { get; set; } = false;
 
-        internal static RedirectPolicy Shared { get; } = new RedirectPolicy();
+        internal static RedirectPolicy Shared { get; } = new RedirectPolicy(false);
 
-        private RedirectPolicy()
+        /// <summary>
+        /// Creates a new instance of the <see cref="RedirectPolicy"/> class.
+        /// </summary>
+        /// <param name="allowAutoRedirects">Determinds whether redirects will be handled by this policy. Rather than passing false, consider using the static <see cref="Shared"/> instance instead which defaults to false.</param>
+        internal RedirectPolicy(bool allowAutoRedirects)
         {
+            AllowAutoRedirects = allowAutoRedirects;
             _maxAutomaticRedirections = 50;
         }
 

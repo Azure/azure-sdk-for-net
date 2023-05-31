@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using Azure.Core.Diagnostics;
 
@@ -161,7 +162,14 @@ namespace Azure.Core.Pipeline
                         DelayStrategy.CreateExponentialDelayStrategy(retryOptions.Delay, retryOptions.MaxDelay) :
                         DelayStrategy.CreateFixedDelayStrategy(retryOptions.Delay)));
 
-            policies.Add(RedirectPolicy.Shared);
+            var redirectPolicy = buildOptions.ClientOptions.ClientRedirects?.IsClientRedirectEnabled switch
+            {
+                true => new RedirectPolicy(true),
+                _ when buildOptions.ClientOptions.IsCustomTransportSet || defaultTransportOptions is null => RedirectPolicy.Shared,
+                _ when defaultTransportOptions.IsClientRedirectEnabled => new RedirectPolicy(true),
+                _ => RedirectPolicy.Shared
+            };
+            policies.Add(redirectPolicy);
 
             AddNonNullPolicies(buildOptions.PerRetryPolicies.ToArray());
 
@@ -199,11 +207,6 @@ namespace Azure.Core.Pipeline
                     isTransportInternallyCreated = true;
                 }
             }
-            // configure the AllowAutoRedirect property on the transport if it is supported
-            // if (transport is SocketsHttpHandlerTransport socketsHttpHandlerTransport)
-            // {
-            //     socketsHttpHandlerTransport.AllowAutoRedirect = false;
-            // }
 
             policies.Add(new HttpPipelineTransportPolicy(transport, sanitizer, buildOptions.RequestFailedDetailsParser));
 

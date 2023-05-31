@@ -84,7 +84,7 @@ namespace Azure.Core
         /// <summary>
         /// Gets or sets the transport options. This should only be set if a custom <see cref="Transport"/> is not set.
         /// </summary>
-        public RedirectPolicyOptions? RedirectPolicyOptions { get; set; }
+        public RedirectPolicyOptions? ClientRedirects { get; set; }
 
         /// <summary>
         /// Gets the client diagnostic options.
