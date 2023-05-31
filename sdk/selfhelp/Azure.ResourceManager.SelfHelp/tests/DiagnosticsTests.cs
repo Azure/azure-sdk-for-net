@@ -26,25 +26,25 @@ namespace Azure.ResourceManager.SelfHelp.Tests.Scenario
             var resourceName = "DiagRpGwPubDev";
             var insightsResourceName = Recording.GenerateAssetName("testResource");
             ResourceIdentifier scope = new ResourceIdentifier($"/subscriptions/{subId}/resourceGroups/{resourceGroupName}/providers/Microsoft.KeyVault/vaults/{resourceName}");
-            SelfHelpDiagnosticResourceData resourceData = CreateDiagnosticResourceData(scope);
+            SelfHelpDiagnosticData resourceData = CreateDiagnosticResourceData(scope);
 
-            var createDiagnosticData = await Client.GetSelfHelpDiagnosticResources(scope).CreateOrUpdateAsync(WaitUntil.Started, insightsResourceName, resourceData);
+            var createDiagnosticData = await Client.GetSelfHelpDiagnostics(scope).CreateOrUpdateAsync(WaitUntil.Started, insightsResourceName, resourceData);
             Assert.NotNull(createDiagnosticData);
 
-            var readDiagnosticData = await Client.GetSelfHelpDiagnosticResourceAsync(scope, insightsResourceName);
+            var readDiagnosticData = await Client.GetSelfHelpDiagnosticAsync(scope, insightsResourceName);
             Assert.NotNull(readDiagnosticData);
         }
 
-        private SelfHelpDiagnosticResourceData CreateDiagnosticResourceData(ResourceIdentifier scope)
+        private SelfHelpDiagnosticData CreateDiagnosticResourceData(ResourceIdentifier scope)
         {
-            List<DiagnosticInvocation> insights = new List<DiagnosticInvocation>
+            List<SelfHelpDiagnosticInvocation> insights = new List<SelfHelpDiagnosticInvocation>
             {
-                new DiagnosticInvocation(){SolutionId = "Demo2InsightV2",}
+                new SelfHelpDiagnosticInvocation(){SolutionId = "Demo2InsightV2",}
             };
             Dictionary<string, string> globalParameters = new Dictionary<string, string>();
             globalParameters.Add("startTime", "2020-07-01");
             ResourceType resourceType = new ResourceType("Microsoft.KeyVault/vaults");
-            var data = new SelfHelpDiagnosticResourceData(scope, null, resourceType, null, globalParameters, insights, null, null, null);
+            var data = new SelfHelpDiagnosticData(scope, null, resourceType, null, globalParameters, insights, null, null, null);
 
             return data;
         }

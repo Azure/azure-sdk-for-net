@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.SelfHelp.Tests
             var insightsResourceName = Recording.GenerateAssetName("testResource");
             ResourceIdentifier scope = new ResourceIdentifier($"/subscriptions/{subId}/resourceGroups/{resourceGroupName}/providers/Microsoft.KeyVault/vaults/{resourceName}");
 
-            var listDisocverySolutionsData = Client.GetDiscoverySolutionsAsync(scope);
+            var listDisocverySolutionsData = Client.GetSelfHelpDiscoverySolutionsAsync(scope);
             var response = await listDisocverySolutionsData.ToEnumerableAsync();
             Assert.NotNull(response.First());
         }
