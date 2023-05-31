@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.SelfHelp.Models
     /// Denotes the status of the diagnostic resource.
     /// Serialized Name: Status
     /// </summary>
-    public readonly partial struct DiagnosticStatus : IEquatable<DiagnosticStatus>
+    public readonly partial struct SelfHelpDiagnosticStatus : IEquatable<SelfHelpDiagnosticStatus>
     {
         private readonly string _value;
 
-        /// <summary> Initializes a new instance of <see cref="DiagnosticStatus"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="SelfHelpDiagnosticStatus"/>. </summary>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public DiagnosticStatus(string value)
+        public SelfHelpDiagnosticStatus(string value)
         {
             _value = value ?? throw new ArgumentNullException(nameof(value));
         }
@@ -35,39 +35,39 @@ namespace Azure.ResourceManager.SelfHelp.Models
         /// Diagnostic creation failed.
         /// Serialized Name: Status.Failed
         /// </summary>
-        public static DiagnosticStatus Failed { get; } = new DiagnosticStatus(FailedValue);
+        public static SelfHelpDiagnosticStatus Failed { get; } = new SelfHelpDiagnosticStatus(FailedValue);
         /// <summary>
         /// Request is missing required inputs to run.
         /// Serialized Name: Status.MissingInputs
         /// </summary>
-        public static DiagnosticStatus MissingInputs { get; } = new DiagnosticStatus(MissingInputsValue);
+        public static SelfHelpDiagnosticStatus MissingInputs { get; } = new SelfHelpDiagnosticStatus(MissingInputsValue);
         /// <summary>
         /// Diagnostic is still running.
         /// Serialized Name: Status.Running
         /// </summary>
-        public static DiagnosticStatus Running { get; } = new DiagnosticStatus(RunningValue);
+        public static SelfHelpDiagnosticStatus Running { get; } = new SelfHelpDiagnosticStatus(RunningValue);
         /// <summary>
         /// Diagnostic creation succeeded.
         /// Serialized Name: Status.Succeeded
         /// </summary>
-        public static DiagnosticStatus Succeeded { get; } = new DiagnosticStatus(SucceededValue);
+        public static SelfHelpDiagnosticStatus Succeeded { get; } = new SelfHelpDiagnosticStatus(SucceededValue);
         /// <summary>
         /// Diagnostic was timed out.
         /// Serialized Name: Status.Timeout
         /// </summary>
-        public static DiagnosticStatus Timeout { get; } = new DiagnosticStatus(TimeoutValue);
-        /// <summary> Determines if two <see cref="DiagnosticStatus"/> values are the same. </summary>
-        public static bool operator ==(DiagnosticStatus left, DiagnosticStatus right) => left.Equals(right);
-        /// <summary> Determines if two <see cref="DiagnosticStatus"/> values are not the same. </summary>
-        public static bool operator !=(DiagnosticStatus left, DiagnosticStatus right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="DiagnosticStatus"/>. </summary>
-        public static implicit operator DiagnosticStatus(string value) => new DiagnosticStatus(value);
+        public static SelfHelpDiagnosticStatus Timeout { get; } = new SelfHelpDiagnosticStatus(TimeoutValue);
+        /// <summary> Determines if two <see cref="SelfHelpDiagnosticStatus"/> values are the same. </summary>
+        public static bool operator ==(SelfHelpDiagnosticStatus left, SelfHelpDiagnosticStatus right) => left.Equals(right);
+        /// <summary> Determines if two <see cref="SelfHelpDiagnosticStatus"/> values are not the same. </summary>
+        public static bool operator !=(SelfHelpDiagnosticStatus left, SelfHelpDiagnosticStatus right) => !left.Equals(right);
+        /// <summary> Converts a string to a <see cref="SelfHelpDiagnosticStatus"/>. </summary>
+        public static implicit operator SelfHelpDiagnosticStatus(string value) => new SelfHelpDiagnosticStatus(value);
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is DiagnosticStatus other && Equals(other);
+        public override bool Equals(object obj) => obj is SelfHelpDiagnosticStatus other && Equals(other);
         /// <inheritdoc />
-        public bool Equals(DiagnosticStatus other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(SelfHelpDiagnosticStatus other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]

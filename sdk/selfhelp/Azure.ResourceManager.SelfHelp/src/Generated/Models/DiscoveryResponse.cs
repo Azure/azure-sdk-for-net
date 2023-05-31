@@ -19,11 +19,11 @@ namespace Azure.ResourceManager.SelfHelp.Models
         /// <summary> Initializes a new instance of DiscoveryResponse. </summary>
         internal DiscoveryResponse()
         {
-            Value = new ChangeTrackingList<SolutionMetadataResource>();
+            SolutionMetaData = new ChangeTrackingList<SelfHelpSolutionMetadata>();
         }
 
         /// <summary> Initializes a new instance of DiscoveryResponse. </summary>
-        /// <param name="value">
+        /// <param name="solutionMetaData">
         /// The list of solution metadata.
         /// Serialized Name: DiscoveryResponse.value
         /// </param>
@@ -31,9 +31,9 @@ namespace Azure.ResourceManager.SelfHelp.Models
         /// The link used to get the next page of solution metadata.
         /// Serialized Name: DiscoveryResponse.nextLink
         /// </param>
-        internal DiscoveryResponse(IReadOnlyList<SolutionMetadataResource> value, string nextLink)
+        internal DiscoveryResponse(IReadOnlyList<SelfHelpSolutionMetadata> solutionMetaData, string nextLink)
         {
-            Value = value;
+            SolutionMetaData = solutionMetaData;
             NextLink = nextLink;
         }
 
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
         /// The list of solution metadata.
         /// Serialized Name: DiscoveryResponse.value
         /// </summary>
-        public IReadOnlyList<SolutionMetadataResource> Value { get; }
+        public IReadOnlyList<SelfHelpSolutionMetadata> SolutionMetaData { get; }
         /// <summary>
         /// The link used to get the next page of solution metadata.
         /// Serialized Name: DiscoveryResponse.nextLink

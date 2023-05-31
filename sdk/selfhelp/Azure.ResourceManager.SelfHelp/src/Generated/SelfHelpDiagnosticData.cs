@@ -13,21 +13,21 @@ using Azure.ResourceManager.SelfHelp.Models;
 namespace Azure.ResourceManager.SelfHelp
 {
     /// <summary>
-    /// A class representing the SelfHelpDiagnosticResource data model.
+    /// A class representing the SelfHelpDiagnostic data model.
     /// Diagnostic resource
     /// Serialized Name: DiagnosticResource
     /// </summary>
-    public partial class SelfHelpDiagnosticResourceData : ResourceData
+    public partial class SelfHelpDiagnosticData : ResourceData
     {
-        /// <summary> Initializes a new instance of SelfHelpDiagnosticResourceData. </summary>
-        public SelfHelpDiagnosticResourceData()
+        /// <summary> Initializes a new instance of SelfHelpDiagnosticData. </summary>
+        public SelfHelpDiagnosticData()
         {
             GlobalParameters = new ChangeTrackingDictionary<string, string>();
-            Insights = new ChangeTrackingList<DiagnosticInvocation>();
-            Diagnostics = new ChangeTrackingList<SelfHelpDiagnostic>();
+            DiagnosticInsights = new ChangeTrackingList<SelfHelpDiagnosticInvocation>();
+            Diagnostics = new ChangeTrackingList<SelfHelpDiagnosticInfo>();
         }
 
-        /// <summary> Initializes a new instance of SelfHelpDiagnosticResourceData. </summary>
+        /// <summary> Initializes a new instance of SelfHelpDiagnosticData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.SelfHelp
         /// Global parameters that can be passed to all solutionIds.
         /// Serialized Name: DiagnosticResource.properties.globalParameters
         /// </param>
-        /// <param name="insights">
+        /// <param name="diagnosticInsights">
         /// SolutionIds that are needed to be invoked.
         /// Serialized Name: DiagnosticResource.properties.insights
         /// </param>
@@ -52,10 +52,10 @@ namespace Azure.ResourceManager.SelfHelp
         /// Array of Diagnostics.
         /// Serialized Name: DiagnosticResource.properties.diagnostics
         /// </param>
-        internal SelfHelpDiagnosticResourceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> globalParameters, IList<DiagnosticInvocation> insights, string acceptedTime, ProvisioningState? provisioningState, IReadOnlyList<SelfHelpDiagnostic> diagnostics) : base(id, name, resourceType, systemData)
+        internal SelfHelpDiagnosticData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> globalParameters, IList<SelfHelpDiagnosticInvocation> diagnosticInsights, string acceptedTime, SelfHelpProvisioningState? provisioningState, IReadOnlyList<SelfHelpDiagnosticInfo> diagnostics) : base(id, name, resourceType, systemData)
         {
             GlobalParameters = globalParameters;
-            Insights = insights;
+            DiagnosticInsights = diagnosticInsights;
             AcceptedTime = acceptedTime;
             ProvisioningState = provisioningState;
             Diagnostics = diagnostics;
@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.SelfHelp
         /// SolutionIds that are needed to be invoked.
         /// Serialized Name: DiagnosticResource.properties.insights
         /// </summary>
-        public IList<DiagnosticInvocation> Insights { get; }
+        public IList<SelfHelpDiagnosticInvocation> DiagnosticInsights { get; }
         /// <summary>
         /// Diagnostic Request Accepted time.
         /// Serialized Name: DiagnosticResource.properties.acceptedAt
@@ -80,11 +80,11 @@ namespace Azure.ResourceManager.SelfHelp
         /// Status of diagnostic provisioning.
         /// Serialized Name: DiagnosticResource.properties.provisioningState
         /// </summary>
-        public ProvisioningState? ProvisioningState { get; }
+        public SelfHelpProvisioningState? ProvisioningState { get; }
         /// <summary>
         /// Array of Diagnostics.
         /// Serialized Name: DiagnosticResource.properties.diagnostics
         /// </summary>
-        public IReadOnlyList<SelfHelpDiagnostic> Diagnostics { get; }
+        public IReadOnlyList<SelfHelpDiagnosticInfo> Diagnostics { get; }
     }
 }

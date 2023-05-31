@@ -14,15 +14,15 @@ namespace Azure.ResourceManager.SelfHelp.Models
     /// Solution Invocation with additional params needed for invocation.
     /// Serialized Name: DiagnosticInvocation
     /// </summary>
-    public partial class DiagnosticInvocation
+    public partial class SelfHelpDiagnosticInvocation
     {
-        /// <summary> Initializes a new instance of DiagnosticInvocation. </summary>
-        public DiagnosticInvocation()
+        /// <summary> Initializes a new instance of SelfHelpDiagnosticInvocation. </summary>
+        public SelfHelpDiagnosticInvocation()
         {
             AdditionalParameters = new ChangeTrackingDictionary<string, string>();
         }
 
-        /// <summary> Initializes a new instance of DiagnosticInvocation. </summary>
+        /// <summary> Initializes a new instance of SelfHelpDiagnosticInvocation. </summary>
         /// <param name="solutionId">
         /// Solution Id to invoke.
         /// Serialized Name: DiagnosticInvocation.solutionId
@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
         /// Additional parameters required to invoke the solutionId.
         /// Serialized Name: DiagnosticInvocation.additionalParameters
         /// </param>
-        internal DiagnosticInvocation(string solutionId, IDictionary<string, string> additionalParameters)
+        internal SelfHelpDiagnosticInvocation(string solutionId, IDictionary<string, string> additionalParameters)
         {
             SolutionId = solutionId;
             AdditionalParameters = additionalParameters;

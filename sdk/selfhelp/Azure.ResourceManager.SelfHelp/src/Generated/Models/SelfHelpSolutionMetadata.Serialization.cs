@@ -12,7 +12,7 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.SelfHelp.Models
 {
-    public partial class SolutionMetadataResource : IUtf8JsonSerializable
+    public partial class SelfHelpSolutionMetadata : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -29,10 +29,10 @@ namespace Azure.ResourceManager.SelfHelp.Models
                 writer.WritePropertyName("solutionType"u8);
                 writer.WriteStringValue(SolutionType);
             }
-            if (Optional.IsDefined(Description))
+            if (Optional.IsDefined(SolutionDescription))
             {
                 writer.WritePropertyName("description"u8);
-                writer.WriteStringValue(Description);
+                writer.WriteStringValue(SolutionDescription);
             }
             if (Optional.IsCollectionDefined(RequiredParameterSets))
             {
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
             writer.WriteEndObject();
         }
 
-        internal static SolutionMetadataResource DeserializeSolutionMetadataResource(JsonElement element)
+        internal static SelfHelpSolutionMetadata DeserializeSelfHelpSolutionMetadata(JsonElement element)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
                     continue;
                 }
             }
-            return new SolutionMetadataResource(id, name, type, systemData.Value, solutionId.Value, solutionType.Value, description.Value, Optional.ToList(requiredParameterSets));
+            return new SelfHelpSolutionMetadata(id, name, type, systemData.Value, solutionId.Value, solutionType.Value, description.Value, Optional.ToList(requiredParameterSets));
         }
     }
 }

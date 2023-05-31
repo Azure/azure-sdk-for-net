@@ -5,16 +5,18 @@
 
 #nullable disable
 
+using Azure.Core;
+
 namespace Azure.ResourceManager.SelfHelp.Models
 {
     /// <summary>
     /// The check availability request body.
     /// Serialized Name: CheckNameAvailabilityRequest
     /// </summary>
-    public partial class CheckNameAvailabilityContent
+    public partial class SelfHelpCheckNameAvailabilityContent
     {
-        /// <summary> Initializes a new instance of CheckNameAvailabilityContent. </summary>
-        public CheckNameAvailabilityContent()
+        /// <summary> Initializes a new instance of SelfHelpCheckNameAvailabilityContent. </summary>
+        public SelfHelpCheckNameAvailabilityContent()
         {
         }
 
@@ -22,11 +24,11 @@ namespace Azure.ResourceManager.SelfHelp.Models
         /// The name of the resource for which availability needs to be checked.
         /// Serialized Name: CheckNameAvailabilityRequest.name
         /// </summary>
-        public string Name { get; set; }
+        public string ResourceName { get; set; }
         /// <summary>
         /// The resource type.
         /// Serialized Name: CheckNameAvailabilityRequest.type
         /// </summary>
-        public string ResourceType { get; set; }
+        public ResourceType? ResourceType { get; set; }
     }
 }

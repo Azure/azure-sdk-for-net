@@ -53,16 +53,44 @@ list-exception:
 - /{scope}/providers/Microsoft.Help/diagnostics/{diagnosticsResourceName}
 
 rename-mapping:
-  DiagnosticResource: SelfHelpDiagnosticResource
-  Status: DiagnosticStatus
-  Insight: DiagnosticInsight
+  DiagnosticResource: SelfHelpDiagnostic
+  Status: SelfHelpDiagnosticStatus
+  Insight: SelfHelpDiagnosticInsight
   Error: SelfHelpError
-  Diagnostic: SelfHelpDiagnostic
+  Diagnostic: SelfHelpDiagnosticInfo
   DiagnosticResource.properties.acceptedAt: acceptedTime
   Insight.id: InsightId
   Insight.title: InsightTitle
   Insight.results: InsightResults
   Insight.importanceLevel: InsightImportanceLevel
   Error.code: ErrorCode
+  CheckNameAvailabilityResponse.nameAvailable: IsNameAvailable
+  CheckNameAvailabilityResponse.reason: NotAvailableReason
+  CheckNameAvailabilityResponse.message: ErrorMessage
+  CheckNameAvailabilityRequest.name: ResourceName
+  DiscoveryResponse.value: SolutionMetaData
+  Diagnostic.status: DiagnosticStatus
+  Diagnostic.insights: DiagnosticInsights
+  Diagnostic.error: ErrorInfo
+  Error.message: ErrorMessage
+  Error.details: ErrorDetails
+  SolutionMetadataResource.properties.description: SolutionDescription
+  DiagnosticResource.properties.insights: DiagnosticInsights
+  CheckNameAvailabilityRequest: SelfHelpCheckNameAvailabilityContent
+  CheckNameAvailabilityRequest.type: ResourceType
+  CheckNameAvailabilityResponse: SelfHelpCheckNameAvailabilityResult
+  DiagnosticInvocation: SelfHelpDiagnosticInvocation
+  ImportanceLevel: SelfHelpImportanceLevel
+  ProvisioningState: SelfHelpProvisioningState
+  SolutionMetadataResource: SelfHelpSolutionMetadata
 
+override-operation-name:
+  Diagnostics_CheckNameAvailability: CheckSelfHelpNameAvailability
+  DiscoverySolution_List: GetSelfHelpDiscoverySolutions
+
+directive:
+#resourceType
+  - from: types.json
+    where: $.definitions.CheckNameAvailabilityRequest.properties.type
+    transform: $["x-ms-format"] = "resource-type"
 ```

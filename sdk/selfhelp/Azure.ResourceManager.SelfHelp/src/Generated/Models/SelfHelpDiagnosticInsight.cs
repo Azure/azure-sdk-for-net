@@ -11,14 +11,14 @@ namespace Azure.ResourceManager.SelfHelp.Models
     /// Detailed insights(s) obtained via the invocation of an insight diagnostic troubleshooter.
     /// Serialized Name: Insight
     /// </summary>
-    public partial class DiagnosticInsight
+    public partial class SelfHelpDiagnosticInsight
     {
-        /// <summary> Initializes a new instance of DiagnosticInsight. </summary>
-        internal DiagnosticInsight()
+        /// <summary> Initializes a new instance of SelfHelpDiagnosticInsight. </summary>
+        internal SelfHelpDiagnosticInsight()
         {
         }
 
-        /// <summary> Initializes a new instance of DiagnosticInsight. </summary>
+        /// <summary> Initializes a new instance of SelfHelpDiagnosticInsight. </summary>
         /// <param name="insightId">
         /// Article id.
         /// Serialized Name: Insight.id
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
         /// Importance level of the insight.
         /// Serialized Name: Insight.importanceLevel
         /// </param>
-        internal DiagnosticInsight(string insightId, string insightTitle, string insightResults, ImportanceLevel? insightImportanceLevel)
+        internal SelfHelpDiagnosticInsight(string insightId, string insightTitle, string insightResults, SelfHelpImportanceLevel? insightImportanceLevel)
         {
             InsightId = insightId;
             InsightTitle = insightTitle;
@@ -62,6 +62,6 @@ namespace Azure.ResourceManager.SelfHelp.Models
         /// Importance level of the insight.
         /// Serialized Name: Insight.importanceLevel
         /// </summary>
-        public ImportanceLevel? InsightImportanceLevel { get; }
+        public SelfHelpImportanceLevel? InsightImportanceLevel { get; }
     }
 }

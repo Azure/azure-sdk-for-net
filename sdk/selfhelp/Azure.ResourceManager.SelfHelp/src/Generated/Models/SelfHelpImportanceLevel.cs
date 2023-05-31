@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.SelfHelp.Models
     /// Importance level of the insight.
     /// Serialized Name: ImportanceLevel
     /// </summary>
-    public readonly partial struct ImportanceLevel : IEquatable<ImportanceLevel>
+    public readonly partial struct SelfHelpImportanceLevel : IEquatable<SelfHelpImportanceLevel>
     {
         private readonly string _value;
 
-        /// <summary> Initializes a new instance of <see cref="ImportanceLevel"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="SelfHelpImportanceLevel"/>. </summary>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public ImportanceLevel(string value)
+        public SelfHelpImportanceLevel(string value)
         {
             _value = value ?? throw new ArgumentNullException(nameof(value));
         }
@@ -33,29 +33,29 @@ namespace Azure.ResourceManager.SelfHelp.Models
         /// A critical insight has been found after running the diagnostic.
         /// Serialized Name: ImportanceLevel.Critical
         /// </summary>
-        public static ImportanceLevel Critical { get; } = new ImportanceLevel(CriticalValue);
+        public static SelfHelpImportanceLevel Critical { get; } = new SelfHelpImportanceLevel(CriticalValue);
         /// <summary>
         /// A warning insight has been found after running the diagnostic.
         /// Serialized Name: ImportanceLevel.Warning
         /// </summary>
-        public static ImportanceLevel Warning { get; } = new ImportanceLevel(WarningValue);
+        public static SelfHelpImportanceLevel Warning { get; } = new SelfHelpImportanceLevel(WarningValue);
         /// <summary>
         /// An information insight has been found after running the diagnostic.
         /// Serialized Name: ImportanceLevel.Information
         /// </summary>
-        public static ImportanceLevel Information { get; } = new ImportanceLevel(InformationValue);
-        /// <summary> Determines if two <see cref="ImportanceLevel"/> values are the same. </summary>
-        public static bool operator ==(ImportanceLevel left, ImportanceLevel right) => left.Equals(right);
-        /// <summary> Determines if two <see cref="ImportanceLevel"/> values are not the same. </summary>
-        public static bool operator !=(ImportanceLevel left, ImportanceLevel right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="ImportanceLevel"/>. </summary>
-        public static implicit operator ImportanceLevel(string value) => new ImportanceLevel(value);
+        public static SelfHelpImportanceLevel Information { get; } = new SelfHelpImportanceLevel(InformationValue);
+        /// <summary> Determines if two <see cref="SelfHelpImportanceLevel"/> values are the same. </summary>
+        public static bool operator ==(SelfHelpImportanceLevel left, SelfHelpImportanceLevel right) => left.Equals(right);
+        /// <summary> Determines if two <see cref="SelfHelpImportanceLevel"/> values are not the same. </summary>
+        public static bool operator !=(SelfHelpImportanceLevel left, SelfHelpImportanceLevel right) => !left.Equals(right);
+        /// <summary> Converts a string to a <see cref="SelfHelpImportanceLevel"/>. </summary>
+        public static implicit operator SelfHelpImportanceLevel(string value) => new SelfHelpImportanceLevel(value);
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is ImportanceLevel other && Equals(other);
+        public override bool Equals(object obj) => obj is SelfHelpImportanceLevel other && Equals(other);
         /// <inheritdoc />
-        public bool Equals(ImportanceLevel other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(SelfHelpImportanceLevel other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
