@@ -15,7 +15,7 @@ clear-output-folder: true
 skip-csproj: true
 
 rename-mapping:
-  CheckTrafficManagerRelativeDnsNameAvailabilityParameters: TrafficManagerRelativeDnsNameAvailabilityParameters
+  CheckTrafficManagerRelativeDnsNameAvailabilityParameters: TrafficManagerRelativeDnsNameAvailabilityContent
   CheckTrafficManagerRelativeDnsNameAvailabilityParameters.type: -|resource-type
   Endpoint.properties.targetResourceId: -|arm-id
   EndpointPropertiesCustomHeadersItem: TrafficManagerEndpointCustomHeaderInfo
