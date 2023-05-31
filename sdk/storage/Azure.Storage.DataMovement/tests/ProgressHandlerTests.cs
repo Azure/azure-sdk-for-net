@@ -17,15 +17,31 @@ namespace Azure.Storage.DataMovement.Tests
 {
     public class ProgressHandlerTests : DataMovementBlobTestBase
     {
-        private string[] _testFiles = { "file1", "dir1/file1", "dir1/file2", "dir1/file3", "dir2/file1" };
-        private long[] _expectedBytesTransferred = { 0, 1024, 2048, 3072, 4096, 5120 };
+        private string[] _testFiles = {
+            "file1",
+            "dir1/file1",
+            "dir1/file2",
+            "dir1/file3",
+            "dir2/file1"
+        };
+        private long[] _expectedBytesTransferred = {
+            0,
+            1024,
+            2048,
+            3072,
+            4096,
+            5120
+        };
 
         public ProgressHandlerTests(bool async, BlobClientOptions.ServiceVersion serviceVersion)
             : base(async, serviceVersion, default)
         {
         }
 
-        private async Task PopulateTestContainer(BlobContainerClient container, int blobSize = Constants.KB, int? blobCount = null)
+        private async Task PopulateTestContainer(
+            BlobContainerClient container,
+            int blobSize = Constants.KB,
+            int? blobCount = null)
         {
             // Use known file set
             if (blobCount == null)
@@ -44,7 +60,10 @@ namespace Azure.Storage.DataMovement.Tests
             }
         }
 
-        private async Task PopulateTestLocalDirectory(string directoryPath, int fileSize = Constants.KB, int? fileCount = null)
+        private async Task PopulateTestLocalDirectory(
+            string directoryPath,
+            int fileSize = Constants.KB,
+            int? fileCount = null)
         {
             // Use known file set
             if (fileCount == null)
@@ -69,7 +88,11 @@ namespace Azure.Storage.DataMovement.Tests
             }
         }
 
-        private long[] CalculateExpectedBytesUpdates(int fileSize, int fileCount, int chunkSize, TransferType transferType)
+        private long[] CalculateExpectedBytesUpdates(
+            int fileSize,
+            int fileCount,
+            int chunkSize,
+            TransferType transferType)
         {
             List<long> expectedBytesTransferred = new List<long>();
             int totalBytes = 0;

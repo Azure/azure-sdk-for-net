@@ -28,6 +28,9 @@ namespace Azure.Storage.DataMovement
         /// </summary>
         internal TransferCheckpointer _checkpointer { get; set; }
 
+        /// <summary>
+        /// Internal progress tracker for tracking and reporting progress of the transfer
+        /// </summary>
         internal TransferProgressTracker _progressTracker;
 
         /// <summary>
@@ -483,7 +486,7 @@ namespace Azure.Storage.DataMovement
             return _jobParts.Select( x => x._sourceResource.Path ).ToList();
         }
 
-        internal void JobPartQueued()
+        internal void QueueJobPart()
         {
             _progressTracker.IncrementQueuedFiles();
         }

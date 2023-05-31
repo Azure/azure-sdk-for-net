@@ -146,7 +146,7 @@ namespace Azure.Storage.DataMovement
                 // Execute the task we pulled out of the queue
                 await foreach (JobPartInternal partItem in item.ProcessJobToJobPartAsync().ConfigureAwait(false))
                 {
-                    item.JobPartQueued();
+                    item.QueueJobPart();
                     await QueueJobPartAsync(partItem).ConfigureAwait(false);
                 }
             }
