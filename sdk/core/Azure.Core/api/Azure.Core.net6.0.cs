@@ -17,8 +17,7 @@ namespace Azure
     }
     public static partial class AzureCoreExtensions
     {
-        public static dynamic ToDynamicFromJson(this System.BinaryData utf8Json) { throw null; }
-        public static dynamic ToDynamicFromJson(this System.BinaryData utf8Json, Azure.Core.Serialization.PropertyNameHandling propertyNameHandling, Azure.Core.Serialization.DynamicDateTimeHandling dateTimeHandling = Azure.Core.Serialization.DynamicDateTimeHandling.Rfc3339) { throw null; }
+        public static dynamic ToDynamicFromJson(this System.BinaryData utf8Json, Azure.Core.Serialization.PropertyNameHandling propertyNameHandling = Azure.Core.Serialization.PropertyNameHandling.AllowPascalCaseReads, Azure.Core.Serialization.DynamicDateTimeHandling dateTimeHandling = Azure.Core.Serialization.DynamicDateTimeHandling.Rfc3339) { throw null; }
         public static System.Threading.Tasks.ValueTask<T?> ToObjectAsync<T>(this System.BinaryData data, Azure.Core.Serialization.ObjectSerializer serializer, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static object? ToObjectFromJson(this System.BinaryData data) { throw null; }
         public static T? ToObject<T>(this System.BinaryData data, Azure.Core.Serialization.ObjectSerializer serializer, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }

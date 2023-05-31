@@ -45,7 +45,7 @@ namespace Azure.Core.Samples
 
             #region Snippet:AzureCoreGetDynamicJsonPropertyPascalCase
             Response response = client.GetWidget();
-            dynamic widget = response.Content.ToDynamicFromJson(PropertyNameHandling.AllowPascalCaseReads);
+            dynamic widget = response.Content.ToDynamicFromJson();
             string name = widget.Name;
             #endregion
 
@@ -74,7 +74,7 @@ namespace Azure.Core.Samples
 
             #region Snippet:AzureCoreGetDynamicJsonArrayValue
             Response response = client.GetWidget();
-            dynamic widget = response.Content.ToDynamicFromJson(PropertyNameHandling.AllowPascalCaseReads);
+            dynamic widget = response.Content.ToDynamicFromJson();
 #if !SNIPPET
             widget.Values = new int[] { 1, 2, 3 };
 #endif
@@ -97,7 +97,7 @@ namespace Azure.Core.Samples
 
             #region Snippet:AzureCoreGetDynamicJsonOptionalProperty
             Response response = client.GetWidget();
-            dynamic widget = response.Content.ToDynamicFromJson(PropertyNameHandling.AllowPascalCaseReads);
+            dynamic widget = response.Content.ToDynamicFromJson();
 
             // JSON is `{ "details" : { "color" : "blue", "size" : "small" } }`
 
@@ -117,7 +117,7 @@ namespace Azure.Core.Samples
             WidgetsClient client = GetMockClient();
 
             Response response = client.GetWidget();
-            dynamic widget = response.Content.ToDynamicFromJson(PropertyNameHandling.AllowPascalCaseReads);
+            dynamic widget = response.Content.ToDynamicFromJson();
 
             bool threw = false;
 
@@ -146,7 +146,7 @@ namespace Azure.Core.Samples
 
             #region Snippet:AzureCoreEnumerateDynamicJsonObject
             Response response = client.GetWidget();
-            dynamic widget = response.Content.ToDynamicFromJson(PropertyNameHandling.AllowPascalCaseReads);
+            dynamic widget = response.Content.ToDynamicFromJson();
 
             // JSON is `{ "details" : { "color" : "blue", "size" : "small" } }`
             foreach (dynamic property in widget.Details)
@@ -165,7 +165,7 @@ namespace Azure.Core.Samples
 
             #region Snippet:AzureCoreCastDynamicJsonToPOCO
             Response response = client.GetWidget();
-            dynamic content = response.Content.ToDynamicFromJson(PropertyNameHandling.AllowPascalCaseReads);
+            dynamic content = response.Content.ToDynamicFromJson();
 
             // JSON is `{ "id" : "123", "name" : "Widget" }`
             Widget widget = (Widget)content;
