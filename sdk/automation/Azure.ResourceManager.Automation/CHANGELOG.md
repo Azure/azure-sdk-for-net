@@ -1,6 +1,6 @@
 # Release History
 
-## 1.1.0-beta.1 (Unreleased)
+## 1.1.0-beta.2 (Unreleased)
 
 ### Features Added
 
@@ -9,6 +9,23 @@
 ### Bugs Fixed
 
 ### Other Changes
+
+## 1.1.0-beta.1 (2023-05-25)
+
+### Features Added
+
+- Enable the model factory feature for model mocking, more information can be found [here](https://azure.github.io/azure-sdk/dotnet_introduction.html#dotnet-mocking-factory-builder).
+- Added `AutomationCertificateData.ThumbprintString`, `AutomationCertificateCreateOrUpdateContent.ThumbprintString` to return the hexadecimal string representation of the SHA-1 hash of the certificate.
+  `AutomationCertificateData.Thumbprint`, `AutomationCertificateCreateOrUpdateContent.Thumbprint` have been hidden but are still available.
+
+### Bugs Fixed
+
+- Fixed an issue that `System.UriFormatException` is thrown when `Uri` type field is empty during serialization of `AutomationWebhookData`.
+
+### Other Changes
+
+- Upgraded dependent Azure.Core to 1.32.0.
+- Upgraded dependent Azure.ResourceManager to 1.6.0.
 
 ## 1.0.1 (2023-02-14)
 

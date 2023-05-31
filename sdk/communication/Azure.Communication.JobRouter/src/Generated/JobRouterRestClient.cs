@@ -122,6 +122,95 @@ namespace Azure.Communication.JobRouter
             }
         }
 
+        internal HttpMessage CreateUpsertJobRequest(string id, RequestContent content, RequestContext context)
+        {
+            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
+            var request = message.Request;
+            request.Method = RequestMethod.Patch;
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw(_endpoint, false);
+            uri.AppendPath("/routing/jobs/", false);
+            uri.AppendPath(id, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            request.Headers.Add("Content-Type", "application/merge-patch+json");
+            request.Content = content;
+            return message;
+        }
+
+        /// <summary>
+        /// [Protocol Method] Creates or updates a router job.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="id"> Id of the job. </param>
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="id"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="id"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual async Task<Response> UpsertJobAsync(string id, RequestContent content, RequestContext context = null)
+        {
+            Argument.AssertNotNullOrEmpty(id, nameof(id));
+            Argument.AssertNotNull(content, nameof(content));
+
+            using var scope = ClientDiagnostics.CreateScope("JobRouter.UpsertJob");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateUpsertJobRequest(id, content, context);
+                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// [Protocol Method] Creates or updates a router job.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="id"> Id of the job. </param>
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="id"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="id"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual Response UpsertJob(string id, RequestContent content, RequestContext context = null)
+        {
+            Argument.AssertNotNullOrEmpty(id, nameof(id));
+            Argument.AssertNotNull(content, nameof(content));
+
+            using var scope = ClientDiagnostics.CreateScope("JobRouter.UpsertJob");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateUpsertJobRequest(id, content, context);
+                return _pipeline.ProcessMessage(message, context);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
         internal HttpMessage CreateGetJobRequest(string id)
         {
             var message = _pipeline.CreateMessage();
@@ -942,7 +1031,7 @@ namespace Azure.Communication.JobRouter
             }
         }
 
-        internal HttpMessage CreateDeclineJobActionRequest(string workerId, string offerId)
+        internal HttpMessage CreateDeclineJobActionRequest(string workerId, string offerId, DeclineJobOfferRequest declineJobOfferRequest)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -957,15 +1046,23 @@ namespace Azure.Communication.JobRouter
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
+            if (declineJobOfferRequest != null)
+            {
+                request.Headers.Add("Content-Type", "application/json");
+                var content = new Utf8JsonRequestContent();
+                content.JsonWriter.WriteObjectValue(declineJobOfferRequest);
+                request.Content = content;
+            }
             return message;
         }
 
         /// <summary> Declines an offer to work on a job. </summary>
         /// <param name="workerId"> Id of the worker. </param>
         /// <param name="offerId"> Id of the offer. </param>
+        /// <param name="declineJobOfferRequest"> Request model for declining offer. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="workerId"/> or <paramref name="offerId"/> is null. </exception>
-        public async Task<Response<object>> DeclineJobActionAsync(string workerId, string offerId, CancellationToken cancellationToken = default)
+        public async Task<Response<object>> DeclineJobActionAsync(string workerId, string offerId, DeclineJobOfferRequest declineJobOfferRequest = null, CancellationToken cancellationToken = default)
         {
             if (workerId == null)
             {
@@ -976,7 +1073,7 @@ namespace Azure.Communication.JobRouter
                 throw new ArgumentNullException(nameof(offerId));
             }
 
-            using var message = CreateDeclineJobActionRequest(workerId, offerId);
+            using var message = CreateDeclineJobActionRequest(workerId, offerId, declineJobOfferRequest);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -995,9 +1092,10 @@ namespace Azure.Communication.JobRouter
         /// <summary> Declines an offer to work on a job. </summary>
         /// <param name="workerId"> Id of the worker. </param>
         /// <param name="offerId"> Id of the offer. </param>
+        /// <param name="declineJobOfferRequest"> Request model for declining offer. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="workerId"/> or <paramref name="offerId"/> is null. </exception>
-        public Response<object> DeclineJobAction(string workerId, string offerId, CancellationToken cancellationToken = default)
+        public Response<object> DeclineJobAction(string workerId, string offerId, DeclineJobOfferRequest declineJobOfferRequest = null, CancellationToken cancellationToken = default)
         {
             if (workerId == null)
             {
@@ -1008,7 +1106,7 @@ namespace Azure.Communication.JobRouter
                 throw new ArgumentNullException(nameof(offerId));
             }
 
-            using var message = CreateDeclineJobActionRequest(workerId, offerId);
+            using var message = CreateDeclineJobActionRequest(workerId, offerId, declineJobOfferRequest);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -1174,6 +1272,95 @@ namespace Azure.Communication.JobRouter
                     }
                 default:
                     throw new RequestFailedException(message.Response);
+            }
+        }
+
+        internal HttpMessage CreateUpsertWorkerRequest(string workerId, RequestContent content, RequestContext context)
+        {
+            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
+            var request = message.Request;
+            request.Method = RequestMethod.Patch;
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw(_endpoint, false);
+            uri.AppendPath("/routing/workers/", false);
+            uri.AppendPath(workerId, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            request.Headers.Add("Content-Type", "application/merge-patch+json");
+            request.Content = content;
+            return message;
+        }
+
+        /// <summary>
+        /// [Protocol Method] Creates or updates a worker.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="workerId"> Id of the worker. </param>
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="workerId"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="workerId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual async Task<Response> UpsertWorkerAsync(string workerId, RequestContent content, RequestContext context = null)
+        {
+            Argument.AssertNotNullOrEmpty(workerId, nameof(workerId));
+            Argument.AssertNotNull(content, nameof(content));
+
+            using var scope = ClientDiagnostics.CreateScope("JobRouter.UpsertWorker");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateUpsertWorkerRequest(workerId, content, context);
+                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// [Protocol Method] Creates or updates a worker.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="workerId"> Id of the worker. </param>
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="workerId"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="workerId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual Response UpsertWorker(string workerId, RequestContent content, RequestContext context = null)
+        {
+            Argument.AssertNotNullOrEmpty(workerId, nameof(workerId));
+            Argument.AssertNotNull(content, nameof(content));
+
+            using var scope = ClientDiagnostics.CreateScope("JobRouter.UpsertWorker");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateUpsertWorkerRequest(workerId, content, context);
+                return _pipeline.ProcessMessage(message, context);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
             }
         }
 
@@ -1532,5 +1719,8 @@ namespace Azure.Communication.JobRouter
                     throw new RequestFailedException(message.Response);
             }
         }
+
+        private static ResponseClassifier _responseClassifier200;
+        private static ResponseClassifier ResponseClassifier200 => _responseClassifier200 ??= new StatusCodeClassifier(stackalloc ushort[] { 200 });
     }
 }

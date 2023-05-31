@@ -42,10 +42,6 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
                 var telemetryItems = TraceHelper.OtelToAzureMonitorTrace(batch, TraceResource, _instrumentationKey);
                 if (telemetryItems.Count > 0)
                 {
-                    if (TraceResource?.MetricTelemetry != null)
-                    {
-                        telemetryItems.Add(TraceResource.MetricTelemetry);
-                    }
                     exportResult = _transmitter.TrackAsync(telemetryItems, false, CancellationToken.None).EnsureCompleted();
                 }
             }

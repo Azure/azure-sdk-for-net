@@ -48,6 +48,11 @@ namespace Azure.ResourceManager.DevCenter.Models
                 writer.WritePropertyName("osStorageType"u8);
                 writer.WriteStringValue(OSStorageType);
             }
+            if (Optional.IsDefined(HibernateSupport))
+            {
+                writer.WritePropertyName("hibernateSupport"u8);
+                writer.WriteStringValue(HibernateSupport.Value.ToString());
+            }
             writer.WriteEndObject();
             writer.WriteEndObject();
         }
