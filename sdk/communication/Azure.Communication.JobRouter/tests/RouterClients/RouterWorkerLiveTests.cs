@@ -221,9 +221,9 @@ namespace Azure.Communication.JobRouter.Tests.RouterClients
             await routerClient.UpdateWorkerAsync(new UpdateWorkerOptions(workerId1) { AvailableForOffers = false});
 
             var checkWorker1Status = await Poll(async () => await routerClient.GetWorkerAsync(workerId1),
-                w => w.Value.State == WorkerState.Inactive, TimeSpan.FromSeconds(10));
+                w => w.Value.State == RouterWorkerState.Inactive, TimeSpan.FromSeconds(10));
 
-            Assert.AreEqual(WorkerState.Inactive, checkWorker1Status.Value.State);
+            Assert.AreEqual(RouterWorkerState.Inactive, checkWorker1Status.Value.State);
 
             // Query all workers with status: active
             var activeWorkers = new HashSet<string>();

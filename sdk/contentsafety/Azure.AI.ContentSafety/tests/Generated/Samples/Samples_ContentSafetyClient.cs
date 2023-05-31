@@ -188,7 +188,7 @@ namespace Azure.AI.ContentSafety.Samples
                 image = new
                 {
                     content = new { },
-                    blobUrl = "<blobUrl>",
+                    blobUrl = "http://localhost:3000",
                 },
                 categories = new[] {
         "Hate"
@@ -240,7 +240,7 @@ namespace Azure.AI.ContentSafety.Samples
                 image = new
                 {
                     content = new { },
-                    blobUrl = "<blobUrl>",
+                    blobUrl = "http://localhost:3000",
                 },
                 categories = new[] {
         "Hate"
@@ -271,7 +271,7 @@ namespace Azure.AI.ContentSafety.Samples
             var body = new AnalyzeImageOptions(new ImageData()
             {
                 Content = BinaryData.FromString("<your binary data content>"),
-                BlobUrl = "<BlobUrl>",
+                BlobUrl = new Uri("http://localhost:3000"),
             })
             {
                 Categories =
