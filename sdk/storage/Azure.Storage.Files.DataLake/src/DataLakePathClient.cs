@@ -1877,9 +1877,9 @@ namespace Azure.Storage.Files.DataLake
                     scope.Start();
                     ResponseWithHeaders<PathDeleteHeaders> response = null;
 
-                    // Pagination only applies to service version 2023-05-03 and later, when using OAuth.
+                    // Pagination only applies to service version 2023-08-03 and later, when using OAuth.
                     bool? paginated = null;
-                    if (_clientConfiguration.ClientOptions.Version >= DataLakeClientOptions.ServiceVersion.V2023_05_03
+                    if (_clientConfiguration.ClientOptions.Version >= DataLakeClientOptions.ServiceVersion.V2023_08_03
                         && _clientConfiguration.OAuthTokenCredential != null)
                     {
                         paginated = true;
