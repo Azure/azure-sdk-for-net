@@ -42,9 +42,14 @@ namespace Microsoft.Azure.Data.SchemaRegistry.JsonSchema.Tests
 
         private class SampleJsonGenerator : SchemaRegistryJsonSchemaGenerator
         {
-            public override string GenerateSchemaFromObject(Type dataType)
+            public override string GenerateSchemaFromType(Type dataType)
             {
                 return _schema;
+            }
+
+            public override void ThrowIfNotValidAgainstSchema(object data, Type dataType, string schemaDefinition)
+            {
+                return;
             }
         }
     }

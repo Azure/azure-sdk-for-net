@@ -54,14 +54,14 @@ namespace Microsoft.Azure.Data.SchemaRegistry.JsonSchema.Tests.Samples
             EventData eventData = (EventData)await serializer.SerializeAsync(employee, messageType: typeof(EventData));
 
 #if SNIPPET
-            // the schema Id will be included as a parameter of the content type
+            // The schema Id will be included as a parameter of the content type
             Console.WriteLine(eventData.ContentType);
 
-            // the serialized JSON data will be stored in the EventBody
+            // The serialized JSON data will be stored in the EventBody
             Console.WriteLine(eventData.EventBody);
 #endif
 
-            // construct a publisher and publish the events to our event hub
+            // Construct a publisher and publish the events to our event hub
 #if SNIPPET
             var fullyQualifiedNamespace = "<< FULLY-QUALIFIED EVENT HUBS NAMESPACE (like something.servicebus.windows.net) >>";
             var eventHubName = "<< NAME OF THE EVENT HUB >>";
@@ -71,12 +71,21 @@ namespace Microsoft.Azure.Data.SchemaRegistry.JsonSchema.Tests.Samples
             var eventHubName = TestEnvironment.SchemaRegistryEventHubName;
             var credential = TestEnvironment.Credential;
 #endif
+            // It is recommended that you cache the Event Hubs clients for the lifetime of your
+            // application, closing or disposing when application ends.  This example disposes
+            // after the immediate scope for simplicity.
+
             await using var producer = new EventHubProducerClient(fullyQualifiedNamespace, eventHubName, credential);
             await producer.SendAsync(new EventData[] { eventData });
             #endregion
 
             #region Snippet:SchemaRegistryJsonDeserializeEventData
-            // construct a consumer and consume the event from our event hub
+            // Construct a consumer and consume the event from our event hub
+
+            // It is recommended that you cache the Event Hubs clients for the lifetime of your
+            // application, closing or disposing when application ends.  This example disposes
+            // after the immediate scope for simplicity.
+
             await using var consumer = new EventHubConsumerClient(EventHubConsumerClient.DefaultConsumerGroupName, fullyQualifiedNamespace, eventHubName, credential);
             await foreach (PartitionEvent receivedEvent in consumer.ReadEventsAsync())
             {
@@ -103,10 +112,10 @@ namespace Microsoft.Azure.Data.SchemaRegistry.JsonSchema.Tests.Samples
             EventData eventData = await serializer.SerializeAsync<EventData, Employee>(employee);
 
 #if SNIPPET
-            // the schema Id will be included as a parameter of the content type
+            // The schema Id will be included as a parameter of the content type
             Console.WriteLine(eventData.ContentType);
 
-            // the serialized JSON data will be stored in the EventBody
+            // The serialized JSON data will be stored in the EventBody
             Console.WriteLine(eventData.EventBody);
 #endif
             #endregion
@@ -145,14 +154,14 @@ namespace Microsoft.Azure.Data.SchemaRegistry.JsonSchema.Tests.Samples
         #region Snippet:SampleSchemaRegistryJsonSchemaGeneratorImplementation
         internal class SampleJsonGenerator : SchemaRegistryJsonSchemaGenerator
         {
-            public override bool ValidateAgainstSchema(Object data, Type dataType, string schemaDefinition)
+            public override void ThrowIfNotValidAgainstSchema(Object data, Type dataType, string schemaDefinition)
             {
                 // Your implementation using the third-party library of your choice goes here.
                 // This method is optional. If it is not overridden, the default always returns true.
 
-                return true;
+                return;
             }
-            public override string GenerateSchemaFromObject(Type dataType)
+            public override string GenerateSchemaFromType(Type dataType)
             {
 #if SNIPPET
                 // Your implementation using the third-party library of your choice goes here.

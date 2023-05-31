@@ -4,7 +4,7 @@ namespace Microsoft.Azure.Data.SchemaRegistry.JsonSchema
     {
         protected SchemaRegistryJsonSchemaGenerator() { }
         public abstract string GenerateSchemaFromObject(System.Type dataType);
-        public virtual bool ValidateAgainstSchema(object data, System.Type dataType, string schemaDefinition) { throw null; }
+        public abstract void ThrowIfNotValidAgainstSchema(object data, System.Type dataType, string schemaDefinition);
     }
     public partial class SchemaRegistryJsonSerializer
     {

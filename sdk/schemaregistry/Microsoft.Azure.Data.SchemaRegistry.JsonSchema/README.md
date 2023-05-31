@@ -55,7 +55,7 @@ The `SchemaRegistryJsonSchemaGenerator` is an abstract class that must be implem
 
 ### Serializer
 
-This library provides a serializer, `SchemaRegistryJsonSerializer` that interacts with `EventData` events. The `SchemaRegistryJsonSerializer` utilizes a `SchemaRegistryClient` to enrich the `EventData` events with the schema ID for the schema used to serialize the data.
+This library provides a serializer, `SchemaRegistryJsonSerializer` that interacts with `EventData` events. The `SchemaRegistryJsonSerializer` utilizes a `SchemaRegistryClient` to enrich the `EventData` events with the schema Id for the schema used to serialize the data.
 
 ## Examples
 
@@ -90,16 +90,20 @@ var serializer = new SchemaRegistryJsonSerializer(client, groupName, new SampleJ
 var employee = new Employee { Age = 42, Name = "Caketown" };
 EventData eventData = (EventData)await serializer.SerializeAsync(employee, messageType: typeof(EventData));
 
-// the schema Id will be included as a parameter of the content type
+// The schema Id will be included as a parameter of the content type
 Console.WriteLine(eventData.ContentType);
 
-// the serialized JSON data will be stored in the EventBody
+// The serialized JSON data will be stored in the EventBody
 Console.WriteLine(eventData.EventBody);
 
-// construct a publisher and publish the events to our event hub
+// Construct a publisher and publish the events to our event hub
 var fullyQualifiedNamespace = "<< FULLY-QUALIFIED EVENT HUBS NAMESPACE (like something.servicebus.windows.net) >>";
 var eventHubName = "<< NAME OF THE EVENT HUB >>";
 var credential = new DefaultAzureCredential();
+// It is recommended that you cache the Event Hubs clients for the lifetime of your
+// application, closing or disposing when application ends.  This example disposes
+// after the immediate scope for simplicity.
+
 await using var producer = new EventHubProducerClient(fullyQualifiedNamespace, eventHubName, credential);
 await producer.SendAsync(new EventData[] { eventData });
 ```
@@ -107,7 +111,12 @@ await producer.SendAsync(new EventData[] { eventData });
 To deserialize an `EventData` event that you are consuming:
 
 ```C# Snippet:SchemaRegistryJsonDeserializeEventData
-// construct a consumer and consume the event from our event hub
+// Construct a consumer and consume the event from our event hub
+
+// It is recommended that you cache the Event Hubs clients for the lifetime of your
+// application, closing or disposing when application ends.  This example disposes
+// after the immediate scope for simplicity.
+
 await using var consumer = new EventHubConsumerClient(EventHubConsumerClient.DefaultConsumerGroupName, fullyQualifiedNamespace, eventHubName, credential);
 await foreach (PartitionEvent receivedEvent in consumer.ReadEventsAsync())
 {
@@ -126,10 +135,10 @@ var serializer = new SchemaRegistryJsonSerializer(client, groupName, new SampleJ
 var employee = new Employee { Age = 42, Name = "Caketown" };
 EventData eventData = await serializer.SerializeAsync<EventData, Employee>(employee);
 
-// the schema Id will be included as a parameter of the content type
+// The schema Id will be included as a parameter of the content type
 Console.WriteLine(eventData.ContentType);
 
-// the serialized JSON data will be stored in the EventBody
+// The serialized JSON data will be stored in the EventBody
 Console.WriteLine(eventData.EventBody);
 ```
 
@@ -154,7 +163,7 @@ Employee deserializedEmployee = await serializer.DeserializeAsync<Employee>(cont
 
 ## Troubleshooting
 
-If you encounter errors when communicating with the Schema Registry service, these errors will be thrown as a [RequestFailedException][request_failed_exception]. The serializer will only communicate with the service the first time it encounters a schema (when serializing) or a schema ID (when deserializing). Any errors related to invalid Content-Types will be thrown as a `FormatException`. 
+If you encounter errors when communicating with the Schema Registry service, these errors will be thrown as a [RequestFailedException][request_failed_exception]. The serializer will only communicate with the service the first time it encounters a schema (when serializing) or a schema Id (when deserializing). Any errors related to invalid Content-Types will be thrown as a `FormatException`. 
 
 Errors related to invalid schemas will be thrown as an `Exception`, and the `InnerException` property will contain the underlying exception that was thrown from your implemented methods in the `SchemaRegistryJsonSchemaGenerator`. This type of error would typically be caught during testing and should not be handled in code.
 

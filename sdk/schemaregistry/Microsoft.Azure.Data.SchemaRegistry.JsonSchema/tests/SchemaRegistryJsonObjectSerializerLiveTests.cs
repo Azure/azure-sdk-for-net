@@ -15,6 +15,7 @@ using Azure.Messaging.EventHubs.Producer;
 using TestSchema;
 using System.Threading;
 using System.Collections.Generic;
+using Microsoft.Identity.Client;
 
 namespace Microsoft.Azure.Data.SchemaRegistry.JsonSchema.Tests
 {
@@ -285,20 +286,25 @@ namespace Microsoft.Azure.Data.SchemaRegistry.JsonSchema.Tests
 
         private class SampleJsonGenerator : SchemaRegistryJsonSchemaGenerator
         {
-            public override string GenerateSchemaFromObject(Type dataType)
+            public override string GenerateSchemaFromType(Type dataType)
             {
                 return _schema;
+            }
+
+            public override void ThrowIfNotValidAgainstSchema(object data, Type dataType, string schemaDefinition)
+            {
+                return;
             }
         }
 
         private class ValidateThrowsGenerator : SchemaRegistryJsonSchemaGenerator
         {
-            public override string GenerateSchemaFromObject(Type dataType)
+            public override string GenerateSchemaFromType(Type dataType)
             {
                 return _schema;
             }
 
-            public override bool ValidateAgainstSchema(object data, Type dataType, string schemaDefinition)
+            public override void ThrowIfNotValidAgainstSchema(object data, Type dataType, string schemaDefinition)
             {
                 throw new FormatException("This is bad JSON!!!!");
             }

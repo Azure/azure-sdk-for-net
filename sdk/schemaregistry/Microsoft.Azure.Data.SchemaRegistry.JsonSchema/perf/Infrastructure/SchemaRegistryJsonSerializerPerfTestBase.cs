@@ -5,6 +5,7 @@ using Azure.Data.SchemaRegistry;
 using Azure.Test.Perf;
 using Microsoft.Azure.Data.SchemaRegistry.JsonSchema.Tests;
 using System;
+using System.Security.Cryptography;
 
 namespace Microsoft.Azure.Data.SchemaRegistry.JsonSchema.Perf
 {
@@ -29,9 +30,14 @@ namespace Microsoft.Azure.Data.SchemaRegistry.JsonSchema.Perf
 
         private class SampleJsonGenerator : SchemaRegistryJsonSchemaGenerator
         {
-            public override string GenerateSchemaFromObject(Type dataType)
+            public override string GenerateSchemaFromType(Type dataType)
             {
-                return _schema;
+                return s_schema;
+            }
+
+            public override void ThrowIfNotValidAgainstSchema(object data, Type dataType, string schemaDefinition)
+            {
+                return;
             }
         }
     }

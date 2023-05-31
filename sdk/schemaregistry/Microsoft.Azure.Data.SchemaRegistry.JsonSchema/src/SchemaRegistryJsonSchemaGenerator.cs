@@ -11,28 +11,24 @@ namespace Microsoft.Azure.Data.SchemaRegistry.JsonSchema
     /// any available library to be used to generate schemas from .NET types and validate objects against schemas.
     /// </summary>
     /// <remarks>
-    /// Defining <see cref="GenerateSchemaFromObject(Type)"/> is required. However, defining <see cref="ValidateAgainstSchema(object, Type, string)"/>
+    /// Defining <see cref="GenerateSchemaFromType(Type)"/> is required. However, defining <see cref="ThrowIfNotValidAgainstSchema(object, Type, string)"/>
     /// is optional.
     /// </remarks>
     public abstract class SchemaRegistryJsonSchemaGenerator
     {
         /// <summary>
-        /// Validates that <paramref name="data"/> is valid according to <paramref name="schemaDefinition"/>.
+        /// Validates that <paramref name="data"/> is valid according to <paramref name="schemaDefinition"/>, and throws an exception otherwise.
         /// </summary>
         /// <param name="data">The data to use for serialization or the data that was deserialized.</param>
         /// <param name="dataType">The type of the data to serialize or the type of the deserialized data.</param>
-        /// <param name="schemaDefinition">The JSON schema definition retrieved using <see cref="SchemaRegistryClient"/></param>
-        /// <returns> <c>true</c> if <paramref name="data"/> is valid, <c>false</c> otherwise.</returns>
-        public virtual bool ValidateAgainstSchema(Object data, Type dataType, string schemaDefinition)
-        {
-            return true;
-        }
+        /// <param name="schemaDefinition">The JSON schema definition retrieved using <see cref="SchemaRegistryClient"/>.</param>
+        public abstract void ThrowIfNotValidAgainstSchema(Object data, Type dataType, string schemaDefinition);
 
         /// <summary>
         /// Generates a JSON schema from <paramref name="dataType"/>.
         /// </summary>
         /// <param name="dataType">The type of the data to serialize.</param>
         /// <returns>The generated JSON schema in string format.</returns>
-        public abstract string GenerateSchemaFromObject(Type dataType);
+        public abstract string GenerateSchemaFromType(Type dataType);
     }
 }
