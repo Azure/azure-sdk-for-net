@@ -161,5 +161,6 @@ if ($LASTEXITCODE) { exit $LASTEXITCODE }
 # call TypeSpec-Project-Generate.ps1
 $generateScript = Join-Path $PSScriptRoot TypeSpec-Project-Generate.ps1
 & $generateScript $sdkProjectFolder
+if ($LASTEXITCODE) { exit $LASTEXITCODE }
 
 return $sdkProjectFolder
