@@ -160,7 +160,7 @@ namespace Azure.Core.Tests
         [Test]
         public void CannotGetOrSetValuesOnAbsentArrays()
         {
-            dynamic value = BinaryData.FromString("""{"foo": [1, 2]}""").ToDynamicFromJson(DynamicCaseMapping.PascalToCamel);
+            dynamic value = BinaryData.FromString("""{"foo": [1, 2]}""").ToDynamicFromJson(PropertyNameHandling.AllowPascalCaseReads);
 
             Assert.Throws<InvalidOperationException>(() => { int i = value[0]; });
             Assert.Throws<InvalidOperationException>(() => { value[0] = 1; });
@@ -172,7 +172,7 @@ namespace Azure.Core.Tests
         [Test]
         public void CannotGetOrSetValuesOnAbsentProperties()
         {
-            dynamic value = BinaryData.FromString("""{"foo": 1}""").ToDynamicFromJson(DynamicCaseMapping.PascalToCamel);
+            dynamic value = BinaryData.FromString("""{"foo": 1}""").ToDynamicFromJson(PropertyNameHandling.AllowPascalCaseReads);
 
             Assert.Throws<InvalidOperationException>(() => { int i = value.Foo.Bar.Baz; });
             Assert.Throws<InvalidOperationException>(() => { value.Foo.Bar.Baz = "hi"; });
@@ -309,7 +309,7 @@ namespace Azure.Core.Tests
         [Test]
         public void CanMakeChangesAndAddNewProperty()
         {
-            DynamicDataOptions options = new() { CaseMapping = DynamicCaseMapping.PascalToCamel };
+            DynamicDataOptions options = new() { PropertyNameHandling = PropertyNameHandling.AllowPascalCaseReads | PropertyNameHandling.WriteCamelCase };
             dynamic jsonData = BinaryData.FromString("""
                 {
                   "foo" : 1
@@ -331,7 +331,7 @@ namespace Azure.Core.Tests
         [Test]
         public void CanAddPocoProperty()
         {
-            DynamicDataOptions options = new() { CaseMapping = DynamicCaseMapping.PascalToCamel };
+            DynamicDataOptions options = new() { PropertyNameHandling = PropertyNameHandling.AllowPascalCaseReads | PropertyNameHandling.WriteCamelCase };
             dynamic value = BinaryData.FromBytes("""
                 {
                     "foo": 1
@@ -375,7 +375,7 @@ namespace Azure.Core.Tests
         [Test]
         public void CanAddNestedPocoProperty()
         {
-            DynamicDataOptions options = new() { CaseMapping = DynamicCaseMapping.PascalToCamel };
+            DynamicDataOptions options = new() { PropertyNameHandling = PropertyNameHandling.AllowPascalCaseReads | PropertyNameHandling.WriteCamelCase};
             dynamic value = BinaryData.FromBytes("""
                 {
                     "foo": 1
@@ -419,7 +419,7 @@ namespace Azure.Core.Tests
         [Test]
         public void CanSetNestedPocoProperty()
         {
-            DynamicDataOptions options = new() { CaseMapping = DynamicCaseMapping.PascalToCamel };
+            DynamicDataOptions options = new() { PropertyNameHandling = PropertyNameHandling.AllowPascalCaseReads | PropertyNameHandling.WriteCamelCase };
             dynamic value = BinaryData.FromBytes("""
                 {
                     "foo": 1
@@ -487,7 +487,7 @@ namespace Azure.Core.Tests
         [Test]
         public void CanCheckOptionalPropertyWithChanges()
         {
-            DynamicDataOptions options = new() { CaseMapping = DynamicCaseMapping.PascalToCamel };
+            DynamicDataOptions options = new() { PropertyNameHandling = PropertyNameHandling.AllowPascalCaseReads | PropertyNameHandling.WriteCamelCase};
             dynamic json = BinaryData.FromString("""
                 {
                   "foo" : "foo",
@@ -591,7 +591,7 @@ namespace Azure.Core.Tests
         [Test]
         public void ThrowsInvalidCastForOriginalJsonValue()
         {
-            DynamicDataOptions options = new() { CaseMapping = DynamicCaseMapping.PascalToCamel };
+            DynamicDataOptions options = new() { PropertyNameHandling = PropertyNameHandling.AllowPascalCaseReads | PropertyNameHandling.WriteCamelCase };
             dynamic json = BinaryData.FromString(
                 """
                 {
@@ -624,7 +624,7 @@ namespace Azure.Core.Tests
         [Test]
         public void CanCastToByte()
         {
-            DynamicDataOptions options = new() { CaseMapping = DynamicCaseMapping.PascalToCamel };
+            DynamicDataOptions options = new() { PropertyNameHandling = PropertyNameHandling.AllowPascalCaseReads | PropertyNameHandling.WriteCamelCase };
             dynamic json = BinaryData.FromString("""
                 {
                   "foo" : 42
@@ -657,7 +657,7 @@ namespace Azure.Core.Tests
         [TestCaseSource(nameof(NumberValues))]
         public void CanCastToNumber<T, U>(string serializedX, T x, T y, T z, U invalid)
         {
-            DynamicDataOptions options = new() { CaseMapping = DynamicCaseMapping.PascalToCamel };
+            DynamicDataOptions options = new() { PropertyNameHandling = PropertyNameHandling.AllowPascalCaseReads | PropertyNameHandling.WriteCamelCase };
             dynamic json = BinaryData.FromString($"{{\"foo\" : {serializedX}}}").ToDynamicFromJson(options);
 
             // Get from parsed JSON
@@ -693,7 +693,7 @@ namespace Azure.Core.Tests
         [Test]
         public void CanExplicitCastToGuid()
         {
-            DynamicDataOptions options = new() { CaseMapping = DynamicCaseMapping.PascalToCamel };
+            DynamicDataOptions options = new() { PropertyNameHandling = PropertyNameHandling.AllowPascalCaseReads | PropertyNameHandling.WriteCamelCase };
             Guid guid = Guid.NewGuid();
             dynamic json = BinaryData.FromString($"{{\"foo\" : \"{guid}\"}}").ToDynamicFromJson(options);
 
@@ -733,7 +733,7 @@ namespace Azure.Core.Tests
         [Test]
         public void CanExplicitCastToDateTime()
         {
-            DynamicDataOptions options = new() { CaseMapping = DynamicCaseMapping.PascalToCamel };
+            DynamicDataOptions options = new() { PropertyNameHandling = PropertyNameHandling.AllowPascalCaseReads | PropertyNameHandling.WriteCamelCase };
             DateTime dateTime = DateTime.UtcNow;
             string dateTimeString = FormatDateTime(dateTime);
             dynamic json = BinaryData.FromString($"{{\"foo\" : \"{dateTimeString}\"}}").ToDynamicFromJson(options);
@@ -776,7 +776,7 @@ namespace Azure.Core.Tests
         [Test]
         public void CanExplicitCastToDateTimeOffset()
         {
-            DynamicDataOptions options = new() { CaseMapping = DynamicCaseMapping.PascalToCamel };
+            DynamicDataOptions options = new() { PropertyNameHandling = PropertyNameHandling.AllowPascalCaseReads | PropertyNameHandling.WriteCamelCase };
             DateTimeOffset dateTime = DateTimeOffset.UtcNow;
             string dateTimeString = FormatDateTimeOffset(dateTime);
             dynamic json = BinaryData.FromString($"{{\"foo\" : \"{dateTimeString}\"}}").ToDynamicFromJson(options);
@@ -1098,7 +1098,7 @@ namespace Azure.Core.Tests
         #region Helpers
         internal static dynamic GetDynamicJson(string json)
         {
-            DynamicDataOptions options = new() { CaseMapping = DynamicCaseMapping.PascalToCamel };
+            DynamicDataOptions options = new() { PropertyNameHandling = PropertyNameHandling.AllowPascalCaseReads};
             return new BinaryData(json).ToDynamicFromJson(options);
         }
 

@@ -45,7 +45,7 @@ namespace Azure.Core.Samples
 
             #region Snippet:AzureCoreGetDynamicJsonPropertyPascalCase
             Response response = client.GetWidget();
-            dynamic widget = response.Content.ToDynamicFromJson(DynamicCaseMapping.PascalToCamel);
+            dynamic widget = response.Content.ToDynamicFromJson(PropertyNameHandling.AllowPascalCaseReads);
             string name = widget.Name;
             #endregion
 
@@ -59,7 +59,7 @@ namespace Azure.Core.Samples
 
             #region Snippet:AzureCoreSetDynamicJsonProperty
             Response response = client.GetWidget();
-            dynamic widget = response.Content.ToDynamicFromJson(DynamicCaseMapping.PascalToCamel);
+            dynamic widget = response.Content.ToDynamicFromJson(PropertyNameHandling.AllowPascalCaseReads | PropertyNameHandling.WriteNewCamelCase);
             widget.Name = "New Name";
             client.SetWidget(RequestContent.Create(widget));
             #endregion
@@ -74,7 +74,7 @@ namespace Azure.Core.Samples
 
             #region Snippet:AzureCoreGetDynamicJsonArrayValue
             Response response = client.GetWidget();
-            dynamic widget = response.Content.ToDynamicFromJson(DynamicCaseMapping.PascalToCamel);
+            dynamic widget = response.Content.ToDynamicFromJson(PropertyNameHandling.AllowPascalCaseReads);
 #if !SNIPPET
             widget.Values = new int[] { 1, 2, 3 };
 #endif
@@ -97,7 +97,7 @@ namespace Azure.Core.Samples
 
             #region Snippet:AzureCoreGetDynamicJsonOptionalProperty
             Response response = client.GetWidget();
-            dynamic widget = response.Content.ToDynamicFromJson(DynamicCaseMapping.PascalToCamel);
+            dynamic widget = response.Content.ToDynamicFromJson(PropertyNameHandling.AllowPascalCaseReads);
 
             // JSON is `{ "details" : { "color" : "blue", "size" : "small" } }`
 
@@ -117,7 +117,7 @@ namespace Azure.Core.Samples
             WidgetsClient client = GetMockClient();
 
             Response response = client.GetWidget();
-            dynamic widget = response.Content.ToDynamicFromJson(DynamicCaseMapping.PascalToCamel);
+            dynamic widget = response.Content.ToDynamicFromJson(PropertyNameHandling.AllowPascalCaseReads);
 
             bool threw = false;
 
@@ -146,7 +146,7 @@ namespace Azure.Core.Samples
 
             #region Snippet:AzureCoreEnumerateDynamicJsonObject
             Response response = client.GetWidget();
-            dynamic widget = response.Content.ToDynamicFromJson(DynamicCaseMapping.PascalToCamel);
+            dynamic widget = response.Content.ToDynamicFromJson(PropertyNameHandling.AllowPascalCaseReads);
 
             // JSON is `{ "details" : { "color" : "blue", "size" : "small" } }`
             foreach (dynamic property in widget.Details)
@@ -165,7 +165,7 @@ namespace Azure.Core.Samples
 
             #region Snippet:AzureCoreCastDynamicJsonToPOCO
             Response response = client.GetWidget();
-            dynamic content = response.Content.ToDynamicFromJson(DynamicCaseMapping.PascalToCamel);
+            dynamic content = response.Content.ToDynamicFromJson(PropertyNameHandling.AllowPascalCaseReads);
 
             // JSON is `{ "id" : "123", "name" : "Widget" }`
             Widget widget = (Widget)content;
@@ -209,7 +209,7 @@ namespace Azure.Core.Samples
 
             #region Snippet:AzureCoreSetPropertyWithoutCaseMapping
             Response response = client.GetWidget();
-            dynamic widget = response.Content.ToDynamicFromJson(DynamicCaseMapping.PascalToCamel);
+            dynamic widget = response.Content.ToDynamicFromJson(PropertyNameHandling.WriteCamelCase);
 
             widget.details["IPAddress"] = "127.0.0.1";
             // JSON is `{ "details" : { "IPAddress" : "127.0.0.1" } }`
@@ -252,7 +252,7 @@ namespace Azure.Core.Samples
 
             #region Snippet:AzureCoreRoundTripDynamicJson
             Response response = client.GetWidget();
-            dynamic widget = response.Content.ToDynamicFromJson(DynamicCaseMapping.PascalToCamel);
+            dynamic widget = response.Content.ToDynamicFromJson(PropertyNameHandling.AllowPascalCaseReads | PropertyNameHandling.WriteNewCamelCase);
             widget.Name = "New Name";
             client.SetWidget(RequestContent.Create(widget));
             #endregion
@@ -266,7 +266,7 @@ namespace Azure.Core.Samples
 
             #region Snippet:AzureCoreDisposeDynamicJson
             Response response = client.GetLargeWidget();
-            using (dynamic widget = response.Content.ToDynamicFromJson(DynamicCaseMapping.PascalToCamel))
+            using (dynamic widget = response.Content.ToDynamicFromJson(PropertyNameHandling.AllowPascalCaseReads | PropertyNameHandling.WriteNewCamelCase))
             {
 #if !SNIPPET
                 details = widget.Details;

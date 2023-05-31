@@ -18,7 +18,7 @@ namespace Azure
     public static partial class AzureCoreExtensions
     {
         public static dynamic ToDynamicFromJson(this System.BinaryData utf8Json) { throw null; }
-        public static dynamic ToDynamicFromJson(this System.BinaryData utf8Json, Azure.Core.Serialization.DynamicCaseMapping caseMapping, Azure.Core.Serialization.DynamicDateTimeHandling dateTimeHandling = Azure.Core.Serialization.DynamicDateTimeHandling.Rfc3339) { throw null; }
+        public static dynamic ToDynamicFromJson(this System.BinaryData utf8Json, Azure.Core.Serialization.PropertyNameHandling propertyNameHandling, Azure.Core.Serialization.DynamicDateTimeHandling dateTimeHandling = Azure.Core.Serialization.DynamicDateTimeHandling.Rfc3339) { throw null; }
         public static System.Threading.Tasks.ValueTask<T?> ToObjectAsync<T>(this System.BinaryData data, Azure.Core.Serialization.ObjectSerializer serializer, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static object? ToObjectFromJson(this System.BinaryData data) { throw null; }
         public static T? ToObject<T>(this System.BinaryData data, Azure.Core.Serialization.ObjectSerializer serializer, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -1101,11 +1101,6 @@ namespace Azure.Core.Pipeline
 }
 namespace Azure.Core.Serialization
 {
-    public enum DynamicCaseMapping
-    {
-        None = 0,
-        PascalToCamel = 1,
-    }
     public enum DynamicDateTimeHandling
     {
         Rfc3339 = 0,
@@ -1137,6 +1132,15 @@ namespace Azure.Core.Serialization
         public virtual System.BinaryData Serialize(object? value, System.Type? inputType = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public abstract System.Threading.Tasks.ValueTask SerializeAsync(System.IO.Stream stream, object? value, System.Type inputType, System.Threading.CancellationToken cancellationToken);
         public virtual System.Threading.Tasks.ValueTask<System.BinaryData> SerializeAsync(object? value, System.Type? inputType = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+    }
+    [System.FlagsAttribute]
+    public enum PropertyNameHandling
+    {
+        Strict = 0,
+        AllowPascalCaseReads = 1,
+        WriteNewCamelCase = 2,
+        WriteExistingCamelCase = 4,
+        WriteCamelCase = 6,
     }
 }
 namespace Azure.Messaging

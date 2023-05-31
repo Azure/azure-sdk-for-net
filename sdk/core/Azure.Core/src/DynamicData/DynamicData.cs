@@ -51,14 +51,11 @@ namespace Azure.Core.Dynamic
                 }
             };
 
-            switch (options.CaseMapping)
+            // TODO: Split out serialization and deserialization options
+            if ((options.PropertyNameHandling & PropertyNameHandling.AllowPascalCaseReads) == PropertyNameHandling.AllowPascalCaseReads ||
+                (options.PropertyNameHandling & PropertyNameHandling.WriteNewCamelCase) == PropertyNameHandling.WriteNewCamelCase)
             {
-                case DynamicCaseMapping.PascalToCamel:
-                    serializerOptions.PropertyNamingPolicy = JsonNamingPolicy.CamelCase;
-                    break;
-                case DynamicCaseMapping.None:
-                default:
-                    break;
+                serializerOptions.PropertyNamingPolicy = JsonNamingPolicy.CamelCase;
             }
 
             switch (options.DateTimeHandling)
@@ -104,7 +101,8 @@ namespace Azure.Core.Dynamic
 
             // If we're using the PascalToCamel mapping and the strict name lookup
             // failed, do a second lookup with a camelCase name as well.
-            if (_options.CaseMapping == DynamicCaseMapping.PascalToCamel && char.IsUpper(name[0]))
+            if ((_options.PropertyNameHandling & PropertyNameHandling.AllowPascalCaseReads) == PropertyNameHandling.AllowPascalCaseReads &&
+                char.IsUpper(name[0]))
             {
                 if (_element.TryGetProperty(ConvertToCamelCase(name), out element))
                 {
@@ -173,7 +171,9 @@ namespace Azure.Core.Dynamic
                 value = ConvertType(value);
             }
 
-            if (_options.CaseMapping == DynamicCaseMapping.PascalToCamel)
+            // TODO: implement the full set of write options
+            if ((_options.PropertyNameHandling & PropertyNameHandling.WriteNewCamelCase) == PropertyNameHandling.WriteNewCamelCase ||
+                (_options.PropertyNameHandling & PropertyNameHandling.WriteCamelCase) == PropertyNameHandling.WriteCamelCase)
             {
                 name = ConvertToCamelCase(name);
             }

@@ -17,9 +17,9 @@ namespace Azure.Core.Dynamic
         internal static DynamicDataOptions Default { get => _default; }
 
         /// <summary>
-        /// Gets or sets an object that specifies how dynamic property names will be mapped to member names in the data buffer.
+        /// Gets or sets an object that specifies how dynamic property names will be mapped to member names in the data content.
         /// </summary>
-        public DynamicCaseMapping CaseMapping { get; set; }
+        public PropertyNameHandling PropertyNameHandling { get; set; }
 
         /// <summary>
         /// Gets or sets an object that specifies how DateTime and DateTimeOffset should be handled when serializing and deserializing.
