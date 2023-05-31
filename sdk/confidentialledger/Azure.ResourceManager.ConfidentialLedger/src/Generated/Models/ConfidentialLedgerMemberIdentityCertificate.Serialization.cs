@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ConfidentialLedger.Models
 {
-    public partial class MemberIdentityCertificate : IUtf8JsonSerializable
+    public partial class ConfidentialLedgerMemberIdentityCertificate : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.ConfidentialLedger.Models
             writer.WriteEndObject();
         }
 
-        internal static MemberIdentityCertificate DeserializeMemberIdentityCertificate(JsonElement element)
+        internal static ConfidentialLedgerMemberIdentityCertificate DeserializeConfidentialLedgerMemberIdentityCertificate(JsonElement element)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.ConfidentialLedger.Models
                     continue;
                 }
             }
-            return new MemberIdentityCertificate(certificate.Value, encryptionkey.Value, tags.Value);
+            return new ConfidentialLedgerMemberIdentityCertificate(certificate.Value, encryptionkey.Value, tags.Value);
         }
     }
 }

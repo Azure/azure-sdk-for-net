@@ -10,18 +10,18 @@ using System;
 namespace Azure.ResourceManager.ConfidentialLedger.Models
 {
     /// <summary> Object representing MemberIdentityCertificate for Managed CCF. </summary>
-    public partial class MemberIdentityCertificate
+    public partial class ConfidentialLedgerMemberIdentityCertificate
     {
-        /// <summary> Initializes a new instance of MemberIdentityCertificate. </summary>
-        public MemberIdentityCertificate()
+        /// <summary> Initializes a new instance of ConfidentialLedgerMemberIdentityCertificate. </summary>
+        public ConfidentialLedgerMemberIdentityCertificate()
         {
         }
 
-        /// <summary> Initializes a new instance of MemberIdentityCertificate. </summary>
+        /// <summary> Initializes a new instance of ConfidentialLedgerMemberIdentityCertificate. </summary>
         /// <param name="certificate"> Member Identity Certificate. </param>
         /// <param name="encryptionkey"> Member Identity Certificate Encryption Key. </param>
         /// <param name="tags"> Anything. </param>
-        internal MemberIdentityCertificate(string certificate, string encryptionkey, BinaryData tags)
+        internal ConfidentialLedgerMemberIdentityCertificate(string certificate, string encryptionkey, BinaryData tags)
         {
             Certificate = certificate;
             Encryptionkey = encryptionkey;

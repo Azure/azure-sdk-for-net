@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.ConfidentialLedger.Models
             Optional<Uri> ledgerUri = default;
             Optional<Uri> identityServiceUri = default;
             Optional<string> ledgerInternalNamespace = default;
-            Optional<RunningState> runningState = default;
+            Optional<ConfidentialLedgerRunningState> runningState = default;
             Optional<ConfidentialLedgerType> ledgerType = default;
             Optional<ConfidentialLedgerProvisioningState> provisioningState = default;
             Optional<IList<AadBasedSecurityPrincipal>> aadBasedSecurityPrincipals = default;
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.ConfidentialLedger.Models
                     {
                         continue;
                     }
-                    runningState = new RunningState(property.Value.GetString());
+                    runningState = new ConfidentialLedgerRunningState(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("ledgerType"u8))

@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ConfidentialLedger.Models
 {
-    public partial class DeploymentType : IUtf8JsonSerializable
+    public partial class ConfidentialLedgerDeploymentType : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -24,19 +24,19 @@ namespace Azure.ResourceManager.ConfidentialLedger.Models
             if (Optional.IsDefined(AppSourceUri))
             {
                 writer.WritePropertyName("appSourceUri"u8);
-                writer.WriteStringValue(AppSourceUri);
+                writer.WriteStringValue(AppSourceUri.AbsoluteUri);
             }
             writer.WriteEndObject();
         }
 
-        internal static DeploymentType DeserializeDeploymentType(JsonElement element)
+        internal static ConfidentialLedgerDeploymentType DeserializeConfidentialLedgerDeploymentType(JsonElement element)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<LanguageRuntime> languageRuntime = default;
-            Optional<string> appSourceUri = default;
+            Optional<ConfidentialLedgerLanguageRuntime> languageRuntime = default;
+            Optional<Uri> appSourceUri = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("languageRuntime"u8))
@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.ConfidentialLedger.Models
                     {
                         continue;
                     }
-                    languageRuntime = new LanguageRuntime(property.Value.GetString());
+                    languageRuntime = new ConfidentialLedgerLanguageRuntime(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("appSourceUri"u8))
@@ -54,11 +54,11 @@ namespace Azure.ResourceManager.ConfidentialLedger.Models
                     {
                         continue;
                     }
-                    appSourceUri = property.Value.GetString();
+                    appSourceUri = new Uri(property.Value.GetString());
                     continue;
                 }
             }
-            return new DeploymentType(Optional.ToNullable(languageRuntime), appSourceUri);
+            return new ConfidentialLedgerDeploymentType(Optional.ToNullable(languageRuntime), appSourceUri.Value);
         }
     }
 }

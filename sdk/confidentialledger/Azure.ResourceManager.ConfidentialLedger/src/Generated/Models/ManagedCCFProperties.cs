@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.ConfidentialLedger.Models
         /// <summary> Initializes a new instance of ManagedCCFProperties. </summary>
         public ManagedCCFProperties()
         {
-            MemberIdentityCertificates = new ChangeTrackingList<MemberIdentityCertificate>();
+            MemberIdentityCertificates = new ChangeTrackingList<ConfidentialLedgerMemberIdentityCertificate>();
         }
 
         /// <summary> Initializes a new instance of ManagedCCFProperties. </summary>
@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.ConfidentialLedger.Models
         /// <param name="deploymentType"> Deployment Type of Managed CCF. </param>
         /// <param name="provisioningState"> Provisioning state of Ledger Resource. </param>
         /// <param name="nodeCount"> Number of CCF nodes in the Managed CCF. </param>
-        internal ManagedCCFProperties(string appName, Uri appUri, Uri identityServiceUri, IList<MemberIdentityCertificate> memberIdentityCertificates, DeploymentType deploymentType, ConfidentialLedgerProvisioningState? provisioningState, int? nodeCount)
+        internal ManagedCCFProperties(string appName, Uri appUri, Uri identityServiceUri, IList<ConfidentialLedgerMemberIdentityCertificate> memberIdentityCertificates, ConfidentialLedgerDeploymentType deploymentType, ConfidentialLedgerProvisioningState? provisioningState, int? nodeCount)
         {
             AppName = appName;
             AppUri = appUri;
@@ -46,9 +46,9 @@ namespace Azure.ResourceManager.ConfidentialLedger.Models
         /// <summary> Endpoint for accessing network identity. </summary>
         public Uri IdentityServiceUri { get; }
         /// <summary> List of member identity certificates for  Managed CCF. </summary>
-        public IList<MemberIdentityCertificate> MemberIdentityCertificates { get; }
+        public IList<ConfidentialLedgerMemberIdentityCertificate> MemberIdentityCertificates { get; }
         /// <summary> Deployment Type of Managed CCF. </summary>
-        public DeploymentType DeploymentType { get; set; }
+        public ConfidentialLedgerDeploymentType DeploymentType { get; set; }
         /// <summary> Provisioning state of Ledger Resource. </summary>
         public ConfidentialLedgerProvisioningState? ProvisioningState { get; }
         /// <summary> Number of CCF nodes in the Managed CCF. </summary>

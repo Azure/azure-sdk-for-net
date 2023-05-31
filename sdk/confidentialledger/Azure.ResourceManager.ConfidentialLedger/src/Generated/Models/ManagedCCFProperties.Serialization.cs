@@ -49,8 +49,8 @@ namespace Azure.ResourceManager.ConfidentialLedger.Models
             Optional<string> appName = default;
             Optional<Uri> appUri = default;
             Optional<Uri> identityServiceUri = default;
-            Optional<IList<MemberIdentityCertificate>> memberIdentityCertificates = default;
-            Optional<DeploymentType> deploymentType = default;
+            Optional<IList<ConfidentialLedgerMemberIdentityCertificate>> memberIdentityCertificates = default;
+            Optional<ConfidentialLedgerDeploymentType> deploymentType = default;
             Optional<ConfidentialLedgerProvisioningState> provisioningState = default;
             Optional<int> nodeCount = default;
             foreach (var property in element.EnumerateObject())
@@ -84,10 +84,10 @@ namespace Azure.ResourceManager.ConfidentialLedger.Models
                     {
                         continue;
                     }
-                    List<MemberIdentityCertificate> array = new List<MemberIdentityCertificate>();
+                    List<ConfidentialLedgerMemberIdentityCertificate> array = new List<ConfidentialLedgerMemberIdentityCertificate>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(MemberIdentityCertificate.DeserializeMemberIdentityCertificate(item));
+                        array.Add(ConfidentialLedgerMemberIdentityCertificate.DeserializeConfidentialLedgerMemberIdentityCertificate(item));
                     }
                     memberIdentityCertificates = array;
                     continue;
@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.ConfidentialLedger.Models
                     {
                         continue;
                     }
-                    deploymentType = DeploymentType.DeserializeDeploymentType(property.Value);
+                    deploymentType = ConfidentialLedgerDeploymentType.DeserializeConfidentialLedgerDeploymentType(property.Value);
                     continue;
                 }
                 if (property.NameEquals("provisioningState"u8))

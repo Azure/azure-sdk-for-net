@@ -10,25 +10,25 @@ using System;
 namespace Azure.ResourceManager.ConfidentialLedger.Models
 {
     /// <summary> Object representing DeploymentType for Managed CCF. </summary>
-    public partial class DeploymentType
+    public partial class ConfidentialLedgerDeploymentType
     {
-        /// <summary> Initializes a new instance of DeploymentType. </summary>
-        public DeploymentType()
+        /// <summary> Initializes a new instance of ConfidentialLedgerDeploymentType. </summary>
+        public ConfidentialLedgerDeploymentType()
         {
         }
 
-        /// <summary> Initializes a new instance of DeploymentType. </summary>
+        /// <summary> Initializes a new instance of ConfidentialLedgerDeploymentType. </summary>
         /// <param name="languageRuntime"> Unique name for the Managed CCF. </param>
         /// <param name="appSourceUri"> Source Uri containing ManagedCCF code. </param>
-        internal DeploymentType(LanguageRuntime? languageRuntime, string appSourceUri)
+        internal ConfidentialLedgerDeploymentType(ConfidentialLedgerLanguageRuntime? languageRuntime, Uri appSourceUri)
         {
             LanguageRuntime = languageRuntime;
             AppSourceUri = appSourceUri;
         }
 
         /// <summary> Unique name for the Managed CCF. </summary>
-        public LanguageRuntime? LanguageRuntime { get; set; }
+        public ConfidentialLedgerLanguageRuntime? LanguageRuntime { get; set; }
         /// <summary> Source Uri containing ManagedCCF code. </summary>
-        public string AppSourceUri { get; set; }
+        public Uri AppSourceUri { get; set; }
     }
 }
