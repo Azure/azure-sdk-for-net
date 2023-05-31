@@ -115,7 +115,7 @@ namespace Azure.Storage
             headers.Sort(static (x, y) =>
             {
                 CultureInfo cultureInfo = new CultureInfo(Constants.EnUsCulture, useUserOverride: false);
-                return string.Compare(x.Name, y.Name, ignoreCase: true, cultureInfo);
+                return string.Compare(x.Name, y.Name, cultureInfo, CompareOptions.IgnoreSymbols);
             });
 
             foreach (var header in headers)
