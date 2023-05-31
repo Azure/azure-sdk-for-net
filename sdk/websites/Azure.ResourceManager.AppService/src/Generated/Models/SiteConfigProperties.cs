@@ -182,7 +182,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <summary> Number of workers. </summary>
         public int? NumberOfWorkers { get; set; }
         /// <summary> Default documents. </summary>
-        public IList<string> DefaultDocuments { get; set; }
+        public IList<string> DefaultDocuments { get; }
         /// <summary> .NET Framework version. </summary>
         public string NetFrameworkVersion { get; set; }
         /// <summary> Version of PHP. </summary>
@@ -218,13 +218,13 @@ namespace Azure.ResourceManager.AppService.Models
         /// <summary> Publishing user name. </summary>
         public string PublishingUsername { get; set; }
         /// <summary> Application settings. </summary>
-        public IList<AppServiceNameValuePair> AppSettings { get; set; }
+        public IList<AppServiceNameValuePair> AppSettings { get; }
         /// <summary> Connection strings. </summary>
-        public IList<ConnStringInfo> ConnectionStrings { get; set; }
+        public IList<ConnStringInfo> ConnectionStrings { get; }
         /// <summary> Site MachineKey. </summary>
         public SiteMachineKey MachineKey { get; }
         /// <summary> Handler mappings. </summary>
-        public IList<HttpRequestHandlerMapping> HandlerMappings { get; set; }
+        public IList<HttpRequestHandlerMapping> HandlerMappings { get; }
         /// <summary> Document root. </summary>
         public string DocumentRoot { get; set; }
         /// <summary> SCM type. </summary>
@@ -246,7 +246,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <summary> Managed pipeline mode. </summary>
         public ManagedPipelineMode? ManagedPipelineMode { get; set; }
         /// <summary> Virtual applications. </summary>
-        public IList<VirtualApplication> VirtualApplications { get; set; }
+        public IList<VirtualApplication> VirtualApplications { get; }
         /// <summary> Site load balancing. </summary>
         public SiteLoadBalancing? LoadBalancing { get; set; }
         /// <summary> This is work around for polymorphic types. </summary>
@@ -319,9 +319,9 @@ namespace Azure.ResourceManager.AppService.Models
         /// <summary> Identity to use for Key Vault Reference authentication. </summary>
         public string KeyVaultReferenceIdentity { get; set; }
         /// <summary> IP security restrictions for main. </summary>
-        public IList<AppServiceIPSecurityRestriction> IPSecurityRestrictions { get; set; }
+        public IList<AppServiceIPSecurityRestriction> IPSecurityRestrictions { get; }
         /// <summary> IP security restrictions for scm. </summary>
-        public IList<AppServiceIPSecurityRestriction> ScmIPSecurityRestrictions { get; set; }
+        public IList<AppServiceIPSecurityRestriction> ScmIPSecurityRestrictions { get; }
         /// <summary> IP security restrictions for scm to use main. </summary>
         public bool? AllowIPSecurityRestrictionsForScmToUseMain { get; set; }
         /// <summary> Http20Enabled: configures a web site to allow clients to connect over http2.0. </summary>
@@ -358,7 +358,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// </summary>
         public int? MinimumElasticInstanceCount { get; set; }
         /// <summary> List of Azure Storage Accounts. </summary>
-        public IDictionary<string, AppServiceStorageAccessInfo> AzureStorageAccounts { get; set; }
+        public IDictionary<string, AppServiceStorageAccessInfo> AzureStorageAccounts { get; }
         /// <summary> Property to allow or block all public traffic. </summary>
         public string PublicNetworkAccess { get; set; }
     }
