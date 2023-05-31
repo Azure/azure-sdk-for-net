@@ -105,20 +105,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
                 linksJson.Append('[');
                 foreach (ref readonly var link in activity.EnumerateLinks())
                 {
-                    linksJson
-                        .Append('{')
-                        .Append("\"operation_Id\":")
-                        .Append('\"')
-                        .Append(link.Context.TraceId.ToHexString())
-                        .Append('\"')
-                        .Append(',');
-                    linksJson
-                        .Append("\"id\":")
-                        .Append('\"')
-                        .Append(link.Context.SpanId.ToHexString())
-                        .Append('\"');
-                    linksJson.Append("},");
-
+                    AddContextToMSLinks(linksJson, link);
                     maxLinks--;
                     if (maxLinks == 0)
                     {
@@ -301,18 +288,18 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
             };
         }
 
-        internal static void AddEnqueuedTimeToMeasurementsAndAddLinksToProperties(Activity activity, IDictionary<string, double> measurements, ref AzMonList UnMappedTags)
+        internal static void AddEnqueuedTimeToMeasurrementsAndLinksToProperties(Activity activity, IDictionary<string, double> measurements, ref AzMonList UnMappedTags)
         {
             if (activity.Links != null && activity.Links.Any())
             {
-                if (TryGetAverageTimeInQueueForBatchAndAddLinksToProperties(activity, ref UnMappedTags, out long enqueuedTime))
+                if (TryGetAverageQueueTimeWithLinks(activity, ref UnMappedTags, out long enqueuedTime))
                 {
                     measurements["timeSinceEnqueued"] = enqueuedTime;
                 }
             }
         }
 
-        private static bool TryGetAverageTimeInQueueForBatchAndAddLinksToProperties(Activity activity, ref AzMonList UnMappedTags, out long avgTimeInQueue)
+        private static bool TryGetAverageQueueTimeWithLinks(Activity activity, ref AzMonList UnMappedTags, out long avgTimeInQueue)
         {
             avgTimeInQueue = 0;
             var linksCount = 0;
@@ -325,31 +312,22 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
             linksJson.Append('[');
             foreach (ref readonly var link in activity.EnumerateLinks())
             {
-                if (!TryGetEnqueuedTime(link, out var msgEnqueuedTime))
+                long msgEnqueuedTime = 0;
+                if (isEnqueuedTimeCalculated && !TryGetEnqueuedTime(link, out msgEnqueuedTime))
                 {
                     // instrumentation does not consistently report enqueued time, ignoring whole span
                     isEnqueuedTimeCalculated = false;
                 }
-
-                avgTimeInQueue += Math.Max(startEpochTime - msgEnqueuedTime, 0);
+                if (isEnqueuedTimeCalculated)
+                {
+                    avgTimeInQueue += Math.Max(startEpochTime - msgEnqueuedTime, 0);
+                }
 
                 linksCount++;
 
                 if (linksCount <= MaxlinksAllowed)
                 {
-                    linksJson
-                        .Append('{')
-                        .Append("\"operation_Id\":")
-                        .Append('\"')
-                        .Append(link.Context.TraceId.ToHexString())
-                        .Append('\"')
-                        .Append(',');
-                    linksJson
-                        .Append("\"id\":")
-                        .Append('\"')
-                        .Append(link.Context.SpanId.ToHexString())
-                        .Append('\"');
-                    linksJson.Append("},");
+                    AddContextToMSLinks(linksJson, link);
                 }
             }
 
@@ -358,11 +336,8 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
                 // trim trailing comma - json does not support it
                 linksJson.Remove(linksJson.Length - 1, 1);
             }
-
             linksJson.Append(']');
-
             AzMonList.Add(ref UnMappedTags, new KeyValuePair<string, object?>(msLinks, linksJson.ToString()));
-
             if (MaxlinksAllowed < linksCount)
             {
                 AzureMonitorExporterEventSource.Log.WriteInformational("ActivityLinksIgnored", $"Max count of {MaxlinksAllowed} has reached.");
@@ -384,18 +359,35 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
         private static bool TryGetEnqueuedTime(ActivityLink link, out long enqueuedTime)
         {
             enqueuedTime = 0;
-            if (link.Tags != null && link.Tags.Any())
+
+            foreach (ref readonly var attribute in link.EnumerateTagObjects())
             {
-                foreach (var attribute in link.Tags)
+                if (attribute.Key == "enqueuedTime")
                 {
-                    if (attribute.Key == "enqueuedTime")
-                    {
-                        return long.TryParse(attribute.Value?.ToString(), out enqueuedTime);
-                    }
+                    return long.TryParse(attribute.Value?.ToString(), out enqueuedTime);
                 }
             }
 
             return false;
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        private static void AddContextToMSLinks(StringBuilder linksJson, ActivityLink link)
+        {
+            linksJson
+                .Append('{')
+                .Append("\"operation_Id\":")
+                .Append('\"')
+                .Append(link.Context.TraceId.ToHexString())
+                .Append('\"')
+                .Append(',');
+            linksJson
+                .Append("\"id\":")
+                .Append('\"')
+                .Append(link.Context.SpanId.ToHexString())
+                .Append('\"');
+            linksJson
+                .Append("},");
         }
     }
 }
