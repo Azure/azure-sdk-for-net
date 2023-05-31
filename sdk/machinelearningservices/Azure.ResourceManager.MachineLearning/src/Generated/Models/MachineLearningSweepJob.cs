@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// Please note <see cref="MachineLearningJobInput"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="MachineLearningCustomModelJobInput"/>, <see cref="MachineLearningLiteralJobInput"/>, <see cref="MachineLearningFlowModelJobInput"/>, <see cref="MachineLearningTableJobInput"/>, <see cref="MachineLearningTritonModelJobInput"/>, <see cref="MachineLearningUriFileJobInput"/> and <see cref="MachineLearningUriFolderJobInput"/>.
         /// </summary>
-        public IDictionary<string, MachineLearningJobInput> Inputs { get; set; }
+        public IDictionary<string, MachineLearningJobInput> Inputs { get; }
         /// <summary> Sweep Job limit. </summary>
         public MachineLearningSweepJobLimits Limits { get; set; }
         /// <summary> [Required] Optimization objective. </summary>
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// Please note <see cref="MachineLearningJobOutput"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="MachineLearningCustomModelJobOutput"/>, <see cref="MachineLearningFlowModelJobOutput"/>, <see cref="MachineLearningTableJobOutput"/>, <see cref="MachineLearningTritonModelJobOutput"/>, <see cref="MachineLearningUriFileJobOutput"/> and <see cref="MachineLearningUriFolderJobOutput"/>.
         /// </summary>
-        public IDictionary<string, MachineLearningJobOutput> Outputs { get; set; }
+        public IDictionary<string, MachineLearningJobOutput> Outputs { get; }
         /// <summary>
         /// [Required] The hyperparameter sampling algorithm
         /// Please note <see cref="SamplingAlgorithm"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.

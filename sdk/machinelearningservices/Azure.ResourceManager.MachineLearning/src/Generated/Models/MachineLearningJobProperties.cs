@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// List of JobEndpoints.
         /// For local jobs, a job endpoint will have an endpoint value of FileStreamObject.
         /// </summary>
-        public IDictionary<string, MachineLearningJobService> Services { get; set; }
+        public IDictionary<string, MachineLearningJobService> Services { get; }
         /// <summary> Status of the job. </summary>
         public MachineLearningJobStatus? Status { get; }
     }

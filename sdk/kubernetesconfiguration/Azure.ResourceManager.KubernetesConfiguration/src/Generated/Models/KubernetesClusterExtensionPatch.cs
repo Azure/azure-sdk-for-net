@@ -27,8 +27,8 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
         /// <summary> Version of the extension for this extension, if it is &apos;pinned&apos; to a specific version. autoUpgradeMinorVersion must be &apos;false&apos;. </summary>
         public string Version { get; set; }
         /// <summary> Configuration settings, as name-value pairs for configuring this extension. </summary>
-        public IDictionary<string, string> ConfigurationSettings { get; set; }
+        public IDictionary<string, string> ConfigurationSettings { get; }
         /// <summary> Configuration settings that are sensitive, as name-value pairs for configuring this extension. </summary>
-        public IDictionary<string, string> ConfigurationProtectedSettings { get; set; }
+        public IDictionary<string, string> ConfigurationProtectedSettings { get; }
     }
 }

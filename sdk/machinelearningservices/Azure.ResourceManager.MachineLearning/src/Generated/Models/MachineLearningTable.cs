@@ -41,6 +41,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
         }
 
         /// <summary> Uris referenced in the MLTable definition (required for lineage). </summary>
-        public IList<Uri> ReferencedUris { get; set; }
+        public IList<Uri> ReferencedUris { get; }
     }
 }

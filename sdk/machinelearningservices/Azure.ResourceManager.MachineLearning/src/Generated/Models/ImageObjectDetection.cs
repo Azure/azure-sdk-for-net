@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <summary> Settings used for training the model. </summary>
         public ImageModelSettingsObjectDetection ModelSettings { get; set; }
         /// <summary> Search space for sampling different combinations of models and their hyperparameters. </summary>
-        public IList<ImageModelDistributionSettingsObjectDetection> SearchSpace { get; set; }
+        public IList<ImageModelDistributionSettingsObjectDetection> SearchSpace { get; }
         /// <summary> [Required] Limit settings for the AutoML job. </summary>
         public ImageLimitSettings LimitSettings { get; set; }
         /// <summary> Model sweeping and hyperparameter sweeping related settings. </summary>

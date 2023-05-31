@@ -87,15 +87,15 @@ namespace Azure.ResourceManager.KubernetesConfiguration
         /// <summary> Scope at which the extension is installed. </summary>
         public KubernetesClusterExtensionScope Scope { get; set; }
         /// <summary> Configuration settings, as name-value pairs for configuring this extension. </summary>
-        public IDictionary<string, string> ConfigurationSettings { get; set; }
+        public IDictionary<string, string> ConfigurationSettings { get; }
         /// <summary> Configuration settings that are sensitive, as name-value pairs for configuring this extension. </summary>
-        public IDictionary<string, string> ConfigurationProtectedSettings { get; set; }
+        public IDictionary<string, string> ConfigurationProtectedSettings { get; }
         /// <summary> Currently installed version of the extension. </summary>
         public string CurrentVersion { get; }
         /// <summary> Status of installation of this extension. </summary>
         public KubernetesConfigurationProvisioningState? ProvisioningState { get; }
         /// <summary> Status from this extension. </summary>
-        public IList<KubernetesClusterExtensionStatus> Statuses { get; set; }
+        public IList<KubernetesClusterExtensionStatus> Statuses { get; }
         /// <summary> Error information from the Agent - e.g. errors during installation. </summary>
         public ResponseError ErrorInfo { get; }
         /// <summary> Custom Location settings properties. </summary>

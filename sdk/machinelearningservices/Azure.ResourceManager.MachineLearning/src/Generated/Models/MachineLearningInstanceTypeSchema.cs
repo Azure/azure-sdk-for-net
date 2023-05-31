@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         }
 
         /// <summary> Node Selector. </summary>
-        public IDictionary<string, string> NodeSelector { get; set; }
+        public IDictionary<string, string> NodeSelector { get; }
         /// <summary> Resource requests/limits for this instance type. </summary>
         public MachineLearningInstanceTypeSchemaResources Resources { get; set; }
     }

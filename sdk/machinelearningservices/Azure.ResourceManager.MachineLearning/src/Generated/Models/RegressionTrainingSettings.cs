@@ -41,8 +41,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
         }
 
         /// <summary> Allowed models for regression task. </summary>
-        public IList<AutoMLVerticalRegressionModel> AllowedTrainingAlgorithms { get; set; }
+        public IList<AutoMLVerticalRegressionModel> AllowedTrainingAlgorithms { get; }
         /// <summary> Blocked models for regression task. </summary>
-        public IList<AutoMLVerticalRegressionModel> BlockedTrainingAlgorithms { get; set; }
+        public IList<AutoMLVerticalRegressionModel> BlockedTrainingAlgorithms { get; }
     }
 }

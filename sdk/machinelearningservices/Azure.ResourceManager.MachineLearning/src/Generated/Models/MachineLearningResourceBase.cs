@@ -34,8 +34,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <summary> The asset description text. </summary>
         public string Description { get; set; }
         /// <summary> The asset property dictionary. </summary>
-        public IDictionary<string, string> Properties { get; set; }
+        public IDictionary<string, string> Properties { get; }
         /// <summary> Tag dictionary. Tags can be added, removed, and updated. </summary>
-        public IDictionary<string, string> Tags { get; set; }
+        public IDictionary<string, string> Tags { get; }
     }
 }

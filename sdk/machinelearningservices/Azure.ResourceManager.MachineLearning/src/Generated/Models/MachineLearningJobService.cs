@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <summary> Port for endpoint. </summary>
         public int? Port { get; set; }
         /// <summary> Additional properties to set on the endpoint. </summary>
-        public IDictionary<string, string> Properties { get; set; }
+        public IDictionary<string, string> Properties { get; }
         /// <summary> Status of endpoint. </summary>
         public string Status { get; }
     }

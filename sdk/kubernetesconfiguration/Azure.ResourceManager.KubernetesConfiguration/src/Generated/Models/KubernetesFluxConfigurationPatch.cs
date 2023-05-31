@@ -31,8 +31,8 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
         /// <summary> Parameters to reconcile to the AzureBlob source kind type. </summary>
         public KubernetesAzureBlobUpdateContent AzureBlob { get; set; }
         /// <summary> Array of kustomizations used to reconcile the artifact pulled by the source type on the cluster. </summary>
-        public IDictionary<string, KustomizationUpdateContent> Kustomizations { get; set; }
+        public IDictionary<string, KustomizationUpdateContent> Kustomizations { get; }
         /// <summary> Key-value pairs of protected configuration settings for the configuration. </summary>
-        public IDictionary<string, string> ConfigurationProtectedSettings { get; set; }
+        public IDictionary<string, string> ConfigurationProtectedSettings { get; }
     }
 }

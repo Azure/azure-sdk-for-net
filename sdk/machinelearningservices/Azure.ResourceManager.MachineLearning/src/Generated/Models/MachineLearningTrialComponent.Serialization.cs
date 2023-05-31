@@ -46,21 +46,14 @@ namespace Azure.ResourceManager.MachineLearning.Models
             writer.WriteStringValue(EnvironmentId);
             if (Optional.IsCollectionDefined(EnvironmentVariables))
             {
-                if (EnvironmentVariables != null)
+                writer.WritePropertyName("environmentVariables"u8);
+                writer.WriteStartObject();
+                foreach (var item in EnvironmentVariables)
                 {
-                    writer.WritePropertyName("environmentVariables"u8);
-                    writer.WriteStartObject();
-                    foreach (var item in EnvironmentVariables)
-                    {
-                        writer.WritePropertyName(item.Key);
-                        writer.WriteStringValue(item.Value);
-                    }
-                    writer.WriteEndObject();
+                    writer.WritePropertyName(item.Key);
+                    writer.WriteStringValue(item.Value);
                 }
-                else
-                {
-                    writer.WriteNull("environmentVariables");
-                }
+                writer.WriteEndObject();
             }
             if (Optional.IsDefined(Resources))
             {

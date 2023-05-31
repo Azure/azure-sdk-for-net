@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         }
 
         /// <summary> Fields to apply transformer logic on. </summary>
-        public IList<string> Fields { get; set; }
+        public IList<string> Fields { get; }
         /// <summary>
         /// Different properties to be passed to transformer.
         /// Input expected is dictionary of key,value pairs in JSON format.

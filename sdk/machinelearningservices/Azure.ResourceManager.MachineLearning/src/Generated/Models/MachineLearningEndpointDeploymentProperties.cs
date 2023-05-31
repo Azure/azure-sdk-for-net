@@ -42,8 +42,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <summary> ARM resource ID or AssetId of the environment specification for the endpoint deployment. </summary>
         public string EnvironmentId { get; set; }
         /// <summary> Environment variables configuration for the deployment. </summary>
-        public IDictionary<string, string> EnvironmentVariables { get; set; }
+        public IDictionary<string, string> EnvironmentVariables { get; }
         /// <summary> Property dictionary. Properties can be added, but not removed or altered. </summary>
-        public IDictionary<string, string> Properties { get; set; }
+        public IDictionary<string, string> Properties { get; }
     }
 }

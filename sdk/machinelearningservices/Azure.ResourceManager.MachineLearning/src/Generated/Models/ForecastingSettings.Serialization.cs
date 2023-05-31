@@ -115,20 +115,13 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
             if (Optional.IsCollectionDefined(TimeSeriesIdColumnNames))
             {
-                if (TimeSeriesIdColumnNames != null)
+                writer.WritePropertyName("timeSeriesIdColumnNames"u8);
+                writer.WriteStartArray();
+                foreach (var item in TimeSeriesIdColumnNames)
                 {
-                    writer.WritePropertyName("timeSeriesIdColumnNames"u8);
-                    writer.WriteStartArray();
-                    foreach (var item in TimeSeriesIdColumnNames)
-                    {
-                        writer.WriteStringValue(item);
-                    }
-                    writer.WriteEndArray();
+                    writer.WriteStringValue(item);
                 }
-                else
-                {
-                    writer.WriteNull("timeSeriesIdColumnNames");
-                }
+                writer.WriteEndArray();
             }
             if (Optional.IsDefined(UseStl))
             {

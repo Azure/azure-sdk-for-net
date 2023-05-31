@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
         /// <summary> The path in the source reference to reconcile on the cluster. </summary>
         public string Path { get; set; }
         /// <summary> Specifies other Kustomizations that this Kustomization depends on. This Kustomization will not reconcile until all dependencies have completed their reconciliation. </summary>
-        public IList<string> DependsOn { get; set; }
+        public IList<string> DependsOn { get; }
         /// <summary> The maximum time to attempt to reconcile the Kustomization on the cluster. </summary>
         public long? TimeoutInSeconds { get; set; }
         /// <summary> The interval at which to re-reconcile the Kustomization on the cluster. </summary>

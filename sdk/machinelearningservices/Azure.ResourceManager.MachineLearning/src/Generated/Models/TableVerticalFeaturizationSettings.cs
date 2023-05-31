@@ -42,9 +42,9 @@ namespace Azure.ResourceManager.MachineLearning.Models
         }
 
         /// <summary> These transformers shall not be used in featurization. </summary>
-        public IList<BlockedTransformer> BlockedTransformers { get; set; }
+        public IList<BlockedTransformer> BlockedTransformers { get; }
         /// <summary> Dictionary of column name and its type (int, float, string, datetime etc). </summary>
-        public IDictionary<string, string> ColumnNameAndTypes { get; set; }
+        public IDictionary<string, string> ColumnNameAndTypes { get; }
         /// <summary> Determines whether to use Dnn based featurizers for data featurization. </summary>
         public bool? EnableDnnFeaturization { get; set; }
         /// <summary>
@@ -54,6 +54,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// </summary>
         public MachineLearningFeaturizationMode? Mode { get; set; }
         /// <summary> User can specify additional transformers to be used along with the columns to which it would be applied and parameters for the transformer constructor. </summary>
-        public IDictionary<string, IList<ColumnTransformer>> TransformerParams { get; set; }
+        public IDictionary<string, IList<ColumnTransformer>> TransformerParams { get; }
     }
 }

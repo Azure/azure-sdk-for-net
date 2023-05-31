@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <summary> [Required] The ARM resource ID of the Environment specification for the job. </summary>
         public ResourceIdentifier EnvironmentId { get; set; }
         /// <summary> Environment variables included in the job. </summary>
-        public IDictionary<string, string> EnvironmentVariables { get; set; }
+        public IDictionary<string, string> EnvironmentVariables { get; }
         /// <summary> Compute Resource configuration for the job. </summary>
         public MachineLearningJobResourceConfiguration Resources { get; set; }
     }

@@ -48,8 +48,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <summary> [Required] List of minutes for the schedule. </summary>
         public IList<int> Minutes { get; }
         /// <summary> List of month days for the schedule. </summary>
-        public IList<int> MonthDays { get; set; }
+        public IList<int> MonthDays { get; }
         /// <summary> List of days for the schedule. </summary>
-        public IList<MachineLearningDayOfWeek> WeekDays { get; set; }
+        public IList<MachineLearningDayOfWeek> WeekDays { get; }
     }
 }

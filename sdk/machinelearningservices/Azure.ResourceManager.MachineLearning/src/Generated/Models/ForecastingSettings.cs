@@ -133,7 +133,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// The names of columns used to group a timeseries. It can be used to create multiple series.
         /// If grain is not defined, the data set is assumed to be one time-series. This parameter is used with task type forecasting.
         /// </summary>
-        public IList<string> TimeSeriesIdColumnNames { get; set; }
+        public IList<string> TimeSeriesIdColumnNames { get; }
         /// <summary> Configure STL Decomposition of the time-series target column. </summary>
         public MachineLearningUseStl? UseStl { get; set; }
     }

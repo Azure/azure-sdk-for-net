@@ -85,9 +85,9 @@ namespace Azure.ResourceManager.KubernetesConfiguration
         /// <summary> Parameters to reconcile to the AzureBlob source kind type. </summary>
         public KubernetesAzureBlob AzureBlob { get; set; }
         /// <summary> Array of kustomizations used to reconcile the artifact pulled by the source type on the cluster. </summary>
-        public IDictionary<string, Kustomization> Kustomizations { get; set; }
+        public IDictionary<string, Kustomization> Kustomizations { get; }
         /// <summary> Key-value pairs of protected configuration settings for the configuration. </summary>
-        public IDictionary<string, string> ConfigurationProtectedSettings { get; set; }
+        public IDictionary<string, string> ConfigurationProtectedSettings { get; }
         /// <summary> Statuses of the Flux Kubernetes resources created by the fluxConfiguration or created by the managed objects provisioned by the fluxConfiguration. </summary>
         public IReadOnlyList<KubernetesObjectStatus> Statuses { get; }
         /// <summary> Public Key associated with this fluxConfiguration (either generated within the cluster or provided by the user). </summary>

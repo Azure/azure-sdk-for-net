@@ -56,6 +56,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <summary> Set to &quot;Enabled&quot; for endpoints that should allow public access when Private Link is enabled. </summary>
         public MachineLearningPublicNetworkAccessType? PublicNetworkAccess { get; set; }
         /// <summary> Percentage of traffic from endpoint to divert to each deployment. Traffic values need to sum to 100. </summary>
-        public IDictionary<string, int> Traffic { get; set; }
+        public IDictionary<string, int> Traffic { get; }
     }
 }

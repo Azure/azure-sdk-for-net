@@ -88,13 +88,13 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// </summary>
         public string EnvironmentId { get; set; }
         /// <summary> Environment variables included in the job. </summary>
-        public IDictionary<string, string> EnvironmentVariables { get; set; }
+        public IDictionary<string, string> EnvironmentVariables { get; }
         /// <summary>
         /// Mapping of output data bindings used in the job.
         /// Please note <see cref="MachineLearningJobOutput"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="MachineLearningCustomModelJobOutput"/>, <see cref="MachineLearningFlowModelJobOutput"/>, <see cref="MachineLearningTableJobOutput"/>, <see cref="MachineLearningTritonModelJobOutput"/>, <see cref="MachineLearningUriFileJobOutput"/> and <see cref="MachineLearningUriFolderJobOutput"/>.
         /// </summary>
-        public IDictionary<string, MachineLearningJobOutput> Outputs { get; set; }
+        public IDictionary<string, MachineLearningJobOutput> Outputs { get; }
         /// <summary> Compute Resource configuration for the job. </summary>
         public MachineLearningJobResourceConfiguration Resources { get; set; }
         /// <summary>

@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.LoadTesting.Models
         }
 
         /// <summary> Resource tags. </summary>
-        public IDictionary<string, string> Tags { get; set; }
+        public IDictionary<string, string> Tags { get; }
         /// <summary> The type of identity used for the resource. </summary>
         public ManagedServiceIdentity Identity { get; set; }
         /// <summary> Description of the resource. </summary>

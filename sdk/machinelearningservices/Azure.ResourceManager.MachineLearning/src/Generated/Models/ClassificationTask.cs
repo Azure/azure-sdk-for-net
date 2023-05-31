@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <summary> Inputs for training phase for an AutoML Job. </summary>
         public ClassificationTrainingSettings TrainingSettings { get; set; }
         /// <summary> Columns to use for CVSplit data. </summary>
-        public IList<string> CvSplitColumnNames { get; set; }
+        public IList<string> CvSplitColumnNames { get; }
         /// <summary> Featurization inputs needed for AutoML job. </summary>
         public TableVerticalFeaturizationSettings FeaturizationSettings { get; set; }
         /// <summary> Execution constraints for AutoMLJob. </summary>

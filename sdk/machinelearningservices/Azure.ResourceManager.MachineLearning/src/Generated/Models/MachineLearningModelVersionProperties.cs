@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         }
 
         /// <summary> Mapping of model flavors to their properties. </summary>
-        public IDictionary<string, MachineLearningFlavorData> Flavors { get; set; }
+        public IDictionary<string, MachineLearningFlavorData> Flavors { get; }
         /// <summary> Name of the training job which produced this model. </summary>
         public string JobName { get; set; }
         /// <summary> The storage format for this entity. Used for NCD. </summary>

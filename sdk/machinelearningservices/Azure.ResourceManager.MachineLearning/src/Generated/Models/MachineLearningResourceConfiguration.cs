@@ -65,6 +65,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// </list>
         /// </para>
         /// </summary>
-        public IDictionary<string, BinaryData> Properties { get; set; }
+        public IDictionary<string, BinaryData> Properties { get; }
     }
 }

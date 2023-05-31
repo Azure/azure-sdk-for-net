@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// </summary>
         public MachineLearningEndpointAuthKeys Keys { get; set; }
         /// <summary> Property dictionary. Properties can be added, but not removed or altered. </summary>
-        public IDictionary<string, string> Properties { get; set; }
+        public IDictionary<string, string> Properties { get; }
         /// <summary> Endpoint URI. </summary>
         public Uri ScoringUri { get; }
         /// <summary> Endpoint Swagger URI. </summary>

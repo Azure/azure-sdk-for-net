@@ -671,6 +671,7 @@ namespace Azure.Security.KeyVault.Storage
             };
             if (tags != null)
             {
+                storageAccountCreateParameters.Tags.Clear();
                 foreach (var value in tags)
                 {
                     storageAccountCreateParameters.Tags.Add(value);
@@ -787,6 +788,7 @@ namespace Azure.Security.KeyVault.Storage
             };
             if (tags != null)
             {
+                storageAccountUpdateParameters.Tags.Clear();
                 foreach (var value in tags)
                 {
                     storageAccountUpdateParameters.Tags.Add(value);
@@ -1452,6 +1454,7 @@ namespace Azure.Security.KeyVault.Storage
             };
             if (tags != null)
             {
+                sasDefinitionCreateParameters.Tags.Clear();
                 foreach (var value in tags)
                 {
                     sasDefinitionCreateParameters.Tags.Add(value);
@@ -1578,6 +1581,7 @@ namespace Azure.Security.KeyVault.Storage
             };
             if (tags != null)
             {
+                sasDefinitionUpdateParameters.Tags.Clear();
                 foreach (var value in tags)
                 {
                     sasDefinitionUpdateParameters.Tags.Add(value);
