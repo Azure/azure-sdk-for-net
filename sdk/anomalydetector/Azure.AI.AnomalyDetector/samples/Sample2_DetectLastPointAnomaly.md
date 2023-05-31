@@ -13,7 +13,7 @@ You can set `endpoint` and `apiKey` based on an environment variable, a configur
 //read endpoint and apiKey
 string endpoint = TestEnvironment.Endpoint;
 string apiKey = TestEnvironment.ApiKey;
-string dataSource = TestEnvironment.DataSource;
+Uri dataSource = new Uri(TestEnvironment.DataSource);
 
 Uri endpointUri = new Uri(endpoint);
 AzureKeyCredential credential = new AzureKeyCredential(apiKey);

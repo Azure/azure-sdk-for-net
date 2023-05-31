@@ -70,7 +70,7 @@
     },
     "variables": {
         "searchServiceName": "[concat('azs-net-', parameters('baseName'))]",
-        "searchApiVersion": "2020-03-13",
+        "searchApiVersion": "2021-04-01-preview",
         "searchEncryptionLocations": [
             "westus2",
             "eastus2",

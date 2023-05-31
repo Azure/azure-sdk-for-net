@@ -66,6 +66,7 @@ namespace Azure.ResourceManager.Compute.Tests
             Assert.AreEqual(description, updatedGallery.Data.Description);
         }
 
+        [RecordedTest]
         [TestCase(null)]
         [TestCase(true)]
         [TestCase(false)]

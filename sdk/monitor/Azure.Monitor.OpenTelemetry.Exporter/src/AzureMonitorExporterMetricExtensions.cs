@@ -3,7 +3,6 @@
 
 using System;
 using Azure.Core;
-using Azure.Monitor.OpenTelemetry.Exporter.Internals;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
 using OpenTelemetry.Metrics;
@@ -46,8 +45,6 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
                 // configuration delegate into options pipeline.
                 builder.ConfigureServices(services => services.Configure(finalOptionsName, configure));
             }
-
-            builder.AddMeter(StandardMetricConstants.StandardMetricMeterName);
 
             return builder.AddReader(sp =>
             {

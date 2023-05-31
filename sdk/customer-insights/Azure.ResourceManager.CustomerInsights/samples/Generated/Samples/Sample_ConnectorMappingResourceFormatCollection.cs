@@ -56,7 +56,6 @@ namespace Azure.ResourceManager.CustomerInsights.Samples
                     ErrorLimit = 10,
                 }, new ConnectorMappingFormat()
                 {
-                    FormatType = FormatType.TextFormat,
                     ColumnDelimiter = "|",
                 }, new ConnectorMappingAvailability(5)
                 {
