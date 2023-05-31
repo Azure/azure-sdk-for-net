@@ -638,7 +638,7 @@
         "CLIENT_ID": "82759f53-fe56-4a00-a282-dc1990e29267",
         "DEFAULT_PROJECT_NAME": "sdk-project-x2z4o4ohvwcbi",
         "DEFAULT_TEST_USER_NAME": "sdk_integration_test_1@fidalgoppe010.onmicrosoft.com",
-        "DEVCENTER_ENDPOINT": "https://8ab2df1c-ed88-4946-a8a9-e1bbb3e4d1fd-sdk-dc-4qb444onnk2tc.centraluseuap.devcenter.azure.com/",
+        "DEFAULT_DEVCENTER_ENDPOINT": "https://8ab2df1c-ed88-4946-a8a9-e1bbb3e4d1fd-sdk-dc-4qb444onnk2tc.centraluseuap.devcenter.azure.com/",
         "RandomSeed": "250363810",
         "STATIC_TEST_USER_ID": "df428e89-1bc2-4e72-b736-032c31a6cd97",
         "TENANT_ID": "8ab2df1c-ed88-4946-a8a9-e1bbb3e4d1fd",

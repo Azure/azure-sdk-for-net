@@ -648,7 +648,7 @@
     "Variables": {
         "DEFAULT_POOL_NAME": "sdk-pool-6ieikn5v2nfnu",
         "DEFAULT_PROJECT_NAME": "sdk-project-x2z4o4ohvwcbi",
-        "DEVCENTER_ENDPOINT": "https://8ab2df1c-ed88-4946-a8a9-e1bbb3e4d1fd-sdk-dc-4qb444onnk2tc.centraluseuap.devcenter.azure.com/",
+        "DEFAULT_DEVCENTER_ENDPOINT": "https://8ab2df1c-ed88-4946-a8a9-e1bbb3e4d1fd-sdk-dc-4qb444onnk2tc.centraluseuap.devcenter.azure.com/",
         "RandomSeed": "1195890706",
         "STATIC_TEST_USER_ID": "df428e89-1bc2-4e72-b736-032c31a6cd97"
     }

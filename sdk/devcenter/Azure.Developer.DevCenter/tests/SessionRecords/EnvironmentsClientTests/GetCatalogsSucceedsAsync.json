@@ -36,7 +36,7 @@
   "Variables": {
     "DEFAULT_CATALOG_NAME": "sdk-default-catalog",
     "DEFAULT_PROJECT_NAME": "sdk-project-tum3smsgozvm2",
-    "DEVCENTER_ENDPOINT": "https://8ab2df1c-ed88-4946-a8a9-e1bbb3e4d1fd-sdk-dc-4qb444onnk2tc.centraluseuap.devcenter.azure.com/",
+    "DEFAULT_DEVCENTER_ENDPOINT": "https://8ab2df1c-ed88-4946-a8a9-e1bbb3e4d1fd-sdk-dc-4qb444onnk2tc.centraluseuap.devcenter.azure.com/",
     "RandomSeed": "1548222024"
   }
 }
