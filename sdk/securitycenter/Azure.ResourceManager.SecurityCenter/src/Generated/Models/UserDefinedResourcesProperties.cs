@@ -7,6 +7,7 @@
 
 using System.Collections.Generic;
 using System.Linq;
+using Azure.Core;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
@@ -19,7 +20,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         public UserDefinedResourcesProperties(string query, IEnumerable<string> querySubscriptions)
         {
             Query = query;
-            QuerySubscriptions = querySubscriptions?.ToList();
+            QuerySubscriptions = querySubscriptions?.ToList() as IList<string> ?? new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of UserDefinedResourcesProperties. </summary>
@@ -34,6 +35,6 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <summary> Azure Resource Graph query which represents the security solution&apos;s user defined resources. Required to start with &quot;where type != &quot;Microsoft.Devices/IotHubs&quot;&quot;. </summary>
         public string Query { get; set; }
         /// <summary> List of Azure subscription ids on which the user defined resources query should be executed. </summary>
-        public IList<string> QuerySubscriptions { get; set; }
+        public IList<string> QuerySubscriptions { get; }
     }
 }

@@ -18,21 +18,14 @@ namespace Azure.ResourceManager.ResourceMover.Models
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(Tags))
             {
-                if (Tags != null)
+                writer.WritePropertyName("tags"u8);
+                writer.WriteStartObject();
+                foreach (var item in Tags)
                 {
-                    writer.WritePropertyName("tags"u8);
-                    writer.WriteStartObject();
-                    foreach (var item in Tags)
-                    {
-                        writer.WritePropertyName(item.Key);
-                        writer.WriteStringValue(item.Value);
-                    }
-                    writer.WriteEndObject();
+                    writer.WritePropertyName(item.Key);
+                    writer.WriteStringValue(item.Value);
                 }
-                else
-                {
-                    writer.WriteNull("tags");
-                }
+                writer.WriteEndObject();
             }
             if (Optional.IsDefined(EnableDdosProtection))
             {
@@ -48,54 +41,33 @@ namespace Azure.ResourceManager.ResourceMover.Models
             }
             if (Optional.IsCollectionDefined(AddressSpace))
             {
-                if (AddressSpace != null)
+                writer.WritePropertyName("addressSpace"u8);
+                writer.WriteStartArray();
+                foreach (var item in AddressSpace)
                 {
-                    writer.WritePropertyName("addressSpace"u8);
-                    writer.WriteStartArray();
-                    foreach (var item in AddressSpace)
-                    {
-                        writer.WriteStringValue(item);
-                    }
-                    writer.WriteEndArray();
+                    writer.WriteStringValue(item);
                 }
-                else
-                {
-                    writer.WriteNull("addressSpace");
-                }
+                writer.WriteEndArray();
             }
             if (Optional.IsCollectionDefined(DnsServers))
             {
-                if (DnsServers != null)
+                writer.WritePropertyName("dnsServers"u8);
+                writer.WriteStartArray();
+                foreach (var item in DnsServers)
                 {
-                    writer.WritePropertyName("dnsServers"u8);
-                    writer.WriteStartArray();
-                    foreach (var item in DnsServers)
-                    {
-                        writer.WriteStringValue(item);
-                    }
-                    writer.WriteEndArray();
+                    writer.WriteStringValue(item);
                 }
-                else
-                {
-                    writer.WriteNull("dnsServers");
-                }
+                writer.WriteEndArray();
             }
             if (Optional.IsCollectionDefined(Subnets))
             {
-                if (Subnets != null)
+                writer.WritePropertyName("subnets"u8);
+                writer.WriteStartArray();
+                foreach (var item in Subnets)
                 {
-                    writer.WritePropertyName("subnets"u8);
-                    writer.WriteStartArray();
-                    foreach (var item in Subnets)
-                    {
-                        writer.WriteObjectValue(item);
-                    }
-                    writer.WriteEndArray();
+                    writer.WriteObjectValue(item);
                 }
-                else
-                {
-                    writer.WriteNull("subnets");
-                }
+                writer.WriteEndArray();
             }
             writer.WritePropertyName("resourceType"u8);
             writer.WriteStringValue(ResourceType);

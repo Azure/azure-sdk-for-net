@@ -42,26 +42,19 @@ namespace Azure.Search.Documents.Indexes.Models
             }
             if (Optional.IsCollectionDefined(Configuration))
             {
-                if (Configuration != null)
+                writer.WritePropertyName("configuration"u8);
+                writer.WriteStartObject();
+                foreach (var item in Configuration)
                 {
-                    writer.WritePropertyName("configuration"u8);
-                    writer.WriteStartObject();
-                    foreach (var item in Configuration)
+                    writer.WritePropertyName(item.Key);
+                    if (item.Value == null)
                     {
-                        writer.WritePropertyName(item.Key);
-                        if (item.Value == null)
-                        {
-                            writer.WriteNullValue();
-                            continue;
-                        }
-                        writer.WriteObjectValue(item.Value);
+                        writer.WriteNullValue();
+                        continue;
                     }
-                    writer.WriteEndObject();
+                    writer.WriteObjectValue(item.Value);
                 }
-                else
-                {
-                    writer.WriteNull("configuration");
-                }
+                writer.WriteEndObject();
             }
             writer.WritePropertyName("@odata.type"u8);
             writer.WriteStringValue(ODataType);

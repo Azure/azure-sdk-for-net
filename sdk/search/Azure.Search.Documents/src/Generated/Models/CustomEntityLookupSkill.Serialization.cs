@@ -43,20 +43,13 @@ namespace Azure.Search.Documents.Indexes.Models
             }
             if (Optional.IsCollectionDefined(InlineEntitiesDefinition))
             {
-                if (InlineEntitiesDefinition != null)
+                writer.WritePropertyName("inlineEntitiesDefinition"u8);
+                writer.WriteStartArray();
+                foreach (var item in InlineEntitiesDefinition)
                 {
-                    writer.WritePropertyName("inlineEntitiesDefinition"u8);
-                    writer.WriteStartArray();
-                    foreach (var item in InlineEntitiesDefinition)
-                    {
-                        writer.WriteObjectValue(item);
-                    }
-                    writer.WriteEndArray();
+                    writer.WriteObjectValue(item);
                 }
-                else
-                {
-                    writer.WriteNull("inlineEntitiesDefinition");
-                }
+                writer.WriteEndArray();
             }
             if (Optional.IsDefined(GlobalDefaultCaseSensitive))
             {
