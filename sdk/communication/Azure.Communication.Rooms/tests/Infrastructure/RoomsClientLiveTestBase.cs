@@ -11,6 +11,8 @@ using Azure.Communication.Identity;
 using System.Threading.Tasks;
 using static Azure.Communication.Rooms.RoomsClientOptions;
 using Azure.Core.TestFramework.Models;
+using Azure.Communication.Tests;
+using Azure.Identity;
 
 namespace Azure.Communication.Rooms.Tests
 {
@@ -34,6 +36,69 @@ namespace Azure.Communication.Rooms.Tests
             UriRegexSanitizers.Add(new UriRegexSanitizer(URIDomainNameReplacerRegEx, "https://sanitized.communication.azure.com"));
             UriRegexSanitizers.Add(new UriRegexSanitizer(URIRoomsIdReplacerRegEx, "/rooms/Sanitized"));
         }
+
+        /// <summary>
+        /// Creates a <see cref="RoomsClient" /> based on provided authMethod
+        /// and instruments it to make use of the Azure Core Test Framework functionalities.
+        /// </summary>
+        /// <returns>The instrumented <see cref="RoomsClient" />.</returns>
+        protected RoomsClient CreateClient(AuthMethod authMethod = AuthMethod.ConnectionString, bool isInstrumented = true)
+        {
+            return authMethod switch
+            {
+                AuthMethod.ConnectionString => CreateClientWithConnectionString(isInstrumented),
+                AuthMethod.KeyCredential => CreateClientWithAzureKeyCredential(isInstrumented),
+                AuthMethod.TokenCredential => CreateClientWithTokenCredential(isInstrumented),
+                _ => throw new ArgumentOutOfRangeException(nameof(authMethod))
+            };
+        }
+
+        /// <summary>
+        /// Creates a <see cref="RoomsClient" /> with the connectionstring via environment
+        /// variables and instruments it to make use of the Azure Core Test Framework functionalities.
+        /// </summary>
+        /// <returns>The instrumented <see cref="RoomsClient" />.</returns>
+        protected RoomsClient CreateClientWithConnectionString(bool isInstrumented = true)
+        {
+            var client = new RoomsClient(
+                    TestEnvironment.CommunicationConnectionStringRooms,
+                    CreateRoomsClientOptionsWithCorrelationVectorLogs(RoomsClientOptions.ServiceVersion.V2023_03_31_Preview));
+
+            // We always create the instrumented client to suppress the instrumentation check
+            var instrumentedClient = InstrumentClient(client);
+            return isInstrumented ? instrumentedClient : client;
+        }
+
+        /// <summary>
+        /// Creates a <see cref="RoomsClient" /> with the azure key credential
+        /// and instruments it to make use of the Azure Core Test Framework functionalities.
+        /// </summary>
+        /// <returns>The instrumented <see cref="RoomsClient" />.</returns>
+        protected RoomsClient CreateClientWithAzureKeyCredential(bool isInstrumented = true)
+        {
+            var client = new RoomsClient(
+                    TestEnvironment.CommunicationRoomsEndpoint,
+                     new AzureKeyCredential(TestEnvironment.CommunicationRoomsAccessKey),
+                    CreateRoomsClientOptionsWithCorrelationVectorLogs(RoomsClientOptions.ServiceVersion.V2023_03_31_Preview));
+
+            return isInstrumented ? InstrumentClient(client) : client;
+        }
+
+        /// <summary>
+        /// Creates a <see cref="RoomsClient" /> with the token credential
+        /// and instruments it to make use of the Azure Core Test Framework functionalities.
+        /// </summary>
+        /// <returns>The instrumented <see cref="RoomsClient" />.</returns>
+        protected RoomsClient CreateClientWithTokenCredential(bool isInstrumented = true)
+        {
+            var client = new RoomsClient(
+                    TestEnvironment.CommunicationRoomsEndpoint,
+                    (Mode == RecordedTestMode.Playback) ? new MockCredential() : new DefaultAzureCredential(),
+                    CreateRoomsClientOptionsWithCorrelationVectorLogs(RoomsClientOptions.ServiceVersion.V2023_03_31_Preview));
+
+            return isInstrumented ? InstrumentClient(client) : client;
+        }
+
         protected RoomsClient CreateInstrumentedRoomsClient(ServiceVersion version)
         {
             var connectionString = TestEnvironment.CommunicationConnectionStringRooms;

@@ -8,8 +8,8 @@ title: Conversations
 license-header: MICROSOFT_MIT_NO_VERSION
 
 input-file:
-- https://raw.githubusercontent.com/Azure/azure-rest-api-specs/40f5247a48ff1eec044c8441c422af0628a8a288/specification/cognitiveservices/data-plane/Language/preview/2022-10-01-preview/analyzeconversations.json
-- https://raw.githubusercontent.com/Azure/azure-rest-api-specs/40f5247a48ff1eec044c8441c422af0628a8a288/specification/cognitiveservices/data-plane/Language/preview/2022-10-01-preview/analyzeconversations-authoring.json
+- https://raw.githubusercontent.com/Azure/azure-rest-api-specs/53240ebc58b3c4e99de723194032064db1d97e63/specification/cognitiveservices/data-plane/Language/stable/2023-04-01/analyzeconversations.json
+- https://raw.githubusercontent.com/Azure/azure-rest-api-specs/53240ebc58b3c4e99de723194032064db1d97e63/specification/cognitiveservices/data-plane/Language/stable/2023-04-01/analyzeconversations-authoring.json
 clear-output-folder: true
 
 data-plane: true
@@ -180,15 +180,10 @@ directive:
         url: "https://learn.microsoft.com/rest/api/language/" + version + "/conversational-analysis-authoring/" + operationId.replace(/([a-z0-9])([A-Z])/g, "$1-$2").toLowerCase()
     };
 
-# Mark the LRO as internal so we can call it from an overload, which we can't do using transforms since that results in duplicate operationIds.
-- where-operation: AnalyzeConversation_SubmitJob
-  transform: |
-    $["x-accessibility"] = "internal";
-
 # Rename operations to be consistent. Do this after other operation transforms for ease.
 - rename-operation:
     from: AnalyzeConversation_SubmitJob
-    to: ConversationAnalysis_StartAnalyzeConversation
+    to: ConversationAnalysis_AnalyzeConversations
 
 - rename-operation:
     from: AnalyzeConversation_JobStatus
@@ -196,7 +191,7 @@ directive:
 
 - rename-operation:
     from: AnalyzeConversation_CancelJob
-    to: ConversationAnalysis_CancelAnalyzeConversationJob
+    to: ConversationAnalysis_CancelAnalyzeConversations
 
 - rename-operation:
     from: ConversationalAnalysisAuthoring_Export

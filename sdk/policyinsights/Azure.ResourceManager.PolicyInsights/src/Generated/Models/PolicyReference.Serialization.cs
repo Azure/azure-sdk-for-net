@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
             {
                 if (property.NameEquals("policyDefinitionId"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null || property.Value.ValueKind == JsonValueKind.String && property.Value.GetString().Length == 0)
                     {
                         continue;
                     }
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
                 }
                 if (property.NameEquals("policySetDefinitionId"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null || property.Value.ValueKind == JsonValueKind.String && property.Value.GetString().Length == 0)
                     {
                         continue;
                     }
@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
                 }
                 if (property.NameEquals("policyAssignmentId"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null || property.Value.ValueKind == JsonValueKind.String && property.Value.GetString().Length == 0)
                     {
                         continue;
                     }

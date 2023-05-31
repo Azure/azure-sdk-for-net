@@ -28,9 +28,11 @@ namespace Azure.Search.Documents.Indexes.Models
         /// <param name="searchAnalyzerName"> The name of the analyzer used at search time for the field. This option can be used only with searchable fields. It must be set together with indexAnalyzer and it cannot be set together with the analyzer option. This property cannot be set to the name of a language analyzer; use the analyzer property instead if you need a language analyzer. This analyzer can be updated on an existing field. Must be null for complex fields. </param>
         /// <param name="indexAnalyzerName"> The name of the analyzer used at indexing time for the field. This option can be used only with searchable fields. It must be set together with searchAnalyzer and it cannot be set together with the analyzer option.  This property cannot be set to the name of a language analyzer; use the analyzer property instead if you need a language analyzer. Once the analyzer is chosen, it cannot be changed for the field. Must be null for complex fields. </param>
         /// <param name="normalizerName"> The name of the normalizer to use for the field. This option can be used only with fields with filterable, sortable, or facetable enabled. Once the normalizer is chosen, it cannot be changed for the field. Must be null for complex fields. </param>
+        /// <param name="dimensions"> The dimensionality of the vector field. </param>
+        /// <param name="vectorSearchConfiguration"> The name of the vector search algorithm configuration that specifies the algorithm and optional parameters for searching the vector field. </param>
         /// <param name="synonymMapNames"> A list of the names of synonym maps to associate with this field. This option can be used only with searchable fields. Currently only one synonym map per field is supported. Assigning a synonym map to a field ensures that query terms targeting that field are expanded at query-time using the rules in the synonym map. This attribute can be changed on existing fields. Must be null or an empty collection for complex fields. </param>
         /// <param name="fields"> A list of sub-fields if this is a field of type Edm.ComplexType or Collection(Edm.ComplexType). Must be null or empty for simple fields. </param>
-        internal SearchField(string name, SearchFieldDataType type, bool? isKey, bool? isRetrievable, bool? isSearchable, bool? isFilterable, bool? isSortable, bool? isFacetable, LexicalAnalyzerName? analyzerName, LexicalAnalyzerName? searchAnalyzerName, LexicalAnalyzerName? indexAnalyzerName, LexicalNormalizerName? normalizerName, IList<string> synonymMapNames, IList<SearchField> fields)
+        internal SearchField(string name, SearchFieldDataType type, bool? isKey, bool? isRetrievable, bool? isSearchable, bool? isFilterable, bool? isSortable, bool? isFacetable, LexicalAnalyzerName? analyzerName, LexicalAnalyzerName? searchAnalyzerName, LexicalAnalyzerName? indexAnalyzerName, LexicalNormalizerName? normalizerName, int? dimensions, string vectorSearchConfiguration, IList<string> synonymMapNames, IList<SearchField> fields)
         {
             Name = name;
             Type = type;
@@ -44,8 +46,14 @@ namespace Azure.Search.Documents.Indexes.Models
             SearchAnalyzerName = searchAnalyzerName;
             IndexAnalyzerName = indexAnalyzerName;
             NormalizerName = normalizerName;
+            Dimensions = dimensions;
+            VectorSearchConfiguration = vectorSearchConfiguration;
             SynonymMapNames = synonymMapNames;
             Fields = fields;
         }
+        /// <summary> The dimensionality of the vector field. </summary>
+        public int? Dimensions { get; set; }
+        /// <summary> The name of the vector search algorithm configuration that specifies the algorithm and optional parameters for searching the vector field. </summary>
+        public string VectorSearchConfiguration { get; set; }
     }
 }

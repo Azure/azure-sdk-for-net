@@ -36,10 +36,10 @@ namespace Azure.Identity.Tests
             Assert.IsInstanceOf(typeof(EnvironmentCredential), sources[0]);
             Assert.IsInstanceOf(typeof(WorkloadIdentityCredential), sources[1]);
             Assert.IsInstanceOf(typeof(ManagedIdentityCredential), sources[2]);
-            Assert.IsInstanceOf(typeof(AzureDeveloperCliCredential), sources[3]);
-            Assert.IsInstanceOf(typeof(VisualStudioCredential), sources[4]);
-            Assert.IsInstanceOf(typeof(AzureCliCredential), sources[5]);
-            Assert.IsInstanceOf(typeof(AzurePowerShellCredential), sources[6]);
+            Assert.IsInstanceOf(typeof(VisualStudioCredential), sources[3]);
+            Assert.IsInstanceOf(typeof(AzureCliCredential), sources[4]);
+            Assert.IsInstanceOf(typeof(AzurePowerShellCredential), sources[5]);
+            Assert.IsInstanceOf(typeof(AzureDeveloperCliCredential), sources[6]);
         }
 
         [Test]
@@ -55,10 +55,10 @@ namespace Azure.Identity.Tests
             Assert.IsInstanceOf(typeof(EnvironmentCredential), sources[0]);
             Assert.IsInstanceOf(typeof(WorkloadIdentityCredential), sources[1]);
             Assert.IsInstanceOf(typeof(ManagedIdentityCredential), sources[2]);
-            Assert.IsInstanceOf(typeof(AzureDeveloperCliCredential), sources[3]);
-            Assert.IsInstanceOf(typeof(VisualStudioCredential), sources[4]);
-            Assert.IsInstanceOf(typeof(AzureCliCredential), sources[5]);
-            Assert.IsInstanceOf(typeof(AzurePowerShellCredential), sources[6]);
+            Assert.IsInstanceOf(typeof(VisualStudioCredential), sources[3]);
+            Assert.IsInstanceOf(typeof(AzureCliCredential), sources[4]);
+            Assert.IsInstanceOf(typeof(AzurePowerShellCredential), sources[5]);
+            Assert.IsInstanceOf(typeof(AzureDeveloperCliCredential), sources[6]);
 
             if (includeInteractive)
             {
@@ -463,7 +463,7 @@ namespace Azure.Identity.Tests
                 ExcludeAzureCliCredential = availableCredential != typeof(AzureCliCredential),
                 ExcludeAzurePowerShellCredential = availableCredential != typeof(AzurePowerShellCredential),
                 ExcludeInteractiveBrowserCredential = availableCredential != typeof(InteractiveBrowserCredential),
-                DisableAuthorityValidationAndInstanceDiscovery = disableInstanceDiscovery
+                DisableInstanceDiscovery = disableInstanceDiscovery
             };
         }
 

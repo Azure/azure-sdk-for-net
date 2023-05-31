@@ -96,6 +96,17 @@ Response<RouterJob> updatedJob = routerClient.UpdateJob(
 Console.WriteLine($"Job has been successfully updated. Current value of channelReference: {updatedJob.Value.ChannelReference}"); // "45678"
 ```
 
+## Remove from job
+
+```C# Snippet:Azure_Communication_JobRouter_Tests_Samples_Crud_UpdateJobRemoveProp
+Response updatedJobWithoutChannelReference = routerClient.UpdateJob(jobId,
+    RequestContent.Create(new { ChannelReference = (string?)null }));
+
+Response<RouterJob> queriedJobWithoutChannelReference = routerClient.GetJob(jobId);
+
+Console.WriteLine($"Job has been successfully updated. 'ChannelReference' has been removed: {string.IsNullOrWhiteSpace(queriedJobWithoutChannelReference.Value.ChannelReference)}");
+```
+
 ## Reclassify a job
 
 ```C# Snippet:Azure_Communication_JobRouter_Tests_Samples_Crud_ReclassifyRouterJob
@@ -154,7 +165,7 @@ Console.WriteLine($"Job has been successfully assigned with a worker with assign
 ```C# Snippet:Azure_Communication_JobRouter_Tests_Samples_Crud_DeclineJobOffer
 // A worker can also choose to decline an offer
 
-Response<DeclineJobOfferResult> declineOffer = routerClient.DeclineJobOffer(worker.Value.Id, issuedOffer.Id);
+Response<DeclineJobOfferResult> declineOffer = routerClient.DeclineJobOffer(new DeclineJobOfferOptions(worker.Value.Id, issuedOffer.Id));
 ```
 
 ## Complete a job

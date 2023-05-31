@@ -1,6 +1,16 @@
 # Release History
 
-## 12.15.0-beta.1 (Unreleased)
+## 12.15.0-beta.2 (Unreleased)
+
+### Features Added
+
+### Breaking Changes
+
+### Bugs Fixed
+
+### Other Changes
+
+## 12.15.0-beta.1 (2023-05-30)
 - Added support for service version 2023-01-03.
 - Added AccessRights property to ShareFileHandle.
 

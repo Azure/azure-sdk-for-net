@@ -330,12 +330,28 @@ namespace Azure.Storage.Shared
             if (disposing)
             {
                 Flush();
+                ValidateCallerCrcIfAny();
                 _accumulatedDisposables.Dispose();
             }
 
             _disposed = true;
 
             base.Dispose(disposing);
+        }
+
+        private void ValidateCallerCrcIfAny()
+        {
+            if (UseMasterCrc && !_userProvidedChecksum.IsEmpty)
+            {
+                using (_bufferPool.RentAsSpanDisposable(_masterCrcChecksummer.HashLengthInBytes, out Span<byte> currentAccumulated))
+                {
+                    _masterCrcChecksummer.GetCurrentHash(currentAccumulated);
+                    if (!currentAccumulated.SequenceEqual(_userProvidedChecksum.Span))
+                    {
+                        throw Errors.ChecksumMismatch(currentAccumulated, _userProvidedChecksum.Span);
+                    }
+                }
+            }
         }
 
         /// <summary>

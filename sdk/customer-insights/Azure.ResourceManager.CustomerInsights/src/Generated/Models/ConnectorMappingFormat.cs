@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.CustomerInsights.Models
         }
 
         /// <summary> The type mapping format. </summary>
-        public FormatType FormatType { get; set; }
+        public FormatType FormatType { get; }
         /// <summary> The character that signifies a break between columns. </summary>
         public string ColumnDelimiter { get; set; }
         /// <summary> The oData language. </summary>

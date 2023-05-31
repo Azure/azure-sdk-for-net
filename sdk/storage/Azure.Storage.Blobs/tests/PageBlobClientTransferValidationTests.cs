@@ -93,6 +93,18 @@ namespace Azure.Storage.Blobs.Tests
             [Values(Constants.KB)] int streamBufferSize,
             [Values(512)] int dataSize)
             => await base.OpenWriteSuccessfulHashComputation(algorithm, streamBufferSize, dataSize);
+
+        [Test]
+        public override async Task OpenWriteSucceedsWithCallerProvidedCrc(
+            [Values(Constants.KB)] int dataSize,
+            [Values(Constants.KB, 512)] int bufferSize)
+            => await base.OpenWriteSucceedsWithCallerProvidedCrc(dataSize, bufferSize);
+
+        [Test]
+        public override async Task OpenWriteFailsOnCallerProvidedCrcMismatch(
+            [Values(Constants.KB)] int dataSize,
+            [Values(Constants.KB, 512)] int bufferSize)
+            => await base.OpenWriteFailsOnCallerProvidedCrcMismatch(dataSize, bufferSize);
         #endregion
     }
 }

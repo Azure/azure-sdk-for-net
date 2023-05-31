@@ -9,6 +9,7 @@ using System.Text.Json;
 using System.Threading.Tasks;
 using Azure.Communication.JobRouter.Models;
 using Azure.Communication.JobRouter.Tests.Infrastructure;
+using Azure.Core;
 using Azure.Core.TestFramework;
 using NUnit.Framework;
 
@@ -57,6 +58,17 @@ namespace Azure.Communication.JobRouter.Tests.Samples
             Console.WriteLine($"Queue statistics successfully retrieved for queue: {JsonSerializer.Serialize(queueStatistics.Value)}");
 
             #endregion Snippet:Azure_Communication_JobRouter_Tests_Samples_Crud_GetJobQueueStat_Async
+
+            #region Snippet:Azure_Communication_JobRouter_Tests_Samples_Crud_UpdateQueueRemoveProp_Async
+
+            Response updatedJobQueueWithoutName = await routerAdministrationClient.UpdateQueueAsync(jobQueueId,
+                RequestContent.Create(new { Name = (string?)null }));
+
+            Response<JobQueue> queriedJobQueueWithoutName = await routerAdministrationClient.GetQueueAsync(jobQueueId);
+
+            Console.WriteLine($"Queue successfully updated: 'Name' has been removed. Status: {string.IsNullOrWhiteSpace(queriedJobQueueWithoutName.Value.Name)}");
+
+            #endregion Snippet:Azure_Communication_JobRouter_Tests_Samples_Crud_UpdateQueueRemoveProp_Async
 
             #region Snippet:Azure_Communication_JobRouter_Tests_Samples_Crud_UpdateGetJobQueue_Async
 

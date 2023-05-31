@@ -182,17 +182,17 @@ namespace Azure.AI.Language.Conversations
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Operation"/> representing an asynchronous operation on the service. </returns>
-        /// <include file="Docs/ConversationAnalysisClient.xml" path="doc/members/member[@name='StartAnalyzeConversationAsync(WaitUntil,RequestContent,RequestContext)']/*" />
-        internal virtual async Task<Operation<BinaryData>> StartAnalyzeConversationAsync(WaitUntil waitUntil, RequestContent content, RequestContext context = null)
+        /// <include file="Docs/ConversationAnalysisClient.xml" path="doc/members/member[@name='AnalyzeConversationsAsync(WaitUntil,RequestContent,RequestContext)']/*" />
+        public virtual async Task<Operation<BinaryData>> AnalyzeConversationsAsync(WaitUntil waitUntil, RequestContent content, RequestContext context = null)
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = ClientDiagnostics.CreateScope("ConversationAnalysisClient.StartAnalyzeConversation");
+            using var scope = ClientDiagnostics.CreateScope("ConversationAnalysisClient.AnalyzeConversations");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateStartAnalyzeConversationRequest(content, context);
-                return await ProtocolOperationHelpers.ProcessMessageAsync(_pipeline, message, ClientDiagnostics, "ConversationAnalysisClient.StartAnalyzeConversation", OperationFinalStateVia.Location, context, waitUntil).ConfigureAwait(false);
+                using HttpMessage message = CreateAnalyzeConversationsRequest(content, context);
+                return await ProtocolOperationHelpers.ProcessMessageAsync(_pipeline, message, ClientDiagnostics, "ConversationAnalysisClient.AnalyzeConversations", OperationFinalStateVia.Location, context, waitUntil).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -217,17 +217,17 @@ namespace Azure.AI.Language.Conversations
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Operation"/> representing an asynchronous operation on the service. </returns>
-        /// <include file="Docs/ConversationAnalysisClient.xml" path="doc/members/member[@name='StartAnalyzeConversation(WaitUntil,RequestContent,RequestContext)']/*" />
-        internal virtual Operation<BinaryData> StartAnalyzeConversation(WaitUntil waitUntil, RequestContent content, RequestContext context = null)
+        /// <include file="Docs/ConversationAnalysisClient.xml" path="doc/members/member[@name='AnalyzeConversations(WaitUntil,RequestContent,RequestContext)']/*" />
+        public virtual Operation<BinaryData> AnalyzeConversations(WaitUntil waitUntil, RequestContent content, RequestContext context = null)
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = ClientDiagnostics.CreateScope("ConversationAnalysisClient.StartAnalyzeConversation");
+            using var scope = ClientDiagnostics.CreateScope("ConversationAnalysisClient.AnalyzeConversations");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateStartAnalyzeConversationRequest(content, context);
-                return ProtocolOperationHelpers.ProcessMessage(_pipeline, message, ClientDiagnostics, "ConversationAnalysisClient.StartAnalyzeConversation", OperationFinalStateVia.Location, context, waitUntil);
+                using HttpMessage message = CreateAnalyzeConversationsRequest(content, context);
+                return ProtocolOperationHelpers.ProcessMessage(_pipeline, message, ClientDiagnostics, "ConversationAnalysisClient.AnalyzeConversations", OperationFinalStateVia.Location, context, waitUntil);
             }
             catch (Exception e)
             {
@@ -251,15 +251,15 @@ namespace Azure.AI.Language.Conversations
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Operation"/> representing an asynchronous operation on the service. </returns>
-        /// <include file="Docs/ConversationAnalysisClient.xml" path="doc/members/member[@name='CancelAnalyzeConversationJobAsync(WaitUntil,Guid,RequestContext)']/*" />
-        public virtual async Task<Operation> CancelAnalyzeConversationJobAsync(WaitUntil waitUntil, Guid jobId, RequestContext context = null)
+        /// <include file="Docs/ConversationAnalysisClient.xml" path="doc/members/member[@name='CancelAnalyzeConversationsAsync(WaitUntil,Guid,RequestContext)']/*" />
+        public virtual async Task<Operation> CancelAnalyzeConversationsAsync(WaitUntil waitUntil, Guid jobId, RequestContext context = null)
         {
-            using var scope = ClientDiagnostics.CreateScope("ConversationAnalysisClient.CancelAnalyzeConversationJob");
+            using var scope = ClientDiagnostics.CreateScope("ConversationAnalysisClient.CancelAnalyzeConversations");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateCancelAnalyzeConversationJobRequest(jobId, context);
-                return await ProtocolOperationHelpers.ProcessMessageWithoutResponseValueAsync(_pipeline, message, ClientDiagnostics, "ConversationAnalysisClient.CancelAnalyzeConversationJob", OperationFinalStateVia.Location, context, waitUntil).ConfigureAwait(false);
+                using HttpMessage message = CreateCancelAnalyzeConversationsRequest(jobId, context);
+                return await ProtocolOperationHelpers.ProcessMessageWithoutResponseValueAsync(_pipeline, message, ClientDiagnostics, "ConversationAnalysisClient.CancelAnalyzeConversations", OperationFinalStateVia.Location, context, waitUntil).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -283,15 +283,15 @@ namespace Azure.AI.Language.Conversations
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Operation"/> representing an asynchronous operation on the service. </returns>
-        /// <include file="Docs/ConversationAnalysisClient.xml" path="doc/members/member[@name='CancelAnalyzeConversationJob(WaitUntil,Guid,RequestContext)']/*" />
-        public virtual Operation CancelAnalyzeConversationJob(WaitUntil waitUntil, Guid jobId, RequestContext context = null)
+        /// <include file="Docs/ConversationAnalysisClient.xml" path="doc/members/member[@name='CancelAnalyzeConversations(WaitUntil,Guid,RequestContext)']/*" />
+        public virtual Operation CancelAnalyzeConversations(WaitUntil waitUntil, Guid jobId, RequestContext context = null)
         {
-            using var scope = ClientDiagnostics.CreateScope("ConversationAnalysisClient.CancelAnalyzeConversationJob");
+            using var scope = ClientDiagnostics.CreateScope("ConversationAnalysisClient.CancelAnalyzeConversations");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateCancelAnalyzeConversationJobRequest(jobId, context);
-                return ProtocolOperationHelpers.ProcessMessageWithoutResponseValue(_pipeline, message, ClientDiagnostics, "ConversationAnalysisClient.CancelAnalyzeConversationJob", OperationFinalStateVia.Location, context, waitUntil);
+                using HttpMessage message = CreateCancelAnalyzeConversationsRequest(jobId, context);
+                return ProtocolOperationHelpers.ProcessMessageWithoutResponseValue(_pipeline, message, ClientDiagnostics, "ConversationAnalysisClient.CancelAnalyzeConversations", OperationFinalStateVia.Location, context, waitUntil);
             }
             catch (Exception e)
             {
@@ -317,7 +317,7 @@ namespace Azure.AI.Language.Conversations
             return message;
         }
 
-        internal HttpMessage CreateStartAnalyzeConversationRequest(RequestContent content, RequestContext context)
+        internal HttpMessage CreateAnalyzeConversationsRequest(RequestContent content, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200202);
             var request = message.Request;
@@ -354,7 +354,7 @@ namespace Azure.AI.Language.Conversations
             return message;
         }
 
-        internal HttpMessage CreateCancelAnalyzeConversationJobRequest(Guid jobId, RequestContext context)
+        internal HttpMessage CreateCancelAnalyzeConversationsRequest(Guid jobId, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier202);
             var request = message.Request;
