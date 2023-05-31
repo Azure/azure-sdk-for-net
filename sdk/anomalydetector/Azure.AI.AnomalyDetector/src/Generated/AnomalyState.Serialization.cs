@@ -55,7 +55,7 @@ namespace Azure.AI.AnomalyDetector
                     continue;
                 }
             }
-            return new AnomalyState(timestamp, value, Optional.ToList(errors));
+            return new AnomalyState(timestamp, value.Value, Optional.ToList(errors));
         }
 
         /// <summary> Deserializes the model from a raw response. </summary>
