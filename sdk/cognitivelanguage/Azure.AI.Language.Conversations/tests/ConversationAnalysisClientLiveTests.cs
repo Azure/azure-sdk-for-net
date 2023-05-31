@@ -320,7 +320,7 @@ namespace Azure.AI.Language.Conversations.Tests
                 },
             };
 
-            Operation<BinaryData> analyzeConversationOperation = await Client.AnalyzeConversationAsync(WaitUntil.Completed, RequestContent.Create(data));
+            Operation<BinaryData> analyzeConversationOperation = await Client.AnalyzeConversationsAsync(WaitUntil.Completed, RequestContent.Create(data));
 
             dynamic jobResults = analyzeConversationOperation.Value.ToDynamicFromJson(DynamicCaseMapping.PascalToCamel);
             Assert.NotNull(jobResults);
