@@ -340,7 +340,10 @@ namespace Azure.Core.Pipeline
 
                 _diagnosticSource.Write(_activityName + ".Start", _diagnosticSourceArgs ?? _currentActivity);
 
-                _currentActivity?.SetDisplayName(_displayName);
+                if (_displayName != null)
+                {
+                    _currentActivity?.SetDisplayName(_displayName);
+                }
 
                 return _currentActivity;
             }
@@ -581,7 +584,7 @@ namespace Azure.Core.Pipeline
             return GetAllDataRequestedMethod(activity);
         }
 
-        public static void SetDisplayName(this Activity activity, string? displayName)
+        public static void SetDisplayName(this Activity activity, string displayName)
         {
             if (displayName != null)
             {
