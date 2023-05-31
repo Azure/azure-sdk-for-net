@@ -35,4 +35,10 @@
   <ItemGroup>
     <Folder Include="Properties" />
   </ItemGroup>
+
+  <!--Temp until next version of Azure.Messaging.EventHubs is released and we update the dependency in Microsoft.Azure.WebJobs.Extensions.EventHubs -->
+  <ItemGroup>
+    <ProjectReference Include="..\..\Azure.Messaging.EventHubs\src\Azure.Messaging.EventHubs.csproj" />
+  </ItemGroup>
+  <!--End Temp-->
 </Project>

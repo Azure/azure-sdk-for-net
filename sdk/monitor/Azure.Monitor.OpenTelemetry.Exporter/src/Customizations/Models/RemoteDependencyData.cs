@@ -83,6 +83,10 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Models
                 {
                     Type = $"InProc | {activityTagsProcessor.MappedTags.GetAzNameSpace()}";
                 }
+                else if (activity.Kind == ActivityKind.Producer)
+                {
+                    Type = $"Queue Message | {activityTagsProcessor.MappedTags.GetAzNameSpace()}";
+                }
                 else
                 {
                     // The Azure SDK sets az.namespace with its resource provider information.
