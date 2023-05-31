@@ -78,7 +78,7 @@ namespace Azure.AI.ContentSafety
                     continue;
                 }
             }
-            return new AnalyzeTextResult(Optional.ToList(blocklistsMatchResults), hateResult, selfHarmResult, sexualResult, violenceResult);
+            return new AnalyzeTextResult(Optional.ToList(blocklistsMatchResults), hateResult.Value, selfHarmResult.Value, sexualResult.Value, violenceResult.Value);
         }
 
         /// <summary> Deserializes the model from a raw response. </summary>
