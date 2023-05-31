@@ -15,8 +15,9 @@ namespace Azure.Communication.CallAutomation
         private CallAutomationEventProcessor _evHandler;
         private string _callConnectionId;
         private string _operationContext;
-        internal DialogResult()
+        internal DialogResult(string dialogId)
         {
+            DialogId = dialogId;
         }
 
         internal void SetEventProcessor(CallAutomationEventProcessor evHandler, string callConnectionId, string operationContext)
@@ -25,6 +26,9 @@ namespace Azure.Communication.CallAutomation
             _callConnectionId = callConnectionId;
             _operationContext = operationContext;
         }
+
+        /// <summary> Dialog ID </summary>
+        public string DialogId { get; }
 
         /// <summary>
         /// Wait for <see cref="DialogEventResult"/> using <see cref="CallAutomationEventProcessor"/>.

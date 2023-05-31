@@ -1,5 +1,9 @@
 # Release History
 
+## 1.0.9-beta.3 (Unreleased)
+- Added DialogId to DialogResult so it easier to retrieve after a call
+- Made DialogId an optional parameter for StartDialog (if not provided, one will be generated)
+
 ## 1.0.9-beta.2 (Unreleased)
 - Fix CallDialog creation
 - Fix Dialog event parsing

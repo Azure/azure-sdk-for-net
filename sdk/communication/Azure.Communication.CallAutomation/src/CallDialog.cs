@@ -55,14 +55,15 @@ namespace Azure.Communication.CallAutomation
             try
             {
                 StartDialogRequestInternal request = CreateStartDialogRequest(startDialogOptions);
+                string internalDialogId = dialogId == "" ? Guid.NewGuid().ToString() : dialogId;
 
                 var response = await CallDialogRestClient.StartDialogAsync
                     (CallConnectionId,
-                    dialogId == "" ? Guid.NewGuid().ToString() : dialogId,
+                    internalDialogId,
                     request,
                     cancellationToken).ConfigureAwait(false);
 
-                var result = new DialogResult();
+                var result = new DialogResult(internalDialogId);
                 result.SetEventProcessor(EventProcessor, CallConnectionId, request.OperationContext);
 
                 return Response.FromValue(result, response.GetRawResponse());
@@ -88,14 +89,15 @@ namespace Azure.Communication.CallAutomation
             try
             {
                 StartDialogRequestInternal request = CreateStartDialogRequest(startDialogOptions);
+                string internalDialogId = dialogId == "" ? Guid.NewGuid().ToString() : dialogId;
 
                 var response = CallDialogRestClient.StartDialog
                     (CallConnectionId,
-                    dialogId == "" ? Guid.NewGuid().ToString() : dialogId,
+                    internalDialogId,
                     request,
                     cancellationToken);
 
-                var result = new DialogResult();
+                var result = new DialogResult(internalDialogId);
                 result.SetEventProcessor(EventProcessor, CallConnectionId, request.OperationContext);
 
                 return Response.FromValue(result, response.GetRawResponse());
@@ -135,7 +137,7 @@ namespace Azure.Communication.CallAutomation
                     dialogId,
                     cancellationToken).ConfigureAwait(false);
 
-                var result = new DialogResult();
+                var result = new DialogResult(dialogId);
                 result.SetEventProcessor(EventProcessor, CallConnectionId, null);
 
                 return Response.FromValue(result, response);
@@ -163,7 +165,7 @@ namespace Azure.Communication.CallAutomation
                     dialogId,
                     cancellationToken);
 
-                var result = new DialogResult();
+                var result = new DialogResult(dialogId);
                 result.SetEventProcessor(EventProcessor, CallConnectionId, null);
 
                 return Response.FromValue(result, response);
