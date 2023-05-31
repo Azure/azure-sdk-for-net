@@ -38,7 +38,7 @@
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/027da7f8-2fc6-46d4-9be9-560706b60fec/resourceGroups/sdk-test-rg-delete/providers/Microsoft.ConfidentialLedger/ledgers/dotnet-sdk-test-ledger-delete?api-version=2022-05-13",
+      "RequestUri": "https://management.azure.com/subscriptions/027da7f8-2fc6-46d4-9be9-560706b60fec/resourceGroups/sdk-test-rg-delete/providers/Microsoft.ConfidentialLedger/ledgers/dotnet-sdk-test-ledger-delete?api-version=2023-01-26-preview",
       "RequestMethod": "PUT",
       "RequestHeaders": {
         "Accept": "application/json",
@@ -56,7 +56,7 @@
       },
       "StatusCode": 201,
       "ResponseHeaders": {
-        "Azure-AsyncOperation": "https://management.azure.com/providers/Microsoft.ConfidentialLedger/locations/WESTEUROPE/operationStatuses/7f9219f8-1092-4c6d-997e-52ce63c84a33*132377D7F8F513B1D67BE1B92A110D256E276DB56BBFF3F5586922870E99548B?api-version=2022-05-13",
+        "Azure-AsyncOperation": "https://management.azure.com/providers/Microsoft.ConfidentialLedger/locations/WESTEUROPE/operationStatuses/7f9219f8-1092-4c6d-997e-52ce63c84a33*132377D7F8F513B1D67BE1B92A110D256E276DB56BBFF3F5586922870E99548B?api-version=2023-01-26-preview",
         "Cache-Control": "no-cache",
         "Content-Length": "938",
         "Content-Type": "application/json; charset=utf-8",
@@ -108,7 +108,7 @@
       }
     },
     {
-      "RequestUri": "https://management.azure.com/providers/Microsoft.ConfidentialLedger/locations/WESTEUROPE/operationStatuses/7f9219f8-1092-4c6d-997e-52ce63c84a33*132377D7F8F513B1D67BE1B92A110D256E276DB56BBFF3F5586922870E99548B?api-version=2022-05-13",
+      "RequestUri": "https://management.azure.com/providers/Microsoft.ConfidentialLedger/locations/WESTEUROPE/operationStatuses/7f9219f8-1092-4c6d-997e-52ce63c84a33*132377D7F8F513B1D67BE1B92A110D256E276DB56BBFF3F5586922870E99548B?api-version=2023-01-26-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
@@ -144,7 +144,7 @@
       }
     },
     {
-      "RequestUri": "https://management.azure.com/providers/Microsoft.ConfidentialLedger/locations/WESTEUROPE/operationStatuses/7f9219f8-1092-4c6d-997e-52ce63c84a33*132377D7F8F513B1D67BE1B92A110D256E276DB56BBFF3F5586922870E99548B?api-version=2022-05-13",
+      "RequestUri": "https://management.azure.com/providers/Microsoft.ConfidentialLedger/locations/WESTEUROPE/operationStatuses/7f9219f8-1092-4c6d-997e-52ce63c84a33*132377D7F8F513B1D67BE1B92A110D256E276DB56BBFF3F5586922870E99548B?api-version=2023-01-26-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
@@ -180,7 +180,7 @@
       }
     },
     {
-      "RequestUri": "https://management.azure.com/providers/Microsoft.ConfidentialLedger/locations/WESTEUROPE/operationStatuses/7f9219f8-1092-4c6d-997e-52ce63c84a33*132377D7F8F513B1D67BE1B92A110D256E276DB56BBFF3F5586922870E99548B?api-version=2022-05-13",
+      "RequestUri": "https://management.azure.com/providers/Microsoft.ConfidentialLedger/locations/WESTEUROPE/operationStatuses/7f9219f8-1092-4c6d-997e-52ce63c84a33*132377D7F8F513B1D67BE1B92A110D256E276DB56BBFF3F5586922870E99548B?api-version=2023-01-26-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
@@ -216,7 +216,7 @@
       }
     },
     {
-      "RequestUri": "https://management.azure.com/providers/Microsoft.ConfidentialLedger/locations/WESTEUROPE/operationStatuses/7f9219f8-1092-4c6d-997e-52ce63c84a33*132377D7F8F513B1D67BE1B92A110D256E276DB56BBFF3F5586922870E99548B?api-version=2022-05-13",
+      "RequestUri": "https://management.azure.com/providers/Microsoft.ConfidentialLedger/locations/WESTEUROPE/operationStatuses/7f9219f8-1092-4c6d-997e-52ce63c84a33*132377D7F8F513B1D67BE1B92A110D256E276DB56BBFF3F5586922870E99548B?api-version=2023-01-26-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
@@ -252,7 +252,7 @@
       }
     },
     {
-      "RequestUri": "https://management.azure.com/providers/Microsoft.ConfidentialLedger/locations/WESTEUROPE/operationStatuses/7f9219f8-1092-4c6d-997e-52ce63c84a33*132377D7F8F513B1D67BE1B92A110D256E276DB56BBFF3F5586922870E99548B?api-version=2022-05-13",
+      "RequestUri": "https://management.azure.com/providers/Microsoft.ConfidentialLedger/locations/WESTEUROPE/operationStatuses/7f9219f8-1092-4c6d-997e-52ce63c84a33*132377D7F8F513B1D67BE1B92A110D256E276DB56BBFF3F5586922870E99548B?api-version=2023-01-26-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
@@ -288,7 +288,7 @@
       }
     },
     {
-      "RequestUri": "https://management.azure.com/providers/Microsoft.ConfidentialLedger/locations/WESTEUROPE/operationStatuses/7f9219f8-1092-4c6d-997e-52ce63c84a33*132377D7F8F513B1D67BE1B92A110D256E276DB56BBFF3F5586922870E99548B?api-version=2022-05-13",
+      "RequestUri": "https://management.azure.com/providers/Microsoft.ConfidentialLedger/locations/WESTEUROPE/operationStatuses/7f9219f8-1092-4c6d-997e-52ce63c84a33*132377D7F8F513B1D67BE1B92A110D256E276DB56BBFF3F5586922870E99548B?api-version=2023-01-26-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
@@ -324,7 +324,7 @@
       }
     },
     {
-      "RequestUri": "https://management.azure.com/providers/Microsoft.ConfidentialLedger/locations/WESTEUROPE/operationStatuses/7f9219f8-1092-4c6d-997e-52ce63c84a33*132377D7F8F513B1D67BE1B92A110D256E276DB56BBFF3F5586922870E99548B?api-version=2022-05-13",
+      "RequestUri": "https://management.azure.com/providers/Microsoft.ConfidentialLedger/locations/WESTEUROPE/operationStatuses/7f9219f8-1092-4c6d-997e-52ce63c84a33*132377D7F8F513B1D67BE1B92A110D256E276DB56BBFF3F5586922870E99548B?api-version=2023-01-26-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
@@ -360,7 +360,7 @@
       }
     },
     {
-      "RequestUri": "https://management.azure.com/providers/Microsoft.ConfidentialLedger/locations/WESTEUROPE/operationStatuses/7f9219f8-1092-4c6d-997e-52ce63c84a33*132377D7F8F513B1D67BE1B92A110D256E276DB56BBFF3F5586922870E99548B?api-version=2022-05-13",
+      "RequestUri": "https://management.azure.com/providers/Microsoft.ConfidentialLedger/locations/WESTEUROPE/operationStatuses/7f9219f8-1092-4c6d-997e-52ce63c84a33*132377D7F8F513B1D67BE1B92A110D256E276DB56BBFF3F5586922870E99548B?api-version=2023-01-26-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
@@ -396,7 +396,7 @@
       }
     },
     {
-      "RequestUri": "https://management.azure.com/providers/Microsoft.ConfidentialLedger/locations/WESTEUROPE/operationStatuses/7f9219f8-1092-4c6d-997e-52ce63c84a33*132377D7F8F513B1D67BE1B92A110D256E276DB56BBFF3F5586922870E99548B?api-version=2022-05-13",
+      "RequestUri": "https://management.azure.com/providers/Microsoft.ConfidentialLedger/locations/WESTEUROPE/operationStatuses/7f9219f8-1092-4c6d-997e-52ce63c84a33*132377D7F8F513B1D67BE1B92A110D256E276DB56BBFF3F5586922870E99548B?api-version=2023-01-26-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
@@ -432,7 +432,7 @@
       }
     },
     {
-      "RequestUri": "https://management.azure.com/providers/Microsoft.ConfidentialLedger/locations/WESTEUROPE/operationStatuses/7f9219f8-1092-4c6d-997e-52ce63c84a33*132377D7F8F513B1D67BE1B92A110D256E276DB56BBFF3F5586922870E99548B?api-version=2022-05-13",
+      "RequestUri": "https://management.azure.com/providers/Microsoft.ConfidentialLedger/locations/WESTEUROPE/operationStatuses/7f9219f8-1092-4c6d-997e-52ce63c84a33*132377D7F8F513B1D67BE1B92A110D256E276DB56BBFF3F5586922870E99548B?api-version=2023-01-26-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
@@ -486,7 +486,7 @@
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/027da7f8-2fc6-46d4-9be9-560706b60fec/resourceGroups/sdk-test-rg-delete/providers/Microsoft.ConfidentialLedger/ledgers/dotnet-sdk-test-ledger-delete?api-version=2022-05-13",
+      "RequestUri": "https://management.azure.com/subscriptions/027da7f8-2fc6-46d4-9be9-560706b60fec/resourceGroups/sdk-test-rg-delete/providers/Microsoft.ConfidentialLedger/ledgers/dotnet-sdk-test-ledger-delete?api-version=2023-01-26-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
@@ -540,7 +540,7 @@
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/027da7f8-2fc6-46d4-9be9-560706b60fec/resourceGroups/sdk-test-rg-delete/providers/Microsoft.ConfidentialLedger/ledgers/dotnet-sdk-test-ledger-delete?api-version=2022-05-13",
+      "RequestUri": "https://management.azure.com/subscriptions/027da7f8-2fc6-46d4-9be9-560706b60fec/resourceGroups/sdk-test-rg-delete/providers/Microsoft.ConfidentialLedger/ledgers/dotnet-sdk-test-ledger-delete?api-version=2023-01-26-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
@@ -595,7 +595,7 @@
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/027da7f8-2fc6-46d4-9be9-560706b60fec/resourceGroups/sdk-test-rg-delete/providers/Microsoft.ConfidentialLedger/ledgers/dotnet-sdk-test-ledger-delete?api-version=2022-05-13",
+      "RequestUri": "https://management.azure.com/subscriptions/027da7f8-2fc6-46d4-9be9-560706b60fec/resourceGroups/sdk-test-rg-delete/providers/Microsoft.ConfidentialLedger/ledgers/dotnet-sdk-test-ledger-delete?api-version=2023-01-26-preview",
       "RequestMethod": "DELETE",
       "RequestHeaders": {
         "Accept": "application/json",
@@ -608,14 +608,14 @@
       "RequestBody": null,
       "StatusCode": 202,
       "ResponseHeaders": {
-        "Azure-AsyncOperation": "https://management.azure.com/providers/Microsoft.ConfidentialLedger/locations/WESTEUROPE/operationStatuses/6d84a664-03f8-434d-98f0-540d62483aac*132377D7F8F513B1D67BE1B92A110D256E276DB56BBFF3F5586922870E99548B?api-version=2022-05-13",
+        "Azure-AsyncOperation": "https://management.azure.com/providers/Microsoft.ConfidentialLedger/locations/WESTEUROPE/operationStatuses/6d84a664-03f8-434d-98f0-540d62483aac*132377D7F8F513B1D67BE1B92A110D256E276DB56BBFF3F5586922870E99548B?api-version=2023-01-26-preview",
         "Cache-Control": "no-cache",
         "Content-Length": "4",
         "Content-Type": "application/json; charset=utf-8",
         "Date": "Sat, 10 Sep 2022 21:04:20 GMT",
         "ETag": "\u0022960af5a5-0000-0d00-0000-631cfbd40000\u0022",
         "Expires": "-1",
-        "Location": "https://management.azure.com/providers/Microsoft.ConfidentialLedger/locations/WESTEUROPE/operationStatuses/6d84a664-03f8-434d-98f0-540d62483aac*132377D7F8F513B1D67BE1B92A110D256E276DB56BBFF3F5586922870E99548B?api-version=2022-05-13",
+        "Location": "https://management.azure.com/providers/Microsoft.ConfidentialLedger/locations/WESTEUROPE/operationStatuses/6d84a664-03f8-434d-98f0-540d62483aac*132377D7F8F513B1D67BE1B92A110D256E276DB56BBFF3F5586922870E99548B?api-version=2023-01-26-preview",
         "Pragma": "no-cache",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "X-Content-Type-Options": "nosniff",
@@ -633,7 +633,7 @@
       "ResponseBody": "null"
     },
     {
-      "RequestUri": "https://management.azure.com/providers/Microsoft.ConfidentialLedger/locations/WESTEUROPE/operationStatuses/6d84a664-03f8-434d-98f0-540d62483aac*132377D7F8F513B1D67BE1B92A110D256E276DB56BBFF3F5586922870E99548B?api-version=2022-05-13",
+      "RequestUri": "https://management.azure.com/providers/Microsoft.ConfidentialLedger/locations/WESTEUROPE/operationStatuses/6d84a664-03f8-434d-98f0-540d62483aac*132377D7F8F513B1D67BE1B92A110D256E276DB56BBFF3F5586922870E99548B?api-version=2023-01-26-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
@@ -669,7 +669,7 @@
       }
     },
     {
-      "RequestUri": "https://management.azure.com/providers/Microsoft.ConfidentialLedger/locations/WESTEUROPE/operationStatuses/6d84a664-03f8-434d-98f0-540d62483aac*132377D7F8F513B1D67BE1B92A110D256E276DB56BBFF3F5586922870E99548B?api-version=2022-05-13",
+      "RequestUri": "https://management.azure.com/providers/Microsoft.ConfidentialLedger/locations/WESTEUROPE/operationStatuses/6d84a664-03f8-434d-98f0-540d62483aac*132377D7F8F513B1D67BE1B92A110D256E276DB56BBFF3F5586922870E99548B?api-version=2023-01-26-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
@@ -705,7 +705,7 @@
       }
     },
     {
-      "RequestUri": "https://management.azure.com/providers/Microsoft.ConfidentialLedger/locations/WESTEUROPE/operationStatuses/6d84a664-03f8-434d-98f0-540d62483aac*132377D7F8F513B1D67BE1B92A110D256E276DB56BBFF3F5586922870E99548B?api-version=2022-05-13",
+      "RequestUri": "https://management.azure.com/providers/Microsoft.ConfidentialLedger/locations/WESTEUROPE/operationStatuses/6d84a664-03f8-434d-98f0-540d62483aac*132377D7F8F513B1D67BE1B92A110D256E276DB56BBFF3F5586922870E99548B?api-version=2023-01-26-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
@@ -741,7 +741,7 @@
       }
     },
     {
-      "RequestUri": "https://management.azure.com/providers/Microsoft.ConfidentialLedger/locations/WESTEUROPE/operationStatuses/6d84a664-03f8-434d-98f0-540d62483aac*132377D7F8F513B1D67BE1B92A110D256E276DB56BBFF3F5586922870E99548B?api-version=2022-05-13",
+      "RequestUri": "https://management.azure.com/providers/Microsoft.ConfidentialLedger/locations/WESTEUROPE/operationStatuses/6d84a664-03f8-434d-98f0-540d62483aac*132377D7F8F513B1D67BE1B92A110D256E276DB56BBFF3F5586922870E99548B?api-version=2023-01-26-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
@@ -777,7 +777,7 @@
       }
     },
     {
-      "RequestUri": "https://management.azure.com/providers/Microsoft.ConfidentialLedger/locations/WESTEUROPE/operationStatuses/6d84a664-03f8-434d-98f0-540d62483aac*132377D7F8F513B1D67BE1B92A110D256E276DB56BBFF3F5586922870E99548B?api-version=2022-05-13",
+      "RequestUri": "https://management.azure.com/providers/Microsoft.ConfidentialLedger/locations/WESTEUROPE/operationStatuses/6d84a664-03f8-434d-98f0-540d62483aac*132377D7F8F513B1D67BE1B92A110D256E276DB56BBFF3F5586922870E99548B?api-version=2023-01-26-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
@@ -813,7 +813,7 @@
       }
     },
     {
-      "RequestUri": "https://management.azure.com/providers/Microsoft.ConfidentialLedger/locations/WESTEUROPE/operationStatuses/6d84a664-03f8-434d-98f0-540d62483aac*132377D7F8F513B1D67BE1B92A110D256E276DB56BBFF3F5586922870E99548B?api-version=2022-05-13",
+      "RequestUri": "https://management.azure.com/providers/Microsoft.ConfidentialLedger/locations/WESTEUROPE/operationStatuses/6d84a664-03f8-434d-98f0-540d62483aac*132377D7F8F513B1D67BE1B92A110D256E276DB56BBFF3F5586922870E99548B?api-version=2023-01-26-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
@@ -849,7 +849,7 @@
       }
     },
     {
-      "RequestUri": "https://management.azure.com/providers/Microsoft.ConfidentialLedger/locations/WESTEUROPE/operationStatuses/6d84a664-03f8-434d-98f0-540d62483aac*132377D7F8F513B1D67BE1B92A110D256E276DB56BBFF3F5586922870E99548B?api-version=2022-05-13",
+      "RequestUri": "https://management.azure.com/providers/Microsoft.ConfidentialLedger/locations/WESTEUROPE/operationStatuses/6d84a664-03f8-434d-98f0-540d62483aac*132377D7F8F513B1D67BE1B92A110D256E276DB56BBFF3F5586922870E99548B?api-version=2023-01-26-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
@@ -885,7 +885,7 @@
       }
     },
     {
-      "RequestUri": "https://management.azure.com/providers/Microsoft.ConfidentialLedger/locations/WESTEUROPE/operationStatuses/6d84a664-03f8-434d-98f0-540d62483aac*132377D7F8F513B1D67BE1B92A110D256E276DB56BBFF3F5586922870E99548B?api-version=2022-05-13",
+      "RequestUri": "https://management.azure.com/providers/Microsoft.ConfidentialLedger/locations/WESTEUROPE/operationStatuses/6d84a664-03f8-434d-98f0-540d62483aac*132377D7F8F513B1D67BE1B92A110D256E276DB56BBFF3F5586922870E99548B?api-version=2023-01-26-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
@@ -921,7 +921,7 @@
       }
     },
     {
-      "RequestUri": "https://management.azure.com/providers/Microsoft.ConfidentialLedger/locations/WESTEUROPE/operationStatuses/6d84a664-03f8-434d-98f0-540d62483aac*132377D7F8F513B1D67BE1B92A110D256E276DB56BBFF3F5586922870E99548B?api-version=2022-05-13",
+      "RequestUri": "https://management.azure.com/providers/Microsoft.ConfidentialLedger/locations/WESTEUROPE/operationStatuses/6d84a664-03f8-434d-98f0-540d62483aac*132377D7F8F513B1D67BE1B92A110D256E276DB56BBFF3F5586922870E99548B?api-version=2023-01-26-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
@@ -957,7 +957,7 @@
       }
     },
     {
-      "RequestUri": "https://management.azure.com/providers/Microsoft.ConfidentialLedger/locations/WESTEUROPE/operationStatuses/6d84a664-03f8-434d-98f0-540d62483aac*132377D7F8F513B1D67BE1B92A110D256E276DB56BBFF3F5586922870E99548B?api-version=2022-05-13",
+      "RequestUri": "https://management.azure.com/providers/Microsoft.ConfidentialLedger/locations/WESTEUROPE/operationStatuses/6d84a664-03f8-434d-98f0-540d62483aac*132377D7F8F513B1D67BE1B92A110D256E276DB56BBFF3F5586922870E99548B?api-version=2023-01-26-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
@@ -1011,7 +1011,7 @@
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/027da7f8-2fc6-46d4-9be9-560706b60fec/resourceGroups/sdk-test-rg-delete/providers/Microsoft.ConfidentialLedger/ledgers/dotnet-sdk-test-ledger-delete?api-version=2022-05-13",
+      "RequestUri": "https://management.azure.com/subscriptions/027da7f8-2fc6-46d4-9be9-560706b60fec/resourceGroups/sdk-test-rg-delete/providers/Microsoft.ConfidentialLedger/ledgers/dotnet-sdk-test-ledger-delete?api-version=2023-01-26-preview",
       "RequestMethod": "DELETE",
       "RequestHeaders": {
         "Accept": "application/json",
