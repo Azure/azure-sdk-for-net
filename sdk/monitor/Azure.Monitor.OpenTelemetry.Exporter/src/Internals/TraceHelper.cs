@@ -288,7 +288,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
             };
         }
 
-        internal static void AddEnqueuedTimeToMeasurrementsAndLinksToProperties(Activity activity, IDictionary<string, double> measurements, ref AzMonList UnMappedTags)
+        internal static void AddEnqueuedTimeToMeasurementsAndLinksToProperties(Activity activity, IDictionary<string, double> measurements, ref AzMonList UnMappedTags)
         {
             if (activity.Links != null && activity.Links.Any())
             {

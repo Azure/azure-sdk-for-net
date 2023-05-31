@@ -41,7 +41,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Models
 
             if (activity.Kind == ActivityKind.Consumer)
             {
-                TraceHelper.AddEnqueuedTimeToMeasurrementsAndLinksToProperties(activity, Measurements, ref activityTagsProcessor.UnMappedTags);
+                TraceHelper.AddEnqueuedTimeToMeasurementsAndLinksToProperties(activity, Measurements, ref activityTagsProcessor.UnMappedTags);
             }
             else
             {
