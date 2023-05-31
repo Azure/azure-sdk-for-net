@@ -91,7 +91,7 @@ namespace Azure.Communication.Chat
         /// <param name="createdBy"> Created by </param>
         /// <param name="deletedOn"> Deleted on date time </param>
         /// <returns>A new <see cref="ChatThreadProperties"/> instance for mocking.</returns>
-        public static ChatThreadProperties ChatThreadProperties(string id, string topic = default, DateTimeOffset createdOn = default, CommunicationIdentifier createdBy = default, DateTimeOffset deletedOn = default) => new ChatThreadProperties(id, topic, createdOn, createdBy, deletedOn);
+        public static ChatThreadProperties ChatThreadProperties(string id, string topic, DateTimeOffset createdOn = default, CommunicationIdentifier createdBy = default, DateTimeOffset deletedOn = default) => new ChatThreadProperties(id, topic, createdOn, createdBy, deletedOn);
 
         /// <summary>
         /// Initializes a new instance of the <see cref="CreateChatThreadResult"/> class.

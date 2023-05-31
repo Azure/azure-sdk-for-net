@@ -100,7 +100,7 @@ namespace Azure.Communication.Chat
         public static Azure.Communication.Chat.ChatParticipant ChatParticipant(Azure.Communication.CommunicationIdentifier user, string displayName = null, System.DateTimeOffset? shareHistoryTime = default(System.DateTimeOffset?)) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public static Azure.Communication.Chat.ChatThreadItem ChatThreadItem(string id, string topic, System.DateTimeOffset? deletedOn, System.DateTimeOffset? lastMessageReceivedOn) { throw null; }
-        public static Azure.Communication.Chat.ChatThreadProperties ChatThreadProperties(string id, string topic = null, System.DateTimeOffset createdOn = default(System.DateTimeOffset), Azure.Communication.CommunicationIdentifier createdBy = null, System.DateTimeOffset deletedOn = default(System.DateTimeOffset)) { throw null; }
+        public static Azure.Communication.Chat.ChatThreadProperties ChatThreadProperties(string id, string topic, System.DateTimeOffset createdOn = default(System.DateTimeOffset), Azure.Communication.CommunicationIdentifier createdBy = null, System.DateTimeOffset deletedOn = default(System.DateTimeOffset)) { throw null; }
         public static Azure.Communication.Chat.CreateChatThreadResult CreateChatThreadResult(Azure.Communication.Chat.ChatThreadProperties chatThread, System.Collections.Generic.IEnumerable<Azure.Communication.Chat.ChatError> invalidParticipants = null) { throw null; }
         public static Azure.Communication.Chat.SendChatMessageResult SendChatMessageResult(string id) { throw null; }
     }
