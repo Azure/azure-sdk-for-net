@@ -88,9 +88,4 @@ override-operation-name:
   Diagnostics_CheckNameAvailability: CheckSelfHelpNameAvailability
   DiscoverySolution_List: GetSelfHelpDiscoverySolutions
 
-directive:
-#resourceType
-  - from: types.json
-    where: $.definitions.CheckNameAvailabilityRequest.properties.type
-    transform: $["x-ms-format"] = "resource-type"
 ```

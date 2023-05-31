@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
     {
         public SelfHelpCheckNameAvailabilityContent() { }
         public string ResourceName { get { throw null; } set { } }
-        public Azure.Core.ResourceType? ResourceType { get { throw null; } set { } }
+        public string ResourceType { get { throw null; } set { } }
     }
     public partial class SelfHelpCheckNameAvailabilityResult
     {
