@@ -1,14 +1,14 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://management.azure.com/providers/Microsoft.Network/trafficManagerGeographicHierarchies/default?api-version=2022-04-01-preview",
+      "RequestUri": "https://management.azure.com/providers/Microsoft.Network/trafficManagerGeographicHierarchies/default?api-version=2022-04-01",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "traceparent": "00-f7e078d32aa6945feeb5612f0c9d4286-7981e1703d7c53be-00",
-        "User-Agent": "azsdk-net-ResourceManager.TrafficManager/1.1.0-alpha.20221115.1 (.NET 6.0.11; Microsoft Windows 10.0.19045)",
-        "x-ms-client-request-id": "8448e9908f5c08c14c6fda8868c08f23",
+        "traceparent": "00-3c1169b783ad1548af78f0f363a65075-ac4a87f79bae3d40-00",
+        "User-Agent": "azsdk-net-ResourceManager.TrafficManager/1.1.0-alpha.20230531.1 (.NET Framework 4.8.4614.0; Microsoft Windows 10.0.19045 )",
+        "x-ms-client-request-id": "b43259721696b7818f2d6d4f199ebdb5",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
@@ -17,15 +17,15 @@
         "Cache-Control": "private",
         "Content-Length": "16124",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Tue, 15 Nov 2022 13:32:30 GMT",
+        "Date": "Wed, 31 May 2023 11:54:51 GMT",
         "Server": "Microsoft-IIS/10.0",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "X-AspNet-Version": "4.0.30319",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-correlation-request-id": "bb4732e9-c98d-4a1b-86d8-5c76a700c761",
+        "x-ms-correlation-request-id": "95512533-d195-40c2-98d7-1bb0a2135995",
         "x-ms-ratelimit-remaining-tenant-resource-requests": "98",
-        "x-ms-request-id": "8448e990-8f5c-08c1-4c6f-da8868c08f23",
-        "x-ms-routing-request-id": "JIOINDIACENTRAL:20221115T133230Z:bb4732e9-c98d-4a1b-86d8-5c76a700c761",
+        "x-ms-request-id": "b4325972-1696-b781-8f2d-6d4f199ebdb5",
+        "x-ms-routing-request-id": "JIOINDIACENTRAL:20230531T115451Z:95512533-d195-40c2-98d7-1bb0a2135995",
         "X-Powered-By": "ASP.NET"
       },
       "ResponseBody": {
@@ -1722,7 +1722,7 @@
   ],
   "Variables": {
     "AZURE_AUTHORITY_HOST": "https://login.microsoftonline.com/",
-    "RandomSeed": "1944766541",
+    "RandomSeed": "747060334",
     "RESOURCE_MANAGER_URL": null,
     "SUBSCRIPTION_ID": "6bb9d374-1f0d-437e-8bbe-4bc892850065"
   }
