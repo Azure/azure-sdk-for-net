@@ -20,8 +20,4 @@
     <PackageReference Include="Microsoft.Identity.Client" />
   </ItemGroup>
   
-  <ItemGroup>
-    <Folder Include="SessionRecords\DevCenterClientTests\" />
-  </ItemGroup>
-  
 </Project>
