@@ -12,7 +12,7 @@ namespace Microsoft.Azure.Data.SchemaRegistry.JsonSchema
     /// </summary>
     ///
     /// <remarks>
-    ///   When defining Start/Complete tasks, it is highly recommended that the CompleteEvent.Id must be exactly StartEvent.Id + 1.
+    ///   When defining Start/Complete tasks, it is highly recommended that the CompleteEvent.Id be exactly StartEvent.Id + 1.
     /// </remarks>
     [EventSource(Name = EventSourceName)]
     internal class SchemaRegistryJsonEventSource : AzureEventSource

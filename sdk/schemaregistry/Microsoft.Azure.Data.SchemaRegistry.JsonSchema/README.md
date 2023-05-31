@@ -9,7 +9,7 @@ Azure Schema Registry is a schema repository service hosted by Azure Event Hubs,
 Install the Azure Schema Registry JSON Schema library for .NET with [NuGet][nuget]:
 
 ```dotnetcli
-dotnet add package Microsoft.Azure.Data.SchemaRegistry.JsonSchema
+dotnet add package Microsoft.Azure.Data.SchemaRegistry.JsonSchema  --prerelease
 ```
 
 ### Prerequisites
@@ -51,7 +51,7 @@ var schemaRegistryClient = new SchemaRegistryClient(fullyQualifiedNamespace: ful
 
 ### JSON Schema generator
 
-The `SchemaRegistryJsonSchemaGenerator` is an abstract class that must be implemented and passed into the `SchemaRegistryJsonSerializer` constructor. This allows you to choose the third-party JSON Schema package you would like to use for generating schemas from types. You can optionally provide an implementation for JSON Schema validation. The default evaluates all schemas as valid.
+The `SchemaRegistryJsonSchemaGenerator` is an abstract class that must be implemented and passed into the `SchemaRegistryJsonSerializer` constructor. This allows you to choose the third-party JSON Schema package you would like to use to generate schemas from .NET types. You can optionally provide an implementation to validate a .NET type against a JSON Schema. The default assumes all schemas are valid to long as the payload can be deserialized into the requested type.
 
 ### Serializer
 
@@ -118,7 +118,7 @@ await foreach (PartitionEvent receivedEvent in consumer.ReadEventsAsync())
 }
 ```
 
-You can also use generic methods to serialize and deserialize the data. This may be more convenient if you are not building a library on top of the Json Schema serializer. Using it with your own library may introduce complexities.
+You can also use generic methods to serialize and deserialize the data. This may be more convenient if you are not building a library on top of the JSON Schema serializer. Using it with your own library may introduce complexities.
 
 ```C# Snippet:SchemaRegistryJsonSerializeEventDataGenerics
 var serializer = new SchemaRegistryJsonSerializer(client, groupName, new SampleJsonGenerator());
