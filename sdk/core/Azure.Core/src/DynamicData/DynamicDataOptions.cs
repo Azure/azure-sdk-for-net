@@ -1,12 +1,14 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using Azure.Core.Serialization;
+
 namespace Azure.Core.Dynamic
 {
     /// <summary>
     /// Provides options to be used with <see cref="DynamicData"/>.
     /// </summary>
-    public class DynamicDataOptions
+    internal class DynamicDataOptions
     {
         private static readonly DynamicDataOptions _default = new()
         {

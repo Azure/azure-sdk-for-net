@@ -3,8 +3,8 @@
 
 using System;
 using System.Collections;
-using System.Collections.Generic;
 using Azure.Core.Dynamic;
+using Azure.Core.Serialization;
 using NUnit.Framework;
 
 namespace Azure.Core.Tests

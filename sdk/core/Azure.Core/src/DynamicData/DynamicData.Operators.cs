@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using Azure.Core.Json;
+using Azure.Core.Serialization;
 
 namespace Azure.Core.Dynamic
 {

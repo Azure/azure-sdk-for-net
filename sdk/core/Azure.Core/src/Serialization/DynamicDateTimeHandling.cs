@@ -10,9 +10,10 @@ using System.IO;
 using System.Reflection;
 using System.Text.Json;
 using System.Text.Json.Serialization;
+using Azure.Core.Dynamic;
 using Azure.Core.Json;
 
-namespace Azure.Core.Dynamic
+namespace Azure.Core.Serialization
 {
     /// <summary>
     /// Determines how DynamicData handles DateTime and DateTimeOffset when serializing and deserializing.
