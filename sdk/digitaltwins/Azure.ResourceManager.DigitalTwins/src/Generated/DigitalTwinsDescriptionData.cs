@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.DigitalTwins
         /// <summary> Api endpoint to work with DigitalTwinsInstance. </summary>
         public string HostName { get; }
         /// <summary> The private endpoint connections. </summary>
-        public IList<DigitalTwinsPrivateEndpointConnectionData> PrivateEndpointConnections { get; set; }
+        public IList<DigitalTwinsPrivateEndpointConnectionData> PrivateEndpointConnections { get; }
         /// <summary> Public network access for the DigitalTwinsInstance. </summary>
         public DigitalTwinsPublicNetworkAccess? PublicNetworkAccess { get; set; }
         /// <summary> The managed identity for the DigitalTwinsInstance. </summary>

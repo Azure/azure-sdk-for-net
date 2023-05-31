@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
         /// <summary> Make this version of the package the active one across the hostpool. </summary>
         public bool? IsActive { get; set; }
         /// <summary> List of package dependencies. </summary>
-        public IList<MsixPackageDependencies> PackageDependencies { get; set; }
+        public IList<MsixPackageDependencies> PackageDependencies { get; }
         /// <summary> Package Version found in the appxmanifest.xml. </summary>
         public string Version { get; set; }
         /// <summary> Date Package was last updated, found in the appxmanifest.xml. </summary>

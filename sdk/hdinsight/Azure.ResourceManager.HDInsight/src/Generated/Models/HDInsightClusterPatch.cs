@@ -20,6 +20,6 @@ namespace Azure.ResourceManager.HDInsight.Models
         }
 
         /// <summary> The resource tags. </summary>
-        public IDictionary<string, string> Tags { get; set; }
+        public IDictionary<string, string> Tags { get; }
     }
 }
