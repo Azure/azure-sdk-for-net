@@ -24,8 +24,7 @@ namespace Azure.Core.Pipeline
         private readonly ActivityAdapter? _activityAdapter;
         private readonly bool _suppressNestedClientActivities;
 
-        internal DiagnosticScope(string scopeName, DiagnosticListener source, object? diagnosticSourceArgs, object? activitySource, ActivityKind kind, bool suppressNestedClientActivities,
-            string? displayName = null)
+        internal DiagnosticScope(string scopeName, DiagnosticListener source, object? diagnosticSourceArgs, object? activitySource, ActivityKind kind, bool suppressNestedClientActivities)
         {
             // ActivityKind.Internal and Client both can represent public API calls depending on the SDK
             _suppressNestedClientActivities = (kind == ActivityKind.Client || kind == ActivityKind.Internal) ? suppressNestedClientActivities : false;
@@ -43,8 +42,7 @@ namespace Azure.Core.Pipeline
                                                     diagnosticSource: source,
                                                     activityName: scopeName,
                                                     kind: kind,
-                                                    diagnosticSourceArgs: diagnosticSourceArgs,
-                                                    displayName: displayName) : null;
+                                                    diagnosticSourceArgs: diagnosticSourceArgs) : null;
         }
 
         public bool IsEnabled { get; }
@@ -92,6 +90,11 @@ namespace Azure.Core.Pipeline
         {
             Activity? started = _activityAdapter?.Start();
             started?.SetCustomProperty(AzureSdkScopeLabel, AzureSdkScopeValue);
+        }
+
+        public void SetDisplayName(string displayName)
+        {
+            _activityAdapter?.SetDisplayName(displayName);
         }
 
         public void SetStartTime(DateTime dateTime)
@@ -183,16 +186,14 @@ namespace Azure.Core.Pipeline
             private List<Activity>? _links;
             private string? _traceparent;
             private string? _tracestate;
-            private string? _displayName;
 
-            public ActivityAdapter(object? activitySource, DiagnosticSource diagnosticSource, string activityName, ActivityKind kind, object? diagnosticSourceArgs, string? displayName)
+            public ActivityAdapter(object? activitySource, DiagnosticSource diagnosticSource, string activityName, ActivityKind kind, object? diagnosticSourceArgs)
             {
                 _activitySource = activitySource;
                 _diagnosticSource = diagnosticSource;
                 _activityName = activityName;
                 _kind = kind;
                 _diagnosticSourceArgs = diagnosticSourceArgs;
-                _displayName = displayName;
             }
 
             public void AddTag(string name, object value)
@@ -338,9 +339,12 @@ namespace Azure.Core.Pipeline
 
                 _diagnosticSource.Write(_activityName + ".Start", _diagnosticSourceArgs ?? _currentActivity);
 
-                _currentActivity.SetDisplayName(_displayName);
-
                 return _currentActivity;
+            }
+
+            public void SetDisplayName(string displayName)
+            {
+                _currentActivity?.SetDisplayName(displayName);
             }
 
             private Activity? StartActivitySourceActivity()

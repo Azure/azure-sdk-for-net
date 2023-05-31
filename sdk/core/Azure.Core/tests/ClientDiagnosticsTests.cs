@@ -158,7 +158,9 @@ namespace Azure.Core.Tests
             using var testListener = new TestDiagnosticListener("Azure.Clients");
             DiagnosticScopeFactory clientDiagnostics = new DiagnosticScopeFactory("Azure.Clients",  "Microsoft.Azure.Core.Cool.Tests", true, false);
 
-            DiagnosticScope scope = clientDiagnostics.CreateScope("ActivityName", displayName: "Custom Display Name");
+            DiagnosticScope scope = clientDiagnostics.CreateScope("ActivityName");
+
+            scope.SetDisplayName("Custom Display Name");
 
             scope.AddLink("00-6e76af18746bae4eadc3581338bbe8b1-2899ebfdbdce904b-00", "foo=bar");
             scope.AddLink("00-6e76af18746bae4eadc3581338bbe8b2-2899ebfdbdce904b-00", null);
@@ -314,11 +316,14 @@ namespace Azure.Core.Tests
             using var testListener = new TestDiagnosticListener("Azure.Clients");
             DiagnosticScopeFactory clientDiagnostics = new DiagnosticScopeFactory("Azure.Clients", "Microsoft.Azure.Core.Cool.Tests", true, false);
 
-            using DiagnosticScope scope = clientDiagnostics.CreateScope("ClientName.ActivityName", (DiagnosticScope.ActivityKind)kind, "Activity Display Name");
+            using DiagnosticScope scope = clientDiagnostics.CreateScope("ClientName.ActivityName", (DiagnosticScope.ActivityKind)kind);
+            scope.SetDisplayName("Activity Display Name");
             scope.Start();
 
-            DiagnosticScope nestedScope = clientDiagnostics.CreateScope("ClientName.NestedActivityName", (DiagnosticScope.ActivityKind)kind, "Nested Activity Display Name");
+            DiagnosticScope nestedScope = clientDiagnostics.CreateScope("ClientName.NestedActivityName", (DiagnosticScope.ActivityKind)kind);
+            nestedScope.SetDisplayName("Nested Activity Display Name");
             nestedScope.Start();
+
             Assert.IsTrue(nestedScope.IsEnabled);
             Assert.AreEqual("ClientName.NestedActivityName", Activity.Current.OperationName);
             Assert.AreEqual("Nested Activity Display Name", Activity.Current.DisplayName);

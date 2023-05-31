@@ -64,7 +64,10 @@ namespace Azure.Core.Tests
 
                 DiagnosticScopeFactory clientDiagnostics = new DiagnosticScopeFactory("Azure.Clients", "Microsoft.Azure.Core.Cool.Tests", true, false);
 
-                DiagnosticScope scope = clientDiagnostics.CreateScope("ClientName.ActivityName", displayName: "custom display name");
+                DiagnosticScope scope = clientDiagnostics.CreateScope("ClientName.ActivityName");
+
+                scope.SetDisplayName("custom display name");
+
                 scope.AddAttribute("Attribute1", "Value1");
                 scope.AddAttribute("Attribute2", 2, i => i.ToString());
                 scope.AddAttribute("Attribute3", 3);
@@ -154,10 +157,12 @@ namespace Azure.Core.Tests
 
             ClientDiagnostics clientDiagnostics = new ClientDiagnostics("Azure.Clients", "Microsoft.Azure.Core.Cool.Tests", testOptions, suppressNestedScopes);
 
-            using DiagnosticScope scope = clientDiagnostics.CreateScope("ClientName.ActivityName", displayName: "Activity Display Name");
+            using DiagnosticScope scope = clientDiagnostics.CreateScope("ClientName.ActivityName");
+            scope.SetDisplayName("Activity Display Name");
             scope.Start();
 
-            DiagnosticScope nestedScope = clientDiagnostics.CreateScope("ClientName.NestedActivityName", displayName: "Nested Activity Display Name");
+            DiagnosticScope nestedScope = clientDiagnostics.CreateScope("ClientName.NestedActivityName");
+            nestedScope.SetDisplayName("Nested Activity Display Name");
             nestedScope.Start();
 
             if (suppressNestedScopes.GetValueOrDefault(false))
