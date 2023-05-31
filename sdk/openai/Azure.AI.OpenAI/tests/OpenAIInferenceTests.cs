@@ -108,8 +108,8 @@ namespace Azure.AI.OpenAI.Tests
             Assert.That(response.GetRawResponse(), Is.Not.Null.Or.Empty);
             Assert.That(response.Value, Is.Not.Null);
             Assert.That(response.Value.Id, Is.Not.Null.Or.Empty);
-            Assert.That(response.Value.Model, Is.EqualTo(CompletionsDeploymentId));
-            Assert.That(response.Value.Created, Is.GreaterThan(0));
+            Assert.That(response.Value.Created, Is.GreaterThan(new DateTimeOffset(new DateTime(2023, 1, 1))));
+            Assert.That(response.Value.Created, Is.LessThan(DateTimeOffset.UtcNow.AddDays(7)));
             Assert.That(response.Value.Choices, Is.Not.Null.Or.Empty);
             Assert.That(response.Value.Choices.Count, Is.EqualTo(expectedChoiceCount), "Each prompt should produce `SnippetCount` choices");
             Assert.That(response.Value.Usage, Is.Not.Null);
@@ -120,10 +120,10 @@ namespace Azure.AI.OpenAI.Tests
             Assert.That(firstChoice, Is.Not.Null);
             Assert.That(firstChoice.FinishReason, Is.Not.Null.Or.Empty);
             Assert.That(firstChoice.Text, Is.Not.Null.Or.Empty);
-            Assert.That(firstChoice.Logprobs, Is.Not.Null);
-            Assert.That(firstChoice.Logprobs.Tokens, Is.Not.Null.Or.Empty);
-            Assert.That(firstChoice.Logprobs.Tokens.Count, Is.LessThan(response.Value.Usage.TotalTokens));
-            Assert.That(firstChoice.Logprobs.Tokens[0], Is.Not.Null.Or.Empty);
+            Assert.That(firstChoice.LogProbabilityModel, Is.Not.Null);
+            Assert.That(firstChoice.LogProbabilityModel.Tokens, Is.Not.Null.Or.Empty);
+            Assert.That(firstChoice.LogProbabilityModel.Tokens.Count, Is.LessThan(response.Value.Usage.TotalTokens));
+            Assert.That(firstChoice.LogProbabilityModel.Tokens[0], Is.Not.Null.Or.Empty);
 
             Assert.That(response.Value.Choices[2].Index, Is.EqualTo(2));
         }
@@ -159,7 +159,7 @@ namespace Azure.AI.OpenAI.Tests
             Assert.That(response.Value.Choices.Count, Is.EqualTo(1));
             ChatChoice choice = response.Value.Choices[0];
             Assert.That(choice.Index, Is.EqualTo(0));
-            Assert.That(choice.FinishReason, Is.EquivalentTo("stop"));
+            Assert.That(choice.FinishReason, Is.EqualTo(CompletionsFinishReason.Stopped));
             Assert.That(choice.Message.Role, Is.EqualTo(ChatRole.Assistant));
             Assert.That(choice.Message.Content, Is.Not.Null.Or.Empty);
         }
@@ -205,7 +205,10 @@ namespace Azure.AI.OpenAI.Tests
             Assert.That(totalMessages, Is.GreaterThan(1));
         }
 
-        private async Task InternalAdvancedCompletionsOptions(OpenAIClientServiceTarget serviceTarget)
+        [RecordedTest]
+        [TestCase(OpenAIClientServiceTarget.Azure)]
+        [TestCase(OpenAIClientServiceTarget.NonAzure)]
+        public async Task AdvancedCompletionsOptions(OpenAIClientServiceTarget serviceTarget)
         {
             OpenAIClient client = GetTestClient(serviceTarget);
             string deploymentOrModelName = GetDeploymentOrModelName(serviceTarget, OpenAIClientScenario.Completions);
@@ -218,8 +221,17 @@ namespace Azure.AI.OpenAI.Tests
                 User = "AzureSDKOpenAITests",
                 Echo = true,
                 LogProbabilityCount = 1,
+                MaxTokens = 512,
+                TokenSelectionBiases =
+                {
+                    [25996] = -100, // ' banana', with the leading space
+                    [35484] = -100, // ' bananas', with the leading space
+                    [40058] = -100, // ' Banana'
+                    [15991] = -100, // 'anas'
+                },
             };
             Response<Completions> response = await client.GetCompletionsAsync(deploymentOrModelName, requestOptions);
+
             Assert.That(response, Is.Not.Null);
             string rawResponse = response.GetRawResponse().Content.ToString();
             Assert.That(rawResponse, Is.Not.Null.Or.Empty);
@@ -227,11 +239,18 @@ namespace Azure.AI.OpenAI.Tests
             Assert.That(response.Value, Is.Not.Null);
             Assert.That(response.Value.Choices, Is.Not.Null.Or.Empty);
             Assert.That(response.Value.Choices.Count, Is.EqualTo(1));
-            Assert.That(response.Value.Choices[0].Text.ToLower().StartsWith(promptText.ToLower()));
 
-            Assert.That(response.Value.Choices[0].Logprobs, Is.Not.Null.Or.Empty);
-            Assert.That(response.Value.Choices[0].Logprobs.Tokens, Is.Not.Null.Or.Empty);
-            Assert.That(response.Value.Usage.TotalTokens, Is.GreaterThan(response.Value.Choices[0].Logprobs.Tokens.Count));
+            Choice choice = response.Value.Choices[0];
+
+            string choiceText = choice.Text;
+            Assert.That(choiceText, Is.Not.Null.Or.Empty);
+            Assert.That(choiceText.Length, Is.GreaterThan(promptText.Length));
+            Assert.That(choiceText.ToLower().StartsWith(promptText.ToLower()));
+            Assert.That(choiceText.Substring(promptText.Length).Contains(" banana"), Is.False);
+
+            Assert.That(choice.LogProbabilityModel, Is.Not.Null.Or.Empty);
+            Assert.That(choice.LogProbabilityModel.Tokens, Is.Not.Null.Or.Empty);
+            Assert.That(response.Value.Usage.TotalTokens, Is.GreaterThan(response.Value.Choices[0].LogProbabilityModel.Tokens.Count));
         }
 
         [RecordedTest]
@@ -270,7 +289,9 @@ namespace Azure.AI.OpenAI.Tests
             Assert.That(response, Is.Not.Null);
             Assert.That(response.Value, Is.Not.Null);
             Assert.That(response.Value.Choices, Is.Not.Null.Or.Empty);
-            Assert.That(response.Value.Choices[0].FinishReason, Is.EqualTo("length"));
+            Assert.That(response.Value.Choices[0].FinishReason, Is.EqualTo(CompletionsFinishReason.TokenLimitReached));
+            Assert.IsTrue(response.Value.Choices[0].FinishReason == CompletionsFinishReason.TokenLimitReached);
+            Assert.IsTrue(response.Value.Choices[0].FinishReason == "length");
         }
 
         [RecordedTest]
@@ -319,7 +340,7 @@ namespace Azure.AI.OpenAI.Tests
                 {
                     Assert.That(choice.FinishReason, Is.Not.Null.Or.Empty);
                 }
-                Assert.That(choice.Logprobs, Is.Not.Null);
+                Assert.That(choice.LogProbabilityModel, Is.Not.Null);
                 originallyEnumeratedChoices++;
                 originallyEnumeratedTextParts.Add(textPartsForChoice);
             }
@@ -328,8 +349,8 @@ namespace Azure.AI.OpenAI.Tests
             // choice has arrived.
             Assert.That(response.GetRawResponse(), Is.Not.Null.Or.Empty);
             Assert.That(responseValue.Id, Is.Not.Null.Or.Empty);
-            Assert.That(responseValue.Created, Is.GreaterThan(new DateTime(2022, 1, 1)));
-            Assert.That(responseValue.Created, Is.LessThan(DateTime.Now.AddDays(2)));
+            Assert.That(responseValue.Created, Is.GreaterThan(new DateTimeOffset(new DateTime(2023, 1, 1))));
+            Assert.That(responseValue.Created, Is.LessThan(DateTimeOffset.UtcNow.AddDays(7)));
 
             // Validate stability of enumeration (non-cancelled case)
             IReadOnlyList<StreamingChoice> secondPassChoices = await GetBlockingListFromIAsyncEnumerable(
@@ -345,6 +366,23 @@ namespace Azure.AI.OpenAI.Tests
                     Assert.AreEqual(originallyEnumeratedTextParts[i][j], secondPassTextParts[j]);
                 }
             }
+        }
+
+        [RecordedTest]
+        [Ignore("Built-in serialization/deserialization not yet supported, but can be achieved with a custom converter")]
+        public void JsonTypeSerialization()
+        {
+            var originalMessage = new ChatMessage(ChatRole.User, "How do I make a great taco?");
+
+            string clearTextSerializedMessage = System.Text.Json.JsonSerializer.Serialize(originalMessage);
+            ChatMessage messageFromClearText = System.Text.Json.JsonSerializer.Deserialize<ChatMessage>(clearTextSerializedMessage);
+            Assert.That(messageFromClearText.Role, Is.EqualTo(originalMessage.Role));
+            Assert.That(messageFromClearText.Content, Is.EqualTo(originalMessage.Content));
+
+            byte[] utf8SerializedMessage = System.Text.Json.JsonSerializer.SerializeToUtf8Bytes(originalMessage);
+            ChatMessage messageFromUtf8Bytes = System.Text.Json.JsonSerializer.Deserialize<ChatMessage>(utf8SerializedMessage);
+            Assert.That(messageFromUtf8Bytes.Role, Is.EqualTo(originalMessage.Role));
+            Assert.That(messageFromUtf8Bytes.Content, Is.EqualTo(originalMessage.Content));
         }
 
         // Lightweight reimplementation of .NET 7 .ToBlockingEnumerable().ToList()
