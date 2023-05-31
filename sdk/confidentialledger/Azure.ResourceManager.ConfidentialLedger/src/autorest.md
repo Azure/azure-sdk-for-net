@@ -13,7 +13,7 @@ require: https://github.com/Azure/azure-rest-api-specs/blob/756495dd7e0e2f518103
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
 skip-csproj: true
-tag: package-preview-2023-01
+# tag: package-preview-2023-01
 modelerfour:
   flatten-payloads: false
 
@@ -50,6 +50,12 @@ rename-rules:
   URI: Uri
   Etag: ETag|etag
   AAD: Aad
+
+prepend-rp-prefix:
+  - DeploymentType
+  - LanguageRuntime
+  - RunningState
+  - MemberIdentityCertificate
 
 rename-mapping:
   CheckNameAvailabilityRequest: ConfidentialLedgerNameAvailabilityContent
