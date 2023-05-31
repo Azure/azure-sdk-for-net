@@ -499,8 +499,8 @@ namespace Azure.AI.TextAnalytics
 
         #region Extractive Summarize
 
-        internal static List<SummarySentence> ConvertToSummarySentenceList(IEnumerable<ExtractedSummarySentence> sentences)
-            => sentences.Select((sentence) => new SummarySentence(sentence)).ToList();
+        internal static List<ExtractiveSummarySentence> ConvertToExtractiveSummarySentenceList(IEnumerable<ExtractedSummarySentence> sentences)
+            => sentences.Select((sentence) => new ExtractiveSummarySentence(sentence)).ToList();
 
         internal static ExtractiveSummarizeResultCollection ConvertToExtractiveSummarizeResultCollection(
             ExtractiveSummarizationResult results,
@@ -521,7 +521,7 @@ namespace Azure.AI.TextAnalytics
                     new ExtractiveSummarizeResult(
                         document.Id,
                         document.Statistics ?? default,
-                        ConvertToSummarySentenceList(document.Sentences),
+                        ConvertToExtractiveSummarySentenceList(document.Sentences),
                         ConvertToDetectedLanguage(document.DetectedLanguage),
                         ConvertToWarnings(document.Warnings)));
             }
@@ -547,7 +547,7 @@ namespace Azure.AI.TextAnalytics
 
         #region Abstractive Summarize
 
-        internal static List<AbstractiveSummary> ConvertToSummaryList(IEnumerable<AbstractiveSummaryInternal> summaries)
+        internal static List<AbstractiveSummary> ConvertToAbstractiveSummaryList(IEnumerable<AbstractiveSummaryInternal> summaries)
             => summaries.Select((summary) => new AbstractiveSummary(summary)).ToList();
 
         internal static AbstractiveSummarizeResultCollection ConvertToAbstractiveSummarizeResultCollection(
@@ -569,7 +569,7 @@ namespace Azure.AI.TextAnalytics
                     new AbstractiveSummarizeResult(
                         document.Id,
                         document.Statistics ?? default,
-                        ConvertToSummaryList(document.Summaries),
+                        ConvertToAbstractiveSummaryList(document.Summaries),
                         ConvertToDetectedLanguage(document.DetectedLanguage),
                         ConvertToWarnings(document.Warnings)));
             }

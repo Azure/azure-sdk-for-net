@@ -15,10 +15,10 @@ namespace Azure.AI.TextAnalytics
         {
             Text = summary.Text;
 
-            List<SummaryContext> contexts = new();
+            List<AbstractiveSummaryContext> contexts = new();
             foreach (SummaryContextInternal context in summary.Contexts)
             {
-                contexts.Add(new SummaryContext(context));
+                contexts.Add(new AbstractiveSummaryContext(context));
             }
             Contexts = contexts;
         }
@@ -29,9 +29,9 @@ namespace Azure.AI.TextAnalytics
         public string Text { get; }
 
         /// <summary>
-        /// The collection of <see cref="SummaryContext"/> objects that reference the text that was used as context by
+        /// The collection of <see cref="AbstractiveSummaryContext"/> objects that reference the text that was used as context by
         /// the service to produce the summary.
         /// </summary>
-        public IReadOnlyCollection<SummaryContext> Contexts { get; }
+        public IReadOnlyCollection<AbstractiveSummaryContext> Contexts { get; }
     }
 }
