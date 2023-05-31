@@ -92,7 +92,7 @@ namespace Azure.Health.Insights.ClinicalMatching
                     continue;
                 }
             }
-            return new TrialMatcherInference(type, value, description, Optional.ToNullable(confidenceScore), Optional.ToList(evidence), id, Optional.ToNullable(source), metadata);
+            return new TrialMatcherInference(type, value, description.Value, Optional.ToNullable(confidenceScore), Optional.ToList(evidence), id.Value, Optional.ToNullable(source), metadata.Value);
         }
 
         /// <summary> Deserializes the model from a raw response. </summary>

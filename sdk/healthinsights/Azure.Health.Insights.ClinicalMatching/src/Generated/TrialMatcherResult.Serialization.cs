@@ -79,7 +79,7 @@ namespace Azure.Health.Insights.ClinicalMatching
                     continue;
                 }
             }
-            return new TrialMatcherResult(jobId, createdDateTime, expirationDateTime, lastUpdateDateTime, status, Optional.ToList(errors), results);
+            return new TrialMatcherResult(jobId, createdDateTime, expirationDateTime, lastUpdateDateTime, status, Optional.ToList(errors), results.Value);
         }
 
         /// <summary> Deserializes the model from a raw response. </summary>

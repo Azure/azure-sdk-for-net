@@ -52,7 +52,7 @@ namespace Azure.Health.Insights.CancerProfiling
                     continue;
                 }
             }
-            return new InferenceEvidence(patientDataEvidence, patientInfoEvidence, Optional.ToNullable(importance));
+            return new InferenceEvidence(patientDataEvidence.Value, patientInfoEvidence.Value, Optional.ToNullable(importance));
         }
 
         /// <summary> Deserializes the model from a raw response. </summary>

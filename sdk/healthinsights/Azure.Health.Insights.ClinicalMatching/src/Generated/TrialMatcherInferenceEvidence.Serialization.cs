@@ -58,7 +58,7 @@ namespace Azure.Health.Insights.ClinicalMatching
                     continue;
                 }
             }
-            return new TrialMatcherInferenceEvidence(eligibilityCriteriaEvidence, patientDataEvidence, patientInfoEvidence, Optional.ToNullable(importance));
+            return new TrialMatcherInferenceEvidence(eligibilityCriteriaEvidence.Value, patientDataEvidence.Value, patientInfoEvidence.Value, Optional.ToNullable(importance));
         }
 
         /// <summary> Deserializes the model from a raw response. </summary>

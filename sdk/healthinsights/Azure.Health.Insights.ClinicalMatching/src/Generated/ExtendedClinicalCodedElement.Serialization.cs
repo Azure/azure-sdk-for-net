@@ -58,7 +58,7 @@ namespace Azure.Health.Insights.ClinicalMatching
                     continue;
                 }
             }
-            return new ExtendedClinicalCodedElement(system, code, name, value, semanticType, category);
+            return new ExtendedClinicalCodedElement(system, code, name.Value, value.Value, semanticType.Value, category.Value);
         }
 
         /// <summary> Deserializes the model from a raw response. </summary>

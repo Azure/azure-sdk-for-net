@@ -46,7 +46,7 @@ namespace Azure.Health.Insights.ClinicalMatching
                     continue;
                 }
             }
-            return new ClinicalNoteEvidence(id, text, offset, length);
+            return new ClinicalNoteEvidence(id, text.Value, offset, length);
         }
 
         /// <summary> Deserializes the model from a raw response. </summary>
