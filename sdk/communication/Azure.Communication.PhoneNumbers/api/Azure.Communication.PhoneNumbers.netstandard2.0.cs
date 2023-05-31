@@ -27,6 +27,7 @@ namespace Azure.Communication.PhoneNumbers
     public partial class OperatorInformation
     {
         internal OperatorInformation() { }
+        public string IsoCountryCode { get { throw null; } }
         public Azure.Communication.PhoneNumbers.OperatorNumberType? NumberType { get { throw null; } }
         public Azure.Communication.PhoneNumbers.OperatorDetails OperatorDetails { get { throw null; } }
         public string PhoneNumber { get { throw null; } }
@@ -248,7 +249,7 @@ namespace Azure.Communication.PhoneNumbers
     public static partial class PhoneNumbersModelFactory
     {
         public static Azure.Communication.PhoneNumbers.OperatorDetails OperatorDetails(string name = null, string mobileNetworkCode = null, string mobileCountryCode = null) { throw null; }
-        public static Azure.Communication.PhoneNumbers.OperatorInformation OperatorInformation(string phoneNumber = null, Azure.Communication.PhoneNumbers.OperatorNumberType? numberType = default(Azure.Communication.PhoneNumbers.OperatorNumberType?), Azure.Communication.PhoneNumbers.OperatorDetails operatorDetails = null) { throw null; }
+        public static Azure.Communication.PhoneNumbers.OperatorInformation OperatorInformation(string phoneNumber = null, Azure.Communication.PhoneNumbers.OperatorNumberType? numberType = default(Azure.Communication.PhoneNumbers.OperatorNumberType?), string isoCountryCode = null, Azure.Communication.PhoneNumbers.OperatorDetails operatorDetails = null) { throw null; }
         public static Azure.Communication.PhoneNumbers.OperatorInformationResult OperatorInformationResult(System.Collections.Generic.IEnumerable<Azure.Communication.PhoneNumbers.OperatorInformation> results = null) { throw null; }
         public static Azure.Communication.PhoneNumbers.PhoneNumberAdministrativeDivision PhoneNumberAdministrativeDivision(string localizedName = null, string abbreviatedName = null) { throw null; }
         public static Azure.Communication.PhoneNumbers.PhoneNumberAreaCode PhoneNumberAreaCode(string areaCode = null) { throw null; }
