@@ -251,16 +251,23 @@ namespace Azure.Messaging.ServiceBus
             }
             finally
             {
-                if (args is ProcessMessageEventArgs processMessageEventArgs)
-                {
-                    await processMessageEventArgs.CancelMessageLockRenewalAsync().ConfigureAwait(false);
-                }
+                await ReleaseAsync(args).ConfigureAwait(false);
             }
         }
 
         private static ICollection<ServiceBusReceivedMessage> GetProcessedMessages(EventArgs args) =>
             args is ProcessMessageEventArgs processMessageEventArgs ? processMessageEventArgs.Messages.Keys
                 : ((ProcessSessionMessageEventArgs)args).Messages.Keys;
+
+        private static async ValueTask ReleaseAsync(EventArgs args)
+        {
+            if (args is ProcessMessageEventArgs processMessageEventArgs)
+            {
+                await processMessageEventArgs.ReleaseAsync().ConfigureAwait(false);
+                return;
+            }
+            await ((ProcessSessionMessageEventArgs)args).ReleaseAsync().ConfigureAwait(false);
+        }
 
         internal bool ShouldAutoRenewMessageLock()
         {

@@ -154,7 +154,7 @@ namespace Azure.Messaging.ServiceBus
             _callbackCompleted = true;
         }
 
-        internal async Task CancelMessageLockRenewalAsync()
+        internal async ValueTask ReleaseAsync()
         {
             try
             {

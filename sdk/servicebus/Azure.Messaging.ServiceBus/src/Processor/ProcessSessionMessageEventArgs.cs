@@ -30,6 +30,14 @@ namespace Azure.Messaging.ServiceBus
         /// </summary>
         public CancellationToken CancellationToken { get; }
 
+        /// <summary>
+        /// The <see cref="System.Threading.CancellationToken"/> instance is cancelled when the lock renewal failed to
+        /// renew the lock or the <see cref="ServiceBusSessionProcessorOptions.MaxAutoLockRenewalDuration"/> has elapsed.
+        /// </summary>
+        /// <remarks>The cancellation token is triggered by comparing <see cref="ServiceBusReceivedMessage.LockedUntil"/>
+        /// against <see cref="DateTimeOffset.UtcNow"/> and might be subjected to clock drift.</remarks>
+        public CancellationToken LockExpiryCancellationToken { get; }
+
         internal ConcurrentDictionary<ServiceBusReceivedMessage, CancellationTokenSource> Messages => _receiveActions.Messages;
 
         /// <summary>
@@ -113,6 +121,7 @@ namespace Azure.Messaging.ServiceBus
             _sessionReceiver = (ServiceBusSessionReceiver) _manager?.Receiver;
             _receiveActions = new ProcessorReceiveActions(message, manager, false);
             CancellationToken = cancellationToken;
+            LockExpiryCancellationToken = _receiveActions.GetLockExpiryCancellationToken(message);
         }
 
         [EditorBrowsable(EditorBrowsableState.Never)]
@@ -246,5 +255,7 @@ namespace Azure.Messaging.ServiceBus
         public virtual ProcessorReceiveActions GetReceiveActions() => _receiveActions;
 
         internal void EndExecutionScope() => _receiveActions.EndExecutionScope();
+
+        internal async ValueTask ReleaseAsync() => await _receiveActions.ReleaseAsync().ConfigureAwait(false);
     }
 }

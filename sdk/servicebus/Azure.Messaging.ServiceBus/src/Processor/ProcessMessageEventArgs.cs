@@ -236,6 +236,6 @@ namespace Azure.Messaging.ServiceBus
 
         internal void EndExecutionScope() => _receiveActions.EndExecutionScope();
 
-        internal async Task CancelMessageLockRenewalAsync() => await _receiveActions.CancelMessageLockRenewalAsync().ConfigureAwait(false);
+        internal async ValueTask ReleaseAsync() => await _receiveActions.ReleaseAsync().ConfigureAwait(false);
     }
 }
