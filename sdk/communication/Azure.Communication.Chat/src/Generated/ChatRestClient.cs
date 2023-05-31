@@ -58,6 +58,7 @@ namespace Azure.Communication.Chat
             CreateChatThreadRequest createChatThreadRequest = new CreateChatThreadRequest(topic);
             if (participants != null)
             {
+                createChatThreadRequest.Participants.Clear();
                 foreach (var value in participants)
                 {
                     createChatThreadRequest.Participants.Add(value);

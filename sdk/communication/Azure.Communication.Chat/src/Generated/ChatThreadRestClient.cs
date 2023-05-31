@@ -219,6 +219,7 @@ namespace Azure.Communication.Chat
             };
             if (metadata != null)
             {
+                sendChatMessageRequest.Metadata.Clear();
                 foreach (var value in metadata)
                 {
                     sendChatMessageRequest.Metadata.Add(value);
@@ -485,6 +486,7 @@ namespace Azure.Communication.Chat
             };
             if (metadata != null)
             {
+                updateChatMessageRequest.Metadata.Clear();
                 foreach (var value in metadata)
                 {
                     updateChatMessageRequest.Metadata.Add(value);

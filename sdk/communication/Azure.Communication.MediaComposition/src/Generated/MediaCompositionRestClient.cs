@@ -130,6 +130,7 @@ namespace Azure.Communication.MediaComposition
             };
             if (inputs != null)
             {
+                mediaComposition.Inputs.Clear();
                 foreach (var value in inputs)
                 {
                     mediaComposition.Inputs.Add(value);
@@ -137,6 +138,7 @@ namespace Azure.Communication.MediaComposition
             }
             if (outputs != null)
             {
+                mediaComposition.Outputs.Clear();
                 foreach (var value in outputs)
                 {
                     mediaComposition.Outputs.Add(value);
@@ -234,6 +236,7 @@ namespace Azure.Communication.MediaComposition
             };
             if (inputs != null)
             {
+                mediaComposition.Inputs.Clear();
                 foreach (var value in inputs)
                 {
                     mediaComposition.Inputs.Add(value);
@@ -241,6 +244,7 @@ namespace Azure.Communication.MediaComposition
             }
             if (outputs != null)
             {
+                mediaComposition.Outputs.Clear();
                 foreach (var value in outputs)
                 {
                     mediaComposition.Outputs.Add(value);

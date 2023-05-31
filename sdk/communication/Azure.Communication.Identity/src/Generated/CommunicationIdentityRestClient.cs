@@ -59,6 +59,7 @@ namespace Azure.Communication.Identity
             };
             if (createTokenWithScopes != null)
             {
+                communicationIdentityCreateRequest.CreateTokenWithScopes.Clear();
                 foreach (var value in createTokenWithScopes)
                 {
                     communicationIdentityCreateRequest.CreateTokenWithScopes.Add(value);

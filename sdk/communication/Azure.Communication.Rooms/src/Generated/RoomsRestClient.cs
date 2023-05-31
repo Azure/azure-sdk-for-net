@@ -66,6 +66,7 @@ namespace Azure.Communication.Rooms
             };
             if (participants != null)
             {
+                createRoomRequest.Participants.Clear();
                 foreach (var value in participants)
                 {
                     createRoomRequest.Participants.Add(value);

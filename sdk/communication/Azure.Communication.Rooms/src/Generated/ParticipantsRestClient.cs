@@ -126,6 +126,7 @@ namespace Azure.Communication.Rooms
             UpdateParticipantsRequest updateParticipantsRequest = new UpdateParticipantsRequest();
             if (participants != null)
             {
+                updateParticipantsRequest.Participants.Clear();
                 foreach (var value in participants)
                 {
                     updateParticipantsRequest.Participants.Add(value);
