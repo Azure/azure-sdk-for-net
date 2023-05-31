@@ -39,6 +39,7 @@ namespace Azure.ResourceManager.Hci.Models
         private const string InProgressValue = "InProgress";
         private const string AcceptedValue = "Accepted";
         private const string ProvisioningValue = "Provisioning";
+        private const string UpgradeFailedRollbackSucceededValue = "UpgradeFailedRollbackSucceeded";
 
         /// <summary> NotSpecified. </summary>
         public static ArcExtensionAggregateState NotSpecified { get; } = new ArcExtensionAggregateState(NotSpecifiedValue);
@@ -74,6 +75,8 @@ namespace Azure.ResourceManager.Hci.Models
         public static ArcExtensionAggregateState Accepted { get; } = new ArcExtensionAggregateState(AcceptedValue);
         /// <summary> Provisioning. </summary>
         public static ArcExtensionAggregateState Provisioning { get; } = new ArcExtensionAggregateState(ProvisioningValue);
+        /// <summary> UpgradeFailedRollbackSucceeded. </summary>
+        public static ArcExtensionAggregateState UpgradeFailedRollbackSucceeded { get; } = new ArcExtensionAggregateState(UpgradeFailedRollbackSucceededValue);
         /// <summary> Determines if two <see cref="ArcExtensionAggregateState"/> values are the same. </summary>
         public static bool operator ==(ArcExtensionAggregateState left, ArcExtensionAggregateState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ArcExtensionAggregateState"/> values are not the same. </summary>
