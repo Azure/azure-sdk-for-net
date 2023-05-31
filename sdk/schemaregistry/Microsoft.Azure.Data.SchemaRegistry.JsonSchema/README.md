@@ -64,14 +64,14 @@ This library provides a serializer, `SchemaRegistryJsonSerializer` that interact
 ```C# Snippet:SampleSchemaRegistryJsonSchemaGeneratorImplementation
 internal class SampleJsonGenerator : SchemaRegistryJsonSchemaGenerator
 {
-    public override bool ValidateAgainstSchema(Object data, Type dataType, string schemaDefinition)
+    public override void ThrowIfNotValidAgainstSchema(Object data, Type dataType, string schemaDefinition)
     {
         // Your implementation using the third-party library of your choice goes here.
         // This method is optional. If it is not overridden, the default always returns true.
 
-        return true;
+        return;
     }
-    public override string GenerateSchemaFromObject(Type dataType)
+    public override string GenerateSchemaFromType(Type dataType)
     {
         // Your implementation using the third-party library of your choice goes here.
 
@@ -97,9 +97,11 @@ Console.WriteLine(eventData.ContentType);
 Console.WriteLine(eventData.EventBody);
 
 // Construct a publisher and publish the events to our event hub
+
 var fullyQualifiedNamespace = "<< FULLY-QUALIFIED EVENT HUBS NAMESPACE (like something.servicebus.windows.net) >>";
 var eventHubName = "<< NAME OF THE EVENT HUB >>";
 var credential = new DefaultAzureCredential();
+
 // It is recommended that you cache the Event Hubs clients for the lifetime of your
 // application, closing or disposing when application ends.  This example disposes
 // after the immediate scope for simplicity.

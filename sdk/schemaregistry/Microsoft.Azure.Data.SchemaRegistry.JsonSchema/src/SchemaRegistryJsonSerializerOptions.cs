@@ -10,9 +10,9 @@ using System.Text.Json;
 namespace Microsoft.Azure.Data.SchemaRegistry.JsonSchema
 {
     /// <summary>
-    /// The options to use when serializing a message using the <see cref="SchemaRegistryJsonSerializer"/>.
+    /// The options to use with the <see cref="SchemaRegistryJsonSerializer"/>.
     /// </summary>
-    public class SerializeMessageOptions
+    public class SchemaRegistryJsonSerializerOptions
     {
         /// <summary>
         /// Allows the user to pass in an <see cref="ObjectSerializer"/>, such as a <see cref="JsonObjectSerializer"/>,

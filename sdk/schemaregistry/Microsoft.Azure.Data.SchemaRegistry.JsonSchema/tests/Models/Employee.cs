@@ -3,8 +3,8 @@
 
 namespace TestSchema
 {
-	public class Employee
-	{
+    public class Employee
+    {
         public int Age { get; set; }
         public string Name { get; set; }
     }

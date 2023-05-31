@@ -11,6 +11,7 @@ using Azure;
 using Azure.Core.Pipeline;
 using Azure.Messaging;
 using System.Text.Json;
+using Azure.Core.Serialization;
 
 namespace Microsoft.Azure.Data.SchemaRegistry.JsonSchema
 {
@@ -28,6 +29,7 @@ namespace Microsoft.Azure.Data.SchemaRegistry.JsonSchema
         private readonly SchemaRegistryClient _client;
         private readonly string _groupName;
         private readonly SchemaRegistryJsonSchemaGenerator _jsonSchemaGenerator;
+        private readonly SchemaRegistryJsonSerializerOptions _jsonSerializerOptions;
         private const string JsonMimeType = "application/json";
         private const int CacheCapacity = 128;
 
@@ -45,6 +47,20 @@ namespace Microsoft.Azure.Data.SchemaRegistry.JsonSchema
         }
 
         /// <summary>
+        /// Initializes a new instance of the <see cref="SchemaRegistryJsonSerializer"/>. This constructor can only be used to create an
+        /// instance which will be used for deserialization. In order to serialize (or both serialize and deserialize) you will need to use
+        /// one of the constructors that have a <c>groupName</c> parameter.
+        /// </summary>
+        /// <param name="client">The <see cref="SchemaRegistryClient"/> instance to use for looking up schemas.</param>
+        /// <param name="jsonSchemaGenerator">The instance inherited from <see cref="SchemaRegistryJsonSchemaGenerator"/> to use to generate and validate JSON schemas.</param>
+        /// <param name="options"></param>
+        /// <exception cref="ArgumentNullException"></exception>
+        public SchemaRegistryJsonSerializer(SchemaRegistryClient client, SchemaRegistryJsonSchemaGenerator jsonSchemaGenerator, SchemaRegistryJsonSerializerOptions options)
+            : this(client, null, jsonSchemaGenerator)
+        {
+        }
+
+        /// <summary>
         /// Initializes a new instance of the <see cref="SchemaRegistryJsonSerializer"/>. This constructor can be used to create an instance
         /// that will work for both serialization and deserialization.
         /// </summary>
@@ -53,10 +69,25 @@ namespace Microsoft.Azure.Data.SchemaRegistry.JsonSchema
         /// <param name="jsonSchemaGenerator">The instance inherited from <see cref="SchemaRegistryJsonSchemaGenerator"/> to use to generate and validate JSON schemas.</param>
         /// <exception cref="ArgumentNullException"></exception>
         public SchemaRegistryJsonSerializer(SchemaRegistryClient client, string groupName, SchemaRegistryJsonSchemaGenerator jsonSchemaGenerator)
+            : this(client, groupName, jsonSchemaGenerator, default)
+        {
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="SchemaRegistryJsonSerializer"/>. This constructor can be used to create an instance
+        /// that will work for both serialization and deserialization.
+        /// </summary>
+        /// <param name="client">The <see cref="SchemaRegistryClient"/> instance to use for looking up schemas.</param>
+        /// <param name="groupName">The Schema Registry group name that contains the schemas that will be used to serialize.</param>
+        /// <param name="jsonSchemaGenerator">The instance inherited from <see cref="SchemaRegistryJsonSchemaGenerator"/> to use to generate and validate JSON schemas.</param>
+        /// <param name="options"></param>
+        /// <exception cref="ArgumentNullException"></exception>
+        public SchemaRegistryJsonSerializer(SchemaRegistryClient client, string groupName, SchemaRegistryJsonSchemaGenerator jsonSchemaGenerator, SchemaRegistryJsonSerializerOptions options)
         {
             _client = client ?? throw new ArgumentNullException(nameof(client));
             _groupName = groupName;
             _jsonSchemaGenerator = jsonSchemaGenerator ?? throw new ArgumentNullException(nameof(jsonSchemaGenerator));
+            _jsonSerializerOptions = options ?? new SchemaRegistryJsonSerializerOptions { ObjectSerializer = new JsonObjectSerializer() };
         }
 
         /// <summary>
@@ -222,20 +253,23 @@ namespace Microsoft.Azure.Data.SchemaRegistry.JsonSchema
             {
                 // Serialize the data
                 dataType ??= value?.GetType() ?? typeof(object);
+                var serializer = _jsonSerializerOptions.ObjectSerializer;
 
                 using Stream stream = new MemoryStream();
                 BinaryData data;
                 if (async)
                 {
-                    await JsonSerializer.SerializeAsync(stream, value, dataType, new JsonSerializerOptions(), cancellationToken).ConfigureAwait(false);
+                    await serializer.SerializeAsync(stream, value, dataType, cancellationToken).ConfigureAwait(false);
 
                     stream.Position = 0;
                     data = BinaryData.FromStream(stream);
                 }
                 else
                 {
-                    var jsonString = JsonSerializer.Serialize(value, dataType);
-                    data = BinaryData.FromString(jsonString);
+                    serializer.Serialize(stream, value, dataType, cancellationToken);
+
+                    stream.Position = 0;
+                    data = BinaryData.FromStream(stream);
                 }
 
                 // Use the given schema string definition or generate one from the type
@@ -436,17 +470,18 @@ namespace Microsoft.Azure.Data.SchemaRegistry.JsonSchema
                 throw new Exception($"An error occurred while attempting to retrieve the schema with id {schemaId}.", ex);
             }
 
+            var deserializer = _jsonSerializerOptions.ObjectSerializer;
             object objectToReturn;
             try
             {
                 var dataStream = data.ToStream();
                 if (async)
                 {
-                    objectToReturn = await JsonSerializer.DeserializeAsync(dataStream, dataType, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    objectToReturn = await deserializer.DeserializeAsync(dataStream, dataType, cancellationToken: cancellationToken).ConfigureAwait(false);
                 }
                 else
                 {
-                    objectToReturn = JsonSerializer.Deserialize(data, dataType);
+                    objectToReturn = deserializer.Deserialize(dataStream, dataType, cancellationToken);
                 }
             }
             catch (Exception ex)

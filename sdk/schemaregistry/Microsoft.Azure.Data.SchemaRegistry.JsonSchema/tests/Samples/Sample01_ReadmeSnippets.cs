@@ -62,6 +62,7 @@ namespace Microsoft.Azure.Data.SchemaRegistry.JsonSchema.Tests.Samples
 #endif
 
             // Construct a publisher and publish the events to our event hub
+
 #if SNIPPET
             var fullyQualifiedNamespace = "<< FULLY-QUALIFIED EVENT HUBS NAMESPACE (like something.servicebus.windows.net) >>";
             var eventHubName = "<< NAME OF THE EVENT HUB >>";
@@ -71,6 +72,7 @@ namespace Microsoft.Azure.Data.SchemaRegistry.JsonSchema.Tests.Samples
             var eventHubName = TestEnvironment.SchemaRegistryEventHubName;
             var credential = TestEnvironment.Credential;
 #endif
+
             // It is recommended that you cache the Event Hubs clients for the lifetime of your
             // application, closing or disposing when application ends.  This example disposes
             // after the immediate scope for simplicity.
