@@ -36,16 +36,11 @@ To use Azure Active Directory authentication, add the Azure Identity package:
 You will also need to register a new AAD application, or run locally or in an environment with a managed identity.
 If using an application, set the values of the client ID, tenant ID, and client secret of the AAD application as environment variables: AZURE_CLIENT_ID, AZURE_TENANT_ID, AZURE_CLIENT_SECRET.
 
-```
-Uri endpoint = new Uri("<dev-center-uri>");
-var client = new DevCenterClient(endpoint, new DefaultAzureCredential());
-```
-
 ## Key concepts
 
 The library uses three main clients. The `DevCenterClient` provides access to common APIs for interacting with projects and listing resources across projects.
 The `DevBoxesClient` is scoped to a single project, and provides access to Dev Box resources such as Pools and Dev Boxes.
-The `EnvironmentsClient` is scoped to a single project, and provides access to Environments resources such as Catalog Items, Environment Types, and Environments.
+The `DeploymentEnvironmentsClient` is scoped to a single project, and provides access to Environments resources such as Environment Definitions, Environment Types, and Environments.
 
 Use these clients to interact with DevCenter resources based on your scenario.
 
@@ -68,7 +63,7 @@ We guarantee that all client instance methods are thread-safe and independent of
 
 You can familiarize yourself with different APIs using [Samples](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/devcenter/Azure.Developer.DevCenter/samples).
 
-### Build a client and get projects
+### Build a client and get all projects in a dev center
 ```C# Snippet:Azure_DevCenter_GetProjects_Scenario
 var credential = new DefaultAzureCredential();
 var devCenterClient = new DevCenterClient(endpoint, credential);
@@ -121,21 +116,6 @@ Console.WriteLine($"Connect using web URL {remoteConnectionData.GetProperty("web
 Operation devBoxDeleteOperation = await devBoxesClient.DeleteDevBoxAsync(WaitUntil.Completed, targetProjectName, "MyDevBox");
 await devBoxDeleteOperation.WaitForCompletionResponseAsync();
 Console.WriteLine($"Completed dev box deletion.");
-```
-
-## Get all projects in a dev center
-
-Create a `DevCenterClient` and issue a request to get all projects the signed-in user can access.
-
-```C# Snippet:Azure_DevCenter_GetProjects_Scenario
-var credential = new DefaultAzureCredential();
-var devCenterClient = new DevCenterClient(endpoint, credential);
-string targetProjectName = null;
-await foreach (BinaryData data in devCenterClient.GetProjectsAsync(filter: null, maxCount: 1))
-{
-    JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
-    targetProjectName = result.GetProperty("name").ToString();
-}
 ```
 
 ## Get project catalogs
