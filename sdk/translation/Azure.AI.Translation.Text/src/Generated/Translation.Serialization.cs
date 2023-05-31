@@ -64,7 +64,7 @@ namespace Azure.AI.Translation.Text
                     continue;
                 }
             }
-            return new Translation(to, text, transliteration, alignment, sentLen);
+            return new Translation(to, text, transliteration.Value, alignment.Value, sentLen.Value);
         }
 
         /// <summary> Deserializes the model from a raw response. </summary>
