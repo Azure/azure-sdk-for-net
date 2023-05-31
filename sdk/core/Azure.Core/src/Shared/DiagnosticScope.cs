@@ -186,6 +186,7 @@ namespace Azure.Core.Pipeline
             private List<Activity>? _links;
             private string? _traceparent;
             private string? _tracestate;
+            private string? _displayName;
 
             public ActivityAdapter(object? activitySource, DiagnosticSource diagnosticSource, string activityName, ActivityKind kind, object? diagnosticSourceArgs)
             {
@@ -339,11 +340,14 @@ namespace Azure.Core.Pipeline
 
                 _diagnosticSource.Write(_activityName + ".Start", _diagnosticSourceArgs ?? _currentActivity);
 
+                _currentActivity?.SetDisplayName(_displayName);
+
                 return _currentActivity;
             }
 
             public void SetDisplayName(string displayName)
             {
+                _displayName = displayName;
                 _currentActivity?.SetDisplayName(displayName);
             }
 
