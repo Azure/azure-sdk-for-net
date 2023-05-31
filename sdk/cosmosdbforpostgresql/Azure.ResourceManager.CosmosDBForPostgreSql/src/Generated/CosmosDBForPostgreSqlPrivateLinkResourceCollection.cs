@@ -20,8 +20,8 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
 {
     /// <summary>
     /// A class representing a collection of <see cref="CosmosDBForPostgreSqlPrivateLinkResource" /> and their operations.
-    /// Each <see cref="CosmosDBForPostgreSqlPrivateLinkResource" /> in the collection will belong to the same instance of <see cref="ClusterResource" />.
-    /// To get a <see cref="CosmosDBForPostgreSqlPrivateLinkResourceCollection" /> instance call the GetCosmosDBForPostgreSqlPrivateLinkResources method from an instance of <see cref="ClusterResource" />.
+    /// Each <see cref="CosmosDBForPostgreSqlPrivateLinkResource" /> in the collection will belong to the same instance of <see cref="CosmosDBForPostgreSqlClusterResource" />.
+    /// To get a <see cref="CosmosDBForPostgreSqlPrivateLinkResourceCollection" /> instance call the GetCosmosDBForPostgreSqlPrivateLinkResources method from an instance of <see cref="CosmosDBForPostgreSqlClusterResource" />.
     /// </summary>
     public partial class CosmosDBForPostgreSqlPrivateLinkResourceCollection : ArmCollection, IEnumerable<CosmosDBForPostgreSqlPrivateLinkResource>, IAsyncEnumerable<CosmosDBForPostgreSqlPrivateLinkResource>
     {
@@ -48,8 +48,8 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
 
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
-            if (id.ResourceType != ClusterResource.ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ClusterResource.ResourceType), nameof(id));
+            if (id.ResourceType != CosmosDBForPostgreSqlClusterResource.ResourceType)
+                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, CosmosDBForPostgreSqlClusterResource.ResourceType), nameof(id));
         }
 
         /// <summary>

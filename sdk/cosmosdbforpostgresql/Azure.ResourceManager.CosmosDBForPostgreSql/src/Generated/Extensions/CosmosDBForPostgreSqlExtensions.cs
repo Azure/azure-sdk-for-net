@@ -50,134 +50,134 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
                 return new SubscriptionResourceExtensionClient(client, scope);
             });
         }
-        #region ClusterResource
+        #region CosmosDBForPostgreSqlClusterResource
         /// <summary>
-        /// Gets an object representing a <see cref="ClusterResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ClusterResource.CreateResourceIdentifier" /> to create a <see cref="ClusterResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="CosmosDBForPostgreSqlClusterResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="CosmosDBForPostgreSqlClusterResource.CreateResourceIdentifier" /> to create a <see cref="CosmosDBForPostgreSqlClusterResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ClusterResource" /> object. </returns>
-        public static ClusterResource GetClusterResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="CosmosDBForPostgreSqlClusterResource" /> object. </returns>
+        public static CosmosDBForPostgreSqlClusterResource GetCosmosDBForPostgreSqlClusterResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                ClusterResource.ValidateResourceId(id);
-                return new ClusterResource(client, id);
+                CosmosDBForPostgreSqlClusterResource.ValidateResourceId(id);
+                return new CosmosDBForPostgreSqlClusterResource(client, id);
             }
             );
         }
         #endregion
 
-        #region ClusterServerResource
+        #region CosmosDBForPostgreSqlClusterServerResource
         /// <summary>
-        /// Gets an object representing a <see cref="ClusterServerResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ClusterServerResource.CreateResourceIdentifier" /> to create a <see cref="ClusterServerResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="CosmosDBForPostgreSqlClusterServerResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="CosmosDBForPostgreSqlClusterServerResource.CreateResourceIdentifier" /> to create a <see cref="CosmosDBForPostgreSqlClusterServerResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ClusterServerResource" /> object. </returns>
-        public static ClusterServerResource GetClusterServerResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="CosmosDBForPostgreSqlClusterServerResource" /> object. </returns>
+        public static CosmosDBForPostgreSqlClusterServerResource GetCosmosDBForPostgreSqlClusterServerResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                ClusterServerResource.ValidateResourceId(id);
-                return new ClusterServerResource(client, id);
+                CosmosDBForPostgreSqlClusterServerResource.ValidateResourceId(id);
+                return new CosmosDBForPostgreSqlClusterServerResource(client, id);
             }
             );
         }
         #endregion
 
-        #region ConfigurationResource
+        #region CosmosDBForPostgreSqlConfigurationResource
         /// <summary>
-        /// Gets an object representing a <see cref="ConfigurationResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ConfigurationResource.CreateResourceIdentifier" /> to create a <see cref="ConfigurationResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="CosmosDBForPostgreSqlConfigurationResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="CosmosDBForPostgreSqlConfigurationResource.CreateResourceIdentifier" /> to create a <see cref="CosmosDBForPostgreSqlConfigurationResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ConfigurationResource" /> object. </returns>
-        public static ConfigurationResource GetConfigurationResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="CosmosDBForPostgreSqlConfigurationResource" /> object. </returns>
+        public static CosmosDBForPostgreSqlConfigurationResource GetCosmosDBForPostgreSqlConfigurationResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                ConfigurationResource.ValidateResourceId(id);
-                return new ConfigurationResource(client, id);
+                CosmosDBForPostgreSqlConfigurationResource.ValidateResourceId(id);
+                return new CosmosDBForPostgreSqlConfigurationResource(client, id);
             }
             );
         }
         #endregion
 
-        #region ServerGroupsv2CoordinatorConfigurationResource
+        #region CosmosDBForPostgreSqlCoordinatorConfigurationResource
         /// <summary>
-        /// Gets an object representing a <see cref="ServerGroupsv2CoordinatorConfigurationResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ServerGroupsv2CoordinatorConfigurationResource.CreateResourceIdentifier" /> to create a <see cref="ServerGroupsv2CoordinatorConfigurationResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="CosmosDBForPostgreSqlCoordinatorConfigurationResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="CosmosDBForPostgreSqlCoordinatorConfigurationResource.CreateResourceIdentifier" /> to create a <see cref="CosmosDBForPostgreSqlCoordinatorConfigurationResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ServerGroupsv2CoordinatorConfigurationResource" /> object. </returns>
-        public static ServerGroupsv2CoordinatorConfigurationResource GetServerGroupsv2CoordinatorConfigurationResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="CosmosDBForPostgreSqlCoordinatorConfigurationResource" /> object. </returns>
+        public static CosmosDBForPostgreSqlCoordinatorConfigurationResource GetCosmosDBForPostgreSqlCoordinatorConfigurationResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                ServerGroupsv2CoordinatorConfigurationResource.ValidateResourceId(id);
-                return new ServerGroupsv2CoordinatorConfigurationResource(client, id);
+                CosmosDBForPostgreSqlCoordinatorConfigurationResource.ValidateResourceId(id);
+                return new CosmosDBForPostgreSqlCoordinatorConfigurationResource(client, id);
             }
             );
         }
         #endregion
 
-        #region ServerGroupsv2NodeConfigurationResource
+        #region CosmosDBForPostgreSqlNodeConfigurationResource
         /// <summary>
-        /// Gets an object representing a <see cref="ServerGroupsv2NodeConfigurationResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ServerGroupsv2NodeConfigurationResource.CreateResourceIdentifier" /> to create a <see cref="ServerGroupsv2NodeConfigurationResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="CosmosDBForPostgreSqlNodeConfigurationResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="CosmosDBForPostgreSqlNodeConfigurationResource.CreateResourceIdentifier" /> to create a <see cref="CosmosDBForPostgreSqlNodeConfigurationResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ServerGroupsv2NodeConfigurationResource" /> object. </returns>
-        public static ServerGroupsv2NodeConfigurationResource GetServerGroupsv2NodeConfigurationResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="CosmosDBForPostgreSqlNodeConfigurationResource" /> object. </returns>
+        public static CosmosDBForPostgreSqlNodeConfigurationResource GetCosmosDBForPostgreSqlNodeConfigurationResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                ServerGroupsv2NodeConfigurationResource.ValidateResourceId(id);
-                return new ServerGroupsv2NodeConfigurationResource(client, id);
+                CosmosDBForPostgreSqlNodeConfigurationResource.ValidateResourceId(id);
+                return new CosmosDBForPostgreSqlNodeConfigurationResource(client, id);
             }
             );
         }
         #endregion
 
-        #region FirewallRuleResource
+        #region CosmosDBForPostgreSqlFirewallRuleResource
         /// <summary>
-        /// Gets an object representing a <see cref="FirewallRuleResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="FirewallRuleResource.CreateResourceIdentifier" /> to create a <see cref="FirewallRuleResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="CosmosDBForPostgreSqlFirewallRuleResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="CosmosDBForPostgreSqlFirewallRuleResource.CreateResourceIdentifier" /> to create a <see cref="CosmosDBForPostgreSqlFirewallRuleResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="FirewallRuleResource" /> object. </returns>
-        public static FirewallRuleResource GetFirewallRuleResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="CosmosDBForPostgreSqlFirewallRuleResource" /> object. </returns>
+        public static CosmosDBForPostgreSqlFirewallRuleResource GetCosmosDBForPostgreSqlFirewallRuleResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                FirewallRuleResource.ValidateResourceId(id);
-                return new FirewallRuleResource(client, id);
+                CosmosDBForPostgreSqlFirewallRuleResource.ValidateResourceId(id);
+                return new CosmosDBForPostgreSqlFirewallRuleResource(client, id);
             }
             );
         }
         #endregion
 
-        #region RoleResource
+        #region CosmosDBForPostgreSqlRoleResource
         /// <summary>
-        /// Gets an object representing a <see cref="RoleResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="RoleResource.CreateResourceIdentifier" /> to create a <see cref="RoleResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="CosmosDBForPostgreSqlRoleResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="CosmosDBForPostgreSqlRoleResource.CreateResourceIdentifier" /> to create a <see cref="CosmosDBForPostgreSqlRoleResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="RoleResource" /> object. </returns>
-        public static RoleResource GetRoleResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="CosmosDBForPostgreSqlRoleResource" /> object. </returns>
+        public static CosmosDBForPostgreSqlRoleResource GetCosmosDBForPostgreSqlRoleResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                RoleResource.ValidateResourceId(id);
-                return new RoleResource(client, id);
+                CosmosDBForPostgreSqlRoleResource.ValidateResourceId(id);
+                return new CosmosDBForPostgreSqlRoleResource(client, id);
             }
             );
         }
@@ -221,12 +221,12 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
         }
         #endregion
 
-        /// <summary> Gets a collection of ClusterResources in the ResourceGroupResource. </summary>
+        /// <summary> Gets a collection of CosmosDBForPostgreSqlClusterResources in the ResourceGroupResource. </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <returns> An object representing collection of ClusterResources and their operations over a ClusterResource. </returns>
-        public static ClusterCollection GetClusters(this ResourceGroupResource resourceGroupResource)
+        /// <returns> An object representing collection of CosmosDBForPostgreSqlClusterResources and their operations over a CosmosDBForPostgreSqlClusterResource. </returns>
+        public static CosmosDBForPostgreSqlClusterCollection GetCosmosDBForPostgreSqlClusters(this ResourceGroupResource resourceGroupResource)
         {
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetClusters();
+            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetCosmosDBForPostgreSqlClusters();
         }
 
         /// <summary>
@@ -248,9 +248,9 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
         /// <exception cref="ArgumentException"> <paramref name="clusterName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="clusterName"/> is null. </exception>
         [ForwardsClientCalls]
-        public static async Task<Response<ClusterResource>> GetClusterAsync(this ResourceGroupResource resourceGroupResource, string clusterName, CancellationToken cancellationToken = default)
+        public static async Task<Response<CosmosDBForPostgreSqlClusterResource>> GetCosmosDBForPostgreSqlClusterAsync(this ResourceGroupResource resourceGroupResource, string clusterName, CancellationToken cancellationToken = default)
         {
-            return await resourceGroupResource.GetClusters().GetAsync(clusterName, cancellationToken).ConfigureAwait(false);
+            return await resourceGroupResource.GetCosmosDBForPostgreSqlClusters().GetAsync(clusterName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -272,9 +272,9 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
         /// <exception cref="ArgumentException"> <paramref name="clusterName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="clusterName"/> is null. </exception>
         [ForwardsClientCalls]
-        public static Response<ClusterResource> GetCluster(this ResourceGroupResource resourceGroupResource, string clusterName, CancellationToken cancellationToken = default)
+        public static Response<CosmosDBForPostgreSqlClusterResource> GetCosmosDBForPostgreSqlCluster(this ResourceGroupResource resourceGroupResource, string clusterName, CancellationToken cancellationToken = default)
         {
-            return resourceGroupResource.GetClusters().Get(clusterName, cancellationToken);
+            return resourceGroupResource.GetCosmosDBForPostgreSqlClusters().Get(clusterName, cancellationToken);
         }
 
         /// <summary>
@@ -292,10 +292,10 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ClusterResource" /> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<ClusterResource> GetClustersAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="CosmosDBForPostgreSqlClusterResource" /> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<CosmosDBForPostgreSqlClusterResource> GetCosmosDBForPostgreSqlClustersAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetClustersAsync(cancellationToken);
+            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetCosmosDBForPostgreSqlClustersAsync(cancellationToken);
         }
 
         /// <summary>
@@ -313,10 +313,10 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ClusterResource" /> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<ClusterResource> GetClusters(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="CosmosDBForPostgreSqlClusterResource" /> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<CosmosDBForPostgreSqlClusterResource> GetCosmosDBForPostgreSqlClusters(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetClusters(cancellationToken);
+            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetCosmosDBForPostgreSqlClusters(cancellationToken);
         }
 
         /// <summary>
@@ -336,7 +336,7 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
         /// <param name="content"> The required parameters for checking if cluster name is available. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public static async Task<Response<NameAvailability>> CheckNameAvailabilityClusterAsync(this SubscriptionResource subscriptionResource, NameAvailabilityContent content, CancellationToken cancellationToken = default)
+        public static async Task<Response<CosmosDBForPostgreSqlNameAvailability>> CheckNameAvailabilityClusterAsync(this SubscriptionResource subscriptionResource, NameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -360,7 +360,7 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
         /// <param name="content"> The required parameters for checking if cluster name is available. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public static Response<NameAvailability> CheckNameAvailabilityCluster(this SubscriptionResource subscriptionResource, NameAvailabilityContent content, CancellationToken cancellationToken = default)
+        public static Response<CosmosDBForPostgreSqlNameAvailability> CheckNameAvailabilityCluster(this SubscriptionResource subscriptionResource, NameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 

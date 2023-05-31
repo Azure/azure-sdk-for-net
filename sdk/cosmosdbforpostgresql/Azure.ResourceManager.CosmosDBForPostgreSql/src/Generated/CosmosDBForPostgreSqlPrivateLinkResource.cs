@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
     /// A Class representing a CosmosDBForPostgreSqlPrivateLinkResource along with the instance operations that can be performed on it.
     /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="CosmosDBForPostgreSqlPrivateLinkResource" />
     /// from an instance of <see cref="ArmClient" /> using the GetCosmosDBForPostgreSqlPrivateLinkResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ClusterResource" /> using the GetCosmosDBForPostgreSqlPrivateLinkResource method.
+    /// Otherwise you can get one from its parent resource <see cref="CosmosDBForPostgreSqlClusterResource" /> using the GetCosmosDBForPostgreSqlPrivateLinkResource method.
     /// </summary>
     public partial class CosmosDBForPostgreSqlPrivateLinkResource : ArmResource
     {

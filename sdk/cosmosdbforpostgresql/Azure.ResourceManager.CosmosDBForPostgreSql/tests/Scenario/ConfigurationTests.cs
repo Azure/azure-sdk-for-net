@@ -10,11 +10,12 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql.Tests
 {
     public class ConfigurationTests : CosmosDBForPostgreSqlManagementTestBase
     {
-        private ResourceGroupResource _resourceGroup;
-
-        private ResourceIdentifier _resourceGroupIdentifier;
-        private ClusterResource _cluster;
         private string _rgName;
+        private ResourceGroupResource _resourceGroup;
+        private ResourceIdentifier _resourceGroupIdentifier;
+
+        private string _clusterName;
+        private CosmosDBForPostgreSqlClusterResource _cluster;
         private ResourceIdentifier _clusterIdentifier;
 
         public ConfigurationTests(bool isAsync)
@@ -26,44 +27,68 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql.Tests
         public async Task GlobalSetup()
         {
             _rgName = SessionRecording.GenerateAssetName("test-rg-");
-            SubscriptionResource subscription = await GlobalClient.GetDefaultSubscriptionAsync();
-
-            var rgLro = await subscription.GetResourceGroups().CreateOrUpdateAsync(WaitUntil.Completed, _rgName, new ResourceGroupData(AzureLocation.WestUS2));
-            ResourceGroupResource rg = rgLro.Value;
-            _resourceGroupIdentifier = rg.Id;
-
-            ClusterCollection cls =  rg.GetClusters();
-
-            string clusterName = SessionRecording.GenerateAssetName("cosmospgnet");
-            var data = new ClusterData(rg.Data.Location)
+            _clusterName = SessionRecording.GenerateAssetName("cosmos-pg-net-");
+            if (Mode == RecordedTestMode.Playback)
             {
-                CoordinatorVCores = 4,
-                EnableHa = false,
-                CoordinatorStorageQuotaInMb = 524288,
-                NodeCount = 2,
-                CoordinatorServerEdition = "GeneralPurpose",
-                CoordinatorEnablePublicIPAccess = true,
-                NodeServerEdition = "MemoryOptimized",
-                NodeStorageQuotaInMb = 524288,
-                NodeVCores = 4,
-                PostgresqlVersion = "14",
-                CitusVersion = "11.1",
-                AdministratorLoginPassword = "P4ssw@rd1234",
-                EnableShardsOnCoordinator = true,
-                PreferredPrimaryZone = "1"
-            };
+                _resourceGroupIdentifier = ResourceGroupResource.CreateResourceIdentifier(SessionRecording.GetVariable("SUBSCRIPTION_ID", null), _rgName);
+                _clusterIdentifier = CosmosDBForPostgreSqlClusterResource.CreateResourceIdentifier(SessionRecording.GetVariable("SUBSCRIPTION_ID", null), _rgName, _clusterName);
+            }
+            else
+            {
+                using (SessionRecording.DisableRecording())
+                {
+                    var subscription = await GlobalClient.GetDefaultSubscriptionAsync();
+                    var rgLro = await subscription.GetResourceGroups().CreateOrUpdateAsync(WaitUntil.Completed, _rgName, new ResourceGroupData(AzureLocation.WestUS2));
+                    _resourceGroupIdentifier = rgLro.Value.Data.Id;
+                    ResourceGroupResource rg = rgLro.Value;
+                    CosmosDBForPostgreSqlClusterCollection cls = rg.GetCosmosDBForPostgreSqlClusters();
 
-            var lro = await cls.CreateOrUpdateAsync(WaitUntil.Completed, clusterName, data);
-            _cluster = lro.Value;
-            _clusterIdentifier = lro.Value.Id;
+                    var data = new CosmosDBForPostgreSqlClusterData(rg.Data.Location)
+                    {
+                        CoordinatorVCores = 4,
+                        EnableHa = false,
+                        CoordinatorStorageQuotaInMb = 524288,
+                        NodeCount = 2,
+                        CoordinatorServerEdition = "GeneralPurpose",
+                        CoordinatorEnablePublicIPAccess = true,
+                        NodeServerEdition = "MemoryOptimized",
+                        NodeStorageQuotaInMb = 524288,
+                        NodeVCores = 4,
+                        PostgresqlVersion = "14",
+                        CitusVersion = "11.1",
+                        AdministratorLoginPassword = "P4ssw@rd1234",
+                        EnableShardsOnCoordinator = true,
+                        PreferredPrimaryZone = "1"
+                    };
 
+                    var lro = await cls.CreateOrUpdateAsync(WaitUntil.Completed, _clusterName, data);
+                    _cluster = lro.Value;
+                    _clusterIdentifier = lro.Value.Id;
+                }
+            }
             await StopSessionRecordingAsync();
         }
 
         [OneTimeTearDown]
         public async Task GlobalTearDown()
         {
-            await _resourceGroup.DeleteAsync(WaitUntil.Completed);
+            if (Mode == RecordedTestMode.Playback)
+            {
+                return;
+            }
+            try
+            {
+                using (Recording.DisableRecording())
+                {
+                    await foreach (var cluster in _resourceGroup.GetCosmosDBForPostgreSqlClusters().GetAllAsync())
+                    {
+                        await cluster.DeleteAsync(WaitUntil.Completed);
+                    }
+                }
+            }
+            catch (RequestFailedException ex) when (ex.Status == 404)
+            {
+            }
         }
 
         [SetUp]
@@ -71,7 +96,7 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql.Tests
         {
             var client = GetArmClient();
             _resourceGroup = await client.GetResourceGroupResource(_resourceGroupIdentifier).GetAsync();
-            _cluster = await _resourceGroup.GetClusterAsync(_clusterIdentifier.Name);
+            _cluster = await _resourceGroup.GetCosmosDBForPostgreSqlClusterAsync(_clusterIdentifier.Name);
         }
 
         [TestCase]
@@ -85,13 +110,13 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql.Tests
                 Value = "false"
             };
 
-            ServerGroupsv2CoordinatorConfigurationCollection configurationCollection = _cluster.GetServerGroupsv2CoordinatorConfigurations();
+            CosmosDBForPostgreSqlCoordinatorConfigurationCollection configurationCollection = _cluster.GetCosmosDBForPostgreSqlCoordinatorConfigurations();
             var lro = await configurationCollection.CreateOrUpdateAsync(WaitUntil.Completed, configurationName, data);
-            ServerGroupsv2CoordinatorConfigurationResource configuration = lro.Value;
+            CosmosDBForPostgreSqlCoordinatorConfigurationResource configuration = lro.Value;
             Assert.AreEqual(data.Value, configuration.Data.Value);
 
             // Get
-            ServerGroupsv2CoordinatorConfigurationResource configurationFromGet = await _cluster.GetServerGroupsv2CoordinatorConfigurationAsync(configurationName);
+            CosmosDBForPostgreSqlCoordinatorConfigurationResource configurationFromGet = await _cluster.GetCosmosDBForPostgreSqlCoordinatorConfigurationAsync(configurationName);
             Assert.AreEqual(data.Value, configurationFromGet.Data.Value);
         }
 
@@ -106,13 +131,13 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql.Tests
                 Value = "false"
             };
 
-            ServerGroupsv2NodeConfigurationCollection configurationCollection = _cluster.GetServerGroupsv2NodeConfigurations();
+            CosmosDBForPostgreSqlNodeConfigurationCollection configurationCollection = _cluster.GetCosmosDBForPostgreSqlNodeConfigurations();
             var lro = await configurationCollection.CreateOrUpdateAsync(WaitUntil.Completed, configurationName, data);
-            ServerGroupsv2NodeConfigurationResource configuration = lro.Value;
+            CosmosDBForPostgreSqlNodeConfigurationResource configuration = lro.Value;
             Assert.AreEqual(data.Value, configuration.Data.Value);
 
             // Get
-            ServerGroupsv2NodeConfigurationResource configurationFromGet = await _cluster.GetServerGroupsv2NodeConfigurationAsync(configurationName);
+            CosmosDBForPostgreSqlNodeConfigurationResource configurationFromGet = await _cluster.GetCosmosDBForPostgreSqlNodeConfigurationAsync(configurationName);
             Assert.AreEqual(data.Value, configurationFromGet.Data.Value);
         }
     }

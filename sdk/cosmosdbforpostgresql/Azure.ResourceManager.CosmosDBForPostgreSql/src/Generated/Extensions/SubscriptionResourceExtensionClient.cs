@@ -19,8 +19,8 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
     /// <summary> A class to add extension methods to SubscriptionResource. </summary>
     internal partial class SubscriptionResourceExtensionClient : ArmResource
     {
-        private ClientDiagnostics _clusterClientDiagnostics;
-        private ClustersRestOperations _clusterRestClient;
+        private ClientDiagnostics _cosmosDBForPostgreSqlClusterClustersClientDiagnostics;
+        private ClustersRestOperations _cosmosDBForPostgreSqlClusterClustersRestClient;
 
         /// <summary> Initializes a new instance of the <see cref="SubscriptionResourceExtensionClient"/> class for mocking. </summary>
         protected SubscriptionResourceExtensionClient()
@@ -34,8 +34,8 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
         {
         }
 
-        private ClientDiagnostics ClusterClientDiagnostics => _clusterClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.CosmosDBForPostgreSql", ClusterResource.ResourceType.Namespace, Diagnostics);
-        private ClustersRestOperations ClusterRestClient => _clusterRestClient ??= new ClustersRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(ClusterResource.ResourceType));
+        private ClientDiagnostics CosmosDBForPostgreSqlClusterClustersClientDiagnostics => _cosmosDBForPostgreSqlClusterClustersClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.CosmosDBForPostgreSql", CosmosDBForPostgreSqlClusterResource.ResourceType.Namespace, Diagnostics);
+        private ClustersRestOperations CosmosDBForPostgreSqlClusterClustersRestClient => _cosmosDBForPostgreSqlClusterClustersRestClient ??= new ClustersRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(CosmosDBForPostgreSqlClusterResource.ResourceType));
 
         private string GetApiVersionOrNull(ResourceType resourceType)
         {
@@ -57,12 +57,12 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ClusterResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<ClusterResource> GetClustersAsync(CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="CosmosDBForPostgreSqlClusterResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<CosmosDBForPostgreSqlClusterResource> GetCosmosDBForPostgreSqlClustersAsync(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => ClusterRestClient.CreateListRequest(Id.SubscriptionId);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => ClusterRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ClusterResource(Client, ClusterData.DeserializeClusterData(e)), ClusterClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetClusters", "value", "nextLink", cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CosmosDBForPostgreSqlClusterClustersRestClient.CreateListRequest(Id.SubscriptionId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CosmosDBForPostgreSqlClusterClustersRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new CosmosDBForPostgreSqlClusterResource(Client, CosmosDBForPostgreSqlClusterData.DeserializeCosmosDBForPostgreSqlClusterData(e)), CosmosDBForPostgreSqlClusterClustersClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetCosmosDBForPostgreSqlClusters", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -79,12 +79,12 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ClusterResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<ClusterResource> GetClusters(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="CosmosDBForPostgreSqlClusterResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<CosmosDBForPostgreSqlClusterResource> GetCosmosDBForPostgreSqlClusters(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => ClusterRestClient.CreateListRequest(Id.SubscriptionId);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => ClusterRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ClusterResource(Client, ClusterData.DeserializeClusterData(e)), ClusterClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetClusters", "value", "nextLink", cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CosmosDBForPostgreSqlClusterClustersRestClient.CreateListRequest(Id.SubscriptionId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CosmosDBForPostgreSqlClusterClustersRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new CosmosDBForPostgreSqlClusterResource(Client, CosmosDBForPostgreSqlClusterData.DeserializeCosmosDBForPostgreSqlClusterData(e)), CosmosDBForPostgreSqlClusterClustersClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetCosmosDBForPostgreSqlClusters", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -102,13 +102,13 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
         /// </summary>
         /// <param name="content"> The required parameters for checking if cluster name is available. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<NameAvailability>> CheckNameAvailabilityClusterAsync(NameAvailabilityContent content, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<CosmosDBForPostgreSqlNameAvailability>> CheckNameAvailabilityClusterAsync(NameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            using var scope = ClusterClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.CheckNameAvailabilityCluster");
+            using var scope = CosmosDBForPostgreSqlClusterClustersClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.CheckNameAvailabilityCluster");
             scope.Start();
             try
             {
-                var response = await ClusterRestClient.CheckNameAvailabilityAsync(Id.SubscriptionId, content, cancellationToken).ConfigureAwait(false);
+                var response = await CosmosDBForPostgreSqlClusterClustersRestClient.CheckNameAvailabilityAsync(Id.SubscriptionId, content, cancellationToken).ConfigureAwait(false);
                 return response;
             }
             catch (Exception e)
@@ -133,13 +133,13 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
         /// </summary>
         /// <param name="content"> The required parameters for checking if cluster name is available. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<NameAvailability> CheckNameAvailabilityCluster(NameAvailabilityContent content, CancellationToken cancellationToken = default)
+        public virtual Response<CosmosDBForPostgreSqlNameAvailability> CheckNameAvailabilityCluster(NameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            using var scope = ClusterClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.CheckNameAvailabilityCluster");
+            using var scope = CosmosDBForPostgreSqlClusterClustersClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.CheckNameAvailabilityCluster");
             scope.Start();
             try
             {
-                var response = ClusterRestClient.CheckNameAvailability(Id.SubscriptionId, content, cancellationToken);
+                var response = CosmosDBForPostgreSqlClusterClustersRestClient.CheckNameAvailability(Id.SubscriptionId, content, cancellationToken);
                 return response;
             }
             catch (Exception e)

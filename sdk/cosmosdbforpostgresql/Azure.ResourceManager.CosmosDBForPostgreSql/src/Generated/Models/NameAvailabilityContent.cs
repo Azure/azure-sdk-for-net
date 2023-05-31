@@ -21,12 +21,12 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql.Models
             Argument.AssertNotNull(name, nameof(name));
 
             Name = name;
-            ResourceType = CheckNameAvailabilityResourceType.MicrosoftDBforPostgreSQLServerGroupsv2;
+            ResourceType = CosmosDBForPostgreSqlCheckNameAvailabilityResourceType.MicrosoftDBforPostgreSQLServerGroupsv2;
         }
 
         /// <summary> Cluster name to verify. </summary>
         public string Name { get; }
         /// <summary> Resource type used for verification. </summary>
-        public CheckNameAvailabilityResourceType ResourceType { get; }
+        public CosmosDBForPostgreSqlCheckNameAvailabilityResourceType ResourceType { get; }
     }
 }

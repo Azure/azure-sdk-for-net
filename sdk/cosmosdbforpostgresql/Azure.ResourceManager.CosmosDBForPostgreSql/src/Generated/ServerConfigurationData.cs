@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
         /// <param name="allowedValues"> Allowed values of the configuration. </param>
         /// <param name="requiresRestart"> If configuration change requires restart. </param>
         /// <param name="provisioningState"> Provisioning state of the configuration. </param>
-        internal ServerConfigurationData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string value, string source, string description, string defaultValue, ConfigurationDataType? dataType, string allowedValues, bool? requiresRestart, ProvisioningState? provisioningState) : base(id, name, resourceType, systemData)
+        internal ServerConfigurationData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string value, string source, string description, string defaultValue, CosmosDBForPostgreSqlConfigurationDataType? dataType, string allowedValues, bool? requiresRestart, ProvisioningState? provisioningState) : base(id, name, resourceType, systemData)
         {
             Value = value;
             Source = source;
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
         /// <summary> Default value of the configuration. </summary>
         public string DefaultValue { get; }
         /// <summary> Data type of the configuration. </summary>
-        public ConfigurationDataType? DataType { get; }
+        public CosmosDBForPostgreSqlConfigurationDataType? DataType { get; }
         /// <summary> Allowed values of the configuration. </summary>
         public string AllowedValues { get; }
         /// <summary> If configuration change requires restart. </summary>

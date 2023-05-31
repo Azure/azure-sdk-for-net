@@ -31,11 +31,11 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
             return apiVersion;
         }
 
-        /// <summary> Gets a collection of ClusterResources in the ResourceGroupResource. </summary>
-        /// <returns> An object representing collection of ClusterResources and their operations over a ClusterResource. </returns>
-        public virtual ClusterCollection GetClusters()
+        /// <summary> Gets a collection of CosmosDBForPostgreSqlClusterResources in the ResourceGroupResource. </summary>
+        /// <returns> An object representing collection of CosmosDBForPostgreSqlClusterResources and their operations over a CosmosDBForPostgreSqlClusterResource. </returns>
+        public virtual CosmosDBForPostgreSqlClusterCollection GetCosmosDBForPostgreSqlClusters()
         {
-            return GetCachedClient(Client => new ClusterCollection(Client, Id));
+            return GetCachedClient(Client => new CosmosDBForPostgreSqlClusterCollection(Client, Id));
         }
     }
 }

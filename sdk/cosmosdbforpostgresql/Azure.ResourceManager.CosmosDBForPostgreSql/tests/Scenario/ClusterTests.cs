@@ -22,9 +22,9 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql.Tests
             // Create
             SubscriptionResource subscription = await Client.GetDefaultSubscriptionAsync();
             ResourceGroupResource rg = await CreateResourceGroup(subscription, "cosmospgrg", AzureLocation.WestUS);
-            ClusterCollection clusters = rg.GetClusters();
-            string clusterName = Recording.GenerateAssetName("cosmospgnet");
-            var data = new ClusterData(rg.Data.Location)
+            CosmosDBForPostgreSqlClusterCollection clusters = rg.GetCosmosDBForPostgreSqlClusters();
+            string clusterName = Recording.GenerateAssetName("cosmos-pg-net-");
+            var data = new CosmosDBForPostgreSqlClusterData(rg.Data.Location)
             {
                 CoordinatorVCores = 4,
                 EnableHa = false,
@@ -40,15 +40,15 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql.Tests
             };
 
             var lro = await clusters.CreateOrUpdateAsync(WaitUntil.Completed, clusterName, data);
-            ClusterResource cluster = lro.Value;
+            CosmosDBForPostgreSqlClusterResource cluster = lro.Value;
             Assert.AreEqual(clusterName, cluster.Data.Name);
 
             // Get
-            ClusterResource clusterFromGet = await clusters.GetAsync(clusterName);
+            CosmosDBForPostgreSqlClusterResource clusterFromGet = await clusters.GetAsync(clusterName);
             Assert.AreEqual(clusterName, clusterFromGet.Data.Name);
 
             // List
-            await foreach (ClusterResource clusterFromList in clusters)
+            await foreach (CosmosDBForPostgreSqlClusterResource clusterFromList in clusters)
             {
                 Assert.AreEqual(clusterName, clusterFromList.Data.Name);
             }
@@ -61,9 +61,9 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql.Tests
             // Create
             SubscriptionResource subscription = await Client.GetDefaultSubscriptionAsync();
             ResourceGroupResource rg = await CreateResourceGroup(subscription, "cosmospgrg", AzureLocation.WestUS);
-            ClusterCollection clusters = rg.GetClusters();
+            CosmosDBForPostgreSqlClusterCollection clusters = rg.GetCosmosDBForPostgreSqlClusters();
             string clusterName = Recording.GenerateAssetName("cosmospgnet");
-            var data = new ClusterData(rg.Data.Location)
+            var data = new CosmosDBForPostgreSqlClusterData(rg.Data.Location)
             {
                 CoordinatorVCores = 4,
                 EnableHa = false,
@@ -79,21 +79,21 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql.Tests
             };
 
             var lro = await clusters.CreateOrUpdateAsync(WaitUntil.Completed, clusterName, data);
-            ClusterResource cluster = lro.Value;
+            CosmosDBForPostgreSqlClusterResource cluster = lro.Value;
             Assert.AreEqual(clusterName, cluster.Data.Name);
 
             // Update
-            var updatedData = new ClusterData(rg.Data.Location)
+            var updatedData = new CosmosDBForPostgreSqlClusterData(rg.Data.Location)
             {
                 EnableHa = true
             };
             lro = await clusters.CreateOrUpdateAsync(WaitUntil.Completed, clusterName, updatedData);
-            ClusterResource clusterFromUpdate = lro.Value;
+            CosmosDBForPostgreSqlClusterResource clusterFromUpdate = lro.Value;
             Assert.AreEqual(clusterName, clusterFromUpdate.Data.Name);
             Assert.AreEqual(true, clusterFromUpdate.Data.EnableHa);
 
             // Get
-            ClusterResource clusterFromGet = await clusterFromUpdate.GetAsync();
+            CosmosDBForPostgreSqlClusterResource clusterFromGet = await clusterFromUpdate.GetAsync();
             Assert.AreEqual(clusterName, clusterFromGet.Data.Name);
 
             // Delete

@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
             Optional<string> source = default;
             Optional<string> description = default;
             Optional<string> defaultValue = default;
-            Optional<ConfigurationDataType> dataType = default;
+            Optional<CosmosDBForPostgreSqlConfigurationDataType> dataType = default;
             Optional<string> allowedValues = default;
             Optional<bool> requiresRestart = default;
             Optional<ProvisioningState> provisioningState = default;
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
                             {
                                 continue;
                             }
-                            dataType = new ConfigurationDataType(property0.Value.GetString());
+                            dataType = new CosmosDBForPostgreSqlConfigurationDataType(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("allowedValues"u8))

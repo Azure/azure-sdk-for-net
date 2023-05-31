@@ -46,20 +46,35 @@ rename-rules:
   URI: Uri
   Etag: ETag|etag
 
-request-path-to-resource-data:
- /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DBforPostgreSQL/serverGroupsv2/{clusterName}/coordinatorConfigurations/{configurationName}: ServerConfiguration
- /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DBforPostgreSQL/serverGroupsv2/{clusterName}/nodeConfigurations/{configurationName}: ServerConfiguration
+rename-mapping:
+  ClusterListResult: CosmosDBForPostgreSqlClusterListResult
+  ClusterServerListResult: CosmosDBForPostgreSqlClusterServerListResult
+  NameAvailability: CosmosDBForPostgreSqlNameAvailability
+  FirewallRuleListResult: CosmosDBForPostgreSqlFirewallRuleListResult
+  MaintenanceWindow: CosmosDBForPostgreSqlMaintenanceWindow
+  ClusterConfigurationListResult: CosmosDBForPostgreSqlClusterConfigurationListResult
+  ConfigurationDataType: CosmosDBForPostgreSqlConfigurationDataType
+  CheckNameAvailabilityResourceType: CosmosDBForPostgreSqlCheckNameAvailabilityResourceType
+  ServerRole: CosmosDBForPostgreSqlServerRole
+  RoleListResult: CosmosDBForPostgreSqlRoleListResult
+  ServerRoleGroupConfiguration: CosmosDBForPostgreSqlServerRoleGroupConfiguration
+  SimplePrivateEndpointConnection: CosmosDBForPostgreSqlSimplePrivateEndpointConnection
+  ServerConfigurationData: CosmosDBForPostgreSqlServerConfigurationData
 
-request-path-is-non-resource:
+prepend-rp-prefix:
+- Cluster
+- FirewallRule
+- Configuration
+- ClusterServer
+- Role
+
+list-exception:
 - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DBforPostgreSQL/serverGroupsv2/{clusterName}/coordinatorConfigurations/{configurationName}
 - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DBforPostgreSQL/serverGroupsv2/{clusterName}/nodeConfigurations/{configurationName}
 
-override-operation-name:
-  ServerGroupsv2CoordinatorConfigurations_List: GetAll
-  ServerGroupsv2NodeConfigurations_List: GetAll
-operation-positions:
-  ServerGroupsv2CoordinatorConfigurations_List: collection
-  ServerGroupsv2NodeConfigurations_List: collection
+request-path-to-resource-name:
+ /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DBforPostgreSQL/serverGroupsv2/{clusterName}/coordinatorConfigurations/{configurationName}: CosmosDBForPostgreSqlCoordinatorConfiguration
+ /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DBforPostgreSQL/serverGroupsv2/{clusterName}/nodeConfigurations/{configurationName}: CosmosDBForPostgreSqlNodeConfiguration
 
 directive:
 - from: types.json
