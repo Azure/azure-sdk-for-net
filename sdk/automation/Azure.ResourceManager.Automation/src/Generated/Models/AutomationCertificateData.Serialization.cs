@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.Automation
             string name = default;
             ResourceType type = default;
             Optional<SystemData> systemData = default;
-            Optional<BinaryData> thumbprint = default;
+            Optional<string> thumbprint = default;
             Optional<DateTimeOffset> expiryTime = default;
             Optional<bool> isExportable = default;
             Optional<DateTimeOffset> creationTime = default;
@@ -81,11 +81,7 @@ namespace Azure.ResourceManager.Automation
                     {
                         if (property0.NameEquals("thumbprint"u8))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            thumbprint = BinaryData.FromString(property0.Value.GetRawText());
+                            thumbprint = property0.Value.GetString();
                             continue;
                         }
                         if (property0.NameEquals("expiryTime"u8))

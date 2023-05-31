@@ -20,17 +20,17 @@ namespace Azure.ResourceManager.IotHub.Models
         /// <summary> Initializes a new instance of IotHubCertificatePropertiesWithNonce. </summary>
         /// <param name="subject"> The certificate&apos;s subject name. </param>
         /// <param name="expireOn"> The certificate&apos;s expiration date and time. </param>
-        /// <param name="thumbprint"> The certificate&apos;s thumbprint. </param>
+        /// <param name="thumbprintString"> The certificate&apos;s thumbprint. </param>
         /// <param name="isVerified"> Determines whether certificate has been verified. </param>
         /// <param name="createdOn"> The certificate&apos;s create date and time. </param>
         /// <param name="updatedOn"> The certificate&apos;s last update date and time. </param>
         /// <param name="verificationCode"> The certificate&apos;s verification code that will be used for proof of possession. </param>
         /// <param name="certificate"> The certificate content. </param>
-        internal IotHubCertificatePropertiesWithNonce(string subject, DateTimeOffset? expireOn, BinaryData thumbprint, bool? isVerified, DateTimeOffset? createdOn, DateTimeOffset? updatedOn, string verificationCode, BinaryData certificate)
+        internal IotHubCertificatePropertiesWithNonce(string subject, DateTimeOffset? expireOn, string thumbprintString, bool? isVerified, DateTimeOffset? createdOn, DateTimeOffset? updatedOn, string verificationCode, BinaryData certificate)
         {
             Subject = subject;
             ExpireOn = expireOn;
-            Thumbprint = thumbprint;
+            ThumbprintString = thumbprintString;
             IsVerified = isVerified;
             CreatedOn = createdOn;
             UpdatedOn = updatedOn;
@@ -42,37 +42,8 @@ namespace Azure.ResourceManager.IotHub.Models
         public string Subject { get; }
         /// <summary> The certificate&apos;s expiration date and time. </summary>
         public DateTimeOffset? ExpireOn { get; }
-        /// <summary>
-        /// The certificate&apos;s thumbprint.
-        /// <para>
-        /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formated json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        public BinaryData Thumbprint { get; }
+        /// <summary> The certificate&apos;s thumbprint. </summary>
+        public string ThumbprintString { get; }
         /// <summary> Determines whether certificate has been verified. </summary>
         public bool? IsVerified { get; }
         /// <summary> The certificate&apos;s create date and time. </summary>

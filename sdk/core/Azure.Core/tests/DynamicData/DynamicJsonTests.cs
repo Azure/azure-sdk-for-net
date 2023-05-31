@@ -7,6 +7,8 @@ using System.IO;
 using System.Text.Json;
 using Azure.Core.Dynamic;
 using Azure.Core.GeoJson;
+using Azure.Core.Serialization;
+using Microsoft.CSharp.RuntimeBinder;
 using NUnit.Framework;
 
 namespace Azure.Core.Tests
@@ -156,6 +158,30 @@ namespace Azure.Core.Tests
         }
 
         [Test]
+        public void CannotGetOrSetValuesOnAbsentArrays()
+        {
+            dynamic value = BinaryData.FromString("""{"foo": [1, 2]}""").ToDynamicFromJson(DynamicCaseMapping.PascalToCamel);
+
+            Assert.Throws<InvalidOperationException>(() => { int i = value[0]; });
+            Assert.Throws<InvalidOperationException>(() => { value[0] = 1; });
+
+            Assert.Throws<InvalidOperationException>(() => { int i = value.Foo[0][0]; });
+            Assert.Throws<InvalidOperationException>(() => { value.Foo[0][0] = 2; });
+        }
+
+        [Test]
+        public void CannotGetOrSetValuesOnAbsentProperties()
+        {
+            dynamic value = BinaryData.FromString("""{"foo": 1}""").ToDynamicFromJson(DynamicCaseMapping.PascalToCamel);
+
+            Assert.Throws<InvalidOperationException>(() => { int i = value.Foo.Bar.Baz; });
+            Assert.Throws<InvalidOperationException>(() => { value.Foo.Bar.Baz = "hi"; });
+
+            Assert.Throws<RuntimeBinderException>(() => { int i = value.A.B.C; });
+            Assert.Throws<RuntimeBinderException>(() => { value.A.B.C = 1; });
+        }
+
+        [Test]
         public void CanSetArrayValuesToDifferentTypes()
         {
             dynamic jsonData = GetDynamicJson("""[0, 1, 2, 3]""");
@@ -196,6 +222,8 @@ namespace Azure.Core.Tests
 
             Assert.IsNull((CustomType)jsonData.Foo);
             Assert.IsNull((int?)jsonData.Foo);
+            Assert.IsNull(jsonData.Foo);
+            Assert.IsNull(jsonData.foo);
         }
 
         [Test]
@@ -205,6 +233,7 @@ namespace Azure.Core.Tests
 
             Assert.IsNull((CustomType)jsonData[0]);
             Assert.IsNull((int?)jsonData[0]);
+            Assert.IsNull(jsonData[0]);
         }
 
         [Test]
@@ -216,6 +245,8 @@ namespace Azure.Core.Tests
 
             Assert.IsNull((CustomType)jsonData.Foo);
             Assert.IsNull((int?)jsonData.Foo);
+            Assert.IsNull(jsonData.Foo);
+            Assert.IsNull(jsonData.foo);
         }
 
         [Test]
@@ -227,6 +258,7 @@ namespace Azure.Core.Tests
 
             Assert.IsNull((CustomType)jsonData[0]);
             Assert.IsNull((int?)jsonData[0]);
+            Assert.IsNull(jsonData[0]);
         }
 
         [Test]
@@ -445,9 +477,11 @@ namespace Azure.Core.Tests
 
             // Property is present
             Assert.IsFalse(json.Foo == null);
+            Assert.AreNotEqual(null, json.Foo);
 
             // Property is absent
             Assert.IsTrue(json.Bar == null);
+            Assert.AreEqual(null, json.Bar);
         }
 
         [Test]
@@ -471,11 +505,15 @@ namespace Azure.Core.Tests
 
             // Properties are present
             Assert.IsFalse(json.Foo == null);
+            Assert.AreNotEqual(null, json.Foo);
             Assert.IsFalse(json.Bar.B == null);
+            Assert.AreNotEqual(null, json.Bar.B);
             Assert.IsFalse(json.Baz == null);
+            Assert.AreNotEqual(null, json.Baz);
 
             // Properties are absent
             Assert.IsTrue(json.Bar.A == null);
+            Assert.AreEqual(null, json.Bar.A);
         }
 
         [Test]
@@ -489,6 +527,7 @@ namespace Azure.Core.Tests
 
             // Property is absent
             Assert.IsTrue(json.OptionalValue == null);
+            Assert.AreEqual(null, json.OptionalValue);
 
             json.OptionalValue = 5;
 
@@ -837,10 +876,13 @@ namespace Azure.Core.Tests
             // GetMember binding mirrors Azure SDK models, so we allow a null check for an optional
             // property through the C#-style dynamic interface.
             Assert.IsTrue(json.foo == null);
+            Assert.AreEqual(null, json.foo);
             Assert.IsTrue(json.bar == null);
+            Assert.AreEqual(null, json.bar);
 
             // Indexer lookup mimics JsonNode behavior and so throws if a property is absent.
             Assert.IsTrue(json["foo"] == null);
+            Assert.AreEqual(null, json["foo"]);
             Assert.Throws<KeyNotFoundException>(() => _ = json["bar"]);
             Assert.Throws<KeyNotFoundException>(() => { if (json["bar"] == null) {; } });
         }

@@ -35,7 +35,7 @@ namespace Microsoft.Azure.WebJobs.EventHubs.Listeners
             private readonly ILogger _logger;
             private readonly int _batchCheckpointFrequency;
             private int _batchCounter;
-            private bool _firstFunctionExecute;
+            private bool _firstFunctionInvocation;
             private bool _minimumBatchesEnabled;
             private bool _disposed;
             private TimeSpan _maxWaitTime;
@@ -56,7 +56,7 @@ namespace Microsoft.Azure.WebJobs.EventHubs.Listeners
                 _singleDispatch = singleDispatch;
                 _batchCheckpointFrequency = options.BatchCheckpointFrequency;
                 _logger = logger;
-                _firstFunctionExecute = true;
+                _firstFunctionInvocation = true;
                 _maxWaitTime = options.MaxWaitTime;
                 _minimumBatchesEnabled = options.MinEventBatchSize > 1; // 1 is the default
 
@@ -98,11 +98,11 @@ namespace Microsoft.Azure.WebJobs.EventHubs.Listeners
             /// </summary>
             /// <param name="context">The partition information for this partition.</param>
             /// <param name="messages">The events to process.</param>
-            /// <param name="processingCancellationToken">The cancellation token to respect if processing is canceled.</param>
+            /// <param name="partitionProcessingCancellationToken">The cancellation token to respect if processing for the partition is canceled.</param>
             /// <returns></returns>
-            public async Task ProcessEventsAsync(EventProcessorHostPartition context, IEnumerable<EventData> messages, CancellationToken processingCancellationToken)
+            public async Task ProcessEventsAsync(EventProcessorHostPartition context, IEnumerable<EventData> messages, CancellationToken partitionProcessingCancellationToken)
             {
-                using CancellationTokenSource linkedCts = CancellationTokenSource.CreateLinkedTokenSource(_cts.Token, processingCancellationToken);
+                using CancellationTokenSource linkedCts = CancellationTokenSource.CreateLinkedTokenSource(_cts.Token, partitionProcessingCancellationToken);
                 _mostRecentPartitionContext = context;
                 var events = messages.ToArray();
                 EventData eventToCheckpoint = null;
@@ -136,7 +136,7 @@ namespace Microsoft.Azure.WebJobs.EventHubs.Listeners
                         };
 
                         await _executor.TryExecuteAsync(input, linkedCts.Token).ConfigureAwait(false);
-                        _firstFunctionExecute = false;
+                        _firstFunctionInvocation = false;
                         eventToCheckpoint = events[i];
                     }
                 }
@@ -169,7 +169,6 @@ namespace Microsoft.Azure.WebJobs.EventHubs.Listeners
 
                                 UpdateCheckpointContext(triggerEvents, context);
                                 await TriggerExecute(triggerEvents, context, linkedCts.Token).ConfigureAwait(false);
-                                _firstFunctionExecute = false;
                                 eventToCheckpoint = triggerEvents.Last();
 
                                 // If there is a background timer task, cancel it and dispose of the cancellation token. If there
@@ -203,7 +202,6 @@ namespace Microsoft.Azure.WebJobs.EventHubs.Listeners
                     {
                         UpdateCheckpointContext(events, context);
                         await TriggerExecute(events, context, linkedCts.Token).ConfigureAwait(false);
-                        _firstFunctionExecute = false;
                         eventToCheckpoint = events.LastOrDefault();
                     }
 
@@ -211,14 +209,17 @@ namespace Microsoft.Azure.WebJobs.EventHubs.Listeners
                     // and wait to send until we receive enough events or total max wait time has passed.
                 }
 
-                // Checkpoint if we processed any events.
+                // Checkpoint if we processed any events and cancellation has not been signaled.
                 // Don't checkpoint if no events. This can reset the sequence counter to 0.
                 // Note: we intentionally checkpoint the batch regardless of function
                 // success/failure. EventHub doesn't support any sort "poison event" model,
                 // so that is the responsibility of the user's function currently. E.g.
                 // the function should have try/catch handling around all event processing
                 // code, and capture/log/persist failed events, since they won't be retried.
-                if (eventToCheckpoint != null)
+                // Don't checkpoint if cancellation has been requested as this can lead to data loss,
+                // since the user may not actually process the event.
+
+                if (eventToCheckpoint != null && !linkedCts.IsCancellationRequested)
                 {
                     await CheckpointAsync(eventToCheckpoint, context).ConfigureAwait(false);
                 }
@@ -240,7 +241,7 @@ namespace Microsoft.Azure.WebJobs.EventHubs.Listeners
                 };
 
                 await _executor.TryExecuteAsync(input, cancellationToken).ConfigureAwait(false);
-                _firstFunctionExecute = false;
+                _firstFunctionInvocation = false;
             }
 
             private async Task MonitorCachedEvents(DateTimeOffset? lastCheckpointTime, CancellationTokenSource backgroundCancellationTokenSource)
@@ -248,7 +249,7 @@ namespace Microsoft.Azure.WebJobs.EventHubs.Listeners
                 Debug.Assert(_minimumBatchesEnabled, "Monitoring of cached events should only take place when minimum batches are enabled.");
 
                 var acquiredSemaphore = false;
-                var adjustedMaxWaitTime = GetAdjustedMaxWaitTime(_maxWaitTime, lastCheckpointTime, _firstFunctionExecute);
+                var adjustedMaxWaitTime = GetAdjustedMaxWaitTime(_maxWaitTime, lastCheckpointTime, _firstFunctionInvocation);
 
                 try
                 {
@@ -276,7 +277,10 @@ namespace Microsoft.Azure.WebJobs.EventHubs.Listeners
                         _logger.LogDebug($"Partition Processor has waited MaxWaitTime since last invocation and is attempting to invoke function on all held events ({details})");
 
                         await TriggerExecute(triggerEvents, _mostRecentPartitionContext, backgroundCancellationTokenSource.Token).ConfigureAwait(false);
-                        await CheckpointAsync(triggerEvents.Last(), _mostRecentPartitionContext).ConfigureAwait(false);
+                        if (!backgroundCancellationTokenSource.Token.IsCancellationRequested)
+                        {
+                            await CheckpointAsync(triggerEvents.Last(), _mostRecentPartitionContext).ConfigureAwait(false);
+                        }
                     }
                     else
                     {
@@ -305,7 +309,7 @@ namespace Microsoft.Azure.WebJobs.EventHubs.Listeners
                 }
             }
 
-            private TimeSpan GetAdjustedMaxWaitTime(TimeSpan configuredMaxWaitTime, DateTimeOffset? lastCheckpointTime, bool firstInvocation)
+            private static TimeSpan GetAdjustedMaxWaitTime(TimeSpan configuredMaxWaitTime, DateTimeOffset? lastCheckpointTime, bool firstInvocation)
             {
                 // If this is not the first invocation of the function for this partition then use the configured wait time.
                 if (!firstInvocation)

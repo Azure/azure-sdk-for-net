@@ -18,7 +18,7 @@ We will generate an SDK under the SDK project folder of `azure-sdk-for-net`.
 
 You can update `tsp-location.yaml` under sdk project folder to set the typespec project.
 
-You can refer to the [tsp-location.yaml](https://github.com/Azure/azure-sdk-tools/blob/main/doc/common/Typespec-Project-Scripts.md#tsp-locationyaml) which describes the supported properties in the file.
+You can refer to the [tsp-location.yaml](https://github.com/Azure/azure-sdk-tools/blob/main/doc/common/TypeSpec-Project-Scripts.md#tsp-locationyaml) which describes the supported properties in the file.
 
 ### Generate Code
 
@@ -39,14 +39,14 @@ Code review happens on 2 places.
 
 One is the usual GitHub pull request, for developers.
 
-Another is the [apiview](https://apiview.dev/), for architects. GitHub pull request (PR) should automatically trigger the apiview. If this does not happen, please help to file an issue in [azure-sdk-tools](https://github.com/azure/azure-sdk-tools) to report the failure. 
+Another is the [apiview](https://apiview.dev/), for architects. GitHub pull request (PR) should automatically trigger the apiview. If this does not happen, please help to file an issue in [azure-sdk-tools](https://github.com/azure/azure-sdk-tools) to report the failure.
 And you can upload one manually:
 
  - Build the SDK, Run `dotnet pack` to create SDK package.
  - Login apiview with GitHub account.
  - Click "Create + review" at bottom-right corner.
  - "Browse" and upload .nupkg (e.g. /home/azure-sdk-for-net/artifacts/package/Debug/Azure.AI.AnomalyDetector/Azure.AI.AnomalyDetector.3.0.0-alpha.20230331.1.nupkg), and comment the result apiview link in the PR.
-  
+
 **Comment @Azure/dpg-devs for awareness in PR to loop in SDK developers for review.**
 
 ## Package Release

@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.IotHub.Models
             }
             Optional<string> subject = default;
             Optional<DateTimeOffset> expiry = default;
-            Optional<BinaryData> thumbprint = default;
+            Optional<string> thumbprint = default;
             Optional<bool> isVerified = default;
             Optional<DateTimeOffset> created = default;
             Optional<DateTimeOffset> updated = default;
@@ -45,11 +45,7 @@ namespace Azure.ResourceManager.IotHub.Models
                 }
                 if (property.NameEquals("thumbprint"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    thumbprint = BinaryData.FromString(property.Value.GetRawText());
+                    thumbprint = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("isVerified"u8))
