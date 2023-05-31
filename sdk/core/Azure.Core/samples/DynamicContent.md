@@ -29,7 +29,7 @@ To use dynamic content with an idiomatic .NET style, pass `DynamicCaseMapping.Pa
 
 ```C# Snippet:AzureCoreGetDynamicJsonPropertyPascalCase
 Response response = client.GetWidget();
-dynamic widget = response.Content.ToDynamicFromJson(PropertyNameHandling.AllowPascalCaseReads);
+dynamic widget = response.Content.ToDynamicFromJson();
 string name = widget.Name;
 ```
 
@@ -50,7 +50,7 @@ JSON array values are accessed using array indexers.  The `Length` property retu
 
 ```C# Snippet:AzureCoreGetDynamicJsonArrayValue
 Response response = client.GetWidget();
-dynamic widget = response.Content.ToDynamicFromJson(PropertyNameHandling.AllowPascalCaseReads);
+dynamic widget = response.Content.ToDynamicFromJson();
 
 // JSON is `{ "values" : [1, 2, 3] }`
 if (widget.Values.Length > 0)
@@ -65,7 +65,7 @@ Dynamic JSON objects and arrays implement `IEnumerable` and can be iterated over
 
 ```C# Snippet:AzureCoreEnumerateDynamicJsonObject
 Response response = client.GetWidget();
-dynamic widget = response.Content.ToDynamicFromJson(PropertyNameHandling.AllowPascalCaseReads);
+dynamic widget = response.Content.ToDynamicFromJson();
 
 // JSON is `{ "details" : { "color" : "blue", "size" : "small" } }`
 foreach (dynamic property in widget.Details)
@@ -80,7 +80,7 @@ Optional properties will return null if not present in the JSON content.
 
 ```C# Snippet:AzureCoreGetDynamicJsonOptionalProperty
 Response response = client.GetWidget();
-dynamic widget = response.Content.ToDynamicFromJson(PropertyNameHandling.AllowPascalCaseReads);
+dynamic widget = response.Content.ToDynamicFromJson();
 
 // JSON is `{ "details" : { "color" : "blue", "size" : "small" } }`
 
@@ -122,7 +122,7 @@ Dynamic JSON objects can be cast to CLR types using the cast operator.
 
 ```C# Snippet:AzureCoreCastDynamicJsonToPOCO
 Response response = client.GetWidget();
-dynamic content = response.Content.ToDynamicFromJson(PropertyNameHandling.AllowPascalCaseReads);
+dynamic content = response.Content.ToDynamicFromJson();
 
 // JSON is `{ "id" : "123", "name" : "Widget" }`
 Widget widget = (Widget)content;

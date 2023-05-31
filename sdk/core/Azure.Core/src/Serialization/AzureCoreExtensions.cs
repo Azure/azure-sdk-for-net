@@ -63,7 +63,7 @@ namespace Azure
         /// <summary>
         /// Return the content of the BinaryData as a dynamic type.
         /// </summary>
-        public static dynamic ToDynamicFromJson(this BinaryData utf8Json, PropertyNameHandling propertyNameHandling = PropertyNameHandling.AllowPascalCaseReads, DynamicDateTimeHandling dateTimeHandling = DynamicDateTimeHandling.Rfc3339)
+        public static dynamic ToDynamicFromJson(this BinaryData utf8Json, PropertyNameHandling propertyNameHandling = PropertyNameHandling.AllowPascalCaseReads, DateTimeHandling dateTimeHandling = DateTimeHandling.Rfc3339)
         {
             DynamicDataOptions options = new()
             {

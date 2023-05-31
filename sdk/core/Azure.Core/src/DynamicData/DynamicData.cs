@@ -60,11 +60,11 @@ namespace Azure.Core.Dynamic
 
             switch (options.DateTimeHandling)
             {
-                case DynamicDateTimeHandling.UnixTime:
+                case DateTimeHandling.UnixTime:
                     serializerOptions.Converters.Add(new UnixTimeDateTimeConverter());
                     serializerOptions.Converters.Add(new UnixTimeDateTimeOffsetConverter());
                     break;
-                case DynamicDateTimeHandling.Rfc3339:
+                case DateTimeHandling.Rfc3339:
                 default:
                     serializerOptions.Converters.Add(new Rfc3339DateTimeConverter());
                     serializerOptions.Converters.Add(new Rfc3339DateTimeOffsetConverter());

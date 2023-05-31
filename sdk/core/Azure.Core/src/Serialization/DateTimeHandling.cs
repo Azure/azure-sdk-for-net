@@ -18,7 +18,7 @@ namespace Azure.Core.Serialization
     /// <summary>
     /// Determines how DynamicData handles DateTime and DateTimeOffset when serializing and deserializing.
     /// </summary>
-    public enum DynamicDateTimeHandling
+    public enum DateTimeHandling
     {
         /// <summary>
         /// DateTime and DateTimeOffset values assigned to <see cref="DynamicData"/> will be
