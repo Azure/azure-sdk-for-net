@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.Cdn.Models
         }
 
         /// <summary> List of keys used to validate the signed URL hashes. </summary>
-        public IList<UriSigningKey> UriSigningKeys { get; set; }
+        public IList<UriSigningKey> UriSigningKeys { get; }
         /// <summary> A policy that specifies the delivery rules to be used for an endpoint. </summary>
         public EndpointDeliveryPolicy DeliveryPolicy { get; set; }
         /// <summary> Defines the Web Application Firewall policy for the endpoint (if applicable). </summary>

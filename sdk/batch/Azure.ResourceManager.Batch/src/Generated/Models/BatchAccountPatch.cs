@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.Batch.Models
         /// <summary> Configures how customer data is encrypted inside the Batch account. By default, accounts are encrypted using a Microsoft managed key. For additional control, a customer-managed key can be used instead. </summary>
         public BatchAccountEncryptionConfiguration Encryption { get; set; }
         /// <summary> List of allowed authentication modes for the Batch account that can be used to authenticate with the data plane. This does not affect authentication with the control plane. </summary>
-        public IList<BatchAuthenticationMode> AllowedAuthenticationModes { get; set; }
+        public IList<BatchAuthenticationMode> AllowedAuthenticationModes { get; }
         /// <summary> If not specified, the default value is &apos;enabled&apos;. </summary>
         public BatchPublicNetworkAccess? PublicNetworkAccess { get; set; }
         /// <summary> The network profile only takes effect when publicNetworkAccess is enabled. </summary>
