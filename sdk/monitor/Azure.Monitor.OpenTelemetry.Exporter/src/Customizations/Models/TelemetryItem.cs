@@ -114,11 +114,9 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Models
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         private void SetAuthenticatedUserId(ref ActivityTagsProcessor activityTagsProcessor)
         {
-            if (activityTagsProcessor.HasEndUserId)
+            if (activityTagsProcessor.EndUserId != null)
             {
-                var endUserId = AzMonList.GetTagValue(ref activityTagsProcessor.MappedTags, SemanticConventions.AttributeEnduserId)?.ToString();
-
-                Tags[ContextTagKeys.AiUserAuthUserId.ToString()] = endUserId;
+                Tags[ContextTagKeys.AiUserAuthUserId.ToString()] = activityTagsProcessor.EndUserId;
             }
         }
     }

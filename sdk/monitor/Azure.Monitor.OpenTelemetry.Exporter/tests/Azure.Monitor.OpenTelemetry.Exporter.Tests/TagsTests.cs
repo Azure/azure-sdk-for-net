@@ -315,8 +315,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             using var activity = CreateTestActivity(tagObjects, activityKind);
             activityTagsProcessor.CategorizeTags(activity);
 
-            Assert.True(activityTagsProcessor.HasEndUserId);
-            Assert.Equal("TestUser", AzMonList.GetTagValue(ref activityTagsProcessor.MappedTags, SemanticConventions.AttributeEnduserId)?.ToString());
+            Assert.Equal("TestUser", activityTagsProcessor.EndUserId);
         }
 
         private static Activity CreateTestActivity(IEnumerable<KeyValuePair<string, object?>>? additionalAttributes = null, ActivityKind activityKind = ActivityKind.Server)

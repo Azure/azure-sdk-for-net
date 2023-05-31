@@ -69,7 +69,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
         public OperationType activityType { get; private set; }
 
         public bool HasAzureNamespace { get; private set; } = false;
-        public bool HasEndUserId { get; private set; } = false;
+        public string? EndUserId { get; private set; } = null;
 
         public ActivityTagsProcessor()
         {
@@ -110,7 +110,8 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
                 {
                     if (tag.Key == SemanticConventions.AttributeEnduserId)
                     {
-                        this.HasEndUserId = true;
+                        this.EndUserId = tag.Value.ToString();
+                        continue;
                     }
 
                     AzMonList.Add(ref MappedTags, tag);
