@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+
 namespace Azure.ResourceManager.Hci.Models
 {
     /// <summary> Cluster node details. </summary>
@@ -29,7 +31,8 @@ namespace Azure.ResourceManager.Hci.Models
         /// <param name="serialNumber"> Immutable id of the cluster node. </param>
         /// <param name="coreCount"> Number of physical cores on the cluster node. </param>
         /// <param name="memoryInGiB"> Total available memory on the cluster node (in GiB). </param>
-        internal HciClusterNode(string name, float? id, WindowsServerSubscription? windowsServerSubscription, ClusterNodeType? nodeType, string ehcResourceId, string manufacturer, string model, string osName, string osVersion, string osDisplayVersion, string serialNumber, float? coreCount, float? memoryInGiB)
+        /// <param name="lastLicensingTimestamp"> Most recent licensing timestamp. </param>
+        internal HciClusterNode(string name, float? id, WindowsServerSubscription? windowsServerSubscription, ClusterNodeType? nodeType, string ehcResourceId, string manufacturer, string model, string osName, string osVersion, string osDisplayVersion, string serialNumber, float? coreCount, float? memoryInGiB, DateTimeOffset? lastLicensingTimestamp)
         {
             Name = name;
             Id = id;
@@ -44,6 +47,7 @@ namespace Azure.ResourceManager.Hci.Models
             SerialNumber = serialNumber;
             CoreCount = coreCount;
             MemoryInGiB = memoryInGiB;
+            LastLicensingTimestamp = lastLicensingTimestamp;
         }
 
         /// <summary> Name of the cluster node. </summary>
@@ -72,5 +76,7 @@ namespace Azure.ResourceManager.Hci.Models
         public float? CoreCount { get; }
         /// <summary> Total available memory on the cluster node (in GiB). </summary>
         public float? MemoryInGiB { get; }
+        /// <summary> Most recent licensing timestamp. </summary>
+        public DateTimeOffset? LastLicensingTimestamp { get; }
     }
 }

@@ -33,14 +33,10 @@ namespace Azure.ResourceManager.NotificationHubs.Models
                 writer.WritePropertyName("endpoint"u8);
                 writer.WriteStringValue(Endpoint.AbsoluteUri);
             }
-            if (Optional.IsDefined(Thumbprint))
+            if (Optional.IsDefined(ThumbprintString))
             {
                 writer.WritePropertyName("thumbprint"u8);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(Thumbprint);
-#else
-                JsonSerializer.Serialize(writer, JsonDocument.Parse(Thumbprint.ToString()).RootElement);
-#endif
+                writer.WriteStringValue(ThumbprintString);
             }
             if (Optional.IsDefined(KeyId))
             {
@@ -75,7 +71,7 @@ namespace Azure.ResourceManager.NotificationHubs.Models
             Optional<string> apnsCertificate = default;
             Optional<string> certificateKey = default;
             Optional<Uri> endpoint = default;
-            Optional<BinaryData> thumbprint = default;
+            Optional<string> thumbprint = default;
             Optional<string> keyId = default;
             Optional<string> appName = default;
             Optional<string> appId = default;
@@ -112,11 +108,7 @@ namespace Azure.ResourceManager.NotificationHubs.Models
                         }
                         if (property0.NameEquals("thumbprint"u8))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            thumbprint = BinaryData.FromString(property0.Value.GetRawText());
+                            thumbprint = property0.Value.GetString();
                             continue;
                         }
                         if (property0.NameEquals("keyId"u8))

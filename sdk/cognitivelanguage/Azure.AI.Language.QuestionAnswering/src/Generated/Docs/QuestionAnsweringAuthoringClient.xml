@@ -1345,7 +1345,7 @@ var data = new[] {
         value = new {
             displayName = "<displayName>",
             source = "<source>",
-            sourceUri = new {},
+            sourceUri = "http://localhost:3000",
             sourceKind = "file",
             contentStructureKind = "unstructured",
         },
@@ -1386,7 +1386,7 @@ var data = new[] {
         value = new {
             displayName = "<displayName>",
             source = "<source>",
-            sourceUri = new {},
+            sourceUri = "http://localhost:3000",
             sourceKind = "file",
             contentStructureKind = "unstructured",
         },

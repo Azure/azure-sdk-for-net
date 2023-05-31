@@ -8,25 +8,24 @@
         "Authorization": "Sanitized",
         "Content-Length": "2",
         "Content-Type": "application/merge-patch\u002Bjson",
-        "traceparent": "00-887d36a89b1b924d85122fe98176a70f-8a5712771f6a174c-00",
-        "User-Agent": "azsdk-net-Communication.PhoneNumbers/1.1.0-alpha.20221207.1 (.NET Core 3.1.31; Microsoft Windows 10.0.22621)",
-        "x-ms-client-request-id": "d70727a8d820638ecec6d8a8ca109c9d",
+        "User-Agent": "azsdk-net-Communication.PhoneNumbers/1.2.0-alpha.20230515.1 (.NET 7.0.5; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "6ba78c0b61be7ed2a5c948e8f2322486",
         "x-ms-content-sha256": "Sanitized",
-        "x-ms-date": "Wed, 07 Dec 2022 21:34:09 GMT",
+        "x-ms-date": "Mon, 15 May 2023 15:54:49 GMT",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {},
       "StatusCode": 400,
       "ResponseHeaders": {
-        "api-supported-versions": "2021-03-07, 2022-01-11-preview2, 2022-06-01-preview, 2022-12-01",
+        "api-supported-versions": "2021-03-07, 2022-01-11-preview2, 2022-06-01-preview, 2022-12-01, 2022-12-02-preview2",
         "Content-Type": "application/json",
-        "Date": "Wed, 07 Dec 2022 21:34:08 GMT",
-        "MS-CV": "Z3RFjJ2Us0Cm4TqKAFzjxQ.0",
+        "Date": "Mon, 15 May 2023 15:54:50 GMT",
+        "MS-CV": "HID1rfVQf0\u002Biig7pVZx\u002BdA.0",
         "Strict-Transport-Security": "max-age=2592000",
         "Transfer-Encoding": "chunked",
-        "X-Azure-Ref": "00QaRYwAAAAAb4\u002B67Oo\u002BaRL74G7YVeBI/TUVYMzFFREdFMDQxOQA5ZmM3YjUxOS1hOGNjLTRmODktOTM1ZS1jOTE0OGFlMDllODE=",
+        "X-Azure-Ref": "0y1ViZAAAAADD4ey/ei9XTpP/LUh/FvSnU0FPMzFFREdFMTIxMgA5ZmM3YjUxOS1hOGNjLTRmODktOTM1ZS1jOTE0OGFlMDllODE=",
         "X-Cache": "CONFIG_NOCACHE",
-        "X-Processing-Time": "33ms"
+        "X-Processing-Time": "11ms"
       },
       "ResponseBody": {
         "error": {
@@ -39,6 +38,6 @@
   ],
   "Variables": {
     "COMMUNICATION_LIVETEST_STATIC_CONNECTION_STRING": "endpoint=https://smstestapp.communication.azure.com/;accesskey=Kg==",
-    "RandomSeed": "688280011"
+    "RandomSeed": "1250060953"
   }
 }

@@ -262,7 +262,7 @@
 /sdk/communication/Azure.Communication.Sms/                        @RoyHerrod @arifibrahim4
 
 # PRLabel: %Communication - Resource Manager
-/sdk/communication/Azure.ResourceManager.Communication/            @fengzhou-msft @archerzz @ArcturusZhang @Yao725 @ArthurMa1978
+/sdk/communication/Azure.ResourceManager.Communication/            @archerzz @ArcturusZhang @ArthurMa1978
 
 # PRLabel: %Communication - Rooms
 /sdk/communication/Azure.Communication.Rooms/                      @minnieliu @paolamvhz @alexokun @Mrayyan @shwali-msft @allchiang-msft @mikehang-msft
@@ -719,7 +719,7 @@
 /sdk/storsimple/Microsoft.Azure.Management.StorSimple/             @anoobbacker @ganzee @manuaery @patelkunal
 
 # ServiceLabel: %Storsimple %Service Attention
-/sdk/storsimple8000series/Microsoft.Azure.Management.StorSimple8000Series/ @fengzhou-msft @archerzz @ArcturusZhang @Yao725 @ArthurMa1978
+/sdk/storsimple8000series/Microsoft.Azure.Management.StorSimple8000Series/ @archerzz @ArcturusZhang @ArthurMa1978
 
 # ServiceLabel: %Stream Analytics %Service Attention
 /sdk/streamanalytics/Microsoft.Azure.Management.StreamAnalytics/   @atpham256
@@ -770,8 +770,8 @@
 
 # ######## Management Plane ########
 
-/**/*Management*/                                                  @fengzhou-msft @archerzz @ArcturusZhang @Yao725 @ArthurMa1978
-/**/Azure.ResourceManager*/                                        @fengzhou-msft @archerzz @ArcturusZhang @Yao725 @ArthurMa1978
+/**/*Management*/                                                  @archerzz @ArcturusZhang @ArthurMa1978
+/**/Azure.ResourceManager*/                                        @archerzz @ArcturusZhang @ArthurMa1978
 
 # Reviewers to double check any API changes
 /sdk/**/api/                                                       @KrzysztofCwalina @tg-msft
@@ -788,7 +788,13 @@
 # ######## DPG ########
 
 # Onboarding Documentation and Quickstarts
-/doc/Data\ Plane\ Code\ Generation                                 @chunyu3 @pshao25 @fengzhou-msft @lirenhe @annelo-msft
+/doc/Data\ Plane\ Code\ Generation                                 @chunyu3 @pshao25 @lirenhe @annelo-msft
 
 # Client generation tooling
 /eng/templates/Azure.ServiceTemplate.Template                      @chunyu3 @lirenhe
+
+# PRLabel: %Cognitive - Content Safety
+/sdk/contentsafety/												   @bowgong @mengaims
+
+# ServiceLabel: %Cognitive - Content Safety %Service Attention
+/sdk/contentsafety/Azure.AI.ContentSafety/                     	   @bowgong @mengaims

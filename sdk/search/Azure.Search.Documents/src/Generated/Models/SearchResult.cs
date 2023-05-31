@@ -20,6 +20,7 @@ namespace Azure.Search.Documents.Models
             Score = score;
             Highlights = new ChangeTrackingDictionary<string, IList<string>>();
             Captions = new ChangeTrackingList<CaptionResult>();
+            DocumentDebugInfo = new ChangeTrackingList<DocumentDebugInfo>();
             AdditionalProperties = new ChangeTrackingDictionary<string, object>();
         }
 
@@ -28,13 +29,15 @@ namespace Azure.Search.Documents.Models
         /// <param name="rerankerScore"> The relevance score computed by the semantic ranker for the top search results. Search results are sorted by the RerankerScore first and then by the Score. RerankerScore is only returned for queries of type &apos;semantic&apos;. </param>
         /// <param name="highlights"> Text fragments from the document that indicate the matching search terms, organized by each applicable field; null if hit highlighting was not enabled for the query. </param>
         /// <param name="captions"> Captions are the most representative passages from the document relatively to the search query. They are often used as document summary. Captions are only returned for queries of type &apos;semantic&apos;. </param>
+        /// <param name="documentDebugInfo"> Contains debugging information that can be used to further explore your search results. </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
-        internal SearchResult(double score, double? rerankerScore, IReadOnlyDictionary<string, IList<string>> highlights, IReadOnlyList<CaptionResult> captions, IReadOnlyDictionary<string, object> additionalProperties)
+        internal SearchResult(double score, double? rerankerScore, IReadOnlyDictionary<string, IList<string>> highlights, IReadOnlyList<CaptionResult> captions, IReadOnlyList<DocumentDebugInfo> documentDebugInfo, IReadOnlyDictionary<string, object> additionalProperties)
         {
             Score = score;
             RerankerScore = rerankerScore;
             Highlights = highlights;
             Captions = captions;
+            DocumentDebugInfo = documentDebugInfo;
             AdditionalProperties = additionalProperties;
         }
 
@@ -46,6 +49,8 @@ namespace Azure.Search.Documents.Models
         public IReadOnlyDictionary<string, IList<string>> Highlights { get; }
         /// <summary> Captions are the most representative passages from the document relatively to the search query. They are often used as document summary. Captions are only returned for queries of type &apos;semantic&apos;. </summary>
         public IReadOnlyList<CaptionResult> Captions { get; }
+        /// <summary> Contains debugging information that can be used to further explore your search results. </summary>
+        public IReadOnlyList<DocumentDebugInfo> DocumentDebugInfo { get; }
         /// <summary> Additional Properties. </summary>
         public IReadOnlyDictionary<string, object> AdditionalProperties { get; }
     }

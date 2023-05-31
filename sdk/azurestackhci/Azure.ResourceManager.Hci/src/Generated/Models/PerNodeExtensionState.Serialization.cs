@@ -20,7 +20,9 @@ namespace Azure.ResourceManager.Hci.Models
             }
             Optional<string> name = default;
             Optional<string> extension = default;
+            Optional<string> typeHandlerVersion = default;
             Optional<NodeExtensionState> state = default;
+            Optional<HciExtensionInstanceView> instanceView = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -33,6 +35,11 @@ namespace Azure.ResourceManager.Hci.Models
                     extension = property.Value.GetString();
                     continue;
                 }
+                if (property.NameEquals("typeHandlerVersion"u8))
+                {
+                    typeHandlerVersion = property.Value.GetString();
+                    continue;
+                }
                 if (property.NameEquals("state"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -42,8 +49,17 @@ namespace Azure.ResourceManager.Hci.Models
                     state = new NodeExtensionState(property.Value.GetString());
                     continue;
                 }
+                if (property.NameEquals("instanceView"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    instanceView = HciExtensionInstanceView.DeserializeHciExtensionInstanceView(property.Value);
+                    continue;
+                }
             }
-            return new PerNodeExtensionState(name.Value, extension.Value, Optional.ToNullable(state));
+            return new PerNodeExtensionState(name.Value, extension.Value, typeHandlerVersion.Value, Optional.ToNullable(state), instanceView.Value);
         }
     }
 }

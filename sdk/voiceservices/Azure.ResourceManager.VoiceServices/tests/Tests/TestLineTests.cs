@@ -10,7 +10,7 @@ namespace Azure.ResourceManager.VoiceServices.Tests
 {
     public class TestLineTests : VoiceServicesManagementTestBase
     {
-        private CommunicationsGatewayResource _communicationsGateway;
+        private VoiceServicesCommunicationsGatewayResource _communicationsGateway;
 
         public TestLineTests(bool isAsync)
             : base(isAsync)//, RecordedTestMode.Record)
@@ -23,12 +23,12 @@ namespace Azure.ResourceManager.VoiceServices.Tests
             _communicationsGateway = await CreateDefaultCommunicationsGateway();
         }
 
-        private static TestLineData DefaultTestLineData()
+        private static VoiceServicesTestLineData DefaultTestLineData()
         {
-            return new TestLineData(Location)
+            return new VoiceServicesTestLineData(Location)
             {
                 PhoneNumber = "123456789",
-                Purpose = TestLinePurpose.Automated
+                Purpose = VoiceServicesTestLinePurpose.Automated
             };
         }
 
@@ -39,42 +39,42 @@ namespace Azure.ResourceManager.VoiceServices.Tests
             var resourceName = Recording.GenerateAssetName("SDKTest");
 
             // PUT - Create
-            var createOperation = await _communicationsGateway.GetTestLines().CreateOrUpdateAsync(WaitUntil.Completed, resourceName, DefaultTestLineData());
+            var createOperation = await _communicationsGateway.GetVoiceServicesTestLines().CreateOrUpdateAsync(WaitUntil.Completed, resourceName, DefaultTestLineData());
             Assert.IsTrue(createOperation.HasCompleted);
             Assert.IsTrue(createOperation.HasValue);
 
             // GET - check it exists
-            var getResponse = await _communicationsGateway.GetTestLineAsync(resourceName);
+            var getResponse = await _communicationsGateway.GetVoiceServicesTestLineAsync(resourceName);
             var testLine = getResponse.Value;
             Assert.IsNotNull(testLine);
 
             // PUT - Update
             var updatedTestLineData = DefaultTestLineData();
             updatedTestLineData.PhoneNumber = "123";
-            var putOperation = await _communicationsGateway.GetTestLines().CreateOrUpdateAsync(WaitUntil.Completed, resourceName, updatedTestLineData);
+            var putOperation = await _communicationsGateway.GetVoiceServicesTestLines().CreateOrUpdateAsync(WaitUntil.Completed, resourceName, updatedTestLineData);
             Assert.IsTrue(putOperation.HasCompleted);
             Assert.IsTrue(putOperation.HasValue);
 
             // GET - check the updated testLine name
-            getResponse = await _communicationsGateway.GetTestLineAsync(resourceName);
+            getResponse = await _communicationsGateway.GetVoiceServicesTestLineAsync(resourceName);
             testLine = getResponse.Value;
             Assert.IsNotNull(testLine);
             Assert.AreEqual("123", testLine.Data.PhoneNumber);
 
             // PATCH
-            var patch = new TestLinePatch();
+            var patch = new VoiceServicesTestLinePatch();
             patch.Tags.Add("tagKey", "tagValue");
             var patchOperation = await testLine.UpdateAsync(patch);
             Assert.IsNotNull(patchOperation.Value);
 
             // GET - check the updated tags
-            getResponse = await _communicationsGateway.GetTestLineAsync(resourceName);
+            getResponse = await _communicationsGateway.GetVoiceServicesTestLineAsync(resourceName);
             testLine = getResponse.Value;
             Assert.IsNotNull(testLine);
             Assert.AreEqual("tagValue", testLine.Data.Tags["tagKey"]);
 
             // List TestLines by CommunicationsGateway
-            var testLines = _communicationsGateway.GetTestLines().GetAllAsync();
+            var testLines = _communicationsGateway.GetVoiceServicesTestLines().GetAllAsync();
             var testLinesResult = await testLines.ToEnumerableAsync();
             Assert.NotNull(testLinesResult);
             Assert.IsTrue(testLinesResult.Count >= 1);

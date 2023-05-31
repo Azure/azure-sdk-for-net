@@ -1,5 +1,17 @@
 # Release History
 
+## 1.33.0-beta.1 (Unreleased)
+
+### Features Added
+
+- Added `DynamicData` type to enable dynamic access to JSON.  See the [aka.ms/azsdk/net/dynamicdata](https://aka.ms/azsdk/net/dynamicdata) for further details.
+
+### Breaking Changes
+
+### Bugs Fixed
+
+### Other Changes
+
 ## 1.32.0 (2023-05-09)
 
 ### Features Added

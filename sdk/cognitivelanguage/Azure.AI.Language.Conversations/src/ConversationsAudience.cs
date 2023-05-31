@@ -8,7 +8,7 @@ using Azure.Core;
 namespace Azure.AI.Language.Conversations
 {
     /// <summary> Cloud audiences available for Conversations. </summary>
-    public readonly partial struct ConversationsAudience : IEquatable<ConversationsAudience>
+    internal readonly partial struct ConversationsAudience : IEquatable<ConversationsAudience>
     {
         private readonly string _value;
 
