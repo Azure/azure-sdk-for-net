@@ -165,7 +165,7 @@ namespace Azure.Core.Pipeline
             var redirectPolicy = buildOptions.ClientOptions.ClientRedirects?.IsClientRedirectEnabled switch
             {
                 true => new RedirectPolicy(true),
-                _ when buildOptions.ClientOptions.IsCustomTransportSet || defaultTransportOptions is null => RedirectPolicy.Shared,
+                _ when defaultTransportOptions is null => RedirectPolicy.Shared,
                 _ when defaultTransportOptions.IsClientRedirectEnabled => new RedirectPolicy(true),
                 _ => RedirectPolicy.Shared
             };

@@ -12,6 +12,8 @@
 
 ### Other Changes
 
+- Client redirects are disabled by default and can be enabled by setting `ClientOptions.ClientRedirects.IsClientRedirectEnabled` to `true`.
+
 ## 1.32.0 (2023-05-09)
 
 ### Features Added

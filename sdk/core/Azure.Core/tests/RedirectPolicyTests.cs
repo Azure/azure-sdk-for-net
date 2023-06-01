@@ -165,6 +165,33 @@ namespace Azure.Core.Tests
             Assert.False(mockTransport.Requests[1].Headers.Contains("Authorization"));
         }
 
+        [Test]
+        [TestCase(true)]
+        [TestCase(false)]
+        public async Task RespectsCtorParameter(bool isClientRedirectEnabled)
+        {
+            var mockTransport = new MockTransport(
+                new MockResponse(300)
+                    .AddHeader("Location", "https://new.host/"),
+                new MockResponse(200));
+
+            var response = await SendRequestAsync(mockTransport, messageAction: message =>
+            {
+                message.Request.Uri.Reset(new Uri("https://example.com/"));
+            }, new RedirectPolicy(isClientRedirectEnabled));
+
+            if (isClientRedirectEnabled)
+            {
+                Assert.AreEqual(200, response.Status);
+                Assert.AreEqual(2, mockTransport.Requests.Count);
+            }
+            else
+            {
+                Assert.AreEqual(300, response.Status);
+                Assert.AreEqual(1, mockTransport.Requests.Count);
+            }
+        }
+
         public static readonly object[][] RedirectStatusCodes = {
             new object[] { 300 },
             new object[] { 301 },

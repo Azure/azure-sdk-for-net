@@ -379,9 +379,9 @@ namespace Azure.Core
     {
         protected ClientOptions() { }
         protected ClientOptions(Azure.Core.DiagnosticsOptions? diagnostics) { }
+        public Azure.Core.RedirectPolicyOptions? ClientRedirects { get { throw null; } set { } }
         public static Azure.Core.ClientOptions Default { get { throw null; } }
         public Azure.Core.DiagnosticsOptions Diagnostics { get { throw null; } }
-        public Azure.Core.RedirectPolicyOptions? RedirectPolicyOptions { get { throw null; } set { } }
         public Azure.Core.RetryOptions Retry { get { throw null; } }
         public Azure.Core.Pipeline.HttpPipelinePolicy? RetryPolicy { get { throw null; } set { } }
         public Azure.Core.Pipeline.HttpPipelineTransport Transport { get { throw null; } set { } }
