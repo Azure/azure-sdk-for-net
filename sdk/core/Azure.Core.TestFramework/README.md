@@ -220,7 +220,28 @@ In addition to the auto-rerecording functionality, using the RecordedTestAttribu
 
 ### Recording
 
-When tests are run in `Record` mode, session records are saved to the project directory automatically in a folder named 'SessionRecords'.
+When tests are run in `Record` mode, session records are saved automatically in a local folder named '.assets', located at the root of this repo. This folder will be created automatically by the Test Framework and should not be committed with other changes. Instead, recordings must be pushed manually to the [Azure SDK Assets](https://github.com/Azure/azure-sdk-assets) repo with the help of the `test-proxy` command line tool.
+
+#### Installing the test-proxy tool
+
+In order to push new session records, you must have the `test-proxy` command line tool installed. It can be installed automatically when running the Test Framework in `Record` mode on Windows. You can check the installed version by invoking:
+```PowerShell
+test-proxy --version
+```
+
+If you need to install the `test-proxy` tool manually, check [Azure SDK Tools Test Proxy
+](https://github.com/Azure/azure-sdk-tools/blob/main/tools/test-proxy/Azure.Sdk.Tools.TestProxy/README.md#installation) for installation options.
+
+If the Test Framework cannot detect the `test-proxy` tool installed in your machine, it will prompt you to install it every time tests are run in `Record` mode. To disable the prompt, you can either set the `AZURE_DISABLE_TEST_PROXY_PROMPT` environment variable or the `DisableTestProxyPrompt` [runsetting](https://github.com/Azure/azure-sdk-for-net/blob/main/eng/nunit.runsettings) parameter to `true`.
+
+#### Pushing session records and updating assets.json
+
+The `assets.json` file located at your package directory is used by the Test Framework to figure out how to retrieve session records from the assets repo. In order to push new session records, you need to invoke:
+```PowerShell
+test-proxy push -a <path-to-assets.json>
+```
+
+On completion of the push, a newly created tag will be stamped into the `assets.json` file. This new tag must be committed and pushed to your package directory along with any other changes.
 
 ### Sanitizing
 
