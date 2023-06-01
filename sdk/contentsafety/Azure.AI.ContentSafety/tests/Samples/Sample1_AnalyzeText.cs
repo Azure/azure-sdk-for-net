@@ -9,21 +9,18 @@ using NUnit.Framework;
 
 namespace Azure.AI.ContentSafety.Tests.Samples
 {
-    //TODO: Commenting unused snippets until they are used in readme
     public partial class ContentSafetySamples: SamplesBase<ContentSafetyClientTestEnvironment>
     {
         [Test]
         [SyncOnly]
         public void AnalyzeText()
         {
-            //#region Snippet:CreateContentSafetyClient
-
             string endpoint = TestEnvironment.Endpoint;
             string key = TestEnvironment.Key;
 
             ContentSafetyClient client = new ContentSafetyClient(new Uri(endpoint), new AzureKeyCredential(key));
 
-            //#endregion
+            #region Snippet:Azure_AI_ContentSafety_AnalyzeText
 
             string datapath = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), "Samples", "sample_data", "text.txt");
             string text = File.ReadAllText(datapath);
@@ -37,7 +34,7 @@ namespace Azure.AI.ContentSafety.Tests.Samples
             }
             catch (RequestFailedException ex)
             {
-                Console.WriteLine(String.Format("Analyze text failed.\nError code: {0}, Error message: {1}", ex.ErrorCode, ex.Message));
+                Console.WriteLine(String.Format("Analyze text failed.\nStatus code: {0}, Error code: {1}, Error message: {2}", ex.Status, ex.ErrorCode, ex.Message));
                 throw;
             }
 
@@ -57,6 +54,8 @@ namespace Azure.AI.ContentSafety.Tests.Samples
             {
                 Console.WriteLine(String.Format("Violence severity: {0}", response.Value.ViolenceResult.Severity));
             }
+
+            #endregion Snippet:Azure_AI_ContentSafety_AnalyzeText
         }
     }
 }
