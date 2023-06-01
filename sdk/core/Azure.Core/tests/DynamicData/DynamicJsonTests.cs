@@ -160,7 +160,7 @@ namespace Azure.Core.Tests
         [Test]
         public void CannotGetOrSetValuesOnAbsentArrays()
         {
-            dynamic value = BinaryData.FromString("""{"foo": [1, 2]}""").ToDynamicFromJson(PropertyNameHandling.AllowPascalCaseReads);
+            dynamic value = BinaryData.FromString("""{"foo": [1, 2]}""").ToDynamicFromJson(PropertyNameConversion.CamelCase);
 
             Assert.Throws<InvalidOperationException>(() => { int i = value[0]; });
             Assert.Throws<InvalidOperationException>(() => { value[0] = 1; });
@@ -172,7 +172,7 @@ namespace Azure.Core.Tests
         [Test]
         public void CannotGetOrSetValuesOnAbsentProperties()
         {
-            dynamic value = BinaryData.FromString("""{"foo": 1}""").ToDynamicFromJson(PropertyNameHandling.AllowPascalCaseReads);
+            dynamic value = BinaryData.FromString("""{"foo": 1}""").ToDynamicFromJson(PropertyNameConversion.CamelCase);
 
             Assert.Throws<InvalidOperationException>(() => { int i = value.Foo.Bar.Baz; });
             Assert.Throws<InvalidOperationException>(() => { value.Foo.Bar.Baz = "hi"; });
@@ -309,12 +309,11 @@ namespace Azure.Core.Tests
         [Test]
         public void CanMakeChangesAndAddNewProperty()
         {
-            DynamicDataOptions options = new() { PropertyNameHandling = PropertyNameHandling.AllowPascalCaseReads | PropertyNameHandling.WriteCamelCase };
             dynamic jsonData = BinaryData.FromString("""
                 {
                   "foo" : 1
                 }
-                """).ToDynamicFromJson(options);
+                """).ToDynamicFromJson(PropertyNameConversion.CamelCase);
 
             Assert.AreEqual(1, (int)jsonData.Foo);
 
@@ -331,12 +330,11 @@ namespace Azure.Core.Tests
         [Test]
         public void CanAddPocoProperty()
         {
-            DynamicDataOptions options = new() { PropertyNameHandling = PropertyNameHandling.AllowPascalCaseReads | PropertyNameHandling.WriteCamelCase };
             dynamic value = BinaryData.FromBytes("""
                 {
                     "foo": 1
                 }
-                """u8.ToArray()).ToDynamicFromJson(options);
+                """u8.ToArray()).ToDynamicFromJson(PropertyNameConversion.CamelCase);
 
             SampleModel model = new()
             {
@@ -360,7 +358,7 @@ namespace Azure.Core.Tests
             stream.Position = 0;
 
             BinaryData data = BinaryData.FromStream(stream);
-            dynamic roundTripValue = data.ToDynamicFromJson(options);
+            dynamic roundTripValue = data.ToDynamicFromJson(PropertyNameConversion.CamelCase);
 
             Assert.IsTrue(roundTripValue.foo == value.Foo);
             Assert.IsTrue(roundTripValue.model.message == value.Model.Message);
@@ -375,12 +373,11 @@ namespace Azure.Core.Tests
         [Test]
         public void CanAddNestedPocoProperty()
         {
-            DynamicDataOptions options = new() { PropertyNameHandling = PropertyNameHandling.AllowPascalCaseReads | PropertyNameHandling.WriteCamelCase};
             dynamic value = BinaryData.FromBytes("""
                 {
                     "foo": 1
                 }
-                """u8.ToArray()).ToDynamicFromJson(options);
+                """u8.ToArray()).ToDynamicFromJson(PropertyNameConversion.CamelCase);
 
             ParentModel model = new ParentModel()
             {
@@ -411,7 +408,7 @@ namespace Azure.Core.Tests
 
             // Test deserialization
             BinaryData bd = BinaryData.FromString(value.ToString());
-            dynamic roundTripValue = bd.ToDynamicFromJson(options);
+            dynamic roundTripValue = bd.ToDynamicFromJson(PropertyNameConversion.CamelCase);
             Assert.AreEqual(model.Value, (ChildModel)roundTripValue.Model.Value);
             Assert.AreEqual(model, (ParentModel)roundTripValue.Model);
         }
@@ -419,12 +416,11 @@ namespace Azure.Core.Tests
         [Test]
         public void CanSetNestedPocoProperty()
         {
-            DynamicDataOptions options = new() { PropertyNameHandling = PropertyNameHandling.AllowPascalCaseReads | PropertyNameHandling.WriteCamelCase };
             dynamic value = BinaryData.FromBytes("""
                 {
                     "foo": 1
                 }
-                """u8.ToArray()).ToDynamicFromJson(options);
+                """u8.ToArray()).ToDynamicFromJson(PropertyNameConversion.CamelCase);
 
             ParentModel model = new ParentModel()
             {
@@ -453,7 +449,7 @@ namespace Azure.Core.Tests
 
             // Test deserialization
             BinaryData bd = BinaryData.FromString(value.ToString());
-            dynamic roundTripValue = bd.ToDynamicFromJson(options);
+            dynamic roundTripValue = bd.ToDynamicFromJson(PropertyNameConversion.CamelCase);
             Assert.AreEqual(model.Value, (ChildModel)roundTripValue.Foo.Value);
             Assert.AreEqual(model, (ParentModel)roundTripValue.Foo);
         }
@@ -487,7 +483,6 @@ namespace Azure.Core.Tests
         [Test]
         public void CanCheckOptionalPropertyWithChanges()
         {
-            DynamicDataOptions options = new() { PropertyNameHandling = PropertyNameHandling.AllowPascalCaseReads | PropertyNameHandling.WriteCamelCase};
             dynamic json = BinaryData.FromString("""
                 {
                   "foo" : "foo",
@@ -495,7 +490,7 @@ namespace Azure.Core.Tests
                     "a" : "a"
                   }
                 }
-            """).ToDynamicFromJson(options);
+            """).ToDynamicFromJson(PropertyNameConversion.CamelCase);
 
             // Add property Baz
             json.Baz = "baz";
@@ -591,14 +586,13 @@ namespace Azure.Core.Tests
         [Test]
         public void ThrowsInvalidCastForOriginalJsonValue()
         {
-            DynamicDataOptions options = new() { PropertyNameHandling = PropertyNameHandling.AllowPascalCaseReads | PropertyNameHandling.WriteCamelCase };
             dynamic json = BinaryData.FromString(
                 """
                 {
                     "foo": 1
                 }
                 """
-                ).ToDynamicFromJson(options);
+                ).ToDynamicFromJson(PropertyNameConversion.CamelCase);
 
             Exception e = Assert.Throws<InvalidCastException>(() => { var value = (bool)json.Foo; });
             Assert.That(e.Message.Contains(JsonValueKind.Number.ToString()));
@@ -624,12 +618,11 @@ namespace Azure.Core.Tests
         [Test]
         public void CanCastToByte()
         {
-            DynamicDataOptions options = new() { PropertyNameHandling = PropertyNameHandling.AllowPascalCaseReads | PropertyNameHandling.WriteCamelCase };
             dynamic json = BinaryData.FromString("""
                 {
                   "foo" : 42
                 }
-                """).ToDynamicFromJson(options);
+                """).ToDynamicFromJson(PropertyNameConversion.CamelCase);
 
             // Get from parsed JSON
             Assert.AreEqual((byte)42, (byte)json.Foo);
@@ -657,8 +650,7 @@ namespace Azure.Core.Tests
         [TestCaseSource(nameof(NumberValues))]
         public void CanCastToNumber<T, U>(string serializedX, T x, T y, T z, U invalid)
         {
-            DynamicDataOptions options = new() { PropertyNameHandling = PropertyNameHandling.AllowPascalCaseReads | PropertyNameHandling.WriteCamelCase };
-            dynamic json = BinaryData.FromString($"{{\"foo\" : {serializedX}}}").ToDynamicFromJson(options);
+            dynamic json = BinaryData.FromString($"{{\"foo\" : {serializedX}}}").ToDynamicFromJson(PropertyNameConversion.CamelCase);
 
             // Get from parsed JSON
             Assert.AreEqual(x, (T)json.Foo);
@@ -693,9 +685,8 @@ namespace Azure.Core.Tests
         [Test]
         public void CanExplicitCastToGuid()
         {
-            DynamicDataOptions options = new() { PropertyNameHandling = PropertyNameHandling.AllowPascalCaseReads | PropertyNameHandling.WriteCamelCase };
             Guid guid = Guid.NewGuid();
-            dynamic json = BinaryData.FromString($"{{\"foo\" : \"{guid}\"}}").ToDynamicFromJson(options);
+            dynamic json = BinaryData.FromString($"{{\"foo\" : \"{guid}\"}}").ToDynamicFromJson(PropertyNameConversion.CamelCase);
 
             // Get from parsed JSON
             Assert.AreEqual(guid, (Guid)json.Foo);
@@ -733,10 +724,9 @@ namespace Azure.Core.Tests
         [Test]
         public void CanExplicitCastToDateTime()
         {
-            DynamicDataOptions options = new() { PropertyNameHandling = PropertyNameHandling.AllowPascalCaseReads | PropertyNameHandling.WriteCamelCase };
             DateTime dateTime = DateTime.UtcNow;
             string dateTimeString = FormatDateTime(dateTime);
-            dynamic json = BinaryData.FromString($"{{\"foo\" : \"{dateTimeString}\"}}").ToDynamicFromJson(options);
+            dynamic json = BinaryData.FromString($"{{\"foo\" : \"{dateTimeString}\"}}").ToDynamicFromJson(PropertyNameConversion.CamelCase);
 
             // Get from parsed JSON
             Assert.AreEqual(dateTime, (DateTime)json.Foo);
@@ -776,10 +766,9 @@ namespace Azure.Core.Tests
         [Test]
         public void CanExplicitCastToDateTimeOffset()
         {
-            DynamicDataOptions options = new() { PropertyNameHandling = PropertyNameHandling.AllowPascalCaseReads | PropertyNameHandling.WriteCamelCase };
             DateTimeOffset dateTime = DateTimeOffset.UtcNow;
             string dateTimeString = FormatDateTimeOffset(dateTime);
-            dynamic json = BinaryData.FromString($"{{\"foo\" : \"{dateTimeString}\"}}").ToDynamicFromJson(options);
+            dynamic json = BinaryData.FromString($"{{\"foo\" : \"{dateTimeString}\"}}").ToDynamicFromJson(PropertyNameConversion.CamelCase);
 
             // Get from parsed JSON
             Assert.AreEqual(dateTime, (DateTimeOffset)json.Foo);
@@ -1098,8 +1087,7 @@ namespace Azure.Core.Tests
         #region Helpers
         internal static dynamic GetDynamicJson(string json)
         {
-            DynamicDataOptions options = new() { PropertyNameHandling = PropertyNameHandling.AllowPascalCaseReads};
-            return new BinaryData(json).ToDynamicFromJson(options);
+            return new BinaryData(json).ToDynamicFromJson(PropertyNameConversion.CamelCase);
         }
 
         public static IEnumerable<object[]> NumberValues()

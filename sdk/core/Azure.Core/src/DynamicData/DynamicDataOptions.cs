@@ -17,9 +17,14 @@ namespace Azure.Core.Dynamic
         internal static DynamicDataOptions Default { get => _default; }
 
         /// <summary>
-        /// Gets or sets an object that specifies how dynamic property names will be mapped to member names in the data content.
+        /// Gets or sets a value that specifies how to convert property names on the dynamic object to another format, such as camel case.  This conversion is applied when new values are set on the dynamic object, and when changes to the dynamic object are serialized.
         /// </summary>
-        public PropertyNameHandling PropertyNameHandling { get; set; }
+        public PropertyNameConversion PropertyNameConversion { get; set; }
+
+        /// <summary>
+        /// Gets or sets a value that specifies how to bind property names on the dynamic object to property names in the dynamic content.
+        /// </summary>
+        public DynamicNameBinding DynamicNameBinding { get; set; }
 
         /// <summary>
         /// Gets or sets an object that specifies how DateTime and DateTimeOffset should be handled when serializing and deserializing.

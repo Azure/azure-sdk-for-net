@@ -59,7 +59,7 @@ namespace Azure.Core.Samples
 
             #region Snippet:AzureCoreSetDynamicJsonProperty
             Response response = client.GetWidget();
-            dynamic widget = response.Content.ToDynamicFromJson(PropertyNameHandling.AllowPascalCaseReads | PropertyNameHandling.WriteNewCamelCase);
+            dynamic widget = response.Content.ToDynamicFromJson(PropertyNameConversion.CamelCase);
             widget.Name = "New Name";
             client.SetWidget(RequestContent.Create(widget));
             #endregion
@@ -209,7 +209,7 @@ namespace Azure.Core.Samples
 
             #region Snippet:AzureCoreSetPropertyWithoutCaseMapping
             Response response = client.GetWidget();
-            dynamic widget = response.Content.ToDynamicFromJson(PropertyNameHandling.WriteCamelCase);
+            dynamic widget = response.Content.ToDynamicFromJson(PropertyNameConversion.CamelCase);
 
             widget.details["IPAddress"] = "127.0.0.1";
             // JSON is `{ "details" : { "IPAddress" : "127.0.0.1" } }`
@@ -252,7 +252,7 @@ namespace Azure.Core.Samples
 
             #region Snippet:AzureCoreRoundTripDynamicJson
             Response response = client.GetWidget();
-            dynamic widget = response.Content.ToDynamicFromJson(PropertyNameHandling.AllowPascalCaseReads | PropertyNameHandling.WriteNewCamelCase);
+            dynamic widget = response.Content.ToDynamicFromJson(PropertyNameConversion.CamelCase);
             widget.Name = "New Name";
             client.SetWidget(RequestContent.Create(widget));
             #endregion
@@ -266,7 +266,7 @@ namespace Azure.Core.Samples
 
             #region Snippet:AzureCoreDisposeDynamicJson
             Response response = client.GetLargeWidget();
-            using (dynamic widget = response.Content.ToDynamicFromJson(PropertyNameHandling.AllowPascalCaseReads | PropertyNameHandling.WriteNewCamelCase))
+            using (dynamic widget = response.Content.ToDynamicFromJson(PropertyNameConversion.CamelCase))
             {
 #if !SNIPPET
                 details = widget.Details;

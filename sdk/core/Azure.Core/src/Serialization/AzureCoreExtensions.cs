@@ -62,12 +62,16 @@ namespace Azure
 
         /// <summary>
         /// Return the content of the BinaryData as a dynamic type.
+        /// <paramref name="nameConversion">A value that specifies how to convert property names on the dynamic object to another format, such as camel case.  This conversion is applied when new values are set on the dynamic object, and when changes to the dynamic object are serialized.</paramref>
+        /// <paramref name="nameBinding">A value that specifies how to bind property names on the dynamic object to property names in the dynamic content.</paramref>
+        /// <paramref name="dateTimeHandling"></paramref>
         /// </summary>
-        public static dynamic ToDynamicFromJson(this BinaryData utf8Json, PropertyNameHandling propertyNameHandling = PropertyNameHandling.AllowPascalCaseReads, DateTimeHandling dateTimeHandling = DateTimeHandling.Rfc3339)
+        public static dynamic ToDynamicFromJson(this BinaryData utf8Json, PropertyNameConversion nameConversion = PropertyNameConversion.None, DynamicNameBinding nameBinding = DynamicNameBinding.AllowPascalCase, DateTimeHandling dateTimeHandling = DateTimeHandling.Rfc3339)
         {
             DynamicDataOptions options = new()
             {
-                PropertyNameHandling = propertyNameHandling,
+                PropertyNameConversion = nameConversion,
+                DynamicNameBinding = nameBinding,
                 DateTimeHandling = dateTimeHandling
             };
 

@@ -23,23 +23,13 @@ dynamic widget = response.Content.ToDynamicFromJson();
 string name = widget.name;
 ```
 
-### Get a JSON property idiomatically
-
-To use dynamic content with an idiomatic .NET style, pass `DynamicCaseMapping.PascalToCamel` to `ToDynamicFromJson()`.  This will allow using PascalCase property names to get camelCase JSON members.
-
-```C# Snippet:AzureCoreGetDynamicJsonPropertyPascalCase
-Response response = client.GetWidget();
-dynamic widget = response.Content.ToDynamicFromJson();
-string name = widget.Name;
-```
-
 ### Set a JSON property
 
-JSON members can be set on the dynamic object.  Pass `DynamicCaseMapping.PascalToCamel` to `ToDynamicFromJson()` to write JSON members with camelCase names.
+JSON members can be set on the dynamic object.  Pass `PropertyNameConversion.CamelCase` to `ToDynamicFromJson()` to write new JSON members with camelCase names.
 
 ```C# Snippet:AzureCoreSetDynamicJsonProperty
 Response response = client.GetWidget();
-dynamic widget = response.Content.ToDynamicFromJson(PropertyNameHandling.AllowPascalCaseReads | PropertyNameHandling.WriteNewCamelCase);
+dynamic widget = response.Content.ToDynamicFromJson(PropertyNameConversion.CamelCase);
 widget.Name = "New Name";
 client.SetWidget(RequestContent.Create(widget));
 ```
@@ -142,11 +132,11 @@ When working with JSON from Azure services, you can learn what properties are av
 
 Note that most Azure services name JSON fields [with camelCase names](https://github.com/microsoft/api-guidelines/blob/vNext/azure/Guidelines.md#json-field-name-casing) to [treat them with case-sensitivity](https://github.com/microsoft/api-guidelines/blob/vNext/azure/Guidelines.md#json-field-names-case-sensitivity).  Not every Azure service adheres to this convention; please consult the service REST API documentation.
 
-If you are using the `DynamicCaseMapping.PascalToCamel` setting and there is a need to bypass these name mappings, JSON members can be accessed with exact strings using property indexers.
+If you are using the `PropertyNameConversion.CamelCase` setting and there is a need to bypass these name mappings, JSON members can be accessed with exact strings using property indexers.
 
 ```C# Snippet:AzureCoreSetPropertyWithoutCaseMapping
 Response response = client.GetWidget();
-dynamic widget = response.Content.ToDynamicFromJson(PropertyNameHandling.WriteCamelCase);
+dynamic widget = response.Content.ToDynamicFromJson(PropertyNameConversion.CamelCase);
 
 widget.details["IPAddress"] = "127.0.0.1";
 // JSON is `{ "details" : { "IPAddress" : "127.0.0.1" } }`
@@ -159,7 +149,7 @@ If you need to control when memory is returned to the pool (e.g. for atypically 
 
 ```C# Snippet:AzureCoreDisposeDynamicJson
 Response response = client.GetLargeWidget();
-using (dynamic widget = response.Content.ToDynamicFromJson(PropertyNameHandling.AllowPascalCaseReads | PropertyNameHandling.WriteNewCamelCase))
+using (dynamic widget = response.Content.ToDynamicFromJson(PropertyNameConversion.CamelCase))
 {
     widget.Name = "New Name";
     client.SetWidget(RequestContent.Create(widget));
@@ -197,7 +187,7 @@ To make this common case easier to implement, Dynamic JSON is mutable.  This all
 
 ```C# Snippet:AzureCoreRoundTripDynamicJson
 Response response = client.GetWidget();
-dynamic widget = response.Content.ToDynamicFromJson(PropertyNameHandling.AllowPascalCaseReads | PropertyNameHandling.WriteNewCamelCase);
+dynamic widget = response.Content.ToDynamicFromJson(PropertyNameConversion.CamelCase);
 widget.Name = "New Name";
 client.SetWidget(RequestContent.Create(widget));
 ```

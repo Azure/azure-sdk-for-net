@@ -17,7 +17,7 @@ namespace Azure
     }
     public static partial class AzureCoreExtensions
     {
-        public static dynamic ToDynamicFromJson(this System.BinaryData utf8Json, Azure.Core.Serialization.PropertyNameHandling propertyNameHandling = Azure.Core.Serialization.PropertyNameHandling.AllowPascalCaseReads, Azure.Core.Serialization.DateTimeHandling dateTimeHandling = Azure.Core.Serialization.DateTimeHandling.Rfc3339) { throw null; }
+        public static dynamic ToDynamicFromJson(this System.BinaryData utf8Json, Azure.Core.Serialization.PropertyNameConversion nameConversion = Azure.Core.Serialization.PropertyNameConversion.None, Azure.Core.Dynamic.DynamicNameBinding nameBinding = Azure.Core.Dynamic.DynamicNameBinding.AllowPascalCase, Azure.Core.Serialization.DateTimeHandling dateTimeHandling = Azure.Core.Serialization.DateTimeHandling.Rfc3339) { throw null; }
         public static System.Threading.Tasks.ValueTask<T?> ToObjectAsync<T>(this System.BinaryData data, Azure.Core.Serialization.ObjectSerializer serializer, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static object? ToObjectFromJson(this System.BinaryData data) { throw null; }
         public static T? ToObject<T>(this System.BinaryData data, Azure.Core.Serialization.ObjectSerializer serializer, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -544,7 +544,7 @@ namespace Azure.Core
         public static Azure.Core.RequestContent Create(System.IO.Stream stream) { throw null; }
         public static Azure.Core.RequestContent Create(object serializable) { throw null; }
         public static Azure.Core.RequestContent Create(object serializable, Azure.Core.Serialization.ObjectSerializer? serializer) { throw null; }
-        public static Azure.Core.RequestContent Create(object serializable, Azure.Core.Serialization.PropertyNameHandling propertyNameHandling, Azure.Core.Serialization.DateTimeHandling dateTimeHandling = Azure.Core.Serialization.DateTimeHandling.Rfc3339) { throw null; }
+        public static Azure.Core.RequestContent Create(object serializable, Azure.Core.Serialization.PropertyNameConversion propertyNameHandling, Azure.Core.Serialization.DateTimeHandling dateTimeHandling = Azure.Core.Serialization.DateTimeHandling.Rfc3339) { throw null; }
         public static Azure.Core.RequestContent Create(System.ReadOnlyMemory<byte> bytes) { throw null; }
         public static Azure.Core.RequestContent Create(string content) { throw null; }
         public abstract void Dispose();
@@ -809,6 +809,11 @@ namespace Azure.Core.Dynamic
         public static bool operator !=(Azure.Core.Dynamic.DynamicData? left, object? right) { throw null; }
         System.Dynamic.DynamicMetaObject System.Dynamic.IDynamicMetaObjectProvider.GetMetaObject(System.Linq.Expressions.Expression parameter) { throw null; }
         public override string ToString() { throw null; }
+    }
+    public enum DynamicNameBinding
+    {
+        Strict = 0,
+        AllowPascalCase = 1,
     }
 }
 namespace Azure.Core.Extensions
@@ -1134,14 +1139,10 @@ namespace Azure.Core.Serialization
         public abstract System.Threading.Tasks.ValueTask SerializeAsync(System.IO.Stream stream, object? value, System.Type inputType, System.Threading.CancellationToken cancellationToken);
         public virtual System.Threading.Tasks.ValueTask<System.BinaryData> SerializeAsync(object? value, System.Type? inputType = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
-    [System.FlagsAttribute]
-    public enum PropertyNameHandling
+    public enum PropertyNameConversion
     {
-        Strict = 0,
-        AllowPascalCaseReads = 1,
-        WriteNewCamelCase = 2,
-        WriteExistingCamelCase = 4,
-        WriteCamelCase = 6,
+        None = 0,
+        CamelCase = 1,
     }
 }
 namespace Azure.Messaging
