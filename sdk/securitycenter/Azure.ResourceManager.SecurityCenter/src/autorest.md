@@ -15,7 +15,6 @@ tag: package-dotnet-sdk
 skip-csproj: true
 modelerfour:
   flatten-payloads: false
-  lenient-model-deduplication: true
 
 keep-orphaned-models:
   - ExternalSecuritySolutionKind
@@ -386,6 +385,7 @@ directive:
     where: $.paths..parameters[?(@.name == 'workspaceId')]
     transform: >
         $.format = 'uuid';
+  - remove-operation: GovernanceRules_OperationResults
   # TODO: temporary remove these operations to mitigate the exception from BuildParameterMapping in Autorest.CSharp
   - remove-operation: InformationProtectionPolicies_Get
   - remove-operation: Tasks_UpdateSubscriptionLevelTaskState
@@ -431,4 +431,8 @@ directive:
             "$ref": "../../../common/v1/types.json#/definitions/Location"
           }
         ]
+  - from: governanceRules.json
+    where: $.definitions
+    transform: >
+        $.OperationResult.properties.status['x-ms-enum']['name'] = 'OperationResultStatus';
 ```
