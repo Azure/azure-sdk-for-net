@@ -55,7 +55,7 @@ namespace Azure.Core.Json
                 }
 
                 // Trust but verify
-                if (ancestorTypes.Contains(type))
+                if (ancestorTypes.Contains(property.PropertyType))
                 {
                     continue;
                 }
@@ -87,6 +87,7 @@ namespace Azure.Core.Json
         {
             return IsAllowedPrimitive(type) ||
                 IsAllowedArray(type) ||
+                IsAllowedCollection(type) ||
                 IsAllowedInterface(type) ||
 
                 // TODO: separate out non-primitive values?
@@ -94,7 +95,6 @@ namespace Azure.Core.Json
                 type == typeof(JsonDocument) ||
                 type == typeof(MutableJsonDocument) ||
                 type == typeof(MutableJsonElement) ||
-                type == typeof(Dictionary<string, object>) ||
 
                 // TODO: support extensible enums?
                 type == typeof(ETag) ||
@@ -150,6 +150,14 @@ namespace Azure.Core.Json
                 type == typeof(Guid[]);
         }
 
+        private static bool IsAllowedCollection(Type type)
+        {
+            // TODO: Collection support
+            return
+                type == typeof(Dictionary<string, object>) ||
+                type == typeof(List<int>);
+        }
+
         private static bool IsAllowedInterface(Type type)
         {
             // TODO: Interface support
@@ -176,12 +184,12 @@ namespace Azure.Core.Json
 
             public override T Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
-                throw new NotSupportedException($"Type is not currently supported: '{typeToConvert}'");
+                throw new NotSupportedException($"Type is not currently supported: '{typeToConvert}'.");
             }
 
             public override void Write(Utf8JsonWriter writer, T value, JsonSerializerOptions options)
             {
-                throw new NotSupportedException($"Type is not currently supported: '{typeof(T)}'");
+                throw new NotSupportedException($"Type is not currently supported: '{typeof(T)}'.");
             }
         }
     }

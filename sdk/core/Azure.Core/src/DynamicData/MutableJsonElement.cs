@@ -1049,7 +1049,18 @@ namespace Azure.Core.Json
                 case JsonDocument d:
                     Set(d.RootElement);
                     break;
+                case null:
+                    Changes.AddChange(_path, value, true);
+                    break;
                 default:
+                    Type t = value.GetType();
+                    if (!AllowListConverterFactory.IsAllowedType(t))
+                    {
+                        throw new NotSupportedException($"Type is not currently supported: '{t}'.");
+                    }
+
+                    // TODO: validate types of objects in collections
+
                     Changes.AddChange(_path, value, true);
                     break;
             }

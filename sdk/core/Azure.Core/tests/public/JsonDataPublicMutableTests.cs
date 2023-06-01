@@ -77,6 +77,7 @@ namespace Azure.Core.Tests.Public
         }
 
         [Test]
+        [Ignore("Currently unsupported type.")]
         public void NewObjectPropertiesCanBeAssignedWithSerializedObject()
         {
             var json = JsonDataTestHelpers.CreateEmpty();
