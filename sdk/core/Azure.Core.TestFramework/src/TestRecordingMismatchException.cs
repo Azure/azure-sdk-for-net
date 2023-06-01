@@ -27,7 +27,7 @@ namespace Azure.Core.TestFramework
 
         private static string AppendReminder(string message)
         {
-            const string Reminder = "Have you forgotten to push recordings to the assets repository?";
+            const string Reminder = "If this is a new recording, make sure you have pushed the recordings to the assets repository.";
 
             return TestEnvironment.GlobalIsRunningInCI
                 ? Reminder + Environment.NewLine + Environment.NewLine + message
