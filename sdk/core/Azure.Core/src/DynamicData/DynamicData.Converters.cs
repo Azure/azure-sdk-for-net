@@ -3,6 +3,7 @@
 
 using System;
 using System.Globalization;
+using System.Reflection;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 
@@ -140,6 +141,43 @@ namespace Azure.Core.Dynamic
                 // From: https://github.com/Azure/autorest.csharp/blob/bcc52a3d5788d03bb61c802619b1e3902214d304/src/assets/Generator.Shared/Utf8JsonWriterExtensions.cs#L64
                 long value = dateTimeValue.ToUniversalTime().ToUnixTimeSeconds();
                 writer.WriteNumberValue(value);
+            }
+        }
+
+        private class AllowListConverterFactory : JsonConverterFactory
+        {
+            public static readonly AllowListConverterFactory Default = new();
+
+            public override bool CanConvert(Type typeToConvert)
+            {
+                return !AllowList.IsAllowedType(typeToConvert);
+            }
+
+            public override JsonConverter CreateConverter(Type typeToConvert, JsonSerializerOptions options)
+            {
+                JsonConverter converter = (JsonConverter)Activator.CreateInstance(
+                    typeof(UnsupportedTypeConverter<>).MakeGenericType(new Type[] { typeToConvert }),
+                    BindingFlags.Instance | BindingFlags.Public,
+                    binder: null,
+                    args: new object[] { options },
+                    culture: null)!;
+
+                return converter;
+            }
+
+            private class UnsupportedTypeConverter<T> : JsonConverter<T>
+            {
+                public UnsupportedTypeConverter(JsonSerializerOptions options) { }
+
+                public override T Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
+                {
+                    throw new NotSupportedException($"Type is not currently supported: '{typeToConvert}'.");
+                }
+
+                public override void Write(Utf8JsonWriter writer, T value, JsonSerializerOptions options)
+                {
+                    throw new NotSupportedException($"Type is not currently supported: '{typeof(T)}'.");
+                }
             }
         }
     }
