@@ -1079,7 +1079,8 @@
         "relro",
         "Rpath",
         "rpath",
-        "runpath"
+        "runpath",
+        "Cves"
       ]
     }
   ],
