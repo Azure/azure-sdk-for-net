@@ -232,8 +232,6 @@ test-proxy --version
 If you need to install the `test-proxy` tool manually, check [Azure SDK Tools Test Proxy
 ](https://github.com/Azure/azure-sdk-tools/blob/main/tools/test-proxy/Azure.Sdk.Tools.TestProxy/README.md#installation) for installation options.
 
-If the Test Framework cannot detect the `test-proxy` tool installed in your machine, it will prompt you to install it every time tests are run in `Record` mode. To disable the prompt, you can either set the `AZURE_DISABLE_TEST_PROXY_PROMPT` environment variable or the `DisableTestProxyPrompt` [runsetting](https://github.com/Azure/azure-sdk-for-net/blob/main/eng/nunit.runsettings) parameter to `true`.
-
 #### Pushing session records and updating assets.json
 
 The `assets.json` file located at your package directory is used by the Test Framework to figure out how to retrieve session records from the assets repo. In order to push new session records, you need to invoke:

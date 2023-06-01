@@ -650,19 +650,6 @@ namespace Azure.Core.TestFramework
             }
         }
 
-        internal static bool DisableTestProxyPrompt
-        {
-            get
-            {
-                string switchString = TestContext.Parameters["DisableTestProxyPrompt"] ??
-                                      Environment.GetEnvironmentVariable("AZURE_DISABLE_TEST_PROXY_PROMPT");
-
-                bool.TryParse(switchString, out bool disabledTestProxyPrompt);
-
-                return disabledTestProxyPrompt;
-            }
-        }
-
         private void BootStrapTestResources()
         {
             lock (s_syncLock)

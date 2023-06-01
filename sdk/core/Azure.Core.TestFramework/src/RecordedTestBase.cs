@@ -525,7 +525,6 @@ namespace Azure.Core.TestFramework
             if (s_ranTestProxyValidation ||
                 TestEnvironment.GlobalIsRunningInCI ||
                 !TestEnvironment.IsWindows ||
-                TestEnvironment.DisableTestProxyPrompt ||
                 AssetsJsonPath == null)
             {
                 return;
@@ -542,7 +541,7 @@ namespace Azure.Core.TestFramework
 
                 try
                 {
-                    if (IsTestProxyToolInstalled(global: true) || IsTestProxyToolInstalled(global: false))
+                    if (IsTestProxyToolInstalled())
                     {
                         return;
                     }
@@ -572,11 +571,9 @@ namespace Azure.Core.TestFramework
             }
         }
 
-        private bool IsTestProxyToolInstalled(bool global)
+        private bool IsTestProxyToolInstalled()
         {
-            string args = "tool list " + (global ? "--global" : "--local");
-
-            var processInfo = new ProcessStartInfo("dotnet.exe", args)
+            var processInfo = new ProcessStartInfo("dotnet.exe", "tool list --global")
             {
                 RedirectStandardOutput = true,
                 UseShellExecute = false
