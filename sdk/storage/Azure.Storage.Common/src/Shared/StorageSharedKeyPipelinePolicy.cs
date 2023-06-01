@@ -23,6 +23,11 @@ namespace Azure.Storage
         private const bool IncludeXMsDate = true;
 
         /// <summary>
+        /// CultureInfo used to sort headers in the string to sign.
+        /// </summary>
+        private static readonly CultureInfo s_cultureInfo = new CultureInfo(Constants.EnUsCulture, useUserOverride: false);
+
+        /// <summary>
         /// Shared key credentials used to sign requests
         /// </summary>
         private readonly StorageSharedKeyCredential _credentials;
@@ -113,9 +118,8 @@ namespace Azure.Storage
             }
 
             headers.Sort(static (x, y) =>
-            {
-                CultureInfo cultureInfo = new CultureInfo(Constants.EnUsCulture, useUserOverride: false);
-                return string.Compare(x.Name, y.Name, cultureInfo, CompareOptions.IgnoreSymbols);
+            {;
+                return string.Compare(x.Name, y.Name, s_cultureInfo, CompareOptions.IgnoreSymbols);
             });
 
             foreach (var header in headers)
