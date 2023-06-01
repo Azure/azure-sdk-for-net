@@ -14,7 +14,7 @@
 Install the client library for .NET with [NuGet](https://www.nuget.org/ ):
 
 ```dotnetcli
-dotnet add package Azure.AI.ContentSafety
+dotnet add package Azure.AI.ContentSafety --prerelease
 ```
 
 ### Prerequisites
