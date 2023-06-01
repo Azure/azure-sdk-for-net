@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<PostgreSqlFlexibleServerCapabilityProperties>> value = default;
+            Optional<IReadOnlyList<PostgreSqlFlexibleServerCapability>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -29,10 +29,10 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                     {
                         continue;
                     }
-                    List<PostgreSqlFlexibleServerCapabilityProperties> array = new List<PostgreSqlFlexibleServerCapabilityProperties>();
+                    List<PostgreSqlFlexibleServerCapability> array = new List<PostgreSqlFlexibleServerCapability>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(PostgreSqlFlexibleServerCapabilityProperties.DeserializePostgreSqlFlexibleServerCapabilityProperties(item));
+                        array.Add(PostgreSqlFlexibleServerCapability.DeserializePostgreSqlFlexibleServerCapability(item));
                     }
                     value = array;
                     continue;

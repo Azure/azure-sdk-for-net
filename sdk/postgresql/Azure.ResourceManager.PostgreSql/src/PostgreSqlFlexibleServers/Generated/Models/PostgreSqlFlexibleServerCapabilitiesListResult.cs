@@ -10,26 +10,26 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 {
-    /// <summary> location capability. </summary>
+    /// <summary> Capability for the PostgreSQL server. </summary>
     internal partial class PostgreSqlFlexibleServerCapabilitiesListResult
     {
         /// <summary> Initializes a new instance of PostgreSqlFlexibleServerCapabilitiesListResult. </summary>
         internal PostgreSqlFlexibleServerCapabilitiesListResult()
         {
-            Value = new ChangeTrackingList<PostgreSqlFlexibleServerCapabilityProperties>();
+            Value = new ChangeTrackingList<PostgreSqlFlexibleServerCapability>();
         }
 
         /// <summary> Initializes a new instance of PostgreSqlFlexibleServerCapabilitiesListResult. </summary>
         /// <param name="value"> A list of supported capabilities. </param>
         /// <param name="nextLink"> Link to retrieve next page of results. </param>
-        internal PostgreSqlFlexibleServerCapabilitiesListResult(IReadOnlyList<PostgreSqlFlexibleServerCapabilityProperties> value, string nextLink)
+        internal PostgreSqlFlexibleServerCapabilitiesListResult(IReadOnlyList<PostgreSqlFlexibleServerCapability> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
         /// <summary> A list of supported capabilities. </summary>
-        public IReadOnlyList<PostgreSqlFlexibleServerCapabilityProperties> Value { get; }
+        public IReadOnlyList<PostgreSqlFlexibleServerCapability> Value { get; }
         /// <summary> Link to retrieve next page of results. </summary>
         public string NextLink { get; }
     }

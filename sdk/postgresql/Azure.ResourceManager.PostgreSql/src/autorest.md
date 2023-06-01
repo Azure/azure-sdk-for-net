@@ -14,7 +14,7 @@ modelerfour:
 
 batch:
   - tag: package-2020-01-01
-  - tag: package-flexibleserver-2022-12-01
+  - tag: package-flexibleserver-2023-03-01-preview
 ```
 
 ``` yaml $(tag) == 'package-2020-01-01'
@@ -142,10 +142,10 @@ directive:
       $.RecoverableServerProperties.properties.lastAvailableBackupDateTime['format'] = 'date-time';
 ```
 
-``` yaml $(tag) == 'package-flexibleserver-2022-12-01'
+``` yaml $(tag) == 'package-flexibleserver-2023-03-01-preview'
 
 namespace: Azure.ResourceManager.PostgreSql.FlexibleServers
-require: https://github.com/Azure/azure-rest-api-specs/blob/deba715c80b5b523a84d32fa2764c0f6e867b4d0/specification/postgresql/resource-manager/readme.md
+require: https://github.com/Azure/azure-rest-api-specs/blob/9a40c234b44da5125d464284b549a2cc89595385/specification/postgresql/resource-manager/readme.md
 output-folder: $(this-folder)/PostgreSqlFlexibleServers/Generated
 
 format-by-name-rules:
@@ -192,8 +192,6 @@ rename-mapping:
   FailoverMode: PostgreSqlFlexibleServerFailoverMode
   FlexibleServerEditionCapability: PostgreSqlFlexibleServerEditionCapability
   GeoRedundantBackupEnum: PostgreSqlFlexibleServerGeoRedundantBackupEnum
-  HyperscaleNodeEditionCapability: PostgreSqlFlexibleServerHyperscaleNodeEditionCapability
-  NodeTypeCapability: PostgreSqlFlexibleServerNodeTypeCapability
   Database: PostgreSqlFlexibleServerDatabase
   FirewallRule: PostgreSqlFlexibleServerFirewallRule
   Server: PostgreSqlFlexibleServer
@@ -213,15 +211,10 @@ rename-mapping:
   VirtualNetworkSubnetUsageParameter: PostgreSqlFlexibleServerVirtualNetworkSubnetUsageParameter
   DelegatedSubnetUsage: PostgreSqlFlexibleServerDelegatedSubnetUsage
   VirtualNetworkSubnetUsageResult: PostgreSqlFlexibleServerVirtualNetworkSubnetUsageResult
-  VcoreCapability: PostgreSqlFlexibleServerVCoreCapability
   ServerVersionCapability: PostgreSqlFlexibleServerServerVersionCapability
   ServerVersionCapability.supportedVcores: SupportedVCores
   StorageEditionCapability: PostgreSqlFlexibleServerStorageEditionCapability
   ServerEditionCapability: PostgreSqlFlexibleServerEditionCapability
-  CapabilityProperties: PostgreSqlFlexibleServerCapabilityProperties
-  CapabilityProperties.geoBackupSupported: IsGeoBackupSupported
-  CapabilityProperties.zoneRedundantHaSupported: IsZoneRedundantHASupported
-  CapabilityProperties.zoneRedundantHaAndGeoBackupSupported: IsZoneRedundantHAAndGeoBackupSupported
   CapabilitiesListResult: PostgreSqlFlexibleServerCapabilitiesListResult
   CheckNameAvailabilityRequest: PostgreSqlFlexibleServerNameAvailabilityContent
   CheckNameAvailabilityResponse: PostgreSqlFlexibleServerNameAvailabilityResponse
@@ -231,14 +224,12 @@ rename-mapping:
   SkuTier: PostgreSqlFlexibleServerSkuTier
   CheckNameAvailabilityResponse.nameAvailable: IsNameAvailable
   Storage.storageSizeGB: StorageSizeInGB
-  StorageMBCapability.storageSizeMB: StorageSizeInMB
-  StorageMBCapability: PostgreSqlFlexibleServerStorageCapability
-  VcoreCapability.supportedMemoryPerVcoreMB: SupportedMemoryPerVCoreInMB
+  StorageMbCapability.storageSizeMb: StorageSizeInMB
+  StorageMbCapability: PostgreSqlFlexibleServerStorageCapability
   RestartParameter: PostgreSqlFlexibleServerRestartParameter
   ServerHAState: PostgreSqlFlexibleServerHAState
   ServerPublicNetworkAccessState: PostgreSqlFlexibleServerPublicNetworkAccessState
-  CapabilityProperties.supportedHAMode: SupportedHAModes
-  StorageEditionCapability.supportedStorageMB: SupportedStorageCapabilities
+  StorageEditionCapability.supportedStorageMb: SupportedStorageCapabilities
   Server.properties.pointInTimeUTC: PointInTimeUtc
   ActiveDirectoryAdministrator: PostgreSqlFlexibleServerActiveDirectoryAdministrator
   ActiveDirectoryAuthEnum: PostgreSqlFlexibleServerActiveDirectoryAuthEnum
@@ -256,6 +247,24 @@ rename-mapping:
   ServerBackupListResult: PostgreSqlFlexibleServerBackupListResult
   StorageTierCapability: PostgreSqlFlexibleServerStorageTierCapability
   UserAssignedIdentity: PostgreSqlFlexibleServerUserAssignedIdentity
+  AdminCredentials: PostgreSqlMigrationAdminCredentials
+  BackupSettings: PostgreSqlFlexibleServerBackupSettings
+  BackupStoreDetails: PostgreSqlFlexibleServerBackupStoreDetails
+  CancelEnum: PostgreSqlMigrationCancelEnum
+  CapabilityStatus: PostgreSqlFlexbileServerCapabilityStatus
+  DbServerMetadata: PostgreSqlServerMetadata
+  FastProvisioningSupportedEnum: PostgreSqlFlexibleServerFastProvisioningSupportedENum
+  FlexibleServerCapability: PostgreSqlFlexibleServerCapability
+  FlexibleServersLogFile: PostgreSqlFlexibleServersLogFile
+  FlexibleServersLogFileListResult: PostgreSqlFlexibleServersLogFileListResult
+  GeoBackupSupportedEnum: PostgreSqlFlexibleServerGeoBackupSupportedEnum
+  HaMode: PostgreSqlFlexibleServerHAMode
+  ZoneRedundantHaSupportedEnum: PostgreSqlFlexibleServerZoneRedundantHaSupportedEnum
+  ZoneRedundantHaAndGeoBackupSupportedEnum: PostgreSqlFlexibleServerZoneRedundantHaAndGeoBackupSupportedEnum
+  StorageAutoGrowthSupportedEnum: PostgreSqlFlexibleServerStorageAutoGrowthSupportedEnum
+  OnlineResizeSupportedEnum: PostgreSqlFlexibleServerOnlineResizeSupportedEnum
+  RestrictedEnum: PostgreSqlFlexibleServerZoneRedundantRestrictedEnum
+  ServerSkuCapability: PostgreSqlFlexibleServerSkuCapability
 override-operation-name:
   CheckNameAvailability_Execute: CheckPostgreSqlFlexibleServerNameAvailability
   CheckNameAvailabilityWithLocation_Execute: CheckPostgreSqlFlexibleServerNameAvailabilityWithLocation

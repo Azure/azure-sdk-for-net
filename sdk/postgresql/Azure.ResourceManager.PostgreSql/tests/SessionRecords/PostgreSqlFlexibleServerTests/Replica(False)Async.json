@@ -1,52 +1,43 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c?api-version=2021-01-01",
+      "RequestUri": "https://management.azure.com/subscriptions/5c5037e5-d3f1-4e7b-b3a9-f6bf94902b30?api-version=2021-01-01",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "traceparent": "00-36b6c530db1b6639ac2d77e6ab71d6a3-be8b38e079b61d84-00",
-        "User-Agent": "azsdk-net-ResourceManager/1.4.0 (.NET 6.0.15; Microsoft Windows 10.0.22621)",
-        "x-ms-client-request-id": "879c32370a09cdc35312ec3c0a56e5f5",
+        "traceparent": "00-4f61c3a409982507b05c046e67a7054c-0b846d02fb096ccd-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.6.0 (.NET 6.0.16; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "4fe50bdc39d55c3833c61fcb31468fcf",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
       "StatusCode": 200,
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
-        "Content-Length": "748",
+        "Content-Length": "444",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Mon, 03 Apr 2023 02:11:55 GMT",
+        "Date": "Thu, 01 Jun 2023 07:49:28 GMT",
         "Expires": "-1",
         "Pragma": "no-cache",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-correlation-request-id": "d2b3b036-5ffe-4b7f-a253-076e27060a18",
-        "x-ms-ratelimit-remaining-subscription-reads": "11999",
-        "x-ms-request-id": "d2b3b036-5ffe-4b7f-a253-076e27060a18",
-        "x-ms-routing-request-id": "SOUTHEASTASIA:20230403T021155Z:d2b3b036-5ffe-4b7f-a253-076e27060a18"
+        "x-ms-correlation-request-id": "705ae516-04e6-4b0b-95df-d36fccaa3dcf",
+        "x-ms-ratelimit-remaining-subscription-reads": "11988",
+        "x-ms-request-id": "705ae516-04e6-4b0b-95df-d36fccaa3dcf",
+        "x-ms-routing-request-id": "SOUTHINDIA:20230601T074928Z:705ae516-04e6-4b0b-95df-d36fccaa3dcf"
       },
       "ResponseBody": {
-        "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c",
+        "id": "/subscriptions/5c5037e5-d3f1-4e7b-b3a9-f6bf94902b30",
         "authorizationSource": "RoleBased",
-        "managedByTenants": [],
-        "tags": {
-          "TagKey-9823": "TagValue-1254",
-          "TagKey-3481": "TagValue-320",
-          "TagKey-4926": "TagValue-1187",
-          "TagKey-751": "TagValue-3921",
-          "TagKey-1866": "TagValue-8559",
-          "TagKey-3094": "TagValue-9190",
-          "TagKey-2449": "TagValue-9",
-          "TagKey-8379": "TagValue-164",
-          "TagKey-7470": "TagValue-2205",
-          "TagKey-4236": "TagValue-3698",
-          "TagKey-5316": "TagValue-2725"
-        },
-        "subscriptionId": "db1ab6f0-4769-4b27-930e-01e2ef9c123c",
+        "managedByTenants": [
+          {
+            "tenantId": "2f4a9838-26b7-47ee-be60-ccc1fdec5953"
+          }
+        ],
+        "subscriptionId": "5c5037e5-d3f1-4e7b-b3a9-f6bf94902b30",
         "tenantId": "72f988bf-86f1-41af-91ab-2d7cd011db47",
-        "displayName": ".NET Mgmt SDK Test with TTL = 1 Day",
+        "displayName": "Orcas PM team",
         "state": "Enabled",
         "subscriptionPolicies": {
           "locationPlacementId": "Internal_2014-09-01",
@@ -56,16 +47,16 @@
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourcegroups/pgflexrg4955?api-version=**",
+      "RequestUri": "https://management.azure.com/subscriptions/5c5037e5-d3f1-4e7b-b3a9-f6bf94902b30/resourcegroups/pgflexrg2350?api-version=**",
       "RequestMethod": "PUT",
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
         "Content-Length": "21",
         "Content-Type": "application/json",
-        "traceparent": "00-2838d09afdac5fca82421b3cabaa9aa5-fb65573825153f84-00",
-        "User-Agent": "azsdk-net-ResourceManager/1.4.0 (.NET 6.0.15; Microsoft Windows 10.0.22621)",
-        "x-ms-client-request-id": "faa567c434f54f397d14c5681e73a9eb",
+        "traceparent": "00-e06836821c1d10cfe1b5b8eac02e0701-48f82b3915e51c22-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.6.0 (.NET 6.0.16; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "62f10e07a480cbbd15f601a721c1db04",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
@@ -76,19 +67,19 @@
         "Cache-Control": "no-cache",
         "Content-Length": "221",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Mon, 03 Apr 2023 02:11:56 GMT",
+        "Date": "Thu, 01 Jun 2023 07:49:31 GMT",
         "Expires": "-1",
         "Pragma": "no-cache",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-correlation-request-id": "b1480540-3e93-4695-a037-053cee1f7548",
+        "x-ms-correlation-request-id": "d20157ef-7d3f-4ac5-ac29-a6b5d9e9ae73",
         "x-ms-ratelimit-remaining-subscription-writes": "1199",
-        "x-ms-request-id": "b1480540-3e93-4695-a037-053cee1f7548",
-        "x-ms-routing-request-id": "SOUTHEASTASIA:20230403T021156Z:b1480540-3e93-4695-a037-053cee1f7548"
+        "x-ms-request-id": "d20157ef-7d3f-4ac5-ac29-a6b5d9e9ae73",
+        "x-ms-routing-request-id": "SOUTHINDIA:20230601T074931Z:d20157ef-7d3f-4ac5-ac29-a6b5d9e9ae73"
       },
       "ResponseBody": {
-        "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/pgflexrg4955",
-        "name": "pgflexrg4955",
+        "id": "/subscriptions/5c5037e5-d3f1-4e7b-b3a9-f6bf94902b30/resourceGroups/pgflexrg2350",
+        "name": "pgflexrg2350",
         "type": "Microsoft.Resources/resourceGroups",
         "location": "eastus",
         "properties": {
@@ -97,16 +88,16 @@
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/pgflexrg4955/providers/Microsoft.DBforPostgreSQL/flexibleServers/pgflexserver4853?api-version=2022-12-01",
+      "RequestUri": "https://management.azure.com/subscriptions/5c5037e5-d3f1-4e7b-b3a9-f6bf94902b30/resourceGroups/pgflexrg2350/providers/Microsoft.DBforPostgreSQL/flexibleServers/pgflexserver683?api-version=2023-03-01-preview",
       "RequestMethod": "PUT",
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
         "Content-Length": "250",
         "Content-Type": "application/json",
-        "traceparent": "00-72a2f84af35227d5248b26eaa4d30cfc-04b68a1f7fd2b7ec-00",
-        "User-Agent": "azsdk-net-ResourceManager.PostgreSql/1.2.0-alpha.20230403.1 (.NET 6.0.15; Microsoft Windows 10.0.22621)",
-        "x-ms-client-request-id": "9556340cb5f21d2b6b61e8eaa422d7cf",
+        "traceparent": "00-383f2e949fffb68358110d42217b2200-0691b396dd25fcc8-00",
+        "User-Agent": "azsdk-net-ResourceManager.PostgreSql/1.2.0-alpha.20230531.1 (.NET 6.0.16; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "e9662fbf4da3c7eeb569f4c7eb8349cd",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
@@ -128,36 +119,36 @@
       },
       "StatusCode": 202,
       "ResponseHeaders": {
-        "Azure-AsyncOperation": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.DBforPostgreSQL/locations/eastus/azureAsyncOperation/2718b5d1-3e08-4e65-9b19-18d944419494?api-version=2022-12-01",
+        "Azure-AsyncOperation": "https://management.azure.com/subscriptions/5c5037e5-d3f1-4e7b-b3a9-f6bf94902b30/providers/Microsoft.DBforPostgreSQL/locations/eastus/azureAsyncOperation/7d72202a-0143-4c02-b725-a4a467baafee?api-version=2023-03-01-preview",
         "Cache-Control": "no-cache",
         "Content-Length": "87",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Mon, 03 Apr 2023 02:12:01 GMT",
+        "Date": "Thu, 01 Jun 2023 07:49:35 GMT",
         "Expires": "-1",
-        "Location": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.DBforPostgreSQL/locations/eastus/operationResults/2718b5d1-3e08-4e65-9b19-18d944419494?api-version=2022-12-01",
+        "Location": "https://management.azure.com/subscriptions/5c5037e5-d3f1-4e7b-b3a9-f6bf94902b30/providers/Microsoft.DBforPostgreSQL/locations/eastus/operationResults/7d72202a-0143-4c02-b725-a4a467baafee?api-version=2023-03-01-preview",
         "Pragma": "no-cache",
         "Retry-After": "60",
         "Server": "Microsoft-HTTPAPI/2.0",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-correlation-request-id": "cc56e220-98be-47bc-af2c-194b875aedc9",
+        "x-ms-correlation-request-id": "3f0538b1-98ef-4da7-aa9c-f6db42ca7c1d",
         "x-ms-ratelimit-remaining-subscription-writes": "1198",
-        "x-ms-request-id": "e9f75d55-d81d-41f7-ab52-815f746a48f3",
-        "x-ms-routing-request-id": "SOUTHEASTASIA:20230403T021201Z:cc56e220-98be-47bc-af2c-194b875aedc9"
+        "x-ms-request-id": "203d86b2-d5b0-466d-bee5-6970c9463dda",
+        "x-ms-routing-request-id": "SOUTHINDIA:20230601T074935Z:3f0538b1-98ef-4da7-aa9c-f6db42ca7c1d"
       },
       "ResponseBody": {
         "operation": "UpsertServerManagementOperationV2",
-        "startTime": "2023-04-03T02:12:01.19Z"
+        "startTime": "2023-06-01T07:49:35.66Z"
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.DBforPostgreSQL/locations/eastus/azureAsyncOperation/2718b5d1-3e08-4e65-9b19-18d944419494?api-version=2022-12-01",
+      "RequestUri": "https://management.azure.com/subscriptions/5c5037e5-d3f1-4e7b-b3a9-f6bf94902b30/providers/Microsoft.DBforPostgreSQL/locations/eastus/azureAsyncOperation/7d72202a-0143-4c02-b725-a4a467baafee?api-version=2023-03-01-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
-        "traceparent": "00-72a2f84af35227d5248b26eaa4d30cfc-a04b3ed0ab1ffd81-00",
-        "User-Agent": "azsdk-net-ResourceManager/1.4.0 (.NET 6.0.15; Microsoft Windows 10.0.22621)",
-        "x-ms-client-request-id": "90e2969410113f07091be31b2cdac3fc",
+        "traceparent": "00-383f2e949fffb68358110d42217b2200-5aaa120775fb2434-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.6.0 (.NET 6.0.16; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "d8bd8a1d07a833beb5f615ac023abc9d",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
@@ -166,32 +157,32 @@
         "Cache-Control": "no-cache",
         "Content-Length": "107",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Mon, 03 Apr 2023 02:12:01 GMT",
+        "Date": "Thu, 01 Jun 2023 07:49:35 GMT",
         "Expires": "-1",
         "Pragma": "no-cache",
         "Retry-After": "60",
         "Server": "Microsoft-HTTPAPI/2.0",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-correlation-request-id": "21db5c6a-7715-409a-ab5b-d32d58dd5421",
-        "x-ms-ratelimit-remaining-subscription-reads": "11998",
-        "x-ms-request-id": "889ee2d5-981e-4b4d-865e-bbb3afe5d2a7",
-        "x-ms-routing-request-id": "SOUTHEASTASIA:20230403T021201Z:21db5c6a-7715-409a-ab5b-d32d58dd5421"
+        "x-ms-correlation-request-id": "77bb6427-04bb-409b-adb5-ef03575e39ac",
+        "x-ms-ratelimit-remaining-subscription-reads": "11987",
+        "x-ms-request-id": "ad7918e6-99c1-4ecf-9cd2-e7956f5a7bfb",
+        "x-ms-routing-request-id": "SOUTHINDIA:20230601T074936Z:77bb6427-04bb-409b-adb5-ef03575e39ac"
       },
       "ResponseBody": {
-        "name": "2718b5d1-3e08-4e65-9b19-18d944419494",
+        "name": "7d72202a-0143-4c02-b725-a4a467baafee",
         "status": "InProgress",
-        "startTime": "2023-04-03T02:12:01.19Z"
+        "startTime": "2023-06-01T07:49:35.66Z"
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.DBforPostgreSQL/locations/eastus/azureAsyncOperation/2718b5d1-3e08-4e65-9b19-18d944419494?api-version=2022-12-01",
+      "RequestUri": "https://management.azure.com/subscriptions/5c5037e5-d3f1-4e7b-b3a9-f6bf94902b30/providers/Microsoft.DBforPostgreSQL/locations/eastus/azureAsyncOperation/7d72202a-0143-4c02-b725-a4a467baafee?api-version=2023-03-01-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
-        "traceparent": "00-72a2f84af35227d5248b26eaa4d30cfc-d7b9a0f9a7c22d59-00",
-        "User-Agent": "azsdk-net-ResourceManager/1.4.0 (.NET 6.0.15; Microsoft Windows 10.0.22621)",
-        "x-ms-client-request-id": "835ed99b232799ebe417486e97947071",
+        "traceparent": "00-383f2e949fffb68358110d42217b2200-bc948eb9b3d403cf-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.6.0 (.NET 6.0.16; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "f6ea0d7775075321e829242ba37f5c2b",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
@@ -200,32 +191,32 @@
         "Cache-Control": "no-cache",
         "Content-Length": "107",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Mon, 03 Apr 2023 02:13:01 GMT",
+        "Date": "Thu, 01 Jun 2023 07:50:36 GMT",
         "Expires": "-1",
         "Pragma": "no-cache",
         "Retry-After": "60",
         "Server": "Microsoft-HTTPAPI/2.0",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-correlation-request-id": "878a9122-4edc-40ff-ad7b-9aacb5570f47",
-        "x-ms-ratelimit-remaining-subscription-reads": "11997",
-        "x-ms-request-id": "0dc84842-d181-4c69-acae-fde63646ba8a",
-        "x-ms-routing-request-id": "SOUTHEASTASIA:20230403T021302Z:878a9122-4edc-40ff-ad7b-9aacb5570f47"
+        "x-ms-correlation-request-id": "1b173dac-c3f1-4404-bcc5-be59a13d04ba",
+        "x-ms-ratelimit-remaining-subscription-reads": "11986",
+        "x-ms-request-id": "0f59306b-0904-4e5f-a69a-41d87ca53c66",
+        "x-ms-routing-request-id": "SOUTHINDIA:20230601T075037Z:1b173dac-c3f1-4404-bcc5-be59a13d04ba"
       },
       "ResponseBody": {
-        "name": "2718b5d1-3e08-4e65-9b19-18d944419494",
+        "name": "7d72202a-0143-4c02-b725-a4a467baafee",
         "status": "InProgress",
-        "startTime": "2023-04-03T02:12:01.19Z"
+        "startTime": "2023-06-01T07:49:35.66Z"
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.DBforPostgreSQL/locations/eastus/azureAsyncOperation/2718b5d1-3e08-4e65-9b19-18d944419494?api-version=2022-12-01",
+      "RequestUri": "https://management.azure.com/subscriptions/5c5037e5-d3f1-4e7b-b3a9-f6bf94902b30/providers/Microsoft.DBforPostgreSQL/locations/eastus/azureAsyncOperation/7d72202a-0143-4c02-b725-a4a467baafee?api-version=2023-03-01-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
-        "traceparent": "00-72a2f84af35227d5248b26eaa4d30cfc-6de54049c728f224-00",
-        "User-Agent": "azsdk-net-ResourceManager/1.4.0 (.NET 6.0.15; Microsoft Windows 10.0.22621)",
-        "x-ms-client-request-id": "0e552c92473f7dbe9a51cbb48f341272",
+        "traceparent": "00-383f2e949fffb68358110d42217b2200-443b05dcf8e84562-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.6.0 (.NET 6.0.16; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "60a9951271c61125c39c7b8456993a8a",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
@@ -234,32 +225,32 @@
         "Cache-Control": "no-cache",
         "Content-Length": "107",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Mon, 03 Apr 2023 02:14:03 GMT",
+        "Date": "Thu, 01 Jun 2023 07:51:38 GMT",
         "Expires": "-1",
         "Pragma": "no-cache",
         "Retry-After": "60",
         "Server": "Microsoft-HTTPAPI/2.0",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-correlation-request-id": "29541c06-f0a3-448d-a4b0-436467df72a0",
-        "x-ms-ratelimit-remaining-subscription-reads": "11996",
-        "x-ms-request-id": "a861348b-6dfa-4cec-89e7-0c3ed9603b50",
-        "x-ms-routing-request-id": "SOUTHEASTASIA:20230403T021403Z:29541c06-f0a3-448d-a4b0-436467df72a0"
+        "x-ms-correlation-request-id": "c8422797-2f20-447d-9b59-44d91814d5ca",
+        "x-ms-ratelimit-remaining-subscription-reads": "11985",
+        "x-ms-request-id": "e46f7267-8e02-43c2-aa92-4fba57b3dc0c",
+        "x-ms-routing-request-id": "SOUTHINDIA:20230601T075138Z:c8422797-2f20-447d-9b59-44d91814d5ca"
       },
       "ResponseBody": {
-        "name": "2718b5d1-3e08-4e65-9b19-18d944419494",
+        "name": "7d72202a-0143-4c02-b725-a4a467baafee",
         "status": "InProgress",
-        "startTime": "2023-04-03T02:12:01.19Z"
+        "startTime": "2023-06-01T07:49:35.66Z"
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.DBforPostgreSQL/locations/eastus/azureAsyncOperation/2718b5d1-3e08-4e65-9b19-18d944419494?api-version=2022-12-01",
+      "RequestUri": "https://management.azure.com/subscriptions/5c5037e5-d3f1-4e7b-b3a9-f6bf94902b30/providers/Microsoft.DBforPostgreSQL/locations/eastus/azureAsyncOperation/7d72202a-0143-4c02-b725-a4a467baafee?api-version=2023-03-01-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
-        "traceparent": "00-72a2f84af35227d5248b26eaa4d30cfc-2000ffb7d574af26-00",
-        "User-Agent": "azsdk-net-ResourceManager/1.4.0 (.NET 6.0.15; Microsoft Windows 10.0.22621)",
-        "x-ms-client-request-id": "d3fa21c04b9b7193ab49abf9c799a874",
+        "traceparent": "00-383f2e949fffb68358110d42217b2200-cb595244e372c9a2-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.6.0 (.NET 6.0.16; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "5cf70cbb5f9fa7586969ef7fe3929036",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
@@ -268,50 +259,50 @@
         "Cache-Control": "no-cache",
         "Content-Length": "106",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Mon, 03 Apr 2023 02:15:04 GMT",
+        "Date": "Thu, 01 Jun 2023 07:52:39 GMT",
         "Expires": "-1",
         "Pragma": "no-cache",
         "Retry-After": "60",
         "Server": "Microsoft-HTTPAPI/2.0",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-correlation-request-id": "d81c4f8e-d731-4c5f-9457-c3b6b88c692d",
-        "x-ms-ratelimit-remaining-subscription-reads": "11995",
-        "x-ms-request-id": "dd3fbce4-dd64-4d77-9666-3ab60e26b4e3",
-        "x-ms-routing-request-id": "SOUTHEASTASIA:20230403T021504Z:d81c4f8e-d731-4c5f-9457-c3b6b88c692d"
+        "x-ms-correlation-request-id": "d2fad56a-6c84-4d1f-baa3-ee62a8006115",
+        "x-ms-ratelimit-remaining-subscription-reads": "11984",
+        "x-ms-request-id": "6f042fa1-b992-48d5-bcf5-05ea8d7efb4d",
+        "x-ms-routing-request-id": "SOUTHINDIA:20230601T075239Z:d2fad56a-6c84-4d1f-baa3-ee62a8006115"
       },
       "ResponseBody": {
-        "name": "2718b5d1-3e08-4e65-9b19-18d944419494",
+        "name": "7d72202a-0143-4c02-b725-a4a467baafee",
         "status": "Succeeded",
-        "startTime": "2023-04-03T02:12:01.19Z"
+        "startTime": "2023-06-01T07:49:35.66Z"
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/pgflexrg4955/providers/Microsoft.DBforPostgreSQL/flexibleServers/pgflexserver4853?api-version=2022-12-01",
+      "RequestUri": "https://management.azure.com/subscriptions/5c5037e5-d3f1-4e7b-b3a9-f6bf94902b30/resourceGroups/pgflexrg2350/providers/Microsoft.DBforPostgreSQL/flexibleServers/pgflexserver683?api-version=2023-03-01-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
-        "traceparent": "00-72a2f84af35227d5248b26eaa4d30cfc-c424b8ee31ba0db8-00",
-        "User-Agent": "azsdk-net-ResourceManager/1.4.0 (.NET 6.0.15; Microsoft Windows 10.0.22621)",
-        "x-ms-client-request-id": "ff8871abb58554bd1be0e9d6583609b0",
+        "traceparent": "00-383f2e949fffb68358110d42217b2200-e72813e8222e5156-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.6.0 (.NET 6.0.16; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "6d9aea9a5b9006d7e8d8326afa9cfc4f",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
       "StatusCode": 200,
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
-        "Content-Length": "1090",
+        "Content-Length": "1137",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Mon, 03 Apr 2023 02:15:05 GMT",
+        "Date": "Thu, 01 Jun 2023 07:52:39 GMT",
         "Expires": "-1",
         "Pragma": "no-cache",
         "Server": "Microsoft-HTTPAPI/2.0",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-correlation-request-id": "158cf277-02bb-47f1-b77f-268d5926b4c5",
-        "x-ms-ratelimit-remaining-subscription-reads": "11994",
-        "x-ms-request-id": "117a7f16-5aec-4e01-b689-3ef91d79605d",
-        "x-ms-routing-request-id": "SOUTHEASTASIA:20230403T021505Z:158cf277-02bb-47f1-b77f-268d5926b4c5"
+        "x-ms-correlation-request-id": "35c2c4b2-167e-4797-9036-ca58c83859be",
+        "x-ms-ratelimit-remaining-subscription-reads": "11983",
+        "x-ms-request-id": "2fb80b90-02e4-44fb-b895-c405f02a3529",
+        "x-ms-routing-request-id": "SOUTHINDIA:20230601T075240Z:35c2c4b2-167e-4797-9036-ca58c83859be"
       },
       "ResponseBody": {
         "sku": {
@@ -319,29 +310,32 @@
           "tier": "GeneralPurpose"
         },
         "systemData": {
-          "createdAt": "2023-04-03T02:12:07.6111493Z"
+          "createdAt": "2023-06-01T07:49:40.9740386Z"
         },
         "properties": {
+          "dataEncryption": {
+            "type": "SystemManaged"
+          },
+          "storage": {
+            "iopsTier": "P10",
+            "iops": 500,
+            "storageSizeGB": 128,
+            "autoGrow": "Disabled"
+          },
           "authConfig": {
             "activeDirectoryAuth": "Disabled",
             "passwordAuth": "Enabled"
           },
-          "dataEncryption": {
-            "type": "SystemManaged"
-          },
-          "fullyQualifiedDomainName": "pgflexserver4853.postgres.database.azure.com",
+          "fullyQualifiedDomainName": "pgflexserver683.postgres.database.azure.com",
           "version": "14",
-          "minorVersion": "6",
+          "minorVersion": "7",
           "administratorLogin": "testUser",
           "state": "Ready",
           "availabilityZone": "1",
-          "storage": {
-            "storageSizeGB": 128
-          },
           "backup": {
             "backupRetentionDays": 7,
             "geoRedundantBackup": "Disabled",
-            "earliestRestoreDate": "2023-04-03T02:12:07.6111493\u002B00:00"
+            "earliestRestoreDate": "2023-06-01T07:49:40.9740386\u002B00:00"
           },
           "network": {
             "publicNetworkAccess": "Enabled"
@@ -361,269 +355,65 @@
         },
         "location": "East US",
         "tags": {},
-        "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/pgflexrg4955/providers/Microsoft.DBforPostgreSQL/flexibleServers/pgflexserver4853",
-        "name": "pgflexserver4853",
+        "id": "/subscriptions/5c5037e5-d3f1-4e7b-b3a9-f6bf94902b30/resourceGroups/pgflexrg2350/providers/Microsoft.DBforPostgreSQL/flexibleServers/pgflexserver683",
+        "name": "pgflexserver683",
         "type": "Microsoft.DBforPostgreSQL/flexibleServers"
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/pgflexrg4955/providers/Microsoft.DBforPostgreSQL/flexibleServers/pgflexserver1895?api-version=2022-12-01",
+      "RequestUri": "https://management.azure.com/subscriptions/5c5037e5-d3f1-4e7b-b3a9-f6bf94902b30/resourceGroups/pgflexrg2350/providers/Microsoft.DBforPostgreSQL/flexibleServers/pgflexserver1686?api-version=2023-03-01-preview",
       "RequestMethod": "PUT",
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "Content-Length": "268",
+        "Content-Length": "267",
         "Content-Type": "application/json",
-        "traceparent": "00-db8d6488772aafb63ae0ced700ea72e6-d1cbc8b4a21edff7-00",
-        "User-Agent": "azsdk-net-ResourceManager.PostgreSql/1.2.0-alpha.20230403.1 (.NET 6.0.15; Microsoft Windows 10.0.22621)",
-        "x-ms-client-request-id": "76add6059c9a47d698e462f59bc5b501",
+        "traceparent": "00-a0982f1319e26a4f897df0cf3ea9c092-05a8e8f9e2611250-00",
+        "User-Agent": "azsdk-net-ResourceManager.PostgreSql/1.2.0-alpha.20230531.1 (.NET 6.0.16; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "976f9aefff87b28b3c02f75c81a52e31",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
         "tags": {},
         "location": "eastus",
         "properties": {
-          "sourceServerResourceId": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/pgflexrg4955/providers/Microsoft.DBforPostgreSQL/flexibleServers/pgflexserver4853",
+          "sourceServerResourceId": "/subscriptions/5c5037e5-d3f1-4e7b-b3a9-f6bf94902b30/resourceGroups/pgflexrg2350/providers/Microsoft.DBforPostgreSQL/flexibleServers/pgflexserver683",
           "availabilityZone": "2",
           "createMode": "Replica"
         }
       },
       "StatusCode": 202,
       "ResponseHeaders": {
-        "Azure-AsyncOperation": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.DBforPostgreSQL/locations/eastus/azureAsyncOperation/94c0f6b2-16b2-465d-819b-128f90023fec?api-version=2022-12-01",
+        "Azure-AsyncOperation": "https://management.azure.com/subscriptions/5c5037e5-d3f1-4e7b-b3a9-f6bf94902b30/providers/Microsoft.DBforPostgreSQL/locations/eastus/azureAsyncOperation/e7f0f6ef-d331-40f4-8068-609ef1be1b9b?api-version=2023-03-01-preview",
         "Cache-Control": "no-cache",
-        "Content-Length": "91",
+        "Content-Length": "90",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Mon, 03 Apr 2023 02:15:07 GMT",
+        "Date": "Thu, 01 Jun 2023 07:52:44 GMT",
         "Expires": "-1",
-        "Location": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.DBforPostgreSQL/locations/eastus/operationResults/94c0f6b2-16b2-465d-819b-128f90023fec?api-version=2022-12-01",
+        "Location": "https://management.azure.com/subscriptions/5c5037e5-d3f1-4e7b-b3a9-f6bf94902b30/providers/Microsoft.DBforPostgreSQL/locations/eastus/operationResults/e7f0f6ef-d331-40f4-8068-609ef1be1b9b?api-version=2023-03-01-preview",
         "Pragma": "no-cache",
         "Retry-After": "60",
         "Server": "Microsoft-HTTPAPI/2.0",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-correlation-request-id": "7c2f70ad-73f7-4ea4-ab91-03bc6c97dde0",
+        "x-ms-correlation-request-id": "73fa4ff6-e051-4725-afea-2c91fabdb380",
         "x-ms-ratelimit-remaining-subscription-writes": "1197",
-        "x-ms-request-id": "9aa5dee6-56c0-42c1-b105-4d1cadda3eb0",
-        "x-ms-routing-request-id": "SOUTHEASTASIA:20230403T021508Z:7c2f70ad-73f7-4ea4-ab91-03bc6c97dde0"
+        "x-ms-request-id": "67c240e9-637b-45cc-8ddc-3762bf0838cd",
+        "x-ms-routing-request-id": "SOUTHINDIA:20230601T075244Z:73fa4ff6-e051-4725-afea-2c91fabdb380"
       },
       "ResponseBody": {
         "operation": "CreateReadReplicaManagementOperation",
-        "startTime": "2023-04-03T02:15:07.897Z"
+        "startTime": "2023-06-01T07:52:44.66Z"
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.DBforPostgreSQL/locations/eastus/azureAsyncOperation/94c0f6b2-16b2-465d-819b-128f90023fec?api-version=2022-12-01",
+      "RequestUri": "https://management.azure.com/subscriptions/5c5037e5-d3f1-4e7b-b3a9-f6bf94902b30/providers/Microsoft.DBforPostgreSQL/locations/eastus/azureAsyncOperation/e7f0f6ef-d331-40f4-8068-609ef1be1b9b?api-version=2023-03-01-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
-        "traceparent": "00-db8d6488772aafb63ae0ced700ea72e6-44d9ed351b4d7ce8-00",
-        "User-Agent": "azsdk-net-ResourceManager/1.4.0 (.NET 6.0.15; Microsoft Windows 10.0.22621)",
-        "x-ms-client-request-id": "f1f4fb4032ec0eda9b4066a052c7b855",
-        "x-ms-return-client-request-id": "true"
-      },
-      "RequestBody": null,
-      "StatusCode": 200,
-      "ResponseHeaders": {
-        "Cache-Control": "no-cache",
-        "Content-Length": "108",
-        "Content-Type": "application/json; charset=utf-8",
-        "Date": "Mon, 03 Apr 2023 02:15:08 GMT",
-        "Expires": "-1",
-        "Pragma": "no-cache",
-        "Retry-After": "60",
-        "Server": "Microsoft-HTTPAPI/2.0",
-        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
-        "X-Content-Type-Options": "nosniff",
-        "x-ms-correlation-request-id": "379aa9f0-cc84-4f6e-928c-1ad0686cc3ae",
-        "x-ms-ratelimit-remaining-subscription-reads": "11993",
-        "x-ms-request-id": "40d5cfa8-14eb-4b7c-b84c-546eb571de59",
-        "x-ms-routing-request-id": "SOUTHEASTASIA:20230403T021508Z:379aa9f0-cc84-4f6e-928c-1ad0686cc3ae"
-      },
-      "ResponseBody": {
-        "name": "94c0f6b2-16b2-465d-819b-128f90023fec",
-        "status": "InProgress",
-        "startTime": "2023-04-03T02:15:07.897Z"
-      }
-    },
-    {
-      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.DBforPostgreSQL/locations/eastus/azureAsyncOperation/94c0f6b2-16b2-465d-819b-128f90023fec?api-version=2022-12-01",
-      "RequestMethod": "GET",
-      "RequestHeaders": {
-        "Authorization": "Sanitized",
-        "traceparent": "00-db8d6488772aafb63ae0ced700ea72e6-55a7223fb921874c-00",
-        "User-Agent": "azsdk-net-ResourceManager/1.4.0 (.NET 6.0.15; Microsoft Windows 10.0.22621)",
-        "x-ms-client-request-id": "012ce72beb2cf104e9a112f3e41be5db",
-        "x-ms-return-client-request-id": "true"
-      },
-      "RequestBody": null,
-      "StatusCode": 200,
-      "ResponseHeaders": {
-        "Cache-Control": "no-cache",
-        "Content-Length": "108",
-        "Content-Type": "application/json; charset=utf-8",
-        "Date": "Mon, 03 Apr 2023 02:16:08 GMT",
-        "Expires": "-1",
-        "Pragma": "no-cache",
-        "Retry-After": "60",
-        "Server": "Microsoft-HTTPAPI/2.0",
-        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
-        "X-Content-Type-Options": "nosniff",
-        "x-ms-correlation-request-id": "d08e5411-d19b-4ff5-80f6-0edcf0bd0cda",
-        "x-ms-ratelimit-remaining-subscription-reads": "11992",
-        "x-ms-request-id": "dbc80b19-eed2-474d-8a3c-80f0cee68990",
-        "x-ms-routing-request-id": "SOUTHEASTASIA:20230403T021609Z:d08e5411-d19b-4ff5-80f6-0edcf0bd0cda"
-      },
-      "ResponseBody": {
-        "name": "94c0f6b2-16b2-465d-819b-128f90023fec",
-        "status": "InProgress",
-        "startTime": "2023-04-03T02:15:07.897Z"
-      }
-    },
-    {
-      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.DBforPostgreSQL/locations/eastus/azureAsyncOperation/94c0f6b2-16b2-465d-819b-128f90023fec?api-version=2022-12-01",
-      "RequestMethod": "GET",
-      "RequestHeaders": {
-        "Authorization": "Sanitized",
-        "traceparent": "00-db8d6488772aafb63ae0ced700ea72e6-2eef80919fbf494b-00",
-        "User-Agent": "azsdk-net-ResourceManager/1.4.0 (.NET 6.0.15; Microsoft Windows 10.0.22621)",
-        "x-ms-client-request-id": "a0b5eecbc4d177147bfb826aad4cb89c",
-        "x-ms-return-client-request-id": "true"
-      },
-      "RequestBody": null,
-      "StatusCode": 200,
-      "ResponseHeaders": {
-        "Cache-Control": "no-cache",
-        "Content-Length": "108",
-        "Content-Type": "application/json; charset=utf-8",
-        "Date": "Mon, 03 Apr 2023 02:17:10 GMT",
-        "Expires": "-1",
-        "Pragma": "no-cache",
-        "Retry-After": "60",
-        "Server": "Microsoft-HTTPAPI/2.0",
-        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
-        "X-Content-Type-Options": "nosniff",
-        "x-ms-correlation-request-id": "e800c529-7fdd-4211-820b-ab98787b7090",
-        "x-ms-ratelimit-remaining-subscription-reads": "11991",
-        "x-ms-request-id": "ddff31c6-9fc1-421c-9660-9d22d2358234",
-        "x-ms-routing-request-id": "SOUTHEASTASIA:20230403T021710Z:e800c529-7fdd-4211-820b-ab98787b7090"
-      },
-      "ResponseBody": {
-        "name": "94c0f6b2-16b2-465d-819b-128f90023fec",
-        "status": "InProgress",
-        "startTime": "2023-04-03T02:15:07.897Z"
-      }
-    },
-    {
-      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.DBforPostgreSQL/locations/eastus/azureAsyncOperation/94c0f6b2-16b2-465d-819b-128f90023fec?api-version=2022-12-01",
-      "RequestMethod": "GET",
-      "RequestHeaders": {
-        "Authorization": "Sanitized",
-        "traceparent": "00-db8d6488772aafb63ae0ced700ea72e6-4cac3ee91955e037-00",
-        "User-Agent": "azsdk-net-ResourceManager/1.4.0 (.NET 6.0.15; Microsoft Windows 10.0.22621)",
-        "x-ms-client-request-id": "7a8f62ed17915448f602084a1fe62980",
-        "x-ms-return-client-request-id": "true"
-      },
-      "RequestBody": null,
-      "StatusCode": 200,
-      "ResponseHeaders": {
-        "Cache-Control": "no-cache",
-        "Content-Length": "108",
-        "Content-Type": "application/json; charset=utf-8",
-        "Date": "Mon, 03 Apr 2023 02:18:11 GMT",
-        "Expires": "-1",
-        "Pragma": "no-cache",
-        "Retry-After": "60",
-        "Server": "Microsoft-HTTPAPI/2.0",
-        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
-        "X-Content-Type-Options": "nosniff",
-        "x-ms-correlation-request-id": "9c35c5ca-d14d-4776-a96e-815c95a3a0c7",
-        "x-ms-ratelimit-remaining-subscription-reads": "11990",
-        "x-ms-request-id": "1074072a-c3e9-42da-864f-6befefba388b",
-        "x-ms-routing-request-id": "SOUTHEASTASIA:20230403T021811Z:9c35c5ca-d14d-4776-a96e-815c95a3a0c7"
-      },
-      "ResponseBody": {
-        "name": "94c0f6b2-16b2-465d-819b-128f90023fec",
-        "status": "InProgress",
-        "startTime": "2023-04-03T02:15:07.897Z"
-      }
-    },
-    {
-      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.DBforPostgreSQL/locations/eastus/azureAsyncOperation/94c0f6b2-16b2-465d-819b-128f90023fec?api-version=2022-12-01",
-      "RequestMethod": "GET",
-      "RequestHeaders": {
-        "Authorization": "Sanitized",
-        "traceparent": "00-db8d6488772aafb63ae0ced700ea72e6-34f6d3fe69dffd6b-00",
-        "User-Agent": "azsdk-net-ResourceManager/1.4.0 (.NET 6.0.15; Microsoft Windows 10.0.22621)",
-        "x-ms-client-request-id": "64d48a5b18116784d2b585306899449c",
-        "x-ms-return-client-request-id": "true"
-      },
-      "RequestBody": null,
-      "StatusCode": 200,
-      "ResponseHeaders": {
-        "Cache-Control": "no-cache",
-        "Content-Length": "108",
-        "Content-Type": "application/json; charset=utf-8",
-        "Date": "Mon, 03 Apr 2023 02:19:12 GMT",
-        "Expires": "-1",
-        "Pragma": "no-cache",
-        "Retry-After": "60",
-        "Server": "Microsoft-HTTPAPI/2.0",
-        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
-        "X-Content-Type-Options": "nosniff",
-        "x-ms-correlation-request-id": "2d583b03-cdf0-434a-ba9f-9a263e9ac8fe",
-        "x-ms-ratelimit-remaining-subscription-reads": "11989",
-        "x-ms-request-id": "e94342b0-d3c1-48b8-b996-e1946279b355",
-        "x-ms-routing-request-id": "SOUTHEASTASIA:20230403T021912Z:2d583b03-cdf0-434a-ba9f-9a263e9ac8fe"
-      },
-      "ResponseBody": {
-        "name": "94c0f6b2-16b2-465d-819b-128f90023fec",
-        "status": "InProgress",
-        "startTime": "2023-04-03T02:15:07.897Z"
-      }
-    },
-    {
-      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.DBforPostgreSQL/locations/eastus/azureAsyncOperation/94c0f6b2-16b2-465d-819b-128f90023fec?api-version=2022-12-01",
-      "RequestMethod": "GET",
-      "RequestHeaders": {
-        "Authorization": "Sanitized",
-        "traceparent": "00-db8d6488772aafb63ae0ced700ea72e6-6b218c1cccdeed97-00",
-        "User-Agent": "azsdk-net-ResourceManager/1.4.0 (.NET 6.0.15; Microsoft Windows 10.0.22621)",
-        "x-ms-client-request-id": "810675e96b8bb44aa560a9cebbca5795",
-        "x-ms-return-client-request-id": "true"
-      },
-      "RequestBody": null,
-      "StatusCode": 200,
-      "ResponseHeaders": {
-        "Cache-Control": "no-cache",
-        "Content-Length": "108",
-        "Content-Type": "application/json; charset=utf-8",
-        "Date": "Mon, 03 Apr 2023 02:20:13 GMT",
-        "Expires": "-1",
-        "Pragma": "no-cache",
-        "Retry-After": "60",
-        "Server": "Microsoft-HTTPAPI/2.0",
-        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
-        "X-Content-Type-Options": "nosniff",
-        "x-ms-correlation-request-id": "22824bfd-499a-4da0-ad1c-a4afbafa763a",
-        "x-ms-ratelimit-remaining-subscription-reads": "11988",
-        "x-ms-request-id": "57fa3452-594b-43ac-b0bd-74e1d4fc83e8",
-        "x-ms-routing-request-id": "SOUTHEASTASIA:20230403T022013Z:22824bfd-499a-4da0-ad1c-a4afbafa763a"
-      },
-      "ResponseBody": {
-        "name": "94c0f6b2-16b2-465d-819b-128f90023fec",
-        "status": "InProgress",
-        "startTime": "2023-04-03T02:15:07.897Z"
-      }
-    },
-    {
-      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.DBforPostgreSQL/locations/eastus/azureAsyncOperation/94c0f6b2-16b2-465d-819b-128f90023fec?api-version=2022-12-01",
-      "RequestMethod": "GET",
-      "RequestHeaders": {
-        "Authorization": "Sanitized",
-        "traceparent": "00-db8d6488772aafb63ae0ced700ea72e6-3fff34c761ce08ec-00",
-        "User-Agent": "azsdk-net-ResourceManager/1.4.0 (.NET 6.0.15; Microsoft Windows 10.0.22621)",
-        "x-ms-client-request-id": "220f01d15477d58ade28a7dc9117eb5d",
+        "traceparent": "00-a0982f1319e26a4f897df0cf3ea9c092-1545afb399802d35-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.6.0 (.NET 6.0.16; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "4890a06df8229baf5fe7308d637a8543",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
@@ -632,50 +422,322 @@
         "Cache-Control": "no-cache",
         "Content-Length": "107",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Mon, 03 Apr 2023 02:21:14 GMT",
+        "Date": "Thu, 01 Jun 2023 07:52:44 GMT",
         "Expires": "-1",
         "Pragma": "no-cache",
         "Retry-After": "60",
         "Server": "Microsoft-HTTPAPI/2.0",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-correlation-request-id": "77db91b0-8ddc-4359-9a7e-01449d0c926c",
-        "x-ms-ratelimit-remaining-subscription-reads": "11987",
-        "x-ms-request-id": "126e0c4a-66d0-4c4a-8e39-7d60de5ef1ca",
-        "x-ms-routing-request-id": "SOUTHEASTASIA:20230403T022115Z:77db91b0-8ddc-4359-9a7e-01449d0c926c"
+        "x-ms-correlation-request-id": "bf002122-2c6c-46d3-95bf-676091a554da",
+        "x-ms-ratelimit-remaining-subscription-reads": "11982",
+        "x-ms-request-id": "df45e698-0b5e-457e-9d56-557c742ecc99",
+        "x-ms-routing-request-id": "SOUTHINDIA:20230601T075245Z:bf002122-2c6c-46d3-95bf-676091a554da"
       },
       "ResponseBody": {
-        "name": "94c0f6b2-16b2-465d-819b-128f90023fec",
-        "status": "Succeeded",
-        "startTime": "2023-04-03T02:15:07.897Z"
+        "name": "e7f0f6ef-d331-40f4-8068-609ef1be1b9b",
+        "status": "InProgress",
+        "startTime": "2023-06-01T07:52:44.66Z"
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/pgflexrg4955/providers/Microsoft.DBforPostgreSQL/flexibleServers/pgflexserver1895?api-version=2022-12-01",
+      "RequestUri": "https://management.azure.com/subscriptions/5c5037e5-d3f1-4e7b-b3a9-f6bf94902b30/providers/Microsoft.DBforPostgreSQL/locations/eastus/azureAsyncOperation/e7f0f6ef-d331-40f4-8068-609ef1be1b9b?api-version=2023-03-01-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
-        "traceparent": "00-db8d6488772aafb63ae0ced700ea72e6-463e5435a31f1124-00",
-        "User-Agent": "azsdk-net-ResourceManager/1.4.0 (.NET 6.0.15; Microsoft Windows 10.0.22621)",
-        "x-ms-client-request-id": "aa616cbea8e0f0f44020beb16eb5ab08",
+        "traceparent": "00-a0982f1319e26a4f897df0cf3ea9c092-98ac470d3bb94b21-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.6.0 (.NET 6.0.16; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "b65e01aa90b221509f0f62978bc4854f",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
       "StatusCode": 200,
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
-        "Content-Length": "1270",
+        "Content-Length": "107",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Mon, 03 Apr 2023 02:21:15 GMT",
+        "Date": "Thu, 01 Jun 2023 07:53:45 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Retry-After": "60",
+        "Server": "Microsoft-HTTPAPI/2.0",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "e9aa235c-0b07-4e00-be10-6c6c12837f39",
+        "x-ms-ratelimit-remaining-subscription-reads": "11981",
+        "x-ms-request-id": "7b1cecb2-6343-4625-bfdf-c3987537a964",
+        "x-ms-routing-request-id": "SOUTHINDIA:20230601T075346Z:e9aa235c-0b07-4e00-be10-6c6c12837f39"
+      },
+      "ResponseBody": {
+        "name": "e7f0f6ef-d331-40f4-8068-609ef1be1b9b",
+        "status": "InProgress",
+        "startTime": "2023-06-01T07:52:44.66Z"
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/5c5037e5-d3f1-4e7b-b3a9-f6bf94902b30/providers/Microsoft.DBforPostgreSQL/locations/eastus/azureAsyncOperation/e7f0f6ef-d331-40f4-8068-609ef1be1b9b?api-version=2023-03-01-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-a0982f1319e26a4f897df0cf3ea9c092-0ba86959bee0b776-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.6.0 (.NET 6.0.16; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "e0ef2a55e615130e954e0c189c6cfdba",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "107",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Thu, 01 Jun 2023 07:54:47 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Retry-After": "60",
+        "Server": "Microsoft-HTTPAPI/2.0",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "26fa7cbd-6af6-41db-a411-e8e277bd894d",
+        "x-ms-ratelimit-remaining-subscription-reads": "11980",
+        "x-ms-request-id": "5b3c7df6-e75b-4abf-9940-89eb6b506e57",
+        "x-ms-routing-request-id": "SOUTHINDIA:20230601T075447Z:26fa7cbd-6af6-41db-a411-e8e277bd894d"
+      },
+      "ResponseBody": {
+        "name": "e7f0f6ef-d331-40f4-8068-609ef1be1b9b",
+        "status": "InProgress",
+        "startTime": "2023-06-01T07:52:44.66Z"
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/5c5037e5-d3f1-4e7b-b3a9-f6bf94902b30/providers/Microsoft.DBforPostgreSQL/locations/eastus/azureAsyncOperation/e7f0f6ef-d331-40f4-8068-609ef1be1b9b?api-version=2023-03-01-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-a0982f1319e26a4f897df0cf3ea9c092-9fc74f2d2c63de82-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.6.0 (.NET 6.0.16; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "2b1c306af68edc1a506ea81396180f9a",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "107",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Thu, 01 Jun 2023 07:55:48 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Retry-After": "60",
+        "Server": "Microsoft-HTTPAPI/2.0",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "4889ee04-cca7-4664-82f8-85bfc6e96fc5",
+        "x-ms-ratelimit-remaining-subscription-reads": "11979",
+        "x-ms-request-id": "2b2b5290-0a0a-442f-8981-a151fc4069d8",
+        "x-ms-routing-request-id": "SOUTHINDIA:20230601T075548Z:4889ee04-cca7-4664-82f8-85bfc6e96fc5"
+      },
+      "ResponseBody": {
+        "name": "e7f0f6ef-d331-40f4-8068-609ef1be1b9b",
+        "status": "InProgress",
+        "startTime": "2023-06-01T07:52:44.66Z"
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/5c5037e5-d3f1-4e7b-b3a9-f6bf94902b30/providers/Microsoft.DBforPostgreSQL/locations/eastus/azureAsyncOperation/e7f0f6ef-d331-40f4-8068-609ef1be1b9b?api-version=2023-03-01-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-a0982f1319e26a4f897df0cf3ea9c092-b1d43b1d0d3916c6-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.6.0 (.NET 6.0.16; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "3938e161a48bc32ef34b216383388433",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "107",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Thu, 01 Jun 2023 07:56:49 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Retry-After": "60",
+        "Server": "Microsoft-HTTPAPI/2.0",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "4b5a12c9-fb6b-4e4e-a269-71b49e364144",
+        "x-ms-ratelimit-remaining-subscription-reads": "11978",
+        "x-ms-request-id": "95fbed54-f6b3-4f22-99d2-a61f7419ca7a",
+        "x-ms-routing-request-id": "SOUTHINDIA:20230601T075649Z:4b5a12c9-fb6b-4e4e-a269-71b49e364144"
+      },
+      "ResponseBody": {
+        "name": "e7f0f6ef-d331-40f4-8068-609ef1be1b9b",
+        "status": "InProgress",
+        "startTime": "2023-06-01T07:52:44.66Z"
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/5c5037e5-d3f1-4e7b-b3a9-f6bf94902b30/providers/Microsoft.DBforPostgreSQL/locations/eastus/azureAsyncOperation/e7f0f6ef-d331-40f4-8068-609ef1be1b9b?api-version=2023-03-01-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-a0982f1319e26a4f897df0cf3ea9c092-f001d125ccc57113-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.6.0 (.NET 6.0.16; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "5a2ca7115aa85ec00f1290a63dfa7c7c",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "107",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Thu, 01 Jun 2023 07:57:50 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Retry-After": "60",
+        "Server": "Microsoft-HTTPAPI/2.0",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "416c135d-c2fd-4037-b202-390860be729c",
+        "x-ms-ratelimit-remaining-subscription-reads": "11977",
+        "x-ms-request-id": "6f42906f-1fdc-48b4-ade4-31ace93f8fe7",
+        "x-ms-routing-request-id": "SOUTHINDIA:20230601T075750Z:416c135d-c2fd-4037-b202-390860be729c"
+      },
+      "ResponseBody": {
+        "name": "e7f0f6ef-d331-40f4-8068-609ef1be1b9b",
+        "status": "InProgress",
+        "startTime": "2023-06-01T07:52:44.66Z"
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/5c5037e5-d3f1-4e7b-b3a9-f6bf94902b30/providers/Microsoft.DBforPostgreSQL/locations/eastus/azureAsyncOperation/e7f0f6ef-d331-40f4-8068-609ef1be1b9b?api-version=2023-03-01-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-a0982f1319e26a4f897df0cf3ea9c092-384c3c8857ffde48-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.6.0 (.NET 6.0.16; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "bbb6723fc434c62f02583743d5b75918",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "107",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Thu, 01 Jun 2023 07:58:51 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Retry-After": "60",
+        "Server": "Microsoft-HTTPAPI/2.0",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "534862df-7d2a-4c66-9bf1-ce41114e2e6f",
+        "x-ms-ratelimit-remaining-subscription-reads": "11976",
+        "x-ms-request-id": "0850e5d5-4fd3-4fcb-b533-db657edc0e88",
+        "x-ms-routing-request-id": "SOUTHINDIA:20230601T075851Z:534862df-7d2a-4c66-9bf1-ce41114e2e6f"
+      },
+      "ResponseBody": {
+        "name": "e7f0f6ef-d331-40f4-8068-609ef1be1b9b",
+        "status": "InProgress",
+        "startTime": "2023-06-01T07:52:44.66Z"
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/5c5037e5-d3f1-4e7b-b3a9-f6bf94902b30/providers/Microsoft.DBforPostgreSQL/locations/eastus/azureAsyncOperation/e7f0f6ef-d331-40f4-8068-609ef1be1b9b?api-version=2023-03-01-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-a0982f1319e26a4f897df0cf3ea9c092-bcebf8e63481328b-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.6.0 (.NET 6.0.16; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "ee0175e9b5eb06f221d92978138786f8",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "107",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Thu, 01 Jun 2023 07:59:52 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Retry-After": "60",
+        "Server": "Microsoft-HTTPAPI/2.0",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "533d54b4-68e2-45d1-a3fb-75ad6913fc87",
+        "x-ms-ratelimit-remaining-subscription-reads": "11975",
+        "x-ms-request-id": "a57af194-cf06-4544-9b5b-b53237584333",
+        "x-ms-routing-request-id": "SOUTHINDIA:20230601T075952Z:533d54b4-68e2-45d1-a3fb-75ad6913fc87"
+      },
+      "ResponseBody": {
+        "name": "e7f0f6ef-d331-40f4-8068-609ef1be1b9b",
+        "status": "InProgress",
+        "startTime": "2023-06-01T07:52:44.66Z"
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/5c5037e5-d3f1-4e7b-b3a9-f6bf94902b30/providers/Microsoft.DBforPostgreSQL/locations/eastus/azureAsyncOperation/e7f0f6ef-d331-40f4-8068-609ef1be1b9b?api-version=2023-03-01-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-a0982f1319e26a4f897df0cf3ea9c092-63385cf9e0ff89bb-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.6.0 (.NET 6.0.16; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "1124a4cec9814dfe7866584f227d8858",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "106",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Thu, 01 Jun 2023 08:00:53 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Retry-After": "60",
+        "Server": "Microsoft-HTTPAPI/2.0",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "2e36d37b-04e3-4c92-a30b-25dd33015f7d",
+        "x-ms-ratelimit-remaining-subscription-reads": "11974",
+        "x-ms-request-id": "48a9b4e5-6124-408e-91f5-30b3fd005ea0",
+        "x-ms-routing-request-id": "SOUTHINDIA:20230601T080054Z:2e36d37b-04e3-4c92-a30b-25dd33015f7d"
+      },
+      "ResponseBody": {
+        "name": "e7f0f6ef-d331-40f4-8068-609ef1be1b9b",
+        "status": "Succeeded",
+        "startTime": "2023-06-01T07:52:44.66Z"
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/5c5037e5-d3f1-4e7b-b3a9-f6bf94902b30/resourceGroups/pgflexrg2350/providers/Microsoft.DBforPostgreSQL/flexibleServers/pgflexserver1686?api-version=2023-03-01-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-a0982f1319e26a4f897df0cf3ea9c092-1e7a83130d19912a-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.6.0 (.NET 6.0.16; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "c7bc78b88df8899080af9a5b9ab6b27a",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "1320",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Thu, 01 Jun 2023 08:00:54 GMT",
         "Expires": "-1",
         "Pragma": "no-cache",
         "Server": "Microsoft-HTTPAPI/2.0",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-correlation-request-id": "e806903b-9705-4264-9b68-9b58edd5286d",
-        "x-ms-ratelimit-remaining-subscription-reads": "11986",
-        "x-ms-request-id": "97f593bb-4f66-42df-9a93-67d0f8e96b87",
-        "x-ms-routing-request-id": "SOUTHEASTASIA:20230403T022115Z:e806903b-9705-4264-9b68-9b58edd5286d"
+        "x-ms-correlation-request-id": "7b4829b5-b8b2-4ce9-9ea6-a05969e0ba15",
+        "x-ms-ratelimit-remaining-subscription-reads": "11973",
+        "x-ms-request-id": "0a289712-68f3-48fa-8497-d9ec61ef02bb",
+        "x-ms-routing-request-id": "SOUTHINDIA:20230601T080054Z:7b4829b5-b8b2-4ce9-9ea6-a05969e0ba15"
       },
       "ResponseBody": {
         "sku": {
@@ -683,30 +745,33 @@
           "tier": "GeneralPurpose"
         },
         "systemData": {
-          "createdAt": "2023-04-03T02:15:52.9118430Z"
+          "createdAt": "2023-06-01T07:53:15.8464628Z"
         },
         "properties": {
+          "dataEncryption": {
+            "type": "SystemManaged"
+          },
+          "storage": {
+            "iopsTier": "P10",
+            "iops": 500,
+            "storageSizeGB": 128,
+            "autoGrow": "Disabled"
+          },
           "authConfig": {
             "activeDirectoryAuth": "Disabled",
             "passwordAuth": "Enabled"
           },
-          "dataEncryption": {
-            "type": "SystemManaged"
-          },
-          "fullyQualifiedDomainName": "pgflexserver1895.postgres.database.azure.com",
+          "fullyQualifiedDomainName": "pgflexserver1686.postgres.database.azure.com",
           "version": "14",
-          "minorVersion": "6",
+          "minorVersion": "7",
           "administratorLogin": "testUser",
           "state": "Ready",
           "availabilityZone": "2",
-          "sourceServerResourceId": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/pgflexrg4955/providers/Microsoft.DBforPostgreSQL/flexibleServers/pgflexserver4853",
-          "storage": {
-            "storageSizeGB": 128
-          },
+          "sourceServerResourceId": "/subscriptions/5c5037e5-d3f1-4e7b-b3a9-f6bf94902b30/resourceGroups/pgflexrg2350/providers/Microsoft.DBforPostgreSQL/flexibleServers/pgflexserver683",
           "backup": {
             "backupRetentionDays": 7,
             "geoRedundantBackup": "Disabled",
-            "earliestRestoreDate": "2023-04-03T02:15:52.911843\u002B00:00"
+            "earliestRestoreDate": "2023-06-01T07:53:15.8464628\u002B00:00"
           },
           "network": {
             "publicNetworkAccess": "Enabled"
@@ -726,65 +791,65 @@
         },
         "location": "East US",
         "tags": {},
-        "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/pgflexrg4955/providers/Microsoft.DBforPostgreSQL/flexibleServers/pgflexserver1895",
-        "name": "pgflexserver1895",
+        "id": "/subscriptions/5c5037e5-d3f1-4e7b-b3a9-f6bf94902b30/resourceGroups/pgflexrg2350/providers/Microsoft.DBforPostgreSQL/flexibleServers/pgflexserver1686",
+        "name": "pgflexserver1686",
         "type": "Microsoft.DBforPostgreSQL/flexibleServers"
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/pgflexrg4955/providers/Microsoft.DBforPostgreSQL/flexibleServers/pgflexserver3016?api-version=2022-12-01",
+      "RequestUri": "https://management.azure.com/subscriptions/5c5037e5-d3f1-4e7b-b3a9-f6bf94902b30/resourceGroups/pgflexrg2350/providers/Microsoft.DBforPostgreSQL/flexibleServers/pgflexserver885?api-version=2023-03-01-preview",
       "RequestMethod": "PUT",
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "Content-Length": "268",
+        "Content-Length": "267",
         "Content-Type": "application/json",
-        "traceparent": "00-dda174c97319239c68c1b3561220209f-ddf9a8c28d5b2180-00",
-        "User-Agent": "azsdk-net-ResourceManager.PostgreSql/1.2.0-alpha.20230403.1 (.NET 6.0.15; Microsoft Windows 10.0.22621)",
-        "x-ms-client-request-id": "675ef05d228a9424ea30a263c36e228e",
+        "traceparent": "00-134b43f3c25905668eebde9bf7e03b07-958e5c6dacab76b6-00",
+        "User-Agent": "azsdk-net-ResourceManager.PostgreSql/1.2.0-alpha.20230531.1 (.NET 6.0.16; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "31743ed24893209677b476855ca3e4a3",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
         "tags": {},
         "location": "eastus",
         "properties": {
-          "sourceServerResourceId": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/pgflexrg4955/providers/Microsoft.DBforPostgreSQL/flexibleServers/pgflexserver4853",
+          "sourceServerResourceId": "/subscriptions/5c5037e5-d3f1-4e7b-b3a9-f6bf94902b30/resourceGroups/pgflexrg2350/providers/Microsoft.DBforPostgreSQL/flexibleServers/pgflexserver683",
           "availabilityZone": "2",
           "createMode": "Replica"
         }
       },
       "StatusCode": 202,
       "ResponseHeaders": {
-        "Azure-AsyncOperation": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.DBforPostgreSQL/locations/eastus/azureAsyncOperation/8af3ced6-1ab0-42f1-81a6-54968929acc6?api-version=2022-12-01",
+        "Azure-AsyncOperation": "https://management.azure.com/subscriptions/5c5037e5-d3f1-4e7b-b3a9-f6bf94902b30/providers/Microsoft.DBforPostgreSQL/locations/eastus/azureAsyncOperation/7c646f2b-4192-46a5-843e-354f10511740?api-version=2023-03-01-preview",
         "Cache-Control": "no-cache",
         "Content-Length": "91",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Mon, 03 Apr 2023 02:21:17 GMT",
+        "Date": "Thu, 01 Jun 2023 08:00:58 GMT",
         "Expires": "-1",
-        "Location": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.DBforPostgreSQL/locations/eastus/operationResults/8af3ced6-1ab0-42f1-81a6-54968929acc6?api-version=2022-12-01",
+        "Location": "https://management.azure.com/subscriptions/5c5037e5-d3f1-4e7b-b3a9-f6bf94902b30/providers/Microsoft.DBforPostgreSQL/locations/eastus/operationResults/7c646f2b-4192-46a5-843e-354f10511740?api-version=2023-03-01-preview",
         "Pragma": "no-cache",
         "Retry-After": "60",
         "Server": "Microsoft-HTTPAPI/2.0",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-correlation-request-id": "6d578d3d-2961-4c0c-a0d5-5e5d127d048f",
+        "x-ms-correlation-request-id": "296a213e-d549-4b31-97fa-4202e7b672e1",
         "x-ms-ratelimit-remaining-subscription-writes": "1196",
-        "x-ms-request-id": "1fc68d67-bfe3-4257-885b-7e7982ec137c",
-        "x-ms-routing-request-id": "SOUTHEASTASIA:20230403T022118Z:6d578d3d-2961-4c0c-a0d5-5e5d127d048f"
+        "x-ms-request-id": "bf6e7364-014a-4fb3-baf2-57a34f5de264",
+        "x-ms-routing-request-id": "SOUTHINDIA:20230601T080058Z:296a213e-d549-4b31-97fa-4202e7b672e1"
       },
       "ResponseBody": {
         "operation": "CreateReadReplicaManagementOperation",
-        "startTime": "2023-04-03T02:21:17.913Z"
+        "startTime": "2023-06-01T08:00:58.833Z"
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.DBforPostgreSQL/locations/eastus/azureAsyncOperation/8af3ced6-1ab0-42f1-81a6-54968929acc6?api-version=2022-12-01",
+      "RequestUri": "https://management.azure.com/subscriptions/5c5037e5-d3f1-4e7b-b3a9-f6bf94902b30/providers/Microsoft.DBforPostgreSQL/locations/eastus/azureAsyncOperation/7c646f2b-4192-46a5-843e-354f10511740?api-version=2023-03-01-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
-        "traceparent": "00-dda174c97319239c68c1b3561220209f-438906011c8f209c-00",
-        "User-Agent": "azsdk-net-ResourceManager/1.4.0 (.NET 6.0.15; Microsoft Windows 10.0.22621)",
-        "x-ms-client-request-id": "a17e9f7d84b89bd247ccbfb005912cd2",
+        "traceparent": "00-134b43f3c25905668eebde9bf7e03b07-6213974015f262ae-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.6.0 (.NET 6.0.16; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "e37ddeb4570870c4e29c4f44170b2ddd",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
@@ -793,32 +858,32 @@
         "Cache-Control": "no-cache",
         "Content-Length": "108",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Mon, 03 Apr 2023 02:21:17 GMT",
+        "Date": "Thu, 01 Jun 2023 08:00:58 GMT",
         "Expires": "-1",
         "Pragma": "no-cache",
         "Retry-After": "60",
         "Server": "Microsoft-HTTPAPI/2.0",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-correlation-request-id": "da7934d7-e0af-40a9-82a0-bc8269478f6e",
-        "x-ms-ratelimit-remaining-subscription-reads": "11985",
-        "x-ms-request-id": "dc72c431-59e1-49e5-a9fd-49a2209b50f4",
-        "x-ms-routing-request-id": "SOUTHEASTASIA:20230403T022118Z:da7934d7-e0af-40a9-82a0-bc8269478f6e"
+        "x-ms-correlation-request-id": "928d9d4f-c3d5-48ba-89c4-e1fb066605d3",
+        "x-ms-ratelimit-remaining-subscription-reads": "11972",
+        "x-ms-request-id": "6e89b5eb-d6b8-430a-8132-384d29278f36",
+        "x-ms-routing-request-id": "SOUTHINDIA:20230601T080059Z:928d9d4f-c3d5-48ba-89c4-e1fb066605d3"
       },
       "ResponseBody": {
-        "name": "8af3ced6-1ab0-42f1-81a6-54968929acc6",
+        "name": "7c646f2b-4192-46a5-843e-354f10511740",
         "status": "InProgress",
-        "startTime": "2023-04-03T02:21:17.913Z"
+        "startTime": "2023-06-01T08:00:58.833Z"
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.DBforPostgreSQL/locations/eastus/azureAsyncOperation/8af3ced6-1ab0-42f1-81a6-54968929acc6?api-version=2022-12-01",
+      "RequestUri": "https://management.azure.com/subscriptions/5c5037e5-d3f1-4e7b-b3a9-f6bf94902b30/providers/Microsoft.DBforPostgreSQL/locations/eastus/azureAsyncOperation/7c646f2b-4192-46a5-843e-354f10511740?api-version=2023-03-01-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
-        "traceparent": "00-dda174c97319239c68c1b3561220209f-2e501d5f42af2627-00",
-        "User-Agent": "azsdk-net-ResourceManager/1.4.0 (.NET 6.0.15; Microsoft Windows 10.0.22621)",
-        "x-ms-client-request-id": "223c30fe5ba5b09f3b355a6b40cdff11",
+        "traceparent": "00-134b43f3c25905668eebde9bf7e03b07-40353cf82307774a-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.6.0 (.NET 6.0.16; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "c90af6cb17f612ae3e331ef9b7c4f1d4",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
@@ -827,32 +892,32 @@
         "Cache-Control": "no-cache",
         "Content-Length": "108",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Mon, 03 Apr 2023 02:22:19 GMT",
+        "Date": "Thu, 01 Jun 2023 08:01:59 GMT",
         "Expires": "-1",
         "Pragma": "no-cache",
         "Retry-After": "60",
         "Server": "Microsoft-HTTPAPI/2.0",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-correlation-request-id": "c4357f2b-4fb5-44ab-b1da-b1735301f3d7",
-        "x-ms-ratelimit-remaining-subscription-reads": "11984",
-        "x-ms-request-id": "03d5381b-fc25-42a8-8dbf-2a1774c2e39c",
-        "x-ms-routing-request-id": "SOUTHEASTASIA:20230403T022219Z:c4357f2b-4fb5-44ab-b1da-b1735301f3d7"
+        "x-ms-correlation-request-id": "35f6c125-98aa-4631-9b1c-922d1b822f48",
+        "x-ms-ratelimit-remaining-subscription-reads": "11971",
+        "x-ms-request-id": "117baf80-3a35-40ba-b36b-2faf99723296",
+        "x-ms-routing-request-id": "SOUTHINDIA:20230601T080200Z:35f6c125-98aa-4631-9b1c-922d1b822f48"
       },
       "ResponseBody": {
-        "name": "8af3ced6-1ab0-42f1-81a6-54968929acc6",
+        "name": "7c646f2b-4192-46a5-843e-354f10511740",
         "status": "InProgress",
-        "startTime": "2023-04-03T02:21:17.913Z"
+        "startTime": "2023-06-01T08:00:58.833Z"
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.DBforPostgreSQL/locations/eastus/azureAsyncOperation/8af3ced6-1ab0-42f1-81a6-54968929acc6?api-version=2022-12-01",
+      "RequestUri": "https://management.azure.com/subscriptions/5c5037e5-d3f1-4e7b-b3a9-f6bf94902b30/providers/Microsoft.DBforPostgreSQL/locations/eastus/azureAsyncOperation/7c646f2b-4192-46a5-843e-354f10511740?api-version=2023-03-01-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
-        "traceparent": "00-dda174c97319239c68c1b3561220209f-9a922673ba3e951c-00",
-        "User-Agent": "azsdk-net-ResourceManager/1.4.0 (.NET 6.0.15; Microsoft Windows 10.0.22621)",
-        "x-ms-client-request-id": "24e67ac981efefd57974089ced04237b",
+        "traceparent": "00-134b43f3c25905668eebde9bf7e03b07-5077ba3f09c59569-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.6.0 (.NET 6.0.16; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "7ed1b4010025f99b0c4fb82f6fbb2908",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
@@ -861,32 +926,32 @@
         "Cache-Control": "no-cache",
         "Content-Length": "108",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Mon, 03 Apr 2023 02:23:19 GMT",
+        "Date": "Thu, 01 Jun 2023 08:03:00 GMT",
         "Expires": "-1",
         "Pragma": "no-cache",
         "Retry-After": "60",
         "Server": "Microsoft-HTTPAPI/2.0",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-correlation-request-id": "929ec481-69c5-4f70-a200-7606f7bee35e",
-        "x-ms-ratelimit-remaining-subscription-reads": "11983",
-        "x-ms-request-id": "c03d93cc-56cc-4c9e-85b9-68607167c9e4",
-        "x-ms-routing-request-id": "SOUTHEASTASIA:20230403T022320Z:929ec481-69c5-4f70-a200-7606f7bee35e"
+        "x-ms-correlation-request-id": "966c8717-3436-4d15-b4ef-d35ffe69145d",
+        "x-ms-ratelimit-remaining-subscription-reads": "11970",
+        "x-ms-request-id": "d3d636a9-e380-427a-98eb-bba953fa48b3",
+        "x-ms-routing-request-id": "SOUTHINDIA:20230601T080301Z:966c8717-3436-4d15-b4ef-d35ffe69145d"
       },
       "ResponseBody": {
-        "name": "8af3ced6-1ab0-42f1-81a6-54968929acc6",
+        "name": "7c646f2b-4192-46a5-843e-354f10511740",
         "status": "InProgress",
-        "startTime": "2023-04-03T02:21:17.913Z"
+        "startTime": "2023-06-01T08:00:58.833Z"
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.DBforPostgreSQL/locations/eastus/azureAsyncOperation/8af3ced6-1ab0-42f1-81a6-54968929acc6?api-version=2022-12-01",
+      "RequestUri": "https://management.azure.com/subscriptions/5c5037e5-d3f1-4e7b-b3a9-f6bf94902b30/providers/Microsoft.DBforPostgreSQL/locations/eastus/azureAsyncOperation/7c646f2b-4192-46a5-843e-354f10511740?api-version=2023-03-01-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
-        "traceparent": "00-dda174c97319239c68c1b3561220209f-c7d765f060f9e90c-00",
-        "User-Agent": "azsdk-net-ResourceManager/1.4.0 (.NET 6.0.15; Microsoft Windows 10.0.22621)",
-        "x-ms-client-request-id": "64590ff3449c2183ffce65832a675b7a",
+        "traceparent": "00-134b43f3c25905668eebde9bf7e03b07-053fcde554b79123-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.6.0 (.NET 6.0.16; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "3805b46ce9989dcb2f6aa5d538cbb91d",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
@@ -895,32 +960,32 @@
         "Cache-Control": "no-cache",
         "Content-Length": "108",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Mon, 03 Apr 2023 02:24:21 GMT",
+        "Date": "Thu, 01 Jun 2023 08:04:02 GMT",
         "Expires": "-1",
         "Pragma": "no-cache",
         "Retry-After": "60",
         "Server": "Microsoft-HTTPAPI/2.0",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-correlation-request-id": "dfe936ba-2a2d-4fc0-ac76-0fb6b9b9ca82",
-        "x-ms-ratelimit-remaining-subscription-reads": "11982",
-        "x-ms-request-id": "f2503518-cf14-4afb-a8c2-299a183974af",
-        "x-ms-routing-request-id": "SOUTHEASTASIA:20230403T022421Z:dfe936ba-2a2d-4fc0-ac76-0fb6b9b9ca82"
+        "x-ms-correlation-request-id": "4a5082fa-9541-46a8-8b49-3759fd92a784",
+        "x-ms-ratelimit-remaining-subscription-reads": "11969",
+        "x-ms-request-id": "b09b93a5-d0e9-4119-ab35-5f1a46d6fe27",
+        "x-ms-routing-request-id": "SOUTHINDIA:20230601T080402Z:4a5082fa-9541-46a8-8b49-3759fd92a784"
       },
       "ResponseBody": {
-        "name": "8af3ced6-1ab0-42f1-81a6-54968929acc6",
+        "name": "7c646f2b-4192-46a5-843e-354f10511740",
         "status": "InProgress",
-        "startTime": "2023-04-03T02:21:17.913Z"
+        "startTime": "2023-06-01T08:00:58.833Z"
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.DBforPostgreSQL/locations/eastus/azureAsyncOperation/8af3ced6-1ab0-42f1-81a6-54968929acc6?api-version=2022-12-01",
+      "RequestUri": "https://management.azure.com/subscriptions/5c5037e5-d3f1-4e7b-b3a9-f6bf94902b30/providers/Microsoft.DBforPostgreSQL/locations/eastus/azureAsyncOperation/7c646f2b-4192-46a5-843e-354f10511740?api-version=2023-03-01-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
-        "traceparent": "00-dda174c97319239c68c1b3561220209f-0636659ad814429c-00",
-        "User-Agent": "azsdk-net-ResourceManager/1.4.0 (.NET 6.0.15; Microsoft Windows 10.0.22621)",
-        "x-ms-client-request-id": "8be6aecd07ab7ce25b4da8305303c337",
+        "traceparent": "00-134b43f3c25905668eebde9bf7e03b07-d9724c39667453be-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.6.0 (.NET 6.0.16; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "62437baaae39cbb75b10bca75e7fa283",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
@@ -929,32 +994,32 @@
         "Cache-Control": "no-cache",
         "Content-Length": "108",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Mon, 03 Apr 2023 02:25:22 GMT",
+        "Date": "Thu, 01 Jun 2023 08:05:03 GMT",
         "Expires": "-1",
         "Pragma": "no-cache",
         "Retry-After": "60",
         "Server": "Microsoft-HTTPAPI/2.0",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-correlation-request-id": "5ef68c46-46a9-4e3a-a1fa-ec33418bf2c0",
-        "x-ms-ratelimit-remaining-subscription-reads": "11981",
-        "x-ms-request-id": "ede9ae3e-a645-4821-b31f-ad592bae066b",
-        "x-ms-routing-request-id": "SOUTHEASTASIA:20230403T022522Z:5ef68c46-46a9-4e3a-a1fa-ec33418bf2c0"
+        "x-ms-correlation-request-id": "b8615d0a-f2a6-4922-bf84-8ec6ae614dd1",
+        "x-ms-ratelimit-remaining-subscription-reads": "11968",
+        "x-ms-request-id": "71b77089-c3a9-44fe-9087-4e76e3f500a8",
+        "x-ms-routing-request-id": "SOUTHINDIA:20230601T080503Z:b8615d0a-f2a6-4922-bf84-8ec6ae614dd1"
       },
       "ResponseBody": {
-        "name": "8af3ced6-1ab0-42f1-81a6-54968929acc6",
+        "name": "7c646f2b-4192-46a5-843e-354f10511740",
         "status": "InProgress",
-        "startTime": "2023-04-03T02:21:17.913Z"
+        "startTime": "2023-06-01T08:00:58.833Z"
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.DBforPostgreSQL/locations/eastus/azureAsyncOperation/8af3ced6-1ab0-42f1-81a6-54968929acc6?api-version=2022-12-01",
+      "RequestUri": "https://management.azure.com/subscriptions/5c5037e5-d3f1-4e7b-b3a9-f6bf94902b30/providers/Microsoft.DBforPostgreSQL/locations/eastus/azureAsyncOperation/7c646f2b-4192-46a5-843e-354f10511740?api-version=2023-03-01-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
-        "traceparent": "00-dda174c97319239c68c1b3561220209f-0d95087e06147f27-00",
-        "User-Agent": "azsdk-net-ResourceManager/1.4.0 (.NET 6.0.15; Microsoft Windows 10.0.22621)",
-        "x-ms-client-request-id": "3177de129b748474f7c424211b52c412",
+        "traceparent": "00-134b43f3c25905668eebde9bf7e03b07-930e0c67b2b2e000-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.6.0 (.NET 6.0.16; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "028c1509b9bf173be9344fba5bc5c041",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
@@ -963,50 +1028,50 @@
         "Cache-Control": "no-cache",
         "Content-Length": "107",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Mon, 03 Apr 2023 02:26:23 GMT",
+        "Date": "Thu, 01 Jun 2023 08:06:04 GMT",
         "Expires": "-1",
         "Pragma": "no-cache",
         "Retry-After": "60",
         "Server": "Microsoft-HTTPAPI/2.0",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-correlation-request-id": "a5aa5ca9-0c3d-41a2-9db3-54afaffd0d66",
-        "x-ms-ratelimit-remaining-subscription-reads": "11980",
-        "x-ms-request-id": "3cc87b95-28f3-42df-975d-91637876b247",
-        "x-ms-routing-request-id": "SOUTHEASTASIA:20230403T022623Z:a5aa5ca9-0c3d-41a2-9db3-54afaffd0d66"
+        "x-ms-correlation-request-id": "e0ab66d7-8a22-4430-83d6-95d4a15c916c",
+        "x-ms-ratelimit-remaining-subscription-reads": "11967",
+        "x-ms-request-id": "41f2b724-56d8-49c3-95eb-e320f35caf8c",
+        "x-ms-routing-request-id": "SOUTHINDIA:20230601T080604Z:e0ab66d7-8a22-4430-83d6-95d4a15c916c"
       },
       "ResponseBody": {
-        "name": "8af3ced6-1ab0-42f1-81a6-54968929acc6",
+        "name": "7c646f2b-4192-46a5-843e-354f10511740",
         "status": "Succeeded",
-        "startTime": "2023-04-03T02:21:17.913Z"
+        "startTime": "2023-06-01T08:00:58.833Z"
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/pgflexrg4955/providers/Microsoft.DBforPostgreSQL/flexibleServers/pgflexserver3016?api-version=2022-12-01",
+      "RequestUri": "https://management.azure.com/subscriptions/5c5037e5-d3f1-4e7b-b3a9-f6bf94902b30/resourceGroups/pgflexrg2350/providers/Microsoft.DBforPostgreSQL/flexibleServers/pgflexserver885?api-version=2023-03-01-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
-        "traceparent": "00-dda174c97319239c68c1b3561220209f-fe82bd4ca49dd8f2-00",
-        "User-Agent": "azsdk-net-ResourceManager/1.4.0 (.NET 6.0.15; Microsoft Windows 10.0.22621)",
-        "x-ms-client-request-id": "3ecf8e19981debcf2cdc084f9b52cefc",
+        "traceparent": "00-134b43f3c25905668eebde9bf7e03b07-8141ab566efb54ab-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.6.0 (.NET 6.0.16; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "f4849b95c778bdcefc3adc872d243eaf",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
       "StatusCode": 200,
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
-        "Content-Length": "1271",
+        "Content-Length": "1317",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Mon, 03 Apr 2023 02:26:24 GMT",
+        "Date": "Thu, 01 Jun 2023 08:06:04 GMT",
         "Expires": "-1",
         "Pragma": "no-cache",
         "Server": "Microsoft-HTTPAPI/2.0",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-correlation-request-id": "dd424981-b5ab-43ce-bc78-c4948dad3c80",
-        "x-ms-ratelimit-remaining-subscription-reads": "11979",
-        "x-ms-request-id": "2ddcabd6-6097-480f-ba10-272557895565",
-        "x-ms-routing-request-id": "SOUTHEASTASIA:20230403T022624Z:dd424981-b5ab-43ce-bc78-c4948dad3c80"
+        "x-ms-correlation-request-id": "3d791936-9334-4c0a-ab8f-e745385156cb",
+        "x-ms-ratelimit-remaining-subscription-reads": "11966",
+        "x-ms-request-id": "def9a7e0-d23d-4019-a4aa-ad6944f081a8",
+        "x-ms-routing-request-id": "SOUTHINDIA:20230601T080604Z:3d791936-9334-4c0a-ab8f-e745385156cb"
       },
       "ResponseBody": {
         "sku": {
@@ -1014,30 +1079,33 @@
           "tier": "GeneralPurpose"
         },
         "systemData": {
-          "createdAt": "2023-04-03T02:21:49.3210957Z"
+          "createdAt": "2023-06-01T08:01:30.5671077Z"
         },
         "properties": {
+          "dataEncryption": {
+            "type": "SystemManaged"
+          },
+          "storage": {
+            "iopsTier": "P10",
+            "iops": 500,
+            "storageSizeGB": 128,
+            "autoGrow": "Disabled"
+          },
           "authConfig": {
             "activeDirectoryAuth": "Disabled",
             "passwordAuth": "Enabled"
           },
-          "dataEncryption": {
-            "type": "SystemManaged"
-          },
-          "fullyQualifiedDomainName": "pgflexserver3016.postgres.database.azure.com",
+          "fullyQualifiedDomainName": "pgflexserver885.postgres.database.azure.com",
           "version": "14",
-          "minorVersion": "6",
+          "minorVersion": "7",
           "administratorLogin": "testUser",
           "state": "Ready",
           "availabilityZone": "2",
-          "sourceServerResourceId": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/pgflexrg4955/providers/Microsoft.DBforPostgreSQL/flexibleServers/pgflexserver4853",
-          "storage": {
-            "storageSizeGB": 128
-          },
+          "sourceServerResourceId": "/subscriptions/5c5037e5-d3f1-4e7b-b3a9-f6bf94902b30/resourceGroups/pgflexrg2350/providers/Microsoft.DBforPostgreSQL/flexibleServers/pgflexserver683",
           "backup": {
             "backupRetentionDays": 7,
             "geoRedundantBackup": "Disabled",
-            "earliestRestoreDate": "2023-04-03T02:21:49.3210957\u002B00:00"
+            "earliestRestoreDate": "2023-06-01T08:01:30.5671077\u002B00:00"
           },
           "network": {
             "publicNetworkAccess": "Enabled"
@@ -1057,37 +1125,37 @@
         },
         "location": "East US",
         "tags": {},
-        "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/pgflexrg4955/providers/Microsoft.DBforPostgreSQL/flexibleServers/pgflexserver3016",
-        "name": "pgflexserver3016",
+        "id": "/subscriptions/5c5037e5-d3f1-4e7b-b3a9-f6bf94902b30/resourceGroups/pgflexrg2350/providers/Microsoft.DBforPostgreSQL/flexibleServers/pgflexserver885",
+        "name": "pgflexserver885",
         "type": "Microsoft.DBforPostgreSQL/flexibleServers"
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/pgflexrg4955/providers/Microsoft.DBforPostgreSQL/flexibleServers/pgflexserver4853/replicas?api-version=2022-12-01",
+      "RequestUri": "https://management.azure.com/subscriptions/5c5037e5-d3f1-4e7b-b3a9-f6bf94902b30/resourceGroups/pgflexrg2350/providers/Microsoft.DBforPostgreSQL/flexibleServers/pgflexserver683/replicas?api-version=2023-03-01-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "User-Agent": "azsdk-net-ResourceManager.PostgreSql/1.2.0-alpha.20230403.1 (.NET 6.0.15; Microsoft Windows 10.0.22621)",
-        "x-ms-client-request-id": "4c712e0a29ef31063a6293e7e2c16109",
+        "User-Agent": "azsdk-net-ResourceManager.PostgreSql/1.2.0-alpha.20230531.1 (.NET 6.0.16; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "22cb21c8b63ff05e3f2b78055ffc7095",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
       "StatusCode": 200,
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
-        "Content-Length": "1773",
+        "Content-Length": "1769",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Mon, 03 Apr 2023 02:26:24 GMT",
+        "Date": "Thu, 01 Jun 2023 08:06:05 GMT",
         "Expires": "-1",
         "Pragma": "no-cache",
         "Server": "Microsoft-HTTPAPI/2.0",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-correlation-request-id": "e8521c90-bc7c-4268-8b78-80c493e1f29b",
-        "x-ms-ratelimit-remaining-subscription-reads": "11978",
-        "x-ms-request-id": "948962a0-8266-4a56-9dfa-5352430f3e9b",
-        "x-ms-routing-request-id": "SOUTHEASTASIA:20230403T022625Z:e8521c90-bc7c-4268-8b78-80c493e1f29b"
+        "x-ms-correlation-request-id": "2b089732-9156-4604-872c-1d1d3bb21ea9",
+        "x-ms-ratelimit-remaining-subscription-reads": "11965",
+        "x-ms-request-id": "b35be851-060a-45d7-8e1c-385d189b38c0",
+        "x-ms-routing-request-id": "SOUTHINDIA:20230601T080605Z:2b089732-9156-4604-872c-1d1d3bb21ea9"
       },
       "ResponseBody": {
         "value": [
@@ -1096,20 +1164,20 @@
               "name": ""
             },
             "systemData": {
-              "createdAt": "2023-04-03T02:15:08.7552258Z"
+              "createdAt": "2023-06-01T08:00:59.5044075Z"
             },
             "properties": {
               "dataEncryption": {
                 "type": "SystemManaged"
               },
               "state": "Ready",
-              "sourceServerResourceId": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/pgflexrg4955/providers/Microsoft.DBforPostgreSQL/flexibleServers/pgflexserver4853",
+              "sourceServerResourceId": "/subscriptions/5c5037e5-d3f1-4e7b-b3a9-f6bf94902b30/resourceGroups/pgflexrg2350/providers/Microsoft.DBforPostgreSQL/flexibleServers/pgflexserver683",
               "storage": {
                 "storageSizeGB": 0
               },
               "backup": {
                 "geoRedundantBackup": "Disabled",
-                "earliestRestoreDate": "2023-04-03T02:15:08.7552258\u002B00:00"
+                "earliestRestoreDate": "2023-06-01T08:00:59.5044075\u002B00:00"
               },
               "network": {
                 "publicNetworkAccess": "Disabled"
@@ -1123,8 +1191,8 @@
               "replicationRole": "AsyncReplica"
             },
             "location": "eastus",
-            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/pgflexrg4955/providers/Microsoft.DBforPostgreSQL/flexibleServers/pgflexserver1895",
-            "name": "pgflexserver1895",
+            "id": "/subscriptions/5c5037e5-d3f1-4e7b-b3a9-f6bf94902b30/resourceGroups/pgflexrg2350/providers/Microsoft.DBforPostgreSQL/flexibleServers/pgflexserver885",
+            "name": "pgflexserver885",
             "type": "Microsoft.DBforPostgreSQL/flexibleServers"
           },
           {
@@ -1132,20 +1200,20 @@
               "name": ""
             },
             "systemData": {
-              "createdAt": "2023-04-03T02:21:18.8521078Z"
+              "createdAt": "2023-06-01T07:52:45.4086339Z"
             },
             "properties": {
               "dataEncryption": {
                 "type": "SystemManaged"
               },
               "state": "Ready",
-              "sourceServerResourceId": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/pgflexrg4955/providers/Microsoft.DBforPostgreSQL/flexibleServers/pgflexserver4853",
+              "sourceServerResourceId": "/subscriptions/5c5037e5-d3f1-4e7b-b3a9-f6bf94902b30/resourceGroups/pgflexrg2350/providers/Microsoft.DBforPostgreSQL/flexibleServers/pgflexserver683",
               "storage": {
                 "storageSizeGB": 0
               },
               "backup": {
                 "geoRedundantBackup": "Disabled",
-                "earliestRestoreDate": "2023-04-03T02:21:18.8521078\u002B00:00"
+                "earliestRestoreDate": "2023-06-01T07:52:45.4086339\u002B00:00"
               },
               "network": {
                 "publicNetworkAccess": "Disabled"
@@ -1159,24 +1227,24 @@
               "replicationRole": "AsyncReplica"
             },
             "location": "eastus",
-            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/pgflexrg4955/providers/Microsoft.DBforPostgreSQL/flexibleServers/pgflexserver3016",
-            "name": "pgflexserver3016",
+            "id": "/subscriptions/5c5037e5-d3f1-4e7b-b3a9-f6bf94902b30/resourceGroups/pgflexrg2350/providers/Microsoft.DBforPostgreSQL/flexibleServers/pgflexserver1686",
+            "name": "pgflexserver1686",
             "type": "Microsoft.DBforPostgreSQL/flexibleServers"
           }
         ]
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/pgflexrg4955/providers/Microsoft.DBforPostgreSQL/flexibleServers/pgflexserver1895?api-version=2022-12-01",
+      "RequestUri": "https://management.azure.com/subscriptions/5c5037e5-d3f1-4e7b-b3a9-f6bf94902b30/resourceGroups/pgflexrg2350/providers/Microsoft.DBforPostgreSQL/flexibleServers/pgflexserver1686?api-version=2023-03-01-preview",
       "RequestMethod": "PATCH",
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
         "Content-Length": "41",
         "Content-Type": "application/json",
-        "traceparent": "00-82f527632a9ea79569c56f1795424ca8-2f8be5165e62836f-00",
-        "User-Agent": "azsdk-net-ResourceManager.PostgreSql/1.2.0-alpha.20230403.1 (.NET 6.0.15; Microsoft Windows 10.0.22621)",
-        "x-ms-client-request-id": "c5179688853379190f8c05989225e9a5",
+        "traceparent": "00-b6670eb08dac74e451ef29441329f25a-053fa3bc92c61d2f-00",
+        "User-Agent": "azsdk-net-ResourceManager.PostgreSql/1.2.0-alpha.20230531.1 (.NET 6.0.16; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "c2117b4fadfa420a47ce0684dcb3e9c5",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
@@ -1186,36 +1254,36 @@
       },
       "StatusCode": 202,
       "ResponseHeaders": {
-        "Azure-AsyncOperation": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.DBforPostgreSQL/locations/East%20US/azureAsyncOperation/a4e8773b-adad-4762-8f24-a90bdf680c64?api-version=2022-12-01",
+        "Azure-AsyncOperation": "https://management.azure.com/subscriptions/5c5037e5-d3f1-4e7b-b3a9-f6bf94902b30/providers/Microsoft.DBforPostgreSQL/locations/East%20US/azureAsyncOperation/08858667-218e-471d-9dc7-22513b5ea26c?api-version=2023-03-01-preview",
         "Cache-Control": "no-cache",
         "Content-Length": "92",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Mon, 03 Apr 2023 02:26:25 GMT",
+        "Date": "Thu, 01 Jun 2023 08:06:05 GMT",
         "Expires": "-1",
-        "Location": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.DBforPostgreSQL/locations/East%20US/operationResults/a4e8773b-adad-4762-8f24-a90bdf680c64?api-version=2022-12-01",
+        "Location": "https://management.azure.com/subscriptions/5c5037e5-d3f1-4e7b-b3a9-f6bf94902b30/providers/Microsoft.DBforPostgreSQL/locations/East%20US/operationResults/08858667-218e-471d-9dc7-22513b5ea26c?api-version=2023-03-01-preview",
         "Pragma": "no-cache",
         "Retry-After": "15",
         "Server": "Microsoft-HTTPAPI/2.0",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-correlation-request-id": "1f460d9b-59c8-4cb3-b46f-1346f6bc4fb3",
+        "x-ms-correlation-request-id": "cb511728-7571-4563-bb06-fbb40a0dd914",
         "x-ms-ratelimit-remaining-subscription-writes": "1195",
-        "x-ms-request-id": "a4e8773b-adad-4762-8f24-a90bdf680c64",
-        "x-ms-routing-request-id": "SOUTHEASTASIA:20230403T022626Z:1f460d9b-59c8-4cb3-b46f-1346f6bc4fb3"
+        "x-ms-request-id": "08858667-218e-471d-9dc7-22513b5ea26c",
+        "x-ms-routing-request-id": "SOUTHINDIA:20230601T080606Z:cb511728-7571-4563-bb06-fbb40a0dd914"
       },
       "ResponseBody": {
         "operation": "PromoteReadReplicaManagementOperation",
-        "startTime": "2023-04-03T02:26:25.883Z"
+        "startTime": "2023-06-01T08:06:05.937Z"
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.DBforPostgreSQL/locations/East%20US/azureAsyncOperation/a4e8773b-adad-4762-8f24-a90bdf680c64?api-version=2022-12-01",
+      "RequestUri": "https://management.azure.com/subscriptions/5c5037e5-d3f1-4e7b-b3a9-f6bf94902b30/providers/Microsoft.DBforPostgreSQL/locations/East%20US/azureAsyncOperation/08858667-218e-471d-9dc7-22513b5ea26c?api-version=2023-03-01-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
-        "traceparent": "00-82f527632a9ea79569c56f1795424ca8-76070721797a2fe2-00",
-        "User-Agent": "azsdk-net-ResourceManager/1.4.0 (.NET 6.0.15; Microsoft Windows 10.0.22621)",
-        "x-ms-client-request-id": "04c6ff7a093a85c815f73c63246d9f15",
+        "traceparent": "00-b6670eb08dac74e451ef29441329f25a-72cb4e866a2b01b6-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.6.0 (.NET 6.0.16; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "b23846c97b121ab41789db70b0d9148b",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
@@ -1224,32 +1292,32 @@
         "Cache-Control": "no-cache",
         "Content-Length": "108",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Mon, 03 Apr 2023 02:26:25 GMT",
+        "Date": "Thu, 01 Jun 2023 08:06:06 GMT",
         "Expires": "-1",
         "Pragma": "no-cache",
         "Retry-After": "15",
         "Server": "Microsoft-HTTPAPI/2.0",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-correlation-request-id": "47c8aad5-d1ed-4b15-97bf-98c6a8cb26c2",
-        "x-ms-ratelimit-remaining-subscription-reads": "11977",
-        "x-ms-request-id": "c7e45262-8ef8-41e0-979d-72c2b15bd21f",
-        "x-ms-routing-request-id": "SOUTHEASTASIA:20230403T022626Z:47c8aad5-d1ed-4b15-97bf-98c6a8cb26c2"
+        "x-ms-correlation-request-id": "2c99647d-b084-44ff-9e74-659e22f4a966",
+        "x-ms-ratelimit-remaining-subscription-reads": "11964",
+        "x-ms-request-id": "1f09a296-733c-49f4-88af-0cc9adcad0bf",
+        "x-ms-routing-request-id": "SOUTHINDIA:20230601T080606Z:2c99647d-b084-44ff-9e74-659e22f4a966"
       },
       "ResponseBody": {
-        "name": "a4e8773b-adad-4762-8f24-a90bdf680c64",
+        "name": "08858667-218e-471d-9dc7-22513b5ea26c",
         "status": "InProgress",
-        "startTime": "2023-04-03T02:26:25.883Z"
+        "startTime": "2023-06-01T08:06:05.937Z"
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.DBforPostgreSQL/locations/East%20US/azureAsyncOperation/a4e8773b-adad-4762-8f24-a90bdf680c64?api-version=2022-12-01",
+      "RequestUri": "https://management.azure.com/subscriptions/5c5037e5-d3f1-4e7b-b3a9-f6bf94902b30/providers/Microsoft.DBforPostgreSQL/locations/East%20US/azureAsyncOperation/08858667-218e-471d-9dc7-22513b5ea26c?api-version=2023-03-01-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
-        "traceparent": "00-82f527632a9ea79569c56f1795424ca8-b808e30774a30c4a-00",
-        "User-Agent": "azsdk-net-ResourceManager/1.4.0 (.NET 6.0.15; Microsoft Windows 10.0.22621)",
-        "x-ms-client-request-id": "baf1ee7874aa0f2774283d96815e7426",
+        "traceparent": "00-b6670eb08dac74e451ef29441329f25a-8b45c7f9f11b2e33-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.6.0 (.NET 6.0.16; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "c00fb3413709b19b79328666f7bdf37e",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
@@ -1258,32 +1326,32 @@
         "Cache-Control": "no-cache",
         "Content-Length": "108",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Mon, 03 Apr 2023 02:26:41 GMT",
+        "Date": "Thu, 01 Jun 2023 08:06:21 GMT",
         "Expires": "-1",
         "Pragma": "no-cache",
         "Retry-After": "15",
         "Server": "Microsoft-HTTPAPI/2.0",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-correlation-request-id": "de1f5fd5-e88c-4dc5-a0c1-08c3d30d494f",
-        "x-ms-ratelimit-remaining-subscription-reads": "11976",
-        "x-ms-request-id": "9beefb0c-a766-4407-ab15-bada856af004",
-        "x-ms-routing-request-id": "SOUTHEASTASIA:20230403T022641Z:de1f5fd5-e88c-4dc5-a0c1-08c3d30d494f"
+        "x-ms-correlation-request-id": "69212dc2-80cf-4745-9569-daa7d68a6cf8",
+        "x-ms-ratelimit-remaining-subscription-reads": "11963",
+        "x-ms-request-id": "757d8360-9cd5-48c3-b406-fdbf5259f22a",
+        "x-ms-routing-request-id": "SOUTHINDIA:20230601T080621Z:69212dc2-80cf-4745-9569-daa7d68a6cf8"
       },
       "ResponseBody": {
-        "name": "a4e8773b-adad-4762-8f24-a90bdf680c64",
+        "name": "08858667-218e-471d-9dc7-22513b5ea26c",
         "status": "InProgress",
-        "startTime": "2023-04-03T02:26:25.883Z"
+        "startTime": "2023-06-01T08:06:05.937Z"
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.DBforPostgreSQL/locations/East%20US/azureAsyncOperation/a4e8773b-adad-4762-8f24-a90bdf680c64?api-version=2022-12-01",
+      "RequestUri": "https://management.azure.com/subscriptions/5c5037e5-d3f1-4e7b-b3a9-f6bf94902b30/providers/Microsoft.DBforPostgreSQL/locations/East%20US/azureAsyncOperation/08858667-218e-471d-9dc7-22513b5ea26c?api-version=2023-03-01-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
-        "traceparent": "00-82f527632a9ea79569c56f1795424ca8-def7a69110fa5f63-00",
-        "User-Agent": "azsdk-net-ResourceManager/1.4.0 (.NET 6.0.15; Microsoft Windows 10.0.22621)",
-        "x-ms-client-request-id": "921d9a82e45eed6a5f91d8e93bbfcb1a",
+        "traceparent": "00-b6670eb08dac74e451ef29441329f25a-4d0d79e66281df83-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.6.0 (.NET 6.0.16; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "95ba0570377b79b2ebd82170c2912e63",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
@@ -1292,50 +1360,50 @@
         "Cache-Control": "no-cache",
         "Content-Length": "107",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Mon, 03 Apr 2023 02:26:56 GMT",
+        "Date": "Thu, 01 Jun 2023 08:06:36 GMT",
         "Expires": "-1",
         "Pragma": "no-cache",
         "Retry-After": "15",
         "Server": "Microsoft-HTTPAPI/2.0",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-correlation-request-id": "e9905a71-cb55-4c45-9c91-492039cc42f5",
-        "x-ms-ratelimit-remaining-subscription-reads": "11975",
-        "x-ms-request-id": "fa8e0d2e-024e-4857-a08c-b07f3903e2b4",
-        "x-ms-routing-request-id": "SOUTHEASTASIA:20230403T022657Z:e9905a71-cb55-4c45-9c91-492039cc42f5"
+        "x-ms-correlation-request-id": "62ac8e13-b6ab-402e-968b-a0939c7fd918",
+        "x-ms-ratelimit-remaining-subscription-reads": "11962",
+        "x-ms-request-id": "11153af4-3cce-4d99-9c55-5a1db0c8799e",
+        "x-ms-routing-request-id": "SOUTHINDIA:20230601T080636Z:62ac8e13-b6ab-402e-968b-a0939c7fd918"
       },
       "ResponseBody": {
-        "name": "a4e8773b-adad-4762-8f24-a90bdf680c64",
+        "name": "08858667-218e-471d-9dc7-22513b5ea26c",
         "status": "Succeeded",
-        "startTime": "2023-04-03T02:26:25.883Z"
+        "startTime": "2023-06-01T08:06:05.937Z"
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/pgflexrg4955/providers/Microsoft.DBforPostgreSQL/flexibleServers/pgflexserver1895?api-version=2022-12-01",
+      "RequestUri": "https://management.azure.com/subscriptions/5c5037e5-d3f1-4e7b-b3a9-f6bf94902b30/resourceGroups/pgflexrg2350/providers/Microsoft.DBforPostgreSQL/flexibleServers/pgflexserver1686?api-version=2023-03-01-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
-        "traceparent": "00-82f527632a9ea79569c56f1795424ca8-0bf3deaed4a34768-00",
-        "User-Agent": "azsdk-net-ResourceManager/1.4.0 (.NET 6.0.15; Microsoft Windows 10.0.22621)",
-        "x-ms-client-request-id": "1642eefd4ff706c0d8b79012cb3204b6",
+        "traceparent": "00-b6670eb08dac74e451ef29441329f25a-bff88578e984dff7-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.6.0 (.NET 6.0.16; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "9b0a2a7f9eb992f6ab8639dff54d2259",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
       "StatusCode": 200,
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
-        "Content-Length": "1089",
+        "Content-Length": "1140",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Mon, 03 Apr 2023 02:26:57 GMT",
+        "Date": "Thu, 01 Jun 2023 08:06:37 GMT",
         "Expires": "-1",
         "Pragma": "no-cache",
         "Server": "Microsoft-HTTPAPI/2.0",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-correlation-request-id": "1ac5e163-54c6-4b27-851f-b182a05b04b1",
-        "x-ms-ratelimit-remaining-subscription-reads": "11974",
-        "x-ms-request-id": "df0978c0-7a0d-4998-b07d-b98916eff8ae",
-        "x-ms-routing-request-id": "SOUTHEASTASIA:20230403T022657Z:1ac5e163-54c6-4b27-851f-b182a05b04b1"
+        "x-ms-correlation-request-id": "8f0875fd-d098-40e1-b602-64acdb22e00a",
+        "x-ms-ratelimit-remaining-subscription-reads": "11961",
+        "x-ms-request-id": "d0078a0f-4702-45eb-bbd2-dbd924367256",
+        "x-ms-routing-request-id": "SOUTHINDIA:20230601T080637Z:8f0875fd-d098-40e1-b602-64acdb22e00a"
       },
       "ResponseBody": {
         "sku": {
@@ -1343,29 +1411,32 @@
           "tier": "GeneralPurpose"
         },
         "systemData": {
-          "createdAt": "2023-04-03T02:15:52.9118430Z"
+          "createdAt": "2023-06-01T07:53:15.8464628Z"
         },
         "properties": {
+          "dataEncryption": {
+            "type": "SystemManaged"
+          },
+          "storage": {
+            "iopsTier": "P10",
+            "iops": 500,
+            "storageSizeGB": 128,
+            "autoGrow": "Disabled"
+          },
           "authConfig": {
             "activeDirectoryAuth": "Disabled",
             "passwordAuth": "Enabled"
           },
-          "dataEncryption": {
-            "type": "SystemManaged"
-          },
-          "fullyQualifiedDomainName": "pgflexserver1895.postgres.database.azure.com",
+          "fullyQualifiedDomainName": "pgflexserver1686.postgres.database.azure.com",
           "version": "14",
-          "minorVersion": "6",
+          "minorVersion": "7",
           "administratorLogin": "testUser",
           "state": "Ready",
           "availabilityZone": "2",
-          "storage": {
-            "storageSizeGB": 128
-          },
           "backup": {
             "backupRetentionDays": 7,
             "geoRedundantBackup": "Disabled",
-            "earliestRestoreDate": "2023-04-03T02:15:52.911843\u002B00:00"
+            "earliestRestoreDate": "2023-06-01T07:53:15.8464628\u002B00:00"
           },
           "network": {
             "publicNetworkAccess": "Enabled"
@@ -1385,20 +1456,20 @@
         },
         "location": "East US",
         "tags": {},
-        "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/pgflexrg4955/providers/Microsoft.DBforPostgreSQL/flexibleServers/pgflexserver1895",
-        "name": "pgflexserver1895",
+        "id": "/subscriptions/5c5037e5-d3f1-4e7b-b3a9-f6bf94902b30/resourceGroups/pgflexrg2350/providers/Microsoft.DBforPostgreSQL/flexibleServers/pgflexserver1686",
+        "name": "pgflexserver1686",
         "type": "Microsoft.DBforPostgreSQL/flexibleServers"
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/pgflexrg4955/providers/Microsoft.DBforPostgreSQL/flexibleServers/pgflexserver4853?api-version=2022-12-01",
+      "RequestUri": "https://management.azure.com/subscriptions/5c5037e5-d3f1-4e7b-b3a9-f6bf94902b30/resourceGroups/pgflexrg2350/providers/Microsoft.DBforPostgreSQL/flexibleServers/pgflexserver683?api-version=2023-03-01-preview",
       "RequestMethod": "DELETE",
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "traceparent": "00-db7d7925b73fd65a93f7a1f1b4071454-342fabf2ec065ef4-00",
-        "User-Agent": "azsdk-net-ResourceManager.PostgreSql/1.2.0-alpha.20230403.1 (.NET 6.0.15; Microsoft Windows 10.0.22621)",
-        "x-ms-client-request-id": "8ae015830d5094b783045a199c3ed3b4",
+        "traceparent": "00-0f6525a4f764076885ceeeb36df59c7a-375a8512c2dcf361-00",
+        "User-Agent": "azsdk-net-ResourceManager.PostgreSql/1.2.0-alpha.20230531.1 (.NET 6.0.16; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "aa005d967e1e0a0f0095d431152befe8",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
@@ -1408,31 +1479,31 @@
         "Connection": "close",
         "Content-Length": "36",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Mon, 03 Apr 2023 02:26:57 GMT",
+        "Date": "Thu, 01 Jun 2023 08:06:37 GMT",
         "Expires": "-1",
         "Pragma": "no-cache",
         "Server": "Microsoft-HTTPAPI/2.0",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-correlation-request-id": "43b842e4-5729-410a-bf3d-ea28ef48a1a5",
+        "x-ms-correlation-request-id": "ef9b59f6-5502-49b1-89c1-9b995966d831",
         "x-ms-failure-cause": "service",
-        "x-ms-ratelimit-remaining-subscription-deletes": "14999",
-        "x-ms-request-id": "7da734fd-62fa-477d-91b3-d38dea474be9",
-        "x-ms-routing-request-id": "SOUTHEASTASIA:20230403T022658Z:43b842e4-5729-410a-bf3d-ea28ef48a1a5"
+        "x-ms-ratelimit-remaining-subscription-deletes": "14998",
+        "x-ms-request-id": "8946571e-4f32-4f39-942b-d0953ea4477b",
+        "x-ms-routing-request-id": "SOUTHINDIA:20230601T080638Z:ef9b59f6-5502-49b1-89c1-9b995966d831"
       },
       "ResponseBody": {
         "Message": "An error has occurred."
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/pgflexrg4955/providers/Microsoft.DBforPostgreSQL/flexibleServers/pgflexserver4853?api-version=2022-12-01",
+      "RequestUri": "https://management.azure.com/subscriptions/5c5037e5-d3f1-4e7b-b3a9-f6bf94902b30/resourceGroups/pgflexrg2350/providers/Microsoft.DBforPostgreSQL/flexibleServers/pgflexserver683?api-version=2023-03-01-preview",
       "RequestMethod": "DELETE",
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "traceparent": "00-db7d7925b73fd65a93f7a1f1b4071454-342fabf2ec065ef4-00",
-        "User-Agent": "azsdk-net-ResourceManager.PostgreSql/1.2.0-alpha.20230403.1 (.NET 6.0.15; Microsoft Windows 10.0.22621)",
-        "x-ms-client-request-id": "8ae015830d5094b783045a199c3ed3b4",
+        "traceparent": "00-0f6525a4f764076885ceeeb36df59c7a-375a8512c2dcf361-00",
+        "User-Agent": "azsdk-net-ResourceManager.PostgreSql/1.2.0-alpha.20230531.1 (.NET 6.0.16; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "aa005d967e1e0a0f0095d431152befe8",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
@@ -1442,31 +1513,31 @@
         "Connection": "close",
         "Content-Length": "36",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Mon, 03 Apr 2023 02:27:00 GMT",
+        "Date": "Thu, 01 Jun 2023 08:06:40 GMT",
         "Expires": "-1",
         "Pragma": "no-cache",
         "Server": "Microsoft-HTTPAPI/2.0",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-correlation-request-id": "e3306c0d-7610-4924-aba8-2026e5a0d281",
+        "x-ms-correlation-request-id": "462928cc-2c4b-439a-aa9b-ce3dd2698193",
         "x-ms-failure-cause": "service",
         "x-ms-ratelimit-remaining-subscription-deletes": "14999",
-        "x-ms-request-id": "b4ee870e-9ae8-4cf4-860e-03616631f91d",
-        "x-ms-routing-request-id": "SOUTHEASTASIA:20230403T022701Z:e3306c0d-7610-4924-aba8-2026e5a0d281"
+        "x-ms-request-id": "73528d96-5f82-4a13-8c99-5f2423535c3a",
+        "x-ms-routing-request-id": "SOUTHINDIA:20230601T080640Z:462928cc-2c4b-439a-aa9b-ce3dd2698193"
       },
       "ResponseBody": {
         "Message": "An error has occurred."
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/pgflexrg4955/providers/Microsoft.DBforPostgreSQL/flexibleServers/pgflexserver4853?api-version=2022-12-01",
+      "RequestUri": "https://management.azure.com/subscriptions/5c5037e5-d3f1-4e7b-b3a9-f6bf94902b30/resourceGroups/pgflexrg2350/providers/Microsoft.DBforPostgreSQL/flexibleServers/pgflexserver683?api-version=2023-03-01-preview",
       "RequestMethod": "DELETE",
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "traceparent": "00-db7d7925b73fd65a93f7a1f1b4071454-342fabf2ec065ef4-00",
-        "User-Agent": "azsdk-net-ResourceManager.PostgreSql/1.2.0-alpha.20230403.1 (.NET 6.0.15; Microsoft Windows 10.0.22621)",
-        "x-ms-client-request-id": "8ae015830d5094b783045a199c3ed3b4",
+        "traceparent": "00-0f6525a4f764076885ceeeb36df59c7a-375a8512c2dcf361-00",
+        "User-Agent": "azsdk-net-ResourceManager.PostgreSql/1.2.0-alpha.20230531.1 (.NET 6.0.16; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "aa005d967e1e0a0f0095d431152befe8",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
@@ -1476,31 +1547,31 @@
         "Connection": "close",
         "Content-Length": "36",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Mon, 03 Apr 2023 02:27:04 GMT",
+        "Date": "Thu, 01 Jun 2023 08:06:44 GMT",
         "Expires": "-1",
         "Pragma": "no-cache",
         "Server": "Microsoft-HTTPAPI/2.0",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-correlation-request-id": "1ad883af-4fa7-48fc-b7e5-6fd35a8c3cd3",
+        "x-ms-correlation-request-id": "1256bb45-136c-4211-8e65-276708f90dbd",
         "x-ms-failure-cause": "service",
         "x-ms-ratelimit-remaining-subscription-deletes": "14999",
-        "x-ms-request-id": "9ea8df6b-fab4-475d-aae6-20524204c31b",
-        "x-ms-routing-request-id": "SOUTHEASTASIA:20230403T022704Z:1ad883af-4fa7-48fc-b7e5-6fd35a8c3cd3"
+        "x-ms-request-id": "59161989-0c3b-4ded-9678-b4b8a41132af",
+        "x-ms-routing-request-id": "SOUTHINDIA:20230601T080644Z:1256bb45-136c-4211-8e65-276708f90dbd"
       },
       "ResponseBody": {
         "Message": "An error has occurred."
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/pgflexrg4955/providers/Microsoft.DBforPostgreSQL/flexibleServers/pgflexserver4853?api-version=2022-12-01",
+      "RequestUri": "https://management.azure.com/subscriptions/5c5037e5-d3f1-4e7b-b3a9-f6bf94902b30/resourceGroups/pgflexrg2350/providers/Microsoft.DBforPostgreSQL/flexibleServers/pgflexserver683?api-version=2023-03-01-preview",
       "RequestMethod": "DELETE",
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "traceparent": "00-db7d7925b73fd65a93f7a1f1b4071454-342fabf2ec065ef4-00",
-        "User-Agent": "azsdk-net-ResourceManager.PostgreSql/1.2.0-alpha.20230403.1 (.NET 6.0.15; Microsoft Windows 10.0.22621)",
-        "x-ms-client-request-id": "8ae015830d5094b783045a199c3ed3b4",
+        "traceparent": "00-0f6525a4f764076885ceeeb36df59c7a-375a8512c2dcf361-00",
+        "User-Agent": "azsdk-net-ResourceManager.PostgreSql/1.2.0-alpha.20230531.1 (.NET 6.0.16; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "aa005d967e1e0a0f0095d431152befe8",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
@@ -1510,66 +1581,66 @@
         "Connection": "close",
         "Content-Length": "36",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Mon, 03 Apr 2023 02:27:08 GMT",
+        "Date": "Thu, 01 Jun 2023 08:06:50 GMT",
         "Expires": "-1",
         "Pragma": "no-cache",
         "Server": "Microsoft-HTTPAPI/2.0",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-correlation-request-id": "c2b7cef6-452f-4568-b3d7-37449b3e2eb6",
+        "x-ms-correlation-request-id": "eaf3dd00-be9f-4ba7-ba30-366ddee2f8f0",
         "x-ms-failure-cause": "service",
         "x-ms-ratelimit-remaining-subscription-deletes": "14999",
-        "x-ms-request-id": "e1b038a2-b406-4ef1-9014-41a24dfa0ba4",
-        "x-ms-routing-request-id": "SOUTHEASTASIA:20230403T022709Z:c2b7cef6-452f-4568-b3d7-37449b3e2eb6"
+        "x-ms-request-id": "186c047c-5215-48dd-8610-29af0fd5e387",
+        "x-ms-routing-request-id": "SOUTHINDIA:20230601T080650Z:eaf3dd00-be9f-4ba7-ba30-366ddee2f8f0"
       },
       "ResponseBody": {
         "Message": "An error has occurred."
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/pgflexrg4955/providers/Microsoft.DBforPostgreSQL/flexibleServers/pgflexserver3016?api-version=2022-12-01",
+      "RequestUri": "https://management.azure.com/subscriptions/5c5037e5-d3f1-4e7b-b3a9-f6bf94902b30/resourceGroups/pgflexrg2350/providers/Microsoft.DBforPostgreSQL/flexibleServers/pgflexserver885?api-version=2023-03-01-preview",
       "RequestMethod": "DELETE",
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "traceparent": "00-f13ce15b9cfc75fcf9f1700dc009d5e4-fff527d13e8681e1-00",
-        "User-Agent": "azsdk-net-ResourceManager.PostgreSql/1.2.0-alpha.20230403.1 (.NET 6.0.15; Microsoft Windows 10.0.22621)",
-        "x-ms-client-request-id": "9399225d5d1b332fd916baa65358212d",
+        "traceparent": "00-2aac31dd922bb61ec3b97b1dd172440c-98da4c151d962910-00",
+        "User-Agent": "azsdk-net-ResourceManager.PostgreSql/1.2.0-alpha.20230531.1 (.NET 6.0.16; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "cde6220457b3d2c40e28eaf5fed3839d",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
       "StatusCode": 202,
       "ResponseHeaders": {
-        "Azure-AsyncOperation": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.DBforPostgreSQL/locations/East%20US/azureAsyncOperation/68d5d9e3-af2a-4c3e-9c86-3269213408e6?api-version=2022-12-01",
+        "Azure-AsyncOperation": "https://management.azure.com/subscriptions/5c5037e5-d3f1-4e7b-b3a9-f6bf94902b30/providers/Microsoft.DBforPostgreSQL/locations/East%20US/azureAsyncOperation/1c7ca739-a4cb-46fa-8a11-9c209198d51f?api-version=2023-03-01-preview",
         "Cache-Control": "no-cache",
         "Content-Length": "89",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Mon, 03 Apr 2023 02:27:10 GMT",
+        "Date": "Thu, 01 Jun 2023 08:06:52 GMT",
         "Expires": "-1",
-        "Location": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.DBforPostgreSQL/locations/East%20US/operationResults/68d5d9e3-af2a-4c3e-9c86-3269213408e6?api-version=2022-12-01",
+        "Location": "https://management.azure.com/subscriptions/5c5037e5-d3f1-4e7b-b3a9-f6bf94902b30/providers/Microsoft.DBforPostgreSQL/locations/East%20US/operationResults/1c7ca739-a4cb-46fa-8a11-9c209198d51f?api-version=2023-03-01-preview",
         "Pragma": "no-cache",
         "Retry-After": "15",
         "Server": "Microsoft-HTTPAPI/2.0",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-correlation-request-id": "710019f8-8988-46c1-baf4-4feeaefedcd9",
+        "x-ms-correlation-request-id": "30f96d1a-7920-4896-a849-926121c81a0c",
         "x-ms-ratelimit-remaining-subscription-deletes": "14999",
-        "x-ms-request-id": "68d5d9e3-af2a-4c3e-9c86-3269213408e6",
-        "x-ms-routing-request-id": "SOUTHEASTASIA:20230403T022711Z:710019f8-8988-46c1-baf4-4feeaefedcd9"
+        "x-ms-request-id": "1c7ca739-a4cb-46fa-8a11-9c209198d51f",
+        "x-ms-routing-request-id": "SOUTHINDIA:20230601T080652Z:30f96d1a-7920-4896-a849-926121c81a0c"
       },
       "ResponseBody": {
         "operation": "DropReadReplicaManagementOperation",
-        "startTime": "2023-04-03T02:27:10.947Z"
+        "startTime": "2023-06-01T08:06:52.787Z"
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.DBforPostgreSQL/locations/East%20US/azureAsyncOperation/68d5d9e3-af2a-4c3e-9c86-3269213408e6?api-version=2022-12-01",
+      "RequestUri": "https://management.azure.com/subscriptions/5c5037e5-d3f1-4e7b-b3a9-f6bf94902b30/providers/Microsoft.DBforPostgreSQL/locations/East%20US/azureAsyncOperation/1c7ca739-a4cb-46fa-8a11-9c209198d51f?api-version=2023-03-01-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
-        "traceparent": "00-f13ce15b9cfc75fcf9f1700dc009d5e4-8dbe927f846a749c-00",
-        "User-Agent": "azsdk-net-ResourceManager/1.4.0 (.NET 6.0.15; Microsoft Windows 10.0.22621)",
-        "x-ms-client-request-id": "a8b5dbe37199259be6acb0395310412a",
+        "traceparent": "00-2aac31dd922bb61ec3b97b1dd172440c-53b3e91ab9b076ad-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.6.0 (.NET 6.0.16; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "d3da519755663ea6982e9bf693190c2d",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
@@ -1578,32 +1649,32 @@
         "Cache-Control": "no-cache",
         "Content-Length": "108",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Mon, 03 Apr 2023 02:27:10 GMT",
+        "Date": "Thu, 01 Jun 2023 08:06:52 GMT",
         "Expires": "-1",
         "Pragma": "no-cache",
         "Retry-After": "15",
         "Server": "Microsoft-HTTPAPI/2.0",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-correlation-request-id": "80dc0076-0b75-40fd-9ef6-e508989102e5",
+        "x-ms-correlation-request-id": "4a3ddf6f-5695-4dfd-9fc4-3a02b270a3ab",
         "x-ms-ratelimit-remaining-subscription-reads": "11999",
-        "x-ms-request-id": "b682f0c4-ca27-46db-a0c2-72e16add74ef",
-        "x-ms-routing-request-id": "SOUTHEASTASIA:20230403T022711Z:80dc0076-0b75-40fd-9ef6-e508989102e5"
+        "x-ms-request-id": "d21c30d0-f88e-4353-8d4c-59f1a082d8f2",
+        "x-ms-routing-request-id": "SOUTHINDIA:20230601T080653Z:4a3ddf6f-5695-4dfd-9fc4-3a02b270a3ab"
       },
       "ResponseBody": {
-        "name": "68d5d9e3-af2a-4c3e-9c86-3269213408e6",
+        "name": "1c7ca739-a4cb-46fa-8a11-9c209198d51f",
         "status": "InProgress",
-        "startTime": "2023-04-03T02:27:10.947Z"
+        "startTime": "2023-06-01T08:06:52.787Z"
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.DBforPostgreSQL/locations/East%20US/azureAsyncOperation/68d5d9e3-af2a-4c3e-9c86-3269213408e6?api-version=2022-12-01",
+      "RequestUri": "https://management.azure.com/subscriptions/5c5037e5-d3f1-4e7b-b3a9-f6bf94902b30/providers/Microsoft.DBforPostgreSQL/locations/East%20US/azureAsyncOperation/1c7ca739-a4cb-46fa-8a11-9c209198d51f?api-version=2023-03-01-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
-        "traceparent": "00-f13ce15b9cfc75fcf9f1700dc009d5e4-fa4c28c141250479-00",
-        "User-Agent": "azsdk-net-ResourceManager/1.4.0 (.NET 6.0.15; Microsoft Windows 10.0.22621)",
-        "x-ms-client-request-id": "7b8c2de2add71cd659a95b6dca3c3f32",
+        "traceparent": "00-2aac31dd922bb61ec3b97b1dd172440c-97ceafbe73034b42-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.6.0 (.NET 6.0.16; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "4d7b37128a518157dee5b2b2bca10949",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
@@ -1612,32 +1683,32 @@
         "Cache-Control": "no-cache",
         "Content-Length": "108",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Mon, 03 Apr 2023 02:27:26 GMT",
+        "Date": "Thu, 01 Jun 2023 08:07:07 GMT",
         "Expires": "-1",
         "Pragma": "no-cache",
         "Retry-After": "15",
         "Server": "Microsoft-HTTPAPI/2.0",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-correlation-request-id": "9e233891-8c3b-497a-bafc-75e123fe9fb4",
+        "x-ms-correlation-request-id": "873fe1d6-c7c4-4f40-abc9-b2959f418f19",
         "x-ms-ratelimit-remaining-subscription-reads": "11998",
-        "x-ms-request-id": "916874f2-630a-4999-9b95-9203055a29d4",
-        "x-ms-routing-request-id": "SOUTHEASTASIA:20230403T022726Z:9e233891-8c3b-497a-bafc-75e123fe9fb4"
+        "x-ms-request-id": "7f123a1a-4e7f-4be5-ab72-647d575f1d26",
+        "x-ms-routing-request-id": "SOUTHINDIA:20230601T080708Z:873fe1d6-c7c4-4f40-abc9-b2959f418f19"
       },
       "ResponseBody": {
-        "name": "68d5d9e3-af2a-4c3e-9c86-3269213408e6",
+        "name": "1c7ca739-a4cb-46fa-8a11-9c209198d51f",
         "status": "InProgress",
-        "startTime": "2023-04-03T02:27:10.947Z"
+        "startTime": "2023-06-01T08:06:52.787Z"
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.DBforPostgreSQL/locations/East%20US/azureAsyncOperation/68d5d9e3-af2a-4c3e-9c86-3269213408e6?api-version=2022-12-01",
+      "RequestUri": "https://management.azure.com/subscriptions/5c5037e5-d3f1-4e7b-b3a9-f6bf94902b30/providers/Microsoft.DBforPostgreSQL/locations/East%20US/azureAsyncOperation/1c7ca739-a4cb-46fa-8a11-9c209198d51f?api-version=2023-03-01-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
-        "traceparent": "00-f13ce15b9cfc75fcf9f1700dc009d5e4-9fcd8f1a84edaefb-00",
-        "User-Agent": "azsdk-net-ResourceManager/1.4.0 (.NET 6.0.15; Microsoft Windows 10.0.22621)",
-        "x-ms-client-request-id": "77c320ac78a31b9385413f318f8f9c26",
+        "traceparent": "00-2aac31dd922bb61ec3b97b1dd172440c-4aa988864ccf9e83-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.6.0 (.NET 6.0.16; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "ad5e6aabb0f86036219bcc61e74e6e01",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
@@ -1646,32 +1717,32 @@
         "Cache-Control": "no-cache",
         "Content-Length": "108",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Mon, 03 Apr 2023 02:27:41 GMT",
+        "Date": "Thu, 01 Jun 2023 08:07:22 GMT",
         "Expires": "-1",
         "Pragma": "no-cache",
         "Retry-After": "15",
         "Server": "Microsoft-HTTPAPI/2.0",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-correlation-request-id": "b0d1cf93-9ef3-49a6-8fb4-ee991f01551d",
+        "x-ms-correlation-request-id": "b2ea915c-4cf9-4d0c-ab3a-11e540e62b32",
         "x-ms-ratelimit-remaining-subscription-reads": "11997",
-        "x-ms-request-id": "aca5673c-61e0-41f1-a954-4e9d6a368f53",
-        "x-ms-routing-request-id": "SOUTHEASTASIA:20230403T022742Z:b0d1cf93-9ef3-49a6-8fb4-ee991f01551d"
+        "x-ms-request-id": "f1e6f97c-1955-48dc-a0f4-809fec78ca39",
+        "x-ms-routing-request-id": "SOUTHINDIA:20230601T080723Z:b2ea915c-4cf9-4d0c-ab3a-11e540e62b32"
       },
       "ResponseBody": {
-        "name": "68d5d9e3-af2a-4c3e-9c86-3269213408e6",
+        "name": "1c7ca739-a4cb-46fa-8a11-9c209198d51f",
         "status": "InProgress",
-        "startTime": "2023-04-03T02:27:10.947Z"
+        "startTime": "2023-06-01T08:06:52.787Z"
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.DBforPostgreSQL/locations/East%20US/azureAsyncOperation/68d5d9e3-af2a-4c3e-9c86-3269213408e6?api-version=2022-12-01",
+      "RequestUri": "https://management.azure.com/subscriptions/5c5037e5-d3f1-4e7b-b3a9-f6bf94902b30/providers/Microsoft.DBforPostgreSQL/locations/East%20US/azureAsyncOperation/1c7ca739-a4cb-46fa-8a11-9c209198d51f?api-version=2023-03-01-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
-        "traceparent": "00-f13ce15b9cfc75fcf9f1700dc009d5e4-ec121de59e20fda0-00",
-        "User-Agent": "azsdk-net-ResourceManager/1.4.0 (.NET 6.0.15; Microsoft Windows 10.0.22621)",
-        "x-ms-client-request-id": "c610686cef1a35c205984ff0152d5aa9",
+        "traceparent": "00-2aac31dd922bb61ec3b97b1dd172440c-278669da9c964229-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.6.0 (.NET 6.0.16; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "91116df42f4a0c2ff959f581a2f382f7",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
@@ -1680,32 +1751,32 @@
         "Cache-Control": "no-cache",
         "Content-Length": "108",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Mon, 03 Apr 2023 02:27:57 GMT",
+        "Date": "Thu, 01 Jun 2023 08:07:39 GMT",
         "Expires": "-1",
         "Pragma": "no-cache",
         "Retry-After": "15",
         "Server": "Microsoft-HTTPAPI/2.0",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-correlation-request-id": "e7e57240-eda3-453e-b9e8-ce0d2d74b942",
+        "x-ms-correlation-request-id": "4ebd31e9-6f41-4762-bd36-ac5ff466fd39",
         "x-ms-ratelimit-remaining-subscription-reads": "11996",
-        "x-ms-request-id": "1ad551b5-f912-4007-99af-20771eca75ba",
-        "x-ms-routing-request-id": "SOUTHEASTASIA:20230403T022757Z:e7e57240-eda3-453e-b9e8-ce0d2d74b942"
+        "x-ms-request-id": "d5dab228-3fc7-483f-8b3d-9d929ab1ef40",
+        "x-ms-routing-request-id": "SOUTHINDIA:20230601T080739Z:4ebd31e9-6f41-4762-bd36-ac5ff466fd39"
       },
       "ResponseBody": {
-        "name": "68d5d9e3-af2a-4c3e-9c86-3269213408e6",
+        "name": "1c7ca739-a4cb-46fa-8a11-9c209198d51f",
         "status": "InProgress",
-        "startTime": "2023-04-03T02:27:10.947Z"
+        "startTime": "2023-06-01T08:06:52.787Z"
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.DBforPostgreSQL/locations/East%20US/azureAsyncOperation/68d5d9e3-af2a-4c3e-9c86-3269213408e6?api-version=2022-12-01",
+      "RequestUri": "https://management.azure.com/subscriptions/5c5037e5-d3f1-4e7b-b3a9-f6bf94902b30/providers/Microsoft.DBforPostgreSQL/locations/East%20US/azureAsyncOperation/1c7ca739-a4cb-46fa-8a11-9c209198d51f?api-version=2023-03-01-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
-        "traceparent": "00-f13ce15b9cfc75fcf9f1700dc009d5e4-9395530967f9689e-00",
-        "User-Agent": "azsdk-net-ResourceManager/1.4.0 (.NET 6.0.15; Microsoft Windows 10.0.22621)",
-        "x-ms-client-request-id": "338d7e6dc94c6a879a71f5956da48cc9",
+        "traceparent": "00-2aac31dd922bb61ec3b97b1dd172440c-d2976961d130b16b-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.6.0 (.NET 6.0.16; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "294b52255ebb6134001a2bb6bdf5998f",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
@@ -1714,68 +1785,68 @@
         "Cache-Control": "no-cache",
         "Content-Length": "107",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Mon, 03 Apr 2023 02:28:12 GMT",
+        "Date": "Thu, 01 Jun 2023 08:07:54 GMT",
         "Expires": "-1",
         "Pragma": "no-cache",
         "Retry-After": "15",
         "Server": "Microsoft-HTTPAPI/2.0",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-correlation-request-id": "ddf61666-0d47-4bd0-a12b-0ed474d02ca6",
+        "x-ms-correlation-request-id": "d8072618-dad0-4c88-8046-061a8e37f725",
         "x-ms-ratelimit-remaining-subscription-reads": "11995",
-        "x-ms-request-id": "7c2dc2f1-68b8-47da-ab28-0f68193f9fad",
-        "x-ms-routing-request-id": "SOUTHEASTASIA:20230403T022812Z:ddf61666-0d47-4bd0-a12b-0ed474d02ca6"
+        "x-ms-request-id": "31df2e19-3dda-4afc-abd7-d2334b7a076d",
+        "x-ms-routing-request-id": "SOUTHINDIA:20230601T080754Z:d8072618-dad0-4c88-8046-061a8e37f725"
       },
       "ResponseBody": {
-        "name": "68d5d9e3-af2a-4c3e-9c86-3269213408e6",
+        "name": "1c7ca739-a4cb-46fa-8a11-9c209198d51f",
         "status": "Succeeded",
-        "startTime": "2023-04-03T02:27:10.947Z"
+        "startTime": "2023-06-01T08:06:52.787Z"
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/pgflexrg4955/providers/Microsoft.DBforPostgreSQL/flexibleServers/pgflexserver4853?api-version=2022-12-01",
+      "RequestUri": "https://management.azure.com/subscriptions/5c5037e5-d3f1-4e7b-b3a9-f6bf94902b30/resourceGroups/pgflexrg2350/providers/Microsoft.DBforPostgreSQL/flexibleServers/pgflexserver683?api-version=2023-03-01-preview",
       "RequestMethod": "DELETE",
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "traceparent": "00-28fba1df48f5b66986a8e404e951ffae-e6dd52c67958fbdc-00",
-        "User-Agent": "azsdk-net-ResourceManager.PostgreSql/1.2.0-alpha.20230403.1 (.NET 6.0.15; Microsoft Windows 10.0.22621)",
-        "x-ms-client-request-id": "6201350c792cbc185d8d710a28a30658",
+        "traceparent": "00-735231c93a430f3cc41b3d947ccc788b-401d54a69c593dbc-00",
+        "User-Agent": "azsdk-net-ResourceManager.PostgreSql/1.2.0-alpha.20230531.1 (.NET 6.0.16; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "4fbeb076778f7bff3b51b39fbbb5be2e",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
       "StatusCode": 202,
       "ResponseHeaders": {
-        "Azure-AsyncOperation": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.DBforPostgreSQL/locations/East%20US/azureAsyncOperation/18faea65-ab53-4cce-a56e-552a411349f4?api-version=2022-12-01",
+        "Azure-AsyncOperation": "https://management.azure.com/subscriptions/5c5037e5-d3f1-4e7b-b3a9-f6bf94902b30/providers/Microsoft.DBforPostgreSQL/locations/East%20US/azureAsyncOperation/735cc515-4b64-41d2-8a6e-7faecd687589?api-version=2023-03-01-preview",
         "Cache-Control": "no-cache",
         "Content-Length": "84",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Mon, 03 Apr 2023 02:28:12 GMT",
+        "Date": "Thu, 01 Jun 2023 08:07:55 GMT",
         "Expires": "-1",
-        "Location": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.DBforPostgreSQL/locations/East%20US/operationResults/18faea65-ab53-4cce-a56e-552a411349f4?api-version=2022-12-01",
+        "Location": "https://management.azure.com/subscriptions/5c5037e5-d3f1-4e7b-b3a9-f6bf94902b30/providers/Microsoft.DBforPostgreSQL/locations/East%20US/operationResults/735cc515-4b64-41d2-8a6e-7faecd687589?api-version=2023-03-01-preview",
         "Pragma": "no-cache",
         "Retry-After": "15",
         "Server": "Microsoft-HTTPAPI/2.0",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-correlation-request-id": "7ecb352e-f846-4715-8dd2-28b40d52f864",
+        "x-ms-correlation-request-id": "91c4707f-6f58-426c-b1b7-2d7bf605a62a",
         "x-ms-ratelimit-remaining-subscription-deletes": "14998",
-        "x-ms-request-id": "18faea65-ab53-4cce-a56e-552a411349f4",
-        "x-ms-routing-request-id": "SOUTHEASTASIA:20230403T022813Z:7ecb352e-f846-4715-8dd2-28b40d52f864"
+        "x-ms-request-id": "735cc515-4b64-41d2-8a6e-7faecd687589",
+        "x-ms-routing-request-id": "SOUTHINDIA:20230601T080755Z:91c4707f-6f58-426c-b1b7-2d7bf605a62a"
       },
       "ResponseBody": {
         "operation": "DropServerManagementOperation",
-        "startTime": "2023-04-03T02:28:13.463Z"
+        "startTime": "2023-06-01T08:07:55.213Z"
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.DBforPostgreSQL/locations/East%20US/azureAsyncOperation/18faea65-ab53-4cce-a56e-552a411349f4?api-version=2022-12-01",
+      "RequestUri": "https://management.azure.com/subscriptions/5c5037e5-d3f1-4e7b-b3a9-f6bf94902b30/providers/Microsoft.DBforPostgreSQL/locations/East%20US/azureAsyncOperation/735cc515-4b64-41d2-8a6e-7faecd687589?api-version=2023-03-01-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
-        "traceparent": "00-28fba1df48f5b66986a8e404e951ffae-24bbaa80fae46670-00",
-        "User-Agent": "azsdk-net-ResourceManager/1.4.0 (.NET 6.0.15; Microsoft Windows 10.0.22621)",
-        "x-ms-client-request-id": "e0e3860cf72bf37d65d0d5be587d42f6",
+        "traceparent": "00-735231c93a430f3cc41b3d947ccc788b-3225fc758ebb01e1-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.6.0 (.NET 6.0.16; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "f20a65bf3235ad6753d0ed69ab95a54b",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
@@ -1784,32 +1855,32 @@
         "Cache-Control": "no-cache",
         "Content-Length": "108",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Mon, 03 Apr 2023 02:28:13 GMT",
+        "Date": "Thu, 01 Jun 2023 08:07:55 GMT",
         "Expires": "-1",
         "Pragma": "no-cache",
         "Retry-After": "15",
         "Server": "Microsoft-HTTPAPI/2.0",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-correlation-request-id": "3b61db64-343a-45a1-9ee4-eaf08f682001",
+        "x-ms-correlation-request-id": "311e896d-420d-4cb1-bf73-f3eb255d1b72",
         "x-ms-ratelimit-remaining-subscription-reads": "11994",
-        "x-ms-request-id": "0e09e36c-88cc-4012-8c30-2b4b2bbd0b20",
-        "x-ms-routing-request-id": "SOUTHEASTASIA:20230403T022813Z:3b61db64-343a-45a1-9ee4-eaf08f682001"
+        "x-ms-request-id": "26ff6a54-502f-4973-b4db-575ed9ad5ba6",
+        "x-ms-routing-request-id": "SOUTHINDIA:20230601T080755Z:311e896d-420d-4cb1-bf73-f3eb255d1b72"
       },
       "ResponseBody": {
-        "name": "18faea65-ab53-4cce-a56e-552a411349f4",
+        "name": "735cc515-4b64-41d2-8a6e-7faecd687589",
         "status": "InProgress",
-        "startTime": "2023-04-03T02:28:13.463Z"
+        "startTime": "2023-06-01T08:07:55.213Z"
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.DBforPostgreSQL/locations/East%20US/azureAsyncOperation/18faea65-ab53-4cce-a56e-552a411349f4?api-version=2022-12-01",
+      "RequestUri": "https://management.azure.com/subscriptions/5c5037e5-d3f1-4e7b-b3a9-f6bf94902b30/providers/Microsoft.DBforPostgreSQL/locations/East%20US/azureAsyncOperation/735cc515-4b64-41d2-8a6e-7faecd687589?api-version=2023-03-01-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
-        "traceparent": "00-28fba1df48f5b66986a8e404e951ffae-c38a463738081a9f-00",
-        "User-Agent": "azsdk-net-ResourceManager/1.4.0 (.NET 6.0.15; Microsoft Windows 10.0.22621)",
-        "x-ms-client-request-id": "d7ae9d6b7adfa2c75b5e82864d6fc230",
+        "traceparent": "00-735231c93a430f3cc41b3d947ccc788b-fbd975d8f16eea72-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.6.0 (.NET 6.0.16; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "e89dfd5c05b9328c6a2916dfe6cf76c2",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
@@ -1818,32 +1889,32 @@
         "Cache-Control": "no-cache",
         "Content-Length": "108",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Mon, 03 Apr 2023 02:28:29 GMT",
+        "Date": "Thu, 01 Jun 2023 08:08:10 GMT",
         "Expires": "-1",
         "Pragma": "no-cache",
         "Retry-After": "15",
         "Server": "Microsoft-HTTPAPI/2.0",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-correlation-request-id": "23eb8348-f437-4fe4-b4dc-9463ed258992",
+        "x-ms-correlation-request-id": "5eadd96a-f4d7-47f7-a2a9-e9cddf7ab9f5",
         "x-ms-ratelimit-remaining-subscription-reads": "11993",
-        "x-ms-request-id": "27e770db-279d-4244-b682-c1c682127cc4",
-        "x-ms-routing-request-id": "SOUTHEASTASIA:20230403T022829Z:23eb8348-f437-4fe4-b4dc-9463ed258992"
+        "x-ms-request-id": "5292c8ca-9f8a-4516-820d-dfc5ada7c8a0",
+        "x-ms-routing-request-id": "SOUTHINDIA:20230601T080811Z:5eadd96a-f4d7-47f7-a2a9-e9cddf7ab9f5"
       },
       "ResponseBody": {
-        "name": "18faea65-ab53-4cce-a56e-552a411349f4",
+        "name": "735cc515-4b64-41d2-8a6e-7faecd687589",
         "status": "InProgress",
-        "startTime": "2023-04-03T02:28:13.463Z"
+        "startTime": "2023-06-01T08:07:55.213Z"
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.DBforPostgreSQL/locations/East%20US/azureAsyncOperation/18faea65-ab53-4cce-a56e-552a411349f4?api-version=2022-12-01",
+      "RequestUri": "https://management.azure.com/subscriptions/5c5037e5-d3f1-4e7b-b3a9-f6bf94902b30/providers/Microsoft.DBforPostgreSQL/locations/East%20US/azureAsyncOperation/735cc515-4b64-41d2-8a6e-7faecd687589?api-version=2023-03-01-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
-        "traceparent": "00-28fba1df48f5b66986a8e404e951ffae-6a03e2443af435ad-00",
-        "User-Agent": "azsdk-net-ResourceManager/1.4.0 (.NET 6.0.15; Microsoft Windows 10.0.22621)",
-        "x-ms-client-request-id": "a2fd10c625bfef2c18d0ac31941a4a62",
+        "traceparent": "00-735231c93a430f3cc41b3d947ccc788b-1b192bde4df25384-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.6.0 (.NET 6.0.16; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "56dfb002cbaae6f86d8e413256dceaa3",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
@@ -1852,32 +1923,32 @@
         "Cache-Control": "no-cache",
         "Content-Length": "108",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Mon, 03 Apr 2023 02:28:44 GMT",
+        "Date": "Thu, 01 Jun 2023 08:08:25 GMT",
         "Expires": "-1",
         "Pragma": "no-cache",
         "Retry-After": "15",
         "Server": "Microsoft-HTTPAPI/2.0",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-correlation-request-id": "0c1b9ec7-648d-49ef-a1d9-e0ac8999b327",
+        "x-ms-correlation-request-id": "e0bbc323-1276-49ff-92aa-4254f1bbef5f",
         "x-ms-ratelimit-remaining-subscription-reads": "11992",
-        "x-ms-request-id": "91d111c9-6b83-4539-a43b-5af701b0836f",
-        "x-ms-routing-request-id": "SOUTHEASTASIA:20230403T022844Z:0c1b9ec7-648d-49ef-a1d9-e0ac8999b327"
+        "x-ms-request-id": "ca5ab5eb-c893-4fe5-a67e-bbe52463332a",
+        "x-ms-routing-request-id": "SOUTHINDIA:20230601T080826Z:e0bbc323-1276-49ff-92aa-4254f1bbef5f"
       },
       "ResponseBody": {
-        "name": "18faea65-ab53-4cce-a56e-552a411349f4",
+        "name": "735cc515-4b64-41d2-8a6e-7faecd687589",
         "status": "InProgress",
-        "startTime": "2023-04-03T02:28:13.463Z"
+        "startTime": "2023-06-01T08:07:55.213Z"
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.DBforPostgreSQL/locations/East%20US/azureAsyncOperation/18faea65-ab53-4cce-a56e-552a411349f4?api-version=2022-12-01",
+      "RequestUri": "https://management.azure.com/subscriptions/5c5037e5-d3f1-4e7b-b3a9-f6bf94902b30/providers/Microsoft.DBforPostgreSQL/locations/East%20US/azureAsyncOperation/735cc515-4b64-41d2-8a6e-7faecd687589?api-version=2023-03-01-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
-        "traceparent": "00-28fba1df48f5b66986a8e404e951ffae-5ccb95991a3f5e5f-00",
-        "User-Agent": "azsdk-net-ResourceManager/1.4.0 (.NET 6.0.15; Microsoft Windows 10.0.22621)",
-        "x-ms-client-request-id": "5c3d3562f07e9181bf4085cd75f6a6f6",
+        "traceparent": "00-735231c93a430f3cc41b3d947ccc788b-cc45ceb95db7a4af-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.6.0 (.NET 6.0.16; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "07d2440a67dbba49d8d8870c1c88c684",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
@@ -1886,29 +1957,29 @@
         "Cache-Control": "no-cache",
         "Content-Length": "107",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Mon, 03 Apr 2023 02:28:59 GMT",
+        "Date": "Thu, 01 Jun 2023 08:08:40 GMT",
         "Expires": "-1",
         "Pragma": "no-cache",
         "Retry-After": "15",
         "Server": "Microsoft-HTTPAPI/2.0",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-correlation-request-id": "0b598fba-0cab-4abc-bf65-c73a754606e3",
+        "x-ms-correlation-request-id": "21a91e8b-c8fb-4681-8e42-ed7dd029ab2d",
         "x-ms-ratelimit-remaining-subscription-reads": "11991",
-        "x-ms-request-id": "2534b515-2845-409b-8263-5ff4934ac8a2",
-        "x-ms-routing-request-id": "SOUTHEASTASIA:20230403T022859Z:0b598fba-0cab-4abc-bf65-c73a754606e3"
+        "x-ms-request-id": "b6008abf-1a2e-4507-91df-442eaca02f82",
+        "x-ms-routing-request-id": "SOUTHINDIA:20230601T080841Z:21a91e8b-c8fb-4681-8e42-ed7dd029ab2d"
       },
       "ResponseBody": {
-        "name": "18faea65-ab53-4cce-a56e-552a411349f4",
+        "name": "735cc515-4b64-41d2-8a6e-7faecd687589",
         "status": "Succeeded",
-        "startTime": "2023-04-03T02:28:13.463Z"
+        "startTime": "2023-06-01T08:07:55.213Z"
       }
     }
   ],
   "Variables": {
-    "AZURE_AUTHORITY_HOST": "https://login.microsoftonline.com/",
-    "RandomSeed": "648587491",
+    "AZURE_AUTHORITY_HOST": "https://login.microsoftonline.com",
+    "RandomSeed": "92829790",
     "RESOURCE_MANAGER_URL": null,
-    "SUBSCRIPTION_ID": "db1ab6f0-4769-4b27-930e-01e2ef9c123c"
+    "SUBSCRIPTION_ID": "5c5037e5-d3f1-4e7b-b3a9-f6bf94902b30"
   }
 }
