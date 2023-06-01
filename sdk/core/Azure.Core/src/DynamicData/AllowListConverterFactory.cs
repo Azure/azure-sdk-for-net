@@ -27,10 +27,10 @@ namespace Azure.Core.Json
                 return true;
             }
 
-            return IsAllowedPoco(type, new List<Type>());
+            return IsAllowedPoco(type, new HashSet<Type>());
         }
 
-        private static bool IsAllowedPoco(Type type, List<Type> ancestorTypes)
+        private static bool IsAllowedPoco(Type type, HashSet<Type> ancestorTypes)
         {
             if (!HasPublicParameterlessConstructor(type) && !IsAnonymousType(type))
             {
@@ -96,9 +96,6 @@ namespace Azure.Core.Json
                 type == typeof(MutableJsonDocument) ||
                 type == typeof(MutableJsonElement) ||
 
-                // TODO: support extensible enums?
-                type == typeof(ETag) ||
-
                 // TODO: We'll want to remove this dependency
                 type == typeof(DynamicData) ||
 
@@ -110,44 +107,26 @@ namespace Azure.Core.Json
         private static bool IsAllowedPrimitive(Type type)
         {
             return
-                type == typeof(bool) ||
-                type == typeof(string) ||
-                type == typeof(byte) ||
-                type == typeof(sbyte) ||
-                type == typeof(short) ||
-                type == typeof(ushort) ||
-                type == typeof(int) ||
-                type == typeof(uint) ||
-                type == typeof(long) ||
-                type == typeof(ulong) ||
-                type == typeof(float) ||
-                type == typeof(double) ||
+                type.IsPrimitive ||
                 type == typeof(decimal) ||
+                type == typeof(string) ||
                 type == typeof(DateTime) ||
                 type == typeof(DateTimeOffset) ||
-                type == typeof(Guid);
+                type == typeof(TimeSpan) ||
+                type == typeof(Uri) ||
+                type == typeof(Guid) ||
+                type == typeof(ETag);
         }
 
         private static bool IsAllowedArray(Type type)
         {
-            // TODO: add array support differently
-            return
-                type == typeof(bool[]) ||
-                type == typeof(string[]) ||
-                type == typeof(byte[]) ||
-                type == typeof(sbyte[]) ||
-                type == typeof(short[]) ||
-                type == typeof(ushort[]) ||
-                type == typeof(int[]) ||
-                type == typeof(uint[]) ||
-                type == typeof(long[]) ||
-                type == typeof(ulong[]) ||
-                type == typeof(float[]) ||
-                type == typeof(double[]) ||
-                type == typeof(decimal[]) ||
-                type == typeof(DateTime[]) ||
-                type == typeof(DateTimeOffset[]) ||
-                type == typeof(Guid[]);
+            if (type.IsArray)
+            {
+                Type? elementType = type.GetElementType();
+                return elementType != null && IsAllowedType(elementType);
+            }
+
+            return false;
         }
 
         private static bool IsAllowedCollection(Type type)
