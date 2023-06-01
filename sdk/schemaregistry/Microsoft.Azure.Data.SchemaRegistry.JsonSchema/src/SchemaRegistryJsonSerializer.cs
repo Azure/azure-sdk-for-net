@@ -53,7 +53,7 @@ namespace Microsoft.Azure.Data.SchemaRegistry.JsonSchema
         /// </summary>
         /// <param name="client">The <see cref="SchemaRegistryClient"/> instance to use for looking up schemas.</param>
         /// <param name="jsonSchemaGenerator">The instance inherited from <see cref="SchemaRegistryJsonSchemaGenerator"/> to use to generate and validate JSON schemas.</param>
-        /// <param name="options"></param>
+        /// <param name="options">The set of <see cref="SchemaRegistryJsonSerializerOptions"/> to use when configuring the serializer.</param>
         /// <exception cref="ArgumentNullException"></exception>
         public SchemaRegistryJsonSerializer(SchemaRegistryClient client, SchemaRegistryJsonSchemaGenerator jsonSchemaGenerator, SchemaRegistryJsonSerializerOptions options)
             : this(client, null, jsonSchemaGenerator)
@@ -80,14 +80,14 @@ namespace Microsoft.Azure.Data.SchemaRegistry.JsonSchema
         /// <param name="client">The <see cref="SchemaRegistryClient"/> instance to use for looking up schemas.</param>
         /// <param name="groupName">The Schema Registry group name that contains the schemas that will be used to serialize.</param>
         /// <param name="jsonSchemaGenerator">The instance inherited from <see cref="SchemaRegistryJsonSchemaGenerator"/> to use to generate and validate JSON schemas.</param>
-        /// <param name="options"></param>
+        /// <param name="options">The set of <see cref="SchemaRegistryJsonSerializerOptions"/> to use when configuring the serializer.</param>
         /// <exception cref="ArgumentNullException"></exception>
         public SchemaRegistryJsonSerializer(SchemaRegistryClient client, string groupName, SchemaRegistryJsonSchemaGenerator jsonSchemaGenerator, SchemaRegistryJsonSerializerOptions options)
         {
             _client = client ?? throw new ArgumentNullException(nameof(client));
             _groupName = groupName;
             _jsonSchemaGenerator = jsonSchemaGenerator ?? throw new ArgumentNullException(nameof(jsonSchemaGenerator));
-            _jsonSerializerOptions = options ?? new SchemaRegistryJsonSerializerOptions { ObjectSerializer = new JsonObjectSerializer() };
+            _jsonSerializerOptions = options ?? new SchemaRegistryJsonSerializerOptions();
         }
 
         /// <summary>

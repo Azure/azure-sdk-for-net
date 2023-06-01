@@ -163,6 +163,33 @@ MessageContent content = await serializer.SerializeAsync<MessageContent, Employe
 Employee deserializedEmployee = await serializer.DeserializeAsync<Employee>(content);
 ```
 
+### Configuring serialization
+
+By default, the `SchemaRegistryJsonSerializer` serializes and deserializes using the `System.Text.Json.Serializer` with its built-in options. The `SchemaRegistryJsonSerializerOptions` allows you to configure this by specifying an [`ObjectSerializer`][object_serializer] to use for serialization.
+
+To serialize and deserialize with a `NewtonsoftJsonObjectSerializer`:
+```C# Snippet:SchemaRegistryJsonSerializeDeserializeWithOptionsNewtonsoft
+var newtonsoftSerializerOptions = new SchemaRegistryJsonSerializerOptions
+{
+    ObjectSerializer = new NewtonsoftJsonObjectSerializer()
+};
+var newtonsoftSerializer = new SchemaRegistryJsonSerializer(client, groupName, new SampleJsonGenerator(), newtonsoftSerializerOptions);
+```
+
+To configure the `JsonObjectSerializer`:
+```C# Snippet:SchemaRegistryJsonSerializeDeserializeWithOptions
+var jsonSerializerOptions = new JsonSerializerOptions
+{
+    AllowTrailingCommas = true
+};
+
+var serializerOptions = new SchemaRegistryJsonSerializerOptions
+{
+    ObjectSerializer = new JsonObjectSerializer(jsonSerializerOptions)
+};
+var serializer = new SchemaRegistryJsonSerializer(client, groupName, new SampleJsonGenerator(), serializerOptions);
+```
+
 ## Troubleshooting
 
 If you encounter errors when communicating with the Schema Registry service, these errors will be thrown as a [RequestFailedException][request_failed_exception]. The serializer will only communicate with the service the first time it encounters a schema (when serializing) or a schema Id (when deserializing). Any errors related to invalid Content-Types will be thrown as a `FormatException`. 
@@ -186,6 +213,7 @@ This project has adopted the [Microsoft Open Source Code of Conduct][code_of_con
 <!-- LINKS -->
 [nuget]: https://www.nuget.org/
 [event_hubs_namespace]: https://docs.microsoft.com/azure/event-hubs/event-hubs-about
+[object_serializer]: https://docs.microsoft.com/dotnet/api/azure.core.serialization.objectserializer?view=azure-dotnet
 [azure_powershell]: https://docs.microsoft.com/powershell/azure/
 [create_event_hubs_namespace]: https://docs.microsoft.com/azure/event-hubs/event-hubs-quickstart-powershell#create-an-event-hubs-namespace
 [quickstart_guide]: https://github.com/Azure/azure-sdk-for-net/blob/main/doc/dev/mgmt_quickstart.md

@@ -16,6 +16,8 @@ using System.Collections.Generic;
 using Azure.Messaging.EventHubs.Consumer;
 using Azure.Messaging;
 using Newtonsoft.Json.Schema;
+using Azure.Core.Serialization;
+using System.Text.Json;
 
 namespace Microsoft.Azure.Data.SchemaRegistry.JsonSchema.Tests.Samples
 {
@@ -150,6 +152,35 @@ namespace Microsoft.Azure.Data.SchemaRegistry.JsonSchema.Tests.Samples
             MessageContent content = await serializer.SerializeAsync<MessageContent, Employee>(employee);
 
             Employee deserializedEmployee = await serializer.DeserializeAsync<Employee>(content);
+            #endregion
+        }
+
+        [Test]
+        public void SerializeDeserializeWithOptions()
+        {
+            var client = this.schemaRegistryClient;
+            var groupName = TestEnvironment.SchemaRegistryGroup;
+            var employee = new Employee { Age = 42, Name = "Caketown" };
+
+            #region Snippet:SchemaRegistryJsonSerializeDeserializeWithOptionsNewtonsoft
+            var newtonsoftSerializerOptions = new SchemaRegistryJsonSerializerOptions
+            {
+                ObjectSerializer = new NewtonsoftJsonObjectSerializer()
+            };
+            var newtonsoftSerializer = new SchemaRegistryJsonSerializer(client, groupName, new SampleJsonGenerator(), newtonsoftSerializerOptions);
+            #endregion
+
+            #region Snippet:SchemaRegistryJsonSerializeDeserializeWithOptions
+            var jsonSerializerOptions = new JsonSerializerOptions
+            {
+                AllowTrailingCommas = true
+            };
+
+            var serializerOptions = new SchemaRegistryJsonSerializerOptions
+            {
+                ObjectSerializer = new JsonObjectSerializer(jsonSerializerOptions)
+            };
+            var serializer = new SchemaRegistryJsonSerializer(client, groupName, new SampleJsonGenerator(), serializerOptions);
             #endregion
         }
 

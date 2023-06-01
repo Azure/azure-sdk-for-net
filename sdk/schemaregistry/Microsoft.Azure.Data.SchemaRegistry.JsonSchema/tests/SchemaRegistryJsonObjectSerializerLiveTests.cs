@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using Azure.Core.TestFramework;
+using Azure.Core.Serialization;
 using NUnit.Framework;
 using System;
 using System.Threading.Tasks;
@@ -16,12 +17,14 @@ using TestSchema;
 using System.Threading;
 using System.Collections.Generic;
 using Microsoft.Identity.Client;
+using System.Text.Json;
+using System.Text.Json.Serialization;
 
 namespace Microsoft.Azure.Data.SchemaRegistry.JsonSchema.Tests
 {
     public class SchemaRegistryJsonObjectSerializerLiveTests : SchemaRegistryJsonObjectSerializerLiveTestBase
     {
-        private static readonly string _schema = "{\r\n  \"$schema\": \"http://json-schema.org/draft-04/schema#\",\r\n  \"title\": \"Employee\",\r\n  \"type\": \"object\",\r\n  \"additionalProperties\": false,\r\n  \"properties\": {\r\n    \"Age\": {\r\n      \"type\": \"integer\",\r\n      \"format\": \"int32\"\r\n    },\r\n    \"Name\": {\r\n      \"type\": [\r\n        \"null\",\r\n        \"string\"\r\n      ]\r\n    }\r\n  }\r\n}";
+        private static readonly string s_schema = "{\r\n  \"$schema\": \"http://json-schema.org/draft-04/schema#\",\r\n  \"title\": \"Employee\",\r\n  \"type\": \"object\",\r\n  \"additionalProperties\": false,\r\n  \"properties\": {\r\n    \"Age\": {\r\n      \"type\": \"integer\",\r\n      \"format\": \"int32\"\r\n    },\r\n    \"Name\": {\r\n      \"type\": [\r\n        \"null\",\r\n        \"string\"\r\n      ]\r\n    }\r\n  }\r\n}";
 
         public SchemaRegistryJsonObjectSerializerLiveTests(bool isAsync) : base(isAsync)
         {
@@ -30,14 +33,36 @@ namespace Microsoft.Azure.Data.SchemaRegistry.JsonSchema.Tests
         [RecordedTest]
         public async Task CanSerializeAndDeserialize()
         {
-            // We need to test sync and async because the System.Text.Json serialization methods are different in async vs sync
             var client = CreateClient();
             var groupName = TestEnvironment.SchemaRegistryGroup;
             var employee = new Employee { Age = 62, Name = "Bob" };
 
-            await client.RegisterSchemaAsync(groupName, (typeof(Employee)).Name, _schema, SchemaFormat.Json, CancellationToken.None).ConfigureAwait(false);
+            await client.RegisterSchemaAsync(groupName, (typeof(Employee)).Name, s_schema, SchemaFormat.Json, CancellationToken.None).ConfigureAwait(false);
 
             var serializer = new SchemaRegistryJsonSerializer(client, groupName, new SampleJsonGenerator());
+            MessageContent content = await serializer.SerializeAsync<MessageContent, Employee>(employee);
+
+            Employee deserializedEmployee = await serializer.DeserializeAsync<Employee>(content);
+
+            Assert.IsNotNull(deserializedEmployee);
+            Assert.AreEqual("Bob", deserializedEmployee.Name);
+            Assert.AreEqual(62, deserializedEmployee.Age);
+        }
+
+        [RecordedTest]
+        public async Task CanSerializeAndDeserializeWithNewtonsoft()
+        {
+            var client = CreateClient();
+            var groupName = TestEnvironment.SchemaRegistryGroup;
+            var employee = new Employee { Age = 62, Name = "Bob" };
+
+            await client.RegisterSchemaAsync(groupName, (typeof(Employee)).Name, s_schema, SchemaFormat.Json, CancellationToken.None).ConfigureAwait(false);
+
+            var serializerOptions = new SchemaRegistryJsonSerializerOptions
+            {
+                ObjectSerializer = new NewtonsoftJsonObjectSerializer()
+            };
+            var serializer = new SchemaRegistryJsonSerializer(client, groupName, new SampleJsonGenerator(), serializerOptions);
             MessageContent content = await serializer.SerializeAsync<MessageContent, Employee>(employee);
 
             Employee deserializedEmployee = await serializer.DeserializeAsync<Employee>(content);
@@ -54,7 +79,7 @@ namespace Microsoft.Azure.Data.SchemaRegistry.JsonSchema.Tests
             var groupName = TestEnvironment.SchemaRegistryGroup;
             var employee = new Employee { Age = 42, Name = "Caketown" };
 
-            await client.RegisterSchemaAsync(groupName, (typeof(Employee)).Name, _schema, SchemaFormat.Json, CancellationToken.None).ConfigureAwait(false);
+            await client.RegisterSchemaAsync(groupName, (typeof(Employee)).Name, s_schema, SchemaFormat.Json, CancellationToken.None).ConfigureAwait(false);
 
             var serializer = new SchemaRegistryJsonSerializer(client, groupName, new SampleJsonGenerator());
             MessageContent content = await serializer.SerializeAsync<MessageContent, Employee>(employee);
@@ -75,7 +100,7 @@ namespace Microsoft.Azure.Data.SchemaRegistry.JsonSchema.Tests
             var groupName = TestEnvironment.SchemaRegistryGroup;
             var employee = new EmployeeV2 { Age = 42, Name = "Caketown", City = "Redmond" };
 
-            await client.RegisterSchemaAsync(groupName, (typeof(EmployeeV2)).Name, _schema, SchemaFormat.Json, CancellationToken.None).ConfigureAwait(false);
+            await client.RegisterSchemaAsync(groupName, (typeof(EmployeeV2)).Name, s_schema, SchemaFormat.Json, CancellationToken.None).ConfigureAwait(false);
 
             var serializer = new SchemaRegistryJsonSerializer(client, groupName, new SampleJsonGenerator());
             var content = await serializer.SerializeAsync<MessageContent, EmployeeV2>(employee);
@@ -267,7 +292,7 @@ namespace Microsoft.Azure.Data.SchemaRegistry.JsonSchema.Tests
         {
             public override string GenerateSchemaFromType(Type dataType)
             {
-                return _schema;
+                return s_schema;
             }
 
             public override void ThrowIfNotValidAgainstSchema(object data, Type dataType, string schemaDefinition)
@@ -280,7 +305,7 @@ namespace Microsoft.Azure.Data.SchemaRegistry.JsonSchema.Tests
         {
             public override string GenerateSchemaFromType(Type dataType)
             {
-                return _schema;
+                return s_schema;
             }
 
             public override void ThrowIfNotValidAgainstSchema(object data, Type dataType, string schemaDefinition)

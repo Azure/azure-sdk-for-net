@@ -16,7 +16,7 @@ namespace Microsoft.Azure.Data.SchemaRegistry.JsonSchema.Tests
 {
     public class SchemaRegistryJsonObjectSerializerTests
     {
-        private static readonly string _schema = "{\r\n  \"$schema\": \"http://json-schema.org/draft-04/schema#\",\r\n  \"title\": \"Employee\",\r\n  \"type\": \"object\",\r\n  \"additionalProperties\": false,\r\n  \"properties\": {\r\n    \"Age\": {\r\n      \"type\": \"integer\",\r\n      \"format\": \"int32\"\r\n    },\r\n    \"Name\": {\r\n      \"type\": [\r\n        \"null\",\r\n        \"string\"\r\n      ]\r\n    }\r\n  }\r\n}";
+        private static readonly string s_schema = "{\r\n  \"$schema\": \"http://json-schema.org/draft-04/schema#\",\r\n  \"title\": \"Employee\",\r\n  \"type\": \"object\",\r\n  \"additionalProperties\": false,\r\n  \"properties\": {\r\n    \"Age\": {\r\n      \"type\": \"integer\",\r\n      \"format\": \"int32\"\r\n    },\r\n    \"Name\": {\r\n      \"type\": [\r\n        \"null\",\r\n        \"string\"\r\n      ]\r\n    }\r\n  }\r\n}";
 
         [Test]
         public async Task SerializeWorks()
@@ -27,7 +27,7 @@ namespace Microsoft.Azure.Data.SchemaRegistry.JsonSchema.Tests
                     client => client.GetSchemaPropertiesAsync(
                     "groupName",
                     nameof(Employee),
-                    _schema,
+                    s_schema,
                     SchemaFormat.Json,
                     CancellationToken.None))
                 .Returns(
@@ -44,7 +44,7 @@ namespace Microsoft.Azure.Data.SchemaRegistry.JsonSchema.Tests
         {
             public override string GenerateSchemaFromType(Type dataType)
             {
-                return _schema;
+                return s_schema;
             }
 
             public override void ThrowIfNotValidAgainstSchema(object data, Type dataType, string schemaDefinition)
