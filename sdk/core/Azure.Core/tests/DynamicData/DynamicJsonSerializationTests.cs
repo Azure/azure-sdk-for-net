@@ -9,12 +9,12 @@ using NUnit.Framework;
 
 namespace Azure.Core.Tests
 {
-    internal class MutableJsonDocumentSerializationTests
+    internal class DynamicJsonSerializationTests
     {
         [Test]
         public void CannotAssignModelWithBinaryDataProperty()
         {
-            dynamic json = BinaryData.FromString("""{"foo":1}""").ToDynamicFromJson(Dynamic.DynamicCaseMapping.PascalToCamel);
+            dynamic json = BinaryData.FromString("""{"foo":1}""").ToDynamicFromJson(DynamicCaseMapping.PascalToCamel);
             BinaryDataModel model = new BinaryDataModel();
 
             // Existing property
@@ -27,7 +27,7 @@ namespace Azure.Core.Tests
         [Test]
         public void CannotAssignModelWithStreamProperty()
         {
-            dynamic json = BinaryData.FromString("""{"foo":1}""").ToDynamicFromJson(Dynamic.DynamicCaseMapping.PascalToCamel);
+            dynamic json = BinaryData.FromString("""{"foo":1}""").ToDynamicFromJson(DynamicCaseMapping.PascalToCamel);
             StreamModel model = new StreamModel();
 
             // Existing property

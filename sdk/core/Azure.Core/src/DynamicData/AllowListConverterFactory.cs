@@ -7,9 +7,9 @@ using System.Reflection;
 using System.Runtime.CompilerServices;
 using System.Text.Json;
 using System.Text.Json.Serialization;
-using Azure.Core.Dynamic;
+using Azure.Core.Json;
 
-namespace Azure.Core.Json
+namespace Azure.Core.Dynamic
 {
     internal class AllowListConverterFactory : JsonConverterFactory
     {
@@ -18,6 +18,21 @@ namespace Azure.Core.Json
         public override bool CanConvert(Type typeToConvert)
         {
             return !IsAllowedType(typeToConvert);
+        }
+
+        public static void AssertAllowedType<T>(T value)
+        {
+            if (value == null)
+            {
+                return;
+            }
+
+            if (!IsAllowedType(value.GetType()))
+            {
+                throw new NotSupportedException($"Type is not currently supported: '{value.GetType()}'.");
+            }
+
+            // TODO: validate types in collections
         }
 
         public static bool IsAllowedType(Type type)

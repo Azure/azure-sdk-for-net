@@ -166,7 +166,7 @@ namespace Azure.Core.Json
         {
             _original = utf8Json;
             _originalDocument = document;
-            _serializerOptions = serializerOptions ?? new JsonSerializerOptions() { Converters = { AllowListConverterFactory.Default } };
+            _serializerOptions = serializerOptions ?? new JsonSerializerOptions();
         }
 
         private static ReadOnlyMemory<byte> GetBytesFromDocument(JsonDocument document)
