@@ -26,9 +26,11 @@ namespace Azure.Core.Json
                 {
                     _serializedValue = element;
                 }
-
-                byte[] bytes = JsonSerializer.SerializeToUtf8Bytes(Value, _serializerOptions);
-                _serializedValue = JsonDocument.Parse(bytes).RootElement;
+                else
+                {
+                    byte[] bytes = JsonSerializer.SerializeToUtf8Bytes(Value, _serializerOptions);
+                    _serializedValue = JsonDocument.Parse(bytes).RootElement;
+                }
             }
         }
 
@@ -57,6 +59,9 @@ namespace Azure.Core.Json
                 _serializedValue = element;
                 return element;
             }
+
+            // TODO: If it is a MutableJsonDocument, we need to account for changes
+            // TODO: What if it is an object that changes after assignment?
 
             byte[] bytes = JsonSerializer.SerializeToUtf8Bytes(Value, _serializerOptions);
             _serializedValue = JsonDocument.Parse(bytes).RootElement;
