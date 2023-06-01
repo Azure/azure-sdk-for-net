@@ -26,9 +26,9 @@ namespace Azure.ResourceManager.IotFirmwareDefense
     public partial class FirmwareResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="FirmwareResource"/> instance. </summary>
-        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string workspaceName, string firmwareId)
+        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string workspaceName, string firmwareName)
         {
-            var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.IoTFirmwareDefense/workspaces/{workspaceName}/firmwares/{firmwareId}";
+            var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.IoTFirmwareDefense/workspaces/{workspaceName}/firmwares/{firmwareName}";
             return new ResourceIdentifier(resourceId);
         }
 
@@ -301,7 +301,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<UrlToken>> GenerateDownloadUrlAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<UriToken>> GenerateDownloadUrlAsync(CancellationToken cancellationToken = default)
         {
             using var scope = _firmwareClientDiagnostics.CreateScope("FirmwareResource.GenerateDownloadUrl");
             scope.Start();
@@ -331,7 +331,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<UrlToken> GenerateDownloadUrl(CancellationToken cancellationToken = default)
+        public virtual Response<UriToken> GenerateDownloadUrl(CancellationToken cancellationToken = default)
         {
             using var scope = _firmwareClientDiagnostics.CreateScope("FirmwareResource.GenerateDownloadUrl");
             scope.Start();
@@ -361,7 +361,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<UrlToken>> GenerateFilesystemDownloadUrlAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<UriToken>> GenerateFilesystemDownloadUrlAsync(CancellationToken cancellationToken = default)
         {
             using var scope = _firmwareClientDiagnostics.CreateScope("FirmwareResource.GenerateFilesystemDownloadUrl");
             scope.Start();
@@ -391,7 +391,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<UrlToken> GenerateFilesystemDownloadUrl(CancellationToken cancellationToken = default)
+        public virtual Response<UriToken> GenerateFilesystemDownloadUrl(CancellationToken cancellationToken = default)
         {
             using var scope = _firmwareClientDiagnostics.CreateScope("FirmwareResource.GenerateFilesystemDownloadUrl");
             scope.Start();
@@ -421,13 +421,13 @@ namespace Azure.ResourceManager.IotFirmwareDefense
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<FirmwareSummary>> GenerateSummaryAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<FirmwareSummary>> GetFirmwareSummaryAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _firmwareClientDiagnostics.CreateScope("FirmwareResource.GenerateSummary");
+            using var scope = _firmwareClientDiagnostics.CreateScope("FirmwareResource.GetFirmwareSummary");
             scope.Start();
             try
             {
-                var response = await _firmwareRestClient.GenerateSummaryAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                var response = await _firmwareRestClient.GetFirmwareSummaryAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
                 return response;
             }
             catch (Exception e)
@@ -451,13 +451,13 @@ namespace Azure.ResourceManager.IotFirmwareDefense
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<FirmwareSummary> GenerateSummary(CancellationToken cancellationToken = default)
+        public virtual Response<FirmwareSummary> GetFirmwareSummary(CancellationToken cancellationToken = default)
         {
-            using var scope = _firmwareClientDiagnostics.CreateScope("FirmwareResource.GenerateSummary");
+            using var scope = _firmwareClientDiagnostics.CreateScope("FirmwareResource.GetFirmwareSummary");
             scope.Start();
             try
             {
-                var response = _firmwareRestClient.GenerateSummary(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
+                var response = _firmwareRestClient.GetFirmwareSummary(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
                 return response;
             }
             catch (Exception e)
@@ -481,12 +481,12 @@ namespace Azure.ResourceManager.IotFirmwareDefense
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="Component" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<Component> GetGenerateComponentListAsync(CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="SbomComponent" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<SbomComponent> GetSbomComponentsAsync(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _firmwareRestClient.CreateListGenerateComponentListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _firmwareRestClient.CreateListGenerateComponentListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, Component.DeserializeComponent, _firmwareClientDiagnostics, Pipeline, "FirmwareResource.GetGenerateComponentList", "value", "nextLink", cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _firmwareRestClient.CreateListSbomComponentsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _firmwareRestClient.CreateListSbomComponentsNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, SbomComponent.DeserializeSbomComponent, _firmwareClientDiagnostics, Pipeline, "FirmwareResource.GetSbomComponents", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -503,12 +503,12 @@ namespace Azure.ResourceManager.IotFirmwareDefense
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="Component" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<Component> GetGenerateComponentList(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="SbomComponent" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<SbomComponent> GetSbomComponents(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _firmwareRestClient.CreateListGenerateComponentListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _firmwareRestClient.CreateListGenerateComponentListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, Component.DeserializeComponent, _firmwareClientDiagnostics, Pipeline, "FirmwareResource.GetGenerateComponentList", "value", "nextLink", cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _firmwareRestClient.CreateListSbomComponentsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _firmwareRestClient.CreateListSbomComponentsNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, SbomComponent.DeserializeSbomComponent, _firmwareClientDiagnostics, Pipeline, "FirmwareResource.GetSbomComponents", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -525,13 +525,13 @@ namespace Azure.ResourceManager.IotFirmwareDefense
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<Component>> GenerateComponentDetailsAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<SbomComponent>> GetComponentDetailsAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _firmwareClientDiagnostics.CreateScope("FirmwareResource.GenerateComponentDetails");
+            using var scope = _firmwareClientDiagnostics.CreateScope("FirmwareResource.GetComponentDetails");
             scope.Start();
             try
             {
-                var response = await _firmwareRestClient.GenerateComponentDetailsAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                var response = await _firmwareRestClient.GetComponentDetailsAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
                 return response;
             }
             catch (Exception e)
@@ -555,13 +555,13 @@ namespace Azure.ResourceManager.IotFirmwareDefense
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<Component> GenerateComponentDetails(CancellationToken cancellationToken = default)
+        public virtual Response<SbomComponent> GetComponentDetails(CancellationToken cancellationToken = default)
         {
-            using var scope = _firmwareClientDiagnostics.CreateScope("FirmwareResource.GenerateComponentDetails");
+            using var scope = _firmwareClientDiagnostics.CreateScope("FirmwareResource.GetComponentDetails");
             scope.Start();
             try
             {
-                var response = _firmwareRestClient.GenerateComponentDetails(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
+                var response = _firmwareRestClient.GetComponentDetails(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
                 return response;
             }
             catch (Exception e)
@@ -586,11 +586,11 @@ namespace Azure.ResourceManager.IotFirmwareDefense
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="BinaryHardening" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<BinaryHardening> GetGenerateBinaryHardeningListAsync(CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<BinaryHardening> GetBinaryHardeningResultsAsync(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _firmwareRestClient.CreateListGenerateBinaryHardeningListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _firmwareRestClient.CreateListGenerateBinaryHardeningListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, BinaryHardening.DeserializeBinaryHardening, _firmwareClientDiagnostics, Pipeline, "FirmwareResource.GetGenerateBinaryHardeningList", "value", "nextLink", cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _firmwareRestClient.CreateListBinaryHardeningResultsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _firmwareRestClient.CreateListBinaryHardeningResultsNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, BinaryHardening.DeserializeBinaryHardening, _firmwareClientDiagnostics, Pipeline, "FirmwareResource.GetBinaryHardeningResults", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -608,11 +608,11 @@ namespace Azure.ResourceManager.IotFirmwareDefense
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="BinaryHardening" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<BinaryHardening> GetGenerateBinaryHardeningList(CancellationToken cancellationToken = default)
+        public virtual Pageable<BinaryHardening> GetBinaryHardeningResults(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _firmwareRestClient.CreateListGenerateBinaryHardeningListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _firmwareRestClient.CreateListGenerateBinaryHardeningListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, BinaryHardening.DeserializeBinaryHardening, _firmwareClientDiagnostics, Pipeline, "FirmwareResource.GetGenerateBinaryHardeningList", "value", "nextLink", cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _firmwareRestClient.CreateListBinaryHardeningResultsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _firmwareRestClient.CreateListBinaryHardeningResultsNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, BinaryHardening.DeserializeBinaryHardening, _firmwareClientDiagnostics, Pipeline, "FirmwareResource.GetBinaryHardeningResults", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -629,13 +629,13 @@ namespace Azure.ResourceManager.IotFirmwareDefense
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<BinaryHardeningSummary>> GenerateBinaryHardeningSummaryAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<BinaryHardeningSummary>> GetBinaryHardeningSummaryAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _firmwareClientDiagnostics.CreateScope("FirmwareResource.GenerateBinaryHardeningSummary");
+            using var scope = _firmwareClientDiagnostics.CreateScope("FirmwareResource.GetBinaryHardeningSummary");
             scope.Start();
             try
             {
-                var response = await _firmwareRestClient.GenerateBinaryHardeningSummaryAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                var response = await _firmwareRestClient.GetBinaryHardeningSummaryAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
                 return response;
             }
             catch (Exception e)
@@ -659,13 +659,13 @@ namespace Azure.ResourceManager.IotFirmwareDefense
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<BinaryHardeningSummary> GenerateBinaryHardeningSummary(CancellationToken cancellationToken = default)
+        public virtual Response<BinaryHardeningSummary> GetBinaryHardeningSummary(CancellationToken cancellationToken = default)
         {
-            using var scope = _firmwareClientDiagnostics.CreateScope("FirmwareResource.GenerateBinaryHardeningSummary");
+            using var scope = _firmwareClientDiagnostics.CreateScope("FirmwareResource.GetBinaryHardeningSummary");
             scope.Start();
             try
             {
-                var response = _firmwareRestClient.GenerateBinaryHardeningSummary(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
+                var response = _firmwareRestClient.GetBinaryHardeningSummary(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
                 return response;
             }
             catch (Exception e)
@@ -689,13 +689,13 @@ namespace Azure.ResourceManager.IotFirmwareDefense
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<BinaryHardening>> GenerateBinaryHardeningDetailsAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<BinaryHardening>> GetBinaryHardeningDetailsAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _firmwareClientDiagnostics.CreateScope("FirmwareResource.GenerateBinaryHardeningDetails");
+            using var scope = _firmwareClientDiagnostics.CreateScope("FirmwareResource.GetBinaryHardeningDetails");
             scope.Start();
             try
             {
-                var response = await _firmwareRestClient.GenerateBinaryHardeningDetailsAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                var response = await _firmwareRestClient.GetBinaryHardeningDetailsAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
                 return response;
             }
             catch (Exception e)
@@ -719,13 +719,13 @@ namespace Azure.ResourceManager.IotFirmwareDefense
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<BinaryHardening> GenerateBinaryHardeningDetails(CancellationToken cancellationToken = default)
+        public virtual Response<BinaryHardening> GetBinaryHardeningDetails(CancellationToken cancellationToken = default)
         {
-            using var scope = _firmwareClientDiagnostics.CreateScope("FirmwareResource.GenerateBinaryHardeningDetails");
+            using var scope = _firmwareClientDiagnostics.CreateScope("FirmwareResource.GetBinaryHardeningDetails");
             scope.Start();
             try
             {
-                var response = _firmwareRestClient.GenerateBinaryHardeningDetails(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
+                var response = _firmwareRestClient.GetBinaryHardeningDetails(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
                 return response;
             }
             catch (Exception e)
@@ -750,11 +750,11 @@ namespace Azure.ResourceManager.IotFirmwareDefense
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="PasswordHash" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<PasswordHash> GetGeneratePasswordHashListAsync(CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<PasswordHash> GetPasswordHashesAsync(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _firmwareRestClient.CreateListGeneratePasswordHashListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _firmwareRestClient.CreateListGeneratePasswordHashListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, PasswordHash.DeserializePasswordHash, _firmwareClientDiagnostics, Pipeline, "FirmwareResource.GetGeneratePasswordHashList", "value", "nextLink", cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _firmwareRestClient.CreateListPasswordHashesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _firmwareRestClient.CreateListPasswordHashesNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, PasswordHash.DeserializePasswordHash, _firmwareClientDiagnostics, Pipeline, "FirmwareResource.GetPasswordHashes", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -772,11 +772,11 @@ namespace Azure.ResourceManager.IotFirmwareDefense
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="PasswordHash" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<PasswordHash> GetGeneratePasswordHashList(CancellationToken cancellationToken = default)
+        public virtual Pageable<PasswordHash> GetPasswordHashes(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _firmwareRestClient.CreateListGeneratePasswordHashListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _firmwareRestClient.CreateListGeneratePasswordHashListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, PasswordHash.DeserializePasswordHash, _firmwareClientDiagnostics, Pipeline, "FirmwareResource.GetGeneratePasswordHashList", "value", "nextLink", cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _firmwareRestClient.CreateListPasswordHashesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _firmwareRestClient.CreateListPasswordHashesNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, PasswordHash.DeserializePasswordHash, _firmwareClientDiagnostics, Pipeline, "FirmwareResource.GetPasswordHashes", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -794,11 +794,11 @@ namespace Azure.ResourceManager.IotFirmwareDefense
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="Cve" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<Cve> GetGenerateCveListAsync(CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<Cve> GetCvesAsync(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _firmwareRestClient.CreateListGenerateCveListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _firmwareRestClient.CreateListGenerateCveListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, Cve.DeserializeCve, _firmwareClientDiagnostics, Pipeline, "FirmwareResource.GetGenerateCveList", "value", "nextLink", cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _firmwareRestClient.CreateListCvesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _firmwareRestClient.CreateListCvesNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, Cve.DeserializeCve, _firmwareClientDiagnostics, Pipeline, "FirmwareResource.GetCves", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -816,11 +816,11 @@ namespace Azure.ResourceManager.IotFirmwareDefense
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="Cve" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<Cve> GetGenerateCveList(CancellationToken cancellationToken = default)
+        public virtual Pageable<Cve> GetCves(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _firmwareRestClient.CreateListGenerateCveListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _firmwareRestClient.CreateListGenerateCveListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, Cve.DeserializeCve, _firmwareClientDiagnostics, Pipeline, "FirmwareResource.GetGenerateCveList", "value", "nextLink", cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _firmwareRestClient.CreateListCvesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _firmwareRestClient.CreateListCvesNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, Cve.DeserializeCve, _firmwareClientDiagnostics, Pipeline, "FirmwareResource.GetCves", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -837,13 +837,13 @@ namespace Azure.ResourceManager.IotFirmwareDefense
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<CveSummary>> GenerateCveSummaryAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<CveSummary>> GetCveSummaryAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _firmwareClientDiagnostics.CreateScope("FirmwareResource.GenerateCveSummary");
+            using var scope = _firmwareClientDiagnostics.CreateScope("FirmwareResource.GetCveSummary");
             scope.Start();
             try
             {
-                var response = await _firmwareRestClient.GenerateCveSummaryAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                var response = await _firmwareRestClient.GetCveSummaryAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
                 return response;
             }
             catch (Exception e)
@@ -867,13 +867,13 @@ namespace Azure.ResourceManager.IotFirmwareDefense
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<CveSummary> GenerateCveSummary(CancellationToken cancellationToken = default)
+        public virtual Response<CveSummary> GetCveSummary(CancellationToken cancellationToken = default)
         {
-            using var scope = _firmwareClientDiagnostics.CreateScope("FirmwareResource.GenerateCveSummary");
+            using var scope = _firmwareClientDiagnostics.CreateScope("FirmwareResource.GetCveSummary");
             scope.Start();
             try
             {
-                var response = _firmwareRestClient.GenerateCveSummary(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
+                var response = _firmwareRestClient.GetCveSummary(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
                 return response;
             }
             catch (Exception e)
@@ -897,13 +897,13 @@ namespace Azure.ResourceManager.IotFirmwareDefense
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<CryptoCertificateSummary>> GenerateCryptoCertificateSummaryAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<FirmwareCryptoCertificateSummary>> GetCryptoCertificateSummaryAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _firmwareClientDiagnostics.CreateScope("FirmwareResource.GenerateCryptoCertificateSummary");
+            using var scope = _firmwareClientDiagnostics.CreateScope("FirmwareResource.GetCryptoCertificateSummary");
             scope.Start();
             try
             {
-                var response = await _firmwareRestClient.GenerateCryptoCertificateSummaryAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                var response = await _firmwareRestClient.GetCryptoCertificateSummaryAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
                 return response;
             }
             catch (Exception e)
@@ -927,13 +927,13 @@ namespace Azure.ResourceManager.IotFirmwareDefense
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<CryptoCertificateSummary> GenerateCryptoCertificateSummary(CancellationToken cancellationToken = default)
+        public virtual Response<FirmwareCryptoCertificateSummary> GetCryptoCertificateSummary(CancellationToken cancellationToken = default)
         {
-            using var scope = _firmwareClientDiagnostics.CreateScope("FirmwareResource.GenerateCryptoCertificateSummary");
+            using var scope = _firmwareClientDiagnostics.CreateScope("FirmwareResource.GetCryptoCertificateSummary");
             scope.Start();
             try
             {
-                var response = _firmwareRestClient.GenerateCryptoCertificateSummary(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
+                var response = _firmwareRestClient.GetCryptoCertificateSummary(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
                 return response;
             }
             catch (Exception e)
@@ -957,13 +957,13 @@ namespace Azure.ResourceManager.IotFirmwareDefense
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<CryptoKeySummary>> GenerateCryptoKeySummaryAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<FirmwareCryptoKeySummary>> GetCryptoKeySummaryAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _firmwareClientDiagnostics.CreateScope("FirmwareResource.GenerateCryptoKeySummary");
+            using var scope = _firmwareClientDiagnostics.CreateScope("FirmwareResource.GetCryptoKeySummary");
             scope.Start();
             try
             {
-                var response = await _firmwareRestClient.GenerateCryptoKeySummaryAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                var response = await _firmwareRestClient.GetCryptoKeySummaryAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
                 return response;
             }
             catch (Exception e)
@@ -987,13 +987,13 @@ namespace Azure.ResourceManager.IotFirmwareDefense
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<CryptoKeySummary> GenerateCryptoKeySummary(CancellationToken cancellationToken = default)
+        public virtual Response<FirmwareCryptoKeySummary> GetCryptoKeySummary(CancellationToken cancellationToken = default)
         {
-            using var scope = _firmwareClientDiagnostics.CreateScope("FirmwareResource.GenerateCryptoKeySummary");
+            using var scope = _firmwareClientDiagnostics.CreateScope("FirmwareResource.GetCryptoKeySummary");
             scope.Start();
             try
             {
-                var response = _firmwareRestClient.GenerateCryptoKeySummary(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
+                var response = _firmwareRestClient.GetCryptoKeySummary(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
                 return response;
             }
             catch (Exception e)
@@ -1017,12 +1017,12 @@ namespace Azure.ResourceManager.IotFirmwareDefense
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="CryptoCertificate" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<CryptoCertificate> GetGenerateCryptoCertificateListAsync(CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="FirmwareCryptoCertificate" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<FirmwareCryptoCertificate> GetCryptoCertificatesAsync(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _firmwareRestClient.CreateListGenerateCryptoCertificateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _firmwareRestClient.CreateListGenerateCryptoCertificateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, CryptoCertificate.DeserializeCryptoCertificate, _firmwareClientDiagnostics, Pipeline, "FirmwareResource.GetGenerateCryptoCertificateList", "value", "nextLink", cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _firmwareRestClient.CreateListCryptoCertificatesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _firmwareRestClient.CreateListCryptoCertificatesNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, FirmwareCryptoCertificate.DeserializeFirmwareCryptoCertificate, _firmwareClientDiagnostics, Pipeline, "FirmwareResource.GetCryptoCertificates", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -1039,12 +1039,12 @@ namespace Azure.ResourceManager.IotFirmwareDefense
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="CryptoCertificate" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<CryptoCertificate> GetGenerateCryptoCertificateList(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="FirmwareCryptoCertificate" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<FirmwareCryptoCertificate> GetCryptoCertificates(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _firmwareRestClient.CreateListGenerateCryptoCertificateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _firmwareRestClient.CreateListGenerateCryptoCertificateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, CryptoCertificate.DeserializeCryptoCertificate, _firmwareClientDiagnostics, Pipeline, "FirmwareResource.GetGenerateCryptoCertificateList", "value", "nextLink", cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _firmwareRestClient.CreateListCryptoCertificatesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _firmwareRestClient.CreateListCryptoCertificatesNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, FirmwareCryptoCertificate.DeserializeFirmwareCryptoCertificate, _firmwareClientDiagnostics, Pipeline, "FirmwareResource.GetCryptoCertificates", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -1061,12 +1061,12 @@ namespace Azure.ResourceManager.IotFirmwareDefense
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="CryptoKey" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<CryptoKey> GetGenerateCryptoKeyListAsync(CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="FirmwareCryptoKey" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<FirmwareCryptoKey> GetCryptoKeysAsync(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _firmwareRestClient.CreateListGenerateCryptoKeyListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _firmwareRestClient.CreateListGenerateCryptoKeyListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, CryptoKey.DeserializeCryptoKey, _firmwareClientDiagnostics, Pipeline, "FirmwareResource.GetGenerateCryptoKeyList", "value", "nextLink", cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _firmwareRestClient.CreateListCryptoKeysRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _firmwareRestClient.CreateListCryptoKeysNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, FirmwareCryptoKey.DeserializeFirmwareCryptoKey, _firmwareClientDiagnostics, Pipeline, "FirmwareResource.GetCryptoKeys", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -1083,12 +1083,12 @@ namespace Azure.ResourceManager.IotFirmwareDefense
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="CryptoKey" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<CryptoKey> GetGenerateCryptoKeyList(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="FirmwareCryptoKey" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<FirmwareCryptoKey> GetCryptoKeys(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _firmwareRestClient.CreateListGenerateCryptoKeyListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _firmwareRestClient.CreateListGenerateCryptoKeyListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, CryptoKey.DeserializeCryptoKey, _firmwareClientDiagnostics, Pipeline, "FirmwareResource.GetGenerateCryptoKeyList", "value", "nextLink", cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _firmwareRestClient.CreateListCryptoKeysRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _firmwareRestClient.CreateListCryptoKeysNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, FirmwareCryptoKey.DeserializeFirmwareCryptoKey, _firmwareClientDiagnostics, Pipeline, "FirmwareResource.GetCryptoKeys", "value", "nextLink", cancellationToken);
         }
     }
 }

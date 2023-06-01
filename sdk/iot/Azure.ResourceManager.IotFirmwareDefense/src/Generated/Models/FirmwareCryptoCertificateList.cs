@@ -11,25 +11,25 @@ using Azure.Core;
 namespace Azure.ResourceManager.IotFirmwareDefense.Models
 {
     /// <summary> Crypto certificates list. </summary>
-    internal partial class CryptoCertificateList
+    internal partial class FirmwareCryptoCertificateList
     {
-        /// <summary> Initializes a new instance of CryptoCertificateList. </summary>
-        internal CryptoCertificateList()
+        /// <summary> Initializes a new instance of FirmwareCryptoCertificateList. </summary>
+        internal FirmwareCryptoCertificateList()
         {
-            Value = new ChangeTrackingList<CryptoCertificate>();
+            Value = new ChangeTrackingList<FirmwareCryptoCertificate>();
         }
 
-        /// <summary> Initializes a new instance of CryptoCertificateList. </summary>
+        /// <summary> Initializes a new instance of FirmwareCryptoCertificateList. </summary>
         /// <param name="value"> Crypto certificates list. </param>
         /// <param name="nextLink"> The uri to fetch the next page of asset. </param>
-        internal CryptoCertificateList(IReadOnlyList<CryptoCertificate> value, string nextLink)
+        internal FirmwareCryptoCertificateList(IReadOnlyList<FirmwareCryptoCertificate> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
         /// <summary> Crypto certificates list. </summary>
-        public IReadOnlyList<CryptoCertificate> Value { get; }
+        public IReadOnlyList<FirmwareCryptoCertificate> Value { get; }
         /// <summary> The uri to fetch the next page of asset. </summary>
         public string NextLink { get; }
     }

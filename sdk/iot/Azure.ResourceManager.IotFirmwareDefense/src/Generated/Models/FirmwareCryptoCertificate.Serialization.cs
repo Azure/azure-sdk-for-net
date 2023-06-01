@@ -12,9 +12,9 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.IotFirmwareDefense.Models
 {
-    public partial class CryptoCertificate
+    public partial class FirmwareCryptoCertificate
     {
-        internal static CryptoCertificate DeserializeCryptoCertificate(JsonElement element)
+        internal static FirmwareCryptoCertificate DeserializeFirmwareCryptoCertificate(JsonElement element)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -22,8 +22,8 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
             }
             Optional<string> cryptoCertId = default;
             Optional<string> name = default;
-            Optional<CryptoCertificateEntity> subject = default;
-            Optional<CryptoCertificateEntity> issuer = default;
+            Optional<FirmwareCryptoCertificateEntity> subject = default;
+            Optional<FirmwareCryptoCertificateEntity> issuer = default;
             Optional<DateTimeOffset?> issuedDate = default;
             Optional<DateTimeOffset?> expirationDate = default;
             Optional<string> role = default;
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
                         subject = null;
                         continue;
                     }
-                    subject = CryptoCertificateEntity.DeserializeCryptoCertificateEntity(property.Value);
+                    subject = FirmwareCryptoCertificateEntity.DeserializeFirmwareCryptoCertificateEntity(property.Value);
                     continue;
                 }
                 if (property.NameEquals("issuer"u8))
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
                         issuer = null;
                         continue;
                     }
-                    issuer = CryptoCertificateEntity.DeserializeCryptoCertificateEntity(property.Value);
+                    issuer = FirmwareCryptoCertificateEntity.DeserializeFirmwareCryptoCertificateEntity(property.Value);
                     continue;
                 }
                 if (property.NameEquals("issuedDate"u8))
@@ -253,7 +253,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
                     continue;
                 }
             }
-            return new CryptoCertificate(cryptoCertId.Value, name.Value, subject.Value, issuer.Value, Optional.ToNullable(issuedDate), Optional.ToNullable(expirationDate), role.Value, signatureAlgorithm.Value, Optional.ToNullable(keySize), keyAlgorithm.Value, encoding.Value, serialNumber.Value, fingerprint.Value, Optional.ToList(usage), Optional.ToList(filePaths), pairedKey.Value, Optional.ToNullable(isExpired), Optional.ToNullable(isSelfSigned), Optional.ToNullable(isWeakSignature), Optional.ToNullable(isShortKeySize));
+            return new FirmwareCryptoCertificate(cryptoCertId.Value, name.Value, subject.Value, issuer.Value, Optional.ToNullable(issuedDate), Optional.ToNullable(expirationDate), role.Value, signatureAlgorithm.Value, Optional.ToNullable(keySize), keyAlgorithm.Value, encoding.Value, serialNumber.Value, fingerprint.Value, Optional.ToList(usage), Optional.ToList(filePaths), pairedKey.Value, Optional.ToNullable(isExpired), Optional.ToNullable(isSelfSigned), Optional.ToNullable(isWeakSignature), Optional.ToNullable(isShortKeySize));
         }
     }
 }

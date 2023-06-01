@@ -66,21 +66,21 @@ namespace Azure.ResourceManager.IotFirmwareDefense
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="firmwareId"> The id of the firmware. </param>
+        /// <param name="firmwareName"> The id of the firmware. </param>
         /// <param name="data"> Details of the firmware being created or updated. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="firmwareId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="firmwareId"/> or <paramref name="data"/> is null. </exception>
-        public virtual async Task<ArmOperation<FirmwareResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string firmwareId, FirmwareData data, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentException"> <paramref name="firmwareName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="firmwareName"/> or <paramref name="data"/> is null. </exception>
+        public virtual async Task<ArmOperation<FirmwareResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string firmwareName, FirmwareData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(firmwareId, nameof(firmwareId));
+            Argument.AssertNotNullOrEmpty(firmwareName, nameof(firmwareName));
             Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _firmwareClientDiagnostics.CreateScope("FirmwareCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = await _firmwareRestClient.CreateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, firmwareId, data, cancellationToken).ConfigureAwait(false);
+                var response = await _firmwareRestClient.CreateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, firmwareName, data, cancellationToken).ConfigureAwait(false);
                 var operation = new IotFirmwareDefenseArmOperation<FirmwareResource>(Response.FromValue(new FirmwareResource(Client, response), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
@@ -107,21 +107,21 @@ namespace Azure.ResourceManager.IotFirmwareDefense
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="firmwareId"> The id of the firmware. </param>
+        /// <param name="firmwareName"> The id of the firmware. </param>
         /// <param name="data"> Details of the firmware being created or updated. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="firmwareId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="firmwareId"/> or <paramref name="data"/> is null. </exception>
-        public virtual ArmOperation<FirmwareResource> CreateOrUpdate(WaitUntil waitUntil, string firmwareId, FirmwareData data, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentException"> <paramref name="firmwareName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="firmwareName"/> or <paramref name="data"/> is null. </exception>
+        public virtual ArmOperation<FirmwareResource> CreateOrUpdate(WaitUntil waitUntil, string firmwareName, FirmwareData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(firmwareId, nameof(firmwareId));
+            Argument.AssertNotNullOrEmpty(firmwareName, nameof(firmwareName));
             Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _firmwareClientDiagnostics.CreateScope("FirmwareCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _firmwareRestClient.Create(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, firmwareId, data, cancellationToken);
+                var response = _firmwareRestClient.Create(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, firmwareName, data, cancellationToken);
                 var operation = new IotFirmwareDefenseArmOperation<FirmwareResource>(Response.FromValue(new FirmwareResource(Client, response), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
@@ -147,19 +147,19 @@ namespace Azure.ResourceManager.IotFirmwareDefense
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="firmwareId"> The id of the firmware. </param>
+        /// <param name="firmwareName"> The id of the firmware. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="firmwareId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="firmwareId"/> is null. </exception>
-        public virtual async Task<Response<FirmwareResource>> GetAsync(string firmwareId, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentException"> <paramref name="firmwareName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="firmwareName"/> is null. </exception>
+        public virtual async Task<Response<FirmwareResource>> GetAsync(string firmwareName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(firmwareId, nameof(firmwareId));
+            Argument.AssertNotNullOrEmpty(firmwareName, nameof(firmwareName));
 
             using var scope = _firmwareClientDiagnostics.CreateScope("FirmwareCollection.Get");
             scope.Start();
             try
             {
-                var response = await _firmwareRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, firmwareId, cancellationToken).ConfigureAwait(false);
+                var response = await _firmwareRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, firmwareName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new FirmwareResource(Client, response.Value), response.GetRawResponse());
@@ -184,19 +184,19 @@ namespace Azure.ResourceManager.IotFirmwareDefense
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="firmwareId"> The id of the firmware. </param>
+        /// <param name="firmwareName"> The id of the firmware. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="firmwareId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="firmwareId"/> is null. </exception>
-        public virtual Response<FirmwareResource> Get(string firmwareId, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentException"> <paramref name="firmwareName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="firmwareName"/> is null. </exception>
+        public virtual Response<FirmwareResource> Get(string firmwareName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(firmwareId, nameof(firmwareId));
+            Argument.AssertNotNullOrEmpty(firmwareName, nameof(firmwareName));
 
             using var scope = _firmwareClientDiagnostics.CreateScope("FirmwareCollection.Get");
             scope.Start();
             try
             {
-                var response = _firmwareRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, firmwareId, cancellationToken);
+                var response = _firmwareRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, firmwareName, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new FirmwareResource(Client, response.Value), response.GetRawResponse());
@@ -265,19 +265,19 @@ namespace Azure.ResourceManager.IotFirmwareDefense
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="firmwareId"> The id of the firmware. </param>
+        /// <param name="firmwareName"> The id of the firmware. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="firmwareId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="firmwareId"/> is null. </exception>
-        public virtual async Task<Response<bool>> ExistsAsync(string firmwareId, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentException"> <paramref name="firmwareName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="firmwareName"/> is null. </exception>
+        public virtual async Task<Response<bool>> ExistsAsync(string firmwareName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(firmwareId, nameof(firmwareId));
+            Argument.AssertNotNullOrEmpty(firmwareName, nameof(firmwareName));
 
             using var scope = _firmwareClientDiagnostics.CreateScope("FirmwareCollection.Exists");
             scope.Start();
             try
             {
-                var response = await _firmwareRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, firmwareId, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _firmwareRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, firmwareName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -300,19 +300,19 @@ namespace Azure.ResourceManager.IotFirmwareDefense
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="firmwareId"> The id of the firmware. </param>
+        /// <param name="firmwareName"> The id of the firmware. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="firmwareId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="firmwareId"/> is null. </exception>
-        public virtual Response<bool> Exists(string firmwareId, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentException"> <paramref name="firmwareName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="firmwareName"/> is null. </exception>
+        public virtual Response<bool> Exists(string firmwareName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(firmwareId, nameof(firmwareId));
+            Argument.AssertNotNullOrEmpty(firmwareName, nameof(firmwareName));
 
             using var scope = _firmwareClientDiagnostics.CreateScope("FirmwareCollection.Exists");
             scope.Start();
             try
             {
-                var response = _firmwareRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, firmwareId, cancellationToken: cancellationToken);
+                var response = _firmwareRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, firmwareName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)

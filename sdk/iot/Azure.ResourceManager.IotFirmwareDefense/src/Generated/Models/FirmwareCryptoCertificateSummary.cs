@@ -8,14 +8,14 @@
 namespace Azure.ResourceManager.IotFirmwareDefense.Models
 {
     /// <summary> Cryptographic certificate summary values. </summary>
-    public partial class CryptoCertificateSummary
+    public partial class FirmwareCryptoCertificateSummary
     {
-        /// <summary> Initializes a new instance of CryptoCertificateSummary. </summary>
-        internal CryptoCertificateSummary()
+        /// <summary> Initializes a new instance of FirmwareCryptoCertificateSummary. </summary>
+        internal FirmwareCryptoCertificateSummary()
         {
         }
 
-        /// <summary> Initializes a new instance of CryptoCertificateSummary. </summary>
+        /// <summary> Initializes a new instance of FirmwareCryptoCertificateSummary. </summary>
         /// <param name="totalCertificates"> Total number of certificates found. </param>
         /// <param name="pairedKeys"> Total number of paired private keys found for the certificates. </param>
         /// <param name="expired"> Total number of expired certificates found. </param>
@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
         /// <param name="weakSignature"> Total number of certificates found using a weak signature algorithm. </param>
         /// <param name="selfSigned"> Total number of certificates found that are self-signed. </param>
         /// <param name="shortKeySize"> Total number of certificates found that have an insecure key size for the key algorithm. </param>
-        internal CryptoCertificateSummary(long? totalCertificates, long? pairedKeys, long? expired, long? expiringSoon, long? weakSignature, long? selfSigned, long? shortKeySize)
+        internal FirmwareCryptoCertificateSummary(long? totalCertificates, long? pairedKeys, long? expired, long? expiringSoon, long? weakSignature, long? selfSigned, long? shortKeySize)
         {
             TotalCertificates = totalCertificates;
             PairedKeys = pairedKeys;

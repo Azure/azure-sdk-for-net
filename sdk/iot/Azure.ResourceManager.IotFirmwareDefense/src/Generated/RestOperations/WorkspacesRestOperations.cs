@@ -507,7 +507,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense
             }
         }
 
-        internal HttpMessage CreateGenerateUploadUrlRequest(string subscriptionId, string resourceGroupName, string workspaceName, GenerateUploadUrlContent content)
+        internal HttpMessage CreateGenerateUploadUrlRequest(string subscriptionId, string resourceGroupName, string workspaceName, UploadUrlContent content)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -540,7 +540,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="workspaceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<UrlToken>> GenerateUploadUrlAsync(string subscriptionId, string resourceGroupName, string workspaceName, GenerateUploadUrlContent content, CancellationToken cancellationToken = default)
+        public async Task<Response<UriToken>> GenerateUploadUrlAsync(string subscriptionId, string resourceGroupName, string workspaceName, UploadUrlContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -553,9 +553,9 @@ namespace Azure.ResourceManager.IotFirmwareDefense
             {
                 case 200:
                     {
-                        UrlToken value = default;
+                        UriToken value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = UrlToken.DeserializeUrlToken(document.RootElement);
+                        value = UriToken.DeserializeUriToken(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -571,7 +571,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="workspaceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<UrlToken> GenerateUploadUrl(string subscriptionId, string resourceGroupName, string workspaceName, GenerateUploadUrlContent content, CancellationToken cancellationToken = default)
+        public Response<UriToken> GenerateUploadUrl(string subscriptionId, string resourceGroupName, string workspaceName, UploadUrlContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -584,9 +584,9 @@ namespace Azure.ResourceManager.IotFirmwareDefense
             {
                 case 200:
                     {
-                        UrlToken value = default;
+                        UriToken value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = UrlToken.DeserializeUrlToken(document.RootElement);
+                        value = UriToken.DeserializeUriToken(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

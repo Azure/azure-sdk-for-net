@@ -108,14 +108,14 @@ namespace Azure.ResourceManager.IotFirmwareDefense
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="firmwareId"> The id of the firmware. </param>
+        /// <param name="firmwareName"> The id of the firmware. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="firmwareId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="firmwareId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="firmwareName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="firmwareName"/> is null. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<FirmwareResource>> GetFirmwareAsync(string firmwareId, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<FirmwareResource>> GetFirmwareAsync(string firmwareName, CancellationToken cancellationToken = default)
         {
-            return await GetFirmwares().GetAsync(firmwareId, cancellationToken).ConfigureAwait(false);
+            return await GetFirmwares().GetAsync(firmwareName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -131,14 +131,14 @@ namespace Azure.ResourceManager.IotFirmwareDefense
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="firmwareId"> The id of the firmware. </param>
+        /// <param name="firmwareName"> The id of the firmware. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="firmwareId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="firmwareId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="firmwareName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="firmwareName"/> is null. </exception>
         [ForwardsClientCalls]
-        public virtual Response<FirmwareResource> GetFirmware(string firmwareId, CancellationToken cancellationToken = default)
+        public virtual Response<FirmwareResource> GetFirmware(string firmwareName, CancellationToken cancellationToken = default)
         {
-            return GetFirmwares().Get(firmwareId, cancellationToken);
+            return GetFirmwares().Get(firmwareName, cancellationToken);
         }
 
         /// <summary>
@@ -357,7 +357,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense
         /// <param name="content"> Parameters when requesting a URL to upload firmware. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual async Task<Response<UrlToken>> GenerateUploadUrlAsync(GenerateUploadUrlContent content, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<UriToken>> GenerateUploadUrlAsync(UploadUrlContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -391,7 +391,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense
         /// <param name="content"> Parameters when requesting a URL to upload firmware. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual Response<UrlToken> GenerateUploadUrl(GenerateUploadUrlContent content, CancellationToken cancellationToken = default)
+        public virtual Response<UriToken> GenerateUploadUrl(UploadUrlContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 

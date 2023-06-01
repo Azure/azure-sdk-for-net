@@ -8,14 +8,14 @@
 namespace Azure.ResourceManager.IotFirmwareDefense.Models
 {
     /// <summary> Properties for generating an upload URL. </summary>
-    public partial class GenerateUploadUrlContent
+    public partial class UploadUrlContent
     {
-        /// <summary> Initializes a new instance of GenerateUploadUrlContent. </summary>
-        public GenerateUploadUrlContent()
+        /// <summary> Initializes a new instance of UploadUrlContent. </summary>
+        public UploadUrlContent()
         {
         }
 
         /// <summary> A unique ID for the firmware to be uploaded. </summary>
-        public string FirmwareId { get; set; }
+        public string FirmwareName { get; set; }
     }
 }

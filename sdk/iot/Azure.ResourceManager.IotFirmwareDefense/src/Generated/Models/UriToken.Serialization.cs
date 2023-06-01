@@ -11,9 +11,9 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.IotFirmwareDefense.Models
 {
-    public partial class UrlToken
+    public partial class UriToken
     {
-        internal static UrlToken DeserializeUrlToken(JsonElement element)
+        internal static UriToken DeserializeUriToken(JsonElement element)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
                     continue;
                 }
             }
-            return new UrlToken(url.Value, uploadUrl.Value);
+            return new UriToken(url.Value, uploadUrl.Value);
         }
     }
 }

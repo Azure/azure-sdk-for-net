@@ -11,15 +11,15 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.IotFirmwareDefense.Models
 {
-    internal partial class CryptoCertificateList
+    internal partial class FirmwareCryptoCertificateList
     {
-        internal static CryptoCertificateList DeserializeCryptoCertificateList(JsonElement element)
+        internal static FirmwareCryptoCertificateList DeserializeFirmwareCryptoCertificateList(JsonElement element)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<IReadOnlyList<CryptoCertificate>> value = default;
+            Optional<IReadOnlyList<FirmwareCryptoCertificate>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -29,10 +29,10 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
                     {
                         continue;
                     }
-                    List<CryptoCertificate> array = new List<CryptoCertificate>();
+                    List<FirmwareCryptoCertificate> array = new List<FirmwareCryptoCertificate>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(CryptoCertificate.DeserializeCryptoCertificate(item));
+                        array.Add(FirmwareCryptoCertificate.DeserializeFirmwareCryptoCertificate(item));
                     }
                     value = array;
                     continue;
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
                     continue;
                 }
             }
-            return new CryptoCertificateList(Optional.ToList(value), nextLink.Value);
+            return new FirmwareCryptoCertificateList(Optional.ToList(value), nextLink.Value);
         }
     }
 }

@@ -10,68 +10,73 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.IotFirmwareDefense.Models
 {
-    public partial class CryptoKeySummary
+    public partial class FirmwareCryptoCertificateEntity
     {
-        internal static CryptoKeySummary DeserializeCryptoKeySummary(JsonElement element)
+        internal static FirmwareCryptoCertificateEntity DeserializeFirmwareCryptoCertificateEntity(JsonElement element)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<long> totalKeys = default;
-            Optional<long> publicKeys = default;
-            Optional<long> privateKeys = default;
-            Optional<long> pairedKeys = default;
-            Optional<long> shortKeySize = default;
+            Optional<string> commonName = default;
+            Optional<string> organization = default;
+            Optional<string> organizationalUnit = default;
+            Optional<string> state = default;
+            Optional<string> country = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("totalKeys"u8))
+                if (property.NameEquals("commonName"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        commonName = null;
                         continue;
                     }
-                    totalKeys = property.Value.GetInt64();
+                    commonName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("publicKeys"u8))
+                if (property.NameEquals("organization"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        organization = null;
                         continue;
                     }
-                    publicKeys = property.Value.GetInt64();
+                    organization = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("privateKeys"u8))
+                if (property.NameEquals("organizationalUnit"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        organizationalUnit = null;
                         continue;
                     }
-                    privateKeys = property.Value.GetInt64();
+                    organizationalUnit = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("pairedKeys"u8))
+                if (property.NameEquals("state"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        state = null;
                         continue;
                     }
-                    pairedKeys = property.Value.GetInt64();
+                    state = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("shortKeySize"u8))
+                if (property.NameEquals("country"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        country = null;
                         continue;
                     }
-                    shortKeySize = property.Value.GetInt64();
+                    country = property.Value.GetString();
                     continue;
                 }
             }
-            return new CryptoKeySummary(Optional.ToNullable(totalKeys), Optional.ToNullable(publicKeys), Optional.ToNullable(privateKeys), Optional.ToNullable(pairedKeys), Optional.ToNullable(shortKeySize));
+            return new FirmwareCryptoCertificateEntity(commonName.Value, organization.Value, organizationalUnit.Value, state.Value, country.Value);
         }
     }
 }

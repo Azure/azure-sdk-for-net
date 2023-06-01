@@ -11,17 +11,17 @@ using Azure.Core;
 namespace Azure.ResourceManager.IotFirmwareDefense.Models
 {
     /// <summary> Crypto key properties. </summary>
-    public partial class CryptoKey
+    public partial class FirmwareCryptoKey
     {
-        /// <summary> Initializes a new instance of CryptoKey. </summary>
-        internal CryptoKey()
+        /// <summary> Initializes a new instance of FirmwareCryptoKey. </summary>
+        internal FirmwareCryptoKey()
         {
             Usage = new ChangeTrackingList<string>();
             FilePaths = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of CryptoKey. </summary>
-        /// <param name="cryptoKeyId"> ID for the key. </param>
+        /// <summary> Initializes a new instance of FirmwareCryptoKey. </summary>
+        /// <param name="firmwareCryptoKeyId"> ID for the key. </param>
         /// <param name="keyType"> Type of the key (public or private). </param>
         /// <param name="keySize"> Size of the key in bits. </param>
         /// <param name="keyAlgorithm"> Key algorithm name. </param>
@@ -29,9 +29,9 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
         /// <param name="filePaths"> List of files paths for this key. </param>
         /// <param name="pairedKey"> A matching paired key or certificate. </param>
         /// <param name="isShortKeySize"> Indicates the key size is considered too small to be secure for the algorithm. </param>
-        internal CryptoKey(string cryptoKeyId, string keyType, long? keySize, string keyAlgorithm, IReadOnlyList<string> usage, IReadOnlyList<string> filePaths, PairedKey pairedKey, IsShortKeySize? isShortKeySize)
+        internal FirmwareCryptoKey(string firmwareCryptoKeyId, string keyType, long? keySize, string keyAlgorithm, IReadOnlyList<string> usage, IReadOnlyList<string> filePaths, PairedKey pairedKey, IsShortKeySize? isShortKeySize)
         {
-            CryptoKeyId = cryptoKeyId;
+            FirmwareCryptoKeyId = firmwareCryptoKeyId;
             KeyType = keyType;
             KeySize = keySize;
             KeyAlgorithm = keyAlgorithm;
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
         }
 
         /// <summary> ID for the key. </summary>
-        public string CryptoKeyId { get; }
+        public string FirmwareCryptoKeyId { get; }
         /// <summary> Type of the key (public or private). </summary>
         public string KeyType { get; }
         /// <summary> Size of the key in bits. </summary>

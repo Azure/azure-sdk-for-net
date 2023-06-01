@@ -45,5 +45,29 @@ rename-rules:
   SSO: Sso
   URI: Uri
   Etag: ETag|etag
+  FirmwareId: FirmwareName
+  UrlToken: UriToken
+  CryptoKey: FirmwareCryptoKey
+  CryptoCertificate: FirmwareCryptoCertificate
+  GetGenerate: Get
+  GenerateBinaryHardeningList: BinaryHardeningResults
+  GenerateComponentList: SbomComponents
+  GenerateCryptoCertificateList: CryptoCertificates
+  GenerateCryptoKeyList: CryptoKeys
+  GenerateCveList: Cves
+  GeneratePasswordHashList: PasswordHashes
+  GenerateBinaryHardeningDetails: GetBinaryHardeningDetails
+  GenerateBinaryHardeningSummary: GetBinaryHardeningSummary
+  GenerateComponentDetails: GetComponentDetails
+  GenerateCveSummary: GetCveSummary
+  GenerateCryptoCertificateSummary: GetCryptoCertificateSummary
+  GenerateCryptoKeySummary: GetCryptoKeySummary
+  GenerateSummary: GetFirmwareSummary
+
+rename-mapping:
+  CveLink.Href: Href|Uri
+  GenerateUploadUrlRequest: UploadUrlRequest
+  Models.Status: AnalysisStatus
+  Component: SbomComponent
 
 ```

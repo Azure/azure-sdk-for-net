@@ -12,9 +12,9 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.IotFirmwareDefense.Models
 {
-    public partial class Component
+    public partial class SbomComponent
     {
-        internal static Component DeserializeComponent(JsonElement element)
+        internal static SbomComponent DeserializeSbomComponent(JsonElement element)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
                     continue;
                 }
             }
-            return new Component(componentId.Value, componentName.Value, version.Value, license.Value, Optional.ToNullable(releaseDate), Optional.ToList(paths), Optional.ToNullable(isUpdateAvailable));
+            return new SbomComponent(componentId.Value, componentName.Value, version.Value, license.Value, Optional.ToNullable(releaseDate), Optional.ToList(paths), Optional.ToNullable(isUpdateAvailable));
         }
     }
 }

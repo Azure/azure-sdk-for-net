@@ -11,15 +11,15 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.IotFirmwareDefense.Models
 {
-    public partial class CryptoKey
+    public partial class FirmwareCryptoKey
     {
-        internal static CryptoKey DeserializeCryptoKey(JsonElement element)
+        internal static FirmwareCryptoKey DeserializeFirmwareCryptoKey(JsonElement element)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<string> cryptoKeyId = default;
+            Optional<string> firmwareCryptoKeyId = default;
             Optional<string> keyType = default;
             Optional<long?> keySize = default;
             Optional<string> keyAlgorithm = default;
@@ -33,10 +33,10 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        cryptoKeyId = null;
+                        firmwareCryptoKeyId = null;
                         continue;
                     }
-                    cryptoKeyId = property.Value.GetString();
+                    firmwareCryptoKeyId = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("keyType"u8))
@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
                     continue;
                 }
             }
-            return new CryptoKey(cryptoKeyId.Value, keyType.Value, Optional.ToNullable(keySize), keyAlgorithm.Value, Optional.ToList(usage), Optional.ToList(filePaths), pairedKey.Value, Optional.ToNullable(isShortKeySize));
+            return new FirmwareCryptoKey(firmwareCryptoKeyId.Value, keyType.Value, Optional.ToNullable(keySize), keyAlgorithm.Value, Optional.ToList(usage), Optional.ToList(filePaths), pairedKey.Value, Optional.ToNullable(isShortKeySize));
         }
     }
 }

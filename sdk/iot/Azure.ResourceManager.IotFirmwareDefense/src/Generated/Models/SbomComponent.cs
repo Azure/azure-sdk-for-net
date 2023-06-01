@@ -12,15 +12,15 @@ using Azure.Core;
 namespace Azure.ResourceManager.IotFirmwareDefense.Models
 {
     /// <summary> Component of a firmware. </summary>
-    public partial class Component
+    public partial class SbomComponent
     {
-        /// <summary> Initializes a new instance of Component. </summary>
-        internal Component()
+        /// <summary> Initializes a new instance of SbomComponent. </summary>
+        internal SbomComponent()
         {
             Paths = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of Component. </summary>
+        /// <summary> Initializes a new instance of SbomComponent. </summary>
         /// <param name="componentId"> ID for the component. </param>
         /// <param name="componentName"> Name for the component. </param>
         /// <param name="version"> Version for the component. </param>
@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
         /// <param name="releaseOn"> Release date for the component. </param>
         /// <param name="paths"> Paths of the component. </param>
         /// <param name="isUpdateAvailable"> Flag if new update is available for the component. </param>
-        internal Component(string componentId, string componentName, string version, string license, DateTimeOffset? releaseOn, IReadOnlyList<string> paths, IsUpdateAvailable? isUpdateAvailable)
+        internal SbomComponent(string componentId, string componentName, string version, string license, DateTimeOffset? releaseOn, IReadOnlyList<string> paths, IsUpdateAvailable? isUpdateAvailable)
         {
             ComponentId = componentId;
             ComponentName = componentName;

@@ -10,9 +10,9 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.IotFirmwareDefense.Models
 {
-    public partial class CryptoCertificateSummary
+    public partial class FirmwareCryptoCertificateSummary
     {
-        internal static CryptoCertificateSummary DeserializeCryptoCertificateSummary(JsonElement element)
+        internal static FirmwareCryptoCertificateSummary DeserializeFirmwareCryptoCertificateSummary(JsonElement element)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
                     continue;
                 }
             }
-            return new CryptoCertificateSummary(Optional.ToNullable(totalCertificates), Optional.ToNullable(pairedKeys), Optional.ToNullable(expired), Optional.ToNullable(expiringSoon), Optional.ToNullable(weakSignature), Optional.ToNullable(selfSigned), Optional.ToNullable(shortKeySize));
+            return new FirmwareCryptoCertificateSummary(Optional.ToNullable(totalCertificates), Optional.ToNullable(pairedKeys), Optional.ToNullable(expired), Optional.ToNullable(expiringSoon), Optional.ToNullable(weakSignature), Optional.ToNullable(selfSigned), Optional.ToNullable(shortKeySize));
         }
     }
 }

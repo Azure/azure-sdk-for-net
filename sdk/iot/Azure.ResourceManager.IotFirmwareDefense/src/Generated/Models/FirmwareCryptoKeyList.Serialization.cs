@@ -11,15 +11,15 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.IotFirmwareDefense.Models
 {
-    internal partial class CryptoKeyList
+    internal partial class FirmwareCryptoKeyList
     {
-        internal static CryptoKeyList DeserializeCryptoKeyList(JsonElement element)
+        internal static FirmwareCryptoKeyList DeserializeFirmwareCryptoKeyList(JsonElement element)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<IReadOnlyList<CryptoKey>> value = default;
+            Optional<IReadOnlyList<FirmwareCryptoKey>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -29,10 +29,10 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
                     {
                         continue;
                     }
-                    List<CryptoKey> array = new List<CryptoKey>();
+                    List<FirmwareCryptoKey> array = new List<FirmwareCryptoKey>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(CryptoKey.DeserializeCryptoKey(item));
+                        array.Add(FirmwareCryptoKey.DeserializeFirmwareCryptoKey(item));
                     }
                     value = array;
                     continue;
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
                     continue;
                 }
             }
-            return new CryptoKeyList(Optional.ToList(value), nextLink.Value);
+            return new FirmwareCryptoKeyList(Optional.ToList(value), nextLink.Value);
         }
     }
 }

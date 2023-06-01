@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<Component>> value = default;
+            Optional<IReadOnlyList<SbomComponent>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -29,10 +29,10 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
                     {
                         continue;
                     }
-                    List<Component> array = new List<Component>();
+                    List<SbomComponent> array = new List<SbomComponent>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(Component.DeserializeComponent(item));
+                        array.Add(SbomComponent.DeserializeSbomComponent(item));
                     }
                     value = array;
                     continue;

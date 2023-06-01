@@ -16,20 +16,20 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
         /// <summary> Initializes a new instance of ComponentList. </summary>
         internal ComponentList()
         {
-            Value = new ChangeTrackingList<Component>();
+            Value = new ChangeTrackingList<SbomComponent>();
         }
 
         /// <summary> Initializes a new instance of ComponentList. </summary>
         /// <param name="value"> The list of components. </param>
         /// <param name="nextLink"> The uri to fetch the next page of asset. </param>
-        internal ComponentList(IReadOnlyList<Component> value, string nextLink)
+        internal ComponentList(IReadOnlyList<SbomComponent> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
         /// <summary> The list of components. </summary>
-        public IReadOnlyList<Component> Value { get; }
+        public IReadOnlyList<SbomComponent> Value { get; }
         /// <summary> The uri to fetch the next page of asset. </summary>
         public string NextLink { get; }
     }

@@ -39,13 +39,13 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
             return new FirmwareData(id, name, resourceType, systemData, fileName, vendor, model, version, description, fileSize, status, statusMessages?.ToList(), provisioningState);
         }
 
-        /// <summary> Initializes a new instance of UrlToken. </summary>
+        /// <summary> Initializes a new instance of UriToken. </summary>
         /// <param name="uri"> SAS URL for creating or accessing a blob file. </param>
         /// <param name="uploadUri"> SAS URL for file uploading. Kept for backwards compatibility. </param>
-        /// <returns> A new <see cref="Models.UrlToken"/> instance for mocking. </returns>
-        public static UrlToken UrlToken(Uri uri = null, Uri uploadUri = null)
+        /// <returns> A new <see cref="Models.UriToken"/> instance for mocking. </returns>
+        public static UriToken UriToken(Uri uri = null, Uri uploadUri = null)
         {
-            return new UrlToken(uri, uploadUri);
+            return new UriToken(uri, uploadUri);
         }
 
         /// <summary> Initializes a new instance of FirmwareSummary. </summary>
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
             return new FirmwareSummary(extractedSize, fileSize, extractedFileCount, componentCount, binaryCount, analysisTimeSeconds, rootFileSystems);
         }
 
-        /// <summary> Initializes a new instance of Component. </summary>
+        /// <summary> Initializes a new instance of SbomComponent. </summary>
         /// <param name="componentId"> ID for the component. </param>
         /// <param name="componentName"> Name for the component. </param>
         /// <param name="version"> Version for the component. </param>
@@ -70,12 +70,12 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
         /// <param name="releaseOn"> Release date for the component. </param>
         /// <param name="paths"> Paths of the component. </param>
         /// <param name="isUpdateAvailable"> Flag if new update is available for the component. </param>
-        /// <returns> A new <see cref="Models.Component"/> instance for mocking. </returns>
-        public static Component Component(string componentId = null, string componentName = null, string version = null, string license = null, DateTimeOffset? releaseOn = null, IEnumerable<string> paths = null, IsUpdateAvailable? isUpdateAvailable = null)
+        /// <returns> A new <see cref="Models.SbomComponent"/> instance for mocking. </returns>
+        public static SbomComponent SbomComponent(string componentId = null, string componentName = null, string version = null, string license = null, DateTimeOffset? releaseOn = null, IEnumerable<string> paths = null, IsUpdateAvailable? isUpdateAvailable = null)
         {
             paths ??= new List<string>();
 
-            return new Component(componentId, componentName, version, license, releaseOn, paths?.ToList(), isUpdateAvailable);
+            return new SbomComponent(componentId, componentName, version, license, releaseOn, paths?.ToList(), isUpdateAvailable);
         }
 
         /// <summary> Initializes a new instance of BinaryHardening. </summary>
@@ -166,7 +166,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
             return new CveSummary(critical, high, medium, low, unknown, undefined);
         }
 
-        /// <summary> Initializes a new instance of CryptoCertificateSummary. </summary>
+        /// <summary> Initializes a new instance of FirmwareCryptoCertificateSummary. </summary>
         /// <param name="totalCertificates"> Total number of certificates found. </param>
         /// <param name="pairedKeys"> Total number of paired private keys found for the certificates. </param>
         /// <param name="expired"> Total number of expired certificates found. </param>
@@ -174,25 +174,25 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
         /// <param name="weakSignature"> Total number of certificates found using a weak signature algorithm. </param>
         /// <param name="selfSigned"> Total number of certificates found that are self-signed. </param>
         /// <param name="shortKeySize"> Total number of certificates found that have an insecure key size for the key algorithm. </param>
-        /// <returns> A new <see cref="Models.CryptoCertificateSummary"/> instance for mocking. </returns>
-        public static CryptoCertificateSummary CryptoCertificateSummary(long? totalCertificates = null, long? pairedKeys = null, long? expired = null, long? expiringSoon = null, long? weakSignature = null, long? selfSigned = null, long? shortKeySize = null)
+        /// <returns> A new <see cref="Models.FirmwareCryptoCertificateSummary"/> instance for mocking. </returns>
+        public static FirmwareCryptoCertificateSummary FirmwareCryptoCertificateSummary(long? totalCertificates = null, long? pairedKeys = null, long? expired = null, long? expiringSoon = null, long? weakSignature = null, long? selfSigned = null, long? shortKeySize = null)
         {
-            return new CryptoCertificateSummary(totalCertificates, pairedKeys, expired, expiringSoon, weakSignature, selfSigned, shortKeySize);
+            return new FirmwareCryptoCertificateSummary(totalCertificates, pairedKeys, expired, expiringSoon, weakSignature, selfSigned, shortKeySize);
         }
 
-        /// <summary> Initializes a new instance of CryptoKeySummary. </summary>
+        /// <summary> Initializes a new instance of FirmwareCryptoKeySummary. </summary>
         /// <param name="totalKeys"> Total number of cryptographic keys found. </param>
         /// <param name="publicKeys"> Total number of (non-certificate) public keys found. </param>
         /// <param name="privateKeys"> Total number of private keys found. </param>
         /// <param name="pairedKeys"> Total number of keys found that have a matching paired key or certificate. </param>
         /// <param name="shortKeySize"> Total number of keys found that have an insecure key size for the algorithm. </param>
-        /// <returns> A new <see cref="Models.CryptoKeySummary"/> instance for mocking. </returns>
-        public static CryptoKeySummary CryptoKeySummary(long? totalKeys = null, long? publicKeys = null, long? privateKeys = null, long? pairedKeys = null, long? shortKeySize = null)
+        /// <returns> A new <see cref="Models.FirmwareCryptoKeySummary"/> instance for mocking. </returns>
+        public static FirmwareCryptoKeySummary FirmwareCryptoKeySummary(long? totalKeys = null, long? publicKeys = null, long? privateKeys = null, long? pairedKeys = null, long? shortKeySize = null)
         {
-            return new CryptoKeySummary(totalKeys, publicKeys, privateKeys, pairedKeys, shortKeySize);
+            return new FirmwareCryptoKeySummary(totalKeys, publicKeys, privateKeys, pairedKeys, shortKeySize);
         }
 
-        /// <summary> Initializes a new instance of CryptoCertificate. </summary>
+        /// <summary> Initializes a new instance of FirmwareCryptoCertificate. </summary>
         /// <param name="cryptoCertId"> ID for the certificate. </param>
         /// <param name="name"> Name of the certificate. </param>
         /// <param name="subject"> Subject information of the certificate. </param>
@@ -213,25 +213,25 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
         /// <param name="isSelfSigned"> Indicates if the certificate was self-signed. </param>
         /// <param name="isWeakSignature"> Indicates the signature algorithm used is insecure. </param>
         /// <param name="isShortKeySize"> Indicates the certificate&apos;s key size is considered too small to be secure for the key algorithm. </param>
-        /// <returns> A new <see cref="Models.CryptoCertificate"/> instance for mocking. </returns>
-        public static CryptoCertificate CryptoCertificate(string cryptoCertId = null, string name = null, CryptoCertificateEntity subject = null, CryptoCertificateEntity issuer = null, DateTimeOffset? issuedOn = null, DateTimeOffset? expireOn = null, string role = null, string signatureAlgorithm = null, long? keySize = null, string keyAlgorithm = null, string encoding = null, string serialNumber = null, string fingerprint = null, IEnumerable<string> usage = null, IEnumerable<string> filePaths = null, PairedKey pairedKey = null, IsExpired? isExpired = null, IsSelfSigned? isSelfSigned = null, IsWeakSignature? isWeakSignature = null, IsShortKeySize? isShortKeySize = null)
+        /// <returns> A new <see cref="Models.FirmwareCryptoCertificate"/> instance for mocking. </returns>
+        public static FirmwareCryptoCertificate FirmwareCryptoCertificate(string cryptoCertId = null, string name = null, FirmwareCryptoCertificateEntity subject = null, FirmwareCryptoCertificateEntity issuer = null, DateTimeOffset? issuedOn = null, DateTimeOffset? expireOn = null, string role = null, string signatureAlgorithm = null, long? keySize = null, string keyAlgorithm = null, string encoding = null, string serialNumber = null, string fingerprint = null, IEnumerable<string> usage = null, IEnumerable<string> filePaths = null, PairedKey pairedKey = null, IsExpired? isExpired = null, IsSelfSigned? isSelfSigned = null, IsWeakSignature? isWeakSignature = null, IsShortKeySize? isShortKeySize = null)
         {
             usage ??= new List<string>();
             filePaths ??= new List<string>();
 
-            return new CryptoCertificate(cryptoCertId, name, subject, issuer, issuedOn, expireOn, role, signatureAlgorithm, keySize, keyAlgorithm, encoding, serialNumber, fingerprint, usage?.ToList(), filePaths?.ToList(), pairedKey, isExpired, isSelfSigned, isWeakSignature, isShortKeySize);
+            return new FirmwareCryptoCertificate(cryptoCertId, name, subject, issuer, issuedOn, expireOn, role, signatureAlgorithm, keySize, keyAlgorithm, encoding, serialNumber, fingerprint, usage?.ToList(), filePaths?.ToList(), pairedKey, isExpired, isSelfSigned, isWeakSignature, isShortKeySize);
         }
 
-        /// <summary> Initializes a new instance of CryptoCertificateEntity. </summary>
+        /// <summary> Initializes a new instance of FirmwareCryptoCertificateEntity. </summary>
         /// <param name="commonName"> Common name of the certificate entity. </param>
         /// <param name="organization"> Organization of the certificate entity. </param>
         /// <param name="organizationalUnit"> The organizational unit of the certificate entity. </param>
         /// <param name="state"> Geographical state or province of the certificate entity. </param>
         /// <param name="country"> Country code of the certificate entity. </param>
-        /// <returns> A new <see cref="Models.CryptoCertificateEntity"/> instance for mocking. </returns>
-        public static CryptoCertificateEntity CryptoCertificateEntity(string commonName = null, string organization = null, string organizationalUnit = null, string state = null, string country = null)
+        /// <returns> A new <see cref="Models.FirmwareCryptoCertificateEntity"/> instance for mocking. </returns>
+        public static FirmwareCryptoCertificateEntity FirmwareCryptoCertificateEntity(string commonName = null, string organization = null, string organizationalUnit = null, string state = null, string country = null)
         {
-            return new CryptoCertificateEntity(commonName, organization, organizationalUnit, state, country);
+            return new FirmwareCryptoCertificateEntity(commonName, organization, organizationalUnit, state, country);
         }
 
         /// <summary> Initializes a new instance of PairedKey. </summary>
@@ -244,8 +244,8 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
             return new PairedKey(id, pairedKeyType, additionalProperties);
         }
 
-        /// <summary> Initializes a new instance of CryptoKey. </summary>
-        /// <param name="cryptoKeyId"> ID for the key. </param>
+        /// <summary> Initializes a new instance of FirmwareCryptoKey. </summary>
+        /// <param name="firmwareCryptoKeyId"> ID for the key. </param>
         /// <param name="keyType"> Type of the key (public or private). </param>
         /// <param name="keySize"> Size of the key in bits. </param>
         /// <param name="keyAlgorithm"> Key algorithm name. </param>
@@ -253,13 +253,13 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
         /// <param name="filePaths"> List of files paths for this key. </param>
         /// <param name="pairedKey"> A matching paired key or certificate. </param>
         /// <param name="isShortKeySize"> Indicates the key size is considered too small to be secure for the algorithm. </param>
-        /// <returns> A new <see cref="Models.CryptoKey"/> instance for mocking. </returns>
-        public static CryptoKey CryptoKey(string cryptoKeyId = null, string keyType = null, long? keySize = null, string keyAlgorithm = null, IEnumerable<string> usage = null, IEnumerable<string> filePaths = null, PairedKey pairedKey = null, IsShortKeySize? isShortKeySize = null)
+        /// <returns> A new <see cref="Models.FirmwareCryptoKey"/> instance for mocking. </returns>
+        public static FirmwareCryptoKey FirmwareCryptoKey(string firmwareCryptoKeyId = null, string keyType = null, long? keySize = null, string keyAlgorithm = null, IEnumerable<string> usage = null, IEnumerable<string> filePaths = null, PairedKey pairedKey = null, IsShortKeySize? isShortKeySize = null)
         {
             usage ??= new List<string>();
             filePaths ??= new List<string>();
 
-            return new CryptoKey(cryptoKeyId, keyType, keySize, keyAlgorithm, usage?.ToList(), filePaths?.ToList(), pairedKey, isShortKeySize);
+            return new FirmwareCryptoKey(firmwareCryptoKeyId, keyType, keySize, keyAlgorithm, usage?.ToList(), filePaths?.ToList(), pairedKey, isShortKeySize);
         }
 
         /// <summary> Initializes a new instance of WorkspaceData. </summary>

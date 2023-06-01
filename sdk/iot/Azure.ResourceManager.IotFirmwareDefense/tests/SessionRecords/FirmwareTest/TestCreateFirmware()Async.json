@@ -6,9 +6,9 @@
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "traceparent": "00-8bfb461956f4adc174604358ac849a2b-b51803c3667116f9-00",
+        "traceparent": "00-3e472953fdd01499c8596ce68cef318c-c4d3405fd966c97d-00",
         "User-Agent": "azsdk-net-ResourceManager/1.6.0 (.NET 6.0.16; Microsoft Windows 10.0.22621)",
-        "x-ms-client-request-id": "d57108eb5d2d8d3eb09fb17feabeb5a7",
+        "x-ms-client-request-id": "e7d8e9d4247dd8a9e809aede86c924e2",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
@@ -17,15 +17,15 @@
         "Cache-Control": "no-cache",
         "Content-Length": "464",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Fri, 26 May 2023 20:31:11 GMT",
+        "Date": "Thu, 01 Jun 2023 13:52:34 GMT",
         "Expires": "-1",
         "Pragma": "no-cache",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-correlation-request-id": "548d5614-25b5-49cf-9606-58cacf3cb9e1",
+        "x-ms-correlation-request-id": "3b5d89d2-2779-48e5-b8d0-4e21e8b852c3",
         "x-ms-ratelimit-remaining-subscription-reads": "11992",
-        "x-ms-request-id": "548d5614-25b5-49cf-9606-58cacf3cb9e1",
-        "x-ms-routing-request-id": "CANADACENTRAL:20230526T203112Z:548d5614-25b5-49cf-9606-58cacf3cb9e1"
+        "x-ms-request-id": "3b5d89d2-2779-48e5-b8d0-4e21e8b852c3",
+        "x-ms-routing-request-id": "EASTUS:20230601T135235Z:3b5d89d2-2779-48e5-b8d0-4e21e8b852c3"
       },
       "ResponseBody": {
         "id": "/subscriptions/264e9200-2944-4334-9a02-721e6268b55f",
@@ -47,16 +47,16 @@
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/264e9200-2944-4334-9a02-721e6268b55f/resourcegroups/testRg5870?api-version=**",
+      "RequestUri": "https://management.azure.com/subscriptions/264e9200-2944-4334-9a02-721e6268b55f/resourcegroups/testRg3265?api-version=**",
       "RequestMethod": "PUT",
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
         "Content-Length": "21",
         "Content-Type": "application/json",
-        "traceparent": "00-7390018fb5145d0f1d9f34b907cafc02-3d4f354bb562e1a6-00",
+        "traceparent": "00-4b4172a3fca8f3b39e4935867aa5d74a-52d1d2b1d2973134-00",
         "User-Agent": "azsdk-net-ResourceManager/1.6.0 (.NET 6.0.16; Microsoft Windows 10.0.22621)",
-        "x-ms-client-request-id": "cd6353dff730dab591b1601b6730e8a7",
+        "x-ms-client-request-id": "8ab424304199e426cfb45135f1bc803f",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
@@ -67,19 +67,19 @@
         "Cache-Control": "no-cache",
         "Content-Length": "217",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Fri, 26 May 2023 20:31:12 GMT",
+        "Date": "Thu, 01 Jun 2023 13:52:34 GMT",
         "Expires": "-1",
         "Pragma": "no-cache",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-correlation-request-id": "72bc01c7-b383-4e87-a6e7-fb06df356cca",
+        "x-ms-correlation-request-id": "4f5db5d6-3c18-4b3c-9e1e-1ef67f340811",
         "x-ms-ratelimit-remaining-subscription-writes": "1186",
-        "x-ms-request-id": "72bc01c7-b383-4e87-a6e7-fb06df356cca",
-        "x-ms-routing-request-id": "CANADACENTRAL:20230526T203112Z:72bc01c7-b383-4e87-a6e7-fb06df356cca"
+        "x-ms-request-id": "4f5db5d6-3c18-4b3c-9e1e-1ef67f340811",
+        "x-ms-routing-request-id": "EASTUS:20230601T135235Z:4f5db5d6-3c18-4b3c-9e1e-1ef67f340811"
       },
       "ResponseBody": {
-        "id": "/subscriptions/264e9200-2944-4334-9a02-721e6268b55f/resourceGroups/testRg5870",
-        "name": "testRg5870",
+        "id": "/subscriptions/264e9200-2944-4334-9a02-721e6268b55f/resourceGroups/testRg3265",
+        "name": "testRg3265",
         "type": "Microsoft.Resources/resourceGroups",
         "location": "eastus",
         "properties": {
@@ -88,16 +88,16 @@
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/264e9200-2944-4334-9a02-721e6268b55f/resourceGroups/testRg5870/providers/Microsoft.IoTFirmwareDefense/workspaces/resource8688?api-version=2023-02-08-preview",
+      "RequestUri": "https://management.azure.com/subscriptions/264e9200-2944-4334-9a02-721e6268b55f/resourceGroups/testRg3265/providers/Microsoft.IoTFirmwareDefense/workspaces/resource451?api-version=2023-02-08-preview",
       "RequestMethod": "PUT",
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
         "Content-Length": "47",
         "Content-Type": "application/json",
-        "traceparent": "00-87d090313205d4cb4ef1ca4c6f4a236e-09ca7e0abdfb05ee-00",
-        "User-Agent": "azsdk-net-ResourceManager.IotFirmwareDefense/1.0.0-alpha.20230526.1 (.NET 6.0.16; Microsoft Windows 10.0.22621)",
-        "x-ms-client-request-id": "1172a6a70b3950579283ed7042b2481e",
+        "traceparent": "00-769fe71edbd4940d24026a0ad84cf611-c2e0a5ff54d6ad49-00",
+        "User-Agent": "azsdk-net-ResourceManager.IotFirmwareDefense/1.0.0-alpha.20230601.1 (.NET 6.0.16; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "ff55ea4978e1d292d250af58e1e26a02",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
@@ -108,34 +108,34 @@
       "StatusCode": 200,
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
-        "Content-Length": "575",
+        "Content-Length": "573",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Fri, 26 May 2023 20:31:12 GMT",
-        "ETag": "\u0022af00463e-0000-0100-0000-647117110000\u0022",
+        "Date": "Thu, 01 Jun 2023 13:52:35 GMT",
+        "ETag": "\u002213013d8a-0000-0100-0000-6478a2a30000\u0022",
         "Expires": "-1",
         "Pragma": "no-cache",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-client-request-id": "1172a6a70b3950579283ed7042b2481e",
-        "x-ms-correlation-request-id": "0f4c9265-46da-40c3-9c2b-7c28e018a607",
+        "x-ms-client-request-id": "ff55ea4978e1d292d250af58e1e26a02",
+        "x-ms-correlation-request-id": "33637ccc-4274-41d4-9b4c-aa13d3178d68",
         "x-ms-providerhub-traffic": "True",
         "x-ms-ratelimit-remaining-subscription-writes": "1185",
-        "x-ms-request-id": "7dc6d4f3-e2e5-4855-bfbb-d6906ae1fd4d",
-        "x-ms-routing-request-id": "CANADACENTRAL:20230526T203113Z:0f4c9265-46da-40c3-9c2b-7c28e018a607"
+        "x-ms-request-id": "172b52c7-6c79-4ef7-82a9-0d39f6e49e36",
+        "x-ms-routing-request-id": "EASTUS:20230601T135235Z:33637ccc-4274-41d4-9b4c-aa13d3178d68"
       },
       "ResponseBody": {
-        "id": "/subscriptions/264e9200-2944-4334-9a02-721e6268b55f/resourceGroups/testRg5870/providers/Microsoft.IoTFirmwareDefense/workspaces/resource8688",
-        "name": "resource8688",
+        "id": "/subscriptions/264e9200-2944-4334-9a02-721e6268b55f/resourceGroups/testRg3265/providers/Microsoft.IoTFirmwareDefense/workspaces/resource451",
+        "name": "resource451",
         "type": "microsoft.iotfirmwaredefense/workspaces",
         "location": "eastus",
         "tags": {},
         "systemData": {
           "createdBy": "7b16e1fa-ea98-4de3-bf0e-c580630393bd",
           "createdByType": "Application",
-          "createdAt": "2023-05-26T20:31:13.2770471Z",
+          "createdAt": "2023-06-01T13:52:35.5165705Z",
           "lastModifiedBy": "7b16e1fa-ea98-4de3-bf0e-c580630393bd",
           "lastModifiedByType": "Application",
-          "lastModifiedAt": "2023-05-26T20:31:13.2770471Z"
+          "lastModifiedAt": "2023-06-01T13:52:35.5165705Z"
         },
         "properties": {
           "provisioningState": "Succeeded"
@@ -143,16 +143,16 @@
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/264e9200-2944-4334-9a02-721e6268b55f/resourceGroups/testRg5870/providers/Microsoft.IoTFirmwareDefense/workspaces/resource8688/firmwares/resource9941?api-version=2023-02-08-preview",
+      "RequestUri": "https://management.azure.com/subscriptions/264e9200-2944-4334-9a02-721e6268b55f/resourceGroups/testRg3265/providers/Microsoft.IoTFirmwareDefense/workspaces/resource451/firmwares/resource3438?api-version=2023-02-08-preview",
       "RequestMethod": "PUT",
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
         "Content-Length": "153",
         "Content-Type": "application/json",
-        "traceparent": "00-021ac4523e456046f6240ed9052d7e85-a90b942d43045c45-00",
-        "User-Agent": "azsdk-net-ResourceManager.IotFirmwareDefense/1.0.0-alpha.20230526.1 (.NET 6.0.16; Microsoft Windows 10.0.22621)",
-        "x-ms-client-request-id": "5262374110bafabc9cabdd71486fc8d7",
+        "traceparent": "00-036561fd5e06696bb7da262a4316626d-9b3f4152ff270ec6-00",
+        "User-Agent": "azsdk-net-ResourceManager.IotFirmwareDefense/1.0.0-alpha.20230601.1 (.NET 6.0.16; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "0bc341b1a83b02b2ae7057a3f64d2e9f",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
@@ -168,32 +168,32 @@
       "StatusCode": 200,
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
-        "Content-Length": "715",
+        "Content-Length": "714",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Fri, 26 May 2023 20:31:13 GMT",
-        "ETag": "\u00221200455b-0000-0100-0000-647117120000\u0022",
+        "Date": "Thu, 01 Jun 2023 13:52:35 GMT",
+        "ETag": "\u0022d1005e98-0000-0100-0000-6478a2a40000\u0022",
         "Expires": "-1",
         "Pragma": "no-cache",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-client-request-id": "5262374110bafabc9cabdd71486fc8d7",
-        "x-ms-correlation-request-id": "5c00ee0f-2fb9-4433-9628-d3ee301a3201",
+        "x-ms-client-request-id": "0bc341b1a83b02b2ae7057a3f64d2e9f",
+        "x-ms-correlation-request-id": "3d06f847-82fa-4976-a7ac-eaf7c81466c7",
         "x-ms-providerhub-traffic": "True",
         "x-ms-ratelimit-remaining-subscription-writes": "1184",
-        "x-ms-request-id": "1267f33a-75c5-4b5c-92c8-411cadbcc8ab",
-        "x-ms-routing-request-id": "CANADACENTRAL:20230526T203114Z:5c00ee0f-2fb9-4433-9628-d3ee301a3201"
+        "x-ms-request-id": "af05a8e6-74d2-408f-9e65-6955a9c07fb9",
+        "x-ms-routing-request-id": "EASTUS:20230601T135236Z:3d06f847-82fa-4976-a7ac-eaf7c81466c7"
       },
       "ResponseBody": {
-        "id": "/subscriptions/264e9200-2944-4334-9a02-721e6268b55f/resourceGroups/testRg5870/providers/Microsoft.IoTFirmwareDefense/workspaces/resource8688/firmwares/resource9941",
-        "name": "resource9941",
+        "id": "/subscriptions/264e9200-2944-4334-9a02-721e6268b55f/resourceGroups/testRg3265/providers/Microsoft.IoTFirmwareDefense/workspaces/resource451/firmwares/resource3438",
+        "name": "resource3438",
         "type": "microsoft.iotfirmwaredefense/workspaces/firmwares",
         "systemData": {
           "createdBy": "7b16e1fa-ea98-4de3-bf0e-c580630393bd",
           "createdByType": "Application",
-          "createdAt": "2023-05-26T20:31:13.9488555Z",
+          "createdAt": "2023-06-01T13:52:36.0478809Z",
           "lastModifiedBy": "7b16e1fa-ea98-4de3-bf0e-c580630393bd",
           "lastModifiedByType": "Application",
-          "lastModifiedAt": "2023-05-26T20:31:13.9488555Z"
+          "lastModifiedAt": "2023-06-01T13:52:36.0478809Z"
         },
         "properties": {
           "fileName": "testFileName",
@@ -209,7 +209,7 @@
   ],
   "Variables": {
     "AZURE_AUTHORITY_HOST": "https://login.microsoftonline.com",
-    "RandomSeed": "1763139312",
+    "RandomSeed": "2120517507",
     "RESOURCE_MANAGER_URL": null,
     "SUBSCRIPTION_ID": "264e9200-2944-4334-9a02-721e6268b55f"
   }
