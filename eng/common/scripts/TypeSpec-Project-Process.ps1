@@ -91,12 +91,13 @@ function Get-PackageDir([System.Object]$tspConfig) {
   return $packageDir
 }
 
-$repoRootPath =  (Join-Path $PSScriptRoot .. .. ..)
-$repoRootPath = Resolve-Path $repoRootPath
-$repoRootPath = $repoRootPath -replace "\\", "/"
-$tspConfigPath = Join-Path $repoRootPath 'tspconfig.yaml'
+$sdkRepoRootPath =  (Join-Path $PSScriptRoot .. .. ..)
+$sdkRepoRootPath = Resolve-Path $sdkRepoRootPath
+$sdkRepoRootPath = $sdkRepoRootPath -replace "\\", "/"
+$tspConfigPath = Join-Path $sdkRepoRootPath 'tspconfig.yaml'
 $tmpTspConfigPath = $tspConfigPath
 $repo = ""
+$specRepoRoot = ""
 # remote url scenario
 # example url of tspconfig.yaml: https://github.com/Azure/azure-rest-api-specs-pr/blob/724ccc4d7ef7655c0b4d5c5ac4a5513f19bbef35/specification/containerservice/Fleet.Management/tspconfig.yaml
 if ($TypeSpecProjectDirectory -match '^https://github.com/(?<repo>Azure/azure-rest-api-specs(-pr)?)/blob/(?<commit>[0-9a-f]{40})/(?<path>.*)/tspconfig.yaml$') {
@@ -121,8 +122,9 @@ if ($TypeSpecProjectDirectory -match '^https://github.com/(?<repo>Azure/azure-re
     exit 1
   }
   $TypeSpecProjectDirectory = $TypeSpecProjectDirectory.Replace("\", "/")
-  if ($TypeSpecProjectDirectory -match "^.*/(?<path>specification/.*)$") {
+  if ($TypeSpecProjectDirectory -match "(?<repoRoot>^.*)/(?<path>specification/.*)$") {
     $TypeSpecProjectDirectory = $Matches["path"]
+    $specRepoRoot = $Matches["repoRoot"]
   } else {
     Write-Error "$TypeSpecProjectDirectory doesn't have 'specification' in path."
     exit 1
@@ -151,11 +153,11 @@ if (Test-Path $tmpTspConfigPath) {
   Remove-Item $tspConfigPath
 }
 # call CreateUpdate-TspLocation function
-$sdkProjectFolder = CreateUpdate-TspLocation $tspConfigYaml $TypeSpecProjectDirectory $CommitHash $repo $repoRootPath
+$sdkProjectFolder = CreateUpdate-TspLocation $tspConfigYaml $TypeSpecProjectDirectory $CommitHash $repo $sdkRepoRootPath
 
 # call TypeSpec-Project-Sync.ps1
 $syncScript = Join-Path $PSScriptRoot TypeSpec-Project-Sync.ps1
-& $syncScript $sdkProjectFolder
+& $syncScript $sdkProjectFolder $specRepoRoot
 if ($LASTEXITCODE) { exit $LASTEXITCODE }
 
 # call TypeSpec-Project-Generate.ps1
