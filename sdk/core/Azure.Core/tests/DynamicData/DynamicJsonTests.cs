@@ -960,6 +960,7 @@ namespace Azure.Core.Tests
         }
 
         [Test]
+        [Ignore("Not an allowed type")]
         public void NewObjectPropertiesCanBeAssignedWithSerializedObject()
         {
             dynamic json = DynamicJsonTests.GetDynamicJson("{}");

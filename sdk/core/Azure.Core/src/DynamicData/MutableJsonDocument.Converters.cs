@@ -7,6 +7,7 @@ using System.Reflection;
 using System.Runtime.CompilerServices;
 using System.Text.Json;
 using System.Text.Json.Serialization;
+using Azure.Core.Dynamic;
 
 namespace Azure.Core.Json
 {
@@ -136,14 +137,46 @@ namespace Azure.Core.Json
                     type == typeof(decimal) ||
                     type == typeof(DateTime) ||
                     type == typeof(DateTimeOffset) ||
+                    type == typeof(Guid) ||
 
                     // TODO: separate out non-primitive values?
                     // TODO: is this object thing too permissive?
                     type == typeof(Dictionary<string, object>) ||
                     type == typeof(JsonElement) ||
+                    type == typeof(JsonDocument) ||
+                    type == typeof(MutableJsonDocument) ||
+                    type == typeof(MutableJsonElement) ||
 
-                    type == typeof(Guid);
+                    // TODO: We'll want to remove this dependency
+                    type == typeof(DynamicData) ||
+
+                    // TODO: add array support differently
+                    type == typeof(bool[]) ||
+                    type == typeof(string[]) ||
+                    type == typeof(byte[]) ||
+                    type == typeof(sbyte[]) ||
+                    type == typeof(short[]) ||
+                    type == typeof(ushort[]) ||
+                    type == typeof(int[]) ||
+                    type == typeof(uint[]) ||
+                    type == typeof(long[]) ||
+                    type == typeof(ulong[]) ||
+                    type == typeof(float[]) ||
+                    type == typeof(double[]) ||
+                    type == typeof(decimal[]) ||
+                    type == typeof(DateTime[]) ||
+                    type == typeof(DateTimeOffset[]) ||
+                    type == typeof(Guid[]) ||
+
+                    // TODO: Interface support
+                    type == typeof(IEnumerable<bool>) ||
+                    type == typeof(IEnumerable<int>) ||
+
+                    type == typeof(object[])
+                    ;
             }
+
+            // TODO: add array support
 
             public override JsonConverter CreateConverter(Type typeToConvert, JsonSerializerOptions options)
             {
