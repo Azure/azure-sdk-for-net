@@ -1461,20 +1461,17 @@ namespace Azure.Storage.DataMovement.Tests
             await transfer.AwaitCompletion(cancellationTokenSource.Token);
 
             // Assert
-            testEventRaised.AssertUnexpectedFailureCheck();
             Assert.NotNull(transfer);
             Assert.IsTrue(transfer.HasCompleted);
             Assert.AreEqual(StorageTransferStatus.CompletedWithSkippedTransfers, transfer.TransferStatus);
             Assert.IsTrue(skippedSeen);
             Assert.IsTrue(await destinationClient.ExistsAsync());
-            Assert.AreEqual(1, testEventRaised.SkippedEvents.Count);
+
+            testEventRaised.AssertSingleSkippedCheck();
             Assert.AreEqual(sourceResource.Path, testEventRaised.SkippedEvents.First().SourceResource.Path);
             Assert.AreEqual(destinationResource.Uri, testEventRaised.SkippedEvents.First().DestinationResource.Uri);
             Assert.AreEqual(transfer.Id, testEventRaised.SkippedEvents.First().TransferId);
-            Assert.IsEmpty(testEventRaised.SingleCompletedEvents);
-            Assert.AreEqual(2, testEventRaised.StatusEvents.Count);
-            Assert.AreEqual(StorageTransferStatus.InProgress, testEventRaised.StatusEvents.First().StorageTransferStatus);
-            Assert.AreEqual(StorageTransferStatus.CompletedWithSkippedTransfers, testEventRaised.StatusEvents.ElementAt(1).StorageTransferStatus);
+
             // Verify Upload - That we skipped over and didn't reupload something new.
             using (FileStream fileStream = File.OpenRead(originalSourceFile))
             {
