@@ -37,8 +37,8 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Samples
             string subscriptionId = "685C0C6F-9867-4B1C-A534-AA3A05B54BCE";
             string resourceGroupName = "rgworkspaces-firmwares";
             string workspaceName = "A7";
-            string firmwareId = "umrkdttp";
-            ResourceIdentifier firmwareResourceId = FirmwareResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, workspaceName, firmwareId);
+            string firmwareName = "umrkdttp";
+            ResourceIdentifier firmwareResourceId = FirmwareResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, workspaceName, firmwareName);
             FirmwareResource firmware = client.GetFirmwareResource(firmwareResourceId);
 
             // invoke the operation
@@ -85,8 +85,8 @@ BinaryData.FromObjectAsJson(new Dictionary<string, object>()
             string subscriptionId = "685C0C6F-9867-4B1C-A534-AA3A05B54BCE";
             string resourceGroupName = "rgworkspaces-firmwares";
             string workspaceName = "A7";
-            string firmwareId = "umrkdttp";
-            ResourceIdentifier firmwareResourceId = FirmwareResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, workspaceName, firmwareId);
+            string firmwareName = "umrkdttp";
+            ResourceIdentifier firmwareResourceId = FirmwareResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, workspaceName, firmwareName);
             FirmwareResource firmware = client.GetFirmwareResource(firmwareResourceId);
 
             // invoke the operation
@@ -118,8 +118,8 @@ BinaryData.FromObjectAsJson(new Dictionary<string, object>()
             string subscriptionId = "685C0C6F-9867-4B1C-A534-AA3A05B54BCE";
             string resourceGroupName = "rgworkspaces-firmwares";
             string workspaceName = "A7";
-            string firmwareId = "umrkdttp";
-            ResourceIdentifier firmwareResourceId = FirmwareResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, workspaceName, firmwareId);
+            string firmwareName = "umrkdttp";
+            ResourceIdentifier firmwareResourceId = FirmwareResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, workspaceName, firmwareName);
             FirmwareResource firmware = client.GetFirmwareResource(firmwareResourceId);
 
             // invoke the operation
@@ -146,8 +146,8 @@ BinaryData.FromObjectAsJson(new Dictionary<string, object>()
             string subscriptionId = "685C0C6F-9867-4B1C-A534-AA3A05B54BCE";
             string resourceGroupName = "rgworkspaces-firmwares";
             string workspaceName = "A7";
-            string firmwareId = "umrkdttp";
-            ResourceIdentifier firmwareResourceId = FirmwareResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, workspaceName, firmwareId);
+            string firmwareName = "umrkdttp";
+            ResourceIdentifier firmwareResourceId = FirmwareResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, workspaceName, firmwareName);
             FirmwareResource firmware = client.GetFirmwareResource(firmwareResourceId);
 
             // invoke the operation
@@ -174,8 +174,8 @@ BinaryData.FromObjectAsJson(new Dictionary<string, object>()
             string subscriptionId = "685C0C6F-9867-4B1C-A534-AA3A05B54BCE";
             string resourceGroupName = "rgworkspaces-firmwares";
             string workspaceName = "A7";
-            string firmwareId = "umrkdttp";
-            ResourceIdentifier firmwareResourceId = FirmwareResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, workspaceName, firmwareId);
+            string firmwareName = "umrkdttp";
+            ResourceIdentifier firmwareResourceId = FirmwareResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, workspaceName, firmwareName);
             FirmwareResource firmware = client.GetFirmwareResource(firmwareResourceId);
 
             // invoke the operation
@@ -206,8 +206,8 @@ BinaryData.FromObjectAsJson(new Dictionary<string, object>()
             string subscriptionId = "685C0C6F-9867-4B1C-A534-AA3A05B54BCE";
             string resourceGroupName = "rgworkspaces-firmwares";
             string workspaceName = "A7";
-            string firmwareId = "umrkdttp";
-            ResourceIdentifier firmwareResourceId = FirmwareResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, workspaceName, firmwareId);
+            string firmwareName = "umrkdttp";
+            ResourceIdentifier firmwareResourceId = FirmwareResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, workspaceName, firmwareName);
             FirmwareResource firmware = client.GetFirmwareResource(firmwareResourceId);
 
             // invoke the operation
@@ -238,12 +238,12 @@ BinaryData.FromObjectAsJson(new Dictionary<string, object>()
             string subscriptionId = "685C0C6F-9867-4B1C-A534-AA3A05B54BCE";
             string resourceGroupName = "rgworkspaces-firmwares";
             string workspaceName = "A7";
-            string firmwareId = "umrkdttp";
-            ResourceIdentifier firmwareResourceId = FirmwareResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, workspaceName, firmwareId);
+            string firmwareName = "umrkdttp";
+            ResourceIdentifier firmwareResourceId = FirmwareResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, workspaceName, firmwareName);
             FirmwareResource firmware = client.GetFirmwareResource(firmwareResourceId);
 
             // invoke the operation
-            UrlToken result = await firmware.GenerateDownloadUrlAsync();
+            UriToken result = await firmware.GenerateDownloadUrlAsync();
 
             Console.WriteLine($"Succeeded: {result}");
         }
@@ -266,12 +266,12 @@ BinaryData.FromObjectAsJson(new Dictionary<string, object>()
             string subscriptionId = "685C0C6F-9867-4B1C-A534-AA3A05B54BCE";
             string resourceGroupName = "rgworkspaces-firmwares";
             string workspaceName = "A7";
-            string firmwareId = "umrkdttp";
-            ResourceIdentifier firmwareResourceId = FirmwareResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, workspaceName, firmwareId);
+            string firmwareName = "umrkdttp";
+            ResourceIdentifier firmwareResourceId = FirmwareResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, workspaceName, firmwareName);
             FirmwareResource firmware = client.GetFirmwareResource(firmwareResourceId);
 
             // invoke the operation
-            UrlToken result = await firmware.GenerateDownloadUrlAsync();
+            UriToken result = await firmware.GenerateDownloadUrlAsync();
 
             Console.WriteLine($"Succeeded: {result}");
         }
@@ -294,12 +294,12 @@ BinaryData.FromObjectAsJson(new Dictionary<string, object>()
             string subscriptionId = "685C0C6F-9867-4B1C-A534-AA3A05B54BCE";
             string resourceGroupName = "rgworkspaces-firmwares";
             string workspaceName = "A7";
-            string firmwareId = "umrkdttp";
-            ResourceIdentifier firmwareResourceId = FirmwareResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, workspaceName, firmwareId);
+            string firmwareName = "umrkdttp";
+            ResourceIdentifier firmwareResourceId = FirmwareResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, workspaceName, firmwareName);
             FirmwareResource firmware = client.GetFirmwareResource(firmwareResourceId);
 
             // invoke the operation
-            UrlToken result = await firmware.GenerateFilesystemDownloadUrlAsync();
+            UriToken result = await firmware.GenerateFilesystemDownloadUrlAsync();
 
             Console.WriteLine($"Succeeded: {result}");
         }
@@ -322,12 +322,12 @@ BinaryData.FromObjectAsJson(new Dictionary<string, object>()
             string subscriptionId = "685C0C6F-9867-4B1C-A534-AA3A05B54BCE";
             string resourceGroupName = "rgworkspaces-firmwares";
             string workspaceName = "A7";
-            string firmwareId = "umrkdttp";
-            ResourceIdentifier firmwareResourceId = FirmwareResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, workspaceName, firmwareId);
+            string firmwareName = "umrkdttp";
+            ResourceIdentifier firmwareResourceId = FirmwareResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, workspaceName, firmwareName);
             FirmwareResource firmware = client.GetFirmwareResource(firmwareResourceId);
 
             // invoke the operation
-            UrlToken result = await firmware.GenerateFilesystemDownloadUrlAsync();
+            UriToken result = await firmware.GenerateFilesystemDownloadUrlAsync();
 
             Console.WriteLine($"Succeeded: {result}");
         }
@@ -335,7 +335,7 @@ BinaryData.FromObjectAsJson(new Dictionary<string, object>()
         // Firmware_GenerateSummary_MaximumSet_Gen
         [NUnit.Framework.Test]
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task GenerateSummary_FirmwareGenerateSummaryMaximumSetGen()
+        public async Task GetFirmwareSummary_FirmwareGenerateSummaryMaximumSetGen()
         {
             // Generated from example definition: specification/fist/resource-manager/Microsoft.IoTFirmwareDefense/preview/2023-02-08-preview/examples/Firmware_GenerateSummary_MaximumSet_Gen.json
             // this example is just showing the usage of "Firmware_GenerateSummary" operation, for the dependent resources, they will have to be created separately.
@@ -350,12 +350,12 @@ BinaryData.FromObjectAsJson(new Dictionary<string, object>()
             string subscriptionId = "685C0C6F-9867-4B1C-A534-AA3A05B54BCE";
             string resourceGroupName = "rgworkspaces-firmwares";
             string workspaceName = "A7";
-            string firmwareId = "umrkdttp";
-            ResourceIdentifier firmwareResourceId = FirmwareResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, workspaceName, firmwareId);
+            string firmwareName = "umrkdttp";
+            ResourceIdentifier firmwareResourceId = FirmwareResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, workspaceName, firmwareName);
             FirmwareResource firmware = client.GetFirmwareResource(firmwareResourceId);
 
             // invoke the operation
-            FirmwareSummary result = await firmware.GenerateSummaryAsync();
+            FirmwareSummary result = await firmware.GetFirmwareSummaryAsync();
 
             Console.WriteLine($"Succeeded: {result}");
         }
@@ -363,7 +363,7 @@ BinaryData.FromObjectAsJson(new Dictionary<string, object>()
         // Firmware_GenerateSummary_MinimumSet_Gen
         [NUnit.Framework.Test]
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task GenerateSummary_FirmwareGenerateSummaryMinimumSetGen()
+        public async Task GetFirmwareSummary_FirmwareGenerateSummaryMinimumSetGen()
         {
             // Generated from example definition: specification/fist/resource-manager/Microsoft.IoTFirmwareDefense/preview/2023-02-08-preview/examples/Firmware_GenerateSummary_MinimumSet_Gen.json
             // this example is just showing the usage of "Firmware_GenerateSummary" operation, for the dependent resources, they will have to be created separately.
@@ -378,12 +378,12 @@ BinaryData.FromObjectAsJson(new Dictionary<string, object>()
             string subscriptionId = "685C0C6F-9867-4B1C-A534-AA3A05B54BCE";
             string resourceGroupName = "rgworkspaces-firmwares";
             string workspaceName = "A7";
-            string firmwareId = "umrkdttp";
-            ResourceIdentifier firmwareResourceId = FirmwareResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, workspaceName, firmwareId);
+            string firmwareName = "umrkdttp";
+            ResourceIdentifier firmwareResourceId = FirmwareResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, workspaceName, firmwareName);
             FirmwareResource firmware = client.GetFirmwareResource(firmwareResourceId);
 
             // invoke the operation
-            FirmwareSummary result = await firmware.GenerateSummaryAsync();
+            FirmwareSummary result = await firmware.GetFirmwareSummaryAsync();
 
             Console.WriteLine($"Succeeded: {result}");
         }
@@ -391,7 +391,7 @@ BinaryData.FromObjectAsJson(new Dictionary<string, object>()
         // Firmware_ListGenerateComponentList_MaximumSet_Gen
         [NUnit.Framework.Test]
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task GetGenerateComponentList_FirmwareListGenerateComponentListMaximumSetGen()
+        public async Task GetSbomComponents_FirmwareListGenerateComponentListMaximumSetGen()
         {
             // Generated from example definition: specification/fist/resource-manager/Microsoft.IoTFirmwareDefense/preview/2023-02-08-preview/examples/Firmware_ListGenerateComponentList_MaximumSet_Gen.json
             // this example is just showing the usage of "Firmware_ListGenerateComponentList" operation, for the dependent resources, they will have to be created separately.
@@ -406,12 +406,12 @@ BinaryData.FromObjectAsJson(new Dictionary<string, object>()
             string subscriptionId = "685C0C6F-9867-4B1C-A534-AA3A05B54BCE";
             string resourceGroupName = "rgworkspaces-firmwares";
             string workspaceName = "A7";
-            string firmwareId = "umrkdttp";
-            ResourceIdentifier firmwareResourceId = FirmwareResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, workspaceName, firmwareId);
+            string firmwareName = "umrkdttp";
+            ResourceIdentifier firmwareResourceId = FirmwareResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, workspaceName, firmwareName);
             FirmwareResource firmware = client.GetFirmwareResource(firmwareResourceId);
 
             // invoke the operation and iterate over the result
-            await foreach (Component item in firmware.GetGenerateComponentListAsync())
+            await foreach (SbomComponent item in firmware.GetSbomComponentsAsync())
             {
                 Console.WriteLine($"Succeeded: {item}");
             }
@@ -422,7 +422,7 @@ BinaryData.FromObjectAsJson(new Dictionary<string, object>()
         // Firmware_ListGenerateComponentList_MinimumSet_Gen
         [NUnit.Framework.Test]
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task GetGenerateComponentList_FirmwareListGenerateComponentListMinimumSetGen()
+        public async Task GetSbomComponents_FirmwareListGenerateComponentListMinimumSetGen()
         {
             // Generated from example definition: specification/fist/resource-manager/Microsoft.IoTFirmwareDefense/preview/2023-02-08-preview/examples/Firmware_ListGenerateComponentList_MinimumSet_Gen.json
             // this example is just showing the usage of "Firmware_ListGenerateComponentList" operation, for the dependent resources, they will have to be created separately.
@@ -437,12 +437,12 @@ BinaryData.FromObjectAsJson(new Dictionary<string, object>()
             string subscriptionId = "685C0C6F-9867-4B1C-A534-AA3A05B54BCE";
             string resourceGroupName = "rgworkspaces-firmwares";
             string workspaceName = "A7";
-            string firmwareId = "umrkdttp";
-            ResourceIdentifier firmwareResourceId = FirmwareResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, workspaceName, firmwareId);
+            string firmwareName = "umrkdttp";
+            ResourceIdentifier firmwareResourceId = FirmwareResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, workspaceName, firmwareName);
             FirmwareResource firmware = client.GetFirmwareResource(firmwareResourceId);
 
             // invoke the operation and iterate over the result
-            await foreach (Component item in firmware.GetGenerateComponentListAsync())
+            await foreach (SbomComponent item in firmware.GetSbomComponentsAsync())
             {
                 Console.WriteLine($"Succeeded: {item}");
             }
@@ -453,7 +453,7 @@ BinaryData.FromObjectAsJson(new Dictionary<string, object>()
         // Firmware_GenerateComponentDetails_MaximumSet_Gen
         [NUnit.Framework.Test]
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task GenerateComponentDetails_FirmwareGenerateComponentDetailsMaximumSetGen()
+        public async Task GetComponentDetails_FirmwareGenerateComponentDetailsMaximumSetGen()
         {
             // Generated from example definition: specification/fist/resource-manager/Microsoft.IoTFirmwareDefense/preview/2023-02-08-preview/examples/Firmware_GenerateComponentDetails_MaximumSet_Gen.json
             // this example is just showing the usage of "Firmware_GenerateComponentDetails" operation, for the dependent resources, they will have to be created separately.
@@ -468,12 +468,12 @@ BinaryData.FromObjectAsJson(new Dictionary<string, object>()
             string subscriptionId = "685C0C6F-9867-4B1C-A534-AA3A05B54BCE";
             string resourceGroupName = "rgworkspaces-firmwares";
             string workspaceName = "A7";
-            string firmwareId = "umrkdttp";
-            ResourceIdentifier firmwareResourceId = FirmwareResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, workspaceName, firmwareId);
+            string firmwareName = "umrkdttp";
+            ResourceIdentifier firmwareResourceId = FirmwareResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, workspaceName, firmwareName);
             FirmwareResource firmware = client.GetFirmwareResource(firmwareResourceId);
 
             // invoke the operation
-            Component result = await firmware.GenerateComponentDetailsAsync();
+            SbomComponent result = await firmware.GetComponentDetailsAsync();
 
             Console.WriteLine($"Succeeded: {result}");
         }
@@ -481,7 +481,7 @@ BinaryData.FromObjectAsJson(new Dictionary<string, object>()
         // Firmware_GenerateComponentDetails_MinimumSet_Gen
         [NUnit.Framework.Test]
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task GenerateComponentDetails_FirmwareGenerateComponentDetailsMinimumSetGen()
+        public async Task GetComponentDetails_FirmwareGenerateComponentDetailsMinimumSetGen()
         {
             // Generated from example definition: specification/fist/resource-manager/Microsoft.IoTFirmwareDefense/preview/2023-02-08-preview/examples/Firmware_GenerateComponentDetails_MinimumSet_Gen.json
             // this example is just showing the usage of "Firmware_GenerateComponentDetails" operation, for the dependent resources, they will have to be created separately.
@@ -496,12 +496,12 @@ BinaryData.FromObjectAsJson(new Dictionary<string, object>()
             string subscriptionId = "685C0C6F-9867-4B1C-A534-AA3A05B54BCE";
             string resourceGroupName = "rgworkspaces-firmwares";
             string workspaceName = "A7";
-            string firmwareId = "umrkdttp";
-            ResourceIdentifier firmwareResourceId = FirmwareResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, workspaceName, firmwareId);
+            string firmwareName = "umrkdttp";
+            ResourceIdentifier firmwareResourceId = FirmwareResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, workspaceName, firmwareName);
             FirmwareResource firmware = client.GetFirmwareResource(firmwareResourceId);
 
             // invoke the operation
-            Component result = await firmware.GenerateComponentDetailsAsync();
+            SbomComponent result = await firmware.GetComponentDetailsAsync();
 
             Console.WriteLine($"Succeeded: {result}");
         }
@@ -509,7 +509,7 @@ BinaryData.FromObjectAsJson(new Dictionary<string, object>()
         // Firmware_ListGenerateBinaryHardeningList_MaximumSet_Gen
         [NUnit.Framework.Test]
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task GetGenerateBinaryHardeningList_FirmwareListGenerateBinaryHardeningListMaximumSetGen()
+        public async Task GetBinaryHardeningResults_FirmwareListGenerateBinaryHardeningListMaximumSetGen()
         {
             // Generated from example definition: specification/fist/resource-manager/Microsoft.IoTFirmwareDefense/preview/2023-02-08-preview/examples/Firmware_ListGenerateBinaryHardeningList_MaximumSet_Gen.json
             // this example is just showing the usage of "Firmware_ListGenerateBinaryHardeningList" operation, for the dependent resources, they will have to be created separately.
@@ -524,12 +524,12 @@ BinaryData.FromObjectAsJson(new Dictionary<string, object>()
             string subscriptionId = "685C0C6F-9867-4B1C-A534-AA3A05B54BCE";
             string resourceGroupName = "rgworkspaces-firmwares";
             string workspaceName = "A7";
-            string firmwareId = "umrkdttp";
-            ResourceIdentifier firmwareResourceId = FirmwareResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, workspaceName, firmwareId);
+            string firmwareName = "umrkdttp";
+            ResourceIdentifier firmwareResourceId = FirmwareResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, workspaceName, firmwareName);
             FirmwareResource firmware = client.GetFirmwareResource(firmwareResourceId);
 
             // invoke the operation and iterate over the result
-            await foreach (BinaryHardening item in firmware.GetGenerateBinaryHardeningListAsync())
+            await foreach (BinaryHardening item in firmware.GetBinaryHardeningResultsAsync())
             {
                 Console.WriteLine($"Succeeded: {item}");
             }
@@ -540,7 +540,7 @@ BinaryData.FromObjectAsJson(new Dictionary<string, object>()
         // Firmware_ListGenerateBinaryHardeningList_MinimumSet_Gen
         [NUnit.Framework.Test]
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task GetGenerateBinaryHardeningList_FirmwareListGenerateBinaryHardeningListMinimumSetGen()
+        public async Task GetBinaryHardeningResults_FirmwareListGenerateBinaryHardeningListMinimumSetGen()
         {
             // Generated from example definition: specification/fist/resource-manager/Microsoft.IoTFirmwareDefense/preview/2023-02-08-preview/examples/Firmware_ListGenerateBinaryHardeningList_MinimumSet_Gen.json
             // this example is just showing the usage of "Firmware_ListGenerateBinaryHardeningList" operation, for the dependent resources, they will have to be created separately.
@@ -555,12 +555,12 @@ BinaryData.FromObjectAsJson(new Dictionary<string, object>()
             string subscriptionId = "685C0C6F-9867-4B1C-A534-AA3A05B54BCE";
             string resourceGroupName = "rgworkspaces-firmwares";
             string workspaceName = "A7";
-            string firmwareId = "umrkdttp";
-            ResourceIdentifier firmwareResourceId = FirmwareResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, workspaceName, firmwareId);
+            string firmwareName = "umrkdttp";
+            ResourceIdentifier firmwareResourceId = FirmwareResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, workspaceName, firmwareName);
             FirmwareResource firmware = client.GetFirmwareResource(firmwareResourceId);
 
             // invoke the operation and iterate over the result
-            await foreach (BinaryHardening item in firmware.GetGenerateBinaryHardeningListAsync())
+            await foreach (BinaryHardening item in firmware.GetBinaryHardeningResultsAsync())
             {
                 Console.WriteLine($"Succeeded: {item}");
             }
@@ -571,7 +571,7 @@ BinaryData.FromObjectAsJson(new Dictionary<string, object>()
         // Firmware_GenerateBinaryHardeningSummary_MaximumSet_Gen
         [NUnit.Framework.Test]
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task GenerateBinaryHardeningSummary_FirmwareGenerateBinaryHardeningSummaryMaximumSetGen()
+        public async Task GetBinaryHardeningSummary_FirmwareGenerateBinaryHardeningSummaryMaximumSetGen()
         {
             // Generated from example definition: specification/fist/resource-manager/Microsoft.IoTFirmwareDefense/preview/2023-02-08-preview/examples/Firmware_GenerateBinaryHardeningSummary_MaximumSet_Gen.json
             // this example is just showing the usage of "Firmware_GenerateBinaryHardeningSummary" operation, for the dependent resources, they will have to be created separately.
@@ -586,12 +586,12 @@ BinaryData.FromObjectAsJson(new Dictionary<string, object>()
             string subscriptionId = "685C0C6F-9867-4B1C-A534-AA3A05B54BCE";
             string resourceGroupName = "rgworkspaces-firmwares";
             string workspaceName = "A7";
-            string firmwareId = "umrkdttp";
-            ResourceIdentifier firmwareResourceId = FirmwareResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, workspaceName, firmwareId);
+            string firmwareName = "umrkdttp";
+            ResourceIdentifier firmwareResourceId = FirmwareResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, workspaceName, firmwareName);
             FirmwareResource firmware = client.GetFirmwareResource(firmwareResourceId);
 
             // invoke the operation
-            BinaryHardeningSummary result = await firmware.GenerateBinaryHardeningSummaryAsync();
+            BinaryHardeningSummary result = await firmware.GetBinaryHardeningSummaryAsync();
 
             Console.WriteLine($"Succeeded: {result}");
         }
@@ -599,7 +599,7 @@ BinaryData.FromObjectAsJson(new Dictionary<string, object>()
         // Firmware_GenerateBinaryHardeningSummary_MinimumSet_Gen
         [NUnit.Framework.Test]
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task GenerateBinaryHardeningSummary_FirmwareGenerateBinaryHardeningSummaryMinimumSetGen()
+        public async Task GetBinaryHardeningSummary_FirmwareGenerateBinaryHardeningSummaryMinimumSetGen()
         {
             // Generated from example definition: specification/fist/resource-manager/Microsoft.IoTFirmwareDefense/preview/2023-02-08-preview/examples/Firmware_GenerateBinaryHardeningSummary_MinimumSet_Gen.json
             // this example is just showing the usage of "Firmware_GenerateBinaryHardeningSummary" operation, for the dependent resources, they will have to be created separately.
@@ -614,12 +614,12 @@ BinaryData.FromObjectAsJson(new Dictionary<string, object>()
             string subscriptionId = "685C0C6F-9867-4B1C-A534-AA3A05B54BCE";
             string resourceGroupName = "rgworkspaces-firmwares";
             string workspaceName = "A7";
-            string firmwareId = "umrkdttp";
-            ResourceIdentifier firmwareResourceId = FirmwareResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, workspaceName, firmwareId);
+            string firmwareName = "umrkdttp";
+            ResourceIdentifier firmwareResourceId = FirmwareResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, workspaceName, firmwareName);
             FirmwareResource firmware = client.GetFirmwareResource(firmwareResourceId);
 
             // invoke the operation
-            BinaryHardeningSummary result = await firmware.GenerateBinaryHardeningSummaryAsync();
+            BinaryHardeningSummary result = await firmware.GetBinaryHardeningSummaryAsync();
 
             Console.WriteLine($"Succeeded: {result}");
         }
@@ -627,7 +627,7 @@ BinaryData.FromObjectAsJson(new Dictionary<string, object>()
         // Firmware_GenerateBinaryHardeningDetails_MaximumSet_Gen
         [NUnit.Framework.Test]
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task GenerateBinaryHardeningDetails_FirmwareGenerateBinaryHardeningDetailsMaximumSetGen()
+        public async Task GetBinaryHardeningDetails_FirmwareGenerateBinaryHardeningDetailsMaximumSetGen()
         {
             // Generated from example definition: specification/fist/resource-manager/Microsoft.IoTFirmwareDefense/preview/2023-02-08-preview/examples/Firmware_GenerateBinaryHardeningDetails_MaximumSet_Gen.json
             // this example is just showing the usage of "Firmware_GenerateBinaryHardeningDetails" operation, for the dependent resources, they will have to be created separately.
@@ -642,12 +642,12 @@ BinaryData.FromObjectAsJson(new Dictionary<string, object>()
             string subscriptionId = "685C0C6F-9867-4B1C-A534-AA3A05B54BCE";
             string resourceGroupName = "rgworkspaces-firmwares";
             string workspaceName = "A7";
-            string firmwareId = "umrkdttp";
-            ResourceIdentifier firmwareResourceId = FirmwareResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, workspaceName, firmwareId);
+            string firmwareName = "umrkdttp";
+            ResourceIdentifier firmwareResourceId = FirmwareResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, workspaceName, firmwareName);
             FirmwareResource firmware = client.GetFirmwareResource(firmwareResourceId);
 
             // invoke the operation
-            BinaryHardening result = await firmware.GenerateBinaryHardeningDetailsAsync();
+            BinaryHardening result = await firmware.GetBinaryHardeningDetailsAsync();
 
             Console.WriteLine($"Succeeded: {result}");
         }
@@ -655,7 +655,7 @@ BinaryData.FromObjectAsJson(new Dictionary<string, object>()
         // Firmware_GenerateBinaryHardeningDetails_MinimumSet_Gen
         [NUnit.Framework.Test]
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task GenerateBinaryHardeningDetails_FirmwareGenerateBinaryHardeningDetailsMinimumSetGen()
+        public async Task GetBinaryHardeningDetails_FirmwareGenerateBinaryHardeningDetailsMinimumSetGen()
         {
             // Generated from example definition: specification/fist/resource-manager/Microsoft.IoTFirmwareDefense/preview/2023-02-08-preview/examples/Firmware_GenerateBinaryHardeningDetails_MinimumSet_Gen.json
             // this example is just showing the usage of "Firmware_GenerateBinaryHardeningDetails" operation, for the dependent resources, they will have to be created separately.
@@ -670,12 +670,12 @@ BinaryData.FromObjectAsJson(new Dictionary<string, object>()
             string subscriptionId = "685C0C6F-9867-4B1C-A534-AA3A05B54BCE";
             string resourceGroupName = "rgworkspaces-firmwares";
             string workspaceName = "A7";
-            string firmwareId = "umrkdttp";
-            ResourceIdentifier firmwareResourceId = FirmwareResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, workspaceName, firmwareId);
+            string firmwareName = "umrkdttp";
+            ResourceIdentifier firmwareResourceId = FirmwareResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, workspaceName, firmwareName);
             FirmwareResource firmware = client.GetFirmwareResource(firmwareResourceId);
 
             // invoke the operation
-            BinaryHardening result = await firmware.GenerateBinaryHardeningDetailsAsync();
+            BinaryHardening result = await firmware.GetBinaryHardeningDetailsAsync();
 
             Console.WriteLine($"Succeeded: {result}");
         }
@@ -683,7 +683,7 @@ BinaryData.FromObjectAsJson(new Dictionary<string, object>()
         // Firmware_ListGeneratePasswordHashList_MaximumSet_Gen
         [NUnit.Framework.Test]
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task GetGeneratePasswordHashList_FirmwareListGeneratePasswordHashListMaximumSetGen()
+        public async Task GetPasswordHashes_FirmwareListGeneratePasswordHashListMaximumSetGen()
         {
             // Generated from example definition: specification/fist/resource-manager/Microsoft.IoTFirmwareDefense/preview/2023-02-08-preview/examples/Firmware_ListGeneratePasswordHashList_MaximumSet_Gen.json
             // this example is just showing the usage of "Firmware_ListGeneratePasswordHashList" operation, for the dependent resources, they will have to be created separately.
@@ -698,12 +698,12 @@ BinaryData.FromObjectAsJson(new Dictionary<string, object>()
             string subscriptionId = "685C0C6F-9867-4B1C-A534-AA3A05B54BCE";
             string resourceGroupName = "rgworkspaces-firmwares";
             string workspaceName = "A7";
-            string firmwareId = "umrkdttp";
-            ResourceIdentifier firmwareResourceId = FirmwareResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, workspaceName, firmwareId);
+            string firmwareName = "umrkdttp";
+            ResourceIdentifier firmwareResourceId = FirmwareResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, workspaceName, firmwareName);
             FirmwareResource firmware = client.GetFirmwareResource(firmwareResourceId);
 
             // invoke the operation and iterate over the result
-            await foreach (PasswordHash item in firmware.GetGeneratePasswordHashListAsync())
+            await foreach (PasswordHash item in firmware.GetPasswordHashesAsync())
             {
                 Console.WriteLine($"Succeeded: {item}");
             }
@@ -714,7 +714,7 @@ BinaryData.FromObjectAsJson(new Dictionary<string, object>()
         // Firmware_ListGeneratePasswordHashList_MinimumSet_Gen
         [NUnit.Framework.Test]
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task GetGeneratePasswordHashList_FirmwareListGeneratePasswordHashListMinimumSetGen()
+        public async Task GetPasswordHashes_FirmwareListGeneratePasswordHashListMinimumSetGen()
         {
             // Generated from example definition: specification/fist/resource-manager/Microsoft.IoTFirmwareDefense/preview/2023-02-08-preview/examples/Firmware_ListGeneratePasswordHashList_MinimumSet_Gen.json
             // this example is just showing the usage of "Firmware_ListGeneratePasswordHashList" operation, for the dependent resources, they will have to be created separately.
@@ -729,12 +729,12 @@ BinaryData.FromObjectAsJson(new Dictionary<string, object>()
             string subscriptionId = "685C0C6F-9867-4B1C-A534-AA3A05B54BCE";
             string resourceGroupName = "rgworkspaces-firmwares";
             string workspaceName = "A7";
-            string firmwareId = "umrkdttp";
-            ResourceIdentifier firmwareResourceId = FirmwareResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, workspaceName, firmwareId);
+            string firmwareName = "umrkdttp";
+            ResourceIdentifier firmwareResourceId = FirmwareResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, workspaceName, firmwareName);
             FirmwareResource firmware = client.GetFirmwareResource(firmwareResourceId);
 
             // invoke the operation and iterate over the result
-            await foreach (PasswordHash item in firmware.GetGeneratePasswordHashListAsync())
+            await foreach (PasswordHash item in firmware.GetPasswordHashesAsync())
             {
                 Console.WriteLine($"Succeeded: {item}");
             }
@@ -745,7 +745,7 @@ BinaryData.FromObjectAsJson(new Dictionary<string, object>()
         // Firmware_ListGenerateCveList_MaximumSet_Gen
         [NUnit.Framework.Test]
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task GetGenerateCveList_FirmwareListGenerateCveListMaximumSetGen()
+        public async Task GetCves_FirmwareListGenerateCveListMaximumSetGen()
         {
             // Generated from example definition: specification/fist/resource-manager/Microsoft.IoTFirmwareDefense/preview/2023-02-08-preview/examples/Firmware_ListGenerateCveList_MaximumSet_Gen.json
             // this example is just showing the usage of "Firmware_ListGenerateCveList" operation, for the dependent resources, they will have to be created separately.
@@ -760,12 +760,12 @@ BinaryData.FromObjectAsJson(new Dictionary<string, object>()
             string subscriptionId = "685C0C6F-9867-4B1C-A534-AA3A05B54BCE";
             string resourceGroupName = "rgworkspaces-firmwares";
             string workspaceName = "A7";
-            string firmwareId = "umrkdttp";
-            ResourceIdentifier firmwareResourceId = FirmwareResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, workspaceName, firmwareId);
+            string firmwareName = "umrkdttp";
+            ResourceIdentifier firmwareResourceId = FirmwareResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, workspaceName, firmwareName);
             FirmwareResource firmware = client.GetFirmwareResource(firmwareResourceId);
 
             // invoke the operation and iterate over the result
-            await foreach (Cve item in firmware.GetGenerateCveListAsync())
+            await foreach (Cve item in firmware.GetCvesAsync())
             {
                 Console.WriteLine($"Succeeded: {item}");
             }
@@ -776,7 +776,7 @@ BinaryData.FromObjectAsJson(new Dictionary<string, object>()
         // Firmware_ListGenerateCveList_MinimumSet_Gen
         [NUnit.Framework.Test]
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task GetGenerateCveList_FirmwareListGenerateCveListMinimumSetGen()
+        public async Task GetCves_FirmwareListGenerateCveListMinimumSetGen()
         {
             // Generated from example definition: specification/fist/resource-manager/Microsoft.IoTFirmwareDefense/preview/2023-02-08-preview/examples/Firmware_ListGenerateCveList_MinimumSet_Gen.json
             // this example is just showing the usage of "Firmware_ListGenerateCveList" operation, for the dependent resources, they will have to be created separately.
@@ -791,12 +791,12 @@ BinaryData.FromObjectAsJson(new Dictionary<string, object>()
             string subscriptionId = "685C0C6F-9867-4B1C-A534-AA3A05B54BCE";
             string resourceGroupName = "rgworkspaces-firmwares";
             string workspaceName = "A7";
-            string firmwareId = "umrkdttp";
-            ResourceIdentifier firmwareResourceId = FirmwareResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, workspaceName, firmwareId);
+            string firmwareName = "umrkdttp";
+            ResourceIdentifier firmwareResourceId = FirmwareResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, workspaceName, firmwareName);
             FirmwareResource firmware = client.GetFirmwareResource(firmwareResourceId);
 
             // invoke the operation and iterate over the result
-            await foreach (Cve item in firmware.GetGenerateCveListAsync())
+            await foreach (Cve item in firmware.GetCvesAsync())
             {
                 Console.WriteLine($"Succeeded: {item}");
             }
@@ -807,7 +807,7 @@ BinaryData.FromObjectAsJson(new Dictionary<string, object>()
         // Firmware_GenerateCveSummary_MaximumSet_Gen
         [NUnit.Framework.Test]
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task GenerateCveSummary_FirmwareGenerateCveSummaryMaximumSetGen()
+        public async Task GetCveSummary_FirmwareGenerateCveSummaryMaximumSetGen()
         {
             // Generated from example definition: specification/fist/resource-manager/Microsoft.IoTFirmwareDefense/preview/2023-02-08-preview/examples/Firmware_GenerateCveSummary_MaximumSet_Gen.json
             // this example is just showing the usage of "Firmware_GenerateCveSummary" operation, for the dependent resources, they will have to be created separately.
@@ -822,12 +822,12 @@ BinaryData.FromObjectAsJson(new Dictionary<string, object>()
             string subscriptionId = "685C0C6F-9867-4B1C-A534-AA3A05B54BCE";
             string resourceGroupName = "rgworkspaces-firmwares";
             string workspaceName = "A7";
-            string firmwareId = "umrkdttp";
-            ResourceIdentifier firmwareResourceId = FirmwareResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, workspaceName, firmwareId);
+            string firmwareName = "umrkdttp";
+            ResourceIdentifier firmwareResourceId = FirmwareResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, workspaceName, firmwareName);
             FirmwareResource firmware = client.GetFirmwareResource(firmwareResourceId);
 
             // invoke the operation
-            CveSummary result = await firmware.GenerateCveSummaryAsync();
+            CveSummary result = await firmware.GetCveSummaryAsync();
 
             Console.WriteLine($"Succeeded: {result}");
         }
@@ -835,7 +835,7 @@ BinaryData.FromObjectAsJson(new Dictionary<string, object>()
         // Firmware_GenerateCveSummary_MinimumSet_Gen
         [NUnit.Framework.Test]
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task GenerateCveSummary_FirmwareGenerateCveSummaryMinimumSetGen()
+        public async Task GetCveSummary_FirmwareGenerateCveSummaryMinimumSetGen()
         {
             // Generated from example definition: specification/fist/resource-manager/Microsoft.IoTFirmwareDefense/preview/2023-02-08-preview/examples/Firmware_GenerateCveSummary_MinimumSet_Gen.json
             // this example is just showing the usage of "Firmware_GenerateCveSummary" operation, for the dependent resources, they will have to be created separately.
@@ -850,12 +850,12 @@ BinaryData.FromObjectAsJson(new Dictionary<string, object>()
             string subscriptionId = "685C0C6F-9867-4B1C-A534-AA3A05B54BCE";
             string resourceGroupName = "rgworkspaces-firmwares";
             string workspaceName = "A7";
-            string firmwareId = "umrkdttp";
-            ResourceIdentifier firmwareResourceId = FirmwareResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, workspaceName, firmwareId);
+            string firmwareName = "umrkdttp";
+            ResourceIdentifier firmwareResourceId = FirmwareResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, workspaceName, firmwareName);
             FirmwareResource firmware = client.GetFirmwareResource(firmwareResourceId);
 
             // invoke the operation
-            CveSummary result = await firmware.GenerateCveSummaryAsync();
+            CveSummary result = await firmware.GetCveSummaryAsync();
 
             Console.WriteLine($"Succeeded: {result}");
         }
@@ -863,7 +863,7 @@ BinaryData.FromObjectAsJson(new Dictionary<string, object>()
         // Firmware_GenerateCryptoCertificateSummary_MaximumSet_Gen
         [NUnit.Framework.Test]
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task GenerateCryptoCertificateSummary_FirmwareGenerateCryptoCertificateSummaryMaximumSetGen()
+        public async Task GetCryptoCertificateSummary_FirmwareGenerateCryptoCertificateSummaryMaximumSetGen()
         {
             // Generated from example definition: specification/fist/resource-manager/Microsoft.IoTFirmwareDefense/preview/2023-02-08-preview/examples/Firmware_GenerateCryptoCertificateSummary_MaximumSet_Gen.json
             // this example is just showing the usage of "Firmware_GenerateCryptoCertificateSummary" operation, for the dependent resources, they will have to be created separately.
@@ -878,12 +878,12 @@ BinaryData.FromObjectAsJson(new Dictionary<string, object>()
             string subscriptionId = "C589E84A-5C11-4A25-9CF9-4E9C2F1EBFCA";
             string resourceGroupName = "FirmwareAnalysisRG";
             string workspaceName = "default";
-            string firmwareId = "DECAFBAD-0000-0000-0000-BADBADBADBAD";
-            ResourceIdentifier firmwareResourceId = FirmwareResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, workspaceName, firmwareId);
+            string firmwareName = "DECAFBAD-0000-0000-0000-BADBADBADBAD";
+            ResourceIdentifier firmwareResourceId = FirmwareResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, workspaceName, firmwareName);
             FirmwareResource firmware = client.GetFirmwareResource(firmwareResourceId);
 
             // invoke the operation
-            CryptoCertificateSummary result = await firmware.GenerateCryptoCertificateSummaryAsync();
+            FirmwareCryptoCertificateSummary result = await firmware.GetCryptoCertificateSummaryAsync();
 
             Console.WriteLine($"Succeeded: {result}");
         }
@@ -891,7 +891,7 @@ BinaryData.FromObjectAsJson(new Dictionary<string, object>()
         // Firmware_GenerateCryptoCertificateSummary_MinimumSet_Gen
         [NUnit.Framework.Test]
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task GenerateCryptoCertificateSummary_FirmwareGenerateCryptoCertificateSummaryMinimumSetGen()
+        public async Task GetCryptoCertificateSummary_FirmwareGenerateCryptoCertificateSummaryMinimumSetGen()
         {
             // Generated from example definition: specification/fist/resource-manager/Microsoft.IoTFirmwareDefense/preview/2023-02-08-preview/examples/Firmware_GenerateCryptoCertificateSummary_MinimumSet_Gen.json
             // this example is just showing the usage of "Firmware_GenerateCryptoCertificateSummary" operation, for the dependent resources, they will have to be created separately.
@@ -906,12 +906,12 @@ BinaryData.FromObjectAsJson(new Dictionary<string, object>()
             string subscriptionId = "C589E84A-5C11-4A25-9CF9-4E9C2F1EBFCA";
             string resourceGroupName = "rgworkspaces-firmwares";
             string workspaceName = "j5QE_";
-            string firmwareId = "wujtpcgypfpqseyrsebolarkspy";
-            ResourceIdentifier firmwareResourceId = FirmwareResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, workspaceName, firmwareId);
+            string firmwareName = "wujtpcgypfpqseyrsebolarkspy";
+            ResourceIdentifier firmwareResourceId = FirmwareResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, workspaceName, firmwareName);
             FirmwareResource firmware = client.GetFirmwareResource(firmwareResourceId);
 
             // invoke the operation
-            CryptoCertificateSummary result = await firmware.GenerateCryptoCertificateSummaryAsync();
+            FirmwareCryptoCertificateSummary result = await firmware.GetCryptoCertificateSummaryAsync();
 
             Console.WriteLine($"Succeeded: {result}");
         }
@@ -919,7 +919,7 @@ BinaryData.FromObjectAsJson(new Dictionary<string, object>()
         // Firmware_GenerateCryptoKeySummary_MaximumSet_Gen
         [NUnit.Framework.Test]
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task GenerateCryptoKeySummary_FirmwareGenerateCryptoKeySummaryMaximumSetGen()
+        public async Task GetCryptoKeySummary_FirmwareGenerateCryptoKeySummaryMaximumSetGen()
         {
             // Generated from example definition: specification/fist/resource-manager/Microsoft.IoTFirmwareDefense/preview/2023-02-08-preview/examples/Firmware_GenerateCryptoKeySummary_MaximumSet_Gen.json
             // this example is just showing the usage of "Firmware_GenerateCryptoKeySummary" operation, for the dependent resources, they will have to be created separately.
@@ -934,12 +934,12 @@ BinaryData.FromObjectAsJson(new Dictionary<string, object>()
             string subscriptionId = "C589E84A-5C11-4A25-9CF9-4E9C2F1EBFCA";
             string resourceGroupName = "FirmwareAnalysisRG";
             string workspaceName = "default";
-            string firmwareId = "DECAFBAD-0000-0000-0000-BADBADBADBAD";
-            ResourceIdentifier firmwareResourceId = FirmwareResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, workspaceName, firmwareId);
+            string firmwareName = "DECAFBAD-0000-0000-0000-BADBADBADBAD";
+            ResourceIdentifier firmwareResourceId = FirmwareResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, workspaceName, firmwareName);
             FirmwareResource firmware = client.GetFirmwareResource(firmwareResourceId);
 
             // invoke the operation
-            CryptoKeySummary result = await firmware.GenerateCryptoKeySummaryAsync();
+            FirmwareCryptoKeySummary result = await firmware.GetCryptoKeySummaryAsync();
 
             Console.WriteLine($"Succeeded: {result}");
         }
@@ -947,7 +947,7 @@ BinaryData.FromObjectAsJson(new Dictionary<string, object>()
         // Firmware_GenerateCryptoKeySummary_MinimumSet_Gen
         [NUnit.Framework.Test]
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task GenerateCryptoKeySummary_FirmwareGenerateCryptoKeySummaryMinimumSetGen()
+        public async Task GetCryptoKeySummary_FirmwareGenerateCryptoKeySummaryMinimumSetGen()
         {
             // Generated from example definition: specification/fist/resource-manager/Microsoft.IoTFirmwareDefense/preview/2023-02-08-preview/examples/Firmware_GenerateCryptoKeySummary_MinimumSet_Gen.json
             // this example is just showing the usage of "Firmware_GenerateCryptoKeySummary" operation, for the dependent resources, they will have to be created separately.
@@ -962,12 +962,12 @@ BinaryData.FromObjectAsJson(new Dictionary<string, object>()
             string subscriptionId = "C589E84A-5C11-4A25-9CF9-4E9C2F1EBFCA";
             string resourceGroupName = "rgworkspaces-firmwares";
             string workspaceName = "j5QE_";
-            string firmwareId = "wujtpcgypfpqseyrsebolarkspy";
-            ResourceIdentifier firmwareResourceId = FirmwareResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, workspaceName, firmwareId);
+            string firmwareName = "wujtpcgypfpqseyrsebolarkspy";
+            ResourceIdentifier firmwareResourceId = FirmwareResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, workspaceName, firmwareName);
             FirmwareResource firmware = client.GetFirmwareResource(firmwareResourceId);
 
             // invoke the operation
-            CryptoKeySummary result = await firmware.GenerateCryptoKeySummaryAsync();
+            FirmwareCryptoKeySummary result = await firmware.GetCryptoKeySummaryAsync();
 
             Console.WriteLine($"Succeeded: {result}");
         }
@@ -975,7 +975,7 @@ BinaryData.FromObjectAsJson(new Dictionary<string, object>()
         // Firmware_ListGenerateCryptoCertificateList_MaximumSet_Gen
         [NUnit.Framework.Test]
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task GetGenerateCryptoCertificateList_FirmwareListGenerateCryptoCertificateListMaximumSetGen()
+        public async Task GetCryptoCertificates_FirmwareListGenerateCryptoCertificateListMaximumSetGen()
         {
             // Generated from example definition: specification/fist/resource-manager/Microsoft.IoTFirmwareDefense/preview/2023-02-08-preview/examples/Firmware_ListGenerateCryptoCertificateList_MaximumSet_Gen.json
             // this example is just showing the usage of "Firmware_ListGenerateCryptoCertificateList" operation, for the dependent resources, they will have to be created separately.
@@ -990,12 +990,12 @@ BinaryData.FromObjectAsJson(new Dictionary<string, object>()
             string subscriptionId = "C589E84A-5C11-4A25-9CF9-4E9C2F1EBFCA";
             string resourceGroupName = "FirmwareAnalysisRG";
             string workspaceName = "default";
-            string firmwareId = "DECAFBAD-0000-0000-0000-BADBADBADBAD";
-            ResourceIdentifier firmwareResourceId = FirmwareResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, workspaceName, firmwareId);
+            string firmwareName = "DECAFBAD-0000-0000-0000-BADBADBADBAD";
+            ResourceIdentifier firmwareResourceId = FirmwareResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, workspaceName, firmwareName);
             FirmwareResource firmware = client.GetFirmwareResource(firmwareResourceId);
 
             // invoke the operation and iterate over the result
-            await foreach (CryptoCertificate item in firmware.GetGenerateCryptoCertificateListAsync())
+            await foreach (FirmwareCryptoCertificate item in firmware.GetCryptoCertificatesAsync())
             {
                 Console.WriteLine($"Succeeded: {item}");
             }
@@ -1006,7 +1006,7 @@ BinaryData.FromObjectAsJson(new Dictionary<string, object>()
         // Firmware_ListGenerateCryptoCertificateList_MinimumSet_Gen
         [NUnit.Framework.Test]
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task GetGenerateCryptoCertificateList_FirmwareListGenerateCryptoCertificateListMinimumSetGen()
+        public async Task GetCryptoCertificates_FirmwareListGenerateCryptoCertificateListMinimumSetGen()
         {
             // Generated from example definition: specification/fist/resource-manager/Microsoft.IoTFirmwareDefense/preview/2023-02-08-preview/examples/Firmware_ListGenerateCryptoCertificateList_MinimumSet_Gen.json
             // this example is just showing the usage of "Firmware_ListGenerateCryptoCertificateList" operation, for the dependent resources, they will have to be created separately.
@@ -1021,12 +1021,12 @@ BinaryData.FromObjectAsJson(new Dictionary<string, object>()
             string subscriptionId = "C589E84A-5C11-4A25-9CF9-4E9C2F1EBFCA";
             string resourceGroupName = "rgworkspaces-firmwares";
             string workspaceName = "j5QE_";
-            string firmwareId = "wujtpcgypfpqseyrsebolarkspy";
-            ResourceIdentifier firmwareResourceId = FirmwareResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, workspaceName, firmwareId);
+            string firmwareName = "wujtpcgypfpqseyrsebolarkspy";
+            ResourceIdentifier firmwareResourceId = FirmwareResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, workspaceName, firmwareName);
             FirmwareResource firmware = client.GetFirmwareResource(firmwareResourceId);
 
             // invoke the operation and iterate over the result
-            await foreach (CryptoCertificate item in firmware.GetGenerateCryptoCertificateListAsync())
+            await foreach (FirmwareCryptoCertificate item in firmware.GetCryptoCertificatesAsync())
             {
                 Console.WriteLine($"Succeeded: {item}");
             }
@@ -1037,7 +1037,7 @@ BinaryData.FromObjectAsJson(new Dictionary<string, object>()
         // Firmware_ListGenerateCryptoKeyList_MaximumSet_Gen
         [NUnit.Framework.Test]
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task GetGenerateCryptoKeyList_FirmwareListGenerateCryptoKeyListMaximumSetGen()
+        public async Task GetCryptoKeys_FirmwareListGenerateCryptoKeyListMaximumSetGen()
         {
             // Generated from example definition: specification/fist/resource-manager/Microsoft.IoTFirmwareDefense/preview/2023-02-08-preview/examples/Firmware_ListGenerateCryptoKeyList_MaximumSet_Gen.json
             // this example is just showing the usage of "Firmware_ListGenerateCryptoKeyList" operation, for the dependent resources, they will have to be created separately.
@@ -1052,12 +1052,12 @@ BinaryData.FromObjectAsJson(new Dictionary<string, object>()
             string subscriptionId = "C589E84A-5C11-4A25-9CF9-4E9C2F1EBFCA";
             string resourceGroupName = "FirmwareAnalysisRG";
             string workspaceName = "default";
-            string firmwareId = "DECAFBAD-0000-0000-0000-BADBADBADBAD";
-            ResourceIdentifier firmwareResourceId = FirmwareResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, workspaceName, firmwareId);
+            string firmwareName = "DECAFBAD-0000-0000-0000-BADBADBADBAD";
+            ResourceIdentifier firmwareResourceId = FirmwareResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, workspaceName, firmwareName);
             FirmwareResource firmware = client.GetFirmwareResource(firmwareResourceId);
 
             // invoke the operation and iterate over the result
-            await foreach (CryptoKey item in firmware.GetGenerateCryptoKeyListAsync())
+            await foreach (FirmwareCryptoKey item in firmware.GetCryptoKeysAsync())
             {
                 Console.WriteLine($"Succeeded: {item}");
             }
@@ -1068,7 +1068,7 @@ BinaryData.FromObjectAsJson(new Dictionary<string, object>()
         // Firmware_ListGenerateCryptoKeyList_MinimumSet_Gen
         [NUnit.Framework.Test]
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task GetGenerateCryptoKeyList_FirmwareListGenerateCryptoKeyListMinimumSetGen()
+        public async Task GetCryptoKeys_FirmwareListGenerateCryptoKeyListMinimumSetGen()
         {
             // Generated from example definition: specification/fist/resource-manager/Microsoft.IoTFirmwareDefense/preview/2023-02-08-preview/examples/Firmware_ListGenerateCryptoKeyList_MinimumSet_Gen.json
             // this example is just showing the usage of "Firmware_ListGenerateCryptoKeyList" operation, for the dependent resources, they will have to be created separately.
@@ -1083,12 +1083,12 @@ BinaryData.FromObjectAsJson(new Dictionary<string, object>()
             string subscriptionId = "C589E84A-5C11-4A25-9CF9-4E9C2F1EBFCA";
             string resourceGroupName = "rgworkspaces-firmwares";
             string workspaceName = "j5QE_";
-            string firmwareId = "wujtpcgypfpqseyrsebolarkspy";
-            ResourceIdentifier firmwareResourceId = FirmwareResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, workspaceName, firmwareId);
+            string firmwareName = "wujtpcgypfpqseyrsebolarkspy";
+            ResourceIdentifier firmwareResourceId = FirmwareResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, workspaceName, firmwareName);
             FirmwareResource firmware = client.GetFirmwareResource(firmwareResourceId);
 
             // invoke the operation and iterate over the result
-            await foreach (CryptoKey item in firmware.GetGenerateCryptoKeyListAsync())
+            await foreach (FirmwareCryptoKey item in firmware.GetCryptoKeysAsync())
             {
                 Console.WriteLine($"Succeeded: {item}");
             }

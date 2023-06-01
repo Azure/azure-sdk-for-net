@@ -285,11 +285,11 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Samples
             WorkspaceResource workspace = client.GetWorkspaceResource(workspaceResourceId);
 
             // invoke the operation
-            GenerateUploadUrlContent content = new GenerateUploadUrlContent()
+            UploadUrlContent content = new UploadUrlContent()
             {
-                FirmwareId = "ytsfprbywi",
+                FirmwareName = "ytsfprbywi",
             };
-            UrlToken result = await workspace.GenerateUploadUrlAsync(content);
+            UriToken result = await workspace.GenerateUploadUrlAsync(content);
 
             Console.WriteLine($"Succeeded: {result}");
         }
@@ -316,8 +316,8 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Samples
             WorkspaceResource workspace = client.GetWorkspaceResource(workspaceResourceId);
 
             // invoke the operation
-            GenerateUploadUrlContent content = new GenerateUploadUrlContent();
-            UrlToken result = await workspace.GenerateUploadUrlAsync(content);
+            UploadUrlContent content = new UploadUrlContent();
+            UriToken result = await workspace.GenerateUploadUrlAsync(content);
 
             Console.WriteLine($"Succeeded: {result}");
         }

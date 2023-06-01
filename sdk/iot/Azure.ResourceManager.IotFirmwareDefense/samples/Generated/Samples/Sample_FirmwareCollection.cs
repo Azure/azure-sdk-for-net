@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Samples
             FirmwareCollection collection = workspace.GetFirmwares();
 
             // invoke the operation
-            string firmwareId = "umrkdttp";
+            string firmwareName = "umrkdttp";
             FirmwareData data = new FirmwareData()
             {
                 FileName = "wresexxulcdsdd",
@@ -135,7 +135,7 @@ BinaryData.FromObjectAsJson(new Dictionary<string, object>()
 ["message"] = "ulvhmhokezathzzauiitu"})
 },
             };
-            ArmOperation<FirmwareResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, firmwareId, data);
+            ArmOperation<FirmwareResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, firmwareName, data);
             FirmwareResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
@@ -170,9 +170,9 @@ BinaryData.FromObjectAsJson(new Dictionary<string, object>()
             FirmwareCollection collection = workspace.GetFirmwares();
 
             // invoke the operation
-            string firmwareId = "umrkdttp";
+            string firmwareName = "umrkdttp";
             FirmwareData data = new FirmwareData();
-            ArmOperation<FirmwareResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, firmwareId, data);
+            ArmOperation<FirmwareResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, firmwareName, data);
             FirmwareResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
@@ -207,8 +207,8 @@ BinaryData.FromObjectAsJson(new Dictionary<string, object>()
             FirmwareCollection collection = workspace.GetFirmwares();
 
             // invoke the operation
-            string firmwareId = "umrkdttp";
-            FirmwareResource result = await collection.GetAsync(firmwareId);
+            string firmwareName = "umrkdttp";
+            FirmwareResource result = await collection.GetAsync(firmwareName);
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
@@ -242,8 +242,8 @@ BinaryData.FromObjectAsJson(new Dictionary<string, object>()
             FirmwareCollection collection = workspace.GetFirmwares();
 
             // invoke the operation
-            string firmwareId = "umrkdttp";
-            bool result = await collection.ExistsAsync(firmwareId);
+            string firmwareName = "umrkdttp";
+            bool result = await collection.ExistsAsync(firmwareName);
 
             Console.WriteLine($"Succeeded: {result}");
         }
@@ -273,8 +273,8 @@ BinaryData.FromObjectAsJson(new Dictionary<string, object>()
             FirmwareCollection collection = workspace.GetFirmwares();
 
             // invoke the operation
-            string firmwareId = "umrkdttp";
-            FirmwareResource result = await collection.GetAsync(firmwareId);
+            string firmwareName = "umrkdttp";
+            FirmwareResource result = await collection.GetAsync(firmwareName);
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
@@ -308,8 +308,8 @@ BinaryData.FromObjectAsJson(new Dictionary<string, object>()
             FirmwareCollection collection = workspace.GetFirmwares();
 
             // invoke the operation
-            string firmwareId = "umrkdttp";
-            bool result = await collection.ExistsAsync(firmwareId);
+            string firmwareName = "umrkdttp";
+            bool result = await collection.ExistsAsync(firmwareName);
 
             Console.WriteLine($"Succeeded: {result}");
         }
