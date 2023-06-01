@@ -62,6 +62,11 @@ namespace Azure.ResourceManager.Qumulo
 }
 namespace Azure.ResourceManager.Qumulo.Models
 {
+    public static partial class ArmQumuloModelFactory
+    {
+        public static Azure.ResourceManager.Qumulo.Models.MarketplaceDetails MarketplaceDetails(string marketplaceSubscriptionId = null, string planId = null, string offerId = null, string publisherId = null, Azure.ResourceManager.Qumulo.Models.MarketplaceSubscriptionStatus? marketplaceSubscriptionStatus = default(Azure.ResourceManager.Qumulo.Models.MarketplaceSubscriptionStatus?)) { throw null; }
+        public static Azure.ResourceManager.Qumulo.QumuloFileSystemResourceData QumuloFileSystemResourceData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), Azure.ResourceManager.Models.ManagedServiceIdentity identity = null, Azure.ResourceManager.Qumulo.Models.MarketplaceDetails marketplaceDetails = null, Azure.ResourceManager.Qumulo.Models.QumuloProvisioningState? provisioningState = default(Azure.ResourceManager.Qumulo.Models.QumuloProvisioningState?), Azure.ResourceManager.Qumulo.Models.StorageSku storageSku = Azure.ResourceManager.Qumulo.Models.StorageSku.Standard, string userDetailsEmail = null, string delegatedSubnetId = null, System.Uri clusterLoginUri = null, System.Collections.Generic.IEnumerable<System.Net.IPAddress> privateIPs = null, string adminPassword = null, int initialCapacity = 0, string availabilityZone = null) { throw null; }
+    }
     public partial class FileSystemResourceUpdateProperties
     {
         public FileSystemResourceUpdateProperties() { }

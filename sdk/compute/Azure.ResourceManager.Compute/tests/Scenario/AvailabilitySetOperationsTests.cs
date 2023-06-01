@@ -124,5 +124,24 @@ namespace Azure.ResourceManager.Compute.Tests
             Assert.AreEqual(removeIdResult, newRemoveIdResult);
             Assert.AreEqual(removeIdResult, newRemoveOuterIdResult);
         }
+
+        [RecordedTest]
+        [TestCase(null)]
+        [TestCase(true)]
+        [TestCase(false)]
+        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/36714")]
+        public async Task SetTags(bool? useTagResource)
+        {
+            SetTagResourceUsage(Client, useTagResource);
+            var name = Recording.GenerateAssetName("aset-");
+            var aset = await CreateAvailabilitySetAsync(name);
+            var tags = new Dictionary<string, string>()
+            {
+                { "key", "value" }
+            };
+            AvailabilitySetResource updated = await aset.SetTagsAsync(tags);
+
+            Assert.AreEqual(tags, updated.Data.Tags);
+        }
     }
 }

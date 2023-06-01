@@ -1559,7 +1559,7 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring.Samples
     new {
         op = "add",
         value = new {
-            sourceUri = new {},
+            sourceUri = "http://localhost:3000",
             sourceKind = "file",
         },
     }
@@ -1589,7 +1589,7 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring.Samples
         value = new {
             displayName = "<displayName>",
             source = "<source>",
-            sourceUri = new {},
+            sourceUri = "http://localhost:3000",
             sourceKind = "file",
             contentStructureKind = "unstructured",
         },
@@ -1621,7 +1621,7 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring.Samples
     new {
         op = "add",
         value = new {
-            sourceUri = new {},
+            sourceUri = "http://localhost:3000",
             sourceKind = "file",
         },
     }
@@ -1651,7 +1651,7 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring.Samples
         value = new {
             displayName = "<displayName>",
             source = "<source>",
-            sourceUri = new {},
+            sourceUri = "http://localhost:3000",
             sourceKind = "file",
             contentStructureKind = "unstructured",
         },

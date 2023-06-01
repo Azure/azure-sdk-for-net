@@ -16,6 +16,12 @@ namespace Azure.Communication.Chat
             InvalidParticipants = createChatThreadResultInternal.InvalidParticipants;
         }
 
+        internal CreateChatThreadResult(ChatThreadProperties chatThread, IReadOnlyList<ChatError> invalidParticipants)
+        {
+            ChatThread = chatThread;
+            InvalidParticipants = invalidParticipants;
+        }
+
         /// <summary> Chat thread. </summary>
         public ChatThreadProperties ChatThread { get; }
         /// <summary> Errors encountered during the creation of the chat thread. </summary>

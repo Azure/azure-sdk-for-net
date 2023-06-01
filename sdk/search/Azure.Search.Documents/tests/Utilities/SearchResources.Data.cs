@@ -86,6 +86,24 @@ namespace Azure.Search.Documents.Tests
                         new VectorSearchAlgorithmConfiguration( "my-vector-config", "hnsw")
                     }
                 },
+                SemanticSettings = new()
+                {
+                    Configurations =
+                    {
+                       new SemanticConfiguration("my-semantic-config", new()
+                       {
+                           TitleField = new(){ FieldName = "hotelName" },
+                           ContentFields =
+                           {
+                               new() { FieldName = "description" }
+                           },
+                           KeywordFields =
+                           {
+                               new() { FieldName = "category" }
+                           }
+                       })
+                    }
+                },
                 Suggesters =
                 {
                     new SearchSuggester("sg", "description", "hotelName"),
@@ -343,7 +361,7 @@ namespace Azure.Search.Documents.Tests
         public string DescriptionFr { get; set; }
 
         [JsonPropertyName("descriptionVector")]
-        public IReadOnlyList<float> DescriptionVector { get; set; }
+        public IReadOnlyList<float> DescriptionVector { get; set; } = VectorSearchEmbeddings.DefaultVectorizeDescription; // Default DescriptionVector: "Hotel"
 
         [JsonPropertyName("category")]
         public string Category { get; set; }

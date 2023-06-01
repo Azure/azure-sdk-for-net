@@ -6,7 +6,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Azure.Storage.DataMovement.Models;
-using Microsoft.Extensions.Options;
 using NUnit.Framework;
 
 namespace Azure.Storage.DataMovement.Tests
@@ -179,35 +178,62 @@ namespace Azure.Storage.DataMovement.Tests
         /// <param name="blobCount">
         /// Expected amount of single transfers within the container transfer.
         /// </param>
-        public void AssertContainerCompletedCheck(int transferCount)
+        public async Task AssertContainerCompletedCheck(int transferCount)
         {
             AssertUnexpectedFailureCheck();
             Assert.IsEmpty(SkippedEvents);
-            /* TODO: Reenable check:  https://github.com/Azure/azure-sdk-for-net/issues/35976
-            Assert.AreEqual(transferCount, SingleCompletedEvents.Count);
-            Assert.AreEqual(2, StatusEvents.Count);
-            Assert.AreEqual(StorageTransferStatus.InProgress, StatusEvents.First().StorageTransferStatus);
-            Assert.AreEqual(StorageTransferStatus.Completed, StatusEvents.ElementAt(1).StorageTransferStatus);
-            */
+            // TODO: Reenable check:  https://github.com/Azure/azure-sdk-for-net/issues/35976
+            // Assert.AreEqual(transferCount, SingleCompletedEvents.Count);
+
+            await WaitForStatusEventsAsync().ConfigureAwait(false);
+            CollectionAssert.AreEqual(
+                new StorageTransferStatus[] {
+                    StorageTransferStatus.InProgress,
+                    StorageTransferStatus.Completed },
+                StatusEvents.Select(e => e.StorageTransferStatus));
         }
 
         /// <summary>
         /// This asserts that the expected events occurred during a container transfer that is expected
         /// to have a <see cref="StorageTransferStatus.CompletedWithFailure"/> at the end without any skips.
+        /// Assuming <see cref="ErrorHandlingOptions.StopOnAllFailures"/> was set.
         /// </summary>
         /// <param name="expectedFailureCount">
         /// Expected amount of failure single transfers to occur within the container transfers.
         /// </param>
-        public void AssertContainerCompletedWithFailedCheck(int expectedFailureCount)
+        public async Task AssertContainerCompletedWithFailedCheck(int expectedFailureCount)
         {
             Assert.AreEqual(expectedFailureCount, FailedEvents.Count);
             Assert.IsEmpty(SkippedEvents);
-            /* TODO: Reenable check:  https://github.com/Azure/azure-sdk-for-net/issues/35976
-            Assert.AreEqual(3, StatusEvents.Count);
-            Assert.AreEqual(StorageTransferStatus.InProgress, StatusEvents.First().StorageTransferStatus);
-            Assert.AreEqual(StorageTransferStatus.CancellationInProgress, StatusEvents.ElementAt(1).StorageTransferStatus);
-            Assert.AreEqual(StorageTransferStatus.CompletedWithFailedTransfers, StatusEvents.ElementAt(2).StorageTransferStatus);
-            */
+
+            await WaitForStatusEventsAsync().ConfigureAwait(false);
+            CollectionAssert.AreEqual(
+                new StorageTransferStatus[] {
+                    StorageTransferStatus.InProgress,
+                    StorageTransferStatus.CancellationInProgress,
+                    StorageTransferStatus.CompletedWithFailedTransfers },
+                StatusEvents.Select(e => e.StorageTransferStatus));
+        }
+
+        /// <summary>
+        /// This asserts that the expected events occurred during a container transfer that is expected
+        /// to have a <see cref="StorageTransferStatus.CompletedWithFailure"/> at the end without any skips.
+        /// Assuming <see cref="ErrorHandlingOptions.ContinueOnFailure"/> was set.
+        /// </summary>
+        /// <param name="expectedFailureCount">
+        /// Expected amount of failure single transfers to occur within the container transfers.
+        /// </param>
+        public async Task AssertContainerCompletedWithFailedCheckContinue(int expectedFailureCount)
+        {
+            Assert.AreEqual(expectedFailureCount, FailedEvents.Count);
+            Assert.IsEmpty(SkippedEvents);
+
+            await WaitForStatusEventsAsync().ConfigureAwait(false);
+            CollectionAssert.AreEqual(
+                new StorageTransferStatus[] {
+                    StorageTransferStatus.InProgress,
+                    StorageTransferStatus.CompletedWithFailedTransfers },
+                StatusEvents.Select(e => e.StorageTransferStatus));
         }
 
         /// <summary>
@@ -217,28 +243,30 @@ namespace Azure.Storage.DataMovement.Tests
         /// <param name="expectedSkipCount">
         /// Expected amount of skipped single transfers to occur within the container transfers.
         /// </param>
-        public void AssertContainerCompletedWithSkippedCheck(int expectedSkipCount)
+        public async Task AssertContainerCompletedWithSkippedCheck(int expectedSkipCount)
         {
             AssertUnexpectedFailureCheck();
             Assert.AreEqual(expectedSkipCount, SkippedEvents.Count);
-            /* TODO: Reenable check:  https://github.com/Azure/azure-sdk-for-net/issues/35976
-            Assert.AreEqual(2, StatusEvents.Count);
-            Assert.AreEqual(StorageTransferStatus.InProgress, StatusEvents.First().StorageTransferStatus);
-            Assert.AreEqual(StorageTransferStatus.CompletedWithSkippedTransfers, StatusEvents.ElementAt(1).StorageTransferStatus);
-            */
+
+            await WaitForStatusEventsAsync().ConfigureAwait(false);
+            CollectionAssert.AreEqual(
+                new StorageTransferStatus[] {
+                    StorageTransferStatus.InProgress,
+                    StorageTransferStatus.CompletedWithSkippedTransfers },
+                StatusEvents.Select(e => e.StorageTransferStatus));
         }
 
-        public void AssertPausedCheck()
+        public async Task AssertPausedCheck()
         {
             AssertUnexpectedFailureCheck();
             Assert.IsEmpty(SkippedEvents);
-            Assert.IsEmpty(SingleCompletedEvents);
-            /* TODO: Reenable check:  https://github.com/Azure/azure-sdk-for-net/issues/35976
-            Assert.AreEqual(3, StatusEvents.Count);
-            Assert.AreEqual(StorageTransferStatus.InProgress, StatusEvents.First().StorageTransferStatus);
-            Assert.AreEqual(StorageTransferStatus.PauseInProgress, StatusEvents.ElementAt(1).StorageTransferStatus);
-            Assert.AreEqual(StorageTransferStatus.Paused, StatusEvents.ElementAt(2).StorageTransferStatus);
-            */
+
+            await WaitForStatusEventsAsync().ConfigureAwait(false);
+            CollectionAssert.AreEqual(
+                new StorageTransferStatus[] {
+                    StorageTransferStatus.InProgress,
+                    StorageTransferStatus.Paused },
+                StatusEvents.Select(e => e.StorageTransferStatus));
         }
 
         /// <summary>
@@ -265,7 +293,7 @@ namespace Azure.Storage.DataMovement.Tests
             }
             else
             {
-                // If blobNames is popluated make sure these number of blobs match
+                // If blobNames is populated make sure these number of blobs match
                 Assert.AreEqual(transferCount, listOptions.Count);
                 // Add TestEventRaised to each option
                 foreach (TransferOptions currentOptions in listOptions)
@@ -275,6 +303,15 @@ namespace Azure.Storage.DataMovement.Tests
                 }
             }
             return eventRaisedList;
+        }
+
+        /// <summary>
+        /// The final job status event can come in after the transfer is finished.
+        /// This is expected so wait for a brief time to allow that event to come in.
+        /// </summary>
+        private Task WaitForStatusEventsAsync()
+        {
+            return Task.Delay(100);
         }
     }
 }

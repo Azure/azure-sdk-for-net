@@ -7,10 +7,10 @@ using NUnit.Framework;
 using Azure.ResourceManager.Resources;
 using Azure.Core.TestFramework;
 using Azure.ResourceManager.ServiceBus.Models;
-using Azure.ResourceManager.ServiceBus.Tests.Helpers;
+
 namespace Azure.ResourceManager.ServiceBus.Tests
 {
-    public class RuleTests : ServiceBusTestBase
+    public class RuleTests : ServiceBusManagementTestBase
     {
         public RuleTests(bool isAsync) : base(isAsync)
         {
