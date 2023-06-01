@@ -23,7 +23,6 @@ $(RepoRoot)sdk\communication\Azure.Communication.Identity\tests\Azure.Communicat
 $(RepoRoot)sdk\communication\Azure.Communication.MediaComposition\tests\Azure.Communication.MediaComposition.Tests.csproj
 $(RepoRoot)sdk\communication\Azure.Communication.NetworkTraversal\tests\Azure.Communication.NetworkTraversal.Tests.csproj
 $(RepoRoot)sdk\communication\Azure.Communication.PhoneNumbers\tests\Azure.Communication.PhoneNumbers.Tests.csproj
-$(RepoRoot)sdk\communication\Azure.Communication.ShortCodes\tests\Azure.Communication.ShortCodes.Tests.csproj
 $(RepoRoot)sdk\communication\Azure.Communication.Sms\tests\Azure.Communication.Sms.Tests.csproj
 $(RepoRoot)sdk\communication\Azure.ResourceManager.Communication\tests\Azure.ResourceManager.Communication.Tests.csproj
 $(RepoRoot)sdk\compute\Azure.ResourceManager.Compute\tests\Azure.ResourceManager.Compute.Tests.csproj

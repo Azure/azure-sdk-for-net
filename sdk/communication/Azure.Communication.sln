@@ -44,10 +44,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Communication.Calling
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Communication.CallingServer.Tests", "Azure.Communication.CallingServer\tests\Azure.Communication.CallingServer.Tests.csproj", "{B7C0269B-1809-4713-A7BD-390098AB7135}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Communication.ShortCodes", "Azure.Communication.ShortCodes\src\Azure.Communication.ShortCodes.csproj", "{F7C16A81-CCB6-4F86-8815-3CE8B6321258}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Communication.ShortCodes.Tests", "Azure.Communication.ShortCodes\tests\Azure.Communication.ShortCodes.Tests.csproj", "{A3D05FF9-848B-483E-A34E-49C50E73F675}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Communication.Email", "Azure.Communication.Email\src\Azure.Communication.Email.csproj", "{AEED2C23-E1AE-45F6-B975-BA06E28C27A7}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Communication.Email.Tests", "Azure.Communication.Email\tests\Azure.Communication.Email.Tests.csproj", "{F564FD34-F010-41FA-A58C-51558FB9FE89}"
