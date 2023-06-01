@@ -23,14 +23,15 @@ namespace Azure.Core.Serialization
             // if options.Serializers is set and the model is in the dictionary, use the serializer
             if (options != null && options.Serializers != null && typeof(T) != null)
             {
-                ObjectSerializer serializer;
-                if (!options.Serializers.TryGetValue(typeof(T), out serializer))
-                    throw new InvalidOperationException();
+                ObjectSerializer? serializer;
 
-                System.BinaryData data = serializer.Serialize(model);
-                return data.ToStream();
+                if (options.Serializers.TryGetValue(typeof(T), out serializer))
+                {
+                    System.BinaryData data = serializer.Serialize(model);
+                    return data.ToStream();
+                }
             }
-
+            // else use default STJ serializer
             IJsonSerializable serializable = (model ??= new T()) as IJsonSerializable;
             Stream stream = new MemoryStream();
             serializable.Serialize(stream, options);
