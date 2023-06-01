@@ -20,7 +20,7 @@ var credential = new DefaultAzureCredential();
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new PurviewCatalogClient(endpoint, credential).GetPurviewLineagesClient();
 
-Response response = await client.GetLineageGraphAsync("<guid>", "<direction>", 1234, 1234, true, true);
+Response response = await client.GetLineageGraphAsync("<guid>", "<direction>", 1234, 1234, true, true, new RequestContext());
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("baseEntityGuid").ToString());
@@ -69,39 +69,6 @@ Console.WriteLine(result.GetProperty("relations")[0].GetProperty("relationshipId
 Console.WriteLine(result.GetProperty("relations")[0].GetProperty("toEntityId").ToString());
 ]]></code>
 </example>
-<remarks>
-Below is the JSON schema for the response payload.
-
-Response Body:
-
-Schema for <c>AtlasLineageInfo</c>:
-<code>{
-  baseEntityGuid: string, # Optional. The GUID of the base entity.
-  guidEntityMap: Dictionary&lt;string, AtlasEntityHeader&gt;, # Optional. The GUID entity map.
-  widthCounts: Dictionary&lt;string, Dictionary&lt;string, any&gt;&gt;, # Optional. The entity count in specific direction.
-  lineageDepth: number, # Optional. The depth of lineage.
-  lineageWidth: number, # Optional. The width of lineage.
-  includeParent: boolean, # Optional. True to return the parent of the base entity.
-  childrenCount: number, # Optional. The number of children node.
-  lineageDirection: &quot;INPUT&quot; | &quot;OUTPUT&quot; | &quot;BOTH&quot;, # Optional. The enum of lineage direction.
-  parentRelations: [
-    {
-      childEntityId: string, # Optional. The GUID of child entity.
-      relationshipId: string, # Optional. The GUID of relationship.
-      parentEntityId: string, # Optional. The GUID of parent entity.
-    }
-  ], # Optional. An array of parentRelations relations.
-  relations: [
-    {
-      fromEntityId: string, # Optional. The GUID of from-entity.
-      relationshipId: string, # Optional. The GUID of relationship.
-      toEntityId: string, # Optional. The GUID of to-entity.
-    }
-  ], # Optional. An array of lineage relations.
-}
-</code>
-
-</remarks>
     </member>
     <member name="GetLineageGraph(string,string,int?,int?,bool?,bool?,RequestContext)">
 <example>
@@ -122,7 +89,7 @@ var credential = new DefaultAzureCredential();
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new PurviewCatalogClient(endpoint, credential).GetPurviewLineagesClient();
 
-Response response = client.GetLineageGraph("<guid>", "<direction>", 1234, 1234, true, true);
+Response response = client.GetLineageGraph("<guid>", "<direction>", 1234, 1234, true, true, new RequestContext());
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("baseEntityGuid").ToString());
@@ -171,39 +138,6 @@ Console.WriteLine(result.GetProperty("relations")[0].GetProperty("relationshipId
 Console.WriteLine(result.GetProperty("relations")[0].GetProperty("toEntityId").ToString());
 ]]></code>
 </example>
-<remarks>
-Below is the JSON schema for the response payload.
-
-Response Body:
-
-Schema for <c>AtlasLineageInfo</c>:
-<code>{
-  baseEntityGuid: string, # Optional. The GUID of the base entity.
-  guidEntityMap: Dictionary&lt;string, AtlasEntityHeader&gt;, # Optional. The GUID entity map.
-  widthCounts: Dictionary&lt;string, Dictionary&lt;string, any&gt;&gt;, # Optional. The entity count in specific direction.
-  lineageDepth: number, # Optional. The depth of lineage.
-  lineageWidth: number, # Optional. The width of lineage.
-  includeParent: boolean, # Optional. True to return the parent of the base entity.
-  childrenCount: number, # Optional. The number of children node.
-  lineageDirection: &quot;INPUT&quot; | &quot;OUTPUT&quot; | &quot;BOTH&quot;, # Optional. The enum of lineage direction.
-  parentRelations: [
-    {
-      childEntityId: string, # Optional. The GUID of child entity.
-      relationshipId: string, # Optional. The GUID of relationship.
-      parentEntityId: string, # Optional. The GUID of parent entity.
-    }
-  ], # Optional. An array of parentRelations relations.
-  relations: [
-    {
-      fromEntityId: string, # Optional. The GUID of from-entity.
-      relationshipId: string, # Optional. The GUID of relationship.
-      toEntityId: string, # Optional. The GUID of to-entity.
-    }
-  ], # Optional. An array of lineage relations.
-}
-</code>
-
-</remarks>
     </member>
     <member name="NextPageLineageAsync(string,string,bool?,int?,int?,RequestContext)">
 <example>
@@ -224,7 +158,7 @@ var credential = new DefaultAzureCredential();
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new PurviewCatalogClient(endpoint, credential).GetPurviewLineagesClient();
 
-Response response = await client.NextPageLineageAsync("<guid>", "<direction>", true, 1234, 1234);
+Response response = await client.NextPageLineageAsync("<guid>", "<direction>", true, 1234, 1234, new RequestContext());
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("baseEntityGuid").ToString());
@@ -273,39 +207,6 @@ Console.WriteLine(result.GetProperty("relations")[0].GetProperty("relationshipId
 Console.WriteLine(result.GetProperty("relations")[0].GetProperty("toEntityId").ToString());
 ]]></code>
 </example>
-<remarks>
-Below is the JSON schema for the response payload.
-
-Response Body:
-
-Schema for <c>AtlasLineageInfo</c>:
-<code>{
-  baseEntityGuid: string, # Optional. The GUID of the base entity.
-  guidEntityMap: Dictionary&lt;string, AtlasEntityHeader&gt;, # Optional. The GUID entity map.
-  widthCounts: Dictionary&lt;string, Dictionary&lt;string, any&gt;&gt;, # Optional. The entity count in specific direction.
-  lineageDepth: number, # Optional. The depth of lineage.
-  lineageWidth: number, # Optional. The width of lineage.
-  includeParent: boolean, # Optional. True to return the parent of the base entity.
-  childrenCount: number, # Optional. The number of children node.
-  lineageDirection: &quot;INPUT&quot; | &quot;OUTPUT&quot; | &quot;BOTH&quot;, # Optional. The enum of lineage direction.
-  parentRelations: [
-    {
-      childEntityId: string, # Optional. The GUID of child entity.
-      relationshipId: string, # Optional. The GUID of relationship.
-      parentEntityId: string, # Optional. The GUID of parent entity.
-    }
-  ], # Optional. An array of parentRelations relations.
-  relations: [
-    {
-      fromEntityId: string, # Optional. The GUID of from-entity.
-      relationshipId: string, # Optional. The GUID of relationship.
-      toEntityId: string, # Optional. The GUID of to-entity.
-    }
-  ], # Optional. An array of lineage relations.
-}
-</code>
-
-</remarks>
     </member>
     <member name="NextPageLineage(string,string,bool?,int?,int?,RequestContext)">
 <example>
@@ -326,7 +227,7 @@ var credential = new DefaultAzureCredential();
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new PurviewCatalogClient(endpoint, credential).GetPurviewLineagesClient();
 
-Response response = client.NextPageLineage("<guid>", "<direction>", true, 1234, 1234);
+Response response = client.NextPageLineage("<guid>", "<direction>", true, 1234, 1234, new RequestContext());
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("baseEntityGuid").ToString());
@@ -375,39 +276,6 @@ Console.WriteLine(result.GetProperty("relations")[0].GetProperty("relationshipId
 Console.WriteLine(result.GetProperty("relations")[0].GetProperty("toEntityId").ToString());
 ]]></code>
 </example>
-<remarks>
-Below is the JSON schema for the response payload.
-
-Response Body:
-
-Schema for <c>AtlasLineageInfo</c>:
-<code>{
-  baseEntityGuid: string, # Optional. The GUID of the base entity.
-  guidEntityMap: Dictionary&lt;string, AtlasEntityHeader&gt;, # Optional. The GUID entity map.
-  widthCounts: Dictionary&lt;string, Dictionary&lt;string, any&gt;&gt;, # Optional. The entity count in specific direction.
-  lineageDepth: number, # Optional. The depth of lineage.
-  lineageWidth: number, # Optional. The width of lineage.
-  includeParent: boolean, # Optional. True to return the parent of the base entity.
-  childrenCount: number, # Optional. The number of children node.
-  lineageDirection: &quot;INPUT&quot; | &quot;OUTPUT&quot; | &quot;BOTH&quot;, # Optional. The enum of lineage direction.
-  parentRelations: [
-    {
-      childEntityId: string, # Optional. The GUID of child entity.
-      relationshipId: string, # Optional. The GUID of relationship.
-      parentEntityId: string, # Optional. The GUID of parent entity.
-    }
-  ], # Optional. An array of parentRelations relations.
-  relations: [
-    {
-      fromEntityId: string, # Optional. The GUID of from-entity.
-      relationshipId: string, # Optional. The GUID of relationship.
-      toEntityId: string, # Optional. The GUID of to-entity.
-    }
-  ], # Optional. An array of lineage relations.
-}
-</code>
-
-</remarks>
     </member>
     <member name="GetLineageByUniqueAttributeAsync(string,string,int?,int?,bool?,bool?,RequestContext)">
 <example>
@@ -428,7 +296,7 @@ var credential = new DefaultAzureCredential();
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new PurviewCatalogClient(endpoint, credential).GetPurviewLineagesClient();
 
-Response response = await client.GetLineageByUniqueAttributeAsync("<typeName>", "<direction>", 1234, 1234, true, true);
+Response response = await client.GetLineageByUniqueAttributeAsync("<typeName>", "<direction>", 1234, 1234, true, true, new RequestContext());
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("baseEntityGuid").ToString());
@@ -477,39 +345,6 @@ Console.WriteLine(result.GetProperty("relations")[0].GetProperty("relationshipId
 Console.WriteLine(result.GetProperty("relations")[0].GetProperty("toEntityId").ToString());
 ]]></code>
 </example>
-<remarks>
-Below is the JSON schema for the response payload.
-
-Response Body:
-
-Schema for <c>AtlasLineageInfo</c>:
-<code>{
-  baseEntityGuid: string, # Optional. The GUID of the base entity.
-  guidEntityMap: Dictionary&lt;string, AtlasEntityHeader&gt;, # Optional. The GUID entity map.
-  widthCounts: Dictionary&lt;string, Dictionary&lt;string, any&gt;&gt;, # Optional. The entity count in specific direction.
-  lineageDepth: number, # Optional. The depth of lineage.
-  lineageWidth: number, # Optional. The width of lineage.
-  includeParent: boolean, # Optional. True to return the parent of the base entity.
-  childrenCount: number, # Optional. The number of children node.
-  lineageDirection: &quot;INPUT&quot; | &quot;OUTPUT&quot; | &quot;BOTH&quot;, # Optional. The enum of lineage direction.
-  parentRelations: [
-    {
-      childEntityId: string, # Optional. The GUID of child entity.
-      relationshipId: string, # Optional. The GUID of relationship.
-      parentEntityId: string, # Optional. The GUID of parent entity.
-    }
-  ], # Optional. An array of parentRelations relations.
-  relations: [
-    {
-      fromEntityId: string, # Optional. The GUID of from-entity.
-      relationshipId: string, # Optional. The GUID of relationship.
-      toEntityId: string, # Optional. The GUID of to-entity.
-    }
-  ], # Optional. An array of lineage relations.
-}
-</code>
-
-</remarks>
     </member>
     <member name="GetLineageByUniqueAttribute(string,string,int?,int?,bool?,bool?,RequestContext)">
 <example>
@@ -530,7 +365,7 @@ var credential = new DefaultAzureCredential();
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new PurviewCatalogClient(endpoint, credential).GetPurviewLineagesClient();
 
-Response response = client.GetLineageByUniqueAttribute("<typeName>", "<direction>", 1234, 1234, true, true);
+Response response = client.GetLineageByUniqueAttribute("<typeName>", "<direction>", 1234, 1234, true, true, new RequestContext());
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("baseEntityGuid").ToString());
@@ -579,39 +414,6 @@ Console.WriteLine(result.GetProperty("relations")[0].GetProperty("relationshipId
 Console.WriteLine(result.GetProperty("relations")[0].GetProperty("toEntityId").ToString());
 ]]></code>
 </example>
-<remarks>
-Below is the JSON schema for the response payload.
-
-Response Body:
-
-Schema for <c>AtlasLineageInfo</c>:
-<code>{
-  baseEntityGuid: string, # Optional. The GUID of the base entity.
-  guidEntityMap: Dictionary&lt;string, AtlasEntityHeader&gt;, # Optional. The GUID entity map.
-  widthCounts: Dictionary&lt;string, Dictionary&lt;string, any&gt;&gt;, # Optional. The entity count in specific direction.
-  lineageDepth: number, # Optional. The depth of lineage.
-  lineageWidth: number, # Optional. The width of lineage.
-  includeParent: boolean, # Optional. True to return the parent of the base entity.
-  childrenCount: number, # Optional. The number of children node.
-  lineageDirection: &quot;INPUT&quot; | &quot;OUTPUT&quot; | &quot;BOTH&quot;, # Optional. The enum of lineage direction.
-  parentRelations: [
-    {
-      childEntityId: string, # Optional. The GUID of child entity.
-      relationshipId: string, # Optional. The GUID of relationship.
-      parentEntityId: string, # Optional. The GUID of parent entity.
-    }
-  ], # Optional. An array of parentRelations relations.
-  relations: [
-    {
-      fromEntityId: string, # Optional. The GUID of from-entity.
-      relationshipId: string, # Optional. The GUID of relationship.
-      toEntityId: string, # Optional. The GUID of to-entity.
-    }
-  ], # Optional. An array of lineage relations.
-}
-</code>
-
-</remarks>
     </member>
   </members>
 </doc>

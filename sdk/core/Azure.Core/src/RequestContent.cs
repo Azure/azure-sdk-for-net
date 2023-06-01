@@ -2,13 +2,14 @@
 // Licensed under the MIT License.
 
 using System;
-using System.IO;
-using Azure.Core.Buffers;
-using System.Threading.Tasks;
-using System.Threading;
 using System.Buffers;
-using Azure.Core.Serialization;
+using System.IO;
 using System.Text;
+using System.Threading;
+using System.Threading.Tasks;
+using Azure.Core.Buffers;
+using Azure.Core.Dynamic;
+using Azure.Core.Serialization;
 
 namespace Azure.Core
 {
@@ -99,6 +100,12 @@ namespace Azure.Core
         public static implicit operator RequestContent(BinaryData content) => Create(content);
 
         /// <summary>
+        /// Creates a RequestContent that wraps a <see cref="DynamicData"/>.
+        /// </summary>
+        /// <param name="content">The <see cref="DynamicData"/> to use.</param>
+        public static implicit operator RequestContent(DynamicData content) => Create(content);
+
+        /// <summary>
         /// Writes contents of this object to an instance of <see cref="Stream"/>.
         /// </summary>
         /// <param name="stream">The stream to write to.</param>
@@ -151,7 +158,8 @@ namespace Azure.Core
                     {
                         CancellationHelper.ThrowIfCancellationRequested(cancellationToken);
                         var read = _stream.Read(buffer, 0, buffer.Length);
-                        if (read == 0) { break; }
+                        if (read == 0)
+                        { break; }
                         CancellationHelper.ThrowIfCancellationRequested(cancellationToken);
                         stream.Write(buffer, 0, read);
                     }

@@ -12,7 +12,7 @@ using NUnit.Framework;
 
 namespace Azure.ResourceManager.Compute.Tests
 {
-    [ClientTestFixture(true, "2022-08-01", "2021-04-01", "2020-06-01", "2022-11-01")]
+    [ClientTestFixture(true, "2022-08-01", "2021-04-01", "2020-06-01", "2022-11-01", "2023-03-01")]
     public class AvailabilitySetOperationsTests : ComputeTestBase
     {
         public AvailabilitySetOperationsTests(bool isAsync, string apiVersion)
@@ -123,6 +123,25 @@ namespace Azure.ResourceManager.Compute.Tests
             Assert.AreEqual(addIdResult, newAddIdResult);
             Assert.AreEqual(removeIdResult, newRemoveIdResult);
             Assert.AreEqual(removeIdResult, newRemoveOuterIdResult);
+        }
+
+        [RecordedTest]
+        [TestCase(null)]
+        [TestCase(true)]
+        [TestCase(false)]
+        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/36714")]
+        public async Task SetTags(bool? useTagResource)
+        {
+            SetTagResourceUsage(Client, useTagResource);
+            var name = Recording.GenerateAssetName("aset-");
+            var aset = await CreateAvailabilitySetAsync(name);
+            var tags = new Dictionary<string, string>()
+            {
+                { "key", "value" }
+            };
+            AvailabilitySetResource updated = await aset.SetTagsAsync(tags);
+
+            Assert.AreEqual(tags, updated.Data.Tags);
         }
     }
 }

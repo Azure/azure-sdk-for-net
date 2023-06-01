@@ -81,9 +81,11 @@ namespace Azure.ResourceManager.Compute.Tests
             Assert.AreEqual(description, updatedGalleryImage.Data.Description);
         }
 
+        [RecordedTest]
         [TestCase(null)]
         [TestCase(true)]
         [TestCase(false)]
+        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/36714")]
         public async Task SetTags(bool? useTagResource)
         {
             SetTagResourceUsage(Client, useTagResource);

@@ -5,7 +5,6 @@ Run `dotnet build /t:GenerateCode` to generate code.
 ``` yaml
 
 azure-arm: true
-generate-model-factory: false
 csharp: true
 library-name: ContainerService
 namespace: Azure.ResourceManager.ContainerService
@@ -202,6 +201,21 @@ prepend-rp-prefix:
   - TrustedAccessRoleBinding
   - TrustedAccessRoleRule
   - TrustedAccessRoleBindingProvisioningState
+
+operations-to-lro-api-version-override:
+  AgentPools_CreateOrUpdate: "2017-08-31"
+  AgentPools_Delete: "2017-08-31"
+  AgentPools_UpgradeNodeImageVersion: "2017-08-31"
+  ManagedClusters_CreateOrUpdate: "2017-08-31"
+  ManagedClusters_Delete: "2017-08-31"
+  ManagedClusters_UpdateTags: "2017-08-31"
+  ManagedClusters_ResetServicePrincipalProfile: "2017-08-31"
+  ManagedClusters_ResetAADProfile: "2017-08-31"
+  ManagedClusters_RotateClusterCertificates: "2017-08-31"
+  ManagedClusters_Stop: "2017-08-31"
+  ManagedClusters_Start: "2017-08-31"
+  ManagedClusters_RunCommand: "2017-08-31"
+  PrivateEndpointConnections_Delete: "2017-08-31"
 
 directive:
   - from: managedClusters.json

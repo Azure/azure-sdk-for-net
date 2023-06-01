@@ -62,5 +62,24 @@ namespace Azure.ResourceManager.Compute.Tests
 
             Assert.AreEqual(newDiskSize, updatedDisk.Data.DiskSizeGB);
         }
+
+        [RecordedTest]
+        [TestCase(null)]
+        [TestCase(true)]
+        [TestCase(false)]
+        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/36714")]
+        public async Task SetTags(bool? useTagResource)
+        {
+            SetTagResourceUsage(Client, useTagResource);
+            var name = Recording.GenerateAssetName("testDisk-");
+            var disk = await CreateDiskAsync(name);
+            var tags = new Dictionary<string, string>()
+            {
+                { "key", "value" }
+            };
+            ManagedDiskResource updated = await disk.SetTagsAsync(tags);
+
+            Assert.AreEqual(tags, updated.Data.Tags);
+        }
     }
 }

@@ -67,6 +67,7 @@ namespace Microsoft.Azure.WebJobs.EventHubs
                 .AddConverter<EventData, byte[]>(ConvertEventDataToBytes)
                 .AddConverter<BinaryData, EventData>(ConvertBinaryDataToEventData)
                 .AddConverter<EventData, BinaryData>(ConvertEventDataToBinaryData)
+                .AddConverter<EventData, ParameterBindingData>(ConvertEventDataToBindingData)
                 .AddOpenConverter<OpenType.Poco, EventData>(ConvertPocoToEventData);
 
             // register our trigger binding provider
@@ -124,5 +125,8 @@ namespace Microsoft.Azure.WebJobs.EventHubs
 
         private static BinaryData ConvertEventDataToBinaryData(EventData input)
             => input.EventBody;
+
+        internal static ParameterBindingData ConvertEventDataToBindingData(EventData input)
+         => new ParameterBindingData("1.0", "AzureEventHubsEventData", input.GetRawAmqpMessage().ToBytes(), "application/octet-stream");
     }
 }

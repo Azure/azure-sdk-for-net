@@ -50,6 +50,8 @@ namespace Azure.ResourceManager.DataBox
         public bool? IsDeletable { get { throw null; } }
         public bool? IsPrepareToShipEnabled { get { throw null; } }
         public bool? IsShippingAddressEditable { get { throw null; } }
+        public Azure.ResourceManager.DataBox.Models.ReverseShippingDetailsEditStatus? ReverseShippingDetailsUpdate { get { throw null; } }
+        public Azure.ResourceManager.DataBox.Models.ReverseTransportPreferenceEditStatus? ReverseTransportPreferenceUpdate { get { throw null; } }
         public Azure.ResourceManager.DataBox.Models.DataBoxSku Sku { get { throw null; } set { } }
         public System.DateTimeOffset? StartOn { get { throw null; } }
         public Azure.ResourceManager.DataBox.Models.DataBoxStageName? Status { get { throw null; } }
@@ -113,6 +115,64 @@ namespace Azure.ResourceManager.DataBox.Models
         public string MacAddress { get { throw null; } }
         public string Name { get { throw null; } }
     }
+    public static partial class ArmDataBoxModelFactory
+    {
+        public static Azure.ResourceManager.DataBox.Models.AddressValidationResult AddressValidationResult(Azure.ResponseError error = null, Azure.ResourceManager.DataBox.Models.AddressValidationStatus? validationStatus = default(Azure.ResourceManager.DataBox.Models.AddressValidationStatus?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.DataBox.Models.DataBoxShippingAddress> alternateAddresses = null) { throw null; }
+        public static Azure.ResourceManager.DataBox.Models.ApplianceNetworkConfiguration ApplianceNetworkConfiguration(string name = null, string macAddress = null) { throw null; }
+        public static Azure.ResourceManager.DataBox.Models.CreateOrderLimitForSubscriptionValidationResult CreateOrderLimitForSubscriptionValidationResult(Azure.ResponseError error = null, Azure.ResourceManager.DataBox.Models.DataBoxValidationStatus? status = default(Azure.ResourceManager.DataBox.Models.DataBoxValidationStatus?)) { throw null; }
+        public static Azure.ResourceManager.DataBox.Models.CustomerDiskJobSecrets CustomerDiskJobSecrets(Azure.ResourceManager.DataBox.Models.DataCenterAccessSecurityCode dataCenterAccessSecurityCode = null, Azure.ResponseError error = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.DataBox.Models.DataBoxDiskSecret> diskSecrets = null, string carrierAccountNumber = null) { throw null; }
+        public static Azure.ResourceManager.DataBox.Models.DataBoxAccountCopyLogDetails DataBoxAccountCopyLogDetails(string accountName = null, string copyLogLink = null, string copyVerboseLogLink = null) { throw null; }
+        public static Azure.ResourceManager.DataBox.Models.DataBoxAccountCredentialDetails DataBoxAccountCredentialDetails(string accountName = null, Azure.ResourceManager.DataBox.Models.DataAccountType? dataAccountType = default(Azure.ResourceManager.DataBox.Models.DataAccountType?), string accountConnectionString = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.DataBox.Models.ShareCredentialDetails> shareCredentialDetails = null) { throw null; }
+        public static Azure.ResourceManager.DataBox.Models.DataBoxBasicJobDetails DataBoxBasicJobDetails(System.Collections.Generic.IEnumerable<Azure.ResourceManager.DataBox.Models.DataBoxJobStage> jobStages = null, Azure.ResourceManager.DataBox.Models.DataBoxContactDetails contactDetails = null, Azure.ResourceManager.DataBox.Models.DataBoxShippingAddress shippingAddress = null, Azure.ResourceManager.DataBox.Models.PackageShippingDetails deliveryPackage = null, Azure.ResourceManager.DataBox.Models.PackageShippingDetails returnPackage = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.DataBox.Models.DataImportDetails> dataImportDetails = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.DataBox.Models.DataExportDetails> dataExportDetails = null, Azure.ResourceManager.DataBox.Models.DataBoxOrderPreferences preferences = null, Azure.ResourceManager.DataBox.Models.ReverseShippingDetails reverseShippingDetails = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.DataBox.Models.CopyLogDetails> copyLogDetails = null, string reverseShipmentLabelSasKey = null, string chainOfCustodySasKey = null, Azure.ResourceManager.DataBox.Models.DeviceErasureDetails deviceErasureDetails = null, Azure.ResourceManager.DataBox.Models.DataBoxKeyEncryptionKey keyEncryptionKey = null, int? expectedDataSizeInTerabytes = default(int?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.DataBox.Models.CustomerResolutionCode> actions = null, Azure.ResourceManager.DataBox.Models.LastMitigationActionOnJob lastMitigationActionOnJob = null, Azure.ResourceManager.DataBox.Models.DataCenterAddressResult dataCenterAddress = null, Azure.ResourceManager.DataBox.Models.DataCenterCode? dataCenterCode = default(Azure.ResourceManager.DataBox.Models.DataCenterCode?)) { throw null; }
+        public static Azure.ResourceManager.DataBox.Models.DataBoxCopyProgress DataBoxCopyProgress(string storageAccountName = null, Azure.ResourceManager.DataBox.Models.DataBoxJobTransferType? transferType = default(Azure.ResourceManager.DataBox.Models.DataBoxJobTransferType?), Azure.ResourceManager.DataBox.Models.DataAccountType? dataAccountType = default(Azure.ResourceManager.DataBox.Models.DataAccountType?), Azure.Core.ResourceIdentifier accountId = null, long? bytesProcessed = default(long?), long? totalBytesToProcess = default(long?), long? filesProcessed = default(long?), long? totalFilesToProcess = default(long?), long? invalidFilesProcessed = default(long?), long? invalidFileBytesUploaded = default(long?), long? renamedContainerCount = default(long?), long? filesErroredOut = default(long?), long? directoriesErroredOut = default(long?), long? invalidDirectoriesProcessed = default(long?), bool? isEnumerationInProgress = default(bool?), Azure.ResponseError error = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.DataBox.Models.CustomerResolutionCode> actions = null) { throw null; }
+        public static Azure.ResourceManager.DataBox.Models.DataBoxCustomerDiskCopyLogDetails DataBoxCustomerDiskCopyLogDetails(string serialNumber = null, string errorLogLink = null, string verboseLogLink = null) { throw null; }
+        public static Azure.ResourceManager.DataBox.Models.DataBoxCustomerDiskCopyProgress DataBoxCustomerDiskCopyProgress(string storageAccountName = null, Azure.ResourceManager.DataBox.Models.DataBoxJobTransferType? transferType = default(Azure.ResourceManager.DataBox.Models.DataBoxJobTransferType?), Azure.ResourceManager.DataBox.Models.DataAccountType? dataAccountType = default(Azure.ResourceManager.DataBox.Models.DataAccountType?), Azure.Core.ResourceIdentifier accountId = null, long? bytesProcessed = default(long?), long? totalBytesToProcess = default(long?), long? filesProcessed = default(long?), long? totalFilesToProcess = default(long?), long? invalidFilesProcessed = default(long?), long? invalidFileBytesUploaded = default(long?), long? renamedContainerCount = default(long?), long? filesErroredOut = default(long?), long? directoriesErroredOut = default(long?), long? invalidDirectoriesProcessed = default(long?), bool? isEnumerationInProgress = default(bool?), Azure.ResponseError error = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.DataBox.Models.CustomerResolutionCode> actions = null, string serialNumber = null, Azure.ResourceManager.DataBox.Models.DataBoxCopyStatus? copyStatus = default(Azure.ResourceManager.DataBox.Models.DataBoxCopyStatus?)) { throw null; }
+        public static Azure.ResourceManager.DataBox.Models.DataBoxCustomerDiskJobDetails DataBoxCustomerDiskJobDetails(System.Collections.Generic.IEnumerable<Azure.ResourceManager.DataBox.Models.DataBoxJobStage> jobStages = null, Azure.ResourceManager.DataBox.Models.DataBoxContactDetails contactDetails = null, Azure.ResourceManager.DataBox.Models.DataBoxShippingAddress shippingAddress = null, Azure.ResourceManager.DataBox.Models.PackageShippingDetails deliveryPackage = null, Azure.ResourceManager.DataBox.Models.PackageShippingDetails returnPackage = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.DataBox.Models.DataImportDetails> dataImportDetails = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.DataBox.Models.DataExportDetails> dataExportDetails = null, Azure.ResourceManager.DataBox.Models.DataBoxOrderPreferences preferences = null, Azure.ResourceManager.DataBox.Models.ReverseShippingDetails reverseShippingDetails = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.DataBox.Models.CopyLogDetails> copyLogDetails = null, string reverseShipmentLabelSasKey = null, string chainOfCustodySasKey = null, Azure.ResourceManager.DataBox.Models.DeviceErasureDetails deviceErasureDetails = null, Azure.ResourceManager.DataBox.Models.DataBoxKeyEncryptionKey keyEncryptionKey = null, int? expectedDataSizeInTerabytes = default(int?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.DataBox.Models.CustomerResolutionCode> actions = null, Azure.ResourceManager.DataBox.Models.LastMitigationActionOnJob lastMitigationActionOnJob = null, Azure.ResourceManager.DataBox.Models.DataCenterAddressResult dataCenterAddress = null, Azure.ResourceManager.DataBox.Models.DataCenterCode? dataCenterCode = default(Azure.ResourceManager.DataBox.Models.DataCenterCode?), System.Collections.Generic.IDictionary<string, Azure.ResourceManager.DataBox.Models.ImportDiskDetails> importDiskDetails = null, System.Collections.Generic.IReadOnlyDictionary<string, Azure.ResourceManager.DataBox.Models.ExportDiskDetails> exportDiskDetails = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.DataBox.Models.DataBoxCustomerDiskCopyProgress> copyProgress = null, Azure.ResourceManager.DataBox.Models.PackageCarrierInfo deliverToDataCenterPackageDetails = null, Azure.ResourceManager.DataBox.Models.PackageCarrierDetails returnToCustomerPackageDetails = null, bool? enableManifestBackup = default(bool?)) { throw null; }
+        public static Azure.ResourceManager.DataBox.Models.DataBoxDiskCopyLogDetails DataBoxDiskCopyLogDetails(string diskSerialNumber = null, string errorLogLink = null, string verboseLogLink = null) { throw null; }
+        public static Azure.ResourceManager.DataBox.Models.DataBoxDiskCopyProgress DataBoxDiskCopyProgress(string serialNumber = null, long? bytesCopied = default(long?), int? percentComplete = default(int?), Azure.ResourceManager.DataBox.Models.DataBoxCopyStatus? status = default(Azure.ResourceManager.DataBox.Models.DataBoxCopyStatus?), Azure.ResponseError error = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.DataBox.Models.CustomerResolutionCode> actions = null) { throw null; }
+        public static Azure.ResourceManager.DataBox.Models.DataBoxDiskGranularCopyLogDetails DataBoxDiskGranularCopyLogDetails(string serialNumber = null, Azure.Core.ResourceIdentifier accountId = null, string errorLogLink = null, string verboseLogLink = null) { throw null; }
+        public static Azure.ResourceManager.DataBox.Models.DataBoxDiskGranularCopyProgress DataBoxDiskGranularCopyProgress(string storageAccountName = null, Azure.ResourceManager.DataBox.Models.DataBoxJobTransferType? transferType = default(Azure.ResourceManager.DataBox.Models.DataBoxJobTransferType?), Azure.ResourceManager.DataBox.Models.DataAccountType? dataAccountType = default(Azure.ResourceManager.DataBox.Models.DataAccountType?), Azure.Core.ResourceIdentifier accountId = null, long? bytesProcessed = default(long?), long? totalBytesToProcess = default(long?), long? filesProcessed = default(long?), long? totalFilesToProcess = default(long?), long? invalidFilesProcessed = default(long?), long? invalidFileBytesUploaded = default(long?), long? renamedContainerCount = default(long?), long? filesErroredOut = default(long?), long? directoriesErroredOut = default(long?), long? invalidDirectoriesProcessed = default(long?), bool? isEnumerationInProgress = default(bool?), Azure.ResponseError error = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.DataBox.Models.CustomerResolutionCode> actions = null, string serialNumber = null, Azure.ResourceManager.DataBox.Models.DataBoxCopyStatus? copyStatus = default(Azure.ResourceManager.DataBox.Models.DataBoxCopyStatus?)) { throw null; }
+        public static Azure.ResourceManager.DataBox.Models.DataBoxDiskJobDetails DataBoxDiskJobDetails(System.Collections.Generic.IEnumerable<Azure.ResourceManager.DataBox.Models.DataBoxJobStage> jobStages = null, Azure.ResourceManager.DataBox.Models.DataBoxContactDetails contactDetails = null, Azure.ResourceManager.DataBox.Models.DataBoxShippingAddress shippingAddress = null, Azure.ResourceManager.DataBox.Models.PackageShippingDetails deliveryPackage = null, Azure.ResourceManager.DataBox.Models.PackageShippingDetails returnPackage = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.DataBox.Models.DataImportDetails> dataImportDetails = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.DataBox.Models.DataExportDetails> dataExportDetails = null, Azure.ResourceManager.DataBox.Models.DataBoxOrderPreferences preferences = null, Azure.ResourceManager.DataBox.Models.ReverseShippingDetails reverseShippingDetails = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.DataBox.Models.CopyLogDetails> copyLogDetails = null, string reverseShipmentLabelSasKey = null, string chainOfCustodySasKey = null, Azure.ResourceManager.DataBox.Models.DeviceErasureDetails deviceErasureDetails = null, Azure.ResourceManager.DataBox.Models.DataBoxKeyEncryptionKey keyEncryptionKey = null, int? expectedDataSizeInTerabytes = default(int?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.DataBox.Models.CustomerResolutionCode> actions = null, Azure.ResourceManager.DataBox.Models.LastMitigationActionOnJob lastMitigationActionOnJob = null, Azure.ResourceManager.DataBox.Models.DataCenterAddressResult dataCenterAddress = null, Azure.ResourceManager.DataBox.Models.DataCenterCode? dataCenterCode = default(Azure.ResourceManager.DataBox.Models.DataCenterCode?), System.Collections.Generic.IDictionary<string, int> preferredDisks = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.DataBox.Models.DataBoxDiskCopyProgress> copyProgress = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.DataBox.Models.DataBoxDiskGranularCopyProgress> granularCopyProgress = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.DataBox.Models.DataBoxDiskGranularCopyLogDetails> granularCopyLogDetails = null, System.Collections.Generic.IReadOnlyDictionary<string, int> disksAndSizeDetails = null, string passkey = null) { throw null; }
+        public static Azure.ResourceManager.DataBox.Models.DataBoxDiskJobSecrets DataBoxDiskJobSecrets(Azure.ResourceManager.DataBox.Models.DataCenterAccessSecurityCode dataCenterAccessSecurityCode = null, Azure.ResponseError error = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.DataBox.Models.DataBoxDiskSecret> diskSecrets = null, string passkey = null, bool? isPasskeyUserDefined = default(bool?)) { throw null; }
+        public static Azure.ResourceManager.DataBox.Models.DataBoxDiskSecret DataBoxDiskSecret(string diskSerialNumber = null, string bitLockerKey = null) { throw null; }
+        public static Azure.ResourceManager.DataBox.Models.DataBoxHeavyAccountCopyLogDetails DataBoxHeavyAccountCopyLogDetails(string accountName = null, System.Collections.Generic.IEnumerable<string> copyLogLink = null, System.Collections.Generic.IEnumerable<string> copyVerboseLogLink = null) { throw null; }
+        public static Azure.ResourceManager.DataBox.Models.DataBoxHeavyJobDetails DataBoxHeavyJobDetails(System.Collections.Generic.IEnumerable<Azure.ResourceManager.DataBox.Models.DataBoxJobStage> jobStages = null, Azure.ResourceManager.DataBox.Models.DataBoxContactDetails contactDetails = null, Azure.ResourceManager.DataBox.Models.DataBoxShippingAddress shippingAddress = null, Azure.ResourceManager.DataBox.Models.PackageShippingDetails deliveryPackage = null, Azure.ResourceManager.DataBox.Models.PackageShippingDetails returnPackage = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.DataBox.Models.DataImportDetails> dataImportDetails = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.DataBox.Models.DataExportDetails> dataExportDetails = null, Azure.ResourceManager.DataBox.Models.DataBoxOrderPreferences preferences = null, Azure.ResourceManager.DataBox.Models.ReverseShippingDetails reverseShippingDetails = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.DataBox.Models.CopyLogDetails> copyLogDetails = null, string reverseShipmentLabelSasKey = null, string chainOfCustodySasKey = null, Azure.ResourceManager.DataBox.Models.DeviceErasureDetails deviceErasureDetails = null, Azure.ResourceManager.DataBox.Models.DataBoxKeyEncryptionKey keyEncryptionKey = null, int? expectedDataSizeInTerabytes = default(int?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.DataBox.Models.CustomerResolutionCode> actions = null, Azure.ResourceManager.DataBox.Models.LastMitigationActionOnJob lastMitigationActionOnJob = null, Azure.ResourceManager.DataBox.Models.DataCenterAddressResult dataCenterAddress = null, Azure.ResourceManager.DataBox.Models.DataCenterCode? dataCenterCode = default(Azure.ResourceManager.DataBox.Models.DataCenterCode?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.DataBox.Models.DataBoxCopyProgress> copyProgress = null, string devicePassword = null) { throw null; }
+        public static Azure.ResourceManager.DataBox.Models.DataBoxHeavyJobSecrets DataBoxHeavyJobSecrets(Azure.ResourceManager.DataBox.Models.DataCenterAccessSecurityCode dataCenterAccessSecurityCode = null, Azure.ResponseError error = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.DataBox.Models.DataBoxHeavySecret> cabinetPodSecrets = null) { throw null; }
+        public static Azure.ResourceManager.DataBox.Models.DataBoxHeavySecret DataBoxHeavySecret(string deviceSerialNumber = null, string devicePassword = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.DataBox.Models.ApplianceNetworkConfiguration> networkConfigurations = null, string encodedValidationCertPubKey = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.DataBox.Models.DataBoxAccountCredentialDetails> accountCredentialDetails = null) { throw null; }
+        public static Azure.ResourceManager.DataBox.DataBoxJobData DataBoxJobData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), Azure.ResourceManager.DataBox.Models.DataBoxJobTransferType transferType = Azure.ResourceManager.DataBox.Models.DataBoxJobTransferType.ImportToAzure, bool? isCancellable = default(bool?), bool? isDeletable = default(bool?), bool? isShippingAddressEditable = default(bool?), Azure.ResourceManager.DataBox.Models.ReverseShippingDetailsEditStatus? reverseShippingDetailsUpdate = default(Azure.ResourceManager.DataBox.Models.ReverseShippingDetailsEditStatus?), Azure.ResourceManager.DataBox.Models.ReverseTransportPreferenceEditStatus? reverseTransportPreferenceUpdate = default(Azure.ResourceManager.DataBox.Models.ReverseTransportPreferenceEditStatus?), bool? isPrepareToShipEnabled = default(bool?), Azure.ResourceManager.DataBox.Models.DataBoxStageName? status = default(Azure.ResourceManager.DataBox.Models.DataBoxStageName?), System.DateTimeOffset? startOn = default(System.DateTimeOffset?), Azure.ResponseError error = null, Azure.ResourceManager.DataBox.Models.DataBoxBasicJobDetails details = null, string cancellationReason = null, Azure.ResourceManager.DataBox.Models.JobDeliveryType? deliveryType = default(Azure.ResourceManager.DataBox.Models.JobDeliveryType?), System.DateTimeOffset? deliveryInfoScheduledOn = default(System.DateTimeOffset?), bool? isCancellableWithoutFee = default(bool?), Azure.ResourceManager.DataBox.Models.DataBoxSku sku = null, Azure.ResourceManager.Models.ManagedServiceIdentity identity = null) { throw null; }
+        public static Azure.ResourceManager.DataBox.Models.DataBoxJobDetails DataBoxJobDetails(System.Collections.Generic.IEnumerable<Azure.ResourceManager.DataBox.Models.DataBoxJobStage> jobStages = null, Azure.ResourceManager.DataBox.Models.DataBoxContactDetails contactDetails = null, Azure.ResourceManager.DataBox.Models.DataBoxShippingAddress shippingAddress = null, Azure.ResourceManager.DataBox.Models.PackageShippingDetails deliveryPackage = null, Azure.ResourceManager.DataBox.Models.PackageShippingDetails returnPackage = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.DataBox.Models.DataImportDetails> dataImportDetails = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.DataBox.Models.DataExportDetails> dataExportDetails = null, Azure.ResourceManager.DataBox.Models.DataBoxOrderPreferences preferences = null, Azure.ResourceManager.DataBox.Models.ReverseShippingDetails reverseShippingDetails = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.DataBox.Models.CopyLogDetails> copyLogDetails = null, string reverseShipmentLabelSasKey = null, string chainOfCustodySasKey = null, Azure.ResourceManager.DataBox.Models.DeviceErasureDetails deviceErasureDetails = null, Azure.ResourceManager.DataBox.Models.DataBoxKeyEncryptionKey keyEncryptionKey = null, int? expectedDataSizeInTerabytes = default(int?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.DataBox.Models.CustomerResolutionCode> actions = null, Azure.ResourceManager.DataBox.Models.LastMitigationActionOnJob lastMitigationActionOnJob = null, Azure.ResourceManager.DataBox.Models.DataCenterAddressResult dataCenterAddress = null, Azure.ResourceManager.DataBox.Models.DataCenterCode? dataCenterCode = default(Azure.ResourceManager.DataBox.Models.DataCenterCode?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.DataBox.Models.DataBoxCopyProgress> copyProgress = null, string devicePassword = null) { throw null; }
+        public static Azure.ResourceManager.DataBox.Models.DataboxJobSecrets DataboxJobSecrets(Azure.ResourceManager.DataBox.Models.DataCenterAccessSecurityCode dataCenterAccessSecurityCode = null, Azure.ResponseError error = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.DataBox.Models.DataBoxSecret> podSecrets = null) { throw null; }
+        public static Azure.ResourceManager.DataBox.Models.DataBoxJobStage DataBoxJobStage(Azure.ResourceManager.DataBox.Models.DataBoxStageName? stageName = default(Azure.ResourceManager.DataBox.Models.DataBoxStageName?), string displayName = null, Azure.ResourceManager.DataBox.Models.DataBoxStageStatus? stageStatus = default(Azure.ResourceManager.DataBox.Models.DataBoxStageStatus?), System.DateTimeOffset? stageTime = default(System.DateTimeOffset?), System.BinaryData jobStageDetails = null) { throw null; }
+        public static Azure.ResourceManager.DataBox.Models.DataBoxSecret DataBoxSecret(string deviceSerialNumber = null, string devicePassword = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.DataBox.Models.ApplianceNetworkConfiguration> networkConfigurations = null, string encodedValidationCertPubKey = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.DataBox.Models.DataBoxAccountCredentialDetails> accountCredentialDetails = null) { throw null; }
+        public static Azure.ResourceManager.DataBox.Models.DataBoxShipmentPickUpResult DataBoxShipmentPickUpResult(string confirmationNumber = null, System.DateTimeOffset? readyBy = default(System.DateTimeOffset?)) { throw null; }
+        public static Azure.ResourceManager.DataBox.Models.DataBoxSkuCapacity DataBoxSkuCapacity(string usable = null, string maximum = null) { throw null; }
+        public static Azure.ResourceManager.DataBox.Models.DataBoxSkuCost DataBoxSkuCost(System.Guid? meterId = default(System.Guid?), string meterType = null, double? multiplier = default(double?)) { throw null; }
+        public static Azure.ResourceManager.DataBox.Models.DataBoxSkuInformation DataBoxSkuInformation(Azure.ResourceManager.DataBox.Models.DataBoxSku sku = null, bool? isEnabled = default(bool?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.DataBox.Models.DataLocationToServiceLocationMap> dataLocationToServiceLocationMap = null, Azure.ResourceManager.DataBox.Models.DataBoxSkuCapacity capacity = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.DataBox.Models.DataBoxSkuCost> costs = null, System.Collections.Generic.IEnumerable<string> apiVersions = null, Azure.ResourceManager.DataBox.Models.SkuDisabledReason? disabledReason = default(Azure.ResourceManager.DataBox.Models.SkuDisabledReason?), string disabledReasonMessage = null, string requiredFeature = null, System.Collections.Generic.IEnumerable<string> countriesWithinCommerceBoundary = null) { throw null; }
+        public static Azure.ResourceManager.DataBox.Models.DataBoxValidationInputResult DataBoxValidationInputResult(Azure.ResponseError error = null) { throw null; }
+        public static Azure.ResourceManager.DataBox.Models.DataBoxValidationResult DataBoxValidationResult(Azure.ResourceManager.DataBox.Models.OverallValidationStatus? status = default(Azure.ResourceManager.DataBox.Models.OverallValidationStatus?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.DataBox.Models.DataBoxValidationInputResult> individualResponseDetails = null) { throw null; }
+        public static Azure.ResourceManager.DataBox.Models.DataCenterAccessSecurityCode DataCenterAccessSecurityCode(string reverseDataCenterAccessCode = null, string forwardDataCenterAccessCode = null) { throw null; }
+        public static Azure.ResourceManager.DataBox.Models.DataCenterAddressInstructionResult DataCenterAddressInstructionResult(System.Collections.Generic.IEnumerable<string> supportedCarriersForReturnShipment = null, Azure.Core.AzureLocation? dataCenterAzureLocation = default(Azure.Core.AzureLocation?), string communicationInstruction = null) { throw null; }
+        public static Azure.ResourceManager.DataBox.Models.DataCenterAddressLocationResult DataCenterAddressLocationResult(System.Collections.Generic.IEnumerable<string> supportedCarriersForReturnShipment = null, Azure.Core.AzureLocation? dataCenterAzureLocation = default(Azure.Core.AzureLocation?), string contactPersonName = null, string company = null, string street1 = null, string street2 = null, string street3 = null, string city = null, string state = null, string zip = null, string country = null, string phone = null, string phoneExtension = null, string addressType = null, string additionalShippingInformation = null) { throw null; }
+        public static Azure.ResourceManager.DataBox.Models.DataCenterAddressResult DataCenterAddressResult(System.Collections.Generic.IEnumerable<string> supportedCarriersForReturnShipment = null, Azure.Core.AzureLocation? dataCenterAzureLocation = default(Azure.Core.AzureLocation?)) { throw null; }
+        public static Azure.ResourceManager.DataBox.Models.DataLocationToServiceLocationMap DataLocationToServiceLocationMap(Azure.Core.AzureLocation? dataLocation = default(Azure.Core.AzureLocation?), Azure.Core.AzureLocation? serviceLocation = default(Azure.Core.AzureLocation?)) { throw null; }
+        public static Azure.ResourceManager.DataBox.Models.DataTransferDetailsValidationResult DataTransferDetailsValidationResult(Azure.ResponseError error = null, Azure.ResourceManager.DataBox.Models.DataBoxValidationStatus? status = default(Azure.ResourceManager.DataBox.Models.DataBoxValidationStatus?)) { throw null; }
+        public static Azure.ResourceManager.DataBox.Models.DeviceErasureDetails DeviceErasureDetails(Azure.ResourceManager.DataBox.Models.DataBoxStageStatus? deviceErasureStatus = default(Azure.ResourceManager.DataBox.Models.DataBoxStageStatus?), string erasureOrDestructionCertificateSasKey = null) { throw null; }
+        public static Azure.ResourceManager.DataBox.Models.ExportDiskDetails ExportDiskDetails(string manifestFile = null, string manifestHash = null, string backupManifestCloudPath = null) { throw null; }
+        public static Azure.ResourceManager.DataBox.Models.GranularCopyProgress GranularCopyProgress(string storageAccountName = null, Azure.ResourceManager.DataBox.Models.DataBoxJobTransferType? transferType = default(Azure.ResourceManager.DataBox.Models.DataBoxJobTransferType?), Azure.ResourceManager.DataBox.Models.DataAccountType? dataAccountType = default(Azure.ResourceManager.DataBox.Models.DataAccountType?), Azure.Core.ResourceIdentifier accountId = null, long? bytesProcessed = default(long?), long? totalBytesToProcess = default(long?), long? filesProcessed = default(long?), long? totalFilesToProcess = default(long?), long? invalidFilesProcessed = default(long?), long? invalidFileBytesUploaded = default(long?), long? renamedContainerCount = default(long?), long? filesErroredOut = default(long?), long? directoriesErroredOut = default(long?), long? invalidDirectoriesProcessed = default(long?), bool? isEnumerationInProgress = default(bool?), Azure.ResponseError error = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.DataBox.Models.CustomerResolutionCode> actions = null) { throw null; }
+        public static Azure.ResourceManager.DataBox.Models.ImportDiskDetails ImportDiskDetails(string manifestFile = null, string manifestHash = null, string bitLockerKey = null, string backupManifestCloudPath = null) { throw null; }
+        public static Azure.ResourceManager.DataBox.Models.JobSecrets JobSecrets(Azure.ResourceManager.DataBox.Models.DataCenterAccessSecurityCode dataCenterAccessSecurityCode = null, Azure.ResponseError error = null) { throw null; }
+        public static Azure.ResourceManager.DataBox.Models.LastMitigationActionOnJob LastMitigationActionOnJob(System.DateTimeOffset? actionPerformedOn = default(System.DateTimeOffset?), bool? isPerformedByCustomer = default(bool?), Azure.ResourceManager.DataBox.Models.CustomerResolutionCode? customerResolution = default(Azure.ResourceManager.DataBox.Models.CustomerResolutionCode?)) { throw null; }
+        public static Azure.ResourceManager.DataBox.Models.PackageShippingDetails PackageShippingDetails(System.Uri trackingUri = null, string carrierName = null, string trackingId = null) { throw null; }
+        public static Azure.ResourceManager.DataBox.Models.PreferencesValidationResult PreferencesValidationResult(Azure.ResponseError error = null, Azure.ResourceManager.DataBox.Models.DataBoxValidationStatus? status = default(Azure.ResourceManager.DataBox.Models.DataBoxValidationStatus?)) { throw null; }
+        public static Azure.ResourceManager.DataBox.Models.RegionConfigurationResult RegionConfigurationResult(System.Collections.Generic.IEnumerable<System.DateTimeOffset> scheduleAvailabilityResponseAvailableDates = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.DataBox.Models.TransportAvailabilityDetails> transportAvailabilityDetails = null, Azure.ResourceManager.DataBox.Models.DataCenterAddressResult dataCenterAddressResponse = null) { throw null; }
+        public static Azure.ResourceManager.DataBox.Models.ReverseShippingDetails ReverseShippingDetails(Azure.ResourceManager.DataBox.Models.ContactInfo contactDetails = null, Azure.ResourceManager.DataBox.Models.DataBoxShippingAddress shippingAddress = null, bool? isUpdated = default(bool?)) { throw null; }
+        public static Azure.ResourceManager.DataBox.Models.ShareCredentialDetails ShareCredentialDetails(string shareName = null, Azure.ResourceManager.DataBox.Models.ShareDestinationFormatType? shareType = default(Azure.ResourceManager.DataBox.Models.ShareDestinationFormatType?), string userName = null, string password = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.DataBox.Models.DataBoxAccessProtocol> supportedAccessProtocols = null) { throw null; }
+        public static Azure.ResourceManager.DataBox.Models.SkuAvailabilityValidationResult SkuAvailabilityValidationResult(Azure.ResponseError error = null, Azure.ResourceManager.DataBox.Models.DataBoxValidationStatus? status = default(Azure.ResourceManager.DataBox.Models.DataBoxValidationStatus?)) { throw null; }
+        public static Azure.ResourceManager.DataBox.Models.SubscriptionIsAllowedToCreateJobValidationResult SubscriptionIsAllowedToCreateJobValidationResult(Azure.ResponseError error = null, Azure.ResourceManager.DataBox.Models.DataBoxValidationStatus? status = default(Azure.ResourceManager.DataBox.Models.DataBoxValidationStatus?)) { throw null; }
+        public static Azure.ResourceManager.DataBox.Models.TransportAvailabilityDetails TransportAvailabilityDetails(Azure.ResourceManager.DataBox.Models.TransportShipmentType? shipmentType = default(Azure.ResourceManager.DataBox.Models.TransportShipmentType?)) { throw null; }
+        public static Azure.ResourceManager.DataBox.Models.TransportPreferences TransportPreferences(Azure.ResourceManager.DataBox.Models.TransportShipmentType preferredShipmentType = Azure.ResourceManager.DataBox.Models.TransportShipmentType.CustomerManaged, bool? isUpdated = default(bool?)) { throw null; }
+        public static Azure.ResourceManager.DataBox.Models.UnencryptedCredentials UnencryptedCredentials(string jobName = null, Azure.ResourceManager.DataBox.Models.JobSecrets jobSecrets = null) { throw null; }
+    }
     public partial class AvailableSkusContent
     {
         public AvailableSkusContent(Azure.ResourceManager.DataBox.Models.DataBoxJobTransferType transferType, string country, Azure.Core.AzureLocation location) { }
@@ -134,6 +194,14 @@ namespace Azure.ResourceManager.DataBox.Models
         public System.Collections.Generic.IList<string> BlobPathList { get { throw null; } }
         public System.Collections.Generic.IList<string> BlobPrefixList { get { throw null; } }
         public System.Collections.Generic.IList<string> ContainerList { get { throw null; } }
+    }
+    public partial class ContactInfo
+    {
+        public ContactInfo(string contactName, string phone) { }
+        public string ContactName { get { throw null; } set { } }
+        public string Mobile { get { throw null; } set { } }
+        public string Phone { get { throw null; } set { } }
+        public string PhoneExtension { get { throw null; } set { } }
     }
     public abstract partial class CopyLogDetails
     {
@@ -217,6 +285,7 @@ namespace Azure.ResourceManager.DataBox.Models
         public Azure.ResourceManager.DataBox.Models.DataBoxOrderPreferences Preferences { get { throw null; } set { } }
         public Azure.ResourceManager.DataBox.Models.PackageShippingDetails ReturnPackage { get { throw null; } }
         public string ReverseShipmentLabelSasKey { get { throw null; } }
+        public Azure.ResourceManager.DataBox.Models.ReverseShippingDetails ReverseShippingDetails { get { throw null; } set { } }
         public Azure.ResourceManager.DataBox.Models.DataBoxShippingAddress ShippingAddress { get { throw null; } set { } }
     }
     public partial class DataBoxContactDetails
@@ -233,9 +302,11 @@ namespace Azure.ResourceManager.DataBox.Models
     {
         internal DataBoxCopyProgress() { }
         public Azure.Core.ResourceIdentifier AccountId { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.DataBox.Models.CustomerResolutionCode> Actions { get { throw null; } }
         public long? BytesProcessed { get { throw null; } }
         public Azure.ResourceManager.DataBox.Models.DataAccountType? DataAccountType { get { throw null; } }
         public long? DirectoriesErroredOut { get { throw null; } }
+        public Azure.ResponseError Error { get { throw null; } }
         public long? FilesErroredOut { get { throw null; } }
         public long? FilesProcessed { get { throw null; } }
         public long? InvalidDirectoriesProcessed { get { throw null; } }
@@ -315,10 +386,20 @@ namespace Azure.ResourceManager.DataBox.Models
     public partial class DataBoxDiskCopyProgress
     {
         internal DataBoxDiskCopyProgress() { }
+        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.DataBox.Models.CustomerResolutionCode> Actions { get { throw null; } }
         public long? BytesCopied { get { throw null; } }
+        public Azure.ResponseError Error { get { throw null; } }
         public int? PercentComplete { get { throw null; } }
         public string SerialNumber { get { throw null; } }
         public Azure.ResourceManager.DataBox.Models.DataBoxCopyStatus? Status { get { throw null; } }
+    }
+    public partial class DataBoxDiskGranularCopyLogDetails : Azure.ResourceManager.DataBox.Models.GranularCopyLogDetails
+    {
+        internal DataBoxDiskGranularCopyLogDetails() { }
+        public Azure.Core.ResourceIdentifier AccountId { get { throw null; } }
+        public string ErrorLogLink { get { throw null; } }
+        public string SerialNumber { get { throw null; } }
+        public string VerboseLogLink { get { throw null; } }
     }
     public partial class DataBoxDiskGranularCopyProgress : Azure.ResourceManager.DataBox.Models.GranularCopyProgress
     {
@@ -331,6 +412,7 @@ namespace Azure.ResourceManager.DataBox.Models
         public DataBoxDiskJobDetails(Azure.ResourceManager.DataBox.Models.DataBoxContactDetails contactDetails) : base (default(Azure.ResourceManager.DataBox.Models.DataBoxContactDetails)) { }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.DataBox.Models.DataBoxDiskCopyProgress> CopyProgress { get { throw null; } }
         public System.Collections.Generic.IReadOnlyDictionary<string, int> DisksAndSizeDetails { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.DataBox.Models.DataBoxDiskGranularCopyLogDetails> GranularCopyLogDetails { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.DataBox.Models.DataBoxDiskGranularCopyProgress> GranularCopyProgress { get { throw null; } }
         public string Passkey { get { throw null; } set { } }
         public System.Collections.Generic.IDictionary<string, int> PreferredDisks { get { throw null; } }
@@ -352,6 +434,12 @@ namespace Azure.ResourceManager.DataBox.Models
     {
         Enabled = 0,
         Disabled = 1,
+    }
+    public partial class DataBoxEncryptionPreferences
+    {
+        public DataBoxEncryptionPreferences() { }
+        public Azure.ResourceManager.DataBox.Models.DataBoxDoubleEncryption? DoubleEncryption { get { throw null; } set { } }
+        public Azure.ResourceManager.DataBox.Models.HardwareEncryption? HardwareEncryption { get { throw null; } set { } }
     }
     public partial class DataBoxHeavyAccountCopyLogDetails : Azure.ResourceManager.DataBox.Models.CopyLogDetails
     {
@@ -439,9 +527,14 @@ namespace Azure.ResourceManager.DataBox.Models
     public partial class DataBoxOrderPreferences
     {
         public DataBoxOrderPreferences() { }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public Azure.ResourceManager.DataBox.Models.DataBoxDoubleEncryption? DoubleEncryption { get { throw null; } set { } }
+        public Azure.ResourceManager.DataBox.Models.DataBoxEncryptionPreferences EncryptionPreferences { get { throw null; } set { } }
         public System.Collections.Generic.IList<string> PreferredDataCenterRegion { get { throw null; } }
+        public Azure.ResourceManager.DataBox.Models.TransportPreferences ReverseTransportPreferences { get { throw null; } set { } }
         public System.Collections.Generic.IList<string> StorageAccountAccessTierPreferences { get { throw null; } }
+        public Azure.ResourceManager.DataBox.Models.TransportPreferences TransportPreferences { get { throw null; } set { } }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public Azure.ResourceManager.DataBox.Models.TransportShipmentType? TransportPreferencesPreferredShipmentType { get { throw null; } set { } }
     }
     public partial class DataBoxScheduleAvailabilityContent : Azure.ResourceManager.DataBox.Models.ScheduleAvailabilityContent
@@ -471,10 +564,12 @@ namespace Azure.ResourceManager.DataBox.Models
         public string CompanyName { get { throw null; } set { } }
         public string Country { get { throw null; } set { } }
         public string PostalCode { get { throw null; } set { } }
+        public bool? SkipAddressValidation { get { throw null; } set { } }
         public string StateOrProvince { get { throw null; } set { } }
         public string StreetAddress1 { get { throw null; } set { } }
         public string StreetAddress2 { get { throw null; } set { } }
         public string StreetAddress3 { get { throw null; } set { } }
+        public string TaxIdentificationNumber { get { throw null; } set { } }
         public string ZipExtendedCode { get { throw null; } set { } }
     }
     public enum DataBoxShippingAddressType
@@ -509,6 +604,7 @@ namespace Azure.ResourceManager.DataBox.Models
         public System.Collections.Generic.IReadOnlyList<string> ApiVersions { get { throw null; } }
         public Azure.ResourceManager.DataBox.Models.DataBoxSkuCapacity Capacity { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.DataBox.Models.DataBoxSkuCost> Costs { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<string> CountriesWithinCommerceBoundary { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.DataBox.Models.DataLocationToServiceLocationMap> DataLocationToServiceLocationMap { get { throw null; } }
         public Azure.ResourceManager.DataBox.Models.SkuDisabledReason? DisabledReason { get { throw null; } }
         public string DisabledReasonMessage { get { throw null; } }
@@ -586,6 +682,8 @@ namespace Azure.ResourceManager.DataBox.Models
         public DataBoxValidateAddressContent(Azure.ResourceManager.DataBox.Models.DataBoxShippingAddress shippingAddress, Azure.ResourceManager.DataBox.Models.DataBoxSkuName deviceType) { }
         public Azure.ResourceManager.DataBox.Models.DataBoxSkuName DeviceType { get { throw null; } }
         public Azure.ResourceManager.DataBox.Models.DataBoxShippingAddress ShippingAddress { get { throw null; } }
+        public Azure.ResourceManager.DataBox.Models.TransportPreferences TransportPreferences { get { throw null; } set { } }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public Azure.ResourceManager.DataBox.Models.TransportShipmentType? TransportPreferencesPreferredShipmentType { get { throw null; } set { } }
     }
     public abstract partial class DataBoxValidationContent
@@ -790,13 +888,19 @@ namespace Azure.ResourceManager.DataBox.Models
         AzureBlob = 0,
         AzureFile = 1,
     }
+    public abstract partial class GranularCopyLogDetails
+    {
+        protected GranularCopyLogDetails() { }
+    }
     public partial class GranularCopyProgress
     {
         internal GranularCopyProgress() { }
         public Azure.Core.ResourceIdentifier AccountId { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.DataBox.Models.CustomerResolutionCode> Actions { get { throw null; } }
         public long? BytesProcessed { get { throw null; } }
         public Azure.ResourceManager.DataBox.Models.DataAccountType? DataAccountType { get { throw null; } }
         public long? DirectoriesErroredOut { get { throw null; } }
+        public Azure.ResponseError Error { get { throw null; } }
         public long? FilesErroredOut { get { throw null; } }
         public long? FilesProcessed { get { throw null; } }
         public long? InvalidDirectoriesProcessed { get { throw null; } }
@@ -808,6 +912,11 @@ namespace Azure.ResourceManager.DataBox.Models
         public long? TotalBytesToProcess { get { throw null; } }
         public long? TotalFilesToProcess { get { throw null; } }
         public Azure.ResourceManager.DataBox.Models.DataBoxJobTransferType? TransferType { get { throw null; } }
+    }
+    public enum HardwareEncryption
+    {
+        Enabled = 0,
+        Disabled = 1,
     }
     public partial class HeavyScheduleAvailabilityContent : Azure.ResourceManager.DataBox.Models.ScheduleAvailabilityContent
     {
@@ -857,8 +966,10 @@ namespace Azure.ResourceManager.DataBox.Models
     }
     public partial class MitigateJobContent
     {
+        public MitigateJobContent() { }
         public MitigateJobContent(Azure.ResourceManager.DataBox.Models.CustomerResolutionCode customerResolutionCode) { }
         public Azure.ResourceManager.DataBox.Models.CustomerResolutionCode CustomerResolutionCode { get { throw null; } }
+        public System.Collections.Generic.IDictionary<string, Azure.ResourceManager.DataBox.Models.CustomerResolutionCode> SerialNumberCustomerResolutionMap { get { throw null; } }
     }
     public partial class NotificationPreference
     {
@@ -940,6 +1051,25 @@ namespace Azure.ResourceManager.DataBox.Models
         public Azure.ResourceManager.DataBox.Models.DataCenterAddressResult DataCenterAddressResponse { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<System.DateTimeOffset> ScheduleAvailabilityResponseAvailableDates { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.DataBox.Models.TransportAvailabilityDetails> TransportAvailabilityDetails { get { throw null; } }
+    }
+    public partial class ReverseShippingDetails
+    {
+        public ReverseShippingDetails() { }
+        public Azure.ResourceManager.DataBox.Models.ContactInfo ContactDetails { get { throw null; } set { } }
+        public bool? IsUpdated { get { throw null; } }
+        public Azure.ResourceManager.DataBox.Models.DataBoxShippingAddress ShippingAddress { get { throw null; } set { } }
+    }
+    public enum ReverseShippingDetailsEditStatus
+    {
+        Enabled = 0,
+        Disabled = 1,
+        NotSupported = 2,
+    }
+    public enum ReverseTransportPreferenceEditStatus
+    {
+        Enabled = 0,
+        Disabled = 1,
+        NotSupported = 2,
     }
     public abstract partial class ScheduleAvailabilityContent
     {
@@ -1035,6 +1165,12 @@ namespace Azure.ResourceManager.DataBox.Models
         internal TransportAvailabilityDetails() { }
         public Azure.ResourceManager.DataBox.Models.TransportShipmentType? ShipmentType { get { throw null; } }
     }
+    public partial class TransportPreferences
+    {
+        public TransportPreferences(Azure.ResourceManager.DataBox.Models.TransportShipmentType preferredShipmentType) { }
+        public bool? IsUpdated { get { throw null; } }
+        public Azure.ResourceManager.DataBox.Models.TransportShipmentType PreferredShipmentType { get { throw null; } set { } }
+    }
     public enum TransportShipmentType
     {
         CustomerManaged = 0,
@@ -1051,7 +1187,9 @@ namespace Azure.ResourceManager.DataBox.Models
         public UpdateJobDetails() { }
         public Azure.ResourceManager.DataBox.Models.DataBoxContactDetails ContactDetails { get { throw null; } set { } }
         public Azure.ResourceManager.DataBox.Models.DataBoxKeyEncryptionKey KeyEncryptionKey { get { throw null; } set { } }
+        public Azure.ResourceManager.DataBox.Models.DataBoxOrderPreferences Preferences { get { throw null; } set { } }
         public Azure.ResourceManager.DataBox.Models.PackageCarrierDetails ReturnToCustomerPackageDetails { get { throw null; } set { } }
+        public Azure.ResourceManager.DataBox.Models.ReverseShippingDetails ReverseShippingDetails { get { throw null; } set { } }
         public Azure.ResourceManager.DataBox.Models.DataBoxShippingAddress ShippingAddress { get { throw null; } set { } }
     }
 }

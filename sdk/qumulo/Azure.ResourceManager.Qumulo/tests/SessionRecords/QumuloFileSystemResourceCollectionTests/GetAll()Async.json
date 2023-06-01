@@ -1,0 +1,2330 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/fc35d936-3b89-41f8-8110-a24b56826c37?api-version=2021-01-01",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-9253119719c42e7f04efec95a1cee856-1cf9f8503e2576af-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.4.0 (.NET 7.0.5; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "3e5c123aecb14e279740ebebf24a994a",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "401",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Thu, 04 May 2023 06:49:09 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "927d7bfb-eb71-4eb4-af0e-309ca6f01c6c",
+        "x-ms-ratelimit-remaining-subscription-reads": "11999",
+        "x-ms-request-id": "927d7bfb-eb71-4eb4-af0e-309ca6f01c6c",
+        "x-ms-routing-request-id": "JIOINDIACENTRAL:20230504T064910Z:927d7bfb-eb71-4eb4-af0e-309ca6f01c6c"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/fc35d936-3b89-41f8-8110-a24b56826c37",
+        "authorizationSource": "RoleBased",
+        "managedByTenants": [],
+        "subscriptionId": "fc35d936-3b89-41f8-8110-a24b56826c37",
+        "tenantId": "888d76fa-54b2-4ced-8ee5-aac1585adee7",
+        "displayName": "PayG_Test_LiftrQumulo",
+        "state": "Enabled",
+        "subscriptionPolicies": {
+          "locationPlacementId": "Public_2014-09-01",
+          "quotaId": "PayAsYouGo_2014-09-01",
+          "spendingLimit": "Off"
+        }
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/fc35d936-3b89-41f8-8110-a24b56826c37/resourcegroups/Default-Qumulo-9061?api-version=**",
+      "RequestMethod": "PUT",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "Content-Length": "22",
+        "Content-Type": "application/json",
+        "traceparent": "00-1888c8749fe82b0b4cdb79e450ea8a31-717ebe6d569a5278-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.4.0 (.NET 7.0.5; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "d9e6084f08611f0d2eda82d4dc9f3d67",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "location": "eastus2"
+      },
+      "StatusCode": 201,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "236",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Thu, 04 May 2023 06:49:13 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "30a545b2-87df-4cde-ba47-33f04028b576",
+        "x-ms-ratelimit-remaining-subscription-writes": "1199",
+        "x-ms-request-id": "30a545b2-87df-4cde-ba47-33f04028b576",
+        "x-ms-routing-request-id": "JIOINDIACENTRAL:20230504T064913Z:30a545b2-87df-4cde-ba47-33f04028b576"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/fc35d936-3b89-41f8-8110-a24b56826c37/resourceGroups/Default-Qumulo-9061",
+        "name": "Default-Qumulo-9061",
+        "type": "Microsoft.Resources/resourceGroups",
+        "location": "eastus2",
+        "properties": {
+          "provisioningState": "Succeeded"
+        }
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/fc35d936-3b89-41f8-8110-a24b56826c37/resourceGroups/Default-Qumulo-9061/providers/Qumulo.Storage/fileSystems?api-version=2022-10-12",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "User-Agent": "azsdk-net-ResourceManager.Qumulo/1.0.0-alpha.20230504.1 (.NET 7.0.5; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "46b6e10d79f8bc9eea2d47514209b1fb",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "12",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Thu, 04 May 2023 06:49:15 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "cb2b640c-633e-4803-864a-19f43cbe143a",
+        "x-ms-original-request-ids": [
+          "3c835703-c510-4ff7-aede-4ec5d9ac902c",
+          "bbe95a8d-7320-4f71-9d79-72c339d24e0e",
+          "489da76c-84b3-4f00-9ecd-0575ab1ac463",
+          "e06452a2-16f3-42a6-a730-9e70ffd191ad",
+          "972bb234-eb10-45de-aa9e-f34c6e45c5d1",
+          "96f8a3e1-8f3e-4e91-b28b-44bd2b08b96c",
+          "5ab0d04f-8665-4a36-b44e-34ab281950a1",
+          "c8a33b34-aa5f-488d-88b7-bd09ea2899ac",
+          "85ddaec2-6590-496d-8d38-ef3779e455f3",
+          "21df9081-b372-4a04-b104-5f455247d8bf",
+          "03b66c6e-daef-49c8-b831-16088a76bf58"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": "11998",
+        "x-ms-request-id": "cb2b640c-633e-4803-864a-19f43cbe143a",
+        "x-ms-routing-request-id": "JIOINDIACENTRAL:20230504T064915Z:cb2b640c-633e-4803-864a-19f43cbe143a"
+      },
+      "ResponseBody": {
+        "value": []
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/fc35d936-3b89-41f8-8110-a24b56826c37/resourceGroups/Default-Qumulo-9061/providers/Qumulo.Storage/fileSystems/testResource-8064?api-version=2022-10-12",
+      "RequestMethod": "PUT",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "Content-Length": "497",
+        "Content-Type": "application/json",
+        "traceparent": "00-436cebc2e5a4f9476b442ac0d5aae3e1-4a94dd9bdc21d26e-00",
+        "User-Agent": "azsdk-net-ResourceManager.Qumulo/1.0.0-alpha.20230504.1 (.NET 7.0.5; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "e276b02e0ad81f4f8312a479baa1ad84",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "tags": {},
+        "location": "eastus2",
+        "properties": {
+          "marketplaceDetails": {
+            "planId": "qumulo-on-azure-v1%%gmz7xq9ge3py%%P1M",
+            "offerId": "qumulo-saas-mpp",
+            "publisherId": "qumulo1584033880660"
+          },
+          "storageSku": "Performance",
+          "userDetails": {
+            "email": "abc@test.com"
+          },
+          "delegatedSubnetId": "/subscriptions/fc35d936-3b89-41f8-8110-a24b56826c37/resourceGroups/NetworkWatcherRG/providers/Microsoft.Network/virtualNetworks/eastus2vnet/subnets/default",
+          "adminPassword": "Test123",
+          "initialCapacity": 18,
+          "availabilityZone": "2"
+        }
+      },
+      "StatusCode": 201,
+      "ResponseHeaders": {
+        "Azure-AsyncOperation": "https://management.azure.com/providers/Qumulo.Storage/locations/EASTUS2/operationStatuses/f6cf2f74-8dda-4656-a93b-e75db7b92333*7085B731B96B0885AC6CD0199E156000CE4935460C7389F148E44168AD3AD1FB?api-version=2022-10-12",
+        "Cache-Control": "no-cache",
+        "Content-Length": "1102",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Thu, 04 May 2023 06:49:20 GMT",
+        "ETag": "\u0022d20953b1-0000-0100-0000-6453556f0000\u0022",
+        "Expires": "-1",
+        "Location": "https://management.azure.com/providers/Qumulo.Storage/locations/EASTUS2/operationStatuses/f6cf2f74-8dda-4656-a93b-e75db7b92333*7085B731B96B0885AC6CD0199E156000CE4935460C7389F148E44168AD3AD1FB?api-version=2022-10-12",
+        "mise-correlation-id": "5c88a041-0ded-42da-a879-c41242ab55a0",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "e276b02e0ad81f4f8312a479baa1ad84",
+        "x-ms-correlation-request-id": "8abcf7b4-f004-4203-96e9-2033aa328287",
+        "x-ms-providerhub-traffic": "True",
+        "x-ms-ratelimit-remaining-subscription-writes": "1198",
+        "x-ms-request-id": "f6cf2f74-8dda-4656-a93b-e75db7b92333",
+        "x-ms-routing-request-id": "JIOINDIACENTRAL:20230504T064921Z:8abcf7b4-f004-4203-96e9-2033aa328287"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/fc35d936-3b89-41f8-8110-a24b56826c37/resourceGroups/Default-Qumulo-9061/providers/Qumulo.Storage/fileSystems/testResource-8064",
+        "name": "testResource-8064",
+        "type": "qumulo.storage/filesystems",
+        "location": "eastus2",
+        "tags": {},
+        "systemData": {
+          "createdBy": "d01a3099-115f-472c-8d79-8e19275b4d8c",
+          "createdByType": "Application",
+          "createdAt": "2023-05-04T06:49:19.0162803Z",
+          "lastModifiedBy": "d01a3099-115f-472c-8d79-8e19275b4d8c",
+          "lastModifiedByType": "Application",
+          "lastModifiedAt": "2023-05-04T06:49:19.0162803Z"
+        },
+        "properties": {
+          "marketplaceDetails": {
+            "marketplaceSubscriptionId": null,
+            "planId": "qumulo-on-azure-v1%%gmz7xq9ge3py%%P1M",
+            "offerId": "qumulo-saas-mpp",
+            "publisherId": "qumulo1584033880660",
+            "marketplaceSubscriptionStatus": "PendingFulfillmentStart"
+          },
+          "provisioningState": "Accepted",
+          "userDetails": {},
+          "delegatedSubnetId": "/subscriptions/fc35d936-3b89-41f8-8110-a24b56826c37/resourceGroups/NetworkWatcherRG/providers/Microsoft.Network/virtualNetworks/eastus2vnet/subnets/default",
+          "clusterLoginUrl": null,
+          "privateIPs": null,
+          "storageSku": "Performance",
+          "initialCapacity": 18,
+          "availabilityZone": "2"
+        }
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/providers/Qumulo.Storage/locations/EASTUS2/operationStatuses/f6cf2f74-8dda-4656-a93b-e75db7b92333*7085B731B96B0885AC6CD0199E156000CE4935460C7389F148E44168AD3AD1FB?api-version=2022-10-12",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-436cebc2e5a4f9476b442ac0d5aae3e1-9099857e0793f390-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.4.0 (.NET 7.0.5; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "8d7002f02bf0ac08f7d9f68c177072a6",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "503",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Thu, 04 May 2023 06:49:21 GMT",
+        "ETag": "\u0022b0021aa1-0000-0100-0000-6453556f0000\u0022",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "8d7002f02bf0ac08f7d9f68c177072a6",
+        "x-ms-correlation-request-id": "a75e5314-0959-493d-8b70-5cb0af6d97a3",
+        "x-ms-ratelimit-remaining-tenant-reads": "11999",
+        "x-ms-request-id": "68526a99-f795-4dfc-b5b1-27564e3aaa68",
+        "x-ms-routing-request-id": "JIOINDIACENTRAL:20230504T064921Z:a75e5314-0959-493d-8b70-5cb0af6d97a3"
+      },
+      "ResponseBody": {
+        "id": "/providers/Qumulo.Storage/locations/EASTUS2/operationStatuses/f6cf2f74-8dda-4656-a93b-e75db7b92333*7085B731B96B0885AC6CD0199E156000CE4935460C7389F148E44168AD3AD1FB",
+        "name": "f6cf2f74-8dda-4656-a93b-e75db7b92333*7085B731B96B0885AC6CD0199E156000CE4935460C7389F148E44168AD3AD1FB",
+        "resourceId": "/subscriptions/fc35d936-3b89-41f8-8110-a24b56826c37/resourceGroups/Default-Qumulo-9061/providers/Qumulo.Storage/fileSystems/testResource-8064",
+        "status": "Accepted",
+        "startTime": "2023-05-04T06:49:19.6514076Z"
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/providers/Qumulo.Storage/locations/EASTUS2/operationStatuses/f6cf2f74-8dda-4656-a93b-e75db7b92333*7085B731B96B0885AC6CD0199E156000CE4935460C7389F148E44168AD3AD1FB?api-version=2022-10-12",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-436cebc2e5a4f9476b442ac0d5aae3e1-eeb0e9adcc599efb-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.4.0 (.NET 7.0.5; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "4825bea3e0185845464cf3a54993415f",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "503",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Thu, 04 May 2023 06:49:22 GMT",
+        "ETag": "\u0022b0021aa1-0000-0100-0000-6453556f0000\u0022",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "4825bea3e0185845464cf3a54993415f",
+        "x-ms-correlation-request-id": "91b547cb-169f-448d-9f70-e74edec54e7d",
+        "x-ms-ratelimit-remaining-tenant-reads": "11998",
+        "x-ms-request-id": "53eeed4a-558b-47fa-9496-2dc6b75b78a4",
+        "x-ms-routing-request-id": "JIOINDIACENTRAL:20230504T064922Z:91b547cb-169f-448d-9f70-e74edec54e7d"
+      },
+      "ResponseBody": {
+        "id": "/providers/Qumulo.Storage/locations/EASTUS2/operationStatuses/f6cf2f74-8dda-4656-a93b-e75db7b92333*7085B731B96B0885AC6CD0199E156000CE4935460C7389F148E44168AD3AD1FB",
+        "name": "f6cf2f74-8dda-4656-a93b-e75db7b92333*7085B731B96B0885AC6CD0199E156000CE4935460C7389F148E44168AD3AD1FB",
+        "resourceId": "/subscriptions/fc35d936-3b89-41f8-8110-a24b56826c37/resourceGroups/Default-Qumulo-9061/providers/Qumulo.Storage/fileSystems/testResource-8064",
+        "status": "Accepted",
+        "startTime": "2023-05-04T06:49:19.6514076Z"
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/providers/Qumulo.Storage/locations/EASTUS2/operationStatuses/f6cf2f74-8dda-4656-a93b-e75db7b92333*7085B731B96B0885AC6CD0199E156000CE4935460C7389F148E44168AD3AD1FB?api-version=2022-10-12",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-436cebc2e5a4f9476b442ac0d5aae3e1-22442eb546d72aa1-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.4.0 (.NET 7.0.5; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "b8881de92031b99360350bbcdfdd127e",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "503",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Thu, 04 May 2023 06:49:23 GMT",
+        "ETag": "\u0022b0021aa1-0000-0100-0000-6453556f0000\u0022",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "b8881de92031b99360350bbcdfdd127e",
+        "x-ms-correlation-request-id": "a349159f-3150-4768-8e69-2f35e1b300ee",
+        "x-ms-ratelimit-remaining-tenant-reads": "11997",
+        "x-ms-request-id": "7c397b57-abd8-4945-ae78-615e9f010af3",
+        "x-ms-routing-request-id": "JIOINDIACENTRAL:20230504T064924Z:a349159f-3150-4768-8e69-2f35e1b300ee"
+      },
+      "ResponseBody": {
+        "id": "/providers/Qumulo.Storage/locations/EASTUS2/operationStatuses/f6cf2f74-8dda-4656-a93b-e75db7b92333*7085B731B96B0885AC6CD0199E156000CE4935460C7389F148E44168AD3AD1FB",
+        "name": "f6cf2f74-8dda-4656-a93b-e75db7b92333*7085B731B96B0885AC6CD0199E156000CE4935460C7389F148E44168AD3AD1FB",
+        "resourceId": "/subscriptions/fc35d936-3b89-41f8-8110-a24b56826c37/resourceGroups/Default-Qumulo-9061/providers/Qumulo.Storage/fileSystems/testResource-8064",
+        "status": "Accepted",
+        "startTime": "2023-05-04T06:49:19.6514076Z"
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/providers/Qumulo.Storage/locations/EASTUS2/operationStatuses/f6cf2f74-8dda-4656-a93b-e75db7b92333*7085B731B96B0885AC6CD0199E156000CE4935460C7389F148E44168AD3AD1FB?api-version=2022-10-12",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-436cebc2e5a4f9476b442ac0d5aae3e1-1169fe9df16c4b85-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.4.0 (.NET 7.0.5; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "1f171ac0e1fe106ebc1746a438636363",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "503",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Thu, 04 May 2023 06:49:25 GMT",
+        "ETag": "\u0022b0021aa1-0000-0100-0000-6453556f0000\u0022",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "1f171ac0e1fe106ebc1746a438636363",
+        "x-ms-correlation-request-id": "6894a372-e7d6-43a2-8793-ccb3d64a1728",
+        "x-ms-ratelimit-remaining-tenant-reads": "11996",
+        "x-ms-request-id": "c931e6ed-59b2-4acb-a94b-dbd44d8212f3",
+        "x-ms-routing-request-id": "JIOINDIACENTRAL:20230504T064925Z:6894a372-e7d6-43a2-8793-ccb3d64a1728"
+      },
+      "ResponseBody": {
+        "id": "/providers/Qumulo.Storage/locations/EASTUS2/operationStatuses/f6cf2f74-8dda-4656-a93b-e75db7b92333*7085B731B96B0885AC6CD0199E156000CE4935460C7389F148E44168AD3AD1FB",
+        "name": "f6cf2f74-8dda-4656-a93b-e75db7b92333*7085B731B96B0885AC6CD0199E156000CE4935460C7389F148E44168AD3AD1FB",
+        "resourceId": "/subscriptions/fc35d936-3b89-41f8-8110-a24b56826c37/resourceGroups/Default-Qumulo-9061/providers/Qumulo.Storage/fileSystems/testResource-8064",
+        "status": "Accepted",
+        "startTime": "2023-05-04T06:49:19.6514076Z"
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/providers/Qumulo.Storage/locations/EASTUS2/operationStatuses/f6cf2f74-8dda-4656-a93b-e75db7b92333*7085B731B96B0885AC6CD0199E156000CE4935460C7389F148E44168AD3AD1FB?api-version=2022-10-12",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-436cebc2e5a4f9476b442ac0d5aae3e1-6d9b4020d49ce2ed-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.4.0 (.NET 7.0.5; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "faa29797bae783752a6ce7e3d4897969",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "503",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Thu, 04 May 2023 06:49:27 GMT",
+        "ETag": "\u0022b0021aa1-0000-0100-0000-6453556f0000\u0022",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "faa29797bae783752a6ce7e3d4897969",
+        "x-ms-correlation-request-id": "1133f3cb-597b-4385-8a61-090360901c6f",
+        "x-ms-ratelimit-remaining-tenant-reads": "11995",
+        "x-ms-request-id": "6cad6169-a12c-437c-9a5d-beff2eacefe7",
+        "x-ms-routing-request-id": "JIOINDIACENTRAL:20230504T064927Z:1133f3cb-597b-4385-8a61-090360901c6f"
+      },
+      "ResponseBody": {
+        "id": "/providers/Qumulo.Storage/locations/EASTUS2/operationStatuses/f6cf2f74-8dda-4656-a93b-e75db7b92333*7085B731B96B0885AC6CD0199E156000CE4935460C7389F148E44168AD3AD1FB",
+        "name": "f6cf2f74-8dda-4656-a93b-e75db7b92333*7085B731B96B0885AC6CD0199E156000CE4935460C7389F148E44168AD3AD1FB",
+        "resourceId": "/subscriptions/fc35d936-3b89-41f8-8110-a24b56826c37/resourceGroups/Default-Qumulo-9061/providers/Qumulo.Storage/fileSystems/testResource-8064",
+        "status": "Accepted",
+        "startTime": "2023-05-04T06:49:19.6514076Z"
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/providers/Qumulo.Storage/locations/EASTUS2/operationStatuses/f6cf2f74-8dda-4656-a93b-e75db7b92333*7085B731B96B0885AC6CD0199E156000CE4935460C7389F148E44168AD3AD1FB?api-version=2022-10-12",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-436cebc2e5a4f9476b442ac0d5aae3e1-28e92ba0b55ccb3f-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.4.0 (.NET 7.0.5; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "2ee4743a227c0860ae78fb19daef81fd",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "503",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Thu, 04 May 2023 06:49:32 GMT",
+        "ETag": "\u0022b0021aa1-0000-0100-0000-6453556f0000\u0022",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "2ee4743a227c0860ae78fb19daef81fd",
+        "x-ms-correlation-request-id": "a94247bb-d0a2-4bc3-9ab4-59052757db7e",
+        "x-ms-ratelimit-remaining-tenant-reads": "11994",
+        "x-ms-request-id": "170f5960-07b2-417e-afdf-3fd6d806d136",
+        "x-ms-routing-request-id": "JIOINDIACENTRAL:20230504T064932Z:a94247bb-d0a2-4bc3-9ab4-59052757db7e"
+      },
+      "ResponseBody": {
+        "id": "/providers/Qumulo.Storage/locations/EASTUS2/operationStatuses/f6cf2f74-8dda-4656-a93b-e75db7b92333*7085B731B96B0885AC6CD0199E156000CE4935460C7389F148E44168AD3AD1FB",
+        "name": "f6cf2f74-8dda-4656-a93b-e75db7b92333*7085B731B96B0885AC6CD0199E156000CE4935460C7389F148E44168AD3AD1FB",
+        "resourceId": "/subscriptions/fc35d936-3b89-41f8-8110-a24b56826c37/resourceGroups/Default-Qumulo-9061/providers/Qumulo.Storage/fileSystems/testResource-8064",
+        "status": "Accepted",
+        "startTime": "2023-05-04T06:49:19.6514076Z"
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/providers/Qumulo.Storage/locations/EASTUS2/operationStatuses/f6cf2f74-8dda-4656-a93b-e75db7b92333*7085B731B96B0885AC6CD0199E156000CE4935460C7389F148E44168AD3AD1FB?api-version=2022-10-12",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-436cebc2e5a4f9476b442ac0d5aae3e1-3bb235149fc8e591-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.4.0 (.NET 7.0.5; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "4824a8d2173a0697a594f492f98b3b33",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "503",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Thu, 04 May 2023 06:49:39 GMT",
+        "ETag": "\u0022b0021aa1-0000-0100-0000-6453556f0000\u0022",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "4824a8d2173a0697a594f492f98b3b33",
+        "x-ms-correlation-request-id": "fb78d62f-28b0-444b-b459-e1596fdf3b1b",
+        "x-ms-ratelimit-remaining-tenant-reads": "11993",
+        "x-ms-request-id": "875f60f2-9729-47d4-a99f-286ffbacd723",
+        "x-ms-routing-request-id": "JIOINDIACENTRAL:20230504T064940Z:fb78d62f-28b0-444b-b459-e1596fdf3b1b"
+      },
+      "ResponseBody": {
+        "id": "/providers/Qumulo.Storage/locations/EASTUS2/operationStatuses/f6cf2f74-8dda-4656-a93b-e75db7b92333*7085B731B96B0885AC6CD0199E156000CE4935460C7389F148E44168AD3AD1FB",
+        "name": "f6cf2f74-8dda-4656-a93b-e75db7b92333*7085B731B96B0885AC6CD0199E156000CE4935460C7389F148E44168AD3AD1FB",
+        "resourceId": "/subscriptions/fc35d936-3b89-41f8-8110-a24b56826c37/resourceGroups/Default-Qumulo-9061/providers/Qumulo.Storage/fileSystems/testResource-8064",
+        "status": "Accepted",
+        "startTime": "2023-05-04T06:49:19.6514076Z"
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/providers/Qumulo.Storage/locations/EASTUS2/operationStatuses/f6cf2f74-8dda-4656-a93b-e75db7b92333*7085B731B96B0885AC6CD0199E156000CE4935460C7389F148E44168AD3AD1FB?api-version=2022-10-12",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-436cebc2e5a4f9476b442ac0d5aae3e1-f7f319410ce71e9d-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.4.0 (.NET 7.0.5; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "c369dc9e357e75e7379a4c6fbe5ba83b",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "503",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Thu, 04 May 2023 06:49:56 GMT",
+        "ETag": "\u0022b0021aa1-0000-0100-0000-6453556f0000\u0022",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "c369dc9e357e75e7379a4c6fbe5ba83b",
+        "x-ms-correlation-request-id": "2d3c115d-001a-4b50-acc1-f24d4c04a269",
+        "x-ms-ratelimit-remaining-tenant-reads": "11992",
+        "x-ms-request-id": "13fa40e4-41ec-4ce3-9a30-480477b2765f",
+        "x-ms-routing-request-id": "JIOINDIACENTRAL:20230504T064956Z:2d3c115d-001a-4b50-acc1-f24d4c04a269"
+      },
+      "ResponseBody": {
+        "id": "/providers/Qumulo.Storage/locations/EASTUS2/operationStatuses/f6cf2f74-8dda-4656-a93b-e75db7b92333*7085B731B96B0885AC6CD0199E156000CE4935460C7389F148E44168AD3AD1FB",
+        "name": "f6cf2f74-8dda-4656-a93b-e75db7b92333*7085B731B96B0885AC6CD0199E156000CE4935460C7389F148E44168AD3AD1FB",
+        "resourceId": "/subscriptions/fc35d936-3b89-41f8-8110-a24b56826c37/resourceGroups/Default-Qumulo-9061/providers/Qumulo.Storage/fileSystems/testResource-8064",
+        "status": "Accepted",
+        "startTime": "2023-05-04T06:49:19.6514076Z"
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/providers/Qumulo.Storage/locations/EASTUS2/operationStatuses/f6cf2f74-8dda-4656-a93b-e75db7b92333*7085B731B96B0885AC6CD0199E156000CE4935460C7389F148E44168AD3AD1FB?api-version=2022-10-12",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-436cebc2e5a4f9476b442ac0d5aae3e1-c2607a0061fa77fc-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.4.0 (.NET 7.0.5; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "2c11eaeb3164222eddde88e72dce0e22",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "503",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Thu, 04 May 2023 06:50:28 GMT",
+        "ETag": "\u0022b0021aa1-0000-0100-0000-6453556f0000\u0022",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "2c11eaeb3164222eddde88e72dce0e22",
+        "x-ms-correlation-request-id": "ec1a137e-be50-428c-880d-d92e67dd82b5",
+        "x-ms-ratelimit-remaining-tenant-reads": "11991",
+        "x-ms-request-id": "93cf39df-88a6-461f-8dce-19439986fbad",
+        "x-ms-routing-request-id": "JIOINDIACENTRAL:20230504T065029Z:ec1a137e-be50-428c-880d-d92e67dd82b5"
+      },
+      "ResponseBody": {
+        "id": "/providers/Qumulo.Storage/locations/EASTUS2/operationStatuses/f6cf2f74-8dda-4656-a93b-e75db7b92333*7085B731B96B0885AC6CD0199E156000CE4935460C7389F148E44168AD3AD1FB",
+        "name": "f6cf2f74-8dda-4656-a93b-e75db7b92333*7085B731B96B0885AC6CD0199E156000CE4935460C7389F148E44168AD3AD1FB",
+        "resourceId": "/subscriptions/fc35d936-3b89-41f8-8110-a24b56826c37/resourceGroups/Default-Qumulo-9061/providers/Qumulo.Storage/fileSystems/testResource-8064",
+        "status": "Accepted",
+        "startTime": "2023-05-04T06:49:19.6514076Z"
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/providers/Qumulo.Storage/locations/EASTUS2/operationStatuses/f6cf2f74-8dda-4656-a93b-e75db7b92333*7085B731B96B0885AC6CD0199E156000CE4935460C7389F148E44168AD3AD1FB?api-version=2022-10-12",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-436cebc2e5a4f9476b442ac0d5aae3e1-0c559a80811dbb89-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.4.0 (.NET 7.0.5; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "fd7bc73cbd859c7ec0ae119fcb27474a",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "503",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Thu, 04 May 2023 06:51:01 GMT",
+        "ETag": "\u0022b0021aa1-0000-0100-0000-6453556f0000\u0022",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "fd7bc73cbd859c7ec0ae119fcb27474a",
+        "x-ms-correlation-request-id": "77b8458e-1629-43cf-8bb4-812529ca0f06",
+        "x-ms-ratelimit-remaining-tenant-reads": "11990",
+        "x-ms-request-id": "47b97ba7-d601-47d9-b87f-d27bdceccc9b",
+        "x-ms-routing-request-id": "JIOINDIACENTRAL:20230504T065101Z:77b8458e-1629-43cf-8bb4-812529ca0f06"
+      },
+      "ResponseBody": {
+        "id": "/providers/Qumulo.Storage/locations/EASTUS2/operationStatuses/f6cf2f74-8dda-4656-a93b-e75db7b92333*7085B731B96B0885AC6CD0199E156000CE4935460C7389F148E44168AD3AD1FB",
+        "name": "f6cf2f74-8dda-4656-a93b-e75db7b92333*7085B731B96B0885AC6CD0199E156000CE4935460C7389F148E44168AD3AD1FB",
+        "resourceId": "/subscriptions/fc35d936-3b89-41f8-8110-a24b56826c37/resourceGroups/Default-Qumulo-9061/providers/Qumulo.Storage/fileSystems/testResource-8064",
+        "status": "Accepted",
+        "startTime": "2023-05-04T06:49:19.6514076Z"
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/providers/Qumulo.Storage/locations/EASTUS2/operationStatuses/f6cf2f74-8dda-4656-a93b-e75db7b92333*7085B731B96B0885AC6CD0199E156000CE4935460C7389F148E44168AD3AD1FB?api-version=2022-10-12",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-436cebc2e5a4f9476b442ac0d5aae3e1-9413fa1feb328476-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.4.0 (.NET 7.0.5; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "0fa6b9ec0e7a6ccfae47e6a0acff4768",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "503",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Thu, 04 May 2023 06:51:33 GMT",
+        "ETag": "\u0022b0021aa1-0000-0100-0000-6453556f0000\u0022",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "0fa6b9ec0e7a6ccfae47e6a0acff4768",
+        "x-ms-correlation-request-id": "7cba28fd-3e99-4fcc-b224-615d75f5a394",
+        "x-ms-ratelimit-remaining-tenant-reads": "11989",
+        "x-ms-request-id": "8bc6e316-90b7-4892-b2a3-2d4e18801368",
+        "x-ms-routing-request-id": "JIOINDIACENTRAL:20230504T065133Z:7cba28fd-3e99-4fcc-b224-615d75f5a394"
+      },
+      "ResponseBody": {
+        "id": "/providers/Qumulo.Storage/locations/EASTUS2/operationStatuses/f6cf2f74-8dda-4656-a93b-e75db7b92333*7085B731B96B0885AC6CD0199E156000CE4935460C7389F148E44168AD3AD1FB",
+        "name": "f6cf2f74-8dda-4656-a93b-e75db7b92333*7085B731B96B0885AC6CD0199E156000CE4935460C7389F148E44168AD3AD1FB",
+        "resourceId": "/subscriptions/fc35d936-3b89-41f8-8110-a24b56826c37/resourceGroups/Default-Qumulo-9061/providers/Qumulo.Storage/fileSystems/testResource-8064",
+        "status": "Accepted",
+        "startTime": "2023-05-04T06:49:19.6514076Z"
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/providers/Qumulo.Storage/locations/EASTUS2/operationStatuses/f6cf2f74-8dda-4656-a93b-e75db7b92333*7085B731B96B0885AC6CD0199E156000CE4935460C7389F148E44168AD3AD1FB?api-version=2022-10-12",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-436cebc2e5a4f9476b442ac0d5aae3e1-dbc46e8f66752bbd-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.4.0 (.NET 7.0.5; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "f632298caadf2eb66b746bb5208e57b5",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "503",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Thu, 04 May 2023 06:52:05 GMT",
+        "ETag": "\u0022b0021aa1-0000-0100-0000-6453556f0000\u0022",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "f632298caadf2eb66b746bb5208e57b5",
+        "x-ms-correlation-request-id": "4ae728f5-290f-4a42-a317-302e871554be",
+        "x-ms-ratelimit-remaining-tenant-reads": "11988",
+        "x-ms-request-id": "88d95df0-2398-4e94-8a32-f8e0e06afe50",
+        "x-ms-routing-request-id": "JIOINDIACENTRAL:20230504T065205Z:4ae728f5-290f-4a42-a317-302e871554be"
+      },
+      "ResponseBody": {
+        "id": "/providers/Qumulo.Storage/locations/EASTUS2/operationStatuses/f6cf2f74-8dda-4656-a93b-e75db7b92333*7085B731B96B0885AC6CD0199E156000CE4935460C7389F148E44168AD3AD1FB",
+        "name": "f6cf2f74-8dda-4656-a93b-e75db7b92333*7085B731B96B0885AC6CD0199E156000CE4935460C7389F148E44168AD3AD1FB",
+        "resourceId": "/subscriptions/fc35d936-3b89-41f8-8110-a24b56826c37/resourceGroups/Default-Qumulo-9061/providers/Qumulo.Storage/fileSystems/testResource-8064",
+        "status": "Accepted",
+        "startTime": "2023-05-04T06:49:19.6514076Z"
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/providers/Qumulo.Storage/locations/EASTUS2/operationStatuses/f6cf2f74-8dda-4656-a93b-e75db7b92333*7085B731B96B0885AC6CD0199E156000CE4935460C7389F148E44168AD3AD1FB?api-version=2022-10-12",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-436cebc2e5a4f9476b442ac0d5aae3e1-3994ea4ae13d0962-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.4.0 (.NET 7.0.5; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "74fb3e96fe272ea7f80e4f3dd6def0c1",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "503",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Thu, 04 May 2023 06:52:37 GMT",
+        "ETag": "\u0022b0021aa1-0000-0100-0000-6453556f0000\u0022",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "74fb3e96fe272ea7f80e4f3dd6def0c1",
+        "x-ms-correlation-request-id": "672cbed1-2da7-4d4b-adf1-b4b848ef7e30",
+        "x-ms-ratelimit-remaining-tenant-reads": "11987",
+        "x-ms-request-id": "81864445-e7d0-4dd4-b700-4ebcaca2edd5",
+        "x-ms-routing-request-id": "JIOINDIACENTRAL:20230504T065238Z:672cbed1-2da7-4d4b-adf1-b4b848ef7e30"
+      },
+      "ResponseBody": {
+        "id": "/providers/Qumulo.Storage/locations/EASTUS2/operationStatuses/f6cf2f74-8dda-4656-a93b-e75db7b92333*7085B731B96B0885AC6CD0199E156000CE4935460C7389F148E44168AD3AD1FB",
+        "name": "f6cf2f74-8dda-4656-a93b-e75db7b92333*7085B731B96B0885AC6CD0199E156000CE4935460C7389F148E44168AD3AD1FB",
+        "resourceId": "/subscriptions/fc35d936-3b89-41f8-8110-a24b56826c37/resourceGroups/Default-Qumulo-9061/providers/Qumulo.Storage/fileSystems/testResource-8064",
+        "status": "Accepted",
+        "startTime": "2023-05-04T06:49:19.6514076Z"
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/providers/Qumulo.Storage/locations/EASTUS2/operationStatuses/f6cf2f74-8dda-4656-a93b-e75db7b92333*7085B731B96B0885AC6CD0199E156000CE4935460C7389F148E44168AD3AD1FB?api-version=2022-10-12",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-436cebc2e5a4f9476b442ac0d5aae3e1-d59357af67b1ae61-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.4.0 (.NET 7.0.5; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "a113a86751f5416a0277a406a3194c1f",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "503",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Thu, 04 May 2023 06:53:10 GMT",
+        "ETag": "\u0022b0021aa1-0000-0100-0000-6453556f0000\u0022",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "a113a86751f5416a0277a406a3194c1f",
+        "x-ms-correlation-request-id": "5d249bdb-a21a-49d4-b9e2-573d7624639c",
+        "x-ms-ratelimit-remaining-tenant-reads": "11986",
+        "x-ms-request-id": "ed8c2be5-b903-4032-9db6-0cced2f7514e",
+        "x-ms-routing-request-id": "JIOINDIACENTRAL:20230504T065310Z:5d249bdb-a21a-49d4-b9e2-573d7624639c"
+      },
+      "ResponseBody": {
+        "id": "/providers/Qumulo.Storage/locations/EASTUS2/operationStatuses/f6cf2f74-8dda-4656-a93b-e75db7b92333*7085B731B96B0885AC6CD0199E156000CE4935460C7389F148E44168AD3AD1FB",
+        "name": "f6cf2f74-8dda-4656-a93b-e75db7b92333*7085B731B96B0885AC6CD0199E156000CE4935460C7389F148E44168AD3AD1FB",
+        "resourceId": "/subscriptions/fc35d936-3b89-41f8-8110-a24b56826c37/resourceGroups/Default-Qumulo-9061/providers/Qumulo.Storage/fileSystems/testResource-8064",
+        "status": "Accepted",
+        "startTime": "2023-05-04T06:49:19.6514076Z"
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/providers/Qumulo.Storage/locations/EASTUS2/operationStatuses/f6cf2f74-8dda-4656-a93b-e75db7b92333*7085B731B96B0885AC6CD0199E156000CE4935460C7389F148E44168AD3AD1FB?api-version=2022-10-12",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-436cebc2e5a4f9476b442ac0d5aae3e1-0ec8376db8290159-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.4.0 (.NET 7.0.5; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "6d0931efd3038d418204fdd05b78588c",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "503",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Thu, 04 May 2023 06:53:42 GMT",
+        "ETag": "\u0022b0021aa1-0000-0100-0000-6453556f0000\u0022",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "6d0931efd3038d418204fdd05b78588c",
+        "x-ms-correlation-request-id": "4dc55dbf-aa6f-482b-9293-8cc4aa631c11",
+        "x-ms-ratelimit-remaining-tenant-reads": "11985",
+        "x-ms-request-id": "3733f56a-0e22-410e-9fab-ed312d9792a9",
+        "x-ms-routing-request-id": "JIOINDIACENTRAL:20230504T065343Z:4dc55dbf-aa6f-482b-9293-8cc4aa631c11"
+      },
+      "ResponseBody": {
+        "id": "/providers/Qumulo.Storage/locations/EASTUS2/operationStatuses/f6cf2f74-8dda-4656-a93b-e75db7b92333*7085B731B96B0885AC6CD0199E156000CE4935460C7389F148E44168AD3AD1FB",
+        "name": "f6cf2f74-8dda-4656-a93b-e75db7b92333*7085B731B96B0885AC6CD0199E156000CE4935460C7389F148E44168AD3AD1FB",
+        "resourceId": "/subscriptions/fc35d936-3b89-41f8-8110-a24b56826c37/resourceGroups/Default-Qumulo-9061/providers/Qumulo.Storage/fileSystems/testResource-8064",
+        "status": "Accepted",
+        "startTime": "2023-05-04T06:49:19.6514076Z"
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/providers/Qumulo.Storage/locations/EASTUS2/operationStatuses/f6cf2f74-8dda-4656-a93b-e75db7b92333*7085B731B96B0885AC6CD0199E156000CE4935460C7389F148E44168AD3AD1FB?api-version=2022-10-12",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-436cebc2e5a4f9476b442ac0d5aae3e1-2c354abe1e98d107-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.4.0 (.NET 7.0.5; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "784eaa83b57b45bfd4ba71af5aa08bdf",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "503",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Thu, 04 May 2023 06:54:15 GMT",
+        "ETag": "\u0022b0021aa1-0000-0100-0000-6453556f0000\u0022",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "784eaa83b57b45bfd4ba71af5aa08bdf",
+        "x-ms-correlation-request-id": "25d65b3e-2d81-4379-8951-c7fbe35f4ac0",
+        "x-ms-ratelimit-remaining-tenant-reads": "11984",
+        "x-ms-request-id": "c690f84a-6c84-4976-abaa-bf34ebe4d558",
+        "x-ms-routing-request-id": "JIOINDIACENTRAL:20230504T065415Z:25d65b3e-2d81-4379-8951-c7fbe35f4ac0"
+      },
+      "ResponseBody": {
+        "id": "/providers/Qumulo.Storage/locations/EASTUS2/operationStatuses/f6cf2f74-8dda-4656-a93b-e75db7b92333*7085B731B96B0885AC6CD0199E156000CE4935460C7389F148E44168AD3AD1FB",
+        "name": "f6cf2f74-8dda-4656-a93b-e75db7b92333*7085B731B96B0885AC6CD0199E156000CE4935460C7389F148E44168AD3AD1FB",
+        "resourceId": "/subscriptions/fc35d936-3b89-41f8-8110-a24b56826c37/resourceGroups/Default-Qumulo-9061/providers/Qumulo.Storage/fileSystems/testResource-8064",
+        "status": "Accepted",
+        "startTime": "2023-05-04T06:49:19.6514076Z"
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/providers/Qumulo.Storage/locations/EASTUS2/operationStatuses/f6cf2f74-8dda-4656-a93b-e75db7b92333*7085B731B96B0885AC6CD0199E156000CE4935460C7389F148E44168AD3AD1FB?api-version=2022-10-12",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-436cebc2e5a4f9476b442ac0d5aae3e1-08e10da0a27a2d9c-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.4.0 (.NET 7.0.5; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "a44d2fc283d593bd67851ef05399e68a",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "503",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Thu, 04 May 2023 06:54:48 GMT",
+        "ETag": "\u0022b0021aa1-0000-0100-0000-6453556f0000\u0022",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "a44d2fc283d593bd67851ef05399e68a",
+        "x-ms-correlation-request-id": "017f37f7-8cd3-4897-8bee-627ae8d6aa09",
+        "x-ms-ratelimit-remaining-tenant-reads": "11983",
+        "x-ms-request-id": "4a1634de-fa1d-4e60-acfc-d1f98a8493bc",
+        "x-ms-routing-request-id": "JIOINDIACENTRAL:20230504T065448Z:017f37f7-8cd3-4897-8bee-627ae8d6aa09"
+      },
+      "ResponseBody": {
+        "id": "/providers/Qumulo.Storage/locations/EASTUS2/operationStatuses/f6cf2f74-8dda-4656-a93b-e75db7b92333*7085B731B96B0885AC6CD0199E156000CE4935460C7389F148E44168AD3AD1FB",
+        "name": "f6cf2f74-8dda-4656-a93b-e75db7b92333*7085B731B96B0885AC6CD0199E156000CE4935460C7389F148E44168AD3AD1FB",
+        "resourceId": "/subscriptions/fc35d936-3b89-41f8-8110-a24b56826c37/resourceGroups/Default-Qumulo-9061/providers/Qumulo.Storage/fileSystems/testResource-8064",
+        "status": "Accepted",
+        "startTime": "2023-05-04T06:49:19.6514076Z"
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/providers/Qumulo.Storage/locations/EASTUS2/operationStatuses/f6cf2f74-8dda-4656-a93b-e75db7b92333*7085B731B96B0885AC6CD0199E156000CE4935460C7389F148E44168AD3AD1FB?api-version=2022-10-12",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-436cebc2e5a4f9476b442ac0d5aae3e1-febcbec98a6755fa-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.4.0 (.NET 7.0.5; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "f883181fd4cb3aa471c39949619132e2",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "503",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Thu, 04 May 2023 06:55:20 GMT",
+        "ETag": "\u0022b0021aa1-0000-0100-0000-6453556f0000\u0022",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "f883181fd4cb3aa471c39949619132e2",
+        "x-ms-correlation-request-id": "a45d4702-2aa9-49e5-a9f4-345a8371aa08",
+        "x-ms-ratelimit-remaining-tenant-reads": "11982",
+        "x-ms-request-id": "17c761b8-0834-4b7e-b01a-cd520542ff17",
+        "x-ms-routing-request-id": "JIOINDIACENTRAL:20230504T065520Z:a45d4702-2aa9-49e5-a9f4-345a8371aa08"
+      },
+      "ResponseBody": {
+        "id": "/providers/Qumulo.Storage/locations/EASTUS2/operationStatuses/f6cf2f74-8dda-4656-a93b-e75db7b92333*7085B731B96B0885AC6CD0199E156000CE4935460C7389F148E44168AD3AD1FB",
+        "name": "f6cf2f74-8dda-4656-a93b-e75db7b92333*7085B731B96B0885AC6CD0199E156000CE4935460C7389F148E44168AD3AD1FB",
+        "resourceId": "/subscriptions/fc35d936-3b89-41f8-8110-a24b56826c37/resourceGroups/Default-Qumulo-9061/providers/Qumulo.Storage/fileSystems/testResource-8064",
+        "status": "Accepted",
+        "startTime": "2023-05-04T06:49:19.6514076Z"
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/providers/Qumulo.Storage/locations/EASTUS2/operationStatuses/f6cf2f74-8dda-4656-a93b-e75db7b92333*7085B731B96B0885AC6CD0199E156000CE4935460C7389F148E44168AD3AD1FB?api-version=2022-10-12",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-436cebc2e5a4f9476b442ac0d5aae3e1-40324fa9f7199b7f-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.4.0 (.NET 7.0.5; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "2b0e1e79b32affb6ecba11f596cef23a",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "503",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Thu, 04 May 2023 06:55:51 GMT",
+        "ETag": "\u0022b0021aa1-0000-0100-0000-6453556f0000\u0022",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "2b0e1e79b32affb6ecba11f596cef23a",
+        "x-ms-correlation-request-id": "14c15963-ecf1-4b47-8d45-ac6e6508ae9c",
+        "x-ms-ratelimit-remaining-tenant-reads": "11981",
+        "x-ms-request-id": "23e71fbd-a7e2-4bf7-9cf7-e8e6e4d00923",
+        "x-ms-routing-request-id": "JIOINDIACENTRAL:20230504T065552Z:14c15963-ecf1-4b47-8d45-ac6e6508ae9c"
+      },
+      "ResponseBody": {
+        "id": "/providers/Qumulo.Storage/locations/EASTUS2/operationStatuses/f6cf2f74-8dda-4656-a93b-e75db7b92333*7085B731B96B0885AC6CD0199E156000CE4935460C7389F148E44168AD3AD1FB",
+        "name": "f6cf2f74-8dda-4656-a93b-e75db7b92333*7085B731B96B0885AC6CD0199E156000CE4935460C7389F148E44168AD3AD1FB",
+        "resourceId": "/subscriptions/fc35d936-3b89-41f8-8110-a24b56826c37/resourceGroups/Default-Qumulo-9061/providers/Qumulo.Storage/fileSystems/testResource-8064",
+        "status": "Accepted",
+        "startTime": "2023-05-04T06:49:19.6514076Z"
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/providers/Qumulo.Storage/locations/EASTUS2/operationStatuses/f6cf2f74-8dda-4656-a93b-e75db7b92333*7085B731B96B0885AC6CD0199E156000CE4935460C7389F148E44168AD3AD1FB?api-version=2022-10-12",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-436cebc2e5a4f9476b442ac0d5aae3e1-8c11997f7872a40d-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.4.0 (.NET 7.0.5; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "4290e7d4921cee148b133311ea7432d5",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "503",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Thu, 04 May 2023 06:56:24 GMT",
+        "ETag": "\u0022b0021aa1-0000-0100-0000-6453556f0000\u0022",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "4290e7d4921cee148b133311ea7432d5",
+        "x-ms-correlation-request-id": "061b00ea-207c-46ee-9e9f-fbd46a99f8a8",
+        "x-ms-ratelimit-remaining-tenant-reads": "11980",
+        "x-ms-request-id": "177c68f0-46f6-4754-b337-710a5d252d2d",
+        "x-ms-routing-request-id": "JIOINDIACENTRAL:20230504T065625Z:061b00ea-207c-46ee-9e9f-fbd46a99f8a8"
+      },
+      "ResponseBody": {
+        "id": "/providers/Qumulo.Storage/locations/EASTUS2/operationStatuses/f6cf2f74-8dda-4656-a93b-e75db7b92333*7085B731B96B0885AC6CD0199E156000CE4935460C7389F148E44168AD3AD1FB",
+        "name": "f6cf2f74-8dda-4656-a93b-e75db7b92333*7085B731B96B0885AC6CD0199E156000CE4935460C7389F148E44168AD3AD1FB",
+        "resourceId": "/subscriptions/fc35d936-3b89-41f8-8110-a24b56826c37/resourceGroups/Default-Qumulo-9061/providers/Qumulo.Storage/fileSystems/testResource-8064",
+        "status": "Accepted",
+        "startTime": "2023-05-04T06:49:19.6514076Z"
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/providers/Qumulo.Storage/locations/EASTUS2/operationStatuses/f6cf2f74-8dda-4656-a93b-e75db7b92333*7085B731B96B0885AC6CD0199E156000CE4935460C7389F148E44168AD3AD1FB?api-version=2022-10-12",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-436cebc2e5a4f9476b442ac0d5aae3e1-b0f08c404e3eaf6a-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.4.0 (.NET 7.0.5; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "34773c52ba8b6c5f61840c10c3aea3a2",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "503",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Thu, 04 May 2023 06:56:56 GMT",
+        "ETag": "\u0022b0021aa1-0000-0100-0000-6453556f0000\u0022",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "34773c52ba8b6c5f61840c10c3aea3a2",
+        "x-ms-correlation-request-id": "bef19b32-a029-45ff-9de4-96fda5fb3688",
+        "x-ms-ratelimit-remaining-tenant-reads": "11979",
+        "x-ms-request-id": "d73196b7-0be4-48b1-a987-549c57cee9cd",
+        "x-ms-routing-request-id": "JIOINDIACENTRAL:20230504T065657Z:bef19b32-a029-45ff-9de4-96fda5fb3688"
+      },
+      "ResponseBody": {
+        "id": "/providers/Qumulo.Storage/locations/EASTUS2/operationStatuses/f6cf2f74-8dda-4656-a93b-e75db7b92333*7085B731B96B0885AC6CD0199E156000CE4935460C7389F148E44168AD3AD1FB",
+        "name": "f6cf2f74-8dda-4656-a93b-e75db7b92333*7085B731B96B0885AC6CD0199E156000CE4935460C7389F148E44168AD3AD1FB",
+        "resourceId": "/subscriptions/fc35d936-3b89-41f8-8110-a24b56826c37/resourceGroups/Default-Qumulo-9061/providers/Qumulo.Storage/fileSystems/testResource-8064",
+        "status": "Accepted",
+        "startTime": "2023-05-04T06:49:19.6514076Z"
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/providers/Qumulo.Storage/locations/EASTUS2/operationStatuses/f6cf2f74-8dda-4656-a93b-e75db7b92333*7085B731B96B0885AC6CD0199E156000CE4935460C7389F148E44168AD3AD1FB?api-version=2022-10-12",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-436cebc2e5a4f9476b442ac0d5aae3e1-2a12e4218790a8d7-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.4.0 (.NET 7.0.5; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "79755ed1f001e7c50a209f1680a51578",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "503",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Thu, 04 May 2023 06:57:29 GMT",
+        "ETag": "\u0022b0021aa1-0000-0100-0000-6453556f0000\u0022",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "79755ed1f001e7c50a209f1680a51578",
+        "x-ms-correlation-request-id": "5d822cc6-411b-4a14-9fc2-83eb2656736f",
+        "x-ms-ratelimit-remaining-tenant-reads": "11978",
+        "x-ms-request-id": "2dbc6bf4-a349-4fae-ac4c-11d97cc04e3a",
+        "x-ms-routing-request-id": "JIOINDIACENTRAL:20230504T065729Z:5d822cc6-411b-4a14-9fc2-83eb2656736f"
+      },
+      "ResponseBody": {
+        "id": "/providers/Qumulo.Storage/locations/EASTUS2/operationStatuses/f6cf2f74-8dda-4656-a93b-e75db7b92333*7085B731B96B0885AC6CD0199E156000CE4935460C7389F148E44168AD3AD1FB",
+        "name": "f6cf2f74-8dda-4656-a93b-e75db7b92333*7085B731B96B0885AC6CD0199E156000CE4935460C7389F148E44168AD3AD1FB",
+        "resourceId": "/subscriptions/fc35d936-3b89-41f8-8110-a24b56826c37/resourceGroups/Default-Qumulo-9061/providers/Qumulo.Storage/fileSystems/testResource-8064",
+        "status": "Accepted",
+        "startTime": "2023-05-04T06:49:19.6514076Z"
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/providers/Qumulo.Storage/locations/EASTUS2/operationStatuses/f6cf2f74-8dda-4656-a93b-e75db7b92333*7085B731B96B0885AC6CD0199E156000CE4935460C7389F148E44168AD3AD1FB?api-version=2022-10-12",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-436cebc2e5a4f9476b442ac0d5aae3e1-cfbe51d2b7c8ccdb-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.4.0 (.NET 7.0.5; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "5aa23b87be5719af8723e09885032bdc",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "503",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Thu, 04 May 2023 06:58:01 GMT",
+        "ETag": "\u0022b0021aa1-0000-0100-0000-6453556f0000\u0022",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "5aa23b87be5719af8723e09885032bdc",
+        "x-ms-correlation-request-id": "6dd4cbbe-d40a-42d0-9935-92dbd98528ee",
+        "x-ms-ratelimit-remaining-tenant-reads": "11977",
+        "x-ms-request-id": "83e701fa-042a-4133-bb89-15e9b9b54ad7",
+        "x-ms-routing-request-id": "JIOINDIACENTRAL:20230504T065801Z:6dd4cbbe-d40a-42d0-9935-92dbd98528ee"
+      },
+      "ResponseBody": {
+        "id": "/providers/Qumulo.Storage/locations/EASTUS2/operationStatuses/f6cf2f74-8dda-4656-a93b-e75db7b92333*7085B731B96B0885AC6CD0199E156000CE4935460C7389F148E44168AD3AD1FB",
+        "name": "f6cf2f74-8dda-4656-a93b-e75db7b92333*7085B731B96B0885AC6CD0199E156000CE4935460C7389F148E44168AD3AD1FB",
+        "resourceId": "/subscriptions/fc35d936-3b89-41f8-8110-a24b56826c37/resourceGroups/Default-Qumulo-9061/providers/Qumulo.Storage/fileSystems/testResource-8064",
+        "status": "Accepted",
+        "startTime": "2023-05-04T06:49:19.6514076Z"
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/providers/Qumulo.Storage/locations/EASTUS2/operationStatuses/f6cf2f74-8dda-4656-a93b-e75db7b92333*7085B731B96B0885AC6CD0199E156000CE4935460C7389F148E44168AD3AD1FB?api-version=2022-10-12",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-436cebc2e5a4f9476b442ac0d5aae3e1-8d0e47b97deebcef-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.4.0 (.NET 7.0.5; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "8b409070b8fe62d47790296b1a49ecbc",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "573",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Thu, 04 May 2023 06:58:33 GMT",
+        "ETag": "\u0022b00210cb-0000-0100-0000-645357830000\u0022",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "8b409070b8fe62d47790296b1a49ecbc",
+        "x-ms-correlation-request-id": "10933fe3-a2fd-415c-8244-a7ec7ae0e065",
+        "x-ms-ratelimit-remaining-tenant-reads": "11976",
+        "x-ms-request-id": "a6622dce-08fc-4300-bfa3-3fb15ea8e82c",
+        "x-ms-routing-request-id": "JIOINDIACENTRAL:20230504T065834Z:10933fe3-a2fd-415c-8244-a7ec7ae0e065"
+      },
+      "ResponseBody": {
+        "id": "/providers/Qumulo.Storage/locations/EASTUS2/operationStatuses/f6cf2f74-8dda-4656-a93b-e75db7b92333*7085B731B96B0885AC6CD0199E156000CE4935460C7389F148E44168AD3AD1FB",
+        "name": "f6cf2f74-8dda-4656-a93b-e75db7b92333*7085B731B96B0885AC6CD0199E156000CE4935460C7389F148E44168AD3AD1FB",
+        "resourceId": "/subscriptions/fc35d936-3b89-41f8-8110-a24b56826c37/resourceGroups/Default-Qumulo-9061/providers/Qumulo.Storage/fileSystems/testResource-8064",
+        "status": "Succeeded",
+        "startTime": "2023-05-04T06:49:19.6514076Z",
+        "endTime": "2023-05-04T06:58:11.035008Z",
+        "error": {},
+        "properties": null
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/fc35d936-3b89-41f8-8110-a24b56826c37/resourceGroups/Default-Qumulo-9061/providers/Qumulo.Storage/fileSystems/testResource-8064?api-version=2022-10-12",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-436cebc2e5a4f9476b442ac0d5aae3e1-954f0b4d6e94cd48-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.4.0 (.NET 7.0.5; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "8788946e490c134baf5cf2dd0f2c6107",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "1185",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Thu, 04 May 2023 06:58:34 GMT",
+        "ETag": "\u0022d309cf35-0000-0100-0000-645357830000\u0022",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "8788946e490c134baf5cf2dd0f2c6107",
+        "x-ms-correlation-request-id": "ef0a7426-090f-439e-bbe9-cd0f43c2f096",
+        "x-ms-providerhub-traffic": "True",
+        "x-ms-ratelimit-remaining-subscription-reads": "11997",
+        "x-ms-request-id": "202eb4db-4721-4a41-a395-b2a44ae2a513",
+        "x-ms-routing-request-id": "JIOINDIACENTRAL:20230504T065835Z:ef0a7426-090f-439e-bbe9-cd0f43c2f096"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/fc35d936-3b89-41f8-8110-a24b56826c37/resourceGroups/Default-Qumulo-9061/providers/Qumulo.Storage/fileSystems/testResource-8064",
+        "name": "testResource-8064",
+        "type": "qumulo.storage/filesystems",
+        "location": "eastus2",
+        "tags": {},
+        "systemData": {
+          "createdBy": "d01a3099-115f-472c-8d79-8e19275b4d8c",
+          "createdByType": "Application",
+          "createdAt": "2023-05-04T06:49:19.0162803Z",
+          "lastModifiedBy": "13c34964-a135-4390-aa53-32f3c7251982",
+          "lastModifiedByType": "Application",
+          "lastModifiedAt": "2023-05-04T06:58:11.0951594Z"
+        },
+        "properties": {
+          "marketplaceDetails": {
+            "marketplaceSubscriptionId": "2c20807a-03a7-4fc0-c7c3-10893ce54e3a",
+            "planId": "qumulo-on-azure-v1%%gmz7xq9ge3py%%P1M",
+            "offerId": "qumulo-saas-mpp",
+            "publisherId": "qumulo1584033880660",
+            "marketplaceSubscriptionStatus": "Subscribed"
+          },
+          "provisioningState": "Succeeded",
+          "userDetails": {},
+          "delegatedSubnetId": "/subscriptions/fc35d936-3b89-41f8-8110-a24b56826c37/resourceGroups/NetworkWatcherRG/providers/Microsoft.Network/virtualNetworks/eastus2vnet/subnets/default",
+          "storageSku": "Performance",
+          "initialCapacity": 18,
+          "availabilityZone": "2",
+          "clusterLoginUrl": "https://10.6.0.6/login",
+          "privateIPs": [
+            "10.6.0.6",
+            "10.6.0.7",
+            "10.6.0.8",
+            "10.6.0.9"
+          ]
+        }
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/fc35d936-3b89-41f8-8110-a24b56826c37/resourceGroups/Default-Qumulo-9061/providers/Qumulo.Storage/fileSystems/testResource-6297?api-version=2022-10-12",
+      "RequestMethod": "PUT",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "Content-Length": "497",
+        "Content-Type": "application/json",
+        "traceparent": "00-4127860470c7e29d53329d05b8a2f12b-71b7dc3767c0558a-00",
+        "User-Agent": "azsdk-net-ResourceManager.Qumulo/1.0.0-alpha.20230504.1 (.NET 7.0.5; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "efa6c3f48964cf796640e2c79444fe3e",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "tags": {},
+        "location": "eastus2",
+        "properties": {
+          "marketplaceDetails": {
+            "planId": "qumulo-on-azure-v1%%gmz7xq9ge3py%%P1M",
+            "offerId": "qumulo-saas-mpp",
+            "publisherId": "qumulo1584033880660"
+          },
+          "storageSku": "Performance",
+          "userDetails": {
+            "email": "abc@test.com"
+          },
+          "delegatedSubnetId": "/subscriptions/fc35d936-3b89-41f8-8110-a24b56826c37/resourceGroups/NetworkWatcherRG/providers/Microsoft.Network/virtualNetworks/eastus2vnet/subnets/default",
+          "adminPassword": "Test123",
+          "initialCapacity": 18,
+          "availabilityZone": "2"
+        }
+      },
+      "StatusCode": 201,
+      "ResponseHeaders": {
+        "Azure-AsyncOperation": "https://management.azure.com/providers/Qumulo.Storage/locations/EASTUS2/operationStatuses/4adf19cf-d181-412d-b068-1d44ee9a3a9e*25DE26D3D32D474231E9632CD84A60C2F88F1D99EACA011705A76D15F6594091?api-version=2022-10-12",
+        "Cache-Control": "no-cache",
+        "Content-Length": "1102",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Thu, 04 May 2023 06:58:40 GMT",
+        "ETag": "\u0022d309f439-0000-0100-0000-6453579f0000\u0022",
+        "Expires": "-1",
+        "Location": "https://management.azure.com/providers/Qumulo.Storage/locations/EASTUS2/operationStatuses/4adf19cf-d181-412d-b068-1d44ee9a3a9e*25DE26D3D32D474231E9632CD84A60C2F88F1D99EACA011705A76D15F6594091?api-version=2022-10-12",
+        "mise-correlation-id": "1abb93d1-42da-4560-ab01-79f8cef17ef5",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "efa6c3f48964cf796640e2c79444fe3e",
+        "x-ms-correlation-request-id": "62aed2e0-947b-48be-80d8-6f0dafd8f1d3",
+        "x-ms-providerhub-traffic": "True",
+        "x-ms-ratelimit-remaining-subscription-writes": "1197",
+        "x-ms-request-id": "4adf19cf-d181-412d-b068-1d44ee9a3a9e",
+        "x-ms-routing-request-id": "JIOINDIACENTRAL:20230504T065841Z:62aed2e0-947b-48be-80d8-6f0dafd8f1d3"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/fc35d936-3b89-41f8-8110-a24b56826c37/resourceGroups/Default-Qumulo-9061/providers/Qumulo.Storage/fileSystems/testResource-6297",
+        "name": "testResource-6297",
+        "type": "qumulo.storage/filesystems",
+        "location": "eastus2",
+        "tags": {},
+        "systemData": {
+          "createdBy": "d01a3099-115f-472c-8d79-8e19275b4d8c",
+          "createdByType": "Application",
+          "createdAt": "2023-05-04T06:58:38.9425992Z",
+          "lastModifiedBy": "d01a3099-115f-472c-8d79-8e19275b4d8c",
+          "lastModifiedByType": "Application",
+          "lastModifiedAt": "2023-05-04T06:58:38.9425992Z"
+        },
+        "properties": {
+          "marketplaceDetails": {
+            "marketplaceSubscriptionId": null,
+            "planId": "qumulo-on-azure-v1%%gmz7xq9ge3py%%P1M",
+            "offerId": "qumulo-saas-mpp",
+            "publisherId": "qumulo1584033880660",
+            "marketplaceSubscriptionStatus": "PendingFulfillmentStart"
+          },
+          "provisioningState": "Accepted",
+          "userDetails": {},
+          "delegatedSubnetId": "/subscriptions/fc35d936-3b89-41f8-8110-a24b56826c37/resourceGroups/NetworkWatcherRG/providers/Microsoft.Network/virtualNetworks/eastus2vnet/subnets/default",
+          "clusterLoginUrl": null,
+          "privateIPs": null,
+          "storageSku": "Performance",
+          "initialCapacity": 18,
+          "availabilityZone": "2"
+        }
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/providers/Qumulo.Storage/locations/EASTUS2/operationStatuses/4adf19cf-d181-412d-b068-1d44ee9a3a9e*25DE26D3D32D474231E9632CD84A60C2F88F1D99EACA011705A76D15F6594091?api-version=2022-10-12",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-4127860470c7e29d53329d05b8a2f12b-da5d9d72d17a27b6-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.4.0 (.NET 7.0.5; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "5776222ffca2e5571ab920cc66847e6b",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "503",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Thu, 04 May 2023 06:58:40 GMT",
+        "ETag": "\u0022b00213cb-0000-0100-0000-6453579f0000\u0022",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "5776222ffca2e5571ab920cc66847e6b",
+        "x-ms-correlation-request-id": "980d395a-3057-4cf8-a720-7d505ec34a9c",
+        "x-ms-ratelimit-remaining-tenant-reads": "11975",
+        "x-ms-request-id": "ff0f9bac-1098-4eca-b7ba-3c61b506fee0",
+        "x-ms-routing-request-id": "JIOINDIACENTRAL:20230504T065841Z:980d395a-3057-4cf8-a720-7d505ec34a9c"
+      },
+      "ResponseBody": {
+        "id": "/providers/Qumulo.Storage/locations/EASTUS2/operationStatuses/4adf19cf-d181-412d-b068-1d44ee9a3a9e*25DE26D3D32D474231E9632CD84A60C2F88F1D99EACA011705A76D15F6594091",
+        "name": "4adf19cf-d181-412d-b068-1d44ee9a3a9e*25DE26D3D32D474231E9632CD84A60C2F88F1D99EACA011705A76D15F6594091",
+        "resourceId": "/subscriptions/fc35d936-3b89-41f8-8110-a24b56826c37/resourceGroups/Default-Qumulo-9061/providers/Qumulo.Storage/fileSystems/testResource-6297",
+        "status": "Accepted",
+        "startTime": "2023-05-04T06:58:39.3125779Z"
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/providers/Qumulo.Storage/locations/EASTUS2/operationStatuses/4adf19cf-d181-412d-b068-1d44ee9a3a9e*25DE26D3D32D474231E9632CD84A60C2F88F1D99EACA011705A76D15F6594091?api-version=2022-10-12",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-4127860470c7e29d53329d05b8a2f12b-38f2bb904db5798a-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.4.0 (.NET 7.0.5; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "eba7b35d6f02518cf37faa37add6086f",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "503",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Thu, 04 May 2023 06:58:42 GMT",
+        "ETag": "\u0022b00213cb-0000-0100-0000-6453579f0000\u0022",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "eba7b35d6f02518cf37faa37add6086f",
+        "x-ms-correlation-request-id": "483e217b-29e6-410b-a2ee-e8a784a03de9",
+        "x-ms-ratelimit-remaining-tenant-reads": "11974",
+        "x-ms-request-id": "c0aa3dfd-1364-45d8-a393-0e89b7235b8d",
+        "x-ms-routing-request-id": "JIOINDIACENTRAL:20230504T065842Z:483e217b-29e6-410b-a2ee-e8a784a03de9"
+      },
+      "ResponseBody": {
+        "id": "/providers/Qumulo.Storage/locations/EASTUS2/operationStatuses/4adf19cf-d181-412d-b068-1d44ee9a3a9e*25DE26D3D32D474231E9632CD84A60C2F88F1D99EACA011705A76D15F6594091",
+        "name": "4adf19cf-d181-412d-b068-1d44ee9a3a9e*25DE26D3D32D474231E9632CD84A60C2F88F1D99EACA011705A76D15F6594091",
+        "resourceId": "/subscriptions/fc35d936-3b89-41f8-8110-a24b56826c37/resourceGroups/Default-Qumulo-9061/providers/Qumulo.Storage/fileSystems/testResource-6297",
+        "status": "Accepted",
+        "startTime": "2023-05-04T06:58:39.3125779Z"
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/providers/Qumulo.Storage/locations/EASTUS2/operationStatuses/4adf19cf-d181-412d-b068-1d44ee9a3a9e*25DE26D3D32D474231E9632CD84A60C2F88F1D99EACA011705A76D15F6594091?api-version=2022-10-12",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-4127860470c7e29d53329d05b8a2f12b-cee7160f91ed1e1e-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.4.0 (.NET 7.0.5; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "719797eda6ce399bcc44d6c18203c0c0",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "503",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Thu, 04 May 2023 06:58:43 GMT",
+        "ETag": "\u0022b00213cb-0000-0100-0000-6453579f0000\u0022",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "719797eda6ce399bcc44d6c18203c0c0",
+        "x-ms-correlation-request-id": "1490f821-47a8-4e09-ac81-e8d9d0383cf2",
+        "x-ms-ratelimit-remaining-tenant-reads": "11973",
+        "x-ms-request-id": "31560265-1dbe-450e-ac92-bcdcf1db2b54",
+        "x-ms-routing-request-id": "JIOINDIACENTRAL:20230504T065843Z:1490f821-47a8-4e09-ac81-e8d9d0383cf2"
+      },
+      "ResponseBody": {
+        "id": "/providers/Qumulo.Storage/locations/EASTUS2/operationStatuses/4adf19cf-d181-412d-b068-1d44ee9a3a9e*25DE26D3D32D474231E9632CD84A60C2F88F1D99EACA011705A76D15F6594091",
+        "name": "4adf19cf-d181-412d-b068-1d44ee9a3a9e*25DE26D3D32D474231E9632CD84A60C2F88F1D99EACA011705A76D15F6594091",
+        "resourceId": "/subscriptions/fc35d936-3b89-41f8-8110-a24b56826c37/resourceGroups/Default-Qumulo-9061/providers/Qumulo.Storage/fileSystems/testResource-6297",
+        "status": "Accepted",
+        "startTime": "2023-05-04T06:58:39.3125779Z"
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/providers/Qumulo.Storage/locations/EASTUS2/operationStatuses/4adf19cf-d181-412d-b068-1d44ee9a3a9e*25DE26D3D32D474231E9632CD84A60C2F88F1D99EACA011705A76D15F6594091?api-version=2022-10-12",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-4127860470c7e29d53329d05b8a2f12b-0f496a4dc3a522a5-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.4.0 (.NET 7.0.5; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "134571ae674fbf489624642352203744",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "503",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Thu, 04 May 2023 06:58:44 GMT",
+        "ETag": "\u0022b00213cb-0000-0100-0000-6453579f0000\u0022",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "134571ae674fbf489624642352203744",
+        "x-ms-correlation-request-id": "2351050a-b557-435c-aa51-2d0767acabdc",
+        "x-ms-ratelimit-remaining-tenant-reads": "11972",
+        "x-ms-request-id": "68ba8823-4c74-4426-9d72-6a33ad69fbf6",
+        "x-ms-routing-request-id": "JIOINDIACENTRAL:20230504T065845Z:2351050a-b557-435c-aa51-2d0767acabdc"
+      },
+      "ResponseBody": {
+        "id": "/providers/Qumulo.Storage/locations/EASTUS2/operationStatuses/4adf19cf-d181-412d-b068-1d44ee9a3a9e*25DE26D3D32D474231E9632CD84A60C2F88F1D99EACA011705A76D15F6594091",
+        "name": "4adf19cf-d181-412d-b068-1d44ee9a3a9e*25DE26D3D32D474231E9632CD84A60C2F88F1D99EACA011705A76D15F6594091",
+        "resourceId": "/subscriptions/fc35d936-3b89-41f8-8110-a24b56826c37/resourceGroups/Default-Qumulo-9061/providers/Qumulo.Storage/fileSystems/testResource-6297",
+        "status": "Accepted",
+        "startTime": "2023-05-04T06:58:39.3125779Z"
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/providers/Qumulo.Storage/locations/EASTUS2/operationStatuses/4adf19cf-d181-412d-b068-1d44ee9a3a9e*25DE26D3D32D474231E9632CD84A60C2F88F1D99EACA011705A76D15F6594091?api-version=2022-10-12",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-4127860470c7e29d53329d05b8a2f12b-d6099ea0d9fcd007-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.4.0 (.NET 7.0.5; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "cfdeb0b00decb79c176d1ebd98caceef",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "503",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Thu, 04 May 2023 06:58:47 GMT",
+        "ETag": "\u0022b00213cb-0000-0100-0000-6453579f0000\u0022",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "cfdeb0b00decb79c176d1ebd98caceef",
+        "x-ms-correlation-request-id": "582e8f65-550a-4390-9654-e6098eef7c6b",
+        "x-ms-ratelimit-remaining-tenant-reads": "11971",
+        "x-ms-request-id": "97f00a19-9a19-43e8-8dc9-cba4c5156967",
+        "x-ms-routing-request-id": "JIOINDIACENTRAL:20230504T065847Z:582e8f65-550a-4390-9654-e6098eef7c6b"
+      },
+      "ResponseBody": {
+        "id": "/providers/Qumulo.Storage/locations/EASTUS2/operationStatuses/4adf19cf-d181-412d-b068-1d44ee9a3a9e*25DE26D3D32D474231E9632CD84A60C2F88F1D99EACA011705A76D15F6594091",
+        "name": "4adf19cf-d181-412d-b068-1d44ee9a3a9e*25DE26D3D32D474231E9632CD84A60C2F88F1D99EACA011705A76D15F6594091",
+        "resourceId": "/subscriptions/fc35d936-3b89-41f8-8110-a24b56826c37/resourceGroups/Default-Qumulo-9061/providers/Qumulo.Storage/fileSystems/testResource-6297",
+        "status": "Accepted",
+        "startTime": "2023-05-04T06:58:39.3125779Z"
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/providers/Qumulo.Storage/locations/EASTUS2/operationStatuses/4adf19cf-d181-412d-b068-1d44ee9a3a9e*25DE26D3D32D474231E9632CD84A60C2F88F1D99EACA011705A76D15F6594091?api-version=2022-10-12",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-4127860470c7e29d53329d05b8a2f12b-37b926d583e91ea8-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.4.0 (.NET 7.0.5; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "3b88e9bff59186204fd8daa94278e7ac",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "503",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Thu, 04 May 2023 06:58:51 GMT",
+        "ETag": "\u0022b00213cb-0000-0100-0000-6453579f0000\u0022",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "3b88e9bff59186204fd8daa94278e7ac",
+        "x-ms-correlation-request-id": "39dda853-b93e-4434-b2b3-b932bf262bd4",
+        "x-ms-ratelimit-remaining-tenant-reads": "11970",
+        "x-ms-request-id": "12093fa4-7743-4491-bf94-b78e0c962075",
+        "x-ms-routing-request-id": "JIOINDIACENTRAL:20230504T065851Z:39dda853-b93e-4434-b2b3-b932bf262bd4"
+      },
+      "ResponseBody": {
+        "id": "/providers/Qumulo.Storage/locations/EASTUS2/operationStatuses/4adf19cf-d181-412d-b068-1d44ee9a3a9e*25DE26D3D32D474231E9632CD84A60C2F88F1D99EACA011705A76D15F6594091",
+        "name": "4adf19cf-d181-412d-b068-1d44ee9a3a9e*25DE26D3D32D474231E9632CD84A60C2F88F1D99EACA011705A76D15F6594091",
+        "resourceId": "/subscriptions/fc35d936-3b89-41f8-8110-a24b56826c37/resourceGroups/Default-Qumulo-9061/providers/Qumulo.Storage/fileSystems/testResource-6297",
+        "status": "Accepted",
+        "startTime": "2023-05-04T06:58:39.3125779Z"
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/providers/Qumulo.Storage/locations/EASTUS2/operationStatuses/4adf19cf-d181-412d-b068-1d44ee9a3a9e*25DE26D3D32D474231E9632CD84A60C2F88F1D99EACA011705A76D15F6594091?api-version=2022-10-12",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-4127860470c7e29d53329d05b8a2f12b-a4cb2e8f9104e9cc-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.4.0 (.NET 7.0.5; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "d110920cf024a1d4d48dfbe2488a26cb",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "503",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Thu, 04 May 2023 06:59:00 GMT",
+        "ETag": "\u0022b00213cb-0000-0100-0000-6453579f0000\u0022",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "d110920cf024a1d4d48dfbe2488a26cb",
+        "x-ms-correlation-request-id": "c9ec62c3-ddc4-4850-b585-2797e562f972",
+        "x-ms-ratelimit-remaining-tenant-reads": "11969",
+        "x-ms-request-id": "f5cd9c51-484f-4ea3-8a2e-18e7f61a203d",
+        "x-ms-routing-request-id": "JIOINDIACENTRAL:20230504T065900Z:c9ec62c3-ddc4-4850-b585-2797e562f972"
+      },
+      "ResponseBody": {
+        "id": "/providers/Qumulo.Storage/locations/EASTUS2/operationStatuses/4adf19cf-d181-412d-b068-1d44ee9a3a9e*25DE26D3D32D474231E9632CD84A60C2F88F1D99EACA011705A76D15F6594091",
+        "name": "4adf19cf-d181-412d-b068-1d44ee9a3a9e*25DE26D3D32D474231E9632CD84A60C2F88F1D99EACA011705A76D15F6594091",
+        "resourceId": "/subscriptions/fc35d936-3b89-41f8-8110-a24b56826c37/resourceGroups/Default-Qumulo-9061/providers/Qumulo.Storage/fileSystems/testResource-6297",
+        "status": "Accepted",
+        "startTime": "2023-05-04T06:58:39.3125779Z"
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/providers/Qumulo.Storage/locations/EASTUS2/operationStatuses/4adf19cf-d181-412d-b068-1d44ee9a3a9e*25DE26D3D32D474231E9632CD84A60C2F88F1D99EACA011705A76D15F6594091?api-version=2022-10-12",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-4127860470c7e29d53329d05b8a2f12b-40cd21148a33c9bf-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.4.0 (.NET 7.0.5; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "68637455fc97bab390587f1332f3759e",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "503",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Thu, 04 May 2023 06:59:16 GMT",
+        "ETag": "\u0022b00213cb-0000-0100-0000-6453579f0000\u0022",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "68637455fc97bab390587f1332f3759e",
+        "x-ms-correlation-request-id": "7a09e5bf-856a-47f5-b2d6-c7d0a104336f",
+        "x-ms-ratelimit-remaining-tenant-reads": "11968",
+        "x-ms-request-id": "10a4f779-5aee-410b-b98a-4fb51ff195af",
+        "x-ms-routing-request-id": "JIOINDIACENTRAL:20230504T065916Z:7a09e5bf-856a-47f5-b2d6-c7d0a104336f"
+      },
+      "ResponseBody": {
+        "id": "/providers/Qumulo.Storage/locations/EASTUS2/operationStatuses/4adf19cf-d181-412d-b068-1d44ee9a3a9e*25DE26D3D32D474231E9632CD84A60C2F88F1D99EACA011705A76D15F6594091",
+        "name": "4adf19cf-d181-412d-b068-1d44ee9a3a9e*25DE26D3D32D474231E9632CD84A60C2F88F1D99EACA011705A76D15F6594091",
+        "resourceId": "/subscriptions/fc35d936-3b89-41f8-8110-a24b56826c37/resourceGroups/Default-Qumulo-9061/providers/Qumulo.Storage/fileSystems/testResource-6297",
+        "status": "Accepted",
+        "startTime": "2023-05-04T06:58:39.3125779Z"
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/providers/Qumulo.Storage/locations/EASTUS2/operationStatuses/4adf19cf-d181-412d-b068-1d44ee9a3a9e*25DE26D3D32D474231E9632CD84A60C2F88F1D99EACA011705A76D15F6594091?api-version=2022-10-12",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-4127860470c7e29d53329d05b8a2f12b-a75012eae593a588-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.4.0 (.NET 7.0.5; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "06b07285fdb9cecb15e76703fa3d3dc5",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "503",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Thu, 04 May 2023 06:59:48 GMT",
+        "ETag": "\u0022b00213cb-0000-0100-0000-6453579f0000\u0022",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "06b07285fdb9cecb15e76703fa3d3dc5",
+        "x-ms-correlation-request-id": "067562e6-da94-4eec-ba5c-f6374b5ff83c",
+        "x-ms-ratelimit-remaining-tenant-reads": "11967",
+        "x-ms-request-id": "fe65e468-4541-4fb2-93c1-c89e2c2ef380",
+        "x-ms-routing-request-id": "JIOINDIACENTRAL:20230504T065948Z:067562e6-da94-4eec-ba5c-f6374b5ff83c"
+      },
+      "ResponseBody": {
+        "id": "/providers/Qumulo.Storage/locations/EASTUS2/operationStatuses/4adf19cf-d181-412d-b068-1d44ee9a3a9e*25DE26D3D32D474231E9632CD84A60C2F88F1D99EACA011705A76D15F6594091",
+        "name": "4adf19cf-d181-412d-b068-1d44ee9a3a9e*25DE26D3D32D474231E9632CD84A60C2F88F1D99EACA011705A76D15F6594091",
+        "resourceId": "/subscriptions/fc35d936-3b89-41f8-8110-a24b56826c37/resourceGroups/Default-Qumulo-9061/providers/Qumulo.Storage/fileSystems/testResource-6297",
+        "status": "Accepted",
+        "startTime": "2023-05-04T06:58:39.3125779Z"
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/providers/Qumulo.Storage/locations/EASTUS2/operationStatuses/4adf19cf-d181-412d-b068-1d44ee9a3a9e*25DE26D3D32D474231E9632CD84A60C2F88F1D99EACA011705A76D15F6594091?api-version=2022-10-12",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-4127860470c7e29d53329d05b8a2f12b-2d683ff9b69bcbf7-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.4.0 (.NET 7.0.5; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "cd530eb17f141014df5640cb71c06ee1",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "503",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Thu, 04 May 2023 07:00:20 GMT",
+        "ETag": "\u0022b00213cb-0000-0100-0000-6453579f0000\u0022",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "cd530eb17f141014df5640cb71c06ee1",
+        "x-ms-correlation-request-id": "dfae8580-bd6a-495d-9107-fd677edc73e2",
+        "x-ms-ratelimit-remaining-tenant-reads": "11966",
+        "x-ms-request-id": "678760b4-2249-4fba-9571-f6bf21a36671",
+        "x-ms-routing-request-id": "JIOINDIACENTRAL:20230504T070021Z:dfae8580-bd6a-495d-9107-fd677edc73e2"
+      },
+      "ResponseBody": {
+        "id": "/providers/Qumulo.Storage/locations/EASTUS2/operationStatuses/4adf19cf-d181-412d-b068-1d44ee9a3a9e*25DE26D3D32D474231E9632CD84A60C2F88F1D99EACA011705A76D15F6594091",
+        "name": "4adf19cf-d181-412d-b068-1d44ee9a3a9e*25DE26D3D32D474231E9632CD84A60C2F88F1D99EACA011705A76D15F6594091",
+        "resourceId": "/subscriptions/fc35d936-3b89-41f8-8110-a24b56826c37/resourceGroups/Default-Qumulo-9061/providers/Qumulo.Storage/fileSystems/testResource-6297",
+        "status": "Accepted",
+        "startTime": "2023-05-04T06:58:39.3125779Z"
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/providers/Qumulo.Storage/locations/EASTUS2/operationStatuses/4adf19cf-d181-412d-b068-1d44ee9a3a9e*25DE26D3D32D474231E9632CD84A60C2F88F1D99EACA011705A76D15F6594091?api-version=2022-10-12",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-4127860470c7e29d53329d05b8a2f12b-5c44a5e796dd18c3-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.4.0 (.NET 7.0.5; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "d65c5c1820d95812a99553b094afc052",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "503",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Thu, 04 May 2023 07:00:52 GMT",
+        "ETag": "\u0022b00213cb-0000-0100-0000-6453579f0000\u0022",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "d65c5c1820d95812a99553b094afc052",
+        "x-ms-correlation-request-id": "b1510794-026a-4cfd-9653-30b15a706161",
+        "x-ms-ratelimit-remaining-tenant-reads": "11965",
+        "x-ms-request-id": "3d06b642-16fa-4b86-86ef-dfb48461fa06",
+        "x-ms-routing-request-id": "JIOINDIACENTRAL:20230504T070053Z:b1510794-026a-4cfd-9653-30b15a706161"
+      },
+      "ResponseBody": {
+        "id": "/providers/Qumulo.Storage/locations/EASTUS2/operationStatuses/4adf19cf-d181-412d-b068-1d44ee9a3a9e*25DE26D3D32D474231E9632CD84A60C2F88F1D99EACA011705A76D15F6594091",
+        "name": "4adf19cf-d181-412d-b068-1d44ee9a3a9e*25DE26D3D32D474231E9632CD84A60C2F88F1D99EACA011705A76D15F6594091",
+        "resourceId": "/subscriptions/fc35d936-3b89-41f8-8110-a24b56826c37/resourceGroups/Default-Qumulo-9061/providers/Qumulo.Storage/fileSystems/testResource-6297",
+        "status": "Accepted",
+        "startTime": "2023-05-04T06:58:39.3125779Z"
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/providers/Qumulo.Storage/locations/EASTUS2/operationStatuses/4adf19cf-d181-412d-b068-1d44ee9a3a9e*25DE26D3D32D474231E9632CD84A60C2F88F1D99EACA011705A76D15F6594091?api-version=2022-10-12",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-4127860470c7e29d53329d05b8a2f12b-0d44fabe71d7918a-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.4.0 (.NET 7.0.5; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "2462ba1aa79f068a5ea02763bcff5d54",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "503",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Thu, 04 May 2023 07:01:25 GMT",
+        "ETag": "\u0022b00213cb-0000-0100-0000-6453579f0000\u0022",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "2462ba1aa79f068a5ea02763bcff5d54",
+        "x-ms-correlation-request-id": "74739b8a-9467-482b-81c4-1a2ec11673d8",
+        "x-ms-ratelimit-remaining-tenant-reads": "11964",
+        "x-ms-request-id": "c96c74b2-4113-41a6-9277-6743aa146cb2",
+        "x-ms-routing-request-id": "JIOINDIACENTRAL:20230504T070125Z:74739b8a-9467-482b-81c4-1a2ec11673d8"
+      },
+      "ResponseBody": {
+        "id": "/providers/Qumulo.Storage/locations/EASTUS2/operationStatuses/4adf19cf-d181-412d-b068-1d44ee9a3a9e*25DE26D3D32D474231E9632CD84A60C2F88F1D99EACA011705A76D15F6594091",
+        "name": "4adf19cf-d181-412d-b068-1d44ee9a3a9e*25DE26D3D32D474231E9632CD84A60C2F88F1D99EACA011705A76D15F6594091",
+        "resourceId": "/subscriptions/fc35d936-3b89-41f8-8110-a24b56826c37/resourceGroups/Default-Qumulo-9061/providers/Qumulo.Storage/fileSystems/testResource-6297",
+        "status": "Accepted",
+        "startTime": "2023-05-04T06:58:39.3125779Z"
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/providers/Qumulo.Storage/locations/EASTUS2/operationStatuses/4adf19cf-d181-412d-b068-1d44ee9a3a9e*25DE26D3D32D474231E9632CD84A60C2F88F1D99EACA011705A76D15F6594091?api-version=2022-10-12",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-4127860470c7e29d53329d05b8a2f12b-4ca9a34d28ed2164-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.4.0 (.NET 7.0.5; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "9dea867967e190ebfcfb247f2c637b2f",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "503",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Thu, 04 May 2023 07:01:58 GMT",
+        "ETag": "\u0022b00213cb-0000-0100-0000-6453579f0000\u0022",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "9dea867967e190ebfcfb247f2c637b2f",
+        "x-ms-correlation-request-id": "cb252bfe-5c85-4968-a964-99ba885f97f2",
+        "x-ms-ratelimit-remaining-tenant-reads": "11963",
+        "x-ms-request-id": "85b47246-53d1-4a14-a3b6-0db30df7d0c3",
+        "x-ms-routing-request-id": "JIOINDIACENTRAL:20230504T070158Z:cb252bfe-5c85-4968-a964-99ba885f97f2"
+      },
+      "ResponseBody": {
+        "id": "/providers/Qumulo.Storage/locations/EASTUS2/operationStatuses/4adf19cf-d181-412d-b068-1d44ee9a3a9e*25DE26D3D32D474231E9632CD84A60C2F88F1D99EACA011705A76D15F6594091",
+        "name": "4adf19cf-d181-412d-b068-1d44ee9a3a9e*25DE26D3D32D474231E9632CD84A60C2F88F1D99EACA011705A76D15F6594091",
+        "resourceId": "/subscriptions/fc35d936-3b89-41f8-8110-a24b56826c37/resourceGroups/Default-Qumulo-9061/providers/Qumulo.Storage/fileSystems/testResource-6297",
+        "status": "Accepted",
+        "startTime": "2023-05-04T06:58:39.3125779Z"
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/providers/Qumulo.Storage/locations/EASTUS2/operationStatuses/4adf19cf-d181-412d-b068-1d44ee9a3a9e*25DE26D3D32D474231E9632CD84A60C2F88F1D99EACA011705A76D15F6594091?api-version=2022-10-12",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-4127860470c7e29d53329d05b8a2f12b-98f7c49fed229d42-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.4.0 (.NET 7.0.5; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "b6b0ee954a5d7041d2567839f9ae9ca9",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "503",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Thu, 04 May 2023 07:02:30 GMT",
+        "ETag": "\u0022b00213cb-0000-0100-0000-6453579f0000\u0022",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "b6b0ee954a5d7041d2567839f9ae9ca9",
+        "x-ms-correlation-request-id": "b65f40d3-aa32-4c00-8fb3-c60392235442",
+        "x-ms-ratelimit-remaining-tenant-reads": "11962",
+        "x-ms-request-id": "1b3d80f6-8767-484e-814c-ddc9178ee23c",
+        "x-ms-routing-request-id": "JIOINDIACENTRAL:20230504T070230Z:b65f40d3-aa32-4c00-8fb3-c60392235442"
+      },
+      "ResponseBody": {
+        "id": "/providers/Qumulo.Storage/locations/EASTUS2/operationStatuses/4adf19cf-d181-412d-b068-1d44ee9a3a9e*25DE26D3D32D474231E9632CD84A60C2F88F1D99EACA011705A76D15F6594091",
+        "name": "4adf19cf-d181-412d-b068-1d44ee9a3a9e*25DE26D3D32D474231E9632CD84A60C2F88F1D99EACA011705A76D15F6594091",
+        "resourceId": "/subscriptions/fc35d936-3b89-41f8-8110-a24b56826c37/resourceGroups/Default-Qumulo-9061/providers/Qumulo.Storage/fileSystems/testResource-6297",
+        "status": "Accepted",
+        "startTime": "2023-05-04T06:58:39.3125779Z"
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/providers/Qumulo.Storage/locations/EASTUS2/operationStatuses/4adf19cf-d181-412d-b068-1d44ee9a3a9e*25DE26D3D32D474231E9632CD84A60C2F88F1D99EACA011705A76D15F6594091?api-version=2022-10-12",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-4127860470c7e29d53329d05b8a2f12b-f775a855b536df75-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.4.0 (.NET 7.0.5; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "0e36fe3822c4b371ced127a4830adafa",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "503",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Thu, 04 May 2023 07:03:02 GMT",
+        "ETag": "\u0022b00213cb-0000-0100-0000-6453579f0000\u0022",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "0e36fe3822c4b371ced127a4830adafa",
+        "x-ms-correlation-request-id": "d513eeb1-2d05-4a92-bbd1-33ee8bde3c9d",
+        "x-ms-ratelimit-remaining-tenant-reads": "11961",
+        "x-ms-request-id": "c2894513-9b98-4c2c-8c09-415d274aab17",
+        "x-ms-routing-request-id": "JIOINDIACENTRAL:20230504T070302Z:d513eeb1-2d05-4a92-bbd1-33ee8bde3c9d"
+      },
+      "ResponseBody": {
+        "id": "/providers/Qumulo.Storage/locations/EASTUS2/operationStatuses/4adf19cf-d181-412d-b068-1d44ee9a3a9e*25DE26D3D32D474231E9632CD84A60C2F88F1D99EACA011705A76D15F6594091",
+        "name": "4adf19cf-d181-412d-b068-1d44ee9a3a9e*25DE26D3D32D474231E9632CD84A60C2F88F1D99EACA011705A76D15F6594091",
+        "resourceId": "/subscriptions/fc35d936-3b89-41f8-8110-a24b56826c37/resourceGroups/Default-Qumulo-9061/providers/Qumulo.Storage/fileSystems/testResource-6297",
+        "status": "Accepted",
+        "startTime": "2023-05-04T06:58:39.3125779Z"
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/providers/Qumulo.Storage/locations/EASTUS2/operationStatuses/4adf19cf-d181-412d-b068-1d44ee9a3a9e*25DE26D3D32D474231E9632CD84A60C2F88F1D99EACA011705A76D15F6594091?api-version=2022-10-12",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-4127860470c7e29d53329d05b8a2f12b-11dbcd6d54132d91-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.4.0 (.NET 7.0.5; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "cdcef724a64e2ff7447acb8befb2974e",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "503",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Thu, 04 May 2023 07:03:33 GMT",
+        "ETag": "\u0022b00213cb-0000-0100-0000-6453579f0000\u0022",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "cdcef724a64e2ff7447acb8befb2974e",
+        "x-ms-correlation-request-id": "9b3c602c-002b-4c38-a190-ea9a3d5be97a",
+        "x-ms-ratelimit-remaining-tenant-reads": "11960",
+        "x-ms-request-id": "699586f7-bbff-4ae3-9789-ff79b221252b",
+        "x-ms-routing-request-id": "JIOINDIACENTRAL:20230504T070334Z:9b3c602c-002b-4c38-a190-ea9a3d5be97a"
+      },
+      "ResponseBody": {
+        "id": "/providers/Qumulo.Storage/locations/EASTUS2/operationStatuses/4adf19cf-d181-412d-b068-1d44ee9a3a9e*25DE26D3D32D474231E9632CD84A60C2F88F1D99EACA011705A76D15F6594091",
+        "name": "4adf19cf-d181-412d-b068-1d44ee9a3a9e*25DE26D3D32D474231E9632CD84A60C2F88F1D99EACA011705A76D15F6594091",
+        "resourceId": "/subscriptions/fc35d936-3b89-41f8-8110-a24b56826c37/resourceGroups/Default-Qumulo-9061/providers/Qumulo.Storage/fileSystems/testResource-6297",
+        "status": "Accepted",
+        "startTime": "2023-05-04T06:58:39.3125779Z"
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/providers/Qumulo.Storage/locations/EASTUS2/operationStatuses/4adf19cf-d181-412d-b068-1d44ee9a3a9e*25DE26D3D32D474231E9632CD84A60C2F88F1D99EACA011705A76D15F6594091?api-version=2022-10-12",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-4127860470c7e29d53329d05b8a2f12b-9ae9bf22eb059f9b-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.4.0 (.NET 7.0.5; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "2d467b5e6d2c726a7dfde88b229cedc7",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "503",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Thu, 04 May 2023 07:04:07 GMT",
+        "ETag": "\u0022b00213cb-0000-0100-0000-6453579f0000\u0022",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "2d467b5e6d2c726a7dfde88b229cedc7",
+        "x-ms-correlation-request-id": "d7abfb23-0749-4e60-8698-db93116a018b",
+        "x-ms-ratelimit-remaining-tenant-reads": "11959",
+        "x-ms-request-id": "24df73ec-f501-4d84-bda6-a8d3a78aa952",
+        "x-ms-routing-request-id": "JIOINDIACENTRAL:20230504T070407Z:d7abfb23-0749-4e60-8698-db93116a018b"
+      },
+      "ResponseBody": {
+        "id": "/providers/Qumulo.Storage/locations/EASTUS2/operationStatuses/4adf19cf-d181-412d-b068-1d44ee9a3a9e*25DE26D3D32D474231E9632CD84A60C2F88F1D99EACA011705A76D15F6594091",
+        "name": "4adf19cf-d181-412d-b068-1d44ee9a3a9e*25DE26D3D32D474231E9632CD84A60C2F88F1D99EACA011705A76D15F6594091",
+        "resourceId": "/subscriptions/fc35d936-3b89-41f8-8110-a24b56826c37/resourceGroups/Default-Qumulo-9061/providers/Qumulo.Storage/fileSystems/testResource-6297",
+        "status": "Accepted",
+        "startTime": "2023-05-04T06:58:39.3125779Z"
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/providers/Qumulo.Storage/locations/EASTUS2/operationStatuses/4adf19cf-d181-412d-b068-1d44ee9a3a9e*25DE26D3D32D474231E9632CD84A60C2F88F1D99EACA011705A76D15F6594091?api-version=2022-10-12",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-4127860470c7e29d53329d05b8a2f12b-62a2fd82eb04e846-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.4.0 (.NET 7.0.5; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "01157d7bcee0925a0707ca4a57e5c41c",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "503",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Thu, 04 May 2023 07:04:39 GMT",
+        "ETag": "\u0022b00213cb-0000-0100-0000-6453579f0000\u0022",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "01157d7bcee0925a0707ca4a57e5c41c",
+        "x-ms-correlation-request-id": "e006b708-1605-4dc8-a402-54a9f78c1dba",
+        "x-ms-ratelimit-remaining-tenant-reads": "11958",
+        "x-ms-request-id": "1b180548-d14a-4698-aab9-9dad24480c94",
+        "x-ms-routing-request-id": "JIOINDIACENTRAL:20230504T070440Z:e006b708-1605-4dc8-a402-54a9f78c1dba"
+      },
+      "ResponseBody": {
+        "id": "/providers/Qumulo.Storage/locations/EASTUS2/operationStatuses/4adf19cf-d181-412d-b068-1d44ee9a3a9e*25DE26D3D32D474231E9632CD84A60C2F88F1D99EACA011705A76D15F6594091",
+        "name": "4adf19cf-d181-412d-b068-1d44ee9a3a9e*25DE26D3D32D474231E9632CD84A60C2F88F1D99EACA011705A76D15F6594091",
+        "resourceId": "/subscriptions/fc35d936-3b89-41f8-8110-a24b56826c37/resourceGroups/Default-Qumulo-9061/providers/Qumulo.Storage/fileSystems/testResource-6297",
+        "status": "Accepted",
+        "startTime": "2023-05-04T06:58:39.3125779Z"
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/providers/Qumulo.Storage/locations/EASTUS2/operationStatuses/4adf19cf-d181-412d-b068-1d44ee9a3a9e*25DE26D3D32D474231E9632CD84A60C2F88F1D99EACA011705A76D15F6594091?api-version=2022-10-12",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-4127860470c7e29d53329d05b8a2f12b-b0d0ab662c487989-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.4.0 (.NET 7.0.5; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "0845d93aacc4b7cd8d5b5051bd6b0ca7",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "503",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Thu, 04 May 2023 07:05:12 GMT",
+        "ETag": "\u0022b00213cb-0000-0100-0000-6453579f0000\u0022",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "0845d93aacc4b7cd8d5b5051bd6b0ca7",
+        "x-ms-correlation-request-id": "c9ad8637-bb11-46a6-84e4-9ad6c7a69e62",
+        "x-ms-ratelimit-remaining-tenant-reads": "11957",
+        "x-ms-request-id": "11dd35d8-f4c8-43f2-8d2d-9a568d1fb434",
+        "x-ms-routing-request-id": "JIOINDIACENTRAL:20230504T070512Z:c9ad8637-bb11-46a6-84e4-9ad6c7a69e62"
+      },
+      "ResponseBody": {
+        "id": "/providers/Qumulo.Storage/locations/EASTUS2/operationStatuses/4adf19cf-d181-412d-b068-1d44ee9a3a9e*25DE26D3D32D474231E9632CD84A60C2F88F1D99EACA011705A76D15F6594091",
+        "name": "4adf19cf-d181-412d-b068-1d44ee9a3a9e*25DE26D3D32D474231E9632CD84A60C2F88F1D99EACA011705A76D15F6594091",
+        "resourceId": "/subscriptions/fc35d936-3b89-41f8-8110-a24b56826c37/resourceGroups/Default-Qumulo-9061/providers/Qumulo.Storage/fileSystems/testResource-6297",
+        "status": "Accepted",
+        "startTime": "2023-05-04T06:58:39.3125779Z"
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/providers/Qumulo.Storage/locations/EASTUS2/operationStatuses/4adf19cf-d181-412d-b068-1d44ee9a3a9e*25DE26D3D32D474231E9632CD84A60C2F88F1D99EACA011705A76D15F6594091?api-version=2022-10-12",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-4127860470c7e29d53329d05b8a2f12b-a0d1c4b145859588-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.4.0 (.NET 7.0.5; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "710f038c959d906d20b42625a3201b97",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "503",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Thu, 04 May 2023 07:05:43 GMT",
+        "ETag": "\u0022b00213cb-0000-0100-0000-6453579f0000\u0022",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "710f038c959d906d20b42625a3201b97",
+        "x-ms-correlation-request-id": "741f4f92-b6dd-4c28-971c-13eb85faf5f6",
+        "x-ms-ratelimit-remaining-tenant-reads": "11956",
+        "x-ms-request-id": "47a3be05-2ac1-4025-afc2-503eca447ebf",
+        "x-ms-routing-request-id": "JIOINDIACENTRAL:20230504T070544Z:741f4f92-b6dd-4c28-971c-13eb85faf5f6"
+      },
+      "ResponseBody": {
+        "id": "/providers/Qumulo.Storage/locations/EASTUS2/operationStatuses/4adf19cf-d181-412d-b068-1d44ee9a3a9e*25DE26D3D32D474231E9632CD84A60C2F88F1D99EACA011705A76D15F6594091",
+        "name": "4adf19cf-d181-412d-b068-1d44ee9a3a9e*25DE26D3D32D474231E9632CD84A60C2F88F1D99EACA011705A76D15F6594091",
+        "resourceId": "/subscriptions/fc35d936-3b89-41f8-8110-a24b56826c37/resourceGroups/Default-Qumulo-9061/providers/Qumulo.Storage/fileSystems/testResource-6297",
+        "status": "Accepted",
+        "startTime": "2023-05-04T06:58:39.3125779Z"
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/providers/Qumulo.Storage/locations/EASTUS2/operationStatuses/4adf19cf-d181-412d-b068-1d44ee9a3a9e*25DE26D3D32D474231E9632CD84A60C2F88F1D99EACA011705A76D15F6594091?api-version=2022-10-12",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-4127860470c7e29d53329d05b8a2f12b-8b68953f8911353a-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.4.0 (.NET 7.0.5; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "4951cb38e557ce03b05e74847d08d49b",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "503",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Thu, 04 May 2023 07:06:16 GMT",
+        "ETag": "\u0022b00213cb-0000-0100-0000-6453579f0000\u0022",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "4951cb38e557ce03b05e74847d08d49b",
+        "x-ms-correlation-request-id": "c30bcd0f-d0dc-4814-a7ee-58ba5d9c8a4f",
+        "x-ms-ratelimit-remaining-tenant-reads": "11955",
+        "x-ms-request-id": "7cebafde-5d23-458a-89ad-b55f25994277",
+        "x-ms-routing-request-id": "JIOINDIACENTRAL:20230504T070616Z:c30bcd0f-d0dc-4814-a7ee-58ba5d9c8a4f"
+      },
+      "ResponseBody": {
+        "id": "/providers/Qumulo.Storage/locations/EASTUS2/operationStatuses/4adf19cf-d181-412d-b068-1d44ee9a3a9e*25DE26D3D32D474231E9632CD84A60C2F88F1D99EACA011705A76D15F6594091",
+        "name": "4adf19cf-d181-412d-b068-1d44ee9a3a9e*25DE26D3D32D474231E9632CD84A60C2F88F1D99EACA011705A76D15F6594091",
+        "resourceId": "/subscriptions/fc35d936-3b89-41f8-8110-a24b56826c37/resourceGroups/Default-Qumulo-9061/providers/Qumulo.Storage/fileSystems/testResource-6297",
+        "status": "Accepted",
+        "startTime": "2023-05-04T06:58:39.3125779Z"
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/providers/Qumulo.Storage/locations/EASTUS2/operationStatuses/4adf19cf-d181-412d-b068-1d44ee9a3a9e*25DE26D3D32D474231E9632CD84A60C2F88F1D99EACA011705A76D15F6594091?api-version=2022-10-12",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-4127860470c7e29d53329d05b8a2f12b-e91ff134543c3d7a-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.4.0 (.NET 7.0.5; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "53bd22fb53d6a47f6bb5e70f85a8146d",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "503",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Thu, 04 May 2023 07:06:48 GMT",
+        "ETag": "\u0022b00213cb-0000-0100-0000-6453579f0000\u0022",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "53bd22fb53d6a47f6bb5e70f85a8146d",
+        "x-ms-correlation-request-id": "5e66d5c1-aa8b-4f2f-874a-5f0158c17809",
+        "x-ms-ratelimit-remaining-tenant-reads": "11954",
+        "x-ms-request-id": "fc0f6668-bd14-4f66-9cde-af9147ee7729",
+        "x-ms-routing-request-id": "JIOINDIACENTRAL:20230504T070649Z:5e66d5c1-aa8b-4f2f-874a-5f0158c17809"
+      },
+      "ResponseBody": {
+        "id": "/providers/Qumulo.Storage/locations/EASTUS2/operationStatuses/4adf19cf-d181-412d-b068-1d44ee9a3a9e*25DE26D3D32D474231E9632CD84A60C2F88F1D99EACA011705A76D15F6594091",
+        "name": "4adf19cf-d181-412d-b068-1d44ee9a3a9e*25DE26D3D32D474231E9632CD84A60C2F88F1D99EACA011705A76D15F6594091",
+        "resourceId": "/subscriptions/fc35d936-3b89-41f8-8110-a24b56826c37/resourceGroups/Default-Qumulo-9061/providers/Qumulo.Storage/fileSystems/testResource-6297",
+        "status": "Accepted",
+        "startTime": "2023-05-04T06:58:39.3125779Z"
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/providers/Qumulo.Storage/locations/EASTUS2/operationStatuses/4adf19cf-d181-412d-b068-1d44ee9a3a9e*25DE26D3D32D474231E9632CD84A60C2F88F1D99EACA011705A76D15F6594091?api-version=2022-10-12",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-4127860470c7e29d53329d05b8a2f12b-75be62a8b3be0888-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.4.0 (.NET 7.0.5; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "f119b940c219a7500040c03f21e81217",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "503",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Thu, 04 May 2023 07:07:21 GMT",
+        "ETag": "\u0022b00213cb-0000-0100-0000-6453579f0000\u0022",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "f119b940c219a7500040c03f21e81217",
+        "x-ms-correlation-request-id": "2c2f109e-b4c8-4236-be37-94797830f9ba",
+        "x-ms-ratelimit-remaining-tenant-reads": "11953",
+        "x-ms-request-id": "ed8a846f-7f5f-45d8-93ef-a8942c775eac",
+        "x-ms-routing-request-id": "JIOINDIACENTRAL:20230504T070722Z:2c2f109e-b4c8-4236-be37-94797830f9ba"
+      },
+      "ResponseBody": {
+        "id": "/providers/Qumulo.Storage/locations/EASTUS2/operationStatuses/4adf19cf-d181-412d-b068-1d44ee9a3a9e*25DE26D3D32D474231E9632CD84A60C2F88F1D99EACA011705A76D15F6594091",
+        "name": "4adf19cf-d181-412d-b068-1d44ee9a3a9e*25DE26D3D32D474231E9632CD84A60C2F88F1D99EACA011705A76D15F6594091",
+        "resourceId": "/subscriptions/fc35d936-3b89-41f8-8110-a24b56826c37/resourceGroups/Default-Qumulo-9061/providers/Qumulo.Storage/fileSystems/testResource-6297",
+        "status": "Accepted",
+        "startTime": "2023-05-04T06:58:39.3125779Z"
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/providers/Qumulo.Storage/locations/EASTUS2/operationStatuses/4adf19cf-d181-412d-b068-1d44ee9a3a9e*25DE26D3D32D474231E9632CD84A60C2F88F1D99EACA011705A76D15F6594091?api-version=2022-10-12",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-4127860470c7e29d53329d05b8a2f12b-fba8c2d4b9bd4d4b-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.4.0 (.NET 7.0.5; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "80298be0c762e5c04cacdea1fdf34907",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "503",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Thu, 04 May 2023 07:07:53 GMT",
+        "ETag": "\u0022b00213cb-0000-0100-0000-6453579f0000\u0022",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "80298be0c762e5c04cacdea1fdf34907",
+        "x-ms-correlation-request-id": "3b19661d-5cad-47e5-ba70-cf050edfc362",
+        "x-ms-ratelimit-remaining-tenant-reads": "11952",
+        "x-ms-request-id": "60845293-b6e0-4584-90ef-9e61375f8ee0",
+        "x-ms-routing-request-id": "JIOINDIACENTRAL:20230504T070754Z:3b19661d-5cad-47e5-ba70-cf050edfc362"
+      },
+      "ResponseBody": {
+        "id": "/providers/Qumulo.Storage/locations/EASTUS2/operationStatuses/4adf19cf-d181-412d-b068-1d44ee9a3a9e*25DE26D3D32D474231E9632CD84A60C2F88F1D99EACA011705A76D15F6594091",
+        "name": "4adf19cf-d181-412d-b068-1d44ee9a3a9e*25DE26D3D32D474231E9632CD84A60C2F88F1D99EACA011705A76D15F6594091",
+        "resourceId": "/subscriptions/fc35d936-3b89-41f8-8110-a24b56826c37/resourceGroups/Default-Qumulo-9061/providers/Qumulo.Storage/fileSystems/testResource-6297",
+        "status": "Accepted",
+        "startTime": "2023-05-04T06:58:39.3125779Z"
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/providers/Qumulo.Storage/locations/EASTUS2/operationStatuses/4adf19cf-d181-412d-b068-1d44ee9a3a9e*25DE26D3D32D474231E9632CD84A60C2F88F1D99EACA011705A76D15F6594091?api-version=2022-10-12",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-4127860470c7e29d53329d05b8a2f12b-6ed9b30978f1faf8-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.4.0 (.NET 7.0.5; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "c3440749e2ef3881d1165395923f8382",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "574",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Thu, 04 May 2023 07:08:26 GMT",
+        "ETag": "\u0022b1025d24-0000-0100-0000-645359dc0000\u0022",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "c3440749e2ef3881d1165395923f8382",
+        "x-ms-correlation-request-id": "9fd10d73-5a01-457c-bd9c-6aa698620092",
+        "x-ms-ratelimit-remaining-tenant-reads": "11951",
+        "x-ms-request-id": "0d3732cb-41f1-4dd9-8b69-179d918a4f49",
+        "x-ms-routing-request-id": "JIOINDIACENTRAL:20230504T070826Z:9fd10d73-5a01-457c-bd9c-6aa698620092"
+      },
+      "ResponseBody": {
+        "id": "/providers/Qumulo.Storage/locations/EASTUS2/operationStatuses/4adf19cf-d181-412d-b068-1d44ee9a3a9e*25DE26D3D32D474231E9632CD84A60C2F88F1D99EACA011705A76D15F6594091",
+        "name": "4adf19cf-d181-412d-b068-1d44ee9a3a9e*25DE26D3D32D474231E9632CD84A60C2F88F1D99EACA011705A76D15F6594091",
+        "resourceId": "/subscriptions/fc35d936-3b89-41f8-8110-a24b56826c37/resourceGroups/Default-Qumulo-9061/providers/Qumulo.Storage/fileSystems/testResource-6297",
+        "status": "Succeeded",
+        "startTime": "2023-05-04T06:58:39.3125779Z",
+        "endTime": "2023-05-04T07:08:12.9079567Z",
+        "error": {},
+        "properties": null
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/fc35d936-3b89-41f8-8110-a24b56826c37/resourceGroups/Default-Qumulo-9061/providers/Qumulo.Storage/fileSystems/testResource-6297?api-version=2022-10-12",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-4127860470c7e29d53329d05b8a2f12b-62ab1a55e4a2e126-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.4.0 (.NET 7.0.5; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "fa2fcfa2937e780af833a56de4aeaa0c",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "1190",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Thu, 04 May 2023 07:08:27 GMT",
+        "ETag": "\u0022d30906f6-0000-0100-0000-645359dc0000\u0022",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "fa2fcfa2937e780af833a56de4aeaa0c",
+        "x-ms-correlation-request-id": "dfc560f9-6118-4fb2-bbed-7f804819ee2d",
+        "x-ms-providerhub-traffic": "True",
+        "x-ms-ratelimit-remaining-subscription-reads": "11996",
+        "x-ms-request-id": "25e5c5f4-c93d-4ff5-995a-1d8f068ef795",
+        "x-ms-routing-request-id": "JIOINDIACENTRAL:20230504T070828Z:dfc560f9-6118-4fb2-bbed-7f804819ee2d"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/fc35d936-3b89-41f8-8110-a24b56826c37/resourceGroups/Default-Qumulo-9061/providers/Qumulo.Storage/fileSystems/testResource-6297",
+        "name": "testResource-6297",
+        "type": "qumulo.storage/filesystems",
+        "location": "eastus2",
+        "tags": {},
+        "systemData": {
+          "createdBy": "d01a3099-115f-472c-8d79-8e19275b4d8c",
+          "createdByType": "Application",
+          "createdAt": "2023-05-04T06:58:38.9425992Z",
+          "lastModifiedBy": "13c34964-a135-4390-aa53-32f3c7251982",
+          "lastModifiedByType": "Application",
+          "lastModifiedAt": "2023-05-04T07:08:12.9565159Z"
+        },
+        "properties": {
+          "marketplaceDetails": {
+            "marketplaceSubscriptionId": "6db90c78-6522-4e1c-c4ad-f2dad093876a",
+            "planId": "qumulo-on-azure-v1%%gmz7xq9ge3py%%P1M",
+            "offerId": "qumulo-saas-mpp",
+            "publisherId": "qumulo1584033880660",
+            "marketplaceSubscriptionStatus": "Subscribed"
+          },
+          "provisioningState": "Succeeded",
+          "userDetails": {},
+          "delegatedSubnetId": "/subscriptions/fc35d936-3b89-41f8-8110-a24b56826c37/resourceGroups/NetworkWatcherRG/providers/Microsoft.Network/virtualNetworks/eastus2vnet/subnets/default",
+          "storageSku": "Performance",
+          "initialCapacity": 18,
+          "availabilityZone": "2",
+          "clusterLoginUrl": "https://10.6.0.10/login",
+          "privateIPs": [
+            "10.6.0.10",
+            "10.6.0.11",
+            "10.6.0.12",
+            "10.6.0.13"
+          ]
+        }
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/fc35d936-3b89-41f8-8110-a24b56826c37/resourceGroups/Default-Qumulo-9061/providers/Qumulo.Storage/fileSystems?api-version=2022-10-12",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "User-Agent": "azsdk-net-ResourceManager.Qumulo/1.0.0-alpha.20230504.1 (.NET 7.0.5; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "1af5b8f74fa4fe2809f1ae4c742b520d",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "2388",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Thu, 04 May 2023 07:08:29 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "e15fa1f7-bc00-42aa-a698-5bf11d70aa74",
+        "x-ms-original-request-ids": [
+          "e8d5d5ef-2d33-462a-b696-e7f7378c5782",
+          "513a4ab6-d85a-4942-8e98-13f7dfe6f39f",
+          "10c6e0cd-883f-4d9c-b27b-7cc72bafd048",
+          "9fdb7895-63fb-441a-ba06-c6e3afe8501e",
+          "b66511c1-cee0-4e02-a2d2-0ff8aeb3f5eb",
+          "8b19a9c6-a688-4a26-b9cb-86b4e192d775",
+          "04ed1e6d-739f-4112-8404-8ad472b4560b",
+          "72d01c0b-142c-4763-b5bb-f17df9ae23fb",
+          "fc49ee1e-3d9c-4d45-918e-6e318209fe57",
+          "2d303fa7-6a5e-47cb-b421-b6d5d5d00a18",
+          "2157fb82-364f-47ec-b691-42418e7acbcc"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": "11995",
+        "x-ms-request-id": "e15fa1f7-bc00-42aa-a698-5bf11d70aa74",
+        "x-ms-routing-request-id": "JIOINDIACENTRAL:20230504T070830Z:e15fa1f7-bc00-42aa-a698-5bf11d70aa74"
+      },
+      "ResponseBody": {
+        "value": [
+          {
+            "id": "/subscriptions/fc35d936-3b89-41f8-8110-a24b56826c37/resourceGroups/Default-Qumulo-9061/providers/Qumulo.Storage/fileSystems/testResource-8064",
+            "name": "testResource-8064",
+            "type": "qumulo.storage/filesystems",
+            "location": "eastus2",
+            "tags": {},
+            "systemData": {
+              "createdBy": "d01a3099-115f-472c-8d79-8e19275b4d8c",
+              "createdByType": "Application",
+              "createdAt": "2023-05-04T06:49:19.0162803Z",
+              "lastModifiedBy": "13c34964-a135-4390-aa53-32f3c7251982",
+              "lastModifiedByType": "Application",
+              "lastModifiedAt": "2023-05-04T06:58:11.0951594Z"
+            },
+            "properties": {
+              "marketplaceDetails": {
+                "marketplaceSubscriptionId": "2c20807a-03a7-4fc0-c7c3-10893ce54e3a",
+                "planId": "qumulo-on-azure-v1%%gmz7xq9ge3py%%P1M",
+                "offerId": "qumulo-saas-mpp",
+                "publisherId": "qumulo1584033880660",
+                "marketplaceSubscriptionStatus": "Subscribed"
+              },
+              "provisioningState": "Succeeded",
+              "userDetails": {},
+              "delegatedSubnetId": "/subscriptions/fc35d936-3b89-41f8-8110-a24b56826c37/resourceGroups/NetworkWatcherRG/providers/Microsoft.Network/virtualNetworks/eastus2vnet/subnets/default",
+              "storageSku": "Performance",
+              "initialCapacity": 18,
+              "availabilityZone": "2",
+              "clusterLoginUrl": "https://10.6.0.6/login",
+              "privateIPs": [
+                "10.6.0.6",
+                "10.6.0.7",
+                "10.6.0.8",
+                "10.6.0.9"
+              ]
+            }
+          },
+          {
+            "id": "/subscriptions/fc35d936-3b89-41f8-8110-a24b56826c37/resourceGroups/Default-Qumulo-9061/providers/Qumulo.Storage/fileSystems/testResource-6297",
+            "name": "testResource-6297",
+            "type": "qumulo.storage/filesystems",
+            "location": "eastus2",
+            "tags": {},
+            "systemData": {
+              "createdBy": "d01a3099-115f-472c-8d79-8e19275b4d8c",
+              "createdByType": "Application",
+              "createdAt": "2023-05-04T06:58:38.9425992Z",
+              "lastModifiedBy": "13c34964-a135-4390-aa53-32f3c7251982",
+              "lastModifiedByType": "Application",
+              "lastModifiedAt": "2023-05-04T07:08:12.9565159Z"
+            },
+            "properties": {
+              "marketplaceDetails": {
+                "marketplaceSubscriptionId": "6db90c78-6522-4e1c-c4ad-f2dad093876a",
+                "planId": "qumulo-on-azure-v1%%gmz7xq9ge3py%%P1M",
+                "offerId": "qumulo-saas-mpp",
+                "publisherId": "qumulo1584033880660",
+                "marketplaceSubscriptionStatus": "Subscribed"
+              },
+              "provisioningState": "Succeeded",
+              "userDetails": {},
+              "delegatedSubnetId": "/subscriptions/fc35d936-3b89-41f8-8110-a24b56826c37/resourceGroups/NetworkWatcherRG/providers/Microsoft.Network/virtualNetworks/eastus2vnet/subnets/default",
+              "storageSku": "Performance",
+              "initialCapacity": 18,
+              "availabilityZone": "2",
+              "clusterLoginUrl": "https://10.6.0.10/login",
+              "privateIPs": [
+                "10.6.0.10",
+                "10.6.0.11",
+                "10.6.0.12",
+                "10.6.0.13"
+              ]
+            }
+          }
+        ]
+      }
+    }
+  ],
+  "Variables": {
+    "AZURE_AUTHORITY_HOST": null,
+    "RandomSeed": "1309870768",
+    "RESOURCE_MANAGER_URL": null,
+    "SUBSCRIPTION_ID": "fc35d936-3b89-41f8-8110-a24b56826c37"
+  }
+}

@@ -21,12 +21,9 @@ namespace Azure.AI.AnomalyDetector
         /// Source link to the input data to indicate an accessible Azure Storage URI.
         /// It either points to an Azure Blob Storage folder or points to a CSV file in
         /// Azure Blob Storage, based on your data schema selection. The data schema should
-        /// be exactly the same as those used in the training phase.
-        /// </param>
-        /// <param name="topContributorCount">
-        /// Number of top contributed
-        /// variables for one anomalous time stamp in the response. The default is
-        /// 10.
+        /// be exactly the same as those used in the training phase. The input data must
+        /// contain at least slidingWindow entries preceding the start time of the data
+        /// to be detected.
         /// </param>
         /// <param name="startTime">
         /// Start date/time of data for detection, which should
@@ -37,10 +34,35 @@ namespace Azure.AI.AnomalyDetector
         /// be in ISO 8601 format.
         /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="dataSource"/> is null. </exception>
-        public MultivariateBatchDetectionOptions(string dataSource, int topContributorCount, DateTimeOffset startTime, DateTimeOffset endTime)
+        public MultivariateBatchDetectionOptions(Uri dataSource, DateTimeOffset startTime, DateTimeOffset endTime)
         {
             Argument.AssertNotNull(dataSource, nameof(dataSource));
 
+            DataSource = dataSource;
+            StartTime = startTime;
+            EndTime = endTime;
+        }
+
+        /// <summary> Initializes a new instance of MultivariateBatchDetectionOptions. </summary>
+        /// <param name="dataSource">
+        /// Source link to the input data to indicate an accessible Azure Storage URI.
+        /// It either points to an Azure Blob Storage folder or points to a CSV file in
+        /// Azure Blob Storage, based on your data schema selection. The data schema should
+        /// be exactly the same as those used in the training phase. The input data must
+        /// contain at least slidingWindow entries preceding the start time of the data
+        /// to be detected.
+        /// </param>
+        /// <param name="topContributorCount"> Number of top contributed variables for one anomalous time stamp in the response. </param>
+        /// <param name="startTime">
+        /// Start date/time of data for detection, which should
+        /// be in ISO 8601 format.
+        /// </param>
+        /// <param name="endTime">
+        /// End date/time of data for detection, which should
+        /// be in ISO 8601 format.
+        /// </param>
+        internal MultivariateBatchDetectionOptions(Uri dataSource, int? topContributorCount, DateTimeOffset startTime, DateTimeOffset endTime)
+        {
             DataSource = dataSource;
             TopContributorCount = topContributorCount;
             StartTime = startTime;
@@ -51,15 +73,13 @@ namespace Azure.AI.AnomalyDetector
         /// Source link to the input data to indicate an accessible Azure Storage URI.
         /// It either points to an Azure Blob Storage folder or points to a CSV file in
         /// Azure Blob Storage, based on your data schema selection. The data schema should
-        /// be exactly the same as those used in the training phase.
+        /// be exactly the same as those used in the training phase. The input data must
+        /// contain at least slidingWindow entries preceding the start time of the data
+        /// to be detected.
         /// </summary>
-        public string DataSource { get; set; }
-        /// <summary>
-        /// Number of top contributed
-        /// variables for one anomalous time stamp in the response. The default is
-        /// 10.
-        /// </summary>
-        public int TopContributorCount { get; set; }
+        public Uri DataSource { get; set; }
+        /// <summary> Number of top contributed variables for one anomalous time stamp in the response. </summary>
+        public int? TopContributorCount { get; set; }
         /// <summary>
         /// Start date/time of data for detection, which should
         /// be in ISO 8601 format.

@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.DevCenter.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<NetworkConnectionData>> value = default;
+            Optional<IReadOnlyList<DevCenterNetworkConnectionData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -30,10 +30,10 @@ namespace Azure.ResourceManager.DevCenter.Models
                     {
                         continue;
                     }
-                    List<NetworkConnectionData> array = new List<NetworkConnectionData>();
+                    List<DevCenterNetworkConnectionData> array = new List<DevCenterNetworkConnectionData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(NetworkConnectionData.DeserializeNetworkConnectionData(item));
+                        array.Add(DevCenterNetworkConnectionData.DeserializeDevCenterNetworkConnectionData(item));
                     }
                     value = array;
                     continue;

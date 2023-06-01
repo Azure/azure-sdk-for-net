@@ -1,19 +1,31 @@
 # Release History
 
-## 1.2.0-beta.1 (Unreleased)
+## 1.2.0-beta.1 (2023-06-01)
 
 ### Features Added
 
+- Enable the model factory feature for model mocking, more information can be found [here](https://azure.github.io/azure-sdk/dotnet_introduction.html#dotnet-mocking-factory-builder).
 - Added new properties `ComputerName`, `OSName`, `OSVersion` and `HyperVGeneration` to `VirtualMachineScaleSetVmInstanceView` class
 - Added new value `StandardSsdLrs` to `ImageStorageAccountType`
+- Compute RP to `2023-03-01` (AvailabilitySets, VirtualMachines, VirtualMachineScaleSets, etc)
+  - Added new method `Reapply` for `VirtualMachineScaleSet` class.
+  - Added new method `ListAvailabeSizes` for `DedicatedHost` class.
+  - Added new parameter `expand` for `VirtualMachine` List methods.
+  - Added new parameter `hibernate` for `VirtualMachineScaleSet` deallocate methods.
+  - Added new parameters `PriorityMixPolicy` and `SpotRestorePolicy` for `VirtualMachineScaleSet` update methods.
+  - Added new property `BypassPlatformSafetyChecksOnUserSchedule` for `VirtualMachine` class.
+  - Added new property `SecurityPostureReference` to `VirtualMachineScaleSet` class.
+  - Added new properties `OutputBlobManagedIdentity` and `ErrorBlobManagedIdentity` to `RunCommand` class.
+  - Added new properties `RestorePointEncryption`, `SourceDiskRestorePoint` , `HyperVGeneration` and `WriteAcceleratorEnabled` for `RestorePoint` class.
 
 ### Breaking Changes
 
 - Class `VirtualMachineScaleSetNetworkConfiguration` and `VirtualMachineScaleSetIPConfiguration` no longer have the property `Id`
 
-### Bugs Fixed
-
 ### Other Changes
+
+- Upgraded dependent `Azure.Core` to 1.32.0.
+- Upgraded dependent `Azure.ResourceManager` to 1.6.0.
 
 ## 1.1.0 (2023-02-16)
 
