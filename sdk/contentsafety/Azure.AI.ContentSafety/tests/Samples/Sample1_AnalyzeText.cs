@@ -25,20 +25,10 @@ namespace Azure.AI.ContentSafety.Tests.Samples
 
             //#endregion
 
-            //#region Snippet:ReadTextData
-
             string datapath = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), "Samples", "sample_data", "text.txt");
             string text = File.ReadAllText(datapath);
 
-            //#endregion
-
-            //#region Snippet:CreateRequest
-
             var request = new AnalyzeTextOptions(text);
-
-            //#endregion
-
-            //#region Snippet:AnalyzeText
 
             Response<AnalyzeTextResult> response;
             try
@@ -47,12 +37,7 @@ namespace Azure.AI.ContentSafety.Tests.Samples
             }
             catch (RequestFailedException ex)
             {
-                Console.WriteLine(String.Format("Analyze text failed: {0}", ex.Message));
-                throw;
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine(String.Format("Analyze text error: {0}", ex.Message));
+                Console.WriteLine(String.Format("Analyze text failed.\nError code: {0}, Error message: {1}", ex.ErrorCode, ex.Message));
                 throw;
             }
 
@@ -72,7 +57,6 @@ namespace Azure.AI.ContentSafety.Tests.Samples
             {
                 Console.WriteLine(String.Format("Violence severity: {0}", response.Value.ViolenceResult.Severity));
             }
-            //#endregion
         }
     }
 }

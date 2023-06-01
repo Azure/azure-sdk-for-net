@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Reflection;
 using System.Threading;
+using Azure.Core;
 using Azure.Core.TestFramework;
 using NUnit.Framework;
 using static System.Net.Mime.MediaTypeNames;
@@ -43,7 +44,12 @@ namespace Azure.AI.ContentSafety.Tests.Samples
             var blocklistName = "TestBlocklist";
             var blocklistDescription = "Test blocklist management";
 
-            client.CreateOrUpdateTextBlocklist(blocklistName, blocklistDescription);
+            var data = new
+            {
+                description = blocklistDescription,
+            };
+
+            client.CreateOrUpdateTextBlocklist(blocklistName, RequestContent.Create(data));
 
             //#endregion
 
@@ -140,7 +146,7 @@ namespace Azure.AI.ContentSafety.Tests.Samples
             var deleteResult = client.DeleteTextBlocklist(blocklistName);
             if (deleteResult != null && deleteResult.Status == 204)
             {
-                Console.WriteLine("\n Delete blocklist succeded.");
+                Console.WriteLine("\nDelete blocklist succeded.");
             }
 
             //#endregion

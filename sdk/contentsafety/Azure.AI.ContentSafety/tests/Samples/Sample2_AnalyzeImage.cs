@@ -31,16 +31,7 @@ namespace Azure.AI.ContentSafety.Tests.Samples
             //#region Snippet:ReadImageData
 
             string datapath = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), "Samples", "sample_data", "image.jpg");
-            byte[] b = File.ReadAllBytes(datapath);
-            //BinaryData binaryData = BinaryData.FromObjectAsJson(TestData.TestImageContent);
-            //BinaryData binaryData = BinaryData.FromString("\""+TestData.TestImageContent+"\"");
-            BinaryData binaryData = BinaryData.FromBytes(b);
-            ImageData image = new ImageData() { Content = binaryData };
-
-            //FileStream stream = new FileStream(datapath, FileMode.Open);
-            //byte[] buffer = new byte[stream.Length];
-            //stream.Read(buffer, 0, (int)stream.Length);
-            //MemoryStream memoryStream = new MemoryStream(buffer);
+            ImageData image = new ImageData() { Content = BinaryData.FromBytes(File.ReadAllBytes(datapath)) };
 
             //#endregion
 
@@ -59,12 +50,7 @@ namespace Azure.AI.ContentSafety.Tests.Samples
             }
             catch (RequestFailedException ex)
             {
-                Console.WriteLine(String.Format("Analyze image failed: {0}", ex.Message));
-                throw;
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine(String.Format("Analyze image error: {0}", ex.Message));
+                Console.WriteLine(String.Format("Analyze image failed.\nError code: {0}, Error message: {1}", ex.ErrorCode, ex.Message));
                 throw;
             }
 
