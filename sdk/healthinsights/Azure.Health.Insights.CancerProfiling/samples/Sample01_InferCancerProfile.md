@@ -126,7 +126,7 @@ PatientDocument patientDocument3 = new PatientDocument(DocumentType.Note,
 };
 patient1.Data.Add(patientDocument3);
 
-// Set configuration to include evidence for the cancer staging inferences
+// Set configuration to include evidence for the cancer staging inferences and to check for whether a cancer case exists in the text
 var configuration = new OncoPhenotypeModelConfiguration() { IncludeEvidence = true, CheckForCancerCase = true };
 
 // Create OncoPhenotypeData with patient and configration
