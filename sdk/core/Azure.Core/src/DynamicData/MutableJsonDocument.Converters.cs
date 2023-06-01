@@ -4,6 +4,7 @@
 using System;
 using System.Collections.Generic;
 using System.Reflection;
+using System.Runtime.CompilerServices;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 
@@ -21,14 +22,16 @@ namespace Azure.Core.Json
             private static bool IsAllowedType(Type type)
             {
                 if (IsAllowedPrimitive(type))
+                {
                     return true;
+                }
 
                 return IsAllowedNestedPoco(type, new List<Type>());
             }
 
             private static bool IsAllowedNestedPoco(Type type, List<Type> ancestorTypes)
             {
-                if (!HasPublicParameterlessConstructor(type))
+                if (!HasPublicParameterlessConstructor(type) && !IsAnonymousType(type))
                 {
                     return false;
                 }
@@ -40,7 +43,7 @@ namespace Azure.Core.Json
                         return false;
                     }
 
-                    if (!property.CanWrite)
+                    if (!property.CanWrite && !IsAnonymousType(type))
                     {
                         return false;
                     }
@@ -77,7 +80,7 @@ namespace Azure.Core.Json
 
             private static bool IsSimplePoco(Type type)
             {
-                if (!HasPublicParameterlessConstructor(type))
+                if (!HasPublicParameterlessConstructor(type) && !IsAnonymousType(type))
                 {
                     return false;
                 }
@@ -89,7 +92,7 @@ namespace Azure.Core.Json
                         return false;
                     }
 
-                    if (!property.CanWrite)
+                    if (!property.CanWrite && !IsAnonymousType(type))
                     {
                         return false;
                     }
@@ -106,6 +109,13 @@ namespace Azure.Core.Json
             private static bool HasPublicParameterlessConstructor(Type type)
             {
                 return type.GetConstructor(Type.EmptyTypes) != null;
+            }
+
+            private static bool IsAnonymousType(Type type)
+            {
+                return
+                    type.Namespace == null &&
+                    Attribute.IsDefined(type, typeof(CompilerGeneratedAttribute), false);
             }
 
             private static bool IsAllowedPrimitive(Type type)
@@ -126,6 +136,12 @@ namespace Azure.Core.Json
                     type == typeof(decimal) ||
                     type == typeof(DateTime) ||
                     type == typeof(DateTimeOffset) ||
+
+                    // TODO: separate out non-primitive values?
+                    // TODO: is this object thing too permissive?
+                    type == typeof(Dictionary<string, object>) ||
+                    type == typeof(JsonElement) ||
+
                     type == typeof(Guid);
             }
 
