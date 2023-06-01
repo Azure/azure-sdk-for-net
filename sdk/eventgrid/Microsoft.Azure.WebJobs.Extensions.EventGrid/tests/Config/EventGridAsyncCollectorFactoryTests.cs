@@ -13,23 +13,24 @@ namespace Microsoft.Azure.WebJobs.Extensions.EventGrid.Tests.Config
     internal class EventGridAsyncCollectorFactoryTests
     {
         [Test]
-        [TestCase(null, null, null, "The 'Connection' property or 'TopicEndpointUri' property must be set")]
-        [TestCase("", null, null, "The 'Connection' property or 'TopicEndpointUri' property must be set")]
-        [TestCase(null, null, "", "The 'Connection' property or 'TopicEndpointUri' property must be set")]
-        [TestCase(null, null, "EmptyUri", "The 'Connection' property or 'TopicEndpointUri' property must be set")]
+        [TestCase(null, null, null, "The 'Connection.topicEndpointUri' property or 'TopicEndpointUri' property must be set")]
+        [TestCase("", null, null, "The 'Connection.topicEndpointUri' property or 'TopicEndpointUri' property must be set")]
+        [TestCase(null, null, "", "The 'Connection.topicEndpointUri' property or 'TopicEndpointUri' property must be set")]
+        [TestCase(null, null, "EmptyUri", "The 'Connection.topicEndpointUri' property or 'TopicEndpointUri' property must be set")]
         [TestCase("bar.com", "baz", null, "The 'TopicEndpointUri' property must be a valid absolute Uri")]
-        [TestCase(null, "baz", "ValidUri", "Conflicting Event Grid topic credentials have been set in 'Connection' and 'TopicKeySetting'")]
-        [TestCase("https://foo.com", null, "MissingUri", "Event Grid topic connection string 'MissingUri' does not exist. Make sure that it is a defined App Setting.")]
-        [TestCase("https://foo.com", null, "InvalidUri", "Event Grid topic connection string 'InvalidUri' must be a valid absolute Uri")]
-        [TestCase("https://foo.com", null, "AnotherUri", "Conflicting Event Grid topic connection strings have been set in 'Connection' and 'TopicEndpointUri'")]
+        [TestCase(null, "baz", "ValidUri", "Conflicting topic credentials have been set in 'ValidUri' and 'TopicKeySetting'")]
+        [TestCase("https://foo.com", "baz", "ValidUri", "Conflicting topic credentials have been set in 'ValidUri' and 'TopicKeySetting'")]
+        [TestCase("https://foo.com", null, "MissingUri", "The topic endpoint uri in 'MissingUri' does not exist. Make sure that it is a defined App Setting.")]
+        [TestCase("https://foo.com", null, "InvalidUri", "The topic endpoint uri in 'InvalidUri' must be a valid absolute Uri")]
+        [TestCase("https://foo.com", null, "AnotherUri", "Conflicting topic endpoint uris have been set in 'AnotherUri' and 'TopicEndpointUri'")]
         public void ValidateOutputBindingAttributeTests(string topicEndpointUri, string topicKeySetting, string connection, string message)
         {
             var host = TestHelpers.NewHost<Empty>(configuration: new Dictionary<string, string>
             {
-                { "EmptyUri", "" },
-                { "InvalidUri", "bar.com" },
-                { "ValidUri", "https://foo.com" },
-                { "AnotherUri", "https://bar.com" },
+                { "EmptyUri:topicEndpointUri", "" },
+                { "InvalidUri:topicEndpointUri", "bar.com" },
+                { "ValidUri:topicEndpointUri", "https://foo.com" },
+                { "AnotherUri:topicEndpointUri", "https://bar.com" },
             });
 
             var factory = host.Services.GetRequiredService<EventGridAsyncCollectorFactory>();
@@ -67,8 +68,8 @@ namespace Microsoft.Azure.WebJobs.Extensions.EventGrid.Tests.Config
         {
             var host = TestHelpers.NewHost<Empty>(configuration: new Dictionary<string, string>
             {
-                { "EmptyUri", "" },
-                { "ValidUri", "https://foo.com" },
+                { "EmptyUri:topicEndpointUri", "" },
+                { "ValidUri:topicEndpointUri", "https://foo.com" },
             });
             var factory = host.Services.GetRequiredService<EventGridAsyncCollectorFactory>();
 

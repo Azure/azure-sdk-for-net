@@ -12,6 +12,8 @@ namespace Microsoft.Azure.WebJobs.Extensions.EventGrid.Config
 {
     internal class EventGridAsyncCollectorFactory
     {
+        private const string TopicEndpointUri = "topicEndpointUri";
+
         private readonly IConfiguration _configuration;
         private readonly AzureComponentFactory _componentFactory;
 
@@ -30,7 +32,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.EventGrid.Config
             {
                 if (!string.IsNullOrWhiteSpace(attribute.Connection))
                 {
-                    throw new InvalidOperationException($"Conflicting Event Grid topic credentials have been set in '{nameof(EventGridAttribute.Connection)}' and '{nameof(EventGridAttribute.TopicKeySetting)}'");
+                    throw new InvalidOperationException($"Conflicting topic credentials have been set in '{attribute.Connection}' and '{nameof(EventGridAttribute.TopicKeySetting)}'");
                 }
 
                 if (string.IsNullOrWhiteSpace(attribute.TopicKeySetting))
@@ -43,20 +45,20 @@ namespace Microsoft.Azure.WebJobs.Extensions.EventGrid.Config
             {
                 var connectionSection = _configuration.GetSection(attribute.Connection);
                 if (!connectionSection.Exists())
-                    throw new InvalidOperationException($"Event Grid topic connection string '{attribute.Connection}' does not exist. " +
+                    throw new InvalidOperationException($"The topic endpoint uri in '{attribute.Connection}' does not exist. " +
                                                     $"Make sure that it is a defined App Setting.");
 
-                if (!string.IsNullOrWhiteSpace(connectionSection.Value))
+                var eventGridTopicUri = connectionSection[TopicEndpointUri];
+                if (!string.IsNullOrWhiteSpace(eventGridTopicUri))
                 {
-                    var topicEndpointUri = connectionSection.Value;
-                    if (!Uri.IsWellFormedUriString(topicEndpointUri, UriKind.Absolute))
+                    if (!Uri.IsWellFormedUriString(eventGridTopicUri, UriKind.Absolute))
                     {
-                        throw new InvalidOperationException($"Event Grid topic connection string '{attribute.Connection}' must be a valid absolute Uri");
+                        throw new InvalidOperationException($"The topic endpoint uri in '{attribute.Connection}' must be a valid absolute Uri");
                     }
 
-                    if (!string.IsNullOrWhiteSpace(attribute.TopicEndpointUri) && topicEndpointUri != attribute.TopicEndpointUri)
+                    if (!string.IsNullOrWhiteSpace(attribute.TopicEndpointUri) && eventGridTopicUri != attribute.TopicEndpointUri)
                     {
-                        throw new InvalidOperationException($"Conflicting Event Grid topic connection strings have been set in '{nameof(EventGridAttribute.Connection)}' and '{nameof(EventGridAttribute.TopicEndpointUri)}'");
+                        throw new InvalidOperationException($"Conflicting topic endpoint uris have been set in '{attribute.Connection}' and '{nameof(EventGridAttribute.TopicEndpointUri)}'");
                     }
 
                     return;
@@ -73,7 +75,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.EventGrid.Config
                 return;
             }
 
-            throw new InvalidOperationException($"The '{nameof(EventGridAttribute.Connection)}' property or '{nameof(EventGridAttribute.TopicEndpointUri)}' property must be set");
+            throw new InvalidOperationException($"The '{nameof(EventGridAttribute.Connection)}.{TopicEndpointUri}' property or '{nameof(EventGridAttribute.TopicEndpointUri)}' property must be set");
         }
 
         internal virtual IAsyncCollector<object> CreateCollector(EventGridAttribute attribute)
@@ -106,14 +108,11 @@ namespace Microsoft.Azure.WebJobs.Extensions.EventGrid.Config
             }
 
             var connectionSection = _configuration.GetSection(attribute.Connection);
-            if (!string.IsNullOrWhiteSpace(connectionSection.Value))
-            {
-                return new EventGridConnectionInformation(new Uri(connectionSection.Value), _componentFactory.CreateTokenCredential(connectionSection));
-            }
-            else
-            {
-                return new EventGridConnectionInformation(new Uri(attribute.TopicEndpointUri), _componentFactory.CreateTokenCredential(connectionSection));
-            }
+            var topicEndpointUri = connectionSection[TopicEndpointUri];
+            if (string.IsNullOrWhiteSpace(topicEndpointUri))
+                topicEndpointUri = attribute.TopicEndpointUri;
+
+            return new EventGridConnectionInformation(new Uri(topicEndpointUri), _componentFactory.CreateTokenCredential(connectionSection));
         }
 
         internal record EventGridConnectionInformation
