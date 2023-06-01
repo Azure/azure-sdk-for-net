@@ -13,7 +13,7 @@ namespace Azure.Core.Json
     /// <summary>
     /// A mutable representation of a JSON value.
     /// </summary>
-    [JsonConverter(typeof(JsonConverter))]
+    [JsonConverter(typeof(MutableJsonDocumentConverter))]
     internal sealed partial class MutableJsonDocument : IDisposable
     {
         private readonly ReadOnlyMemory<byte> _original;
@@ -166,7 +166,7 @@ namespace Azure.Core.Json
         {
             _original = utf8Json;
             _originalDocument = document;
-            _serializerOptions = serializerOptions ?? new JsonSerializerOptions();
+            _serializerOptions = serializerOptions ?? new JsonSerializerOptions() { Converters = { new AllowListConverterFactory() } };
         }
 
         private static ReadOnlyMemory<byte> GetBytesFromDocument(JsonDocument document)
@@ -180,7 +180,7 @@ namespace Azure.Core.Json
             return new ReadOnlyMemory<byte>(stream.GetBuffer(), 0, (int)stream.Position);
         }
 
-        private class JsonConverter : JsonConverter<MutableJsonDocument>
+        private class MutableJsonDocumentConverter : JsonConverter<MutableJsonDocument>
         {
             public override MutableJsonDocument Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {

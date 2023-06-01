@@ -9,7 +9,7 @@ using System.Text.Json.Serialization;
 
 namespace Azure.Core.Json
 {
-    internal partial struct MutableJsonElement
+    internal partial class MutableJsonDocument
     {
         public class AllowListConverterFactory : JsonConverterFactory
         {
@@ -129,7 +129,7 @@ namespace Azure.Core.Json
                     type == typeof(Guid);
             }
 
-            public override JsonConverter? CreateConverter(Type typeToConvert, JsonSerializerOptions options)
+            public override JsonConverter CreateConverter(Type typeToConvert, JsonSerializerOptions options)
             {
                 JsonConverter converter = (JsonConverter)Activator.CreateInstance(
                     typeof(ThrowingConverter<>).MakeGenericType(new Type[] { typeToConvert }),

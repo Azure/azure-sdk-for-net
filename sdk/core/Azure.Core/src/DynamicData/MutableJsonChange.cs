@@ -17,6 +17,19 @@ namespace Azure.Core.Json
             Value = value;
             ReplacesJsonElement = replacesJsonElement;
             _serializerOptions = options;
+
+            // TODO: refactor for efficiency once proven
+            if (replacesJsonElement)
+            {
+                // Go ahead and serialize so we can throw if not supported
+                if (Value is JsonElement element)
+                {
+                    _serializedValue = element;
+                }
+
+                byte[] bytes = JsonSerializer.SerializeToUtf8Bytes(Value, _serializerOptions);
+                _serializedValue = JsonDocument.Parse(bytes).RootElement;
+            }
         }
 
         public string Path { get; }

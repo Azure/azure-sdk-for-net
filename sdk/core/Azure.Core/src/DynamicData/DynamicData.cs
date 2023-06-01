@@ -46,7 +46,8 @@ namespace Azure.Core.Dynamic
             {
                 Converters =
                 {
-                    new DefaultTimeSpanConverter()
+                    new DefaultTimeSpanConverter(),
+                    new MutableJsonDocument.AllowListConverterFactory(),
                 }
             };
 
