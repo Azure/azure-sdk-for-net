@@ -15,22 +15,24 @@ namespace Azure.Core.Json
     {
         public class AllowListConverterFactory : JsonConverterFactory
         {
+            public static readonly AllowListConverterFactory Default = new();
+
             public override bool CanConvert(Type typeToConvert)
             {
                 return !IsAllowedType(typeToConvert);
             }
 
-            private static bool IsAllowedType(Type type)
+            public static bool IsAllowedType(Type type)
             {
-                if (IsAllowedPrimitive(type))
+                if (IsAllowedKnownType(type))
                 {
                     return true;
                 }
 
-                return IsAllowedNestedPoco(type, new List<Type>());
+                return IsAllowedPoco(type, new List<Type>());
             }
 
-            private static bool IsAllowedNestedPoco(Type type, List<Type> ancestorTypes)
+            private static bool IsAllowedPoco(Type type, List<Type> ancestorTypes)
             {
                 if (!HasPublicParameterlessConstructor(type) && !IsAnonymousType(type))
                 {
@@ -49,13 +51,7 @@ namespace Azure.Core.Json
                         return false;
                     }
 
-                    if (IsAllowedPrimitive(property.PropertyType))
-                    {
-                        continue;
-                    }
-
-                    // TODO: I think we can delete this case, but confirm
-                    if (IsSimplePoco(property.PropertyType))
+                    if (IsAllowedKnownType(property.PropertyType))
                     {
                         continue;
                     }
@@ -68,37 +64,7 @@ namespace Azure.Core.Json
 
                     // Recurse
                     ancestorTypes.Add(type);
-                    if (!IsAllowedNestedPoco(property.PropertyType, ancestorTypes))
-                    {
-                        return false;
-                    }
-
-                    // TODO: Make sure this works with different ordering, e.g. I check the nesting before I get to an invalid typed property
-                }
-
-                return true;
-            }
-
-            private static bool IsSimplePoco(Type type)
-            {
-                if (!HasPublicParameterlessConstructor(type) && !IsAnonymousType(type))
-                {
-                    return false;
-                }
-
-                foreach (PropertyInfo property in type.GetProperties())
-                {
-                    if (!property.CanRead)
-                    {
-                        return false;
-                    }
-
-                    if (!property.CanWrite && !IsAnonymousType(type))
-                    {
-                        return false;
-                    }
-
-                    if (!IsAllowedPrimitive(property.PropertyType))
+                    if (!IsAllowedPoco(property.PropertyType, ancestorTypes))
                     {
                         return false;
                     }
@@ -119,6 +85,27 @@ namespace Azure.Core.Json
                     Attribute.IsDefined(type, typeof(CompilerGeneratedAttribute), false);
             }
 
+            private static bool IsAllowedKnownType(Type type)
+            {
+                return IsAllowedPrimitive(type) ||
+                    IsAllowedArray(type) ||
+                    IsAllowedInterface(type) ||
+
+                    // TODO: separate out non-primitive values?
+                    type == typeof(JsonElement) ||
+                    type == typeof(JsonDocument) ||
+                    type == typeof(MutableJsonDocument) ||
+                    type == typeof(MutableJsonElement) ||
+                    type == typeof(Dictionary<string, object>) ||
+
+                    // TODO: We'll want to remove this dependency
+                    type == typeof(DynamicData) ||
+
+					// TODO: Keep this?
+                    type == typeof(object[])
+                    ;
+            }
+
             private static bool IsAllowedPrimitive(Type type)
             {
                 return
@@ -137,20 +124,13 @@ namespace Azure.Core.Json
                     type == typeof(decimal) ||
                     type == typeof(DateTime) ||
                     type == typeof(DateTimeOffset) ||
-                    type == typeof(Guid) ||
+                    type == typeof(Guid);
+            }
 
-                    // TODO: separate out non-primitive values?
-                    // TODO: is this object thing too permissive?
-                    type == typeof(Dictionary<string, object>) ||
-                    type == typeof(JsonElement) ||
-                    type == typeof(JsonDocument) ||
-                    type == typeof(MutableJsonDocument) ||
-                    type == typeof(MutableJsonElement) ||
-
-                    // TODO: We'll want to remove this dependency
-                    type == typeof(DynamicData) ||
-
-                    // TODO: add array support differently
+            private static bool IsAllowedArray(Type type)
+            {
+                // TODO: add array support differently
+                return
                     type == typeof(bool[]) ||
                     type == typeof(string[]) ||
                     type == typeof(byte[]) ||
@@ -166,17 +146,16 @@ namespace Azure.Core.Json
                     type == typeof(decimal[]) ||
                     type == typeof(DateTime[]) ||
                     type == typeof(DateTimeOffset[]) ||
-                    type == typeof(Guid[]) ||
-
-                    // TODO: Interface support
-                    type == typeof(IEnumerable<bool>) ||
-                    type == typeof(IEnumerable<int>) ||
-
-                    type == typeof(object[])
-                    ;
+                    type == typeof(Guid[]);
             }
 
-            // TODO: add array support
+            private static bool IsAllowedInterface(Type type)
+            {
+                // TODO: Interface support
+                return
+                    type == typeof(IEnumerable<bool>) ||
+                    type == typeof(IEnumerable<int>);
+            }
 
             public override JsonConverter CreateConverter(Type typeToConvert, JsonSerializerOptions options)
             {
@@ -196,12 +175,12 @@ namespace Azure.Core.Json
 
                 public override T Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
                 {
-                    throw new NotSupportedException($"Type is not currently supported: '{typeToConvert}");
+                    throw new NotSupportedException($"Type is not currently supported: '{typeToConvert}'");
                 }
 
                 public override void Write(Utf8JsonWriter writer, T value, JsonSerializerOptions options)
                 {
-                    throw new NotSupportedException($"Type is not currently supported: '{typeof(T)}");
+                    throw new NotSupportedException($"Type is not currently supported: '{typeof(T)}'");
                 }
             }
         }
