@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql.Tests
             SubscriptionResource subscription = await Client.GetDefaultSubscriptionAsync();
             ResourceGroupResource rg = await CreateResourceGroup(subscription, "cosmospgrg", AzureLocation.WestUS);
             CosmosDBForPostgreSqlClusterCollection clusters = rg.GetCosmosDBForPostgreSqlClusters();
-            string clusterName = Recording.GenerateAssetName("cosmospgnet");
+            string clusterName = Recording.GenerateAssetName("cosmos-pg-net-");
             var data = new CosmosDBForPostgreSqlClusterData(rg.Data.Location)
             {
                 CoordinatorVCores = 4,
