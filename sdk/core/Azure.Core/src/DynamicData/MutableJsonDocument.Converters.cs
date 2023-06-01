@@ -98,6 +98,9 @@ namespace Azure.Core.Json
                     type == typeof(MutableJsonElement) ||
                     type == typeof(Dictionary<string, object>) ||
 
+                    // TODO: support extensible enums?
+                    type == typeof(ETag) ||
+
                     // TODO: We'll want to remove this dependency
                     type == typeof(DynamicData) ||
 
