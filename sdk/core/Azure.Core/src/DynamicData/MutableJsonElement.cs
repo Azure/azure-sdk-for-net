@@ -1050,6 +1050,8 @@ namespace Azure.Core.Json
                     Set(d.RootElement);
                     break;
                 default:
+                    // TODO: Serialize, then add change, to give
+                    // opportunity to throw up front.
                     Changes.AddChange(_path, value, true);
                     break;
             }
