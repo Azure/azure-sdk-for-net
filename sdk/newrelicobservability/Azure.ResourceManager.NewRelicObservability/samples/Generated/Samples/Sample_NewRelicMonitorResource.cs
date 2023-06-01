@@ -15,15 +15,14 @@ using Azure.ResourceManager.Models;
 using Azure.ResourceManager.NewRelicObservability;
 using Azure.ResourceManager.NewRelicObservability.Models;
 using Azure.ResourceManager.Resources;
-using NUnit.Framework;
 
 namespace Azure.ResourceManager.NewRelicObservability.Samples
 {
     public partial class Sample_NewRelicMonitorResource
     {
-
         // Monitors_ListBySubscription_MaximumSet_Gen
-        [TestCase]
+        [NUnit.Framework.Test]
+        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task GetNewRelicMonitorResources_MonitorsListBySubscriptionMaximumSetGen()
         {
             // Generated from example definition: specification/newrelic/resource-manager/NewRelic.Observability/preview/2022-07-01-preview/examples/Monitors_ListBySubscription_MaximumSet_Gen.json
@@ -36,7 +35,7 @@ namespace Azure.ResourceManager.NewRelicObservability.Samples
 
             // this example assumes you already have this SubscriptionResource created on azure
             // for more information of creating SubscriptionResource, please refer to the document of SubscriptionResource
-            string subscriptionId = "272c26cb-7026-4b37-b190-7cb7b2abecb0";
+            string subscriptionId = "hfmjmpyqgezxkp";
             ResourceIdentifier subscriptionResourceId = SubscriptionResource.CreateResourceIdentifier(subscriptionId);
             SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
 
@@ -166,6 +165,7 @@ namespace Azure.ResourceManager.NewRelicObservability.Samples
 
         // Monitors_Delete_MaximumSet_Gen
         [NUnit.Framework.Test]
+        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Delete_MonitorsDeleteMaximumSetGen()
         {
             // Generated from example definition: specification/newrelic/resource-manager/NewRelic.Observability/preview/2022-07-01-preview/examples/Monitors_Delete_MaximumSet_Gen.json
@@ -179,8 +179,8 @@ namespace Azure.ResourceManager.NewRelicObservability.Samples
             // this example assumes you already have this NewRelicMonitorResource created on azure
             // for more information of creating NewRelicMonitorResource, please refer to the document of NewRelicMonitorResource
             string subscriptionId = "ddqonpqwjr";
-            string resourceGroupName = "SDKTestNRRG-6892";
-            string monitorName = "testNR-3090";
+            string resourceGroupName = "rgopenapi";
+            string monitorName = "ipxmlcbonyxtolzejcjshkmlron";
             ResourceIdentifier newRelicMonitorResourceId = NewRelicMonitorResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, monitorName);
             NewRelicMonitorResource newRelicMonitorResource = client.GetNewRelicMonitorResource(newRelicMonitorResourceId);
 
