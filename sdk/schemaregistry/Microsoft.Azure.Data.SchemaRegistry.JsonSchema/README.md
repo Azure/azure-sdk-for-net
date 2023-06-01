@@ -87,7 +87,7 @@ internal class SampleJsonGenerator : SchemaRegistryJsonSchemaGenerator
     public override string GenerateSchemaFromType(Type dataType)
     {
         JSchemaGenerator generator = new();
-        JSchema schema = generator.Generate(typeof(Employee));
+        JSchema schema = generator.Generate(dataType);
 
         return schema.ToString();
     }
