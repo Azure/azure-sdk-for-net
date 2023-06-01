@@ -26,7 +26,16 @@ This release uses api version 2023-03-01-preview for PostgreSQL flexible server.
 - Support Network object to be updated as part of PostgreSqlFlexibleServerPatch call.
 - Remove unsupported ReplicationRoles GeoSyncReplica, Secondary, SyncReplica, WalReplica.
 
+## 1.2.0-beta.1 (2023-05-31)
+
+### Features Added
+
+- Enable the model factory feature for model mocking, more information can be found [here](https://azure.github.io/azure-sdk/dotnet_introduction.html#dotnet-mocking-factory-builder).
+
 ### Other Changes
+
+- Upgraded dependent Azure.Core to 1.32.0.
+- Upgraded dependent Azure.ResourceManager to 1.6.0.
 
 ## 1.1.1 (2023-02-16)
 
