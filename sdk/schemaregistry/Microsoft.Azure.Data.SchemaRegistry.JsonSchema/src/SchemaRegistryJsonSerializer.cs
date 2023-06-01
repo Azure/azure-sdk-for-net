@@ -276,7 +276,7 @@ namespace Microsoft.Azure.Data.SchemaRegistry.JsonSchema
                 string schemaString = _jsonSchemaGenerator.GenerateSchemaFromType(dataType);
 
                 // Attempt to validate
-                _jsonSchemaGenerator.ThrowIfNotValidAgainstSchema(data, dataType, schemaString);
+                _jsonSchemaGenerator.ThrowIfNotValidAgainstSchema(value, dataType, schemaString);
 
                 if (async)
                 {

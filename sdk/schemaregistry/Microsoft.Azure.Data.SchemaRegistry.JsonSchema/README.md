@@ -80,6 +80,34 @@ internal class SampleJsonGenerator : SchemaRegistryJsonSchemaGenerator
 }
 ```
 
+For illustration only, here is a sample implementation using `Newtonsoft.Json.Schema`
+```C#
+internal class SampleJsonGenerator : SchemaRegistryJsonSchemaGenerator
+{
+    public override string GenerateSchemaFromType(Type dataType)
+    {
+        JSchemaGenerator generator = new();
+        JSchema schema = generator.Generate(typeof(Employee));
+
+        return schema.ToString();
+    }
+
+    public override void ThrowIfNotValidAgainstSchema(object data, Type dataType, string schemaDefinition)
+    {
+        JSchema schema = JSchema.Parse(schemaDefinition);
+        JObject jsonObject = JObject.FromObject(data);
+
+        bool isValid = jsonObject.IsValid(schema, out IList<ValidationError> messages);
+        IEnumerable<Exception> ex = messages.Select((i => new Exception(i.Message)));
+
+        if (!isValid)
+        {
+            throw new AggregateException(ex);
+        }
+    }
+}
+```
+
 ### Serialize and deserialize data using the Event Hub EventData model
 
 In order to serialize an `EventData` instance with JSON information, you can do the following:
