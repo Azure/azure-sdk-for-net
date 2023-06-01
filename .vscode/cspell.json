@@ -638,6 +638,14 @@
       ]
     },
     {
+      "filename": "**/sdk/managednetworkfabric/**/*.cs",
+      "words": [
+        "evpn",
+        "mbps",
+        "gshut"
+      ]
+    },
+    {
       "filename": "**/sdk/mediaservices/**/*.cs",
       "words": [
         "cabac",
