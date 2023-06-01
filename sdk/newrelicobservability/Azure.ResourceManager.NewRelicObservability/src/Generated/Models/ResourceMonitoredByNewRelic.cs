@@ -5,23 +5,25 @@
 
 #nullable disable
 
+using Azure.Core;
+
 namespace Azure.ResourceManager.NewRelicObservability.Models
 {
     /// <summary> Details of resource being monitored by NewRelic monitor resource. </summary>
-    public partial class MonitoredResource
+    public partial class ResourceMonitoredByNewRelic
     {
-        /// <summary> Initializes a new instance of MonitoredResource. </summary>
-        internal MonitoredResource()
+        /// <summary> Initializes a new instance of ResourceMonitoredByNewRelic. </summary>
+        internal ResourceMonitoredByNewRelic()
         {
         }
 
-        /// <summary> Initializes a new instance of MonitoredResource. </summary>
+        /// <summary> Initializes a new instance of ResourceMonitoredByNewRelic. </summary>
         /// <param name="id"> The ARM id of the resource. </param>
         /// <param name="sendingMetrics"> Flag indicating if resource is sending metrics to NewRelic. </param>
         /// <param name="reasonForMetricsStatus"> Reason for why the resource is sending metrics (or why it is not sending). </param>
         /// <param name="sendingLogs"> Flag indicating if resource is sending logs to NewRelic. </param>
         /// <param name="reasonForLogsStatus"> Reason for why the resource is sending logs (or why it is not sending). </param>
-        internal MonitoredResource(string id, SendingMetricsStatus? sendingMetrics, string reasonForMetricsStatus, SendingLogsStatus? sendingLogs, string reasonForLogsStatus)
+        internal ResourceMonitoredByNewRelic(ResourceIdentifier id, SendingMetricsStatus? sendingMetrics, string reasonForMetricsStatus, SendingLogsStatus? sendingLogs, string reasonForLogsStatus)
         {
             Id = id;
             SendingMetrics = sendingMetrics;
@@ -31,7 +33,7 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
         }
 
         /// <summary> The ARM id of the resource. </summary>
-        public string Id { get; }
+        public ResourceIdentifier Id { get; }
         /// <summary> Flag indicating if resource is sending metrics to NewRelic. </summary>
         public SendingMetricsStatus? SendingMetrics { get; }
         /// <summary> Reason for why the resource is sending metrics (or why it is not sending). </summary>

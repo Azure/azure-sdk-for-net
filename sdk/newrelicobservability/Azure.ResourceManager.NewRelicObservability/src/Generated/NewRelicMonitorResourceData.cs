@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.NewRelicObservability
         /// <param name="liftrResourcePreference"> Liftr resource preference. The priority of the resource. </param>
         /// <param name="orgCreationSource"> Source of org creation. </param>
         /// <param name="accountCreationSource"> Source of account creation. </param>
-        internal NewRelicMonitorResourceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ManagedServiceIdentity identity, NewrelicProvisioningState? provisioningState, MonitoringStatus? monitoringStatus, MarketplaceSubscriptionStatus? marketplaceSubscriptionStatus, string marketplaceSubscriptionId, NewRelicAccountProperties newRelicAccountProperties, UserInfo userInfo, PlanData planData, LiftrResourceCategory? liftrResourceCategory, int? liftrResourcePreference, OrgCreationSource? orgCreationSource, AccountCreationSource? accountCreationSource) : base(id, name, resourceType, systemData, tags, location)
+        internal NewRelicMonitorResourceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ManagedServiceIdentity identity, NewrelicProvisioningState? provisioningState, MonitoringStatus? monitoringStatus, MarketplaceSubscriptionStatus? marketplaceSubscriptionStatus, ResourceIdentifier marketplaceSubscriptionId, NewRelicAccountProperties newRelicAccountProperties, UserInfo userInfo, NewRelicPlan planData, LiftrResourceCategory? liftrResourceCategory, int? liftrResourcePreference, OrgCreationSource? orgCreationSource, AccountCreationSource? accountCreationSource) : base(id, name, resourceType, systemData, tags, location)
         {
             Identity = identity;
             ProvisioningState = provisioningState;
@@ -68,13 +68,13 @@ namespace Azure.ResourceManager.NewRelicObservability
         /// <summary> NewRelic Organization properties of the resource. </summary>
         public MarketplaceSubscriptionStatus? MarketplaceSubscriptionStatus { get; }
         /// <summary> Marketplace Subscription Id. </summary>
-        public string MarketplaceSubscriptionId { get; }
+        public ResourceIdentifier MarketplaceSubscriptionId { get; }
         /// <summary> MarketplaceSubscriptionStatus of the resource. </summary>
         public NewRelicAccountProperties NewRelicAccountProperties { get; set; }
         /// <summary> User Info. </summary>
         public UserInfo UserInfo { get; set; }
         /// <summary> Plan details. </summary>
-        public PlanData PlanData { get; set; }
+        public NewRelicPlan PlanData { get; set; }
         /// <summary> Liftr resource category. </summary>
         public LiftrResourceCategory? LiftrResourceCategory { get; }
         /// <summary> Liftr resource preference. The priority of the resource. </summary>

@@ -11,17 +11,17 @@ using Azure.Core;
 namespace Azure.ResourceManager.NewRelicObservability.Models
 {
     /// <summary> Response of get metrics status Operation. </summary>
-    public partial class MetricsStatusResponse
+    public partial class MetricsStatusResult
     {
-        /// <summary> Initializes a new instance of MetricsStatusResponse. </summary>
-        internal MetricsStatusResponse()
+        /// <summary> Initializes a new instance of MetricsStatusResult. </summary>
+        internal MetricsStatusResult()
         {
             AzureResourceIds = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of MetricsStatusResponse. </summary>
+        /// <summary> Initializes a new instance of MetricsStatusResult. </summary>
         /// <param name="azureResourceIds"> Azure resource IDs. </param>
-        internal MetricsStatusResponse(IReadOnlyList<string> azureResourceIds)
+        internal MetricsStatusResult(IReadOnlyList<string> azureResourceIds)
         {
             AzureResourceIds = azureResourceIds;
         }

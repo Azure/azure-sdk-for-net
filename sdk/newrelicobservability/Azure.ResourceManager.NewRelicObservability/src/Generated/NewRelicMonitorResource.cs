@@ -434,7 +434,7 @@ namespace Azure.ResourceManager.NewRelicObservability
         /// <param name="content"> The details of the get metrics status request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual async Task<Response<MetricsStatusResponse>> GetMetricStatusAsync(MetricsStatusContent content, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<MetricsStatusResult>> GetMetricStatusAsync(MetricsStatusContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -468,7 +468,7 @@ namespace Azure.ResourceManager.NewRelicObservability
         /// <param name="content"> The details of the get metrics status request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual Response<MetricsStatusResponse> GetMetricStatus(MetricsStatusContent content, CancellationToken cancellationToken = default)
+        public virtual Response<MetricsStatusResult> GetMetricStatus(MetricsStatusContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -672,12 +672,12 @@ namespace Azure.ResourceManager.NewRelicObservability
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="MonitoredResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<MonitoredResource> GetMonitoredResourcesAsync(CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="ResourceMonitoredByNewRelic" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<ResourceMonitoredByNewRelic> GetMonitoredResourcesAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _newRelicMonitorResourceMonitorsRestClient.CreateListMonitoredResourcesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _newRelicMonitorResourceMonitorsRestClient.CreateListMonitoredResourcesNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, MonitoredResource.DeserializeMonitoredResource, _newRelicMonitorResourceMonitorsClientDiagnostics, Pipeline, "NewRelicMonitorResource.GetMonitoredResources", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, ResourceMonitoredByNewRelic.DeserializeResourceMonitoredByNewRelic, _newRelicMonitorResourceMonitorsClientDiagnostics, Pipeline, "NewRelicMonitorResource.GetMonitoredResources", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -694,12 +694,12 @@ namespace Azure.ResourceManager.NewRelicObservability
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="MonitoredResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<MonitoredResource> GetMonitoredResources(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="ResourceMonitoredByNewRelic" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<ResourceMonitoredByNewRelic> GetMonitoredResources(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _newRelicMonitorResourceMonitorsRestClient.CreateListMonitoredResourcesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _newRelicMonitorResourceMonitorsRestClient.CreateListMonitoredResourcesNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, MonitoredResource.DeserializeMonitoredResource, _newRelicMonitorResourceMonitorsClientDiagnostics, Pipeline, "NewRelicMonitorResource.GetMonitoredResources", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, ResourceMonitoredByNewRelic.DeserializeResourceMonitoredByNewRelic, _newRelicMonitorResourceMonitorsClientDiagnostics, Pipeline, "NewRelicMonitorResource.GetMonitoredResources", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

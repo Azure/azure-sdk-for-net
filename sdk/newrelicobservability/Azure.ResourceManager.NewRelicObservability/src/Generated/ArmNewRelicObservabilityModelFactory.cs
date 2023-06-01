@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
     /// <summary> Model factory for models. </summary>
     public static partial class ArmNewRelicObservabilityModelFactory
     {
-        /// <summary> Initializes a new instance of AccountResource. </summary>
+        /// <summary> Initializes a new instance of NewRelicAccountResourceData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -26,10 +26,10 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
         /// <param name="accountId"> account id. </param>
         /// <param name="accountName"> account name. </param>
         /// <param name="region"> region. </param>
-        /// <returns> A new <see cref="Models.AccountResource"/> instance for mocking. </returns>
-        public static AccountResource AccountResource(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string organizationId = null, string accountId = null, string accountName = null, string region = null)
+        /// <returns> A new <see cref="Models.NewRelicAccountResourceData"/> instance for mocking. </returns>
+        public static NewRelicAccountResourceData NewRelicAccountResourceData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string organizationId = null, string accountId = null, string accountName = null, string region = null)
         {
-            return new AccountResource(id, name, resourceType, systemData, organizationId, accountId, accountName, region);
+            return new NewRelicAccountResourceData(id, name, resourceType, systemData, organizationId, accountId, accountName, region);
         }
 
         /// <summary> Initializes a new instance of NewRelicMonitorResourceData. </summary>
@@ -52,14 +52,14 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
         /// <param name="orgCreationSource"> Source of org creation. </param>
         /// <param name="accountCreationSource"> Source of account creation. </param>
         /// <returns> A new <see cref="NewRelicObservability.NewRelicMonitorResourceData"/> instance for mocking. </returns>
-        public static NewRelicMonitorResourceData NewRelicMonitorResourceData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, ManagedServiceIdentity identity = null, NewrelicProvisioningState? provisioningState = null, MonitoringStatus? monitoringStatus = null, MarketplaceSubscriptionStatus? marketplaceSubscriptionStatus = null, string marketplaceSubscriptionId = null, NewRelicAccountProperties newRelicAccountProperties = null, UserInfo userInfo = null, PlanData planData = null, LiftrResourceCategory? liftrResourceCategory = null, int? liftrResourcePreference = null, OrgCreationSource? orgCreationSource = null, AccountCreationSource? accountCreationSource = null)
+        public static NewRelicMonitorResourceData NewRelicMonitorResourceData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, ManagedServiceIdentity identity = null, NewrelicProvisioningState? provisioningState = null, MonitoringStatus? monitoringStatus = null, MarketplaceSubscriptionStatus? marketplaceSubscriptionStatus = null, ResourceIdentifier marketplaceSubscriptionId = null, NewRelicAccountProperties newRelicAccountProperties = null, UserInfo userInfo = null, NewRelicPlan planData = null, LiftrResourceCategory? liftrResourceCategory = null, int? liftrResourcePreference = null, OrgCreationSource? orgCreationSource = null, AccountCreationSource? accountCreationSource = null)
         {
             tags ??= new Dictionary<string, string>();
 
             return new NewRelicMonitorResourceData(id, name, resourceType, systemData, tags, location, identity, provisioningState, monitoringStatus, marketplaceSubscriptionStatus, marketplaceSubscriptionId, newRelicAccountProperties, userInfo, planData, liftrResourceCategory, liftrResourcePreference, orgCreationSource, accountCreationSource);
         }
 
-        /// <summary> Initializes a new instance of OrganizationResource. </summary>
+        /// <summary> Initializes a new instance of NewRelicOrganizationResourceData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -67,13 +67,13 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
         /// <param name="organizationId"> organization id. </param>
         /// <param name="organizationName"> organization name. </param>
         /// <param name="billingSource"> Billing source. </param>
-        /// <returns> A new <see cref="Models.OrganizationResource"/> instance for mocking. </returns>
-        public static OrganizationResource OrganizationResource(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string organizationId = null, string organizationName = null, BillingSource? billingSource = null)
+        /// <returns> A new <see cref="Models.NewRelicOrganizationResourceData"/> instance for mocking. </returns>
+        public static NewRelicOrganizationResourceData NewRelicOrganizationResourceData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string organizationId = null, string organizationName = null, BillingSource? billingSource = null)
         {
-            return new OrganizationResource(id, name, resourceType, systemData, organizationId, organizationName, billingSource);
+            return new NewRelicOrganizationResourceData(id, name, resourceType, systemData, organizationId, organizationName, billingSource);
         }
 
-        /// <summary> Initializes a new instance of PlanDataResource. </summary>
+        /// <summary> Initializes a new instance of NewRelicPlanResourceData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -81,20 +81,20 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
         /// <param name="planData"> Plan details. </param>
         /// <param name="orgCreationSource"> Source of org creation. </param>
         /// <param name="accountCreationSource"> Source of account creation. </param>
-        /// <returns> A new <see cref="Models.PlanDataResource"/> instance for mocking. </returns>
-        public static PlanDataResource PlanDataResource(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, PlanData planData = null, OrgCreationSource? orgCreationSource = null, AccountCreationSource? accountCreationSource = null)
+        /// <returns> A new <see cref="Models.NewRelicPlanResourceData"/> instance for mocking. </returns>
+        public static NewRelicPlanResourceData NewRelicPlanResourceData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, NewRelicPlan planData = null, OrgCreationSource? orgCreationSource = null, AccountCreationSource? accountCreationSource = null)
         {
-            return new PlanDataResource(id, name, resourceType, systemData, planData, orgCreationSource, accountCreationSource);
+            return new NewRelicPlanResourceData(id, name, resourceType, systemData, planData, orgCreationSource, accountCreationSource);
         }
 
-        /// <summary> Initializes a new instance of MetricsStatusResponse. </summary>
+        /// <summary> Initializes a new instance of MetricsStatusResult. </summary>
         /// <param name="azureResourceIds"> Azure resource IDs. </param>
-        /// <returns> A new <see cref="Models.MetricsStatusResponse"/> instance for mocking. </returns>
-        public static MetricsStatusResponse MetricsStatusResponse(IEnumerable<string> azureResourceIds = null)
+        /// <returns> A new <see cref="Models.MetricsStatusResult"/> instance for mocking. </returns>
+        public static MetricsStatusResult MetricsStatusResult(IEnumerable<string> azureResourceIds = null)
         {
             azureResourceIds ??= new List<string>();
 
-            return new MetricsStatusResponse(azureResourceIds?.ToList());
+            return new MetricsStatusResult(azureResourceIds?.ToList());
         }
 
         /// <summary> Initializes a new instance of AppServiceInfo. </summary>
@@ -112,21 +112,21 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
         /// <param name="agentVersion"> Version of the NewRelic agent installed on the VM. </param>
         /// <param name="agentStatus"> Status of the NewRelic agent installed on the VM. </param>
         /// <returns> A new <see cref="Models.VmInfo"/> instance for mocking. </returns>
-        public static VmInfo VmInfo(string vmId = null, string agentVersion = null, string agentStatus = null)
+        public static VmInfo VmInfo(ResourceIdentifier vmId = null, string agentVersion = null, string agentStatus = null)
         {
             return new VmInfo(vmId, agentVersion, agentStatus);
         }
 
-        /// <summary> Initializes a new instance of MonitoredResource. </summary>
+        /// <summary> Initializes a new instance of ResourceMonitoredByNewRelic. </summary>
         /// <param name="id"> The ARM id of the resource. </param>
         /// <param name="sendingMetrics"> Flag indicating if resource is sending metrics to NewRelic. </param>
         /// <param name="reasonForMetricsStatus"> Reason for why the resource is sending metrics (or why it is not sending). </param>
         /// <param name="sendingLogs"> Flag indicating if resource is sending logs to NewRelic. </param>
         /// <param name="reasonForLogsStatus"> Reason for why the resource is sending logs (or why it is not sending). </param>
-        /// <returns> A new <see cref="Models.MonitoredResource"/> instance for mocking. </returns>
-        public static MonitoredResource MonitoredResource(string id = null, SendingMetricsStatus? sendingMetrics = null, string reasonForMetricsStatus = null, SendingLogsStatus? sendingLogs = null, string reasonForLogsStatus = null)
+        /// <returns> A new <see cref="Models.ResourceMonitoredByNewRelic"/> instance for mocking. </returns>
+        public static ResourceMonitoredByNewRelic ResourceMonitoredByNewRelic(ResourceIdentifier id = null, SendingMetricsStatus? sendingMetrics = null, string reasonForMetricsStatus = null, SendingLogsStatus? sendingLogs = null, string reasonForLogsStatus = null)
         {
-            return new MonitoredResource(id, sendingMetrics, reasonForMetricsStatus, sendingLogs, reasonForLogsStatus);
+            return new ResourceMonitoredByNewRelic(id, sendingMetrics, reasonForMetricsStatus, sendingLogs, reasonForLogsStatus);
         }
 
         /// <summary> Initializes a new instance of TagRuleData. </summary>

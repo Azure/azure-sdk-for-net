@@ -11,33 +11,33 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.NewRelicObservability.Models
 {
-    public partial class OrganizationResource : IUtf8JsonSerializable
+    public partial class NewRelicPlanResourceData : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(OrganizationId))
+            if (Optional.IsDefined(PlanData))
             {
-                writer.WritePropertyName("organizationId"u8);
-                writer.WriteStringValue(OrganizationId);
+                writer.WritePropertyName("planData"u8);
+                writer.WriteObjectValue(PlanData);
             }
-            if (Optional.IsDefined(OrganizationName))
+            if (Optional.IsDefined(OrgCreationSource))
             {
-                writer.WritePropertyName("organizationName"u8);
-                writer.WriteStringValue(OrganizationName);
+                writer.WritePropertyName("orgCreationSource"u8);
+                writer.WriteStringValue(OrgCreationSource.Value.ToString());
             }
-            if (Optional.IsDefined(BillingSource))
+            if (Optional.IsDefined(AccountCreationSource))
             {
-                writer.WritePropertyName("billingSource"u8);
-                writer.WriteStringValue(BillingSource.Value.ToString());
+                writer.WritePropertyName("accountCreationSource"u8);
+                writer.WriteStringValue(AccountCreationSource.Value.ToString());
             }
             writer.WriteEndObject();
             writer.WriteEndObject();
         }
 
-        internal static OrganizationResource DeserializeOrganizationResource(JsonElement element)
+        internal static NewRelicPlanResourceData DeserializeNewRelicPlanResourceData(JsonElement element)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -47,9 +47,9 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
             string name = default;
             ResourceType type = default;
             Optional<SystemData> systemData = default;
-            Optional<string> organizationId = default;
-            Optional<string> organizationName = default;
-            Optional<BillingSource> billingSource = default;
+            Optional<NewRelicPlan> planData = default;
+            Optional<OrgCreationSource> orgCreationSource = default;
+            Optional<AccountCreationSource> accountCreationSource = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -85,30 +85,38 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.NameEquals("organizationId"u8))
-                        {
-                            organizationId = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("organizationName"u8))
-                        {
-                            organizationName = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("billingSource"u8))
+                        if (property0.NameEquals("planData"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
                                 continue;
                             }
-                            billingSource = new BillingSource(property0.Value.GetString());
+                            planData = NewRelicPlan.DeserializeNewRelicPlan(property0.Value);
+                            continue;
+                        }
+                        if (property0.NameEquals("orgCreationSource"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            orgCreationSource = new OrgCreationSource(property0.Value.GetString());
+                            continue;
+                        }
+                        if (property0.NameEquals("accountCreationSource"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            accountCreationSource = new AccountCreationSource(property0.Value.GetString());
                             continue;
                         }
                     }
                     continue;
                 }
             }
-            return new OrganizationResource(id, name, type, systemData.Value, organizationId.Value, organizationName.Value, Optional.ToNullable(billingSource));
+            return new NewRelicPlanResourceData(id, name, type, systemData.Value, planData.Value, Optional.ToNullable(orgCreationSource), Optional.ToNullable(accountCreationSource));
         }
     }
 }

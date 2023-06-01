@@ -18,14 +18,18 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
             {
                 return null;
             }
-            Optional<string> vmId = default;
+            Optional<ResourceIdentifier> vmId = default;
             Optional<string> agentVersion = default;
             Optional<string> agentStatus = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("vmId"u8))
                 {
-                    vmId = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    vmId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("agentVersion"u8))

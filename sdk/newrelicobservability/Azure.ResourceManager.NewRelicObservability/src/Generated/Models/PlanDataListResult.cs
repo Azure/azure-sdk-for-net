@@ -13,29 +13,29 @@ using Azure.Core;
 namespace Azure.ResourceManager.NewRelicObservability.Models
 {
     /// <summary> Response of get all plan data Operation. </summary>
-    internal partial class PlanDataListResponse
+    internal partial class PlanDataListResult
     {
-        /// <summary> Initializes a new instance of PlanDataListResponse. </summary>
+        /// <summary> Initializes a new instance of PlanDataListResult. </summary>
         /// <param name="value"> The PlanDataResource items on this page. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        internal PlanDataListResponse(IEnumerable<PlanDataResource> value)
+        internal PlanDataListResult(IEnumerable<NewRelicPlanResourceData> value)
         {
             Argument.AssertNotNull(value, nameof(value));
 
             Value = value.ToList();
         }
 
-        /// <summary> Initializes a new instance of PlanDataListResponse. </summary>
+        /// <summary> Initializes a new instance of PlanDataListResult. </summary>
         /// <param name="value"> The PlanDataResource items on this page. </param>
         /// <param name="nextLink"> The link to the next page of items. </param>
-        internal PlanDataListResponse(IReadOnlyList<PlanDataResource> value, Uri nextLink)
+        internal PlanDataListResult(IReadOnlyList<NewRelicPlanResourceData> value, Uri nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
         /// <summary> The PlanDataResource items on this page. </summary>
-        public IReadOnlyList<PlanDataResource> Value { get; }
+        public IReadOnlyList<NewRelicPlanResourceData> Value { get; }
         /// <summary> The link to the next page of items. </summary>
         public Uri NextLink { get; }
     }

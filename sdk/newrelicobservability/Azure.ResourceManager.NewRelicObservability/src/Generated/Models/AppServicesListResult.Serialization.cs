@@ -12,24 +12,24 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.NewRelicObservability.Models
 {
-    internal partial class PlanDataListResponse
+    internal partial class AppServicesListResult
     {
-        internal static PlanDataListResponse DeserializePlanDataListResponse(JsonElement element)
+        internal static AppServicesListResult DeserializeAppServicesListResult(JsonElement element)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            IReadOnlyList<PlanDataResource> value = default;
+            IReadOnlyList<AppServiceInfo> value = default;
             Optional<Uri> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
                 {
-                    List<PlanDataResource> array = new List<PlanDataResource>();
+                    List<AppServiceInfo> array = new List<AppServiceInfo>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(PlanDataResource.DeserializePlanDataResource(item));
+                        array.Add(AppServiceInfo.DeserializeAppServiceInfo(item));
                     }
                     value = array;
                     continue;
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
                     continue;
                 }
             }
-            return new PlanDataListResponse(value, nextLink.Value);
+            return new AppServicesListResult(value, nextLink.Value);
         }
     }
 }

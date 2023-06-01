@@ -12,24 +12,24 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.NewRelicObservability.Models
 {
-    internal partial class AccountsListResponse
+    internal partial class NewRelicAccountsListResult
     {
-        internal static AccountsListResponse DeserializeAccountsListResponse(JsonElement element)
+        internal static NewRelicAccountsListResult DeserializeNewRelicAccountsListResult(JsonElement element)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            IReadOnlyList<AccountResource> value = default;
+            IReadOnlyList<NewRelicAccountResourceData> value = default;
             Optional<Uri> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
                 {
-                    List<AccountResource> array = new List<AccountResource>();
+                    List<NewRelicAccountResourceData> array = new List<NewRelicAccountResourceData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AccountResource.DeserializeAccountResource(item));
+                        array.Add(NewRelicAccountResourceData.DeserializeNewRelicAccountResourceData(item));
                     }
                     value = array;
                     continue;
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
                     continue;
                 }
             }
-            return new AccountsListResponse(value, nextLink.Value);
+            return new NewRelicAccountsListResult(value, nextLink.Value);
         }
     }
 }

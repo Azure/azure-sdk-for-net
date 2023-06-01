@@ -10,15 +10,15 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.NewRelicObservability.Models
 {
-    public partial class MonitoredResource
+    public partial class ResourceMonitoredByNewRelic
     {
-        internal static MonitoredResource DeserializeMonitoredResource(JsonElement element)
+        internal static ResourceMonitoredByNewRelic DeserializeResourceMonitoredByNewRelic(JsonElement element)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<string> id = default;
+            Optional<ResourceIdentifier> id = default;
             Optional<SendingMetricsStatus> sendingMetrics = default;
             Optional<string> reasonForMetricsStatus = default;
             Optional<SendingLogsStatus> sendingLogs = default;
@@ -27,7 +27,11 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
             {
                 if (property.NameEquals("id"u8))
                 {
-                    id = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    id = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("sendingMetrics"u8))
@@ -59,7 +63,7 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
                     continue;
                 }
             }
-            return new MonitoredResource(id.Value, Optional.ToNullable(sendingMetrics), reasonForMetricsStatus.Value, Optional.ToNullable(sendingLogs), reasonForLogsStatus.Value);
+            return new ResourceMonitoredByNewRelic(id.Value, Optional.ToNullable(sendingMetrics), reasonForMetricsStatus.Value, Optional.ToNullable(sendingLogs), reasonForLogsStatus.Value);
         }
     }
 }

@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
         /// <summary> Organization id. </summary>
         public string OrganizationId { get; set; }
         /// <summary> Plan details. </summary>
-        public PlanData PlanData { get; set; }
+        public NewRelicPlan PlanData { get; set; }
         /// <summary> User Email. </summary>
         public string UserEmail { get; }
     }

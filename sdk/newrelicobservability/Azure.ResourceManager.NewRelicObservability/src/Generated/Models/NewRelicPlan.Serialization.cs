@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.NewRelicObservability.Models
 {
-    public partial class PlanData : IUtf8JsonSerializable
+    public partial class NewRelicPlan : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
             writer.WriteEndObject();
         }
 
-        internal static PlanData DeserializePlanData(JsonElement element)
+        internal static NewRelicPlan DeserializeNewRelicPlan(JsonElement element)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
                     continue;
                 }
             }
-            return new PlanData(Optional.ToNullable(usageType), Optional.ToNullable(billingCycle), planDetails.Value, Optional.ToNullable(effectiveDate));
+            return new NewRelicPlan(Optional.ToNullable(usageType), Optional.ToNullable(billingCycle), planDetails.Value, Optional.ToNullable(effectiveDate));
         }
     }
 }

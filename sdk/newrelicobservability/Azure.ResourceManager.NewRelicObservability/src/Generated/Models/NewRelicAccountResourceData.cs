@@ -11,14 +11,14 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.NewRelicObservability.Models
 {
     /// <summary> The details of a account resource. </summary>
-    public partial class AccountResource : ResourceData
+    public partial class NewRelicAccountResourceData : ResourceData
     {
-        /// <summary> Initializes a new instance of AccountResource. </summary>
-        public AccountResource()
+        /// <summary> Initializes a new instance of NewRelicAccountResourceData. </summary>
+        public NewRelicAccountResourceData()
         {
         }
 
-        /// <summary> Initializes a new instance of AccountResource. </summary>
+        /// <summary> Initializes a new instance of NewRelicAccountResourceData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
         /// <param name="accountId"> account id. </param>
         /// <param name="accountName"> account name. </param>
         /// <param name="region"> region. </param>
-        internal AccountResource(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string organizationId, string accountId, string accountName, string region) : base(id, name, resourceType, systemData)
+        internal NewRelicAccountResourceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string organizationId, string accountId, string accountName, string region) : base(id, name, resourceType, systemData)
         {
             OrganizationId = organizationId;
             AccountId = accountId;

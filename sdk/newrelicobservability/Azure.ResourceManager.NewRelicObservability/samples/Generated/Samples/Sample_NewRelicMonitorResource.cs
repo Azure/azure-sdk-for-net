@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.NewRelicObservability.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task GetNewRelicMonitorResources_MonitorsListBySubscriptionMaximumSetGen()
         {
-            // Generated from example definition: specification/newrelic/resource-manager/NewRelic.Observability/preview/2022-07-01-preview/examples/Monitors_ListBySubscription_MaximumSet_Gen.json
+            // Generated from example definition: specification/newrelic/resource-manager/NewRelic.Observability/stable/2022-07-01/examples/Monitors_ListBySubscription_MaximumSet_Gen.json
             // this example is just showing the usage of "Monitors_ListBySubscription" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.NewRelicObservability.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Get_MonitorsGetMaximumSetGen()
         {
-            // Generated from example definition: specification/newrelic/resource-manager/NewRelic.Observability/preview/2022-07-01-preview/examples/Monitors_Get_MaximumSet_Gen.json
+            // Generated from example definition: specification/newrelic/resource-manager/NewRelic.Observability/stable/2022-07-01/examples/Monitors_Get_MaximumSet_Gen.json
             // this example is just showing the usage of "Monitors_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.NewRelicObservability.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Update_MonitorsUpdateMaximumSetGen()
         {
-            // Generated from example definition: specification/newrelic/resource-manager/NewRelic.Observability/preview/2022-07-01-preview/examples/Monitors_Update_MaximumSet_Gen.json
+            // Generated from example definition: specification/newrelic/resource-manager/NewRelic.Observability/stable/2022-07-01/examples/Monitors_Update_MaximumSet_Gen.json
             // this example is just showing the usage of "Monitors_Update" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -144,7 +144,7 @@ namespace Azure.ResourceManager.NewRelicObservability.Samples
                     PhoneNumber = "krf",
                     Country = "hslqnwdanrconqyekwbnttaetv",
                 },
-                PlanData = new PlanData()
+                PlanData = new NewRelicPlan()
                 {
                     UsageType = UsageType.Payg,
                     BillingCycle = BillingCycle.Yearly,
@@ -168,7 +168,7 @@ namespace Azure.ResourceManager.NewRelicObservability.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Delete_MonitorsDeleteMaximumSetGen()
         {
-            // Generated from example definition: specification/newrelic/resource-manager/NewRelic.Observability/preview/2022-07-01-preview/examples/Monitors_Delete_MaximumSet_Gen.json
+            // Generated from example definition: specification/newrelic/resource-manager/NewRelic.Observability/stable/2022-07-01/examples/Monitors_Delete_MaximumSet_Gen.json
             // this example is just showing the usage of "Monitors_Delete" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -196,7 +196,7 @@ namespace Azure.ResourceManager.NewRelicObservability.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Delete_MonitorsDeleteMinimumSetGen()
         {
-            // Generated from example definition: specification/newrelic/resource-manager/NewRelic.Observability/preview/2022-07-01-preview/examples/Monitors_Delete_MinimumSet_Gen.json
+            // Generated from example definition: specification/newrelic/resource-manager/NewRelic.Observability/stable/2022-07-01/examples/Monitors_Delete_MinimumSet_Gen.json
             // this example is just showing the usage of "Monitors_Delete" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -224,7 +224,7 @@ namespace Azure.ResourceManager.NewRelicObservability.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task GetMetricRules_MonitorsGetMetricRulesMaximumSetGen()
         {
-            // Generated from example definition: specification/newrelic/resource-manager/NewRelic.Observability/preview/2022-07-01-preview/examples/Monitors_GetMetricRules_MaximumSet_Gen.json
+            // Generated from example definition: specification/newrelic/resource-manager/NewRelic.Observability/stable/2022-07-01/examples/Monitors_GetMetricRules_MaximumSet_Gen.json
             // this example is just showing the usage of "Monitors_GetMetricRules" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -252,7 +252,7 @@ namespace Azure.ResourceManager.NewRelicObservability.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task GetMetricRules_MonitorsGetMetricRulesMinimumSetGen()
         {
-            // Generated from example definition: specification/newrelic/resource-manager/NewRelic.Observability/preview/2022-07-01-preview/examples/Monitors_GetMetricRules_MinimumSet_Gen.json
+            // Generated from example definition: specification/newrelic/resource-manager/NewRelic.Observability/stable/2022-07-01/examples/Monitors_GetMetricRules_MinimumSet_Gen.json
             // this example is just showing the usage of "Monitors_GetMetricRules" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -280,7 +280,7 @@ namespace Azure.ResourceManager.NewRelicObservability.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task GetMetricStatus_MonitorsGetMetricStatusMaximumSetGen()
         {
-            // Generated from example definition: specification/newrelic/resource-manager/NewRelic.Observability/preview/2022-07-01-preview/examples/Monitors_GetMetricStatus_MaximumSet_Gen.json
+            // Generated from example definition: specification/newrelic/resource-manager/NewRelic.Observability/stable/2022-07-01/examples/Monitors_GetMetricStatus_MaximumSet_Gen.json
             // this example is just showing the usage of "Monitors_GetMetricStatus" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -304,7 +304,7 @@ namespace Azure.ResourceManager.NewRelicObservability.Samples
 "enfghpfw"
 },
             };
-            MetricsStatusResponse result = await newRelicMonitorResource.GetMetricStatusAsync(content);
+            MetricsStatusResult result = await newRelicMonitorResource.GetMetricStatusAsync(content);
 
             Console.WriteLine($"Succeeded: {result}");
         }
@@ -314,7 +314,7 @@ namespace Azure.ResourceManager.NewRelicObservability.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task GetMetricStatus_MonitorsGetMetricStatusMinimumSetGen()
         {
-            // Generated from example definition: specification/newrelic/resource-manager/NewRelic.Observability/preview/2022-07-01-preview/examples/Monitors_GetMetricStatus_MinimumSet_Gen.json
+            // Generated from example definition: specification/newrelic/resource-manager/NewRelic.Observability/stable/2022-07-01/examples/Monitors_GetMetricStatus_MinimumSet_Gen.json
             // this example is just showing the usage of "Monitors_GetMetricStatus" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -332,7 +332,7 @@ namespace Azure.ResourceManager.NewRelicObservability.Samples
 
             // invoke the operation
             MetricsStatusContent content = new MetricsStatusContent("ruxvg@xqkmdhrnoo.hlmbpm");
-            MetricsStatusResponse result = await newRelicMonitorResource.GetMetricStatusAsync(content);
+            MetricsStatusResult result = await newRelicMonitorResource.GetMetricStatusAsync(content);
 
             Console.WriteLine($"Succeeded: {result}");
         }
@@ -342,7 +342,7 @@ namespace Azure.ResourceManager.NewRelicObservability.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task GetAppServices_MonitorsListAppServicesMaximumSetGen()
         {
-            // Generated from example definition: specification/newrelic/resource-manager/NewRelic.Observability/preview/2022-07-01-preview/examples/Monitors_ListAppServices_MaximumSet_Gen.json
+            // Generated from example definition: specification/newrelic/resource-manager/NewRelic.Observability/stable/2022-07-01/examples/Monitors_ListAppServices_MaximumSet_Gen.json
             // this example is just showing the usage of "Monitors_ListAppServices" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -379,7 +379,7 @@ namespace Azure.ResourceManager.NewRelicObservability.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task GetAppServices_MonitorsListAppServicesMinimumSetGen()
         {
-            // Generated from example definition: specification/newrelic/resource-manager/NewRelic.Observability/preview/2022-07-01-preview/examples/Monitors_ListAppServices_MinimumSet_Gen.json
+            // Generated from example definition: specification/newrelic/resource-manager/NewRelic.Observability/stable/2022-07-01/examples/Monitors_ListAppServices_MinimumSet_Gen.json
             // this example is just showing the usage of "Monitors_ListAppServices" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -410,7 +410,7 @@ namespace Azure.ResourceManager.NewRelicObservability.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task SwitchBilling_MonitorsSwitchBillingMaximumSetGen()
         {
-            // Generated from example definition: specification/newrelic/resource-manager/NewRelic.Observability/preview/2022-07-01-preview/examples/Monitors_SwitchBilling_MaximumSet_Gen.json
+            // Generated from example definition: specification/newrelic/resource-manager/NewRelic.Observability/stable/2022-07-01/examples/Monitors_SwitchBilling_MaximumSet_Gen.json
             // this example is just showing the usage of "Monitors_SwitchBilling" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -431,7 +431,7 @@ namespace Azure.ResourceManager.NewRelicObservability.Samples
             {
                 AzureResourceId = "enfghpfw",
                 OrganizationId = "k",
-                PlanData = new PlanData()
+                PlanData = new NewRelicPlan()
                 {
                     UsageType = UsageType.Payg,
                     BillingCycle = BillingCycle.Yearly,
@@ -453,7 +453,7 @@ namespace Azure.ResourceManager.NewRelicObservability.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task SwitchBilling_MonitorsSwitchBillingMinimumSetGen()
         {
-            // Generated from example definition: specification/newrelic/resource-manager/NewRelic.Observability/preview/2022-07-01-preview/examples/Monitors_SwitchBilling_MinimumSet_Gen.json
+            // Generated from example definition: specification/newrelic/resource-manager/NewRelic.Observability/stable/2022-07-01/examples/Monitors_SwitchBilling_MinimumSet_Gen.json
             // this example is just showing the usage of "Monitors_SwitchBilling" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -485,7 +485,7 @@ namespace Azure.ResourceManager.NewRelicObservability.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task GetHosts_MonitorsListHostsMaximumSetGen()
         {
-            // Generated from example definition: specification/newrelic/resource-manager/NewRelic.Observability/preview/2022-07-01-preview/examples/Monitors_ListHosts_MaximumSet_Gen.json
+            // Generated from example definition: specification/newrelic/resource-manager/NewRelic.Observability/stable/2022-07-01/examples/Monitors_ListHosts_MaximumSet_Gen.json
             // this example is just showing the usage of "Monitors_ListHosts" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -522,7 +522,7 @@ namespace Azure.ResourceManager.NewRelicObservability.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task GetHosts_MonitorsListHostsMinimumSetGen()
         {
-            // Generated from example definition: specification/newrelic/resource-manager/NewRelic.Observability/preview/2022-07-01-preview/examples/Monitors_ListHosts_MinimumSet_Gen.json
+            // Generated from example definition: specification/newrelic/resource-manager/NewRelic.Observability/stable/2022-07-01/examples/Monitors_ListHosts_MinimumSet_Gen.json
             // this example is just showing the usage of "Monitors_ListHosts" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -559,7 +559,7 @@ namespace Azure.ResourceManager.NewRelicObservability.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task GetMonitoredResources_MonitorsListMonitoredResourcesMaximumSetGen()
         {
-            // Generated from example definition: specification/newrelic/resource-manager/NewRelic.Observability/preview/2022-07-01-preview/examples/Monitors_ListMonitoredResources_MaximumSet_Gen.json
+            // Generated from example definition: specification/newrelic/resource-manager/NewRelic.Observability/stable/2022-07-01/examples/Monitors_ListMonitoredResources_MaximumSet_Gen.json
             // this example is just showing the usage of "Monitors_ListMonitoredResources" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -576,7 +576,7 @@ namespace Azure.ResourceManager.NewRelicObservability.Samples
             NewRelicMonitorResource newRelicMonitorResource = client.GetNewRelicMonitorResource(newRelicMonitorResourceId);
 
             // invoke the operation and iterate over the result
-            await foreach (MonitoredResource item in newRelicMonitorResource.GetMonitoredResourcesAsync())
+            await foreach (ResourceMonitoredByNewRelic item in newRelicMonitorResource.GetMonitoredResourcesAsync())
             {
                 Console.WriteLine($"Succeeded: {item}");
             }
@@ -589,7 +589,7 @@ namespace Azure.ResourceManager.NewRelicObservability.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task GetMonitoredResources_MonitorsListMonitoredResourcesMinimumSetGen()
         {
-            // Generated from example definition: specification/newrelic/resource-manager/NewRelic.Observability/preview/2022-07-01-preview/examples/Monitors_ListMonitoredResources_MinimumSet_Gen.json
+            // Generated from example definition: specification/newrelic/resource-manager/NewRelic.Observability/stable/2022-07-01/examples/Monitors_ListMonitoredResources_MinimumSet_Gen.json
             // this example is just showing the usage of "Monitors_ListMonitoredResources" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -606,7 +606,7 @@ namespace Azure.ResourceManager.NewRelicObservability.Samples
             NewRelicMonitorResource newRelicMonitorResource = client.GetNewRelicMonitorResource(newRelicMonitorResourceId);
 
             // invoke the operation and iterate over the result
-            await foreach (MonitoredResource item in newRelicMonitorResource.GetMonitoredResourcesAsync())
+            await foreach (ResourceMonitoredByNewRelic item in newRelicMonitorResource.GetMonitoredResourcesAsync())
             {
                 Console.WriteLine($"Succeeded: {item}");
             }
@@ -619,7 +619,7 @@ namespace Azure.ResourceManager.NewRelicObservability.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task VmHostPayload_MonitorsVmHostPayloadMaximumSetGen()
         {
-            // Generated from example definition: specification/newrelic/resource-manager/NewRelic.Observability/preview/2022-07-01-preview/examples/Monitors_VmHostPayload_MaximumSet_Gen.json
+            // Generated from example definition: specification/newrelic/resource-manager/NewRelic.Observability/stable/2022-07-01/examples/Monitors_VmHostPayload_MaximumSet_Gen.json
             // this example is just showing the usage of "Monitors_VmHostPayload" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -646,7 +646,7 @@ namespace Azure.ResourceManager.NewRelicObservability.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task VmHostPayload_MonitorsVmHostPayloadMinimumSetGen()
         {
-            // Generated from example definition: specification/newrelic/resource-manager/NewRelic.Observability/preview/2022-07-01-preview/examples/Monitors_VmHostPayload_MinimumSet_Gen.json
+            // Generated from example definition: specification/newrelic/resource-manager/NewRelic.Observability/stable/2022-07-01/examples/Monitors_VmHostPayload_MinimumSet_Gen.json
             // this example is just showing the usage of "Monitors_VmHostPayload" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line

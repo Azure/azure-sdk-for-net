@@ -11,14 +11,14 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.NewRelicObservability.Models
 {
     /// <summary> The details of a Organization resource. </summary>
-    public partial class OrganizationResource : ResourceData
+    public partial class NewRelicOrganizationResourceData : ResourceData
     {
-        /// <summary> Initializes a new instance of OrganizationResource. </summary>
-        public OrganizationResource()
+        /// <summary> Initializes a new instance of NewRelicOrganizationResourceData. </summary>
+        public NewRelicOrganizationResourceData()
         {
         }
 
-        /// <summary> Initializes a new instance of OrganizationResource. </summary>
+        /// <summary> Initializes a new instance of NewRelicOrganizationResourceData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
         /// <param name="organizationId"> organization id. </param>
         /// <param name="organizationName"> organization name. </param>
         /// <param name="billingSource"> Billing source. </param>
-        internal OrganizationResource(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string organizationId, string organizationName, BillingSource? billingSource) : base(id, name, resourceType, systemData)
+        internal NewRelicOrganizationResourceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string organizationId, string organizationName, BillingSource? billingSource) : base(id, name, resourceType, systemData)
         {
             OrganizationId = organizationId;
             OrganizationName = organizationName;

@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.NewRelicObservability.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task GetAll_MonitorsListByResourceGroupMaximumSetGen()
         {
-            // Generated from example definition: specification/newrelic/resource-manager/NewRelic.Observability/preview/2022-07-01-preview/examples/Monitors_ListByResourceGroup_MaximumSet_Gen.json
+            // Generated from example definition: specification/newrelic/resource-manager/NewRelic.Observability/stable/2022-07-01/examples/Monitors_ListByResourceGroup_MaximumSet_Gen.json
             // this example is just showing the usage of "Monitors_ListByResourceGroup" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.NewRelicObservability.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Get_MonitorsGetMaximumSetGen()
         {
-            // Generated from example definition: specification/newrelic/resource-manager/NewRelic.Observability/preview/2022-07-01-preview/examples/Monitors_Get_MaximumSet_Gen.json
+            // Generated from example definition: specification/newrelic/resource-manager/NewRelic.Observability/stable/2022-07-01/examples/Monitors_Get_MaximumSet_Gen.json
             // this example is just showing the usage of "Monitors_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.NewRelicObservability.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Exists_MonitorsGetMaximumSetGen()
         {
-            // Generated from example definition: specification/newrelic/resource-manager/NewRelic.Observability/preview/2022-07-01-preview/examples/Monitors_Get_MaximumSet_Gen.json
+            // Generated from example definition: specification/newrelic/resource-manager/NewRelic.Observability/stable/2022-07-01/examples/Monitors_Get_MaximumSet_Gen.json
             // this example is just showing the usage of "Monitors_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.NewRelicObservability.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task CreateOrUpdate_MonitorsCreateOrUpdateMaximumSetGen()
         {
-            // Generated from example definition: specification/newrelic/resource-manager/NewRelic.Observability/preview/2022-07-01-preview/examples/Monitors_CreateOrUpdate_MaximumSet_Gen.json
+            // Generated from example definition: specification/newrelic/resource-manager/NewRelic.Observability/stable/2022-07-01/examples/Monitors_CreateOrUpdate_MaximumSet_Gen.json
             // this example is just showing the usage of "Monitors_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -180,7 +180,7 @@ namespace Azure.ResourceManager.NewRelicObservability.Samples
                     PhoneNumber = "krf",
                     Country = "hslqnwdanrconqyekwbnttaetv",
                 },
-                PlanData = new PlanData()
+                PlanData = new NewRelicPlan()
                 {
                     UsageType = UsageType.Payg,
                     BillingCycle = BillingCycle.Yearly,

@@ -83,10 +83,10 @@ namespace Azure.ResourceManager.NewRelicObservability
             Optional<NewrelicProvisioningState> provisioningState = default;
             Optional<MonitoringStatus> monitoringStatus = default;
             Optional<MarketplaceSubscriptionStatus> marketplaceSubscriptionStatus = default;
-            Optional<string> marketplaceSubscriptionId = default;
+            Optional<ResourceIdentifier> marketplaceSubscriptionId = default;
             Optional<NewRelicAccountProperties> newRelicAccountProperties = default;
             Optional<UserInfo> userInfo = default;
-            Optional<PlanData> planData = default;
+            Optional<NewRelicPlan> planData = default;
             Optional<LiftrResourceCategory> liftrResourceCategory = default;
             Optional<int> liftrResourcePreference = default;
             Optional<OrgCreationSource> orgCreationSource = default;
@@ -183,7 +183,11 @@ namespace Azure.ResourceManager.NewRelicObservability
                         }
                         if (property0.NameEquals("marketplaceSubscriptionId"u8))
                         {
-                            marketplaceSubscriptionId = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            marketplaceSubscriptionId = new ResourceIdentifier(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("newRelicAccountProperties"u8))
@@ -210,7 +214,7 @@ namespace Azure.ResourceManager.NewRelicObservability
                             {
                                 continue;
                             }
-                            planData = PlanData.DeserializePlanData(property0.Value);
+                            planData = NewRelicPlan.DeserializeNewRelicPlan(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("liftrResourceCategory"u8))

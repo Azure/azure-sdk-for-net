@@ -13,29 +13,29 @@ using Azure.Core;
 namespace Azure.ResourceManager.NewRelicObservability.Models
 {
     /// <summary> Response of get all accounts Operation. </summary>
-    internal partial class AccountsListResponse
+    internal partial class NewRelicAccountsListResult
     {
-        /// <summary> Initializes a new instance of AccountsListResponse. </summary>
+        /// <summary> Initializes a new instance of NewRelicAccountsListResult. </summary>
         /// <param name="value"> The AccountResource items on this page. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        internal AccountsListResponse(IEnumerable<AccountResource> value)
+        internal NewRelicAccountsListResult(IEnumerable<NewRelicAccountResourceData> value)
         {
             Argument.AssertNotNull(value, nameof(value));
 
             Value = value.ToList();
         }
 
-        /// <summary> Initializes a new instance of AccountsListResponse. </summary>
+        /// <summary> Initializes a new instance of NewRelicAccountsListResult. </summary>
         /// <param name="value"> The AccountResource items on this page. </param>
         /// <param name="nextLink"> The link to the next page of items. </param>
-        internal AccountsListResponse(IReadOnlyList<AccountResource> value, Uri nextLink)
+        internal NewRelicAccountsListResult(IReadOnlyList<NewRelicAccountResourceData> value, Uri nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
         /// <summary> The AccountResource items on this page. </summary>
-        public IReadOnlyList<AccountResource> Value { get; }
+        public IReadOnlyList<NewRelicAccountResourceData> Value { get; }
         /// <summary> The link to the next page of items. </summary>
         public Uri NextLink { get; }
     }

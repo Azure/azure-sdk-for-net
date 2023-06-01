@@ -11,7 +11,7 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.NewRelicObservability.Models
 {
-    public partial class AccountResource : IUtf8JsonSerializable
+    public partial class NewRelicAccountResourceData : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
             writer.WriteEndObject();
         }
 
-        internal static AccountResource DeserializeAccountResource(JsonElement element)
+        internal static NewRelicAccountResourceData DeserializeNewRelicAccountResourceData(JsonElement element)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
                     continue;
                 }
             }
-            return new AccountResource(id, name, type, systemData.Value, organizationId.Value, accountId.Value, accountName.Value, region.Value);
+            return new NewRelicAccountResourceData(id, name, type, systemData.Value, organizationId.Value, accountId.Value, accountName.Value, region.Value);
         }
     }
 }

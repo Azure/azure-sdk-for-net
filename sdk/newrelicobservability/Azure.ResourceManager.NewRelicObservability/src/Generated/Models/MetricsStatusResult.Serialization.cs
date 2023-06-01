@@ -11,9 +11,9 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.NewRelicObservability.Models
 {
-    public partial class MetricsStatusResponse
+    public partial class MetricsStatusResult
     {
-        internal static MetricsStatusResponse DeserializeMetricsStatusResponse(JsonElement element)
+        internal static MetricsStatusResult DeserializeMetricsStatusResult(JsonElement element)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
                     continue;
                 }
             }
-            return new MetricsStatusResponse(Optional.ToList(azureResourceIds));
+            return new MetricsStatusResult(Optional.ToList(azureResourceIds));
         }
     }
 }

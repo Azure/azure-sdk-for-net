@@ -12,24 +12,24 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.NewRelicObservability.Models
 {
-    internal partial class AppServicesListResponse
+    internal partial class MonitoredResourceListResult
     {
-        internal static AppServicesListResponse DeserializeAppServicesListResponse(JsonElement element)
+        internal static MonitoredResourceListResult DeserializeMonitoredResourceListResult(JsonElement element)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            IReadOnlyList<AppServiceInfo> value = default;
+            IReadOnlyList<ResourceMonitoredByNewRelic> value = default;
             Optional<Uri> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
                 {
-                    List<AppServiceInfo> array = new List<AppServiceInfo>();
+                    List<ResourceMonitoredByNewRelic> array = new List<ResourceMonitoredByNewRelic>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AppServiceInfo.DeserializeAppServiceInfo(item));
+                        array.Add(ResourceMonitoredByNewRelic.DeserializeResourceMonitoredByNewRelic(item));
                     }
                     value = array;
                     continue;
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
                     continue;
                 }
             }
-            return new AppServicesListResponse(value, nextLink.Value);
+            return new MonitoredResourceListResult(value, nextLink.Value);
         }
     }
 }

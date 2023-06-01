@@ -8,12 +8,14 @@ csharp: true
 library-name: Newrelic
 namespace: Azure.ResourceManager.NewRelicObservability
 require: https://github.com/Azure/azure-rest-api-specs/blob/fd0b301360d7f83dee9dec5afe3fff77b90b79f6/specification/newrelic/resource-manager/readme.md
-tag: package-2022-07-01-preview
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
 skip-csproj: true
 modelerfour:
   flatten-payloads: false
+
+# mgmt-debug:
+#   show-serialized-names: true
 
 format-by-name-rules:
   'tenantId': 'uuid'
@@ -46,23 +48,49 @@ rename-rules:
   Etag: ETag|etag
 
 rename-mapping:
+    AccountResource: NewRelicAccountResourceData
+    AccountsListResponse: NewRelicAccountsListResult
     Agent: NewrelicAgent
+    AgentData.ArcResourceId: -|arm-id
+    AgentData.ArcVmUuid: -|uuid
+    AppServicesListResponse: AppServicesListResult
+    AzureStorageBlobContainerEndpointProperties: StorageBlobContainerEndpointProperties
+    AzureStorageBlobContainerNewrelicEndpointProperties.StorageAccountResourceId: -|arm-id
     Endpoint: NewrelicEndpoint
     JobDefinitionData: NewrelicJobDefinitionData
     JobRun: NewrelicJobRun
-    ProvisioningState: NewrelicProvisioningState
-    Project: NewrelicProject
-    StorageMover: NewrelicStorageMover
-    AzureStorageBlobContainerEndpointProperties: StorageBlobContainerEndpointProperties
-    AgentData.ArcResourceId: -|arm-id
-    AgentData.ArcVmUuid: -|uuid
     JobDefinitionData.AgentResourceId: -|arm-id
     JobDefinitionData.LatestJobRunResourceId: -|arm-id
     JobDefinitionData.SourceResourceId: -|arm-id
     JobDefinitionData.TargetResourceId: -|arm-id
     JobRunData.AgentResourceId: -|arm-id
     JobRunData.SourceResourceId: -|arm-id
+    NewRelicMonitorResource.properties.marketplaceSubscriptionId: -|arm-id
+    MetricsStatusResponse: MetricsStatusResult
+    MonitoredResource: ResourceMonitoredByNewRelic
+    MonitoredResource.id: -|arm-id
+    MonitoredResourceListResponse: MonitoredResourceListResult
+    MonitoringStatus.Disabled: IsDisabled
+    MonitoringStatus.Enabled: IsEnabled
     NewrelicAgentData.LocalIPAddress: -|ip-address
-    AzureStorageBlobContainerNewrelicEndpointProperties.StorageAccountResourceId: -|arm-id
+    OrganizationsListResponse: OrganizationsListResult
+    ProvisioningState: NewrelicProvisioningState
+    Project: NewrelicProject
+    PlanDataListResponse: PlanDataListResult
+    PlanData: NewRelicPlan
+    PlanDataResource: NewRelicPlanResourceData
+    OrganizationResource: NewRelicOrganizationResourceData
+    SendAadLogsStatus.Disabled: IsDisabled
+    SendAadLogsStatus.Enabled: IsEnabled
+    SendingLogsStatus.Disabled: IsDisabled
+    SendingLogsStatus.Enabled: IsEnabled
+    SendActivityLogsStatus.Disabled: IsDisabled
+    SendActivityLogsStatus.Enabled: IsEnabled
+    SendingMetricsStatus.Disabled: IsDisabled
+    SendingMetricsStatus.Enabled: IsEnabled
+    SendSubscriptionLogsStatus.Disabled: IsDisabled
+    SendSubscriptionLogsStatus.Enabled: IsEnabled
+    StorageMover: NewrelicStorageMover
+    VMInfo.vmId: -|arm-id
 
 ```

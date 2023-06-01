@@ -12,24 +12,24 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.NewRelicObservability.Models
 {
-    internal partial class OrganizationsListResponse
+    internal partial class OrganizationsListResult
     {
-        internal static OrganizationsListResponse DeserializeOrganizationsListResponse(JsonElement element)
+        internal static OrganizationsListResult DeserializeOrganizationsListResult(JsonElement element)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            IReadOnlyList<OrganizationResource> value = default;
+            IReadOnlyList<NewRelicOrganizationResourceData> value = default;
             Optional<Uri> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
                 {
-                    List<OrganizationResource> array = new List<OrganizationResource>();
+                    List<NewRelicOrganizationResourceData> array = new List<NewRelicOrganizationResourceData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(OrganizationResource.DeserializeOrganizationResource(item));
+                        array.Add(NewRelicOrganizationResourceData.DeserializeNewRelicOrganizationResourceData(item));
                     }
                     value = array;
                     continue;
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
                     continue;
                 }
             }
-            return new OrganizationsListResponse(value, nextLink.Value);
+            return new OrganizationsListResult(value, nextLink.Value);
         }
     }
 }

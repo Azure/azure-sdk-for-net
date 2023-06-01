@@ -10,19 +10,19 @@ using System;
 namespace Azure.ResourceManager.NewRelicObservability.Models
 {
     /// <summary> Plan data of NewRelic Monitor resource. </summary>
-    public partial class PlanData
+    public partial class NewRelicPlan
     {
-        /// <summary> Initializes a new instance of PlanData. </summary>
-        public PlanData()
+        /// <summary> Initializes a new instance of NewRelicPlan. </summary>
+        public NewRelicPlan()
         {
         }
 
-        /// <summary> Initializes a new instance of PlanData. </summary>
+        /// <summary> Initializes a new instance of NewRelicPlan. </summary>
         /// <param name="usageType"> Different usage type like PAYG/COMMITTED. this could be enum. </param>
         /// <param name="billingCycle"> Different billing cycles like MONTHLY/WEEKLY. this could be enum. </param>
         /// <param name="planDetails"> plan id as published by NewRelic. </param>
         /// <param name="effectiveOn"> date when plan was applied. </param>
-        internal PlanData(UsageType? usageType, BillingCycle? billingCycle, string planDetails, DateTimeOffset? effectiveOn)
+        internal NewRelicPlan(UsageType? usageType, BillingCycle? billingCycle, string planDetails, DateTimeOffset? effectiveOn)
         {
             UsageType = usageType;
             BillingCycle = billingCycle;

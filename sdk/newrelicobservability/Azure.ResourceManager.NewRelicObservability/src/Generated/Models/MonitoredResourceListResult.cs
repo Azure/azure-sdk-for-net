@@ -13,29 +13,29 @@ using Azure.Core;
 namespace Azure.ResourceManager.NewRelicObservability.Models
 {
     /// <summary> List of all the resources being monitored by NewRelic monitor resource. </summary>
-    internal partial class MonitoredResourceListResponse
+    internal partial class MonitoredResourceListResult
     {
-        /// <summary> Initializes a new instance of MonitoredResourceListResponse. </summary>
+        /// <summary> Initializes a new instance of MonitoredResourceListResult. </summary>
         /// <param name="value"> The MonitoredResource items on this page. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        internal MonitoredResourceListResponse(IEnumerable<MonitoredResource> value)
+        internal MonitoredResourceListResult(IEnumerable<ResourceMonitoredByNewRelic> value)
         {
             Argument.AssertNotNull(value, nameof(value));
 
             Value = value.ToList();
         }
 
-        /// <summary> Initializes a new instance of MonitoredResourceListResponse. </summary>
+        /// <summary> Initializes a new instance of MonitoredResourceListResult. </summary>
         /// <param name="value"> The MonitoredResource items on this page. </param>
         /// <param name="nextLink"> The link to the next page of items. </param>
-        internal MonitoredResourceListResponse(IReadOnlyList<MonitoredResource> value, Uri nextLink)
+        internal MonitoredResourceListResult(IReadOnlyList<ResourceMonitoredByNewRelic> value, Uri nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
         /// <summary> The MonitoredResource items on this page. </summary>
-        public IReadOnlyList<MonitoredResource> Value { get; }
+        public IReadOnlyList<ResourceMonitoredByNewRelic> Value { get; }
         /// <summary> The link to the next page of items. </summary>
         public Uri NextLink { get; }
     }

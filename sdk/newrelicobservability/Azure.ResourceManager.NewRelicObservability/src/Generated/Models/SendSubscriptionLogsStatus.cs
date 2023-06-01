@@ -22,13 +22,13 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
             _value = value ?? throw new ArgumentNullException(nameof(value));
         }
 
-        private const string EnabledValue = "Enabled";
-        private const string DisabledValue = "Disabled";
+        private const string IsEnabledValue = "Enabled";
+        private const string IsDisabledValue = "Disabled";
 
         /// <summary> Enabled. </summary>
-        public static SendSubscriptionLogsStatus Enabled { get; } = new SendSubscriptionLogsStatus(EnabledValue);
+        public static SendSubscriptionLogsStatus IsEnabled { get; } = new SendSubscriptionLogsStatus(IsEnabledValue);
         /// <summary> Disabled. </summary>
-        public static SendSubscriptionLogsStatus Disabled { get; } = new SendSubscriptionLogsStatus(DisabledValue);
+        public static SendSubscriptionLogsStatus IsDisabled { get; } = new SendSubscriptionLogsStatus(IsDisabledValue);
         /// <summary> Determines if two <see cref="SendSubscriptionLogsStatus"/> values are the same. </summary>
         public static bool operator ==(SendSubscriptionLogsStatus left, SendSubscriptionLogsStatus right) => left.Equals(right);
         /// <summary> Determines if two <see cref="SendSubscriptionLogsStatus"/> values are not the same. </summary>
