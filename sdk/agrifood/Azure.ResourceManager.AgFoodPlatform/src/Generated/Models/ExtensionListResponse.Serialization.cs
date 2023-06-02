@@ -28,7 +28,6 @@ namespace Azure.ResourceManager.AgFoodPlatform.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<ExtensionData> array = new List<ExtensionData>();

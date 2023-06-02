@@ -58,7 +58,6 @@ namespace Azure.ResourceManager.Elastic.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        elasticsearchServiceUrl = null;
                         continue;
                     }
                     elasticsearchServiceUrl = new Uri(property.Value.GetString());
@@ -68,7 +67,6 @@ namespace Azure.ResourceManager.Elastic.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        kibanaServiceUrl = null;
                         continue;
                     }
                     kibanaServiceUrl = new Uri(property.Value.GetString());
@@ -78,7 +76,6 @@ namespace Azure.ResourceManager.Elastic.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        kibanaSsoUrl = null;
                         continue;
                     }
                     kibanaSsoUrl = new Uri(property.Value.GetString());

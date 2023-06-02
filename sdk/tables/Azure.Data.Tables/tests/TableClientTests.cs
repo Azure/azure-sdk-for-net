@@ -511,26 +511,48 @@ namespace Azure.Data.Tables.Tests
             CollectionAssert.Contains(actualSas.Segments, TableName);
         }
 
-        private static IEnumerable<object[]> TableClientsAllCtors()
+        private static IEnumerable<object[]> TableClientsAllCtors(bool useEmulator)
         {
-            var sharedKeyCred = new TableSharedKeyCredential(AccountName, Secret);
-            var tokenCred = new MockCredential();
-            var connString = $"DefaultEndpointsProtocol=https;AccountName={AccountName};AccountKey={Secret};TableEndpoint=https://{AccountName}.table.core.windows.net/;";
-            var sasCred = new AzureSasCredential(signature);
-            var fromTableServiceClient = new TableServiceClient(_url, sharedKeyCred).GetTableClient(TableName);
+            Uri url;
+            string connectionString;
+            TableSharedKeyCredential sharedKeyCred;
 
-            yield return new object[] { new TableClient(connString, TableName) };
-            yield return new object[] { new TableClient(_url, TableName, sharedKeyCred) };
-            yield return new object[] { new TableClient(_url, TableName, tokenCred) };
-            yield return new object[] { new TableClient(_url, sasCred) };
-            yield return new object[] { new TableClient(new Uri($"{_url}?{signature}")) };
+            if (useEmulator)
+            {
+                url = new Uri("http://127.0.0.1:10002/devstoreaccount1");
+                connectionString = "UseDevelopmentStorage=true";
+                sharedKeyCred = new TableSharedKeyCredential("devstoreaccount1", "Eby8vdM02xNOcqFlqUwJPLlmEtlCDXJ1OUzFT50uSRZ6IFsuFq2UVErCz4I6tq/K1SZFPTOtr/KBHBeksoGMGw==");
+            }
+            else
+            {
+                url = _url;
+                connectionString = $"DefaultEndpointsProtocol=https;AccountName={AccountName};AccountKey={Secret};TableEndpoint=https://{AccountName}.table.core.windows.net/;";
+                sharedKeyCred = new TableSharedKeyCredential(AccountName, Secret);
+            }
+
+            var tokenCred = new MockCredential();
+            var sasCred = new AzureSasCredential(signature);
+            var fromTableServiceClient = new TableServiceClient(url, sharedKeyCred).GetTableClient(TableName);
+
+            yield return new object[] { new TableClient(connectionString, TableName) };
+            yield return new object[] { new TableClient(url, TableName, sharedKeyCred) };
+            yield return new object[] { new TableClient(url, TableName, tokenCred) };
+            yield return new object[] { new TableClient(url, sasCred) };
+            yield return new object[] { new TableClient(new Uri($"{url}?{signature}")) };
             yield return new object[] { fromTableServiceClient };
         }
 
-        [TestCaseSource(nameof(TableClientsAllCtors))]
+        [TestCaseSource(nameof(TableClientsAllCtors), new object[] { false })]
         public void UriPropertyIsPopulated(TableClient client)
         {
-            Assert.AreEqual($"{_url}{TableName}", client.Uri.AbsoluteUri);
+            Assert.AreEqual(_urlWithTableName, client.Uri);
+            Assert.That(client.Uri.AbsoluteUri, Does.Not.Contain(signature));
+        }
+
+        [TestCaseSource(nameof(TableClientsAllCtors), new object[] { true })]
+        public void UriPropertyIsPopulatedForEmulator(TableClient client)
+        {
+            Assert.AreEqual(new Uri("http://127.0.0.1:10002/devstoreaccount1/" + TableName), client.Uri);
             Assert.That(client.Uri.AbsoluteUri, Does.Not.Contain(signature));
         }
 

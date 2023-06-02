@@ -77,7 +77,7 @@ public class PluginProcessor : ServiceBusProcessor
         _plugins = plugins;
     }
 
-    protected internal override async Task OnProcessMessageAsync(ProcessMessageEventArgs args)
+    protected override async Task OnProcessMessageAsync(ProcessMessageEventArgs args)
     {
         foreach (var plugin in _plugins)
         {
@@ -107,7 +107,7 @@ public class PluginSessionProcessor : ServiceBusSessionProcessor
         _plugins = plugins;
     }
 
-    protected internal override async Task OnProcessSessionMessageAsync(ProcessSessionMessageEventArgs args)
+    protected override async Task OnProcessSessionMessageAsync(ProcessSessionMessageEventArgs args)
     {
         foreach (var plugin in _plugins)
         {
@@ -117,7 +117,7 @@ public class PluginSessionProcessor : ServiceBusSessionProcessor
         await base.OnProcessSessionMessageAsync(args);
     }
 
-    protected internal override Task OnProcessErrorAsync(ProcessErrorEventArgs args)
+    protected override Task OnProcessErrorAsync(ProcessErrorEventArgs args)
     {
         return Task.CompletedTask;
     }

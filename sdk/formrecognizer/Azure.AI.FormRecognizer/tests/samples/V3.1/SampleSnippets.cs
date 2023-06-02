@@ -73,13 +73,13 @@ namespace Azure.AI.FormRecognizer.Samples
             var credential = new AzureKeyCredential(apiKey);
             var client = new FormTrainingClient(new Uri(endpoint), credential);
 
-            Uri trainingFileUri = new Uri(TestEnvironment.BlobContainerSasUrlV2);
+            Uri trainingFileUri = new Uri(TestEnvironment.BlobContainerSasUrl);
             TrainingOperation trainingOperation = await client.StartTrainingAsync(trainingFileUri, useTrainingLabels: false);
             Response<CustomFormModel> operationResponse = await trainingOperation.WaitForCompletionAsync();
             CustomFormModel model = operationResponse.Value;
 
-            string resourceId = TestEnvironment.TargetResourceId;
-            string resourceRegion = TestEnvironment.TargetResourceRegion;
+            string resourceId = TestEnvironment.ResourceId;
+            string resourceRegion = TestEnvironment.ResourceRegion;
             string modelId = model.ModelId;
             CopyAuthorization authorization = await client.GetCopyAuthorizationAsync(resourceId, resourceRegion);
 

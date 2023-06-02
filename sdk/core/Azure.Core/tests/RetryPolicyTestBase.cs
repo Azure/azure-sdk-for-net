@@ -666,8 +666,8 @@ namespace Azure.Core.Tests
                 : base(
                     maxRetries,
                     mode == RetryMode.Exponential ?
-                        Delay.CreateExponentialDelay(delay, maxDelay) :
-                        Delay.CreateFixedDelay(delay))
+                        DelayStrategy.CreateExponentialDelayStrategy(delay, maxDelay) :
+                        DelayStrategy.CreateFixedDelayStrategy(delay))
             {
             }
 

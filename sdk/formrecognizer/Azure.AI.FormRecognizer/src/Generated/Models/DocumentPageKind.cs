@@ -11,7 +11,7 @@ using System.ComponentModel;
 namespace Azure.AI.FormRecognizer.DocumentAnalysis
 {
     /// <summary> Kind of document page. </summary>
-    internal readonly partial struct DocumentPageKind : IEquatable<DocumentPageKind>
+    public readonly partial struct DocumentPageKind : IEquatable<DocumentPageKind>
     {
         private readonly string _value;
 

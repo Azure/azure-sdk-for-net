@@ -48,7 +48,6 @@ namespace Azure.ResourceManager.Synapse.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     connectVia = SynapseEntityReference.DeserializeSynapseEntityReference(property.Value);
@@ -58,7 +57,6 @@ namespace Azure.ResourceManager.Synapse.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     stagingLinkedService = SynapseEntityReference.DeserializeSynapseEntityReference(property.Value);

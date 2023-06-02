@@ -44,6 +44,24 @@ dotnet add package Azure.Messaging.EventHubs
 ### Authenticate the client
 
 For the Event Hubs client library to interact with an Event Hub, it will need to understand how to connect and authorize with it.  The easiest means for doing so is to use a connection string, which is created automatically when creating an Event Hubs namespace.  If you aren't familiar with using connection strings with Event Hubs, you may wish to follow the step-by-step guide to [get an Event Hubs connection string](https://docs.microsoft.com/azure/event-hubs/event-hubs-get-connection-string).
+
+Once you have a connection string, any of the Event Hubs client types can be created with it:
+
+```C# Snippet:EventHubs_ReadMe_Create_ConnectionString
+var connectionString = "<< CONNECTION STRING FOR THE EVENT HUBS NAMESPACE >>";
+var eventHubName = "<< NAME OF THE EVENT HUB >>";
+
+// It is recommended that you cache the Event Hubs clients for the lifetime of your
+// application, closing or disposing when application ends.  This example disposes
+// after the immediate scope for simplicity.
+
+await using var producer = new EventHubProducerClient(connectionString, eventHubName);
+```
+
+For examples of authenticating the Event Hubs clients with credential types, see [Using an Azure Active Directory (AAD) principal](#using-an-active-directory-principal-with-the-event-hub-clients) or the [Identity and Shared Access Credentials](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/eventhub/Azure.Messaging.EventHubs/samples/Sample06_IdentityAndSharedAccessCredentials.md) sample.
+
+For examples of authenticating the Event Hubs clients for an ASP.NET Core application, see [Registering with ASP.NET Core dependency injection](#registering-with-aspnet-core-dependency-injection).
+
 ## Key concepts
 
 - An **Event Hub client** is the primary interface for developers interacting with the Event Hubs client library.  There are several different Event Hub clients, each dedicated to a specific use of Event Hubs, such as publishing or consuming events.
@@ -85,6 +103,10 @@ Many Event Hub operations take place within the scope of a specific partition.  
 var connectionString = "<< CONNECTION STRING FOR THE EVENT HUBS NAMESPACE >>";
 var eventHubName = "<< NAME OF THE EVENT HUB >>";
 
+// It is recommended that you cache the Event Hubs clients for the lifetime of your
+// application, closing or disposing when application ends.  This example disposes
+// after the immediate scope for simplicity.
+
 await using (var producer = new EventHubProducerClient(connectionString, eventHubName))
 {
     string[] partitionIds = await producer.GetPartitionIdsAsync();
@@ -99,11 +121,19 @@ In order to publish events, you'll need to create an `EventHubProducerClient`.  
 var connectionString = "<< CONNECTION STRING FOR THE EVENT HUBS NAMESPACE >>";
 var eventHubName = "<< NAME OF THE EVENT HUB >>";
 
+// It is recommended that you cache the Event Hubs clients for the lifetime of your
+// application, closing or disposing when application ends.  This example disposes
+// after the immediate scope for simplicity.
+
 await using (var producer = new EventHubProducerClient(connectionString, eventHubName))
 {
     using EventDataBatch eventBatch = await producer.CreateBatchAsync();
-    eventBatch.TryAdd(new EventData(new BinaryData("First")));
-    eventBatch.TryAdd(new EventData(new BinaryData("Second")));
+
+    if ((!eventBatch.TryAdd(new EventData("First"))) ||
+        (!eventBatch.TryAdd(new EventData("Second"))))
+    {
+       throw new ApplicationException("Not all events could be added to the batch!");
+    }
 
     await producer.SendAsync(eventBatch);
 }
@@ -120,6 +150,10 @@ var connectionString = "<< CONNECTION STRING FOR THE EVENT HUBS NAMESPACE >>";
 var eventHubName = "<< NAME OF THE EVENT HUB >>";
 
 string consumerGroup = EventHubConsumerClient.DefaultConsumerGroupName;
+
+// It is recommended that you cache the Event Hubs clients for the lifetime of your
+// application, closing or disposing when application ends.  This example disposes
+// after the immediate scope for simplicity.
 
 await using (var consumer = new EventHubConsumerClient(consumerGroup, connectionString, eventHubName))
 {
@@ -145,6 +179,10 @@ var connectionString = "<< CONNECTION STRING FOR THE EVENT HUBS NAMESPACE >>";
 var eventHubName = "<< NAME OF THE EVENT HUB >>";
 
 string consumerGroup = EventHubConsumerClient.DefaultConsumerGroupName;
+
+// It is recommended that you cache the Event Hubs clients for the lifetime of your
+// application, closing or disposing when application ends.  This example disposes
+// after the immediate scope for simplicity.
 
 await using (var consumer = new EventHubConsumerClient(consumerGroup, connectionString, eventHubName))
 {
@@ -221,7 +259,7 @@ More details can be found in the Event Processor Client [README](https://github.
 
 ### Using an Active Directory principal with the Event Hub clients
 
-The [Azure Identity library](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/identity/Azure.Identity/README.md) provides Azure Active Directory authentication support which can be used for the Azure client libraries, including Event Hubs.
+The [Azure Identity library](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/identity/Azure.Identity/README.md) provides Azure Active Directory (AAD) authentication support which can be used for the Azure client libraries, including Event Hubs.
 
 To make use of an Active Directory principal, one of the available credentials from the `Azure.Identity` library is specified when creating the Event Hubs client.  In addition, the fully qualified Event Hubs namespace and the name of desired Event Hub are supplied in lieu of the Event Hubs connection string.  For illustration, the `EventHubProducerClient` is demonstrated in these examples, but the concept and form are common across clients.
 
@@ -230,17 +268,81 @@ var fullyQualifiedNamespace = "<< FULLY-QUALIFIED EVENT HUBS NAMESPACE (like som
 var eventHubName = "<< NAME OF THE EVENT HUB >>";
 var credential = new DefaultAzureCredential();
 
+// It is recommended that you cache the Event Hubs clients for the lifetime of your
+// application, closing or disposing when application ends.  This example disposes
+// after the immediate scope for simplicity.
+
 await using (var producer = new EventHubProducerClient(fullyQualifiedNamespace, eventHubName, credential))
 {
     using EventDataBatch eventBatch = await producer.CreateBatchAsync();
-    eventBatch.TryAdd(new EventData(new BinaryData("First")));
-    eventBatch.TryAdd(new EventData(new BinaryData("Second")));
+
+    if ((!eventBatch.TryAdd(new EventData("First"))) ||
+        (!eventBatch.TryAdd(new EventData("Second"))))
+    {
+       throw new ApplicationException("Not all events could be added to the batch!");
+    }
 
     await producer.SendAsync(eventBatch);
 }
 ```
 
 When using Azure Active Directory, your principal must be assigned a role which allows access to Event Hubs, such as the `Azure Event Hubs Data Owner` role. For more information about using Azure Active Directory authorization with Event Hubs, please refer to [the associated documentation](https://docs.microsoft.com/azure/event-hubs/authorize-access-azure-active-directory).
+
+### Registering with ASP.NET Core dependency injection
+
+To inject one of the Event Hubs clients as a dependency in an ASP.NET Core application, install the Azure client library integration for ASP.NET Core package.
+
+```dotnetcli
+dotnet add package Microsoft.Extensions.Azure
+```
+
+After installing, register the desired Event Hubs client types in the `Startup.ConfigureServices` method:
+
+```csharp
+public void ConfigureServices(IServiceCollection services)
+{
+    services.AddAzureClients(builder =>
+    {
+        builder.AddEventHubProducerClient(Configuration.GetConnectionString("EventHubs"));
+    });
+  
+    services.AddControllers();
+}
+```
+
+To use the preceding code, add this to the configuration for your application:
+
+```json
+{
+  "ConnectionStrings": {
+    "EventHubs": "<connection_string>"
+  }
+}
+```
+
+For applications that prefer using a shared `Azure.Identity` credential for their clients, registration looks slightly different:
+
+```csharp
+var fullyQualifiedNamespace = "<< FULLY-QUALIFIED EVENT HUBS NAMESPACE (like something.servicebus.windows.net) >>";
+
+public void ConfigureServices(IServiceCollection services)
+{
+    services.AddAzureClients(builder =>
+    {
+        // This will register the EventHubProducerClient using the default credential.
+        builder.AddEventHubProducerClientWithNamespace(fullyQualifiedNamespace);
+
+        // By default, DefaultAzureCredential is used, which is likely desired for most
+        // scenarios. If you need to restrict to a specific credential instance, you could
+        // register that instance as the default credential instead.
+        builder.UseCredential(new ManagedIdentityCredential());
+    });
+  
+    services.AddControllers();
+}
+```
+
+For more details, see [Dependency injection with the Azure SDK for .NET](https://docs.microsoft.com/dotnet/azure/sdk/dependency-injection).
 
 ## Troubleshooting
 

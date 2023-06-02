@@ -186,7 +186,6 @@ namespace Azure.ResourceManager.Hci
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     location = new AzureLocation(property.Value.GetString());
@@ -211,7 +210,6 @@ namespace Azure.ResourceManager.Hci
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
@@ -230,7 +228,6 @@ namespace Azure.ResourceManager.Hci
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             provisioningState = new HciProvisioningState(property0.Value.GetString());
@@ -240,7 +237,6 @@ namespace Azure.ResourceManager.Hci
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             installedDate = property0.Value.GetDateTimeOffset("O");
@@ -255,7 +251,6 @@ namespace Azure.ResourceManager.Hci
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             state = new HciUpdateState(property0.Value.GetString());
@@ -265,7 +260,6 @@ namespace Azure.ResourceManager.Hci
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             List<UpdatePrerequisite> array = new List<UpdatePrerequisite>();
@@ -280,7 +274,6 @@ namespace Azure.ResourceManager.Hci
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             List<HciPackageVersionInfo> array = new List<HciPackageVersionInfo>();
@@ -295,7 +288,6 @@ namespace Azure.ResourceManager.Hci
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             rebootRequired = new HciNodeRebootRequirement(property0.Value.GetString());
@@ -305,7 +297,6 @@ namespace Azure.ResourceManager.Hci
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             healthState = new HciHealthState(property0.Value.GetString());
@@ -315,7 +306,6 @@ namespace Azure.ResourceManager.Hci
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             List<HciPrecheckResult> array = new List<HciPrecheckResult>();
@@ -330,7 +320,6 @@ namespace Azure.ResourceManager.Hci
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             healthCheckDate = property0.Value.GetDateTimeOffset("O");
@@ -345,7 +334,6 @@ namespace Azure.ResourceManager.Hci
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             packageSizeInMb = property0.Value.GetSingle();
@@ -375,7 +363,6 @@ namespace Azure.ResourceManager.Hci
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             availabilityType = new HciAvailabilityType(property0.Value.GetString());
@@ -404,7 +391,6 @@ namespace Azure.ResourceManager.Hci
                                 {
                                     if (property1.Value.ValueKind == JsonValueKind.Null)
                                     {
-                                        property1.ThrowNonNullablePropertyIsNull();
                                         continue;
                                     }
                                     progressPercentage = property1.Value.GetSingle();

@@ -29,7 +29,6 @@ namespace Azure.ResourceManager.DataLakeStore.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     unit = property.Value.GetString().ToDataLakeStoreUsageUnit();
@@ -39,7 +38,6 @@ namespace Azure.ResourceManager.DataLakeStore.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     id = new ResourceIdentifier(property.Value.GetString());
@@ -49,7 +47,6 @@ namespace Azure.ResourceManager.DataLakeStore.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     currentValue = property.Value.GetInt32();
@@ -59,7 +56,6 @@ namespace Azure.ResourceManager.DataLakeStore.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     limit = property.Value.GetInt32();
@@ -69,7 +65,6 @@ namespace Azure.ResourceManager.DataLakeStore.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     name = DataLakeStoreUsageName.DeserializeDataLakeStoreUsageName(property.Value);

@@ -4,7 +4,6 @@ Run `dotnet build /t:GenerateCode` to generate code.
 
 ``` yaml
 azure-arm: true
-generate-model-factory: false
 library-name: Resources
 namespace: Azure.ResourceManager.Resources
 title: ResourceManagementClient
@@ -89,6 +88,9 @@ rename-rules:
   SSO: Sso
   URI: Uri
   Urls: Uris
+
+models-to-treat-empty-string-as-null:
+  - ArmApplicationPackageSupportUris
 
 directive:
   - remove-operation: checkResourceName

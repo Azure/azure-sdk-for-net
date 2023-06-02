@@ -1,12 +1,11 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using Azure.Communication.JobRouter.Tests.Infrastructure;
+using Azure.Core;
 using Azure.Core.TestFramework;
 using NUnit.Framework;
 
@@ -44,6 +43,7 @@ namespace Azure.Communication.JobRouter.Tests.RouterClients
                     PrioritizationRule = prioritizationRule
                 });
 
+            AddForCleanup(new Task(async () => await routerClient.DeleteClassificationPolicyAsync(classificationPolicyId)));
             Assert.NotNull(createClassificationPolicyResponse.Value);
 
             var createClassificationPolicy = createClassificationPolicyResponse.Value;
@@ -76,7 +76,7 @@ namespace Azure.Communication.JobRouter.Tests.RouterClients
 
             var classificationPolicyName = $"{classificationPolicyId}-Name";
 
-            createClassificationPolicyResponse = await routerClient.UpdateClassificationPolicyAsync(
+            var updateClassificationPolicyResponse = await routerClient.UpdateClassificationPolicyAsync(
                 new UpdateClassificationPolicyOptions(classificationPolicyId)
                 {
                     FallbackQueueId = createQueueResponse.Value.Id,
@@ -86,9 +86,9 @@ namespace Azure.Communication.JobRouter.Tests.RouterClients
                     Name = classificationPolicyName,
                 });
 
-            Assert.NotNull(createClassificationPolicyResponse.Value);
+            Assert.NotNull(updateClassificationPolicyResponse.Value);
 
-            createClassificationPolicy = createClassificationPolicyResponse.Value;
+            createClassificationPolicy = updateClassificationPolicyResponse.Value;
             Assert.DoesNotThrow(() =>
             {
                 var queueSelectors = createClassificationPolicy.QueueSelectors;
@@ -116,7 +116,24 @@ namespace Azure.Communication.JobRouter.Tests.RouterClients
             Assert.IsTrue(!string.IsNullOrWhiteSpace(createClassificationPolicy.FallbackQueueId) && createClassificationPolicy.FallbackQueueId == createQueueResponse.Value.Id);
             Assert.IsFalse(string.IsNullOrWhiteSpace(createClassificationPolicy.Name));
 
-            AddForCleanup(new Task(async () => await routerClient.DeleteClassificationPolicyAsync(classificationPolicyId)));
+            updateClassificationPolicyResponse = await routerClient.UpdateClassificationPolicyAsync(
+                new UpdateClassificationPolicyOptions(classificationPolicyId)
+                {
+                    FallbackQueueId = null,
+                    QueueSelectors = null,
+                    WorkerSelectors = null,
+                    PrioritizationRule = null,
+                    Name = $"{classificationPolicyName}-updated",
+                });
+
+            var updateClassificationPolicy = updateClassificationPolicyResponse.Value;
+            Assert.IsFalse(updateClassificationPolicy.QueueSelectors.Any());
+            Assert.IsFalse(updateClassificationPolicy.WorkerSelectors.Any());
+
+            // TODO: Deleting optional params is not working.  Add these verifications back once SDK supports sending null values:
+            // Assert.IsNull(updateClassificationPolicy.PrioritizationRule);
+            // Assert.IsNull(updateClassificationPolicy.FallbackQueueId);
+            Assert.AreEqual(updateClassificationPolicy.Name, $"{classificationPolicyName}-updated");
         }
 
         [Test]
@@ -153,6 +170,9 @@ namespace Azure.Communication.JobRouter.Tests.RouterClients
                     Name = classificationPolicyName,
                     PrioritizationRule = priorityRule,
                 });
+
+            AddForCleanup(new Task(async () => await routerClient.DeleteClassificationPolicyAsync(classificationPolicyId)));
+
             var getClassificationPolicyResponse = await routerClient.GetClassificationPolicyAsync(classificationPolicyId);
 
             Assert.Null(getClassificationPolicyResponse.Value.FallbackQueueId);
@@ -160,8 +180,6 @@ namespace Azure.Communication.JobRouter.Tests.RouterClients
             Assert.IsEmpty(getClassificationPolicyResponse.Value.QueueSelectors);
             Assert.IsTrue(getClassificationPolicyResponse.Value.PrioritizationRule.GetType() == typeof(StaticRule));
             Assert.IsEmpty(getClassificationPolicyResponse.Value.WorkerSelectors);
-
-            AddForCleanup(new Task(async () => await routerClient.DeleteClassificationPolicyAsync(classificationPolicyId)));
         }
 
         [Test]
@@ -183,6 +201,9 @@ namespace Azure.Communication.JobRouter.Tests.RouterClients
                     Name = classificationPolicyName,
                     QueueSelectors = queueSelectionRule,
                 });
+
+            AddForCleanup(new Task(async () => await routerClient.DeleteClassificationPolicyAsync(classificationPolicyId)));
+
             var getClassificationPolicyResponse =
                 await routerClient.GetClassificationPolicyAsync(classificationPolicyId);
 
@@ -193,8 +214,6 @@ namespace Azure.Communication.JobRouter.Tests.RouterClients
             Assert.NotNull(staticQSelector);
             Assert.Null(getClassificationPolicyResponse.Value.PrioritizationRule);
             Assert.AreEqual(0, getClassificationPolicyResponse.Value.WorkerSelectors.Count);
-
-            AddForCleanup(new Task(async () => await routerClient.DeleteClassificationPolicyAsync(classificationPolicyId)));
         }
 
         [Test]
@@ -213,6 +232,9 @@ namespace Azure.Communication.JobRouter.Tests.RouterClients
                     Name = classificationPolicyName,
                     WorkerSelectors = workerSelectors
                 });
+
+            AddForCleanup(new Task(async () => await routerClient.DeleteClassificationPolicyAsync(classificationPolicyId)));
+
             var getClassificationPolicyResponse =
                 await routerClient.GetClassificationPolicyAsync(classificationPolicyId);
 
@@ -221,8 +243,35 @@ namespace Azure.Communication.JobRouter.Tests.RouterClients
             Assert.Null(getClassificationPolicyResponse.Value.PrioritizationRule);
             Assert.IsEmpty(getClassificationPolicyResponse.Value.QueueSelectors);
             Assert.AreEqual(1, getClassificationPolicyResponse.Value.WorkerSelectors.Count);
+        }
+
+        [Test]
+        public async Task CreateClassificationPolicyAndRemoveAProperty()
+        {
+            RouterAdministrationClient routerClient = CreateRouterAdministrationClientWithConnectionString();
+
+            var classificationPolicyId = GenerateUniqueId($"{nameof(CreateClassificationPolicyAndRemoveAProperty)}-ClassicationPolicy_w_WSelector");
+            var classificationPolicyName = $"Priority-ClassificationPolicy";
+            var workerSelectors = new List<WorkerSelectorAttachment>();
+            var labelSelectorAttachment = new StaticWorkerSelectorAttachment(new WorkerSelector("department", LabelOperator.Equal, new LabelValue("sales")));
+            workerSelectors.Add(labelSelectorAttachment);
+            var createClassificationPolicyResponse = await routerClient.CreateClassificationPolicyAsync(
+                new CreateClassificationPolicyOptions(classificationPolicyId)
+                {
+                    Name = classificationPolicyName,
+                    WorkerSelectors = workerSelectors
+                });
 
             AddForCleanup(new Task(async () => await routerClient.DeleteClassificationPolicyAsync(classificationPolicyId)));
+
+            Assert.False(string.IsNullOrWhiteSpace(createClassificationPolicyResponse.Value.Name));
+
+            var updatedPolicyResponse = await routerClient.UpdateClassificationPolicyAsync(classificationPolicyId,
+                RequestContent.Create(new { Name = (string?)null }));
+
+            var retrievedPolicy = await routerClient.GetClassificationPolicyAsync(classificationPolicyId);
+
+            Assert.True(string.IsNullOrWhiteSpace(retrievedPolicy.Value.Name));
         }
 
         #endregion Classification Policy Tests

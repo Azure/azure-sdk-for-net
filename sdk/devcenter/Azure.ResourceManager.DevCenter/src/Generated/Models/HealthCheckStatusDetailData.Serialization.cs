@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.DevCenter
             Optional<SystemData> systemData = default;
             Optional<DateTimeOffset> startDateTime = default;
             Optional<DateTimeOffset> endDateTime = default;
-            Optional<IReadOnlyList<HealthCheck>> healthChecks = default;
+            Optional<IReadOnlyList<DevCenterHealthCheck>> healthChecks = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -59,7 +59,6 @@ namespace Azure.ResourceManager.DevCenter
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
@@ -78,7 +77,6 @@ namespace Azure.ResourceManager.DevCenter
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             startDateTime = property0.Value.GetDateTimeOffset("O");
@@ -88,7 +86,6 @@ namespace Azure.ResourceManager.DevCenter
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             endDateTime = property0.Value.GetDateTimeOffset("O");
@@ -98,13 +95,12 @@ namespace Azure.ResourceManager.DevCenter
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            List<HealthCheck> array = new List<HealthCheck>();
+                            List<DevCenterHealthCheck> array = new List<DevCenterHealthCheck>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(HealthCheck.DeserializeHealthCheck(item));
+                                array.Add(DevCenterHealthCheck.DeserializeDevCenterHealthCheck(item));
                             }
                             healthChecks = array;
                             continue;

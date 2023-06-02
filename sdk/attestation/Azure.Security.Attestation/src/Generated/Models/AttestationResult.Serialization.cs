@@ -71,7 +71,6 @@ namespace Azure.Security.Attestation
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     iat = property.Value.GetDouble();
@@ -81,7 +80,6 @@ namespace Azure.Security.Attestation
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     exp = property.Value.GetDouble();
@@ -91,7 +89,6 @@ namespace Azure.Security.Attestation
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     nbf = property.Value.GetDouble();
@@ -101,7 +98,6 @@ namespace Azure.Security.Attestation
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     cnf = property.Value.GetObject();
@@ -121,7 +117,6 @@ namespace Azure.Security.Attestation
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     xMsRuntime = property.Value.GetObject();
@@ -131,7 +126,6 @@ namespace Azure.Security.Attestation
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     xMsInittime = property.Value.GetObject();
@@ -141,7 +135,6 @@ namespace Azure.Security.Attestation
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     xMsPolicy = property.Value.GetObject();
@@ -156,7 +149,6 @@ namespace Azure.Security.Attestation
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     xMsPolicySigner = JsonWebKey.DeserializeJsonWebKey(property.Value);
@@ -171,7 +163,6 @@ namespace Azure.Security.Attestation
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     xMsSgxIsDebuggable = property.Value.GetBoolean();
@@ -181,7 +172,6 @@ namespace Azure.Security.Attestation
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     xMsSgxProductId = property.Value.GetSingle();
@@ -201,7 +191,6 @@ namespace Azure.Security.Attestation
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     xMsSgxSvn = property.Value.GetSingle();
@@ -216,7 +205,6 @@ namespace Azure.Security.Attestation
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     xMsSgxCollateral = property.Value.GetObject();
@@ -231,7 +219,6 @@ namespace Azure.Security.Attestation
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     isDebuggable = property.Value.GetBoolean();
@@ -241,7 +228,6 @@ namespace Azure.Security.Attestation
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     maaAttestationcollateral = property.Value.GetObject();
@@ -261,7 +247,6 @@ namespace Azure.Security.Attestation
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     productId = property.Value.GetSingle();
@@ -281,7 +266,6 @@ namespace Azure.Security.Attestation
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     svn = property.Value.GetSingle();
@@ -296,7 +280,6 @@ namespace Azure.Security.Attestation
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     policySigner = JsonWebKey.DeserializeJsonWebKey(property.Value);

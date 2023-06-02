@@ -4,7 +4,28 @@
 
 ### Features Added
 
+- Added support for service version 2023-04-01.
+
 ### Breaking Changes
+
+The following changes are only breaking from the previous beta. They are not breaking since version 1.0.0 when those types and members did not exist.
+
+- Removed support for service version 2022-05-15-preview.
+- Removed support for service version 2022-10-01-preview.
+- Removed support for "ConversationalPIITask" analysis.
+- Removed support for "ConversationalSentimentTask" analysis.
+- Removed `ConversationsAudience`.
+- Removed `ConversationsClientOptions.Audience`.
+- Removed `ConversationAuthoringClient.AssignDeploymentResources` and `AssignDeploymentResourcesAsync`.
+- Removed `ConversationAuthoringClient.DeleteDeploymentFromResources` and `DeleteDeploymentFromResourcesAsync`.
+- Removed `ConversationAuthoringClient.GetAssignDeploymentResourcesStatus` and `GetAssignDeploymentResourcesStatusAsync`.
+- Removed `ConversationAuthoringClient.GetAssignedResourceDeployments` and `GetAssignedResourceDeploymentsAsync`.
+- Removed `ConversationAuthoringClient.GetDeploymentDeleteFromResourcesStatus` and `GetDeploymentDeleteFromResourcesStatusAsync`.
+- Removed `ConversationAuthoringClient.GetDeploymentResources` and `GetDeploymentResourcesAsync`.
+- Removed `ConversationAuthoringClient.GetUnassignDeploymentResourcesStatus` and `GetUnassignDeploymentResourcesStatusAsync`.
+- Removed `ConversationAuthoringClient.UnassignDeploymentResources` and `UnassignDeploymentResourcesAsync`.
+- Renamed `ConversationAnalysisClient.AnalyzeConversation` and `AnalyzeConversationAsync` that took a `WaitUntil` parameter to `AnalyzeConversations` and `AnalyzeConversationsAsync`.
+- Renamed `ConversationAnalysisClient.CancelAnalyzeConversationJob` and `CancelAnalyzeConversationJobAsync` to `CancelAnalyzeConversations` and `CancelAnalyzeConversationsAsync`.
 
 ### Bugs Fixed
 

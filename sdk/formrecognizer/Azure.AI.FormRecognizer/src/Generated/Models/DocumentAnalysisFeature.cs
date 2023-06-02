@@ -11,7 +11,7 @@ using System.ComponentModel;
 namespace Azure.AI.FormRecognizer.DocumentAnalysis
 {
     /// <summary> The DocumentAnalysisFeature. </summary>
-    internal readonly partial struct DocumentAnalysisFeature : IEquatable<DocumentAnalysisFeature>
+    public readonly partial struct DocumentAnalysisFeature : IEquatable<DocumentAnalysisFeature>
     {
         private readonly string _value;
 

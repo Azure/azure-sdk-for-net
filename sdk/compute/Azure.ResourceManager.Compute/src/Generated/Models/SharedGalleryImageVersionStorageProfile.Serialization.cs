@@ -27,7 +27,6 @@ namespace Azure.ResourceManager.Compute.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     osDiskImage = SharedGalleryOSDiskImage.DeserializeSharedGalleryOSDiskImage(property.Value);
@@ -37,7 +36,6 @@ namespace Azure.ResourceManager.Compute.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<SharedGalleryDataDiskImage> array = new List<SharedGalleryDataDiskImage>();

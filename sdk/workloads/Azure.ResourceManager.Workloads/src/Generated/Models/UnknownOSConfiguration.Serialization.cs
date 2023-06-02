@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.Workloads.Models
             {
                 return null;
             }
-            OSType osType = "Unknown";
+            SapOSType osType = "Unknown";
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("osType"u8))
                 {
-                    osType = new OSType(property.Value.GetString());
+                    osType = new SapOSType(property.Value.GetString());
                     continue;
                 }
             }

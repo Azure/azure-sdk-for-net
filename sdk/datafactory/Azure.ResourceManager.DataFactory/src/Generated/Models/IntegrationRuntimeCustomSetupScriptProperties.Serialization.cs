@@ -43,7 +43,6 @@ namespace Azure.ResourceManager.DataFactory.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        blobContainerUri = null;
                         continue;
                     }
                     blobContainerUri = new Uri(property.Value.GetString());
@@ -53,7 +52,6 @@ namespace Azure.ResourceManager.DataFactory.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     sasToken = FactorySecretString.DeserializeFactorySecretString(property.Value);

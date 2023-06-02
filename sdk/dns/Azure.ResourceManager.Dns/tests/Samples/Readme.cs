@@ -4,7 +4,6 @@
 using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager;
-#if !SNIPPET
 using Azure.ResourceManager.Resources;
 using Azure.ResourceManager.Resources.Models;
 using NUnit.Framework;
@@ -18,10 +17,6 @@ namespace Azure.ResourceManager.Dns.Tests.Samples
         [Ignore("Only verifying that the sample builds")]
         public void ClientAuth()
         {
-#endif
-
-            // Code omitted for brevity
-
             ArmClient armClient = new ArmClient(new DefaultAzureCredential());
         }
 

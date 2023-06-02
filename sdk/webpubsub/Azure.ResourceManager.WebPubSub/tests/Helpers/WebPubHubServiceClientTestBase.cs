@@ -19,11 +19,13 @@ namespace Azure.ResourceManager.WebPubSub.Tests.Helpers
         public WebPubHubServiceClientTestBase(bool isAsync) : base(isAsync)
         {
             IgnoreTestInLiveMode();
+            IgnoreNetworkDependencyVersions();
         }
         public WebPubHubServiceClientTestBase(bool isAsync, RecordedTestMode mode)
         : base(isAsync, mode)
         {
             IgnoreTestInLiveMode();
+            IgnoreNetworkDependencyVersions();
         }
 
         public ArmClient ArmClient { get; set; }

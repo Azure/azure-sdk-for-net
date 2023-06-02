@@ -29,7 +29,7 @@ namespace Azure.Analytics.Synapse.Artifacts
         internal NotebookCreateOrUpdateNotebookOperation(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
         {
             IOperation<NotebookResource> nextLinkOperation = NextLinkOperationImplementation.Create(this, pipeline, request.Method, request.Uri.ToUri(), response, OperationFinalStateVia.Location);
-            _operation = new OperationInternal<NotebookResource>(clientDiagnostics, nextLinkOperation, response, "NotebookCreateOrUpdateNotebookOperation");
+            _operation = new OperationInternal<NotebookResource>(nextLinkOperation, clientDiagnostics, response, "NotebookCreateOrUpdateNotebookOperation");
         }
 
         /// <inheritdoc />

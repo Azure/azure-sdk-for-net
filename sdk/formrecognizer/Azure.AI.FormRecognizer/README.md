@@ -25,6 +25,7 @@ This table shows the relationship between SDK versions and supported API version
 
 |SDK version|Supported API version of service
 |-|-
+|4.1.0-beta.1 | 2.0, 2.1, 2022-08-31, 2023-02-28-preview
 |4.0.0 | 2.0, 2.1, 2022-08-31
 |3.1.X | 2.0, 2.1
 |3.0.X | 2.0
@@ -33,6 +34,7 @@ This table shows the relationship between SDK versions and supported API version
 
 |API version|Supported clients
 |-|-
+|2023-02-28-preview|DocumentAnalysisClient and DocumentModelAdministrationClient
 |2022-08-31|DocumentAnalysisClient and DocumentModelAdministrationClient
 |2.1|FormRecognizerClient and FormTrainingClient
 |2.0|FormRecognizerClient and FormTrainingClient

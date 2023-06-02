@@ -11,7 +11,7 @@ using System.ComponentModel;
 namespace Azure.AI.FormRecognizer.DocumentAnalysis
 {
     /// <summary> Font weight. </summary>
-    internal readonly partial struct FontWeight : IEquatable<FontWeight>
+    public readonly partial struct FontWeight : IEquatable<FontWeight>
     {
         private readonly string _value;
 

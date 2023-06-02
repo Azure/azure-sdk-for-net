@@ -10,6 +10,8 @@ using Microsoft.Azure.WebJobs.Host.Config;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Azure.WebJobs.Host.Indexers;
 using NUnit.Framework;
+using System.Collections.Generic;
+using Microsoft.Azure.WebJobs.Host.TestCommon;
 
 namespace Microsoft.Azure.WebJobs.Extensions.Tables.Tests
 {
@@ -69,6 +71,86 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables.Tests
             Assert.AreEqual(TableName, CustomTableBinding<Poco>.Table.Name);
             Assert.True(CustomTableBinding<Poco>.AddInvoked);
             Assert.True(CustomTableBinding<Poco>.DeleteInvoked);
+        }
+
+        [RecordedTest]
+        public async Task Table_CreateParameterBindingData_CreatesValidParameterBindingDataObject()
+        {
+            // Arrange
+            var program = new BindToParameterBindingData();
+
+            IHost host = new HostBuilder()
+               .ConfigureDefaultTestHost<BindToParameterBindingData>(program, builder =>
+               {
+                   builder.AddTables();
+               })
+               .Build();
+
+            var jobHost = host.GetJobHost<BindToParameterBindingData>();
+
+            // Act
+            await jobHost.CallAsync(nameof(BindToParameterBindingData.Run));
+            ParameterBindingData result = program.Result;
+
+            Assert.NotNull(result);
+
+            var tableData = result?.Content.ToObjectFromJson<Dictionary<string, object>>();
+
+            // Assert
+            Assert.True(tableData.TryGetValue("TableName", out var tableName));
+            Assert.True(tableData.TryGetValue("Take", out var take));
+            Assert.True(tableData.TryGetValue("Filter", out var filter));
+            Assert.True(tableData.TryGetValue("Connection", out var connection));
+            Assert.True(tableData.TryGetValue("PartitionKey", out var partitionKey));
+            Assert.True(tableData.TryGetValue("RowKey", out var rowKey));
+
+            // Check values
+            Assert.AreEqual("tableName", tableName.ToString());
+            Assert.AreEqual("partitionKey", partitionKey.ToString());
+            Assert.AreEqual("rowKey", rowKey.ToString());
+            Assert.AreEqual("0", take.ToString());
+            Assert.Null(connection);
+            Assert.Null(filter);
+        }
+
+        [RecordedTest]
+        public async Task Table_CreateParameterBindingData_CreatesValidParameterBindingDataObject_WithAdditionalParams()
+        {
+            // Arrange
+            var program = new BindToParameterBindingData();
+
+            IHost host = new HostBuilder()
+               .ConfigureDefaultTestHost<BindToParameterBindingData>(program, builder =>
+               {
+                   builder.AddTables();
+               })
+               .Build();
+
+            var jobHost = host.GetJobHost<BindToParameterBindingData>();
+
+            // Act
+            await jobHost.CallAsync(nameof(BindToParameterBindingData.RunWithAdditionalParams));
+            ParameterBindingData result = program.Result;
+
+            Assert.NotNull(result);
+
+            var tableData = result?.Content.ToObjectFromJson<Dictionary<string, object>>();
+
+            // Assert
+            Assert.True(tableData.TryGetValue("TableName", out var tableName));
+            Assert.True(tableData.TryGetValue("Take", out var take));
+            Assert.True(tableData.TryGetValue("Filter", out var filter));
+            Assert.True(tableData.TryGetValue("Connection", out var connection));
+            Assert.True(tableData.TryGetValue("PartitionKey", out var partitionKey));
+            Assert.True(tableData.TryGetValue("RowKey", out var rowKey));
+
+            // Check values
+            Assert.AreEqual("tableName", tableName.ToString());
+            Assert.AreEqual("partitionKey", partitionKey.ToString());
+            Assert.AreEqual("rowKey", rowKey.ToString());
+            Assert.AreEqual("5", take.ToString());
+            Assert.AreEqual("connection", connection.ToString());
+            Assert.AreEqual("filter", filter.ToString());
         }
 
         // Add a rule for binding TableClient --> CustomTableBinding<TEntity>
@@ -158,6 +240,23 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables.Tests
             {
                 // complete and flush all storage operations
                 return Task.FromResult(true);
+            }
+        }
+
+        private class BindToParameterBindingData
+        {
+            public ParameterBindingData Result { get; set; }
+
+            public void Run(
+                [Table("tableName", "partitionKey", "rowKey")] ParameterBindingData blobData)
+            {
+                this.Result = blobData;
+            }
+
+            public void RunWithAdditionalParams(
+            [Table("tableName", "partitionKey", "rowKey", Connection = "connection", Filter = "filter", Take = 5)] ParameterBindingData blobData)
+            {
+                this.Result = blobData;
             }
         }
     }

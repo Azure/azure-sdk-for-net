@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Net;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Models;
@@ -58,7 +59,12 @@ namespace Azure.ResourceManager.Qumulo
                 writer.WriteStartArray();
                 foreach (var item in PrivateIPs)
                 {
-                    writer.WriteStringValue(item);
+                    if (item == null)
+                    {
+                        writer.WriteNullValue();
+                        continue;
+                    }
+                    writer.WriteStringValue(item.ToString());
                 }
                 writer.WriteEndArray();
             }
@@ -94,7 +100,7 @@ namespace Azure.ResourceManager.Qumulo
             QumuloUserDetails userDetails = default;
             string delegatedSubnetId = default;
             Optional<Uri> clusterLoginUrl = default;
-            Optional<IList<string>> privateIPs = default;
+            Optional<IList<IPAddress>> privateIPs = default;
             string adminPassword = default;
             int initialCapacity = default;
             Optional<string> availabilityZone = default;
@@ -104,7 +110,6 @@ namespace Azure.ResourceManager.Qumulo
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     identity = JsonSerializer.Deserialize<ManagedServiceIdentity>(property.Value.GetRawText());
@@ -114,7 +119,6 @@ namespace Azure.ResourceManager.Qumulo
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();
@@ -149,7 +153,6 @@ namespace Azure.ResourceManager.Qumulo
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
@@ -173,7 +176,6 @@ namespace Azure.ResourceManager.Qumulo
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             provisioningState = property0.Value.GetString().ToQumuloProvisioningState();
@@ -198,7 +200,6 @@ namespace Azure.ResourceManager.Qumulo
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                clusterLoginUrl = null;
                                 continue;
                             }
                             clusterLoginUrl = new Uri(property0.Value.GetString());
@@ -208,13 +209,19 @@ namespace Azure.ResourceManager.Qumulo
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            List<string> array = new List<string>();
+                            List<IPAddress> array = new List<IPAddress>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(item.GetString());
+                                if (item.ValueKind == JsonValueKind.Null)
+                                {
+                                    array.Add(null);
+                                }
+                                else
+                                {
+                                    array.Add(IPAddress.Parse(item.GetString()));
+                                }
                             }
                             privateIPs = array;
                             continue;

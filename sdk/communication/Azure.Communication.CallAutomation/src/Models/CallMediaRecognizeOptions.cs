@@ -58,5 +58,8 @@ namespace Azure.Communication.CallAutomation
         /// Target participant of DTFM tone recognition.
         /// </summary>
         public CommunicationIdentifier TargetParticipant { get; }
+
+        /// <summary> Speech language to be recognized, If not set default is en-US. </summary>
+        public string SpeechLanguage { get; set; }
     }
 }

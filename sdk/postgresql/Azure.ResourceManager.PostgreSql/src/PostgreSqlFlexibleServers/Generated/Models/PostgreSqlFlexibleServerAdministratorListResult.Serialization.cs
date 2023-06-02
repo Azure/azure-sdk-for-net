@@ -28,7 +28,6 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<PostgreSqlFlexibleServerActiveDirectoryAdministratorData> array = new List<PostgreSqlFlexibleServerActiveDirectoryAdministratorData>();

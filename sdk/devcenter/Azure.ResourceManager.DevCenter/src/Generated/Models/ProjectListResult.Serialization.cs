@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.DevCenter.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<ProjectData>> value = default;
+            Optional<IReadOnlyList<DevCenterProjectData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -28,13 +28,12 @@ namespace Azure.ResourceManager.DevCenter.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<ProjectData> array = new List<ProjectData>();
+                    List<DevCenterProjectData> array = new List<DevCenterProjectData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ProjectData.DeserializeProjectData(item));
+                        array.Add(DevCenterProjectData.DeserializeDevCenterProjectData(item));
                     }
                     value = array;
                     continue;

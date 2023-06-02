@@ -20,32 +20,6 @@ namespace Azure.ResourceManager.Compute.Models
             IPConfigurations = new ChangeTrackingList<VirtualMachineScaleSetUpdateIPConfiguration>();
         }
 
-        /// <summary> Initializes a new instance of VirtualMachineScaleSetUpdateNetworkConfiguration. </summary>
-        /// <param name="id"> Resource Id. </param>
-        /// <param name="name"> The network configuration name. </param>
-        /// <param name="primary"> Whether this is a primary NIC on a virtual machine. </param>
-        /// <param name="enableAcceleratedNetworking"> Specifies whether the network interface is accelerated networking-enabled. </param>
-        /// <param name="isTcpStateTrackingDisabled"> Specifies whether the network interface is disabled for tcp state tracking. </param>
-        /// <param name="enableFpga"> Specifies whether the network interface is FPGA networking-enabled. </param>
-        /// <param name="networkSecurityGroup"> The network security group. </param>
-        /// <param name="dnsSettings"> The dns settings to be applied on the network interfaces. </param>
-        /// <param name="ipConfigurations"> The virtual machine scale set IP Configuration. </param>
-        /// <param name="enableIPForwarding"> Whether IP forwarding enabled on this NIC. </param>
-        /// <param name="deleteOption"> Specify what happens to the network interface when the VM is deleted. </param>
-        internal VirtualMachineScaleSetUpdateNetworkConfiguration(ResourceIdentifier id, string name, bool? primary, bool? enableAcceleratedNetworking, bool? isTcpStateTrackingDisabled, bool? enableFpga, WritableSubResource networkSecurityGroup, VirtualMachineScaleSetNetworkConfigurationDnsSettings dnsSettings, IList<VirtualMachineScaleSetUpdateIPConfiguration> ipConfigurations, bool? enableIPForwarding, ComputeDeleteOption? deleteOption) : base(id)
-        {
-            Name = name;
-            Primary = primary;
-            EnableAcceleratedNetworking = enableAcceleratedNetworking;
-            IsTcpStateTrackingDisabled = isTcpStateTrackingDisabled;
-            EnableFpga = enableFpga;
-            NetworkSecurityGroup = networkSecurityGroup;
-            DnsSettings = dnsSettings;
-            IPConfigurations = ipConfigurations;
-            EnableIPForwarding = enableIPForwarding;
-            DeleteOption = deleteOption;
-        }
-
         /// <summary> The network configuration name. </summary>
         public string Name { get; set; }
         /// <summary> Whether this is a primary NIC on a virtual machine. </summary>

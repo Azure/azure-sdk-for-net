@@ -94,7 +94,6 @@ namespace Azure.ResourceManager.StorageMover
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
@@ -128,7 +127,6 @@ namespace Azure.ResourceManager.StorageMover
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             sourceResourceId = new ResourceIdentifier(property0.Value.GetString());
@@ -148,7 +146,6 @@ namespace Azure.ResourceManager.StorageMover
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             targetResourceId = new ResourceIdentifier(property0.Value.GetString());
@@ -168,7 +165,6 @@ namespace Azure.ResourceManager.StorageMover
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             latestJobRunResourceId = new ResourceIdentifier(property0.Value.GetString());
@@ -178,7 +174,6 @@ namespace Azure.ResourceManager.StorageMover
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             latestJobRunStatus = new JobRunStatus(property0.Value.GetString());
@@ -193,7 +188,6 @@ namespace Azure.ResourceManager.StorageMover
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             agentResourceId = new ResourceIdentifier(property0.Value.GetString());
@@ -203,7 +197,6 @@ namespace Azure.ResourceManager.StorageMover
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             provisioningState = new StorageMoverProvisioningState(property0.Value.GetString());

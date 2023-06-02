@@ -1,68 +1,41 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://languagesdkresource.cognitiveservices.azure.com/language/authoring/analyze-conversations/projects?api-version=2022-10-01-preview",
+      "RequestUri": "https://languagesdkresource.cognitiveservices.azure.com/language/authoring/analyze-conversations/projects/CLUScriptDeployed?api-version=2023-04-01",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "traceparent": "00-0aebd85fa65ecb9282c5828a47c827bf-2a1e05e1e959154e-00",
-        "User-Agent": "azsdk-net-AI.Language.Conversations/1.1.0-alpha.20221019.1 (.NET 6.0.10; Microsoft Windows 10.0.22621)",
-        "x-ms-client-request-id": "f7146909680fccd833375260963c24d0",
+        "traceparent": "00-672739aa9917689bcc7f4a14464ccefe-26efb5f1ff051286-00",
+        "User-Agent": "azsdk-net-AI.Language.Conversations/1.1.0-alpha.20230508.1 (.NET 7.0.5; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "6ecbba7cb6779661dbe9c39124c5cfcb",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
       "StatusCode": 200,
       "ResponseHeaders": {
         "Access-Control-Expose-Headers": "*",
-        "apim-request-id": "b9465cb4-887d-4a0d-a486-ed53af8cb8b0",
-        "Content-Length": "834",
+        "apim-request-id": "bcf03cd9-cbf4-421e-bb88-4b26133575b5",
+        "Content-Length": "246",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Thu, 20 Oct 2022 00:18:33 GMT",
-        "request-id": "b9465cb4-887d-4a0d-a486-ed53af8cb8b0",
+        "Date": "Mon, 08 May 2023 23:49:01 GMT",
+        "request-id": "bcf03cd9-cbf4-421e-bb88-4b26133575b5",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
         "X-Content-Type-Options": "nosniff",
-        "x-envoy-upstream-service-time": "19",
+        "x-envoy-upstream-service-time": "21",
         "x-ms-region": "UK South"
       },
       "ResponseBody": {
-        "value": [
-          {
-            "createdDateTime": "2022-09-04T14:32:12Z",
-            "lastModifiedDateTime": "2022-09-04T14:32:21Z",
-            "projectKind": "Conversation",
-            "projectName": "net-conv-1265556354",
-            "multilingual": true,
-            "language": "en"
-          },
-          {
-            "createdDateTime": "2022-09-04T14:31:12Z",
-            "lastModifiedDateTime": "2022-09-04T14:31:25Z",
-            "projectKind": "Conversation",
-            "projectName": "net-conv-249494978",
-            "multilingual": true,
-            "language": "en"
-          },
-          {
-            "createdDateTime": "2022-06-05T12:36:31Z",
-            "lastModifiedDateTime": "2022-06-05T12:40:18Z",
-            "projectKind": "Orchestration",
-            "projectName": "OrchestrationScriptDeployed",
-            "multilingual": false,
-            "description": "",
-            "language": "en-us"
-          },
-          {
-            "createdDateTime": "2022-06-05T11:05:30Z",
-            "lastModifiedDateTime": "2022-06-05T12:30:03Z",
-            "projectKind": "Conversation",
-            "projectName": "CLUScriptDeployed",
-            "multilingual": true,
-            "description": "",
-            "language": "en-us"
-          }
-        ],
-        "nextLink": null
+        "createdDateTime": "2022-11-08T01:44:19Z",
+        "lastModifiedDateTime": "2022-11-08T01:44:35Z",
+        "projectKind": "Conversation",
+        "settings": {
+          "confidenceThreshold": 0.5
+        },
+        "projectName": "CLUScriptDeployed",
+        "multilingual": true,
+        "description": "",
+        "language": "en-us"
       }
     }
   ],
@@ -70,6 +43,7 @@
     "AZURE_AUTHORITY_HOST": null,
     "CONVERSATIONS_ENDPOINT": "https://languagesdkresource.cognitiveservices.azure.com/",
     "CONVERSATIONS_KEY": "Sanitized",
-    "RandomSeed": "386710584"
+    "CONVERSATIONS_PROJECT_NAME": "CLUScriptDeployed",
+    "RandomSeed": "559102303"
   }
 }

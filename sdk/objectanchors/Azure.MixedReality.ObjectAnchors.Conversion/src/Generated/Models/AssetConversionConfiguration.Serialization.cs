@@ -176,7 +176,6 @@ namespace Azure.MixedReality.ObjectAnchors.Conversion
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<TrajectoryPose> array = new List<TrajectoryPose>();
@@ -206,7 +205,6 @@ namespace Azure.MixedReality.ObjectAnchors.Conversion
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     disableDetectScaleUnits = property.Value.GetBoolean();
@@ -226,7 +224,6 @@ namespace Azure.MixedReality.ObjectAnchors.Conversion
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<TrajectoryPose> array = new List<TrajectoryPose>();

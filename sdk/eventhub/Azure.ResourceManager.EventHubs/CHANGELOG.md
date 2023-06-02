@@ -1,6 +1,6 @@
 # Release History
 
-## 1.1.0-beta.2 (Unreleased)
+## 1.1.0-beta.4 (Unreleased)
 
 ### Features Added
 
@@ -9,6 +9,24 @@
 ### Bugs Fixed
 
 ### Other Changes
+
+## 1.1.0-beta.3 (2023-05-30)
+
+### Features Added
+
+- Enable the model factory feature for model mocking, more information can be found [here](https://azure.github.io/azure-sdk/dotnet_introduction.html#dotnet-mocking-factory-builder).
+
+### Other Changes
+
+- Upgraded dependent Azure.Core to 1.32.0.
+- Upgraded dependent Azure.ResourceManager to 1.6.0.
+
+## 1.1.0-beta.2 (2023-04-19)
+
+### Other Changes
+
+- Upgraded API version to 2022-10-01-preview
+- Upgraded dependent `Azure.Core` to `1.30.0`.
 
 ## 1.1.0-beta.1 (2023-02-14)
 
@@ -20,7 +38,7 @@
 
 ### Other Changes
 
-- Upgraded API version to 2022-01-preview.
+- Upgraded API version to 2022-01-01-preview.
 - Upgraded dependent `Azure.Core` to `1.28.0`.
 - Upgraded dependent `Azure.ResourceManager` to `1.4.0`.
 
@@ -197,7 +215,6 @@ EventHubsNamespaceResource eventHubNamespace = eHNamespaceCollection.CreateOrUpd
 EventHubCollection eventHubCollection = eventHubNamespace.GetEventHubs();
 EventHubData eventHubData = new EventHubData()
 {
-    MessageRetentionInDays = 4,
     PartitionCount = 4,
     Status = EventHubEntityStatus.Active,
     CaptureDescription = new CaptureDescription()

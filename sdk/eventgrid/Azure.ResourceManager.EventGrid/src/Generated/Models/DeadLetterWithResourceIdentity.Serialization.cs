@@ -42,7 +42,6 @@ namespace Azure.ResourceManager.EventGrid.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     identity = EventSubscriptionIdentity.DeserializeEventSubscriptionIdentity(property.Value);
@@ -52,7 +51,6 @@ namespace Azure.ResourceManager.EventGrid.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     deadLetterDestination = DeadLetterDestination.DeserializeDeadLetterDestination(property.Value);

@@ -27,7 +27,6 @@ namespace Azure.ResourceManager.StorageCache.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     display = StorageCacheUsageModelDisplay.DeserializeStorageCacheUsageModelDisplay(property.Value);

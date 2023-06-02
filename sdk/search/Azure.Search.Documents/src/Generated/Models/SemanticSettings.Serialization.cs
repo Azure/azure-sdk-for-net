@@ -16,6 +16,11 @@ namespace Azure.Search.Documents.Indexes.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
+            if (Optional.IsDefined(DefaultConfiguration))
+            {
+                writer.WritePropertyName("defaultConfiguration"u8);
+                writer.WriteStringValue(DefaultConfiguration);
+            }
             if (Optional.IsCollectionDefined(Configurations))
             {
                 writer.WritePropertyName("configurations"u8);
@@ -35,14 +40,19 @@ namespace Azure.Search.Documents.Indexes.Models
             {
                 return null;
             }
+            Optional<string> defaultConfiguration = default;
             Optional<IList<SemanticConfiguration>> configurations = default;
             foreach (var property in element.EnumerateObject())
             {
+                if (property.NameEquals("defaultConfiguration"u8))
+                {
+                    defaultConfiguration = property.Value.GetString();
+                    continue;
+                }
                 if (property.NameEquals("configurations"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<SemanticConfiguration> array = new List<SemanticConfiguration>();
@@ -54,7 +64,7 @@ namespace Azure.Search.Documents.Indexes.Models
                     continue;
                 }
             }
-            return new SemanticSettings(Optional.ToList(configurations));
+            return new SemanticSettings(defaultConfiguration.Value, Optional.ToList(configurations));
         }
     }
 }

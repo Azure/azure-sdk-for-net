@@ -5,7 +5,6 @@
 
 #nullable disable
 
-using System;
 using System.Text.Json;
 using Azure.Core;
 
@@ -43,10 +42,10 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                 writer.WritePropertyName("resourceType"u8);
                 writer.WriteStringValue(ResourceType.Value);
             }
-            if (Optional.IsDefined(ResourceUri))
+            if (Optional.IsDefined(ResourceUriString))
             {
                 writer.WritePropertyName("resourceUri"u8);
-                writer.WriteStringValue(ResourceUri.AbsoluteUri);
+                writer.WriteStringValue(ResourceUriString);
             }
             writer.WriteEndObject();
         }
@@ -63,7 +62,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             Optional<AzureLocation> resourceLocation = default;
             Optional<string> resourceName = default;
             Optional<ResourceType> resourceType = default;
-            Optional<Uri> resourceUri = default;
+            Optional<string> resourceUri = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("datasourceType"u8))
@@ -85,7 +84,6 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     resourceLocation = new AzureLocation(property.Value.GetString());
@@ -100,7 +98,6 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     resourceType = new ResourceType(property.Value.GetString());
@@ -108,12 +105,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                 }
                 if (property.NameEquals("resourceUri"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        resourceUri = null;
-                        continue;
-                    }
-                    resourceUri = new Uri(property.Value.GetString());
+                    resourceUri = property.Value.GetString();
                     continue;
                 }
             }

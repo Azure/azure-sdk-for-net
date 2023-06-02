@@ -1,10 +1,22 @@
 # Release History
 
-## 5.9.0-beta.1 (Unreleased)
+## 5.10.0-beta.1 (Unreleased)
 
 ### Features Added
 
 ### Breaking Changes
+
+### Bugs Fixed
+
+### Other Changes
+
+## 5.9.1 (2023-05-09)
+
+### Bugs Fixed
+
+- Removed the 30 second cap applied when opening AMQP links; this allows developers to fully control the timeout for service operations by tuning the `TryTimeout` as appropriate for the application.
+
+## 5.9.0 (2023-04-11)
 
 ### Bugs Fixed
 

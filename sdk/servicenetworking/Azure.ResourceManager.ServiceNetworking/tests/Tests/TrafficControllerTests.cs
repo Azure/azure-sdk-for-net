@@ -78,36 +78,9 @@ namespace Azure.ResourceManager.ServiceNetworking.TrafficController.Tests.Tests
             //Obtaining the Collection object of the Frontend to perform the Create/PUT operation.
             FrontendCollection frontends = GetFrontends(tc);
 
-            //Creating a public IP (PIP) Address Resource. The resource ID of the resouce is passed on to the Frontend.
-            string pipName = Recording.GenerateAssetName("tc-pip");
-            PublicIPAddressResource pip;
-            if (Mode == RecordedTestMode.Playback)
-            {
-                ResourceIdentifier id = PublicIPAddressResource.CreateResourceIdentifier(rgResource.Id.SubscriptionId, rgResource.Id.Name, pipName);
-                pip = Client.GetPublicIPAddressResource(id);
-            }
-            else
-            {
-                PublicIPAddressCollection publicIPAddresses = rgResource.GetPublicIPAddresses();
-                _resourceNames["tc-pip"] = pipName;
-                var pipData = new PublicIPAddressData()
-                {
-                    Location = "East US 2",
-                    Sku = new PublicIPAddressSku()
-                    {
-                        Name = PublicIPAddressSkuName.Standard,
-                        Tier = PublicIPAddressSkuTier.Global
-                    },
-                    PublicIPAllocationMethod = NetworkIPAllocationMethod.Static
-                };
-                pip = publicIPAddresses.CreateOrUpdateAsync(WaitUntil.Completed, pipName, pipData).Result.Value;
-            }
-
             //Frontend Data object that is used to create the new frontend object.
             FrontendData fnd = new FrontendData(location)
             {
-                Mode = FrontendMode.Public,
-                PublicIPAddressId = pip.Id,
                 Location = location,
             };
             //Performing the Create/PUT operation and returning the result.
@@ -135,15 +108,9 @@ namespace Azure.ResourceManager.ServiceNetworking.TrafficController.Tests.Tests
                 return;
             }
             FrontendCollection frontends = GetFrontends(tc);
-            if (Mode == RecordedTestMode.Record)
-            {
-                using (Recording.DisableRecording())
-                {
-                    PublicIPAddressCollection publicIPAddresses = rgResource.GetPublicIPAddresses();
-                    PublicIPAddressResource pip = publicIPAddresses.GetAsync(pipName).Result;
-                    await pip.DeleteAsync(WaitUntil.Started);
-                }
-            }
+            PublicIPAddressCollection publicIPAddresses = rgResource.GetPublicIPAddresses();
+            PublicIPAddressResource pip = publicIPAddresses.GetAsync(pipName).Result;
+            await pip.DeleteAsync(WaitUntil.Started);
         }
 
         private async Task<ArmOperation<AssociationResource>> CreateAssociationAsync(string resourceGroup, string associationName, TrafficControllerResource tc, string location)
@@ -213,18 +180,12 @@ namespace Azure.ResourceManager.ServiceNetworking.TrafficController.Tests.Tests
             }
             AssociationCollection associations = GetAssociations(tc);
 
-            if (Mode==RecordedTestMode.Record)
-            {
-                using (Recording.DisableRecording())
-                {
-                    VirtualNetworkCollection vnets = GetVirtualNetworks(resourceGroup);
-                    VirtualNetworkResource vnet = vnets.GetAsync(vnetName).Result;
+            VirtualNetworkCollection vnets = GetVirtualNetworks(resourceGroup);
+            VirtualNetworkResource vnet = vnets.GetAsync(vnetName).Result;
 
-                    SubnetResource subnet = vnet.GetSubnetAsync(subnetName).Result;
-                    await subnet.DeleteAsync(WaitUntil.Started);
-                    await vnet.DeleteAsync(WaitUntil.Started);
-                }
-            }
+            SubnetResource subnet = vnet.GetSubnetAsync(subnetName).Result;
+            await subnet.DeleteAsync(WaitUntil.Started);
+            await vnet.DeleteAsync(WaitUntil.Started);
         }
 
         private async Task DeleteAssociation(AssociationResource association)

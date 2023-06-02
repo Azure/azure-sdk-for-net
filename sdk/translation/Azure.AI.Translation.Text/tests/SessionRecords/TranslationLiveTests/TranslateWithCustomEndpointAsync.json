@@ -1,0 +1,41 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://tdac18127a4f4f2c8.cognitiveservices.azure.com/translator/text/v3.0/translate?to=cs\u0026api-version=3.0",
+      "RequestMethod": "POST",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Content-Length": "38",
+        "Content-Type": "application/json",
+        "Ocp-Apim-Subscription-Key": "Sanitized",
+        "Ocp-Apim-Subscription-Region": "westus",
+        "traceparent": "00-530c82e3ba0b027c7b285b69dbc88e75-e12f6d34057126f1-00",
+        "User-Agent": "azsdk-net-AI.Translation.Text/1.0.0-alpha.20230403.1 (.NET 6.0.15; Microsoft Windows 10.0.22624)",
+        "x-ms-client-request-id": "a604cede46a31759fbbec085b8958fba",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": "[{\u0022Text\u0022:\u0022It is a beautiful morning\u0022}]",
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Access-Control-Expose-Headers": "X-RequestId,X-Metered-Usage",
+        "apim-request-id": "836d84f4-0786-417b-a3bd-abe709297ac6",
+        "Content-Length": "108",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Mon, 03 Apr 2023 21:50:16 GMT",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+        "X-Content-Type-Options": "nosniff",
+        "X-Metered-Usage": "25",
+        "x-ms-region": "West US",
+        "X-MT-System": "Microsoft",
+        "X-RequestId": "TRAN.MW1P.99BF.0403T2150.2F0888F"
+      },
+      "ResponseBody": "[{\u0022detectedLanguage\u0022:{\u0022language\u0022:\u0022en\u0022,\u0022score\u0022:1.0},\u0022translations\u0022:[{\u0022text\u0022:\u0022Je kr\u00E1sn\u00E9 r\u00E1no\u0022,\u0022to\u0022:\u0022cs\u0022}]}]"
+    }
+  ],
+  "Variables": {
+    "RandomSeed": "527291978",
+    "TEXT_TRANSLATION_API_KEY": "Sanitized",
+    "TEXT_TRANSLATION_CUSTOM_ENDPOINT": "https://tdac18127a4f4f2c8.cognitiveservices.azure.com",
+    "TEXT_TRANSLATION_REGION": "westus"
+  }
+}

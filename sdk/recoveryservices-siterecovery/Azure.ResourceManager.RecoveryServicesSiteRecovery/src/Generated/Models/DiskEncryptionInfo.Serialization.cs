@@ -42,7 +42,6 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     diskEncryptionKeyInfo = DiskEncryptionKeyInfo.DeserializeDiskEncryptionKeyInfo(property.Value);
@@ -52,7 +51,6 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     keyEncryptionKeyInfo = KeyEncryptionKeyInfo.DeserializeKeyEncryptionKeyInfo(property.Value);

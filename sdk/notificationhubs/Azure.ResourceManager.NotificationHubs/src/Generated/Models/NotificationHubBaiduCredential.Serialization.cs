@@ -66,7 +66,6 @@ namespace Azure.ResourceManager.NotificationHubs.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                baiduEndPoint = null;
                                 continue;
                             }
                             baiduEndPoint = new Uri(property0.Value.GetString());

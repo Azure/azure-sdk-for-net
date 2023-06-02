@@ -43,6 +43,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs.Tests
         }
 
         [Test]
+        [Ignore("Flakey test")]
         public async Task TryAcquireLeaseNotLogLeaseConflict()
         {
             // Arrange

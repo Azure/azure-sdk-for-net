@@ -9,7 +9,7 @@ namespace Azure.Communication.CallAutomation
         /// <summary>
         /// Indicates whether the returned event is considered successful or not.
         /// </summary>
-        public bool IsSuccessEvent { get; internal set; }
+        public bool IsSuccess { get; internal set; }
 
         /// <summary>
         /// <see cref="PlayCanceled"/> event will be returned when the play is successfully cancelled.
@@ -21,9 +21,9 @@ namespace Azure.Communication.CallAutomation
         /// </summary>
         public RecognizeCanceled RecognizeCanceledSucessEvent { get; }
 
-        internal CancelAllMediaOperationsEventResult(bool isSuccessEvent, PlayCanceled playCanceledSucessEvent, RecognizeCanceled recognizeCanceledSucessEvent)
+        internal CancelAllMediaOperationsEventResult(bool isSuccess, PlayCanceled playCanceledSucessEvent, RecognizeCanceled recognizeCanceledSucessEvent)
         {
-            IsSuccessEvent = isSuccessEvent;
+            IsSuccess = isSuccess;
             PlayCanceledSucessEvent = playCanceledSucessEvent;
             RecognizeCanceledSucessEvent = recognizeCanceledSucessEvent;
         }

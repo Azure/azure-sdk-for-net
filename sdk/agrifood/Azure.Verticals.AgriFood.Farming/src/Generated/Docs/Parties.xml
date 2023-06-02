@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <doc>
   <members>
-    <member name="GetPartyAsync(String,RequestContext)">
+    <member name="GetPartyAsync(string,RequestContext)">
 <example>
 This sample shows how to call GetPartyAsync with required parameters and parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var client = new FarmBeatsClient(credential).GetPartiesClient(<2022-11-01-preview>);
+var client = new FarmBeatsClient(credential).GetPartiesClient("2022-11-01-preview");
 
-Response response = await client.GetPartyAsync("<partyId>");
+Response response = await client.GetPartyAsync("<partyId>", new RequestContext());
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("id").ToString());
@@ -24,41 +24,15 @@ Console.WriteLine(result.GetProperty("modifiedBy").ToString());
 Console.WriteLine(result.GetProperty("properties").GetProperty("<test>").ToString());
 ]]></code>
 </example>
-<remarks>
-Below is the JSON schema for the response payload.
-
-Response Body:
-
-Schema for <c>Party</c>:
-<code>{
-  id: string, # Optional. Unique resource ID.
-  eTag: string, # Optional. The ETag value to implement optimistic concurrency.
-  status: string, # Optional. Status of the resource.
-  createdDateTime: string (ISO 8601 Format), # Optional. Date-time when resource was created, sample format: yyyy-MM-ddTHH:mm:ssZ.
-  modifiedDateTime: string (ISO 8601 Format), # Optional. Date-time when resource was last modified, sample format: yyyy-MM-ddTHH:mm:ssZ.
-  source: string, # Optional. Source of the resource.
-  name: string, # Optional. Name to identify resource.
-  description: string, # Optional. Textual description of the resource.
-  createdBy: string, # Optional. Created by user/tenant id.
-  modifiedBy: string, # Optional. Modified by user/tenant id.
-  properties: Dictionary&lt;string, any&gt;, # Optional. A collection of key value pairs that belongs to the resource.
-Each pair must not have a key greater than 50 characters
-and must not have a value greater than 150 characters.
-Note: A maximum of 25 key value pairs can be provided for a resource and only string,
-numeral and datetime (yyyy-MM-ddTHH:mm:ssZ) values are supported.
-}
-</code>
-
-</remarks>
     </member>
-    <member name="GetParty(String,RequestContext)">
+    <member name="GetParty(string,RequestContext)">
 <example>
 This sample shows how to call GetParty with required parameters and parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var client = new FarmBeatsClient(credential).GetPartiesClient(<2022-11-01-preview>);
+var client = new FarmBeatsClient(credential).GetPartiesClient("2022-11-01-preview");
 
-Response response = client.GetParty("<partyId>");
+Response response = client.GetParty("<partyId>", new RequestContext());
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("id").ToString());
@@ -74,39 +48,13 @@ Console.WriteLine(result.GetProperty("modifiedBy").ToString());
 Console.WriteLine(result.GetProperty("properties").GetProperty("<test>").ToString());
 ]]></code>
 </example>
-<remarks>
-Below is the JSON schema for the response payload.
-
-Response Body:
-
-Schema for <c>Party</c>:
-<code>{
-  id: string, # Optional. Unique resource ID.
-  eTag: string, # Optional. The ETag value to implement optimistic concurrency.
-  status: string, # Optional. Status of the resource.
-  createdDateTime: string (ISO 8601 Format), # Optional. Date-time when resource was created, sample format: yyyy-MM-ddTHH:mm:ssZ.
-  modifiedDateTime: string (ISO 8601 Format), # Optional. Date-time when resource was last modified, sample format: yyyy-MM-ddTHH:mm:ssZ.
-  source: string, # Optional. Source of the resource.
-  name: string, # Optional. Name to identify resource.
-  description: string, # Optional. Textual description of the resource.
-  createdBy: string, # Optional. Created by user/tenant id.
-  modifiedBy: string, # Optional. Modified by user/tenant id.
-  properties: Dictionary&lt;string, any&gt;, # Optional. A collection of key value pairs that belongs to the resource.
-Each pair must not have a key greater than 50 characters
-and must not have a value greater than 150 characters.
-Note: A maximum of 25 key value pairs can be provided for a resource and only string,
-numeral and datetime (yyyy-MM-ddTHH:mm:ssZ) values are supported.
-}
-</code>
-
-</remarks>
     </member>
-    <member name="CreateOrUpdateAsync(String,RequestContent,RequestContext)">
+    <member name="CreateOrUpdateAsync(string,RequestContent,RequestContext)">
 <example>
 This sample shows how to call CreateOrUpdateAsync with required parameters and parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var client = new FarmBeatsClient(credential).GetPartiesClient(<2022-11-01-preview>);
+var client = new FarmBeatsClient(credential).GetPartiesClient("2022-11-01-preview");
 
 var data = new {};
 
@@ -118,7 +66,7 @@ Console.WriteLine(result.ToString());
 This sample shows how to call CreateOrUpdateAsync with all parameters and request content, and how to parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var client = new FarmBeatsClient(credential).GetPartiesClient(<2022-11-01-preview>);
+var client = new FarmBeatsClient(credential).GetPartiesClient("2022-11-01-preview");
 
 var data = new {
     status = "<status>",
@@ -130,7 +78,7 @@ var data = new {
     },
 };
 
-Response response = await client.CreateOrUpdateAsync("<partyId>", RequestContent.Create(data));
+Response response = await client.CreateOrUpdateAsync("<partyId>", RequestContent.Create(data), new RequestContext());
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("id").ToString());
@@ -146,61 +94,13 @@ Console.WriteLine(result.GetProperty("modifiedBy").ToString());
 Console.WriteLine(result.GetProperty("properties").GetProperty("<test>").ToString());
 ]]></code>
 </example>
-<remarks>
-Below is the JSON schema for the request and response payloads.
-
-Request Body:
-
-Schema for <c>Party</c>:
-<code>{
-  id: string, # Optional. Unique resource ID.
-  eTag: string, # Optional. The ETag value to implement optimistic concurrency.
-  status: string, # Optional. Status of the resource.
-  createdDateTime: string (ISO 8601 Format), # Optional. Date-time when resource was created, sample format: yyyy-MM-ddTHH:mm:ssZ.
-  modifiedDateTime: string (ISO 8601 Format), # Optional. Date-time when resource was last modified, sample format: yyyy-MM-ddTHH:mm:ssZ.
-  source: string, # Optional. Source of the resource.
-  name: string, # Optional. Name to identify resource.
-  description: string, # Optional. Textual description of the resource.
-  createdBy: string, # Optional. Created by user/tenant id.
-  modifiedBy: string, # Optional. Modified by user/tenant id.
-  properties: Dictionary&lt;string, any&gt;, # Optional. A collection of key value pairs that belongs to the resource.
-Each pair must not have a key greater than 50 characters
-and must not have a value greater than 150 characters.
-Note: A maximum of 25 key value pairs can be provided for a resource and only string,
-numeral and datetime (yyyy-MM-ddTHH:mm:ssZ) values are supported.
-}
-</code>
-
-Response Body:
-
-Schema for <c>Party</c>:
-<code>{
-  id: string, # Optional. Unique resource ID.
-  eTag: string, # Optional. The ETag value to implement optimistic concurrency.
-  status: string, # Optional. Status of the resource.
-  createdDateTime: string (ISO 8601 Format), # Optional. Date-time when resource was created, sample format: yyyy-MM-ddTHH:mm:ssZ.
-  modifiedDateTime: string (ISO 8601 Format), # Optional. Date-time when resource was last modified, sample format: yyyy-MM-ddTHH:mm:ssZ.
-  source: string, # Optional. Source of the resource.
-  name: string, # Optional. Name to identify resource.
-  description: string, # Optional. Textual description of the resource.
-  createdBy: string, # Optional. Created by user/tenant id.
-  modifiedBy: string, # Optional. Modified by user/tenant id.
-  properties: Dictionary&lt;string, any&gt;, # Optional. A collection of key value pairs that belongs to the resource.
-Each pair must not have a key greater than 50 characters
-and must not have a value greater than 150 characters.
-Note: A maximum of 25 key value pairs can be provided for a resource and only string,
-numeral and datetime (yyyy-MM-ddTHH:mm:ssZ) values are supported.
-}
-</code>
-
-</remarks>
     </member>
-    <member name="CreateOrUpdate(String,RequestContent,RequestContext)">
+    <member name="CreateOrUpdate(string,RequestContent,RequestContext)">
 <example>
 This sample shows how to call CreateOrUpdate with required parameters and parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var client = new FarmBeatsClient(credential).GetPartiesClient(<2022-11-01-preview>);
+var client = new FarmBeatsClient(credential).GetPartiesClient("2022-11-01-preview");
 
 var data = new {};
 
@@ -212,7 +112,7 @@ Console.WriteLine(result.ToString());
 This sample shows how to call CreateOrUpdate with all parameters and request content, and how to parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var client = new FarmBeatsClient(credential).GetPartiesClient(<2022-11-01-preview>);
+var client = new FarmBeatsClient(credential).GetPartiesClient("2022-11-01-preview");
 
 var data = new {
     status = "<status>",
@@ -224,7 +124,7 @@ var data = new {
     },
 };
 
-Response response = client.CreateOrUpdate("<partyId>", RequestContent.Create(data));
+Response response = client.CreateOrUpdate("<partyId>", RequestContent.Create(data), new RequestContext());
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("id").ToString());
@@ -240,87 +140,39 @@ Console.WriteLine(result.GetProperty("modifiedBy").ToString());
 Console.WriteLine(result.GetProperty("properties").GetProperty("<test>").ToString());
 ]]></code>
 </example>
-<remarks>
-Below is the JSON schema for the request and response payloads.
-
-Request Body:
-
-Schema for <c>Party</c>:
-<code>{
-  id: string, # Optional. Unique resource ID.
-  eTag: string, # Optional. The ETag value to implement optimistic concurrency.
-  status: string, # Optional. Status of the resource.
-  createdDateTime: string (ISO 8601 Format), # Optional. Date-time when resource was created, sample format: yyyy-MM-ddTHH:mm:ssZ.
-  modifiedDateTime: string (ISO 8601 Format), # Optional. Date-time when resource was last modified, sample format: yyyy-MM-ddTHH:mm:ssZ.
-  source: string, # Optional. Source of the resource.
-  name: string, # Optional. Name to identify resource.
-  description: string, # Optional. Textual description of the resource.
-  createdBy: string, # Optional. Created by user/tenant id.
-  modifiedBy: string, # Optional. Modified by user/tenant id.
-  properties: Dictionary&lt;string, any&gt;, # Optional. A collection of key value pairs that belongs to the resource.
-Each pair must not have a key greater than 50 characters
-and must not have a value greater than 150 characters.
-Note: A maximum of 25 key value pairs can be provided for a resource and only string,
-numeral and datetime (yyyy-MM-ddTHH:mm:ssZ) values are supported.
-}
-</code>
-
-Response Body:
-
-Schema for <c>Party</c>:
-<code>{
-  id: string, # Optional. Unique resource ID.
-  eTag: string, # Optional. The ETag value to implement optimistic concurrency.
-  status: string, # Optional. Status of the resource.
-  createdDateTime: string (ISO 8601 Format), # Optional. Date-time when resource was created, sample format: yyyy-MM-ddTHH:mm:ssZ.
-  modifiedDateTime: string (ISO 8601 Format), # Optional. Date-time when resource was last modified, sample format: yyyy-MM-ddTHH:mm:ssZ.
-  source: string, # Optional. Source of the resource.
-  name: string, # Optional. Name to identify resource.
-  description: string, # Optional. Textual description of the resource.
-  createdBy: string, # Optional. Created by user/tenant id.
-  modifiedBy: string, # Optional. Modified by user/tenant id.
-  properties: Dictionary&lt;string, any&gt;, # Optional. A collection of key value pairs that belongs to the resource.
-Each pair must not have a key greater than 50 characters
-and must not have a value greater than 150 characters.
-Note: A maximum of 25 key value pairs can be provided for a resource and only string,
-numeral and datetime (yyyy-MM-ddTHH:mm:ssZ) values are supported.
-}
-</code>
-
-</remarks>
     </member>
-    <member name="DeleteAsync(String,RequestContext)">
+    <member name="DeleteAsync(string,RequestContext)">
 <example>
 This sample shows how to call DeleteAsync with required parameters.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var client = new FarmBeatsClient(credential).GetPartiesClient(<2022-11-01-preview>);
+var client = new FarmBeatsClient(credential).GetPartiesClient("2022-11-01-preview");
 
-Response response = await client.DeleteAsync("<partyId>");
+Response response = await client.DeleteAsync("<partyId>", new RequestContext());
 Console.WriteLine(response.Status);
 ]]></code>
 </example>
     </member>
-    <member name="Delete(String,RequestContext)">
+    <member name="Delete(string,RequestContext)">
 <example>
 This sample shows how to call Delete with required parameters.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var client = new FarmBeatsClient(credential).GetPartiesClient(<2022-11-01-preview>);
+var client = new FarmBeatsClient(credential).GetPartiesClient("2022-11-01-preview");
 
-Response response = client.Delete("<partyId>");
+Response response = client.Delete("<partyId>", new RequestContext());
 Console.WriteLine(response.Status);
 ]]></code>
 </example>
     </member>
-    <member name="GetCascadeDeleteJobDetailsAsync(String,RequestContext)">
+    <member name="GetCascadeDeleteJobDetailsAsync(string,RequestContext)">
 <example>
 This sample shows how to call GetCascadeDeleteJobDetailsAsync with required parameters and parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var client = new FarmBeatsClient(credential).GetPartiesClient(<2022-11-01-preview>);
+var client = new FarmBeatsClient(credential).GetPartiesClient("2022-11-01-preview");
 
-Response response = await client.GetCascadeDeleteJobDetailsAsync("<jobId>");
+Response response = await client.GetCascadeDeleteJobDetailsAsync("<jobId>", new RequestContext());
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("partyId").ToString());
@@ -337,39 +189,15 @@ Console.WriteLine(result.GetProperty("startTime").ToString());
 Console.WriteLine(result.GetProperty("endTime").ToString());
 ]]></code>
 </example>
-<remarks>
-Below is the JSON schema for the response payload.
-
-Response Body:
-
-Schema for <c>CascadeDeleteJob</c>:
-<code>{
-  partyId: string, # Required. Party Id.
-  resourceId: string, # Required. The id of the resource.
-  resourceType: string, # Required. The type of the resource.
-  id: string, # Optional. Unique job id.
-  status: &quot;Waiting&quot; | &quot;Running&quot; | &quot;Succeeded&quot; | &quot;Failed&quot; | &quot;Cancelled&quot;, # Optional. Status of the job.
-Possible values: &apos;Waiting&apos;, &apos;Running&apos;, &apos;Succeeded&apos;, &apos;Failed&apos;, &apos;Cancelled&apos;.
-  durationInSeconds: number, # Optional. Duration of the job in seconds.
-  message: string, # Optional. Status message to capture more details of the job.
-  errorCode: string, # Optional. Error Code when job failed.
-  createdDateTime: string (ISO 8601 Format), # Optional. Job created at dateTime. Sample format: yyyy-MM-ddTHH:mm:ssZ.
-  lastActionDateTime: string (ISO 8601 Format), # Optional. Job was last acted upon at dateTime. Sample format: yyyy-MM-ddTHH:mm:ssZ.
-  startTime: string (ISO 8601 Format), # Optional. Job start time when available. Sample format: yyyy-MM-ddTHH:mm:ssZ.
-  endTime: string (ISO 8601 Format), # Optional. Job end time when available. Sample format: yyyy-MM-ddTHH:mm:ssZ.
-}
-</code>
-
-</remarks>
     </member>
-    <member name="GetCascadeDeleteJobDetails(String,RequestContext)">
+    <member name="GetCascadeDeleteJobDetails(string,RequestContext)">
 <example>
 This sample shows how to call GetCascadeDeleteJobDetails with required parameters and parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var client = new FarmBeatsClient(credential).GetPartiesClient(<2022-11-01-preview>);
+var client = new FarmBeatsClient(credential).GetPartiesClient("2022-11-01-preview");
 
-Response response = client.GetCascadeDeleteJobDetails("<jobId>");
+Response response = client.GetCascadeDeleteJobDetails("<jobId>", new RequestContext());
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("partyId").ToString());
@@ -386,52 +214,28 @@ Console.WriteLine(result.GetProperty("startTime").ToString());
 Console.WriteLine(result.GetProperty("endTime").ToString());
 ]]></code>
 </example>
-<remarks>
-Below is the JSON schema for the response payload.
-
-Response Body:
-
-Schema for <c>CascadeDeleteJob</c>:
-<code>{
-  partyId: string, # Required. Party Id.
-  resourceId: string, # Required. The id of the resource.
-  resourceType: string, # Required. The type of the resource.
-  id: string, # Optional. Unique job id.
-  status: &quot;Waiting&quot; | &quot;Running&quot; | &quot;Succeeded&quot; | &quot;Failed&quot; | &quot;Cancelled&quot;, # Optional. Status of the job.
-Possible values: &apos;Waiting&apos;, &apos;Running&apos;, &apos;Succeeded&apos;, &apos;Failed&apos;, &apos;Cancelled&apos;.
-  durationInSeconds: number, # Optional. Duration of the job in seconds.
-  message: string, # Optional. Status message to capture more details of the job.
-  errorCode: string, # Optional. Error Code when job failed.
-  createdDateTime: string (ISO 8601 Format), # Optional. Job created at dateTime. Sample format: yyyy-MM-ddTHH:mm:ssZ.
-  lastActionDateTime: string (ISO 8601 Format), # Optional. Job was last acted upon at dateTime. Sample format: yyyy-MM-ddTHH:mm:ssZ.
-  startTime: string (ISO 8601 Format), # Optional. Job start time when available. Sample format: yyyy-MM-ddTHH:mm:ssZ.
-  endTime: string (ISO 8601 Format), # Optional. Job end time when available. Sample format: yyyy-MM-ddTHH:mm:ssZ.
-}
-</code>
-
-</remarks>
     </member>
-    <member name="GetPartiesAsync(IEnumerable,IEnumerable,IEnumerable,IEnumerable,DateTimeOffset,DateTimeOffset,DateTimeOffset,DateTimeOffset,Int32,String,RequestContext)">
+    <member name="GetPartiesAsync(IEnumerable{string},IEnumerable{string},IEnumerable{string},IEnumerable{string},DateTimeOffset?,DateTimeOffset?,DateTimeOffset?,DateTimeOffset?,int?,string,RequestContext)">
 <example>
 This sample shows how to call GetPartiesAsync and parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var client = new FarmBeatsClient(credential).GetPartiesClient(<2022-11-01-preview>);
+var client = new FarmBeatsClient(credential).GetPartiesClient("2022-11-01-preview");
 
-await foreach (var data in client.GetPartiesAsync())
+await foreach (var item in client.GetPartiesAsync())
 {
-    JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
     Console.WriteLine(result.ToString());
 }
 ]]></code>
 This sample shows how to call GetPartiesAsync with all parameters, and how to parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var client = new FarmBeatsClient(credential).GetPartiesClient(<2022-11-01-preview>);
+var client = new FarmBeatsClient(credential).GetPartiesClient("2022-11-01-preview");
 
-await foreach (var data in client.GetPartiesAsync(new String[]{"<ids>"}, new String[]{"<names>"}, new String[]{"<propertyFilters>"}, new String[]{"<statuses>"}, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, 1234, "<skipToken>"))
+await foreach (var item in client.GetPartiesAsync(new String[]{"<ids>"}, new String[]{"<names>"}, new String[]{"<propertyFilters>"}, new String[]{"<statuses>"}, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, 1234, "<skipToken>", new RequestContext()))
 {
-    JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
     Console.WriteLine(result.GetProperty("id").ToString());
     Console.WriteLine(result.GetProperty("eTag").ToString());
     Console.WriteLine(result.GetProperty("status").ToString());
@@ -446,54 +250,28 @@ await foreach (var data in client.GetPartiesAsync(new String[]{"<ids>"}, new Str
 }
 ]]></code>
 </example>
-<remarks>
-Below is the JSON schema for one item in the pageable response.
-
-Response Body:
-
-Schema for <c>PartyListResponseValue</c>:
-<code>{
-  id: string, # Optional. Unique resource ID.
-  eTag: string, # Optional. The ETag value to implement optimistic concurrency.
-  status: string, # Optional. Status of the resource.
-  createdDateTime: string (ISO 8601 Format), # Optional. Date-time when resource was created, sample format: yyyy-MM-ddTHH:mm:ssZ.
-  modifiedDateTime: string (ISO 8601 Format), # Optional. Date-time when resource was last modified, sample format: yyyy-MM-ddTHH:mm:ssZ.
-  source: string, # Optional. Source of the resource.
-  name: string, # Optional. Name to identify resource.
-  description: string, # Optional. Textual description of the resource.
-  createdBy: string, # Optional. Created by user/tenant id.
-  modifiedBy: string, # Optional. Modified by user/tenant id.
-  properties: Dictionary&lt;string, any&gt;, # Optional. A collection of key value pairs that belongs to the resource.
-Each pair must not have a key greater than 50 characters
-and must not have a value greater than 150 characters.
-Note: A maximum of 25 key value pairs can be provided for a resource and only string,
-numeral and datetime (yyyy-MM-ddTHH:mm:ssZ) values are supported.
-}
-</code>
-
-</remarks>
     </member>
-    <member name="GetParties(IEnumerable,IEnumerable,IEnumerable,IEnumerable,DateTimeOffset,DateTimeOffset,DateTimeOffset,DateTimeOffset,Int32,String,RequestContext)">
+    <member name="GetParties(IEnumerable{string},IEnumerable{string},IEnumerable{string},IEnumerable{string},DateTimeOffset?,DateTimeOffset?,DateTimeOffset?,DateTimeOffset?,int?,string,RequestContext)">
 <example>
 This sample shows how to call GetParties and parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var client = new FarmBeatsClient(credential).GetPartiesClient(<2022-11-01-preview>);
+var client = new FarmBeatsClient(credential).GetPartiesClient("2022-11-01-preview");
 
-foreach (var data in client.GetParties())
+foreach (var item in client.GetParties())
 {
-    JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
     Console.WriteLine(result.ToString());
 }
 ]]></code>
 This sample shows how to call GetParties with all parameters, and how to parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var client = new FarmBeatsClient(credential).GetPartiesClient(<2022-11-01-preview>);
+var client = new FarmBeatsClient(credential).GetPartiesClient("2022-11-01-preview");
 
-foreach (var data in client.GetParties(new String[]{"<ids>"}, new String[]{"<names>"}, new String[]{"<propertyFilters>"}, new String[]{"<statuses>"}, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, 1234, "<skipToken>"))
+foreach (var item in client.GetParties(new String[]{"<ids>"}, new String[]{"<names>"}, new String[]{"<propertyFilters>"}, new String[]{"<statuses>"}, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, 1234, "<skipToken>", new RequestContext()))
 {
-    JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
     Console.WriteLine(result.GetProperty("id").ToString());
     Console.WriteLine(result.GetProperty("eTag").ToString());
     Console.WriteLine(result.GetProperty("status").ToString());
@@ -508,44 +286,18 @@ foreach (var data in client.GetParties(new String[]{"<ids>"}, new String[]{"<nam
 }
 ]]></code>
 </example>
-<remarks>
-Below is the JSON schema for one item in the pageable response.
-
-Response Body:
-
-Schema for <c>PartyListResponseValue</c>:
-<code>{
-  id: string, # Optional. Unique resource ID.
-  eTag: string, # Optional. The ETag value to implement optimistic concurrency.
-  status: string, # Optional. Status of the resource.
-  createdDateTime: string (ISO 8601 Format), # Optional. Date-time when resource was created, sample format: yyyy-MM-ddTHH:mm:ssZ.
-  modifiedDateTime: string (ISO 8601 Format), # Optional. Date-time when resource was last modified, sample format: yyyy-MM-ddTHH:mm:ssZ.
-  source: string, # Optional. Source of the resource.
-  name: string, # Optional. Name to identify resource.
-  description: string, # Optional. Textual description of the resource.
-  createdBy: string, # Optional. Created by user/tenant id.
-  modifiedBy: string, # Optional. Modified by user/tenant id.
-  properties: Dictionary&lt;string, any&gt;, # Optional. A collection of key value pairs that belongs to the resource.
-Each pair must not have a key greater than 50 characters
-and must not have a value greater than 150 characters.
-Note: A maximum of 25 key value pairs can be provided for a resource and only string,
-numeral and datetime (yyyy-MM-ddTHH:mm:ssZ) values are supported.
-}
-</code>
-
-</remarks>
     </member>
-    <member name="CreateCascadeDeleteJobAsync(WaitUntil,String,String,RequestContext)">
+    <member name="CreateCascadeDeleteJobAsync(WaitUntil,string,string,RequestContext)">
 <example>
 This sample shows how to call CreateCascadeDeleteJobAsync with required parameters and parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var client = new FarmBeatsClient(credential).GetPartiesClient(<2022-11-01-preview>);
+var client = new FarmBeatsClient(credential).GetPartiesClient("2022-11-01-preview");
 
-var operation = await client.CreateCascadeDeleteJobAsync(WaitUntil.Completed, "<jobId>", "<partyId>");
+var operation = await client.CreateCascadeDeleteJobAsync(WaitUntil.Completed, "<jobId>", "<partyId>", new RequestContext());
 
-BinaryData data = operation.Value;
-JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+BinaryData responseData = operation.Value;
+JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
 Console.WriteLine(result.GetProperty("partyId").ToString());
 Console.WriteLine(result.GetProperty("resourceId").ToString());
 Console.WriteLine(result.GetProperty("resourceType").ToString());
@@ -560,42 +312,18 @@ Console.WriteLine(result.GetProperty("startTime").ToString());
 Console.WriteLine(result.GetProperty("endTime").ToString());
 ]]></code>
 </example>
-<remarks>
-Below is the JSON schema for the response payload.
-
-Response Body:
-
-Schema for <c>CascadeDeleteJob</c>:
-<code>{
-  partyId: string, # Required. Party Id.
-  resourceId: string, # Required. The id of the resource.
-  resourceType: string, # Required. The type of the resource.
-  id: string, # Optional. Unique job id.
-  status: &quot;Waiting&quot; | &quot;Running&quot; | &quot;Succeeded&quot; | &quot;Failed&quot; | &quot;Cancelled&quot;, # Optional. Status of the job.
-Possible values: &apos;Waiting&apos;, &apos;Running&apos;, &apos;Succeeded&apos;, &apos;Failed&apos;, &apos;Cancelled&apos;.
-  durationInSeconds: number, # Optional. Duration of the job in seconds.
-  message: string, # Optional. Status message to capture more details of the job.
-  errorCode: string, # Optional. Error Code when job failed.
-  createdDateTime: string (ISO 8601 Format), # Optional. Job created at dateTime. Sample format: yyyy-MM-ddTHH:mm:ssZ.
-  lastActionDateTime: string (ISO 8601 Format), # Optional. Job was last acted upon at dateTime. Sample format: yyyy-MM-ddTHH:mm:ssZ.
-  startTime: string (ISO 8601 Format), # Optional. Job start time when available. Sample format: yyyy-MM-ddTHH:mm:ssZ.
-  endTime: string (ISO 8601 Format), # Optional. Job end time when available. Sample format: yyyy-MM-ddTHH:mm:ssZ.
-}
-</code>
-
-</remarks>
     </member>
-    <member name="CreateCascadeDeleteJob(WaitUntil,String,String,RequestContext)">
+    <member name="CreateCascadeDeleteJob(WaitUntil,string,string,RequestContext)">
 <example>
 This sample shows how to call CreateCascadeDeleteJob with required parameters and parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var client = new FarmBeatsClient(credential).GetPartiesClient(<2022-11-01-preview>);
+var client = new FarmBeatsClient(credential).GetPartiesClient("2022-11-01-preview");
 
-var operation = client.CreateCascadeDeleteJob(WaitUntil.Completed, "<jobId>", "<partyId>");
+var operation = client.CreateCascadeDeleteJob(WaitUntil.Completed, "<jobId>", "<partyId>", new RequestContext());
 
-BinaryData data = operation.Value;
-JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+BinaryData responseData = operation.Value;
+JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
 Console.WriteLine(result.GetProperty("partyId").ToString());
 Console.WriteLine(result.GetProperty("resourceId").ToString());
 Console.WriteLine(result.GetProperty("resourceType").ToString());
@@ -610,30 +338,6 @@ Console.WriteLine(result.GetProperty("startTime").ToString());
 Console.WriteLine(result.GetProperty("endTime").ToString());
 ]]></code>
 </example>
-<remarks>
-Below is the JSON schema for the response payload.
-
-Response Body:
-
-Schema for <c>CascadeDeleteJob</c>:
-<code>{
-  partyId: string, # Required. Party Id.
-  resourceId: string, # Required. The id of the resource.
-  resourceType: string, # Required. The type of the resource.
-  id: string, # Optional. Unique job id.
-  status: &quot;Waiting&quot; | &quot;Running&quot; | &quot;Succeeded&quot; | &quot;Failed&quot; | &quot;Cancelled&quot;, # Optional. Status of the job.
-Possible values: &apos;Waiting&apos;, &apos;Running&apos;, &apos;Succeeded&apos;, &apos;Failed&apos;, &apos;Cancelled&apos;.
-  durationInSeconds: number, # Optional. Duration of the job in seconds.
-  message: string, # Optional. Status message to capture more details of the job.
-  errorCode: string, # Optional. Error Code when job failed.
-  createdDateTime: string (ISO 8601 Format), # Optional. Job created at dateTime. Sample format: yyyy-MM-ddTHH:mm:ssZ.
-  lastActionDateTime: string (ISO 8601 Format), # Optional. Job was last acted upon at dateTime. Sample format: yyyy-MM-ddTHH:mm:ssZ.
-  startTime: string (ISO 8601 Format), # Optional. Job start time when available. Sample format: yyyy-MM-ddTHH:mm:ssZ.
-  endTime: string (ISO 8601 Format), # Optional. Job end time when available. Sample format: yyyy-MM-ddTHH:mm:ssZ.
-}
-</code>
-
-</remarks>
     </member>
   </members>
 </doc>

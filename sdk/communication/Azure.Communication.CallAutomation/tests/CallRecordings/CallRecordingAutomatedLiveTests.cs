@@ -63,41 +63,41 @@ namespace Azure.Communication.CallAutomation.Tests.CallRecordings
             CallRecording callRecording = client.GetCallRecording();
             StartRecordingOptions recordingOptions = new StartRecordingOptions(new ServerCallLocator(serverCallId))
             {
-                RecordingStateCallbackEndpoint = new Uri(TestEnvironment.DispatcherCallback),
+                RecordingStateCallbackUri = new Uri(TestEnvironment.DispatcherCallback),
             };
-            var recordingResponse = await callRecording.StartRecordingAsync(recordingOptions).ConfigureAwait(false);
+            var recordingResponse = await callRecording.StartAsync(recordingOptions).ConfigureAwait(false);
             Assert.NotNull(recordingResponse.Value);
 
             var recordingId = recordingResponse.Value.RecordingId;
             Assert.NotNull(recordingId);
             await WaitForOperationCompletion().ConfigureAwait(false);
 
-            recordingResponse = await callRecording.GetRecordingStateAsync(recordingId).ConfigureAwait(false);
+            recordingResponse = await callRecording.GetStateAsync(recordingId).ConfigureAwait(false);
             Assert.NotNull(recordingResponse.Value);
             Assert.NotNull(recordingResponse.Value.RecordingState);
             Assert.AreEqual(recordingResponse.Value.RecordingState, RecordingState.Active);
 
-            await callRecording.PauseRecordingAsync(recordingId);
+            await callRecording.PauseAsync(recordingId);
             await WaitForOperationCompletion().ConfigureAwait(false);
-            recordingResponse = await callRecording.GetRecordingStateAsync(recordingId).ConfigureAwait(false);
+            recordingResponse = await callRecording.GetStateAsync(recordingId).ConfigureAwait(false);
             Assert.NotNull(recordingResponse.Value);
             Assert.NotNull(recordingResponse.Value.RecordingState);
             Assert.AreEqual(recordingResponse.Value.RecordingState, RecordingState.Inactive);
 
-            await callRecording.ResumeRecordingAsync(recordingId);
+            await callRecording.ResumeAsync(recordingId);
             await WaitForOperationCompletion().ConfigureAwait(false);
-            recordingResponse = await callRecording.GetRecordingStateAsync(recordingId).ConfigureAwait(false);
+            recordingResponse = await callRecording.GetStateAsync(recordingId).ConfigureAwait(false);
             Assert.NotNull(recordingResponse.Value);
             Assert.NotNull(recordingResponse.Value.RecordingState);
             Assert.AreEqual(recordingResponse.Value.RecordingState, RecordingState.Active);
 
-            await callRecording.StopRecordingAsync(recordingId);
+            await callRecording.StopAsync(recordingId);
             await WaitForOperationCompletion().ConfigureAwait(false);
             stopRecording = true;
 
             try
             {
-                recordingResponse = await callRecording.GetRecordingStateAsync(recordingId).ConfigureAwait(false);
+                recordingResponse = await callRecording.GetStateAsync(recordingId).ConfigureAwait(false);
             }
             catch (RequestFailedException ex)
             {
@@ -169,19 +169,19 @@ namespace Azure.Communication.CallAutomation.Tests.CallRecordings
                     Assert.AreEqual(CallConnectionState.Connected, properties.Value.CallConnectionState);
 
                     // try start recording unmixed audio - no channel affinity
-                    var startRecordingResponse = await client.GetCallRecording().StartRecordingAsync(
+                    var startRecordingResponse = await client.GetCallRecording().StartAsync(
                         new StartRecordingOptions(new ServerCallLocator(properties.Value.ServerCallId))
                         {
                             RecordingChannel = RecordingChannel.Unmixed,
                             RecordingContent = RecordingContent.Audio,
                             RecordingFormat = RecordingFormat.Wav,
-                            RecordingStateCallbackEndpoint = new Uri(TestEnvironment.DispatcherCallback),
+                            RecordingStateCallbackUri = new Uri(TestEnvironment.DispatcherCallback),
                         });
                     Assert.AreEqual(StatusCodes.Status200OK, startRecordingResponse.GetRawResponse().Status);
                     Assert.NotNull(startRecordingResponse.Value.RecordingId);
 
                     // try stop recording
-                    var stopRecordingResponse = await client.GetCallRecording().StopRecordingAsync(startRecordingResponse.Value.RecordingId);
+                    var stopRecordingResponse = await client.GetCallRecording().StopAsync(startRecordingResponse.Value.RecordingId);
                     Assert.AreEqual(StatusCodes.Status204NoContent, stopRecordingResponse.Status);
 
                     // wait for CallRecordingStateChanged event TODO: Figure out why this event not being received
@@ -191,8 +191,7 @@ namespace Azure.Communication.CallAutomation.Tests.CallRecordings
                     // Assert.IsTrue(((CallRecordingStateChanged)recordingStartedEvent!).CallConnectionId == callConnectionId);
 
                     // try hangup
-                    var hangUpOptions = new HangUpOptions(true);
-                    await response.CallConnection.HangUpAsync(hangUpOptions).ConfigureAwait(false);
+                    await response.CallConnection.HangUpAsync(true).ConfigureAwait(false);
                     var disconnectedEvent = await WaitForEvent<CallDisconnected>(callConnectionId, TimeSpan.FromSeconds(20));
                     Assert.IsNotNull(disconnectedEvent);
                     Assert.IsTrue(disconnectedEvent is CallDisconnected);
@@ -273,16 +272,16 @@ namespace Azure.Communication.CallAutomation.Tests.CallRecordings
                             RecordingChannel = RecordingChannel.Unmixed,
                             RecordingContent = RecordingContent.Audio,
                             RecordingFormat = RecordingFormat.Wav,
-                            RecordingStateCallbackEndpoint = new Uri(TestEnvironment.DispatcherCallback),
+                            RecordingStateCallbackUri = new Uri(TestEnvironment.DispatcherCallback),
                         };
                     startRecordingOptions.AudioChannelParticipantOrdering.Add(user);
                     startRecordingOptions.AudioChannelParticipantOrdering.Add(target);
-                    var startRecordingResponse = await client.GetCallRecording().StartRecordingAsync(startRecordingOptions);
+                    var startRecordingResponse = await client.GetCallRecording().StartAsync(startRecordingOptions);
                     Assert.AreEqual(StatusCodes.Status200OK, startRecordingResponse.GetRawResponse().Status);
                     Assert.NotNull(startRecordingResponse.Value.RecordingId);
 
                     // try stop recording
-                    var stopRecordingResponse = await client.GetCallRecording().StopRecordingAsync(startRecordingResponse.Value.RecordingId);
+                    var stopRecordingResponse = await client.GetCallRecording().StopAsync(startRecordingResponse.Value.RecordingId);
                     Assert.AreEqual(StatusCodes.Status204NoContent, stopRecordingResponse.Status);
 
                     // wait for CallRecordingStateChanged event TODO: Figure out why event not received
@@ -292,8 +291,7 @@ namespace Azure.Communication.CallAutomation.Tests.CallRecordings
                     // Assert.IsTrue(((CallRecordingStateChanged)recordingStartedEvent!).CallConnectionId == callConnectionId);
 
                     // try hangup
-                    var hangUpOptions = new HangUpOptions(true);
-                    await response.CallConnection.HangUpAsync(hangUpOptions).ConfigureAwait(false);
+                    await response.CallConnection.HangUpAsync(true).ConfigureAwait(false);
                     var disconnectedEvent = await WaitForEvent<CallDisconnected>(callConnectionId, TimeSpan.FromSeconds(20));
                     Assert.IsNotNull(disconnectedEvent);
                     Assert.IsTrue(disconnectedEvent is CallDisconnected);

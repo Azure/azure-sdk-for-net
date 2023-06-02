@@ -13,9 +13,11 @@ namespace Azure.AI.TextAnalytics.Samples
         [Test]
         public async Task MultiLabelClassifyConvenienceAsync()
         {
+            TestEnvironment.IgnoreIfNotPublicCloud();
+
             Uri endpoint = new(TestEnvironment.StaticEndpoint);
             AzureKeyCredential credential = new(TestEnvironment.StaticApiKey);
-            TextAnalyticsClient client = new(endpoint, credential, CreateSampleOptions());
+            TextAnalyticsClient client = new(endpoint, credential, CreateSampleOptions(true));
 
             #region Snippet:Sample10_MultiLabelClassifyConvenienceAsync
             string document =

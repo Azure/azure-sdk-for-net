@@ -86,7 +86,6 @@ namespace Azure.ResourceManager.EventGrid.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             id = JsonField.DeserializeJsonField(property0.Value);
@@ -96,7 +95,6 @@ namespace Azure.ResourceManager.EventGrid.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             topic = JsonField.DeserializeJsonField(property0.Value);
@@ -106,7 +104,6 @@ namespace Azure.ResourceManager.EventGrid.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             eventTime = JsonField.DeserializeJsonField(property0.Value);
@@ -116,7 +113,6 @@ namespace Azure.ResourceManager.EventGrid.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             eventType = JsonFieldWithDefault.DeserializeJsonFieldWithDefault(property0.Value);
@@ -126,7 +122,6 @@ namespace Azure.ResourceManager.EventGrid.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             subject = JsonFieldWithDefault.DeserializeJsonFieldWithDefault(property0.Value);
@@ -136,7 +131,6 @@ namespace Azure.ResourceManager.EventGrid.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             dataVersion = JsonFieldWithDefault.DeserializeJsonFieldWithDefault(property0.Value);

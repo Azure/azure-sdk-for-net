@@ -45,7 +45,6 @@ namespace Azure.Core.TestFramework
 
         private static readonly HashSet<Type> s_bootstrappingAttemptedTypes = new();
         private static readonly object s_syncLock = new();
-        private static readonly bool s_isWindows = RuntimeInformation.IsOSPlatform(OSPlatform.Windows);
         private Exception _bootstrappingException;
         private readonly Type _type;
         private readonly ClientDiagnostics _clientDiagnostics;
@@ -344,7 +343,7 @@ namespace Azure.Core.TestFramework
             // unexpected response => throw an exception
             if (response.Status != 200)
             {
-                throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response);
+                throw new RequestFailedException(response);
             }
 
             // parse the response
@@ -392,7 +391,7 @@ namespace Azure.Core.TestFramework
                     response = await pipeline.SendRequestAsync(request, CancellationToken.None);
                     if (response.Status != 200)
                     {
-                        throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response);
+                        throw new RequestFailedException(response);
                     }
                 }
             }
@@ -565,6 +564,8 @@ namespace Azure.Core.TestFramework
             return testProject;
         }
 
+        public static bool IsWindows => RuntimeInformation.IsOSPlatform(OSPlatform.Windows);
+
         /// <summary>
         /// Determines if the current environment is Azure DevOps.
         /// </summary>
@@ -655,7 +656,7 @@ namespace Azure.Core.TestFramework
             {
                 try
                 {
-                    if (!s_isWindows ||
+                    if (!IsWindows ||
                         s_bootstrappingAttemptedTypes.Contains(_type) ||
                         Mode == RecordedTestMode.Playback ||
                         GlobalIsRunningInCI)

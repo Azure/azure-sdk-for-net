@@ -5,6 +5,9 @@
 
 #nullable disable
 
+using System.Collections.Generic;
+using Azure.Core;
+
 namespace Azure.ResourceManager.AppContainers.Models
 {
     /// <summary> Volume definitions for the Container App. </summary>
@@ -13,24 +16,29 @@ namespace Azure.ResourceManager.AppContainers.Models
         /// <summary> Initializes a new instance of ContainerAppVolume. </summary>
         public ContainerAppVolume()
         {
+            Secrets = new ChangeTrackingList<SecretVolumeItem>();
         }
 
         /// <summary> Initializes a new instance of ContainerAppVolume. </summary>
         /// <param name="name"> Volume name. </param>
         /// <param name="storageType"> Storage type for the volume. If not provided, use EmptyDir. </param>
-        /// <param name="storageName"> Name of storage resource. No need to provide for EmptyDir. </param>
-        internal ContainerAppVolume(string name, ContainerAppStorageType? storageType, string storageName)
+        /// <param name="storageName"> Name of storage resource. No need to provide for EmptyDir and Secret. </param>
+        /// <param name="secrets"> List of secrets to be added in volume. If no secrets are provided, all secrets in collection will be added to volume. </param>
+        internal ContainerAppVolume(string name, ContainerAppStorageType? storageType, string storageName, IList<SecretVolumeItem> secrets)
         {
             Name = name;
             StorageType = storageType;
             StorageName = storageName;
+            Secrets = secrets;
         }
 
         /// <summary> Volume name. </summary>
         public string Name { get; set; }
         /// <summary> Storage type for the volume. If not provided, use EmptyDir. </summary>
         public ContainerAppStorageType? StorageType { get; set; }
-        /// <summary> Name of storage resource. No need to provide for EmptyDir. </summary>
+        /// <summary> Name of storage resource. No need to provide for EmptyDir and Secret. </summary>
         public string StorageName { get; set; }
+        /// <summary> List of secrets to be added in volume. If no secrets are provided, all secrets in collection will be added to volume. </summary>
+        public IList<SecretVolumeItem> Secrets { get; }
     }
 }

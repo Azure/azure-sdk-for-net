@@ -1,28 +1,27 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://languagesdkresource.cognitiveservices.azure.com/language/authoring/analyze-conversations/projects/global/prebuilt-entities?multilingual=true\u0026api-version=2022-10-01-preview",
+      "RequestUri": "https://languagesdkresource.cognitiveservices.azure.com/language/authoring/analyze-conversations/projects/global/prebuilt-entities?multilingual=true\u0026api-version=2023-04-01",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
         "Ocp-Apim-Subscription-Key": "Sanitized",
-        "traceparent": "00-0c502156fd1aaaa7b20545b09e08a8e9-cfc59968ba0f6bde-00",
-        "User-Agent": "azsdk-net-AI.Language.Conversations/1.1.0-alpha.20221019.1 (.NET 6.0.10; Microsoft Windows 10.0.22621)",
-        "x-ms-client-request-id": "25aa2ceab854aa500d0bcedf9de3adf2",
+        "User-Agent": "azsdk-net-AI.Language.Conversations/1.1.0-alpha.20230508.1 (.NET 7.0.5; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "a80b0a39b2deada8b70b5fef4203971f",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
       "StatusCode": 200,
       "ResponseHeaders": {
         "Access-Control-Expose-Headers": "*",
-        "apim-request-id": "aff92257-edae-48f3-90a9-6c00196e5c2e",
-        "Content-Length": "2071",
+        "apim-request-id": "ef563a6c-79c7-431f-bb39-0d88ed453610",
+        "Content-Length": "2258",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Thu, 20 Oct 2022 00:18:34 GMT",
-        "request-id": "aff92257-edae-48f3-90a9-6c00196e5c2e",
+        "Date": "Mon, 08 May 2023 23:49:01 GMT",
+        "request-id": "ef563a6c-79c7-431f-bb39-0d88ed453610",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
         "X-Content-Type-Options": "nosniff",
-        "x-envoy-upstream-service-time": "16",
+        "x-envoy-upstream-service-time": "18",
         "x-ms-region": "UK South"
       },
       "ResponseBody": {
@@ -59,7 +58,7 @@
           },
           {
             "category": "Quantity.NumberRange",
-            "description": "a numeric interval",
+            "description": "A numeric interval",
             "examples": "between 25 and 35, 25-35"
           },
           {
@@ -94,7 +93,7 @@
           },
           {
             "category": "DateTime",
-            "description": "exact date values",
+            "description": "Date time expressions",
             "examples": "May 11th"
           },
           {
@@ -111,6 +110,16 @@
             "category": "URL",
             "description": "Websites URLs and links",
             "examples": "www.example.com, http://example.net?name=my_name\u0026age=10"
+          },
+          {
+            "category": "IPAddress",
+            "description": "An IP Address",
+            "examples": "192.168.0.4"
+          },
+          {
+            "category": "Geography.Address",
+            "description": "Full addresses",
+            "examples": "123 main street, TX 75080"
           }
         ],
         "nextLink": null
@@ -120,6 +129,6 @@
   "Variables": {
     "CONVERSATIONS_ENDPOINT": "https://languagesdkresource.cognitiveservices.azure.com/",
     "CONVERSATIONS_KEY": "Sanitized",
-    "RandomSeed": "1216921552"
+    "RandomSeed": "1516166042"
   }
 }

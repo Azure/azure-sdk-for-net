@@ -4,12 +4,11 @@ Run `dotnet build /t:GenerateCode` to generate code.
 
 ``` yaml
 azure-arm: true
-generate-model-factory: false
 csharp: true
 namespace: Azure.ResourceManager.EventHubs
 output-folder: $(this-folder)/Generated
-require: https://github.com/Azure/azure-rest-api-specs/blob/f8cc22c427518665d6838eb9832243fc9f7ba684/specification/eventhub/resource-manager/readme.md
-tag: package-2022-01-preview
+require: https://github.com/Azure/azure-rest-api-specs/blob/969e0846e56a0869203bcc52773415c71115f59e/specification/eventhub/resource-manager/readme.md
+# tag: package-2022-10-preview
 clear-output-folder: true
 skip-csproj: true
 
@@ -122,6 +121,7 @@ directive:
         $.Eventhub.properties.properties.properties.status['x-ms-enum'].name = 'EventHubEntityStatus';
         $.Destination['x-ms-client-name'] = 'EventHubDestination';
         $.Destination.properties.properties.properties.storageAccountResourceId['x-ms-format'] = 'arm-id';
+        delete $.Eventhub.properties.properties.properties.messageRetentionInDays;
     - from: namespaces-preview.json
       where: $.definitions
       transform: >
@@ -133,6 +133,8 @@ directive:
         $.ConnectionState.properties.status['x-ms-enum'].name = 'EventHubsPrivateLinkConnectionStatus';
         $.Encryption['x-ms-client-name'] = 'EventHubsEncryption';
         $.KeyVaultProperties['x-ms-client-name'] = 'EventHubsKeyVaultProperties';
+        $.KeyVaultProperties['x-ms-client-name'] = 'EventHubsKeyVaultProperties';
+        $.NetworkSecurityPerimeterConfiguration.allOf[0]['$ref'] = '../../../common/v1/definitions.json#/definitions/TrackedResource';
     - from: CheckNameAvailability.json
       where: $.definitions
       transform: >

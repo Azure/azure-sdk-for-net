@@ -131,7 +131,7 @@ namespace Azure.Communication.Email
         {
             Id = copyId;
             _client = client;
-            _operationInternal = new OperationInternal<EmailSendResult>(_client._clientDiagnostics, this, initialResponse);
+            _operationInternal = new OperationInternal<EmailSendResult>(this, _client._clientDiagnostics, initialResponse);
         }
 
         /// <summary>

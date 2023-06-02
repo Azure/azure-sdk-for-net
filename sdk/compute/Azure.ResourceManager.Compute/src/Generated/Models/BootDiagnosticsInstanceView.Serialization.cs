@@ -28,7 +28,6 @@ namespace Azure.ResourceManager.Compute.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        consoleScreenshotBlobUri = null;
                         continue;
                     }
                     consoleScreenshotBlobUri = new Uri(property.Value.GetString());
@@ -38,7 +37,6 @@ namespace Azure.ResourceManager.Compute.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        serialConsoleLogBlobUri = null;
                         continue;
                     }
                     serialConsoleLogBlobUri = new Uri(property.Value.GetString());
@@ -48,7 +46,6 @@ namespace Azure.ResourceManager.Compute.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     status = InstanceViewStatus.DeserializeInstanceViewStatus(property.Value);

@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.ResourceHealth.Models
             }
             Optional<string> id = default;
             Optional<string> name = default;
-            Optional<IReadOnlyList<ImpactedRegion>> regions = default;
+            Optional<IReadOnlyList<EmergingIssueImpactedRegion>> regions = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -38,13 +38,12 @@ namespace Azure.ResourceManager.ResourceHealth.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<ImpactedRegion> array = new List<ImpactedRegion>();
+                    List<EmergingIssueImpactedRegion> array = new List<EmergingIssueImpactedRegion>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ImpactedRegion.DeserializeImpactedRegion(item));
+                        array.Add(EmergingIssueImpactedRegion.DeserializeEmergingIssueImpactedRegion(item));
                     }
                     regions = array;
                     continue;

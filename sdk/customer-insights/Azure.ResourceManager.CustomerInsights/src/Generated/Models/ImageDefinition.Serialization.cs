@@ -28,7 +28,6 @@ namespace Azure.ResourceManager.CustomerInsights.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     imageExists = property.Value.GetBoolean();
@@ -38,7 +37,6 @@ namespace Azure.ResourceManager.CustomerInsights.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        contentUrl = null;
                         continue;
                     }
                     contentUrl = new Uri(property.Value.GetString());

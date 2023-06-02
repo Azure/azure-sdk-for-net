@@ -86,7 +86,6 @@ namespace Azure.ResourceManager.Avs
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
@@ -110,7 +109,6 @@ namespace Azure.ResourceManager.Avs
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             direction = new PortMirroringProfileDirection(property0.Value.GetString());
@@ -130,7 +128,6 @@ namespace Azure.ResourceManager.Avs
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             status = new PortMirroringProfileStatus(property0.Value.GetString());
@@ -140,7 +137,6 @@ namespace Azure.ResourceManager.Avs
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             provisioningState = new WorkloadNetworkPortMirroringProfileProvisioningState(property0.Value.GetString());
@@ -150,7 +146,6 @@ namespace Azure.ResourceManager.Avs
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             revision = property0.Value.GetInt64();

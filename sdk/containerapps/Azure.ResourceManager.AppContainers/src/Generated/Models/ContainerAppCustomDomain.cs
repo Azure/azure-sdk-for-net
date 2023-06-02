@@ -15,15 +15,12 @@ namespace Azure.ResourceManager.AppContainers.Models
     {
         /// <summary> Initializes a new instance of ContainerAppCustomDomain. </summary>
         /// <param name="name"> Hostname. </param>
-        /// <param name="certificateId"> Resource Id of the Certificate to be bound to this hostname. Must exist in the Managed Environment. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="certificateId"/> is null. </exception>
-        public ContainerAppCustomDomain(string name, ResourceIdentifier certificateId)
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        public ContainerAppCustomDomain(string name)
         {
             Argument.AssertNotNull(name, nameof(name));
-            Argument.AssertNotNull(certificateId, nameof(certificateId));
 
             Name = name;
-            CertificateId = certificateId;
         }
 
         /// <summary> Initializes a new instance of ContainerAppCustomDomain. </summary>

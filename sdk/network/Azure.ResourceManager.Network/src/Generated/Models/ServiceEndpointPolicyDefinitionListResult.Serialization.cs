@@ -28,7 +28,6 @@ namespace Azure.ResourceManager.Network.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<ServiceEndpointPolicyDefinitionData> array = new List<ServiceEndpointPolicyDefinitionData>();

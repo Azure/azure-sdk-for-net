@@ -33,7 +33,7 @@ namespace Azure.Security.KeyVault.Certificates
             }
             else
             {
-                _operationInternal = new(_pipeline.Diagnostics, this, response.GetRawResponse(), nameof(DeleteCertificateOperation), new[]
+                _operationInternal = new(this, _pipeline.Diagnostics, response.GetRawResponse(), nameof(DeleteCertificateOperation), new[]
                 {
                     new KeyValuePair<string, string>("secret", _value.Name), // Retained for backward compatibility.
                     new KeyValuePair<string, string>("certificate", _value.Name),
@@ -111,11 +111,7 @@ namespace Azure.Security.KeyVault.Certificates
                     return OperationState.Pending(response);
 
                 default:
-                    RequestFailedException ex = async
-                        ? await _pipeline.Diagnostics.CreateRequestFailedExceptionAsync(response).ConfigureAwait(false)
-                        : _pipeline.Diagnostics.CreateRequestFailedException(response);
-
-                    return OperationState.Failure(response, ex);
+                    return OperationState.Failure(response, new RequestFailedException(response));
             }
         }
     }

@@ -101,6 +101,60 @@ namespace Azure.ResourceManager.TestFramework
             {
                 GroupForReplace = "group"
             });
+            // Ignore the api-version of PolicyAssignments operations
+            UriRegexSanitizers.Add(new UriRegexSanitizer(
+                @"/providers\/Microsoft.Authorization\/policyAssignments(.*?)\?api-version=(?<group>[a-z0-9-]+)", "**"
+            )
+            {
+                GroupForReplace = "group"
+            });
+            // Ignore the api-version of PolicyDefinitions operations
+            UriRegexSanitizers.Add(new UriRegexSanitizer(
+                @"/providers\/Microsoft.Authorization\/policyDefinitions(.*?)\?api-version=(?<group>[a-z0-9-]+)", "**"
+            )
+            {
+                GroupForReplace = "group"
+            });
+            // Ignore the api-version of PolicySetDefinitions operations
+            UriRegexSanitizers.Add(new UriRegexSanitizer(
+                @"/providers\/Microsoft.Authorization\/policySetDefinitions(.*?)\?api-version=(?<group>[a-z0-9-]+)", "**"
+            )
+            {
+                GroupForReplace = "group"
+            });
+        }
+
+        protected void IgnoreNetworkDependencyVersions()
+        {
+            // Ignore the api-version of Network operations
+            UriRegexSanitizers.Add(new UriRegexSanitizer(
+                @"/providers\/Microsoft.Network\/(.*?)\?api-version=(?<group>[a-z0-9-]+)", "**"
+            )
+            {
+                GroupForReplace = "group"
+            });
+        }
+
+        protected void IgnoreKeyVaultDependencyVersions()
+        {
+            // Ignore the api-version of KeyVault operations
+            UriRegexSanitizers.Add(new UriRegexSanitizer(
+                @"/providers\/Microsoft.KeyVault\/(.*?)\?api-version=(?<group>[a-z0-9-]+)", "**"
+            )
+            {
+                GroupForReplace = "group"
+            });
+        }
+
+        protected void IgnoreManagedIdentityDependencyVersions()
+        {
+            // Ignore the api-version of ManagedIdentity operations
+            UriRegexSanitizers.Add(new UriRegexSanitizer(
+                @"/providers\/Microsoft.ManagedIdentity\/(.*?)\?api-version=(?<group>[a-z0-9-]+)", "**"
+            )
+            {
+                GroupForReplace = "group"
+            });
         }
 
         private ArmClient GetCleanupClient()

@@ -6,8 +6,8 @@ namespace Azure.Data.AppConfiguration
         private readonly object _dummy;
         private readonly int _dummyPrimitive;
         public CompositionType(string value) { throw null; }
-        public static Azure.Data.AppConfiguration.CompositionType All { get { throw null; } }
-        public static Azure.Data.AppConfiguration.CompositionType GroupByKey { get { throw null; } }
+        public static Azure.Data.AppConfiguration.CompositionType Key { get { throw null; } }
+        public static Azure.Data.AppConfiguration.CompositionType KeyLabel { get { throw null; } }
         public bool Equals(Azure.Data.AppConfiguration.CompositionType other) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
@@ -50,7 +50,9 @@ namespace Azure.Data.AppConfiguration
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Data.AppConfiguration.ConfigurationSetting>> GetConfigurationSettingAsync(string key, string label = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.Data.AppConfiguration.ConfigurationSetting> GetConfigurationSettings(Azure.Data.AppConfiguration.SettingSelector selector, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.Data.AppConfiguration.ConfigurationSetting> GetConfigurationSettingsAsync(Azure.Data.AppConfiguration.SettingSelector selector, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.Data.AppConfiguration.ConfigurationSetting> GetConfigurationSettingsForSnapshot(string snapshotName, Azure.Data.AppConfiguration.SettingFields fields, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.Data.AppConfiguration.ConfigurationSetting> GetConfigurationSettingsForSnapshot(string snapshotName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.Data.AppConfiguration.ConfigurationSetting> GetConfigurationSettingsForSnapshotAsync(string snapshotName, Azure.Data.AppConfiguration.SettingFields fields, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.Data.AppConfiguration.ConfigurationSetting> GetConfigurationSettingsForSnapshotAsync(string snapshotName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
@@ -86,6 +88,7 @@ namespace Azure.Data.AppConfiguration
         public enum ServiceVersion
         {
             V1_0 = 0,
+            V2022_11_01_Preview = 1,
         }
     }
     public static partial class ConfigurationModelFactory
@@ -243,11 +246,6 @@ namespace Azure.Data.AppConfiguration
         public static implicit operator Azure.Data.AppConfiguration.SnapshotStatus (string value) { throw null; }
         public static bool operator !=(Azure.Data.AppConfiguration.SnapshotStatus left, Azure.Data.AppConfiguration.SnapshotStatus right) { throw null; }
         public override string ToString() { throw null; }
-    }
-    public partial class SnapshotUpdateParameters
-    {
-        public SnapshotUpdateParameters() { }
-        public Azure.Data.AppConfiguration.SnapshotStatus? Status { get { throw null; } set { } }
     }
 }
 namespace Microsoft.Extensions.Azure

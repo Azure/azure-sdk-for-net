@@ -36,7 +36,6 @@ namespace Azure.ResourceManager.Monitor.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     text = LogFileSettingsText.DeserializeLogFileSettingsText(property.Value);

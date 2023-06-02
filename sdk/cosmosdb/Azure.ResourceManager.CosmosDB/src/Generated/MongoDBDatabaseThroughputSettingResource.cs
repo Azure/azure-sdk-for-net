@@ -365,6 +365,158 @@ namespace Azure.ResourceManager.CosmosDB
         }
 
         /// <summary>
+        /// Retrieve throughput distribution for an Azure Cosmos DB MongoDB database
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/databaseAccounts/{accountName}/mongodbDatabases/{databaseName}/throughputSettings/default/retrieveThroughputDistribution</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>MongoDBResources_MongoDBDatabaseRetrieveThroughputDistribution</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="retrieveThroughputParameters"> The parameters to provide for retrieving throughput distribution for the current MongoDB database. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="retrieveThroughputParameters"/> is null. </exception>
+        public virtual async Task<ArmOperation<PhysicalPartitionThroughputInfoResult>> MongoDBDatabaseRetrieveThroughputDistributionAsync(WaitUntil waitUntil, RetrieveThroughputParameters retrieveThroughputParameters, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(retrieveThroughputParameters, nameof(retrieveThroughputParameters));
+
+            using var scope = _mongoDBDatabaseThroughputSettingMongoDBResourcesClientDiagnostics.CreateScope("MongoDBDatabaseThroughputSettingResource.MongoDBDatabaseRetrieveThroughputDistribution");
+            scope.Start();
+            try
+            {
+                var response = await _mongoDBDatabaseThroughputSettingMongoDBResourcesRestClient.MongoDBDatabaseRetrieveThroughputDistributionAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, retrieveThroughputParameters, cancellationToken).ConfigureAwait(false);
+                var operation = new CosmosDBArmOperation<PhysicalPartitionThroughputInfoResult>(new PhysicalPartitionThroughputInfoResultOperationSource(), _mongoDBDatabaseThroughputSettingMongoDBResourcesClientDiagnostics, Pipeline, _mongoDBDatabaseThroughputSettingMongoDBResourcesRestClient.CreateMongoDBDatabaseRetrieveThroughputDistributionRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, retrieveThroughputParameters).Request, response, OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                    await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Retrieve throughput distribution for an Azure Cosmos DB MongoDB database
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/databaseAccounts/{accountName}/mongodbDatabases/{databaseName}/throughputSettings/default/retrieveThroughputDistribution</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>MongoDBResources_MongoDBDatabaseRetrieveThroughputDistribution</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="retrieveThroughputParameters"> The parameters to provide for retrieving throughput distribution for the current MongoDB database. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="retrieveThroughputParameters"/> is null. </exception>
+        public virtual ArmOperation<PhysicalPartitionThroughputInfoResult> MongoDBDatabaseRetrieveThroughputDistribution(WaitUntil waitUntil, RetrieveThroughputParameters retrieveThroughputParameters, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(retrieveThroughputParameters, nameof(retrieveThroughputParameters));
+
+            using var scope = _mongoDBDatabaseThroughputSettingMongoDBResourcesClientDiagnostics.CreateScope("MongoDBDatabaseThroughputSettingResource.MongoDBDatabaseRetrieveThroughputDistribution");
+            scope.Start();
+            try
+            {
+                var response = _mongoDBDatabaseThroughputSettingMongoDBResourcesRestClient.MongoDBDatabaseRetrieveThroughputDistribution(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, retrieveThroughputParameters, cancellationToken);
+                var operation = new CosmosDBArmOperation<PhysicalPartitionThroughputInfoResult>(new PhysicalPartitionThroughputInfoResultOperationSource(), _mongoDBDatabaseThroughputSettingMongoDBResourcesClientDiagnostics, Pipeline, _mongoDBDatabaseThroughputSettingMongoDBResourcesRestClient.CreateMongoDBDatabaseRetrieveThroughputDistributionRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, retrieveThroughputParameters).Request, response, OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                    operation.WaitForCompletion(cancellationToken);
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Redistribute throughput for an Azure Cosmos DB MongoDB database
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/databaseAccounts/{accountName}/mongodbDatabases/{databaseName}/throughputSettings/default/redistributeThroughput</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>MongoDBResources_MongoDBDatabaseRedistributeThroughput</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="redistributeThroughputParameters"> The parameters to provide for redistributing throughput for the current MongoDB database. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="redistributeThroughputParameters"/> is null. </exception>
+        public virtual async Task<ArmOperation<PhysicalPartitionThroughputInfoResult>> MongoDBDatabaseRedistributeThroughputAsync(WaitUntil waitUntil, RedistributeThroughputParameters redistributeThroughputParameters, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(redistributeThroughputParameters, nameof(redistributeThroughputParameters));
+
+            using var scope = _mongoDBDatabaseThroughputSettingMongoDBResourcesClientDiagnostics.CreateScope("MongoDBDatabaseThroughputSettingResource.MongoDBDatabaseRedistributeThroughput");
+            scope.Start();
+            try
+            {
+                var response = await _mongoDBDatabaseThroughputSettingMongoDBResourcesRestClient.MongoDBDatabaseRedistributeThroughputAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, redistributeThroughputParameters, cancellationToken).ConfigureAwait(false);
+                var operation = new CosmosDBArmOperation<PhysicalPartitionThroughputInfoResult>(new PhysicalPartitionThroughputInfoResultOperationSource(), _mongoDBDatabaseThroughputSettingMongoDBResourcesClientDiagnostics, Pipeline, _mongoDBDatabaseThroughputSettingMongoDBResourcesRestClient.CreateMongoDBDatabaseRedistributeThroughputRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, redistributeThroughputParameters).Request, response, OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                    await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Redistribute throughput for an Azure Cosmos DB MongoDB database
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/databaseAccounts/{accountName}/mongodbDatabases/{databaseName}/throughputSettings/default/redistributeThroughput</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>MongoDBResources_MongoDBDatabaseRedistributeThroughput</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="redistributeThroughputParameters"> The parameters to provide for redistributing throughput for the current MongoDB database. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="redistributeThroughputParameters"/> is null. </exception>
+        public virtual ArmOperation<PhysicalPartitionThroughputInfoResult> MongoDBDatabaseRedistributeThroughput(WaitUntil waitUntil, RedistributeThroughputParameters redistributeThroughputParameters, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(redistributeThroughputParameters, nameof(redistributeThroughputParameters));
+
+            using var scope = _mongoDBDatabaseThroughputSettingMongoDBResourcesClientDiagnostics.CreateScope("MongoDBDatabaseThroughputSettingResource.MongoDBDatabaseRedistributeThroughput");
+            scope.Start();
+            try
+            {
+                var response = _mongoDBDatabaseThroughputSettingMongoDBResourcesRestClient.MongoDBDatabaseRedistributeThroughput(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, redistributeThroughputParameters, cancellationToken);
+                var operation = new CosmosDBArmOperation<PhysicalPartitionThroughputInfoResult>(new PhysicalPartitionThroughputInfoResultOperationSource(), _mongoDBDatabaseThroughputSettingMongoDBResourcesClientDiagnostics, Pipeline, _mongoDBDatabaseThroughputSettingMongoDBResourcesRestClient.CreateMongoDBDatabaseRedistributeThroughputRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, redistributeThroughputParameters).Request, response, OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                    operation.WaitForCompletion(cancellationToken);
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
         /// Add a tag to the current resource.
         /// <list type="bullet">
         /// <item>

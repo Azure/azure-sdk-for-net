@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.Network.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Update_HubVirtualNetworkConnectionPut()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2021-02-01/examples/HubVirtualNetworkConnectionPut.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2022-09-01/examples/HubVirtualNetworkConnectionPut.json
             // this example is just showing the usage of "HubVirtualNetworkConnections_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -63,7 +63,13 @@ Id = new ResourceIdentifier("/subscriptions/subid/resourceGroups/rg1/providers/M
 }
 },
                     },
-                    StaticRoutes =
+                    VnetRoutes = new VnetRoute()
+                    {
+                        StaticRoutesConfig = new StaticRoutesConfig()
+                        {
+                            VnetLocalRouteOverrideCriteria = VnetLocalRouteOverrideCriterion.Equal,
+                        },
+                        StaticRoutes =
 {
 new StaticRoute()
 {
@@ -83,6 +89,9 @@ AddressPrefixes =
 NextHopIPAddress = "10.0.0.65",
 }
 },
+                    },
+                    InboundRouteMapId = new ResourceIdentifier("/subscriptions/subid/resourceGroups/rg1/providers/Microsoft.Network/virtualHubs/virtualHub1/routeMaps/routeMap1"),
+                    OutboundRouteMapId = new ResourceIdentifier("/subscriptions/subid/resourceGroups/rg1/providers/Microsoft.Network/virtualHubs/virtualHub1/routeMaps/routeMap2"),
                 },
             };
             ArmOperation<HubVirtualNetworkConnectionResource> lro = await hubVirtualNetworkConnection.UpdateAsync(WaitUntil.Completed, data);
@@ -100,7 +109,7 @@ NextHopIPAddress = "10.0.0.65",
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Delete_HubVirtualNetworkConnectionDelete()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2021-02-01/examples/HubVirtualNetworkConnectionDelete.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2022-09-01/examples/HubVirtualNetworkConnectionDelete.json
             // this example is just showing the usage of "HubVirtualNetworkConnections_Delete" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -128,7 +137,7 @@ NextHopIPAddress = "10.0.0.65",
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Get_HubVirtualNetworkConnectionGet()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2021-02-01/examples/HubVirtualNetworkConnectionGet.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2022-09-01/examples/HubVirtualNetworkConnectionGet.json
             // this example is just showing the usage of "HubVirtualNetworkConnections_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line

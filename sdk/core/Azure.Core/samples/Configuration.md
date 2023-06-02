@@ -31,7 +31,7 @@ internal class GlobalTimeoutRetryPolicy : RetryPolicy
 {
     private readonly TimeSpan _timeout;
 
-    public GlobalTimeoutRetryPolicy(int maxRetries, Delay delay, TimeSpan timeout) : base(maxRetries, delay)
+    public GlobalTimeoutRetryPolicy(int maxRetries, DelayStrategy delayStrategy, TimeSpan timeout) : base(maxRetries, delayStrategy)
     {
         _timeout = timeout;
     }
@@ -61,20 +61,45 @@ internal class GlobalTimeoutRetryPolicy : RetryPolicy
 Here is how we would configure the client to use the policy we just created.
 
 ```C# Snippet:SetGlobalTimeoutRetryPolicy
-var delay = Delay.CreateFixedDelay(TimeSpan.FromSeconds(2));
+var delay = DelayStrategy.CreateFixedDelayStrategy(TimeSpan.FromSeconds(2));
 SecretClientOptions options = new SecretClientOptions()
 {
-    RetryPolicy = new GlobalTimeoutRetryPolicy(maxRetries: 4, delay: delay, timeout: TimeSpan.FromSeconds(30))
+    RetryPolicy = new GlobalTimeoutRetryPolicy(maxRetries: 4, delayStrategy: delay, timeout: TimeSpan.FromSeconds(30))
 };
 ```
 
 Another scenario where it may be helpful to use a custom retry policy is when you need to customize the delay behavior, but don't need to adjust the logic used to determine whether a request should be retried or not. In this case, it isn't necessary to create a custom `RetryPolicy` class - instead, you can pass in a `DelayStrategy` into the `RetryPolicy` constructor.  
 
-In the below example, we create a customized exponential delay strategy that uses different jitter factors from the default values. We then pass the strategy into the `RetryPolicy` constructor and set the constructed policy in our options.
-```C# Snippet:CustomizeExponentialDelay
+In the below example, we create a customized delay strategy that uses a fixed sequence of delays that are iterated through as the number of retries increases. We then pass the strategy into the `RetryPolicy` constructor and set the constructed policy in our options.
+```C# Snippet:SequentialDelayStrategy
+public class SequentialDelayStrategy : DelayStrategy
+{
+    private static readonly TimeSpan[] PollingSequence = new TimeSpan[]
+    {
+        TimeSpan.FromSeconds(1),
+        TimeSpan.FromSeconds(1),
+        TimeSpan.FromSeconds(1),
+        TimeSpan.FromSeconds(2),
+        TimeSpan.FromSeconds(4),
+        TimeSpan.FromSeconds(8),
+        TimeSpan.FromSeconds(16),
+        TimeSpan.FromSeconds(32)
+    };
+    private static readonly TimeSpan MaxDelay = PollingSequence[PollingSequence.Length - 1];
+
+    protected override TimeSpan GetNextDelayCore(Response response, int retryNumber)
+    {
+        int index = retryNumber - 1;
+        return index >= PollingSequence.Length ? MaxDelay : PollingSequence[index];
+    }
+}
+```
+
+Here is how the custom delay would be used in the client options.
+```C# Snippet:CustomizedDelay
 SecretClientOptions options = new SecretClientOptions()
 {
-    RetryPolicy = new RetryPolicy(delay: new MyCustomDelay())
+    RetryPolicy = new RetryPolicy(delayStrategy: new SequentialDelayStrategy())
 };
 ```
 

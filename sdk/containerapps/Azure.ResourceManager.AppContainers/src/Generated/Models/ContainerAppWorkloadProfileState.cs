@@ -10,7 +10,7 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.AppContainers.Models
 {
-    /// <summary> Collection of all the workload Profile States for a Premium Managed Environment.. </summary>
+    /// <summary> Collection of all the workload Profile States for a Managed Environment.. </summary>
     public partial class ContainerAppWorkloadProfileState : ResourceData
     {
         /// <summary> Initializes a new instance of ContainerAppWorkloadProfileState. </summary>

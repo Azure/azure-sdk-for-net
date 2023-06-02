@@ -16,21 +16,21 @@ namespace Azure.ResourceManager.ProviderHub.Models
         }
 
         /// <summary> Initializes a new instance of ResourceMovePolicy. </summary>
-        /// <param name="validationRequired"></param>
-        /// <param name="crossResourceGroupMoveEnabled"></param>
-        /// <param name="crossSubscriptionMoveEnabled"></param>
-        internal ResourceMovePolicy(bool? validationRequired, bool? crossResourceGroupMoveEnabled, bool? crossSubscriptionMoveEnabled)
+        /// <param name="isValidationRequired"></param>
+        /// <param name="isCrossResourceGroupMoveEnabled"></param>
+        /// <param name="isCrossSubscriptionMoveEnabled"></param>
+        internal ResourceMovePolicy(bool? isValidationRequired, bool? isCrossResourceGroupMoveEnabled, bool? isCrossSubscriptionMoveEnabled)
         {
-            ValidationRequired = validationRequired;
-            CrossResourceGroupMoveEnabled = crossResourceGroupMoveEnabled;
-            CrossSubscriptionMoveEnabled = crossSubscriptionMoveEnabled;
+            IsValidationRequired = isValidationRequired;
+            IsCrossResourceGroupMoveEnabled = isCrossResourceGroupMoveEnabled;
+            IsCrossSubscriptionMoveEnabled = isCrossSubscriptionMoveEnabled;
         }
 
-        /// <summary> Gets or sets the validation required. </summary>
-        public bool? ValidationRequired { get; set; }
-        /// <summary> Gets or sets the cross resource group move enabled. </summary>
-        public bool? CrossResourceGroupMoveEnabled { get; set; }
-        /// <summary> Gets or sets the cross subscription move enabled. </summary>
-        public bool? CrossSubscriptionMoveEnabled { get; set; }
+        /// <summary> Gets or sets the is validation required. </summary>
+        public bool? IsValidationRequired { get; set; }
+        /// <summary> Gets or sets the is cross resource group move enabled. </summary>
+        public bool? IsCrossResourceGroupMoveEnabled { get; set; }
+        /// <summary> Gets or sets the is cross subscription move enabled. </summary>
+        public bool? IsCrossSubscriptionMoveEnabled { get; set; }
     }
 }

@@ -105,31 +105,47 @@ namespace Azure.Core.Samples
         {
             #region Snippet:SetGlobalTimeoutRetryPolicy
 
-            var delay = Delay.CreateFixedDelay(TimeSpan.FromSeconds(2));
+            var delay = DelayStrategy.CreateFixedDelayStrategy(TimeSpan.FromSeconds(2));
             SecretClientOptions options = new SecretClientOptions()
             {
-                RetryPolicy = new GlobalTimeoutRetryPolicy(maxRetries: 4, delay: delay, timeout: TimeSpan.FromSeconds(30))
+                RetryPolicy = new GlobalTimeoutRetryPolicy(maxRetries: 4, delayStrategy: delay, timeout: TimeSpan.FromSeconds(30))
             };
             #endregion
         }
 
         [Test]
-        public void CustomizedJitterExponentialDelay()
+        public void CustomizedDelayStrategy()
         {
-            #region Snippet:CustomizeExponentialDelay
+            #region Snippet:CustomizedDelay
             SecretClientOptions options = new SecretClientOptions()
             {
-                RetryPolicy = new RetryPolicy(delay: new MyCustomDelay())
+                RetryPolicy = new RetryPolicy(delayStrategy: new SequentialDelayStrategy())
             };
             #endregion
         }
 
-        private class MyCustomDelay : Delay
+        #region Snippet:SequentialDelayStrategy
+        public class SequentialDelayStrategy : DelayStrategy
         {
+            private static readonly TimeSpan[] PollingSequence = new TimeSpan[]
+            {
+                TimeSpan.FromSeconds(1),
+                TimeSpan.FromSeconds(1),
+                TimeSpan.FromSeconds(1),
+                TimeSpan.FromSeconds(2),
+                TimeSpan.FromSeconds(4),
+                TimeSpan.FromSeconds(8),
+                TimeSpan.FromSeconds(16),
+                TimeSpan.FromSeconds(32)
+            };
+            private static readonly TimeSpan MaxDelay = PollingSequence[PollingSequence.Length - 1];
+
             protected override TimeSpan GetNextDelayCore(Response response, int retryNumber)
             {
-                throw new NotImplementedException();
+                int index = retryNumber - 1;
+                return index >= PollingSequence.Length ? MaxDelay : PollingSequence[index];
             }
         }
+        #endregion
     }
 }

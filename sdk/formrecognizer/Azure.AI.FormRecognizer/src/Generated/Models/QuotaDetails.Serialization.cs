@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.AI.FormRecognizer.DocumentAnalysis
 {
-    internal partial class QuotaDetails
+    public partial class QuotaDetails
     {
         internal static QuotaDetails DeserializeQuotaDetails(JsonElement element)
         {

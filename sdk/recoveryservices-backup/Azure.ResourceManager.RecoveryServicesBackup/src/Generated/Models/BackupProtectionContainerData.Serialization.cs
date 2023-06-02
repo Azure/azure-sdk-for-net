@@ -65,7 +65,6 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     properties = BackupGenericProtectionContainer.DeserializeBackupGenericProtectionContainer(property.Value);
@@ -75,7 +74,6 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     eTag = new ETag(property.Value.GetString());
@@ -85,7 +83,6 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();
@@ -120,7 +117,6 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());

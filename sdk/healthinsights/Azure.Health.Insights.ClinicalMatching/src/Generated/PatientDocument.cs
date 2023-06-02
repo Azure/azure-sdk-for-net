@@ -28,6 +28,23 @@ namespace Azure.Health.Insights.ClinicalMatching
             Content = content;
         }
 
+        /// <summary> Initializes a new instance of PatientDocument. </summary>
+        /// <param name="type"> The type of the patient document, such as 'note' (text document) or 'fhirBundle' (FHIR JSON document). </param>
+        /// <param name="clinicalType"> The type of the clinical document. </param>
+        /// <param name="id"> A given identifier for the document. Has to be unique across all documents for a single patient. </param>
+        /// <param name="language"> A 2 letter ISO 639-1 representation of the language of the document. </param>
+        /// <param name="createdDateTime"> The date and time when the document was created. </param>
+        /// <param name="content"> The content of the patient document. </param>
+        internal PatientDocument(DocumentType type, ClinicalDocumentType? clinicalType, string id, string language, DateTimeOffset? createdDateTime, DocumentContent content)
+        {
+            Type = type;
+            ClinicalType = clinicalType;
+            Id = id;
+            Language = language;
+            CreatedDateTime = createdDateTime;
+            Content = content;
+        }
+
         /// <summary> The type of the patient document, such as 'note' (text document) or 'fhirBundle' (FHIR JSON document). </summary>
         public DocumentType Type { get; }
         /// <summary> The type of the clinical document. </summary>

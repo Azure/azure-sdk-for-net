@@ -22,6 +22,7 @@ namespace Azure.ResourceManager.Network.Models
             _value = value ?? throw new ArgumentNullException(nameof(value));
         }
 
+        private const string UppercaseValue = "Uppercase";
         private const string LowercaseValue = "Lowercase";
         private const string TrimValue = "Trim";
         private const string UrlDecodeValue = "UrlDecode";
@@ -29,6 +30,8 @@ namespace Azure.ResourceManager.Network.Models
         private const string RemoveNullsValue = "RemoveNulls";
         private const string HtmlEntityDecodeValue = "HtmlEntityDecode";
 
+        /// <summary> Uppercase. </summary>
+        public static WebApplicationFirewallTransform Uppercase { get; } = new WebApplicationFirewallTransform(UppercaseValue);
         /// <summary> Lowercase. </summary>
         public static WebApplicationFirewallTransform Lowercase { get; } = new WebApplicationFirewallTransform(LowercaseValue);
         /// <summary> Trim. </summary>

@@ -26,6 +26,6 @@ namespace Azure.Identity
         /// <summary>
         /// The Powershell process timeout.
         /// </summary>
-        public TimeSpan? PowerShellProcessTimeout { get; set; } = TimeSpan.FromSeconds(10);
+        public TimeSpan? ProcessTimeout { get; set; } = TimeSpan.FromSeconds(10);
     }
 }

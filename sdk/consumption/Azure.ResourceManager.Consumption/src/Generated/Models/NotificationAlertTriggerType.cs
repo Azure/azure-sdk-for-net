@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Consumption.Models
 {
-    /// <summary> The comparison operator. </summary>
+    /// <summary>
+    /// The comparison operator.
+    /// Serialized Name: OperatorType
+    /// </summary>
     public readonly partial struct NotificationAlertTriggerType : IEquatable<NotificationAlertTriggerType>
     {
         private readonly string _value;
@@ -26,11 +29,20 @@ namespace Azure.ResourceManager.Consumption.Models
         private const string GreaterThanValue = "GreaterThan";
         private const string GreaterThanOrEqualToValue = "GreaterThanOrEqualTo";
 
-        /// <summary> Alert will be triggered if the evaluated cost is the same as threshold value. Note: It’s not recommended to use this OperatorType as there’s low chance of cost being exactly the same as threshold value, leading to missing of your alert. This OperatorType will be deprecated in future. </summary>
+        /// <summary>
+        /// Alert will be triggered if the evaluated cost is the same as threshold value. Note: It’s not recommended to use this OperatorType as there’s low chance of cost being exactly the same as threshold value, leading to missing of your alert. This OperatorType will be deprecated in future. 
+        /// Serialized Name: OperatorType.EqualTo
+        /// </summary>
         public static NotificationAlertTriggerType EqualTo { get; } = new NotificationAlertTriggerType(EqualToValue);
-        /// <summary> Alert will be triggered if the evaluated cost is greater than the threshold value. Note: This is the recommended OperatorType while configuring Budget Alert. </summary>
+        /// <summary>
+        /// Alert will be triggered if the evaluated cost is greater than the threshold value. Note: This is the recommended OperatorType while configuring Budget Alert.
+        /// Serialized Name: OperatorType.GreaterThan
+        /// </summary>
         public static NotificationAlertTriggerType GreaterThan { get; } = new NotificationAlertTriggerType(GreaterThanValue);
-        /// <summary> Alert will be triggered if the evaluated cost is greater than or equal to the threshold value. </summary>
+        /// <summary>
+        /// Alert will be triggered if the evaluated cost is greater than or equal to the threshold value.
+        /// Serialized Name: OperatorType.GreaterThanOrEqualTo
+        /// </summary>
         public static NotificationAlertTriggerType GreaterThanOrEqualTo { get; } = new NotificationAlertTriggerType(GreaterThanOrEqualToValue);
         /// <summary> Determines if two <see cref="NotificationAlertTriggerType"/> values are the same. </summary>
         public static bool operator ==(NotificationAlertTriggerType left, NotificationAlertTriggerType right) => left.Equals(right);

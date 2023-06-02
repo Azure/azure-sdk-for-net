@@ -30,6 +30,18 @@ namespace Azure.Health.Insights.ClinicalMatching
             Coordinates = coordinates.ToList();
         }
 
+        /// <summary> Initializes a new instance of AreaGeometry. </summary>
+        /// <param name="type"> `GeoJSON` geometry type. </param>
+        /// <param name="coordinates">
+        /// Coordinates of the area circle's center, represented according to the `GeoJSON` standard.
+        /// This is an array of 2 decimal numbers, longitude and latitude (precisely in this order).
+        /// </param>
+        internal AreaGeometry(GeoJsonGeometryType type, IList<float> coordinates)
+        {
+            Type = type;
+            Coordinates = coordinates;
+        }
+
         /// <summary> `GeoJSON` geometry type. </summary>
         public GeoJsonGeometryType Type { get; }
         /// <summary>

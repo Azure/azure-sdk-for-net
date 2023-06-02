@@ -42,7 +42,6 @@ namespace Azure.ResourceManager.DataShare.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             recurrenceInterval = new DataShareSynchronizationRecurrenceInterval(property0.Value.GetString());
@@ -52,7 +51,6 @@ namespace Azure.ResourceManager.DataShare.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             synchronizationTime = property0.Value.GetDateTimeOffset("O");
