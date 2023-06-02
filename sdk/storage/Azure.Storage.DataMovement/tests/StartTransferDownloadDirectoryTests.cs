@@ -73,7 +73,7 @@ namespace Azure.Storage.DataMovement.Tests
             CancellationTokenSource tokenSource = new CancellationTokenSource(TimeSpan.FromSeconds(waitTimeInSec));
             await transfer.AwaitCompletion(tokenSource.Token);
 
-            testEventsRaised.AssertContainerCompletedCheck(sourceFiles.Count);
+            await testEventsRaised.AssertContainerCompletedCheck(sourceFiles.Count);
             Assert.IsTrue(transfer.HasCompleted);
             Assert.AreEqual(StorageTransferStatus.Completed, transfer.TransferStatus);
 
@@ -516,7 +516,7 @@ namespace Azure.Storage.DataMovement.Tests
             Assert.NotNull(transfer);
             Assert.IsTrue(transfer.HasCompleted);
             Assert.AreEqual(StorageTransferStatus.Completed, transfer.TransferStatus);
-            testEventsRaised.AssertContainerCompletedCheck(4);
+            await testEventsRaised.AssertContainerCompletedCheck(4);
         }
 
         [Test]
@@ -553,7 +553,7 @@ namespace Azure.Storage.DataMovement.Tests
             Assert.IsTrue(transfer.HasCompleted);
             Assert.AreEqual(StorageTransferStatus.CompletedWithFailedTransfers, transfer.TransferStatus);
             Assert.IsTrue(testEventsRaised.FailedEvents.First().Exception.Message.Contains("Cannot overwrite file."));
-            testEventsRaised.AssertContainerCompletedWithFailedCheck(1);
+            await testEventsRaised.AssertContainerCompletedWithFailedCheck(1);
         }
 
         [Test]
@@ -590,7 +590,7 @@ namespace Azure.Storage.DataMovement.Tests
             Assert.NotNull(transfer);
             Assert.IsTrue(transfer.HasCompleted);
             Assert.AreEqual(StorageTransferStatus.CompletedWithSkippedTransfers, transfer.TransferStatus);
-            testEventsRaised.AssertContainerCompletedWithSkippedCheck(1);
+            await testEventsRaised.AssertContainerCompletedWithSkippedCheck(1);
         }
 
         [Test]
@@ -620,7 +620,7 @@ namespace Azure.Storage.DataMovement.Tests
             Assert.NotNull(transfer);
             Assert.IsTrue(transfer.HasCompleted);
             Assert.AreEqual(StorageTransferStatus.Completed, transfer.TransferStatus);
-            testEventsRaised.AssertContainerCompletedCheck(4);
+            await testEventsRaised.AssertContainerCompletedCheck(4);
         }
 
         [Test]
@@ -657,7 +657,7 @@ namespace Azure.Storage.DataMovement.Tests
             Assert.IsTrue(transfer.HasCompleted);
             Assert.AreEqual(StorageTransferStatus.CompletedWithFailedTransfers, transfer.TransferStatus);
             Assert.IsTrue(testEventsRaised.FailedEvents.First().Exception.Message.Contains("Cannot overwrite file."));
-            testEventsRaised.AssertContainerCompletedWithFailedCheck(1);
+            await testEventsRaised.AssertContainerCompletedWithFailedCheck(1);
         }
 
         [Test]
@@ -694,7 +694,7 @@ namespace Azure.Storage.DataMovement.Tests
             Assert.NotNull(transfer);
             Assert.IsTrue(transfer.HasCompleted);
             Assert.AreEqual(StorageTransferStatus.CompletedWithSkippedTransfers, transfer.TransferStatus);
-            testEventsRaised.AssertContainerCompletedWithSkippedCheck(1);
+            await testEventsRaised.AssertContainerCompletedWithSkippedCheck(1);
         }
         #endregion
     }

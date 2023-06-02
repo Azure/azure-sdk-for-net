@@ -51,7 +51,7 @@ namespace Azure.AI.TextAnalytics.Models
                 return null;
             }
             Optional<int> sentenceCount = default;
-            Optional<SummarySentencesOrder> sortBy = default;
+            Optional<ExtractiveSummarySentencesOrder> sortBy = default;
             Optional<StringIndexType> stringIndexType = default;
             Optional<string> modelVersion = default;
             Optional<bool> loggingOptOut = default;
@@ -72,7 +72,7 @@ namespace Azure.AI.TextAnalytics.Models
                     {
                         continue;
                     }
-                    sortBy = new SummarySentencesOrder(property.Value.GetString());
+                    sortBy = new ExtractiveSummarySentencesOrder(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("stringIndexType"u8))

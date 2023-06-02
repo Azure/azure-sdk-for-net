@@ -89,7 +89,7 @@ namespace Azure.AI.TextAnalytics.Tests
             IReadOnlyCollection<SingleLabelClassifyActionResult> singleLabelClassifyResults = resultCollection.SingleLabelClassifyResults;
             IReadOnlyCollection<MultiLabelClassifyActionResult> multiLabelClassifyResults = resultCollection.MultiLabelClassifyResults;
             IReadOnlyCollection<AnalyzeHealthcareEntitiesActionResult> analyzeHealthcareEntitiesActionResults = resultCollection.AnalyzeHealthcareEntitiesResults;
-            IReadOnlyCollection<ExtractSummaryActionResult> extractSummaryActionResults = resultCollection.ExtractSummaryResults;
+            IReadOnlyCollection<ExtractiveSummarizeActionResult> extractiveSummarizeActionResults = resultCollection.ExtractiveSummarizeResults;
 
             Assert.IsNotNull(keyPhrasesActionsResults);
             Assert.IsNotNull(entitiesActionsResults);
@@ -100,7 +100,7 @@ namespace Azure.AI.TextAnalytics.Tests
             Assert.IsNotNull(multiLabelClassifyResults);
             Assert.IsNotNull(recognizeCustomEntitiesActionResults);
             Assert.IsNotNull(analyzeHealthcareEntitiesActionResults);
-            Assert.IsNotNull(extractSummaryActionResults);
+            Assert.IsNotNull(extractiveSummarizeActionResults);
 
             var keyPhrasesListId1 = new List<string> { "CEO", "SpaceX", "Elon Musk", "Tesla" };
             var keyPhrasesListId2 = new List<string> { "Tesla stock" };
@@ -840,9 +840,7 @@ namespace Azure.AI.TextAnalytics.Tests
         public void AnalyzeOperationAnalyzeHealthcareEntitiesActionNotSupported()
         {
             TestDiagnostics = false;
-
             TextAnalyticsClient client = GetClient();
-
             TextAnalyticsActions batchActions = new()
             {
                 AnalyzeHealthcareEntitiesActions = new[]
@@ -853,6 +851,44 @@ namespace Azure.AI.TextAnalytics.Tests
 
             NotSupportedException ex = Assert.ThrowsAsync<NotSupportedException>(async () => await client.StartAnalyzeActionsAsync(batchDocuments, batchActions));
             Assert.AreEqual("AnalyzeHealthcareEntitiesAction is not available in API version v3.1. Use service API version 2022-05-01 or newer.", ex.Message);
+        }
+
+        [RecordedTest]
+        [RetryOnInternalServerError]
+        [ServiceVersion(Max = TextAnalyticsClientOptions.ServiceVersion.V2022_05_01)]
+        public void AnalyzeOperationExtractiveSummarizeActionNotSupported()
+        {
+            TestDiagnostics = false;
+            TextAnalyticsClient client = GetClient();
+            TextAnalyticsActions batchActions = new()
+            {
+                ExtractiveSummarizeActions = new[]
+                {
+                    new ExtractiveSummarizeAction(),
+                },
+            };
+
+            NotSupportedException ex = Assert.ThrowsAsync<NotSupportedException>(async () => await client.StartAnalyzeActionsAsync(batchDocuments, batchActions));
+            Assert.That(ex.Message.EndsWith("Use service API version 2022-10-01-preview or newer."));
+        }
+
+        [RecordedTest]
+        [RetryOnInternalServerError]
+        [ServiceVersion(Max = TextAnalyticsClientOptions.ServiceVersion.V2022_05_01)]
+        public void AnalyzeOperationAbstractiveSummarizeActionNotSupported()
+        {
+            TestDiagnostics = false;
+            TextAnalyticsClient client = GetClient();
+            TextAnalyticsActions batchActions = new()
+            {
+                AbstractiveSummarizeActions = new[]
+                {
+                    new AbstractiveSummarizeAction(),
+                },
+            };
+
+            NotSupportedException ex = Assert.ThrowsAsync<NotSupportedException>(async () => await client.StartAnalyzeActionsAsync(batchDocuments, batchActions));
+            Assert.That(ex.Message.EndsWith("Use service API version 2022-10-01-preview or newer."));
         }
 
         private void ValidateOperationProperties(AnalyzeActionsOperation operation)
