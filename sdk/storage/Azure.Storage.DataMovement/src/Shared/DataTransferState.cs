@@ -29,19 +29,15 @@ namespace Azure.Storage.DataMovement
         public StorageTransferStatus Status => _status;
 
         /// <summary>
-        /// constructor
+        /// Constructor to resume current jobs
         /// </summary>
-        public DataTransferState()
-            : this(StorageTransferStatus.Queued)
+        /// <param name="id">The transfer ID of the transfer object.</param>
+        /// <param name="status">The Transfer Status of the Transfer. See <see cref="StorageTransferStatus"/>.</param>
+        public DataTransferState(
+            string id = default,
+            StorageTransferStatus status = StorageTransferStatus.Queued)
         {
-        }
-
-        /// <summary>
-        /// constructor for mocking
-        /// </summary>
-        public DataTransferState(StorageTransferStatus status)
-        {
-            _id = Guid.NewGuid().ToString();
+            _id = string.IsNullOrEmpty(id) ? Guid.NewGuid().ToString() : id;
             _status = status;
             _currentTransferredBytes = 0;
             CompletionSource = new TaskCompletionSource<StorageTransferStatus>(
@@ -53,20 +49,6 @@ namespace Azure.Storage.DataMovement
             {
                 CompletionSource.TrySetResult(status);
             }
-            CancellationTokenSource = new CancellationTokenSource();
-        }
-
-        /// <summary>
-        /// Constructor to resume current jobs
-        /// </summary>
-        public DataTransferState(string id, long bytesTransferred)
-        {
-            _id = id;
-            _status = StorageTransferStatus.Queued;
-            _currentTransferredBytes = bytesTransferred;
-            CompletionSource = new TaskCompletionSource<StorageTransferStatus>(
-                _status,
-                TaskCreationOptions.RunContinuationsAsynchronously);
             CancellationTokenSource = new CancellationTokenSource();
         }
 

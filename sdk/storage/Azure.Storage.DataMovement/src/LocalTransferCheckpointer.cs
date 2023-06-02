@@ -32,6 +32,7 @@ namespace Azure.Storage.DataMovement
         /// <param name="folderPath">Path to the folder containing the checkpointing information to resume from.</param>
         public LocalTransferCheckpointer(string folderPath)
         {
+            _transferStates = new Dictionary<string, Dictionary<int, JobPartPlanFile>>();
             if (string.IsNullOrEmpty(folderPath))
             {
                 _pathToCheckpointer = Path.Combine(Environment.CurrentDirectory, DataMovementConstants.DefaultCheckpointerPath);
@@ -48,8 +49,8 @@ namespace Azure.Storage.DataMovement
             else
             {
                 _pathToCheckpointer = folderPath;
+                InitializeExistingCheckpointer();
             }
-            _transferStates = new Dictionary<string, Dictionary<int, JobPartPlanFile>>();
         }
 
         /// <inheritdoc/>
@@ -109,7 +110,7 @@ namespace Azure.Storage.DataMovement
         }
 
         /// <inheritdoc/>
-        public override async Task AddExistingJobAsync(
+        public override Task AddExistingJobAsync(
             string transferId,
             CancellationToken cancellationToken = default)
         {
@@ -119,9 +120,9 @@ namespace Azure.Storage.DataMovement
             {
                 // Keep track of the correlating job part plan files
                 List<JobPartPlanFileName> fileNames = new List<JobPartPlanFileName>();
-
-                // Search for existing plan files with the correlating transfer id
                 string searchPattern = string.Concat(transferId, '*');
+
+                // Enumerate all the job parts with the transfer id
                 foreach (string path in Directory.EnumerateFiles(_pathToCheckpointer, searchPattern, SearchOption.TopDirectoryOnly)
                     .Where(f => Path.HasExtension(string.Concat(
                         DataMovementConstants.PlanFile.FileExtension,
@@ -140,32 +141,21 @@ namespace Azure.Storage.DataMovement
                 }
 
                 // Verify each existing file and then add it to our transfer states.
-                // TODO: move verification to transfer manager to prevent from opening job plan file
-                // more than once.
                 Dictionary<int, JobPartPlanFile> jobParts = new Dictionary<int, JobPartPlanFile>();
                 foreach (JobPartPlanFileName partFileName in fileNames)
                 {
                     // Grab the header info
                     JobPartPlanHeader header = partFileName.GetJobPartPlanHeader();
 
-                    // Verify the job part plan header
-                    CheckInputWithHeader(transferId, header);
-
                     // Add to list of job parts
-                    JobPartPlanFile jobFile;
-                    using (Stream stream = new MemoryStream())
-                    {
-                        header.Serialize(stream);
-                        jobFile = await JobPartPlanFile.CreateJobPartPlanFileAsync(
-                            fileName: partFileName,
-                            headerStream: stream).ConfigureAwait(false);
-                    }
+                    JobPartPlanFile jobFile = JobPartPlanFile.CreateExistingPartPlanFile(partFileName);
                     jobParts.Add(partFileName.JobPartNumber, jobFile);
                 }
 
                 // Add new transfer id to the list of memory mapped files
                 _transferStates.Add(transferId, jobParts);
             }
+            return Task.CompletedTask;
         }
 
         /// <inheritdoc/>
@@ -395,6 +385,50 @@ namespace Azure.Storage.DataMovement
             else
             {
                 throw Errors.MissingTransferIdCheckpointer(transferId);
+            }
+        }
+
+        /// <summary>
+        /// Takes the path of the checkpointer reads all the files in the top directory level
+        /// and populates the _transferStates
+        /// </summary>
+        private void InitializeExistingCheckpointer()
+        {
+            // Retrieve all valid checkpointer files stored in the checkpointer path.
+            foreach (string path in Directory.EnumerateFiles(_pathToCheckpointer, "*", SearchOption.TopDirectoryOnly)
+                .Where(f => Path.HasExtension(string.Concat(
+                    DataMovementConstants.PlanFile.FileExtension,
+                    DataMovementConstants.PlanFile.SchemaVersion))))
+            {
+                // Ensure each file has the correct format
+                if (JobPartPlanFileName.TryParseJobPartPlanFileName(path, out JobPartPlanFileName partPlanFileName))
+                {
+                    // Check if the transfer Id already exists
+                    if (_transferStates.ContainsKey(partPlanFileName.Id))
+                    {
+                        // If the transfer Id already exists, then add the job part plan file
+                        // with the rest of the job part plan files in the respective
+                        // transfer id.
+                        _transferStates[partPlanFileName.Id].Add(
+                            partPlanFileName.JobPartNumber,
+                            JobPartPlanFile.CreateExistingPartPlanFile(partPlanFileName));
+                    }
+                    else
+                    {
+                        // If the transfer id has not been seen yet, add it and add
+                        // the job part plan file as well.
+                        Dictionary<int, JobPartPlanFile> newTransfer = new Dictionary<int, JobPartPlanFile>
+                    {
+                        {
+                            partPlanFileName.JobPartNumber,
+                            JobPartPlanFile.CreateExistingPartPlanFile(partPlanFileName)
+                        }
+                    };
+                        _transferStates.Add(
+                            partPlanFileName.Id,
+                            newTransfer);
+                    }
+                }
             }
         }
     }

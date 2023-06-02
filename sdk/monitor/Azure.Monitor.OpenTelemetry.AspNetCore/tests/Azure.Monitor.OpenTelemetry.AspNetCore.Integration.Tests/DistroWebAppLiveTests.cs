@@ -35,6 +35,7 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Integration.Tests
         public DistroWebAppLiveTests(bool isAsync) : base(isAsync) { }
 
         [RecordedTest]
+        [SyncOnly] // This test cannot run concurrently with another test because OTel instruments the process and will cause side effects.
         public async Task VerifyDistro()
         {
             // SETUP TELEMETRY CLIENT (FOR QUERIYNG LOG ANALYTICS)
@@ -127,11 +128,11 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Integration.Tests
             var rowCount = table?.Rows.Count;
             if (rowCount == null || rowCount == 0)
             {
-                Assert.Inconclusive($"No telemetry records were found: {description}");
+                Assert.Fail($"No telemetry records were found: {description}");
             }
             else
             {
-                Assert.True(true);
+                Assert.Pass();
             }
         }
     }

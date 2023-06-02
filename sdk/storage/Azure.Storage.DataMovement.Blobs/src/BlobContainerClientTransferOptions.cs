@@ -14,11 +14,6 @@ namespace Azure.Storage.Blobs.Models
     public class BlobContainerClientTransferOptions
     {
         /// <summary>
-        /// Optionally specifies the directory prefix to upload files to, or download files from.
-        /// </summary>
-        public string BlobDirectoryPrefix { get; set; }
-
-        /// <summary>
         /// Options pertaining to the blob storage container used in the data transfer.
         /// </summary>
         public BlobStorageResourceContainerOptions BlobContainerOptions { get; set; }

@@ -91,7 +91,10 @@ Upload a local directory to a virtual directory in the container specifying more
 ```C# Snippet:ExtensionMethodSimpleUploadWithOptions
 BlobContainerClientTransferOptions options = new BlobContainerClientTransferOptions
 {
-    BlobDirectoryPrefix = blobDirectoryPrefix,
+    BlobContainerOptions = new BlobStorageResourceContainerOptions
+    {
+        DirectoryPrefix = blobDirectoryPrefix
+    },
     TransferOptions = new TransferOptions()
     {
         CreateMode = StorageResourceCreateMode.Overwrite,
@@ -121,7 +124,10 @@ Download from the container specifying more advanced options
 ```C# Snippet:ExtensionMethodSimpleDownloadContainerDirectoryWithOptions
 BlobContainerClientTransferOptions options = new BlobContainerClientTransferOptions
 {
-    BlobDirectoryPrefix = blobDirectoryPrefix,
+    BlobContainerOptions = new BlobStorageResourceContainerOptions
+    {
+        DirectoryPrefix = blobDirectoryPrefix
+    },
     TransferOptions = new TransferOptions()
     {
         CreateMode = StorageResourceCreateMode.Overwrite,
@@ -169,7 +175,9 @@ Start Directory Upload
 // Create simple transfer directory upload job which uploads the directory and the contents of that directory
 DataTransfer dataTransfer = await transferManager.StartTransferAsync(
     sourceResource: new LocalDirectoryStorageResourceContainer(sourcePath),
-    destinationResource: new BlobDirectoryStorageResourceContainer(container, "sample-directory2"),
+    destinationResource: new BlobStorageResourceContainer(
+        container,
+        new BlobStorageResourceContainerOptions() { DirectoryPrefix = "sample-directory2" }),
     transferOptions: options);
 ```
 
