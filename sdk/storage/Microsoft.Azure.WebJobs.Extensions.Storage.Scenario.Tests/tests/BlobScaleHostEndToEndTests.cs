@@ -41,10 +41,11 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Scenario.Tests
             _blobServiceClient = _fixture.BlobServiceClient;
         }
 
-        //[Test]
+        [Test]
+        [Ignore("These tests take forever")]
         // We do not want to run the test in the DevOps pipeline due:
         // It can take up to an hour for log data to appear in the blobs in the $logs container - https://learn.microsoft.com/en-us/azure/storage/common/storage-analytics-logging#how-logs-are-stored
-        // But the test is still usefull for local runs to ensure sure everything works as expected
+        // But the test is still usefull for local runs to ensure everything works as expected
         public async Task BlobScaleHostEndToEndTest()
         {
             RandomNameResolver randomNameResolver = new RandomNameResolver();
