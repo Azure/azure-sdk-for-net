@@ -316,6 +316,7 @@ namespace Azure.Storage.DataMovement
             // Cancel the entire job if one job part fails and StopOnFailure is set
             if (_errorHandling == ErrorHandlingOptions.StopOnAllFailures &&
                 jobPartStatus == StorageTransferStatus.CompletedWithFailedTransfers &&
+                jobStatus != StorageTransferStatus.CancellationInProgress &&
                 jobStatus != StorageTransferStatus.CompletedWithFailedTransfers &&
                 jobStatus != StorageTransferStatus.CompletedWithSkippedTransfers &&
                 jobStatus != StorageTransferStatus.Completed)

@@ -6,29 +6,31 @@
       "RequestHeaders": {
         "Accept": "application/json",
         "api-key": "***********",
-        "Content-Length": "38",
+        "Content-Length": "40",
         "Content-Type": "application/json",
-        "traceparent": "00-fe90f383640b763724952419c1dd3ca5-b01dc1449cf3e5f7-00",
-        "User-Agent": "azsdk-net-AI.OpenAI/1.0.0-alpha.20230320.1 (.NET 7.0.4; Microsoft Windows 10.0.25300)",
-        "x-ms-client-request-id": "7e4fedaec90a5d8118113b62c28af2f0",
+        "traceparent": "00-0b5a5f23a564401d811600cdb5d1b000-2f1af5dadc98e0b1-00",
+        "User-Agent": "azsdk-net-AI.OpenAI/1.0.0-alpha.20230525.1 (.NET 7.0.5; Microsoft Windows 10.0.25370)",
+        "x-ms-client-request-id": "ba46ce6a203e4fcc08c44e3caa269377",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
-        "input": "Your text string goes here"
+        "input": [
+          "Your text string goes here"
+        ]
       },
       "StatusCode": 200,
       "ResponseHeaders": {
         "Access-Control-Allow-Origin": "*",
-        "apim-request-id": "6c498dfa-215a-4916-8746-771a24671a59",
+        "apim-request-id": "5a59bb72-28bb-45ae-91f0-5478bc248aae",
         "Content-Length": "89244",
         "Content-Type": "application/json",
-        "Date": "Tue, 21 Mar 2023 00:37:52 GMT",
-        "openai-processing-ms": "42.9375",
+        "Date": "Thu, 25 May 2023 21:04:02 GMT",
+        "Openai-Processing-Ms": "69.6706",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-client-request-id": "7e4fedaec90a5d8118113b62c28af2f0",
+        "X-Ms-Client-Request-Id": "5a59bb72-28bb-45ae-91f0-5478bc248aae",
         "x-ms-region": "East US",
-        "X-Request-ID": "62b357da-4e61-43a7-b260-8995a4248236"
+        "X-Request-ID": "46eed3a3-978b-47ab-b864-ae873d3de9bf"
       },
       "ResponseBody": {
         "object": "list",
@@ -4145,9 +4147,12 @@
     }
   ],
   "Variables": {
+    "AZURE_AUTHORITY_HOST": "https://login.microsoftonline.com",
+    "OPENAI_CHAT_COMPLETIONS_DEPLOYMENT_ID": "gpt-35-turbo",
     "OPENAI_DEPLOYMENT_ID": "text-davinci-002",
     "OPENAI_EMBEDDINGS_DEPLOYMENT_ID": "text-similarity-curie-001",
     "OPENAI_ENDPOINT": "https://sdk8428.openai.azure.com/",
-    "RandomSeed": "1366656959"
+    "RandomSeed": "847214565",
+    "SUBSCRIPTION_ID": "e72e5254-f265-4e95-9bd2-9ee8e7329051"
   }
 }

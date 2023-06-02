@@ -792,3 +792,9 @@
 
 # Client generation tooling
 /eng/templates/Azure.ServiceTemplate.Template                      @chunyu3 @lirenhe
+
+# PRLabel: %Cognitive - Content Safety
+/sdk/contentsafety/												   @bowgong @mengaims
+
+# ServiceLabel: %Cognitive - Content Safety %Service Attention
+/sdk/contentsafety/Azure.AI.ContentSafety/                     	   @bowgong @mengaims
