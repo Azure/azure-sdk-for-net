@@ -264,8 +264,8 @@ namespace Azure.Storage.DataMovement
         {
             if (!_dataTransfer._state.CancellationTokenSource.IsCancellationRequested)
             {
-                _dataTransfer._state.TriggerCancellation();
                 await OnJobStatusChangedAsync(StorageTransferStatus.CancellationInProgress).ConfigureAwait(false);
+                _dataTransfer._state.TriggerCancellation();
             }
         }
 
