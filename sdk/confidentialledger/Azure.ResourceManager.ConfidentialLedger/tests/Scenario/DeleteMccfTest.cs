@@ -8,11 +8,11 @@ using NUnit.Framework;
 
 namespace Azure.ResourceManager.ConfidentialLedger.Tests.Scenario
 {
-    [TestFixture("delete")]
+    [TestFixture("deleteTest")]
     public class DeleteMccfTest : MccfManagementTestBase
     {
         private ManagedCCFResource _mccfResource;
-        public DeleteMccfTest(string testFixtureName) : base(true, testFixtureName)
+        public DeleteMccfTest(string testFixtureName) : base(true, RecordedTestMode.Record, testFixtureName)
         {
         }
 
@@ -23,9 +23,8 @@ namespace Azure.ResourceManager.ConfidentialLedger.Tests.Scenario
             _mccfResource = await GetMccfByName(mccfName);
         }
 
-        [Test, Order(1)]
         [RecordedTest]
-        public async Task TestDeleteLedger()
+        public async Task TestDeleteMccfApp()
         {
             await _mccfResource.DeleteAsync(WaitUntil.Completed);
             try

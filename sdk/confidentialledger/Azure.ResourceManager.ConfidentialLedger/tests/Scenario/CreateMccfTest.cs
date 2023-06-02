@@ -10,15 +10,14 @@ namespace Azure.ResourceManager.ConfidentialLedger.Tests.Scenario
     [TestFixture("create")]
     public class CreateMccfTest : MccfManagementTestBase
     {
-        public CreateMccfTest(string testFixtureName) : base(true, RecordedTestMode.None, testFixtureName)
+        public CreateMccfTest(string testFixtureName) : base(true, RecordedTestMode.Record, testFixtureName)
         {
         }
 
-        [Test, Order(1)]
         [RecordedTest]
         public async Task TestCreateMccfApp()
         {
-            // Create the ledger
+            // Create Mccf App
             await CreateMccf(mccfName);
 
             ManagedCCFResource mccfResource = await GetMccfByName(mccfName);

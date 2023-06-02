@@ -3,15 +3,13 @@
 
 using System;
 using System.Threading.Tasks;
-using Azure.Core;
 using Azure.Core.TestFramework;
-using Azure.Identity;
 using Azure.ResourceManager.ConfidentialLedger.Models;
 using NUnit.Framework;
 
 namespace Azure.ResourceManager.ConfidentialLedger.Tests.Scenario
 {
-    [TestFixture("update")]
+    [TestFixture("updateTest")]
     public class UpdateMccfTest : MccfManagementTestBase
     {
         private ManagedCCFResource _mccfResource;
@@ -20,74 +18,45 @@ namespace Azure.ResourceManager.ConfidentialLedger.Tests.Scenario
         {
         }
 
-        [Test, Order(1)]
         [RecordedTest]
-        public async Task TestAddNodeCountToMccf()
+        public async Task TestAddUserToLedger()
         {
-            // Create Ledger
+            // Create MCCF App
             await CreateMccf(mccfName);
             _mccfResource = await GetMccfByName(mccfName);
-
-            int additionalNodeCount = 1;
-            int newNodeCount = Convert.ToInt32(_mccfResource.Data.Properties.NodeCount) + additionalNodeCount;
+            var deploymentType = GetDeploymentType();
 
             // Add the AadBasedSecurityPrincipal
-            _mccfResource.Data.Properties = AddNodeCount(_mccfResource.Data.Properties, additionalNodeCount);
+            _mccfResource.Data.Properties = UpdateDeploymentType(_mccfResource.Data.Properties, deploymentType);
             await UpdateMccf(mccfName, _mccfResource.Data);
 
             // Get the updated ledger
             _mccfResource = await GetMccfByName(mccfName);
 
-            Assert.AreEqual(newNodeCount, _mccfResource.Data.Properties.NodeCount);
-        }
-
-        [RecordedTest]
-        public async Task TestUpdate()
-        {
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this ManagedCCFResource created on azure
-            // for more information of creating ManagedCCFResource, please refer to the document of ManagedCCFResource
-            string subscriptionId = "027da7f8-2fc6-46d4-9be9-560706b60fec";
-            string resourceGroupName = "pratik-rg";
-            string appName = "pythonMccf1";
-            ResourceIdentifier managedCCFResourceId = ManagedCCFResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, appName);
-            ManagedCCFResource managedCCF = client.GetManagedCCFResource(managedCCFResourceId);
-
-            // invoke the operation
-            ManagedCCFData data = new ManagedCCFData(new AzureLocation("southcentralus"))
-            {
-                Properties = new ManagedCCFProperties()
-                {
-                    DeploymentType = new ConfidentialLedgerDeploymentType()
-                    {
-                        LanguageRuntime = ConfidentialLedgerLanguageRuntime.CPP,
-                        AppSourceUri = new Uri("https://myaccount.blob.core.windows.net/storage/mccfsource?sv=2022-02-11%st=2022-03-11"),
-                    },
-                },
-                Tags =
-{
-["additionalProps1"] = "additional properties",
-},
-            };
-            await managedCCF.UpdateAsync(WaitUntil.Completed, data);
-
-            Console.WriteLine($"Succeeded");
+            Assert.AreEqual(_mccfResource.Data.Properties.DeploymentType, deploymentType);
         }
 
         /// <summary>
         /// Method create a copy of the input LedgerProperties and update the list of securityPrincipals while copying
         /// </summary>
         /// <param name="properties"></param>
-        /// <param name="additionalCount"></param>
+        /// <param name="securityPrincipals"></param>
         /// <returns></returns>
-        private ManagedCCFProperties AddNodeCount(ManagedCCFProperties properties, int additionalCount)
+        private ManagedCCFProperties UpdateDeploymentType(ManagedCCFProperties properties,
+            ConfidentialLedgerDeploymentType deploymentType)
         {
             return new ManagedCCFProperties(properties.AppName, properties.AppUri,
-                properties.IdentityServiceUri, properties.MemberIdentityCertificates, properties.DeploymentType,
-                properties.ProvisioningState, properties.NodeCount + additionalCount);
+                properties.IdentityServiceUri , properties.MemberIdentityCertificates, deploymentType,
+                properties.ProvisioningState, properties.NodeCount);
+        }
+
+        /// <summary>
+        /// Method generate a test list with the TestUser (TestUser321@microsoft.com) with a Contributor test role
+        /// </summary>
+        /// <returns></returns>
+        private ConfidentialLedgerDeploymentType GetDeploymentType()
+        {
+            return new ConfidentialLedgerDeploymentType(ConfidentialLedgerLanguageRuntime.JS, new Uri("TestUpdate"));
         }
     }
 }
