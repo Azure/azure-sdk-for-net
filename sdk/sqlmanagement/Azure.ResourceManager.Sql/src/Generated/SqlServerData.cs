@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="state"> The state of the server. </param>
         /// <param name="fullyQualifiedDomainName"> The fully qualified domain name of the server. </param>
         /// <param name="privateEndpointConnections"> List of private endpoint connections on a server. </param>
-        /// <param name="minimalTlsVersion"> Minimal TLS version. Allowed values: &apos;1.0&apos;, &apos;1.1&apos;, &apos;1.2&apos;. </param>
+        /// <param name="minimalTlsVersion"> Minimal TLS version. Allowed values: &apos;None&apos;, &apos;1.0&apos;, &apos;1.1&apos;, &apos;1.2&apos;. </param>
         /// <param name="publicNetworkAccess"> Whether or not public endpoint access is allowed for this server.  Value is optional but if passed in, must be &apos;Enabled&apos; or &apos;Disabled&apos; or &apos;SecuredByPerimeter&apos;. </param>
         /// <param name="workspaceFeature"> Whether or not existing server has a workspace created and if it allows connection from workspace. </param>
         /// <param name="primaryUserAssignedIdentityId"> The resource id of a user assigned identity to be used by default. </param>
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.Sql
         public string FullyQualifiedDomainName { get; }
         /// <summary> List of private endpoint connections on a server. </summary>
         public IReadOnlyList<SqlServerPrivateEndpointConnection> PrivateEndpointConnections { get; }
-        /// <summary> Minimal TLS version. Allowed values: &apos;1.0&apos;, &apos;1.1&apos;, &apos;1.2&apos;. </summary>
+        /// <summary> Minimal TLS version. Allowed values: &apos;None&apos;, &apos;1.0&apos;, &apos;1.1&apos;, &apos;1.2&apos;. </summary>
         public string MinimalTlsVersion { get; set; }
         /// <summary> Whether or not public endpoint access is allowed for this server.  Value is optional but if passed in, must be &apos;Enabled&apos; or &apos;Disabled&apos; or &apos;SecuredByPerimeter&apos;. </summary>
         public ServerNetworkAccessFlag? PublicNetworkAccess { get; set; }

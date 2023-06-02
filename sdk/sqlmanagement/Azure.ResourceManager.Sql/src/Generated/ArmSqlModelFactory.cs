@@ -2443,17 +2443,20 @@ namespace Azure.ResourceManager.Sql.Models
         /// <param name="state"> The state of the elastic pool. </param>
         /// <param name="createdOn"> The creation date of the elastic pool (ISO8601 format). </param>
         /// <param name="maxSizeBytes"> The storage limit for the database elastic pool in bytes. </param>
+        /// <param name="minCapacity"> Minimal capacity that serverless pool will not shrink below, if not paused. </param>
         /// <param name="perDatabaseSettings"> The per database settings for the elastic pool. </param>
         /// <param name="isZoneRedundant"> Whether or not this elastic pool is zone redundant, which means the replicas of this elastic pool will be spread across multiple availability zones. </param>
         /// <param name="licenseType"> The license type to apply for this elastic pool. </param>
         /// <param name="maintenanceConfigurationId"> Maintenance configuration id assigned to the elastic pool. This configuration defines the period when the maintenance updates will will occur. </param>
-        /// <param name="highAvailabilityReplicaCount"> The number of secondary replicas associated with the elastic pool that are used to provide high availability. </param>
+        /// <param name="highAvailabilityReplicaCount"> The number of secondary replicas associated with the elastic pool that are used to provide high availability. Applicable only to Hyperscale elastic pools. </param>
+        /// <param name="preferredEnclaveType"> Type of enclave requested on the elastic pool. </param>
+        /// <param name="availabilityZone"> Specifies the availability zone the pool&apos;s primary replica is pinned to. </param>
         /// <returns> A new <see cref="Sql.ElasticPoolData"/> instance for mocking. </returns>
-        public static ElasticPoolData ElasticPoolData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, SqlSku sku = null, string kind = null, ElasticPoolState? state = null, DateTimeOffset? createdOn = null, long? maxSizeBytes = null, ElasticPoolPerDatabaseSettings perDatabaseSettings = null, bool? isZoneRedundant = null, ElasticPoolLicenseType? licenseType = null, ResourceIdentifier maintenanceConfigurationId = null, int? highAvailabilityReplicaCount = null)
+        public static ElasticPoolData ElasticPoolData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, SqlSku sku = null, string kind = null, ElasticPoolState? state = null, DateTimeOffset? createdOn = null, long? maxSizeBytes = null, double? minCapacity = null, ElasticPoolPerDatabaseSettings perDatabaseSettings = null, bool? isZoneRedundant = null, ElasticPoolLicenseType? licenseType = null, ResourceIdentifier maintenanceConfigurationId = null, int? highAvailabilityReplicaCount = null, SqlAlwaysEncryptedEnclaveType? preferredEnclaveType = null, SqlAvailabilityZoneType? availabilityZone = null)
         {
             tags ??= new Dictionary<string, string>();
 
-            return new ElasticPoolData(id, name, resourceType, systemData, tags, location, sku, kind, state, createdOn, maxSizeBytes, perDatabaseSettings, isZoneRedundant, licenseType, maintenanceConfigurationId, highAvailabilityReplicaCount);
+            return new ElasticPoolData(id, name, resourceType, systemData, tags, location, sku, kind, state, createdOn, maxSizeBytes, minCapacity, perDatabaseSettings, isZoneRedundant, licenseType, maintenanceConfigurationId, highAvailabilityReplicaCount, preferredEnclaveType, availabilityZone);
         }
 
         /// <summary> Initializes a new instance of IPv6FirewallRuleData. </summary>
