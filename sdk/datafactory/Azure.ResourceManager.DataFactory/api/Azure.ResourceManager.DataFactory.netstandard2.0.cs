@@ -593,6 +593,25 @@ namespace Azure.ResourceManager.DataFactory.Models
         public System.Collections.Generic.IDictionary<string, System.BinaryData> AdditionalProperties { get { throw null; } }
         public System.Collections.Generic.IList<Azure.ResourceManager.DataFactory.Models.DependencyCondition> DependencyConditions { get { throw null; } }
     }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct ActivityOnInactiveMarkA : System.IEquatable<Azure.ResourceManager.DataFactory.Models.ActivityOnInactiveMarkA>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public ActivityOnInactiveMarkA(string value) { throw null; }
+        public static Azure.ResourceManager.DataFactory.Models.ActivityOnInactiveMarkA Failed { get { throw null; } }
+        public static Azure.ResourceManager.DataFactory.Models.ActivityOnInactiveMarkA Skipped { get { throw null; } }
+        public static Azure.ResourceManager.DataFactory.Models.ActivityOnInactiveMarkA Succeeded { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.DataFactory.Models.ActivityOnInactiveMarkA other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.DataFactory.Models.ActivityOnInactiveMarkA left, Azure.ResourceManager.DataFactory.Models.ActivityOnInactiveMarkA right) { throw null; }
+        public static implicit operator Azure.ResourceManager.DataFactory.Models.ActivityOnInactiveMarkA (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.DataFactory.Models.ActivityOnInactiveMarkA left, Azure.ResourceManager.DataFactory.Models.ActivityOnInactiveMarkA right) { throw null; }
+        public override string ToString() { throw null; }
+    }
     public partial class ActivityPolicy
     {
         public ActivityPolicy() { }
@@ -621,16 +640,28 @@ namespace Azure.ResourceManager.DataFactory.Models
         public System.Guid? PipelineRunId { get { throw null; } }
         public string Status { get { throw null; } }
     }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct ActivityState : System.IEquatable<Azure.ResourceManager.DataFactory.Models.ActivityState>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public ActivityState(string value) { throw null; }
+        public static Azure.ResourceManager.DataFactory.Models.ActivityState Active { get { throw null; } }
+        public static Azure.ResourceManager.DataFactory.Models.ActivityState Inactive { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.DataFactory.Models.ActivityState other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.DataFactory.Models.ActivityState left, Azure.ResourceManager.DataFactory.Models.ActivityState right) { throw null; }
+        public static implicit operator Azure.ResourceManager.DataFactory.Models.ActivityState (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.DataFactory.Models.ActivityState left, Azure.ResourceManager.DataFactory.Models.ActivityState right) { throw null; }
+        public override string ToString() { throw null; }
+    }
     public partial class ActivityUserProperty
     {
         public ActivityUserProperty(string name, Azure.Core.Expressions.DataFactory.DataFactoryElement<string> value) { }
         public string Name { get { throw null; } set { } }
-        public Azure.Core.Expressions.DataFactory.DataFactoryElement<string> Value { get { throw null; } set { } }
-    }
-    public partial class AdditionalColumns
-    {
-        public AdditionalColumns() { }
-        public Azure.Core.Expressions.DataFactory.DataFactoryElement<string> Name { get { throw null; } set { } }
         public Azure.Core.Expressions.DataFactory.DataFactoryElement<string> Value { get { throw null; } set { } }
     }
     public partial class AmazonMwsLinkedService : Azure.ResourceManager.DataFactory.Models.FactoryLinkedServiceDefinition
@@ -699,6 +730,7 @@ namespace Azure.ResourceManager.DataFactory.Models
     public partial class AmazonRdsForSqlServerSource : Azure.ResourceManager.DataFactory.Models.TabularSource
     {
         public AmazonRdsForSqlServerSource() { }
+        public Azure.Core.Expressions.DataFactory.DataFactoryElement<string> IsolationLevel { get { throw null; } set { } }
         public System.BinaryData PartitionOption { get { throw null; } set { } }
         public Azure.ResourceManager.DataFactory.Models.SqlPartitionSettings PartitionSettings { get { throw null; } set { } }
         public System.BinaryData ProduceAdditionalTypes { get { throw null; } set { } }
@@ -1515,6 +1547,7 @@ namespace Azure.ResourceManager.DataFactory.Models
     public partial class AzureSqlSource : Azure.ResourceManager.DataFactory.Models.TabularSource
     {
         public AzureSqlSource() { }
+        public Azure.Core.Expressions.DataFactory.DataFactoryElement<string> IsolationLevel { get { throw null; } set { } }
         public System.BinaryData PartitionOption { get { throw null; } set { } }
         public Azure.ResourceManager.DataFactory.Models.SqlPartitionSettings PartitionSettings { get { throw null; } set { } }
         public System.BinaryData ProduceAdditionalTypes { get { throw null; } set { } }
@@ -4993,7 +5026,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         public Azure.Core.Expressions.DataFactory.DataFactoryElement<System.Collections.Generic.IList<string>> AllowedGroups { get { throw null; } set { } }
         public Azure.Core.Expressions.DataFactory.DataFactoryElement<string> DateFilterColumn { get { throw null; } set { } }
         public Azure.Core.Expressions.DataFactory.DataFactoryElement<string> EndOn { get { throw null; } set { } }
-        public Azure.Core.Expressions.DataFactory.DataFactoryElement<System.Collections.Generic.IList<Azure.ResourceManager.DataFactory.Models.AdditionalColumns>> OutputColumns { get { throw null; } set { } }
+        public Azure.Core.Expressions.DataFactory.DataFactoryElement<System.Collections.Generic.IList<Azure.ResourceManager.DataFactory.Models.OutputColumn>> OutputColumns { get { throw null; } set { } }
         public Azure.Core.Expressions.DataFactory.DataFactoryElement<string> StartOn { get { throw null; } set { } }
         public Azure.Core.Expressions.DataFactory.DataFactoryElement<string> UserScopeFilterUri { get { throw null; } set { } }
     }
@@ -5106,6 +5139,11 @@ namespace Azure.ResourceManager.DataFactory.Models
         public Azure.Core.Expressions.DataFactory.DataFactoryElement<string> FileNamePrefix { get { throw null; } set { } }
         public Azure.Core.Expressions.DataFactory.DataFactoryElement<int> MaxRowsPerFile { get { throw null; } set { } }
     }
+    public partial class OutputColumn
+    {
+        public OutputColumn() { }
+        public string Name { get { throw null; } set { } }
+    }
     public partial class ParquetDataset : Azure.ResourceManager.DataFactory.Models.FactoryDatasetDefinition
     {
         public ParquetDataset(Azure.ResourceManager.DataFactory.Models.FactoryLinkedServiceReference linkedServiceName) : base (default(Azure.ResourceManager.DataFactory.Models.FactoryLinkedServiceReference)) { }
@@ -5205,6 +5243,8 @@ namespace Azure.ResourceManager.DataFactory.Models
         public System.Collections.Generic.IList<Azure.ResourceManager.DataFactory.Models.ActivityDependency> DependsOn { get { throw null; } }
         public string Description { get { throw null; } set { } }
         public string Name { get { throw null; } set { } }
+        public Azure.ResourceManager.DataFactory.Models.ActivityOnInactiveMarkA? OnInactiveMarkAs { get { throw null; } set { } }
+        public Azure.ResourceManager.DataFactory.Models.ActivityState? State { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.DataFactory.Models.ActivityUserProperty> UserProperties { get { throw null; } }
     }
     public partial class PipelineCreateRunResult
@@ -6617,6 +6657,7 @@ namespace Azure.ResourceManager.DataFactory.Models
     public partial class SqlDWSource : Azure.ResourceManager.DataFactory.Models.TabularSource
     {
         public SqlDWSource() { }
+        public Azure.Core.Expressions.DataFactory.DataFactoryElement<string> IsolationLevel { get { throw null; } set { } }
         public System.BinaryData PartitionOption { get { throw null; } set { } }
         public Azure.ResourceManager.DataFactory.Models.SqlPartitionSettings PartitionSettings { get { throw null; } set { } }
         public Azure.Core.Expressions.DataFactory.DataFactoryElement<string> SqlReaderQuery { get { throw null; } set { } }
@@ -6645,6 +6686,7 @@ namespace Azure.ResourceManager.DataFactory.Models
     public partial class SqlMISource : Azure.ResourceManager.DataFactory.Models.TabularSource
     {
         public SqlMISource() { }
+        public Azure.Core.Expressions.DataFactory.DataFactoryElement<string> IsolationLevel { get { throw null; } set { } }
         public System.BinaryData PartitionOption { get { throw null; } set { } }
         public Azure.ResourceManager.DataFactory.Models.SqlPartitionSettings PartitionSettings { get { throw null; } set { } }
         public System.BinaryData ProduceAdditionalTypes { get { throw null; } set { } }
@@ -6684,6 +6726,7 @@ namespace Azure.ResourceManager.DataFactory.Models
     public partial class SqlServerSource : Azure.ResourceManager.DataFactory.Models.TabularSource
     {
         public SqlServerSource() { }
+        public Azure.Core.Expressions.DataFactory.DataFactoryElement<string> IsolationLevel { get { throw null; } set { } }
         public System.BinaryData PartitionOption { get { throw null; } set { } }
         public Azure.ResourceManager.DataFactory.Models.SqlPartitionSettings PartitionSettings { get { throw null; } set { } }
         public System.BinaryData ProduceAdditionalTypes { get { throw null; } set { } }
@@ -7004,12 +7047,15 @@ namespace Azure.ResourceManager.DataFactory.Models
     {
         public SynapseNotebookActivity(string name, Azure.ResourceManager.DataFactory.Models.SynapseNotebookReference notebook) : base (default(string)) { }
         public System.BinaryData Conf { get { throw null; } set { } }
+        public Azure.ResourceManager.DataFactory.Models.ConfigurationType? ConfigurationType { get { throw null; } set { } }
         public Azure.Core.Expressions.DataFactory.DataFactoryElement<string> DriverSize { get { throw null; } set { } }
         public Azure.Core.Expressions.DataFactory.DataFactoryElement<string> ExecutorSize { get { throw null; } set { } }
         public Azure.ResourceManager.DataFactory.Models.SynapseNotebookReference Notebook { get { throw null; } set { } }
         public Azure.Core.Expressions.DataFactory.DataFactoryElement<int> NumExecutors { get { throw null; } set { } }
         public System.Collections.Generic.IDictionary<string, Azure.ResourceManager.DataFactory.Models.NotebookParameter> Parameters { get { throw null; } }
+        public System.Collections.Generic.IDictionary<string, System.BinaryData> SparkConfig { get { throw null; } }
         public Azure.ResourceManager.DataFactory.Models.BigDataPoolParametrizationReference SparkPool { get { throw null; } set { } }
+        public Azure.ResourceManager.DataFactory.Models.SparkConfigurationParametrizationReference TargetSparkConfiguration { get { throw null; } set { } }
     }
     public partial class SynapseNotebookReference
     {
