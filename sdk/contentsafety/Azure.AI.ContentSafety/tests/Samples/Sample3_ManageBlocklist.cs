@@ -154,7 +154,7 @@ namespace Azure.AI.ContentSafety.Tests.Samples
             var deleteResult = client.DeleteTextBlocklist(blocklistName);
             if (deleteResult != null && deleteResult.Status == 204)
             {
-                Console.WriteLine("\nDelete blocklist succeded.");
+                Console.WriteLine("\nDeleted blocklist.");
             }
 
             #endregion Snippet:Azure_AI_ContentSafety_DeleteBlocklist

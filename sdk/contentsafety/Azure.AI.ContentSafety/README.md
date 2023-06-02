@@ -1,6 +1,7 @@
 # Azure AI Content Safety client library for .NET
 
 [Azure AI Content Safety][contentsafety_overview] detects harmful user-generated and AI-generated content in applications and services. Content Safety includes several APIs that allow you to detect material that is harmful:
+
 * Text Analysis API: Scans text for sexual content, violence, hate, and self harm with multi-severity levels.
 * Image Analysis API: Scans images for sexual content, violence, hate, and self harm with multi-severity levels.
 * Text Blocklist Management APIs: The default AI classifiers are sufficient for most content safety needs; however, you might need to screen for terms that are specific to your use case. You can create blocklists of terms to use with the Text API.
@@ -19,13 +20,13 @@ dotnet add package Azure.AI.ContentSafety --prerelease
 
 ### Prerequisites
 
-- You need an [Azure subscription][azure_sub] to use this package.
-- An existing [Azure AI Content Safety][contentsafety_overview] instance.
-
+* You need an [Azure subscription][azure_sub] to use this package.
+* An existing [Azure AI Content Safety][contentsafety_overview] instance.
 
 ### Authenticate the client
 
 #### Get the endpoint
+
 You can find the endpoint for your Azure AI Content Safety service resource using the [Azure Portal][azure_portal] or [Azure CLI][azure_cli_endpoint_lookup]:
 
 ```bash
@@ -55,35 +56,39 @@ ContentSafetyClient client = new ContentSafetyClient(new Uri(endpoint), new Azur
 ## Key concepts
 
 ### Harm categories
+
 Content Safety recognizes four distinct categories of objectionable content.
-|Category	|Description  |
+|Category |Description  |
 |---------|---------|
-|Hate	|Hate refers to any content that attacks or uses pejorative or discriminatory language in reference to a person or identity group based on certain differentiating attributes of that group. This includes but is not limited to race, ethnicity, nationality, gender identity and expression, sexual orientation, religion, immigration status, ability status, personal appearance, and body size.|
-|Sexual	|Sexual describes content related to anatomical organs and genitals, romantic relationships, acts portrayed in erotic or affectionate terms, pregnancy, physical sexual acts—including those acts portrayed as an assault or a forced sexual violent act against one’s will—, prostitution, pornography, and abuse.|
-|Violence	|Violence describes content related to physical actions intended to hurt, injure, damage, or kill someone or something. It also includes weapons, guns and related entities, such as manufacturers, associations, legislation, and similar.|
-|Self-harm	|Self-harm describes content related to physical actions intended to purposely hurt, injure, or damage one’s body or kill oneself.|
+|Hate |Hate refers to any content that attacks or uses pejorative or discriminatory language in reference to a person or identity group based on certain differentiating attributes of that group. This includes but is not limited to race, ethnicity, nationality, gender identity and expression, sexual orientation, religion, immigration status, ability status, personal appearance, and body size.|
+|Sexual |Sexual describes content related to anatomical organs and genitals, romantic relationships, acts portrayed in erotic or affectionate terms, pregnancy, physical sexual acts—including those acts portrayed as an assault or a forced sexual violent act against one’s will—, prostitution, pornography, and abuse.|
+|Violence |Violence describes content related to physical actions intended to hurt, injure, damage, or kill someone or something. It also includes weapons, guns and related entities, such as manufacturers, associations, legislation, and similar.|
+|Self-harm |Self-harm describes content related to physical actions intended to purposely hurt, injure, or damage one’s body or kill oneself.|
 
 Classification can be multi-labeled. For example, when a text sample goes through the text moderation model, it could be classified as both Sexual content and Violence.
 
 ### Severity levels
+
 Every harm category the service applies also comes with a severity level rating. The severity level is meant to indicate the severity of the consequences of showing the flagged content.
-|Severity	|Label	|
+|Severity |Label |
 |---------|---------|
-|0	|Safe|
-|2	|Low|
-|4	|Medium|
-|6	|High|
+|0 |Safe|
+|2 |Low|
+|4 |Medium|
+|6 |High|
 
 ### Text blocklist management
+
 Following operations are supported to manage your text blocklist:
-- Create or modify a blocklist
-- List all blocklists
-- Get a blocklist by blocklistName
-- Add blockItems to a blocklist
-- Remove blockItems from a blocklist
-- List all blockItems in a blocklist by blocklistName
-- Get a blockItem in a blocklist by blockItemId and blocklistName
-- Delete a blocklist and all of its blockItems
+
+* Create or modify a blocklist
+* List all blocklists
+* Get a blocklist by blocklistName
+* Add blockItems to a blocklist
+* Remove blockItems from a blocklist
+* List all blockItems in a blocklist by blocklistName
+* Get a blockItem in a blocklist by blockItemId and blocklistName
+* Delete a blocklist and all of its blockItems
 
 You can set the blocklists you want to use when analyze text, then you can get blocklist match result from returned response.
 
@@ -106,9 +111,9 @@ We guarantee that all client instance methods are thread-safe and independent of
 
 The following section provides several code snippets covering some of the most common Content Safety service tasks, including:
 
-- [Analyze text](#analyze-text)
-- [Analyze image](#analyze-image)
-- [Manage text blocklist](#manage-text-blocklist)
+* [Analyze text](#analyze-text)
+* [Analyze image](#analyze-image)
+* [Manage text blocklist](#manage-text-blocklist)
 
 Please refer to [sample data](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/contentsafety/Azure.AI.ContentSafety/tests/Samples/sample_data) for the data used here. For more samples, please refer to [Samples](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/contentsafety/Azure.AI.ContentSafety/tests/Samples).
 
@@ -140,6 +145,7 @@ Console.WriteLine("Violence severity: {0}", response.Value.ViolenceResult?.Sever
 ```
 
 #### Analyze text with blocklists
+
 ```C# Snippet:Azure_AI_ContentSafety_AnalyzeTextWithBlocklist
 // After you edit your blocklist, it usually takes effect in 5 minutes, please wait some time before analyzing with blocklist after editing.
 var request = new AnalyzeTextOptions("I h*te you and I want to k*ll you");
@@ -320,7 +326,9 @@ catch (RequestFailedException ex)
     throw;
 }
 ```
+
 Example console output:
+
 ```
 Analyze text failed.
 Status code: 400, Error code: InvalidRequestBody, Error message: The length of given text 1158 exceeds the limit 1000. | Request Id: a04c7c32-ef27-4c23-8b18-07545b24765b, Timestamp: 2023-06-01T16:43:52Z.
@@ -328,16 +336,17 @@ Status code: 400, Error code: InvalidRequestBody, Error message: The length of g
 
 Error codes are defined as below:
 
-|Error Code	|Possible reasons	|Suggestions|
+|Error Code |Possible reasons |Suggestions|
 |-----------|-------------------|-----------|
-|InvalidRequestBody	|One or more fields in the request body do not match the API definition.	|1. Check the API version you specified in the API call.<br>2. Check the corresponding API definition for the API version you selected.|
-|InvalidResourceName	|The resource name you specified in the URL does not meet the requirements, like the blocklist name, blocklist term ID, etc.	|1. Check the API version you specified in the API call.<br>2. Check whether the given name has invalid characters according to the API definition.|
-|ResourceNotFound	|The resource you specified in the URL may not exist, like the blocklist name.	|1. Check the API version you specified in the API call.<br>2. Double check the existence of the resource specified in the URL.|
-|InternalError	|Some unexpected situations on the server side have been triggered.	|1. You may want to retry a few times after a small period and see it the issue happens again.<br>2. Contact Azure Support if this issue persists.|
-|ServerBusy	|The server side cannot process the request temporarily.	|1. You may want to retry a few times after a small period and see it the issue happens again.<br>2.Contact Azure Support if this issue persists.|
-|TooManyRequests	|The current RPS has exceeded the quota for your current SKU.	|1. Check the pricing table to understand the RPS quota.<br>2.Contact Azure Support if you need more QPS.|
+|InvalidRequestBody |One or more fields in the request body do not match the API definition. |1. Check the API version you specified in the API call.<br>2. Check the corresponding API definition for the API version you selected.|
+|InvalidResourceName |The resource name you specified in the URL does not meet the requirements, like the blocklist name, blocklist term ID, etc. |1. Check the API version you specified in the API call.<br>2. Check whether the given name has invalid characters according to the API definition.|
+|ResourceNotFound |The resource you specified in the URL may not exist, like the blocklist name. |1. Check the API version you specified in the API call.<br>2. Double check the existence of the resource specified in the URL.|
+|InternalError |Some unexpected situations on the server side have been triggered. |1. You may want to retry a few times after a small period and see it the issue happens again.<br>2. Contact Azure Support if this issue persists.|
+|ServerBusy |The server side cannot process the request temporarily. |1. You may want to retry a few times after a small period and see it the issue happens again.<br>2.Contact Azure Support if this issue persists.|
+|TooManyRequests |The current RPS has exceeded the quota for your current SKU. |1. Check the pricing table to understand the RPS quota.<br>2.Contact Azure Support if you need more QPS.|
 
 ### Setting up console logging
+
 The simplest way to see the logs is to enable the console logging.
 To create an Azure SDK log listener that outputs messages to console use the AzureEventSourceListener.CreateConsoleLogger method.
 
@@ -363,19 +372,11 @@ When you submit a pull request, a CLA-bot will automatically determine whether y
 This project has adopted the [Microsoft Open Source Code of Conduct][code_of_conduct]. For more information see the [Code of Conduct FAQ][coc_faq] or contact [opencode@microsoft.com][coc_contact] with any additional questions or comments.
 
 <!-- LINKS -->
-[style-guide-msft]: https://docs.microsoft.com/style-guide/capitalization
-[style-guide-cloud]: https://aka.ms/azsdk/cloud-style-guide
-[authenticate_with_token]: https://docs.microsoft.com/azure/cognitive-services/authentication?tabs=powershell#authenticate-with-an-authentication-token
-[azure_identity_credentials]: https://github.com/Azure/azure-sdk-for-python/tree/main/sdk/identity/azure-identity#credentials
-[azure_identity_pip]: https://pypi.org/project/azure-identity/
-[default_azure_credential]: https://github.com/Azure/azure-sdk-for-python/tree/main/sdk/identity/azure-identity#defaultazurecredential
-[pip]: https://pypi.org/project/pip/
 [azure_sub]: https://azure.microsoft.com/free/
 [contentsafety_overview]: https://aka.ms/acs-doc
 [azure_portal]: https://ms.portal.azure.com/
 [azure_cli_endpoint_lookup]: https://docs.microsoft.com/cli/azure/cognitiveservices/account?view=azure-cli-latest#az-cognitiveservices-account-show
 [azure_cli_key_lookup]: https://docs.microsoft.com/cli/azure/cognitiveservices/account/keys?view=azure-cli-latest#az-cognitiveservices-account-keys-list
-[azure_core_exception]: https://azuresdkdocs.blob.core.windows.net/$web/python/azure-core/latest/azure.core.html#module-azure.core.exceptions
 [logging]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/core/Azure.Core/samples/Diagnostics.md
 
 [cla]: https://cla.microsoft.com
