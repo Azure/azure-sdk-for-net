@@ -63,7 +63,7 @@ namespace Azure.Communication.Chat
             scope.Start();
             try
             {
-                return await _chatThreadRestClient.UpdateChatThreadPropertiesAsync(Id, topic, cancellationToken).ConfigureAwait(false);
+                return await _chatThreadRestClient.UpdateChatThreadPropertiesAsync(Id, topic, null, cancellationToken).ConfigureAwait(false);
             }
             catch (Exception ex)
             {
@@ -82,7 +82,7 @@ namespace Azure.Communication.Chat
             scope.Start();
             try
             {
-                return _chatThreadRestClient.UpdateChatThreadProperties(Id, topic, cancellationToken);
+                return _chatThreadRestClient.UpdateChatThreadProperties(Id, topic, null, cancellationToken);
             }
             catch (Exception ex)
             {
@@ -597,9 +597,10 @@ namespace Azure.Communication.Chat
             {
                 CommunicationIdentifierModel communicationIdentifierModel = CommunicationIdentifierSerializer.Serialize(identifier);
                 return await _chatThreadRestClient.RemoveChatParticipantAsync(Id, communicationIdentifierModel.RawId,
-                    communicationIdentifierModel.CommunicationUser,
-                    communicationIdentifierModel.PhoneNumber,
-                    communicationIdentifierModel.MicrosoftTeamsUser,
+                    null,
+                    null,
+                    null,
+                    null,
                     cancellationToken).ConfigureAwait(false);
             }
             catch (Exception ex)
@@ -621,9 +622,10 @@ namespace Azure.Communication.Chat
             {
                 CommunicationIdentifierModel communicationIdentifierModel = CommunicationIdentifierSerializer.Serialize(identifier);
                 return _chatThreadRestClient.RemoveChatParticipant(Id, communicationIdentifierModel.RawId,
-                    communicationIdentifierModel.CommunicationUser,
-                    communicationIdentifierModel.PhoneNumber,
-                    communicationIdentifierModel.MicrosoftTeamsUser,
+                    null,
+                    null,
+                    null,
+                    null,
                     cancellationToken);
             }
             catch (Exception ex)

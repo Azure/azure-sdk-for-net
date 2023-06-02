@@ -5,6 +5,9 @@
 
 #nullable disable
 
+using System.Collections.Generic;
+using Azure.Core;
+
 namespace Azure.Communication.Chat
 {
     /// <summary> Request payload for updating a chat thread. </summary>
@@ -13,9 +16,12 @@ namespace Azure.Communication.Chat
         /// <summary> Initializes a new instance of UpdateChatThreadRequest. </summary>
         public UpdateChatThreadRequest()
         {
+            Metadata = new ChangeTrackingDictionary<string, string>();
         }
 
         /// <summary> Chat thread topic. </summary>
         public string Topic { get; set; }
+        /// <summary> Contextual metadata for the thread. Note: Has a size limit of 1KB. </summary>
+        public IDictionary<string, string> Metadata { get; }
     }
 }
