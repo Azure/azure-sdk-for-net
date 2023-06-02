@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using Azure.Core;
+
 namespace Azure.ResourceManager.CosmosDBForPostgreSql.Models
 {
     /// <summary> Represents cluster name availability. </summary>
@@ -20,7 +22,7 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql.Models
         /// <param name="nameAvailable"> Indicates whether the cluster name is available. </param>
         /// <param name="name"> Name of the cluster. </param>
         /// <param name="resourceType"> Type of the cluster. </param>
-        internal CosmosDBForPostgreSqlNameAvailability(string message, bool? nameAvailable, string name, string resourceType)
+        internal CosmosDBForPostgreSqlNameAvailability(string message, bool? nameAvailable, string name, ResourceType? resourceType)
         {
             Message = message;
             NameAvailable = nameAvailable;
@@ -35,6 +37,6 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql.Models
         /// <summary> Name of the cluster. </summary>
         public string Name { get; }
         /// <summary> Type of the cluster. </summary>
-        public string ResourceType { get; }
+        public ResourceType? ResourceType { get; }
     }
 }

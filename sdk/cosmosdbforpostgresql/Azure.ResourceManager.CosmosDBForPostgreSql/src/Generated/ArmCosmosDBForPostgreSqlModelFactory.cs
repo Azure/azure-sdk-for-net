@@ -193,7 +193,7 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql.Models
         /// <param name="name"> Name of the cluster. </param>
         /// <param name="resourceType"> Type of the cluster. </param>
         /// <returns> A new <see cref="Models.CosmosDBForPostgreSqlNameAvailability"/> instance for mocking. </returns>
-        public static CosmosDBForPostgreSqlNameAvailability CosmosDBForPostgreSqlNameAvailability(string message = null, bool? nameAvailable = null, string name = null, string resourceType = null)
+        public static CosmosDBForPostgreSqlNameAvailability CosmosDBForPostgreSqlNameAvailability(string message = null, bool? nameAvailable = null, string name = null, ResourceType? resourceType = null)
         {
             return new CosmosDBForPostgreSqlNameAvailability(message, nameAvailable, name, resourceType);
         }

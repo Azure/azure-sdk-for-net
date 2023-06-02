@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql.Models
             Optional<string> message = default;
             Optional<bool> nameAvailable = default;
             Optional<string> name = default;
-            Optional<string> type = default;
+            Optional<ResourceType> type = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("message"u8))
@@ -45,11 +45,15 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql.Models
                 }
                 if (property.NameEquals("type"u8))
                 {
-                    type = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    type = new ResourceType(property.Value.GetString());
                     continue;
                 }
             }
-            return new CosmosDBForPostgreSqlNameAvailability(message.Value, Optional.ToNullable(nameAvailable), name.Value, type.Value);
+            return new CosmosDBForPostgreSqlNameAvailability(message.Value, Optional.ToNullable(nameAvailable), name.Value, Optional.ToNullable(type));
         }
     }
 }

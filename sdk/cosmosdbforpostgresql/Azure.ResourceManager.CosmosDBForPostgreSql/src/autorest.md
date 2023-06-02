@@ -50,6 +50,7 @@ rename-rules:
 
 rename-mapping:
   NameAvailability: CosmosDBForPostgreSqlNameAvailability
+  NameAvailability.type: -|resource-type
   CheckNameAvailabilityResourceType: CosmosDBForPostgreSqlCheckNameAvailabilityResourceType
 
 prepend-rp-prefix:
