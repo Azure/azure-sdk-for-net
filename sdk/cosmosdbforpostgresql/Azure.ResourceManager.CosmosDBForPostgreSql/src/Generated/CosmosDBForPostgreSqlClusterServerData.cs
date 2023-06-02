@@ -30,8 +30,8 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
         /// <param name="serverEdition"> The edition of a server. </param>
         /// <param name="storageQuotaInMb"> The storage of a server in MB. </param>
         /// <param name="vCores"> The vCores count of a server. </param>
-        /// <param name="enableHa"> If high availability (HA) is enabled or not for the server. </param>
-        /// <param name="enablePublicIPAccess"> If public access is enabled on server. </param>
+        /// <param name="isHAEnabled"> If high availability (HA) is enabled or not for the server. </param>
+        /// <param name="isPublicIPAccessEnabled"> If public access is enabled on server. </param>
         /// <param name="isReadOnly"> If server database is set to read-only by system maintenance depending on high disk space usage. </param>
         /// <param name="administratorLogin"> The administrator&apos;s login name of the servers in the cluster. </param>
         /// <param name="fullyQualifiedDomainName"> The fully qualified domain name of a server. </param>
@@ -41,13 +41,13 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
         /// <param name="availabilityZone"> Availability Zone information of the server. </param>
         /// <param name="postgresqlVersion"> The major PostgreSQL version of server. </param>
         /// <param name="citusVersion"> The Citus extension version of server. </param>
-        internal CosmosDBForPostgreSqlClusterServerData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string serverEdition, int? storageQuotaInMb, int? vCores, bool? enableHa, bool? enablePublicIPAccess, bool? isReadOnly, string administratorLogin, string fullyQualifiedDomainName, CosmosDBForPostgreSqlServerRole? role, string state, string haState, string availabilityZone, string postgresqlVersion, string citusVersion) : base(id, name, resourceType, systemData)
+        internal CosmosDBForPostgreSqlClusterServerData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string serverEdition, int? storageQuotaInMb, int? vCores, bool? isHAEnabled, bool? isPublicIPAccessEnabled, bool? isReadOnly, string administratorLogin, string fullyQualifiedDomainName, CosmosDBForPostgreSqlServerRole? role, string state, string haState, string availabilityZone, string postgresqlVersion, string citusVersion) : base(id, name, resourceType, systemData)
         {
             ServerEdition = serverEdition;
             StorageQuotaInMb = storageQuotaInMb;
             VCores = vCores;
-            EnableHa = enableHa;
-            EnablePublicIPAccess = enablePublicIPAccess;
+            IsHAEnabled = isHAEnabled;
+            IsPublicIPAccessEnabled = isPublicIPAccessEnabled;
             IsReadOnly = isReadOnly;
             AdministratorLogin = administratorLogin;
             FullyQualifiedDomainName = fullyQualifiedDomainName;
@@ -66,9 +66,9 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
         /// <summary> The vCores count of a server. </summary>
         public int? VCores { get; set; }
         /// <summary> If high availability (HA) is enabled or not for the server. </summary>
-        public bool? EnableHa { get; set; }
+        public bool? IsHAEnabled { get; set; }
         /// <summary> If public access is enabled on server. </summary>
-        public bool? EnablePublicIPAccess { get; }
+        public bool? IsPublicIPAccessEnabled { get; }
         /// <summary> If server database is set to read-only by system maintenance depending on high disk space usage. </summary>
         public bool? IsReadOnly { get; }
         /// <summary> The administrator&apos;s login name of the servers in the cluster. </summary>

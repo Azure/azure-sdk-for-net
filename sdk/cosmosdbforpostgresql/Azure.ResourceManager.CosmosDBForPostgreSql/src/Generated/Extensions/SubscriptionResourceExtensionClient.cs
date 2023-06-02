@@ -102,9 +102,9 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
         /// </summary>
         /// <param name="content"> The required parameters for checking if cluster name is available. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<CosmosDBForPostgreSqlNameAvailability>> CheckNameAvailabilityClusterAsync(NameAvailabilityContent content, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<CosmosDBForPostgreSqlClusterNameAvailabilityResult>> CheckCosmosDBForPostgreSqlClusterNameAvailabilityAsync(CosmosDBForPostgreSqlClusterNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            using var scope = CosmosDBForPostgreSqlClusterClustersClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.CheckNameAvailabilityCluster");
+            using var scope = CosmosDBForPostgreSqlClusterClustersClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.CheckCosmosDBForPostgreSqlClusterNameAvailability");
             scope.Start();
             try
             {
@@ -133,9 +133,9 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
         /// </summary>
         /// <param name="content"> The required parameters for checking if cluster name is available. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<CosmosDBForPostgreSqlNameAvailability> CheckNameAvailabilityCluster(NameAvailabilityContent content, CancellationToken cancellationToken = default)
+        public virtual Response<CosmosDBForPostgreSqlClusterNameAvailabilityResult> CheckCosmosDBForPostgreSqlClusterNameAvailability(CosmosDBForPostgreSqlClusterNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            using var scope = CosmosDBForPostgreSqlClusterClustersClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.CheckNameAvailabilityCluster");
+            using var scope = CosmosDBForPostgreSqlClusterClustersClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.CheckCosmosDBForPostgreSqlClusterNameAvailability");
             scope.Start();
             try
             {

@@ -15,7 +15,7 @@ using Azure.ResourceManager.CosmosDBForPostgreSql;
 
 namespace Azure.ResourceManager.CosmosDBForPostgreSql.Samples
 {
-    public partial class Sample_FirewallRuleResource
+    public partial class Sample_CosmosDBForPostgreSqlFirewallRuleResource
     {
         // Create a firewall rule of the cluster
         [NUnit.Framework.Test]
@@ -30,23 +30,23 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this FirewallRuleResource created on azure
-            // for more information of creating FirewallRuleResource, please refer to the document of FirewallRuleResource
+            // this example assumes you already have this CosmosDBForPostgreSqlFirewallRuleResource created on azure
+            // for more information of creating CosmosDBForPostgreSqlFirewallRuleResource, please refer to the document of CosmosDBForPostgreSqlFirewallRuleResource
             string subscriptionId = "ffffffff-ffff-ffff-ffff-ffffffffffff";
             string resourceGroupName = "TestGroup";
             string clusterName = "pgtestsvc4";
             string firewallRuleName = "rule1";
-            ResourceIdentifier firewallRuleResourceId = FirewallRuleResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, clusterName, firewallRuleName);
-            FirewallRuleResource firewallRule = client.GetFirewallRuleResource(firewallRuleResourceId);
+            ResourceIdentifier cosmosDBForPostgreSqlFirewallRuleResourceId = CosmosDBForPostgreSqlFirewallRuleResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, clusterName, firewallRuleName);
+            CosmosDBForPostgreSqlFirewallRuleResource cosmosDBForPostgreSqlFirewallRule = client.GetCosmosDBForPostgreSqlFirewallRuleResource(cosmosDBForPostgreSqlFirewallRuleResourceId);
 
             // invoke the operation
-            FirewallRuleData data = new FirewallRuleData("0.0.0.0", "255.255.255.255");
-            ArmOperation<FirewallRuleResource> lro = await firewallRule.UpdateAsync(WaitUntil.Completed, data);
-            FirewallRuleResource result = lro.Value;
+            CosmosDBForPostgreSqlFirewallRuleData data = new CosmosDBForPostgreSqlFirewallRuleData("0.0.0.0", "255.255.255.255");
+            ArmOperation<CosmosDBForPostgreSqlFirewallRuleResource> lro = await cosmosDBForPostgreSqlFirewallRule.UpdateAsync(WaitUntil.Completed, data);
+            CosmosDBForPostgreSqlFirewallRuleResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            FirewallRuleData resourceData = result.Data;
+            CosmosDBForPostgreSqlFirewallRuleData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -64,17 +64,17 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this FirewallRuleResource created on azure
-            // for more information of creating FirewallRuleResource, please refer to the document of FirewallRuleResource
+            // this example assumes you already have this CosmosDBForPostgreSqlFirewallRuleResource created on azure
+            // for more information of creating CosmosDBForPostgreSqlFirewallRuleResource, please refer to the document of CosmosDBForPostgreSqlFirewallRuleResource
             string subscriptionId = "ffffffff-ffff-ffff-ffff-ffffffffffff";
             string resourceGroupName = "TestGroup";
             string clusterName = "pgtestsvc4";
             string firewallRuleName = "rule1";
-            ResourceIdentifier firewallRuleResourceId = FirewallRuleResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, clusterName, firewallRuleName);
-            FirewallRuleResource firewallRule = client.GetFirewallRuleResource(firewallRuleResourceId);
+            ResourceIdentifier cosmosDBForPostgreSqlFirewallRuleResourceId = CosmosDBForPostgreSqlFirewallRuleResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, clusterName, firewallRuleName);
+            CosmosDBForPostgreSqlFirewallRuleResource cosmosDBForPostgreSqlFirewallRule = client.GetCosmosDBForPostgreSqlFirewallRuleResource(cosmosDBForPostgreSqlFirewallRuleResourceId);
 
             // invoke the operation
-            await firewallRule.DeleteAsync(WaitUntil.Completed);
+            await cosmosDBForPostgreSqlFirewallRule.DeleteAsync(WaitUntil.Completed);
 
             Console.WriteLine($"Succeeded");
         }
@@ -92,21 +92,21 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this FirewallRuleResource created on azure
-            // for more information of creating FirewallRuleResource, please refer to the document of FirewallRuleResource
+            // this example assumes you already have this CosmosDBForPostgreSqlFirewallRuleResource created on azure
+            // for more information of creating CosmosDBForPostgreSqlFirewallRuleResource, please refer to the document of CosmosDBForPostgreSqlFirewallRuleResource
             string subscriptionId = "ffffffff-ffff-ffff-ffff-ffffffffffff";
             string resourceGroupName = "TestGroup";
             string clusterName = "pgtestsvc4";
             string firewallRuleName = "rule1";
-            ResourceIdentifier firewallRuleResourceId = FirewallRuleResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, clusterName, firewallRuleName);
-            FirewallRuleResource firewallRule = client.GetFirewallRuleResource(firewallRuleResourceId);
+            ResourceIdentifier cosmosDBForPostgreSqlFirewallRuleResourceId = CosmosDBForPostgreSqlFirewallRuleResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, clusterName, firewallRuleName);
+            CosmosDBForPostgreSqlFirewallRuleResource cosmosDBForPostgreSqlFirewallRule = client.GetCosmosDBForPostgreSqlFirewallRuleResource(cosmosDBForPostgreSqlFirewallRuleResourceId);
 
             // invoke the operation
-            FirewallRuleResource result = await firewallRule.GetAsync();
+            CosmosDBForPostgreSqlFirewallRuleResource result = await cosmosDBForPostgreSqlFirewallRule.GetAsync();
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            FirewallRuleData resourceData = result.Data;
+            CosmosDBForPostgreSqlFirewallRuleData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }

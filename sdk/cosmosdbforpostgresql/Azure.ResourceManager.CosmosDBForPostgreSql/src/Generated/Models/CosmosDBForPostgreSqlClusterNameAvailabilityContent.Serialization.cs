@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.CosmosDBForPostgreSql.Models
 {
-    public partial class NameAvailabilityContent : IUtf8JsonSerializable
+    public partial class CosmosDBForPostgreSqlClusterNameAvailabilityContent : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {

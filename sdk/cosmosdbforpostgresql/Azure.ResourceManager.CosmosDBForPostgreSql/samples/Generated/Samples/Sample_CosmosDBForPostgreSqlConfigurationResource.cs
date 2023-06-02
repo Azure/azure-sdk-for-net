@@ -14,7 +14,7 @@ using Azure.ResourceManager.CosmosDBForPostgreSql;
 
 namespace Azure.ResourceManager.CosmosDBForPostgreSql.Samples
 {
-    public partial class Sample_ConfigurationResource
+    public partial class Sample_CosmosDBForPostgreSqlConfigurationResource
     {
         // Get configuration details.
         [NUnit.Framework.Test]
@@ -29,21 +29,21 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this ConfigurationResource created on azure
-            // for more information of creating ConfigurationResource, please refer to the document of ConfigurationResource
+            // this example assumes you already have this CosmosDBForPostgreSqlConfigurationResource created on azure
+            // for more information of creating CosmosDBForPostgreSqlConfigurationResource, please refer to the document of CosmosDBForPostgreSqlConfigurationResource
             string subscriptionId = "ffffffff-ffff-ffff-ffff-ffffffffffff";
             string resourceGroupName = "TestResourceGroup";
             string clusterName = "testcluster";
             string configurationName = "client_encoding";
-            ResourceIdentifier configurationResourceId = ConfigurationResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, clusterName, configurationName);
-            ConfigurationResource configuration = client.GetConfigurationResource(configurationResourceId);
+            ResourceIdentifier cosmosDBForPostgreSqlConfigurationResourceId = CosmosDBForPostgreSqlConfigurationResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, clusterName, configurationName);
+            CosmosDBForPostgreSqlConfigurationResource cosmosDBForPostgreSqlConfiguration = client.GetCosmosDBForPostgreSqlConfigurationResource(cosmosDBForPostgreSqlConfigurationResourceId);
 
             // invoke the operation
-            ConfigurationResource result = await configuration.GetAsync();
+            CosmosDBForPostgreSqlConfigurationResource result = await cosmosDBForPostgreSqlConfiguration.GetAsync();
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            ConfigurationData resourceData = result.Data;
+            CosmosDBForPostgreSqlConfigurationData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }

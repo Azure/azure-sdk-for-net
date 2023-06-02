@@ -280,6 +280,12 @@
       ]
     },
     {
+      "filename": "**/sdk/cosmosdbforpostgresql/**/*",
+      "words": [
+        "Citus"
+      ]
+    },
+    {
       "filename": "**/sdk/consumption/**/*",
       "words": [
         "payg"

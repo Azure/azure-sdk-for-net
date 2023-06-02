@@ -14,7 +14,7 @@ using Azure.ResourceManager.CosmosDBForPostgreSql;
 
 namespace Azure.ResourceManager.CosmosDBForPostgreSql.Samples
 {
-    public partial class Sample_ClusterServerCollection
+    public partial class Sample_CosmosDBForPostgreSqlClusterServerCollection
     {
         // List servers of the cluster
         [NUnit.Framework.Test]
@@ -29,23 +29,23 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this ClusterResource created on azure
-            // for more information of creating ClusterResource, please refer to the document of ClusterResource
+            // this example assumes you already have this CosmosDBForPostgreSqlClusterResource created on azure
+            // for more information of creating CosmosDBForPostgreSqlClusterResource, please refer to the document of CosmosDBForPostgreSqlClusterResource
             string subscriptionId = "ffffffff-ffff-ffff-ffff-ffffffffffff";
             string resourceGroupName = "TestGroup";
             string clusterName = "testcluster1";
-            ResourceIdentifier clusterResourceId = ClusterResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, clusterName);
-            ClusterResource cluster = client.GetClusterResource(clusterResourceId);
+            ResourceIdentifier cosmosDBForPostgreSqlClusterResourceId = CosmosDBForPostgreSqlClusterResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, clusterName);
+            CosmosDBForPostgreSqlClusterResource cosmosDBForPostgreSqlCluster = client.GetCosmosDBForPostgreSqlClusterResource(cosmosDBForPostgreSqlClusterResourceId);
 
-            // get the collection of this ClusterServerResource
-            ClusterServerCollection collection = cluster.GetClusterServers();
+            // get the collection of this CosmosDBForPostgreSqlClusterServerResource
+            CosmosDBForPostgreSqlClusterServerCollection collection = cosmosDBForPostgreSqlCluster.GetCosmosDBForPostgreSqlClusterServers();
 
             // invoke the operation and iterate over the result
-            await foreach (ClusterServerResource item in collection.GetAllAsync())
+            await foreach (CosmosDBForPostgreSqlClusterServerResource item in collection.GetAllAsync())
             {
                 // the variable item is a resource, you could call other operations on this instance as well
                 // but just for demo, we get its data from this resource instance
-                ClusterServerData resourceData = item.Data;
+                CosmosDBForPostgreSqlClusterServerData resourceData = item.Data;
                 // for demo we just print out the id
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
@@ -66,24 +66,24 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this ClusterResource created on azure
-            // for more information of creating ClusterResource, please refer to the document of ClusterResource
+            // this example assumes you already have this CosmosDBForPostgreSqlClusterResource created on azure
+            // for more information of creating CosmosDBForPostgreSqlClusterResource, please refer to the document of CosmosDBForPostgreSqlClusterResource
             string subscriptionId = "ffffffff-ffff-ffff-ffff-ffffffffffff";
             string resourceGroupName = "TestGroup";
             string clusterName = "testcluster1";
-            ResourceIdentifier clusterResourceId = ClusterResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, clusterName);
-            ClusterResource cluster = client.GetClusterResource(clusterResourceId);
+            ResourceIdentifier cosmosDBForPostgreSqlClusterResourceId = CosmosDBForPostgreSqlClusterResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, clusterName);
+            CosmosDBForPostgreSqlClusterResource cosmosDBForPostgreSqlCluster = client.GetCosmosDBForPostgreSqlClusterResource(cosmosDBForPostgreSqlClusterResourceId);
 
-            // get the collection of this ClusterServerResource
-            ClusterServerCollection collection = cluster.GetClusterServers();
+            // get the collection of this CosmosDBForPostgreSqlClusterServerResource
+            CosmosDBForPostgreSqlClusterServerCollection collection = cosmosDBForPostgreSqlCluster.GetCosmosDBForPostgreSqlClusterServers();
 
             // invoke the operation
             string serverName = "testcluster1-c";
-            ClusterServerResource result = await collection.GetAsync(serverName);
+            CosmosDBForPostgreSqlClusterServerResource result = await collection.GetAsync(serverName);
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            ClusterServerData resourceData = result.Data;
+            CosmosDBForPostgreSqlClusterServerData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -101,16 +101,16 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this ClusterResource created on azure
-            // for more information of creating ClusterResource, please refer to the document of ClusterResource
+            // this example assumes you already have this CosmosDBForPostgreSqlClusterResource created on azure
+            // for more information of creating CosmosDBForPostgreSqlClusterResource, please refer to the document of CosmosDBForPostgreSqlClusterResource
             string subscriptionId = "ffffffff-ffff-ffff-ffff-ffffffffffff";
             string resourceGroupName = "TestGroup";
             string clusterName = "testcluster1";
-            ResourceIdentifier clusterResourceId = ClusterResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, clusterName);
-            ClusterResource cluster = client.GetClusterResource(clusterResourceId);
+            ResourceIdentifier cosmosDBForPostgreSqlClusterResourceId = CosmosDBForPostgreSqlClusterResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, clusterName);
+            CosmosDBForPostgreSqlClusterResource cosmosDBForPostgreSqlCluster = client.GetCosmosDBForPostgreSqlClusterResource(cosmosDBForPostgreSqlClusterResourceId);
 
-            // get the collection of this ClusterServerResource
-            ClusterServerCollection collection = cluster.GetClusterServers();
+            // get the collection of this CosmosDBForPostgreSqlClusterServerResource
+            CosmosDBForPostgreSqlClusterServerCollection collection = cosmosDBForPostgreSqlCluster.GetCosmosDBForPostgreSqlClusterServers();
 
             // invoke the operation
             string serverName = "testcluster1-c";

@@ -15,7 +15,7 @@ using Azure.ResourceManager.CosmosDBForPostgreSql;
 
 namespace Azure.ResourceManager.CosmosDBForPostgreSql.Samples
 {
-    public partial class Sample_ServerGroupsv2NodeConfigurationCollection
+    public partial class Sample_CosmosDBForPostgreSqlNodeConfigurationCollection
     {
         // Get configuration details for node.
         [NUnit.Framework.Test]
@@ -30,20 +30,20 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this ClusterResource created on azure
-            // for more information of creating ClusterResource, please refer to the document of ClusterResource
+            // this example assumes you already have this CosmosDBForPostgreSqlClusterResource created on azure
+            // for more information of creating CosmosDBForPostgreSqlClusterResource, please refer to the document of CosmosDBForPostgreSqlClusterResource
             string subscriptionId = "ffffffff-ffff-ffff-ffff-ffffffffffff";
             string resourceGroupName = "TestResourceGroup";
             string clusterName = "testcluster";
-            ResourceIdentifier clusterResourceId = ClusterResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, clusterName);
-            ClusterResource cluster = client.GetClusterResource(clusterResourceId);
+            ResourceIdentifier cosmosDBForPostgreSqlClusterResourceId = CosmosDBForPostgreSqlClusterResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, clusterName);
+            CosmosDBForPostgreSqlClusterResource cosmosDBForPostgreSqlCluster = client.GetCosmosDBForPostgreSqlClusterResource(cosmosDBForPostgreSqlClusterResourceId);
 
-            // get the collection of this ServerGroupsv2NodeConfigurationResource
-            ServerGroupsv2NodeConfigurationCollection collection = cluster.GetServerGroupsv2NodeConfigurations();
+            // get the collection of this CosmosDBForPostgreSqlNodeConfigurationResource
+            CosmosDBForPostgreSqlNodeConfigurationCollection collection = cosmosDBForPostgreSqlCluster.GetCosmosDBForPostgreSqlNodeConfigurations();
 
             // invoke the operation
             string configurationName = "array_nulls";
-            ServerGroupsv2NodeConfigurationResource result = await collection.GetAsync(configurationName);
+            CosmosDBForPostgreSqlNodeConfigurationResource result = await collection.GetAsync(configurationName);
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
@@ -65,16 +65,16 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this ClusterResource created on azure
-            // for more information of creating ClusterResource, please refer to the document of ClusterResource
+            // this example assumes you already have this CosmosDBForPostgreSqlClusterResource created on azure
+            // for more information of creating CosmosDBForPostgreSqlClusterResource, please refer to the document of CosmosDBForPostgreSqlClusterResource
             string subscriptionId = "ffffffff-ffff-ffff-ffff-ffffffffffff";
             string resourceGroupName = "TestResourceGroup";
             string clusterName = "testcluster";
-            ResourceIdentifier clusterResourceId = ClusterResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, clusterName);
-            ClusterResource cluster = client.GetClusterResource(clusterResourceId);
+            ResourceIdentifier cosmosDBForPostgreSqlClusterResourceId = CosmosDBForPostgreSqlClusterResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, clusterName);
+            CosmosDBForPostgreSqlClusterResource cosmosDBForPostgreSqlCluster = client.GetCosmosDBForPostgreSqlClusterResource(cosmosDBForPostgreSqlClusterResourceId);
 
-            // get the collection of this ServerGroupsv2NodeConfigurationResource
-            ServerGroupsv2NodeConfigurationCollection collection = cluster.GetServerGroupsv2NodeConfigurations();
+            // get the collection of this CosmosDBForPostgreSqlNodeConfigurationResource
+            CosmosDBForPostgreSqlNodeConfigurationCollection collection = cosmosDBForPostgreSqlCluster.GetCosmosDBForPostgreSqlNodeConfigurations();
 
             // invoke the operation
             string configurationName = "array_nulls";
@@ -96,16 +96,16 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this ClusterResource created on azure
-            // for more information of creating ClusterResource, please refer to the document of ClusterResource
+            // this example assumes you already have this CosmosDBForPostgreSqlClusterResource created on azure
+            // for more information of creating CosmosDBForPostgreSqlClusterResource, please refer to the document of CosmosDBForPostgreSqlClusterResource
             string subscriptionId = "ffffffff-ffff-ffff-ffff-ffffffffffff";
             string resourceGroupName = "TestResourceGroup";
             string clusterName = "testcluster";
-            ResourceIdentifier clusterResourceId = ClusterResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, clusterName);
-            ClusterResource cluster = client.GetClusterResource(clusterResourceId);
+            ResourceIdentifier cosmosDBForPostgreSqlClusterResourceId = CosmosDBForPostgreSqlClusterResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, clusterName);
+            CosmosDBForPostgreSqlClusterResource cosmosDBForPostgreSqlCluster = client.GetCosmosDBForPostgreSqlClusterResource(cosmosDBForPostgreSqlClusterResourceId);
 
-            // get the collection of this ServerGroupsv2NodeConfigurationResource
-            ServerGroupsv2NodeConfigurationCollection collection = cluster.GetServerGroupsv2NodeConfigurations();
+            // get the collection of this CosmosDBForPostgreSqlNodeConfigurationResource
+            CosmosDBForPostgreSqlNodeConfigurationCollection collection = cosmosDBForPostgreSqlCluster.GetCosmosDBForPostgreSqlNodeConfigurations();
 
             // invoke the operation
             string configurationName = "array_nulls";
@@ -113,8 +113,8 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql.Samples
             {
                 Value = "off",
             };
-            ArmOperation<ServerGroupsv2NodeConfigurationResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, configurationName, data);
-            ServerGroupsv2NodeConfigurationResource result = lro.Value;
+            ArmOperation<CosmosDBForPostgreSqlNodeConfigurationResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, configurationName, data);
+            CosmosDBForPostgreSqlNodeConfigurationResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance

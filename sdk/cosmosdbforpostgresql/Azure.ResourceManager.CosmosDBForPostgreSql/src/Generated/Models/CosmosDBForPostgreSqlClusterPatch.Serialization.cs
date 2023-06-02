@@ -43,15 +43,15 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql.Models
                 writer.WritePropertyName("citusVersion"u8);
                 writer.WriteStringValue(CitusVersion);
             }
-            if (Optional.IsDefined(EnableShardsOnCoordinator))
+            if (Optional.IsDefined(IsShardsOnCoordinatorEnabled))
             {
                 writer.WritePropertyName("enableShardsOnCoordinator"u8);
-                writer.WriteBooleanValue(EnableShardsOnCoordinator.Value);
+                writer.WriteBooleanValue(IsShardsOnCoordinatorEnabled.Value);
             }
-            if (Optional.IsDefined(EnableHa))
+            if (Optional.IsDefined(IsHAEnabled))
             {
                 writer.WritePropertyName("enableHa"u8);
-                writer.WriteBooleanValue(EnableHa.Value);
+                writer.WriteBooleanValue(IsHAEnabled.Value);
             }
             if (Optional.IsDefined(PreferredPrimaryZone))
             {
@@ -73,10 +73,10 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql.Models
                 writer.WritePropertyName("coordinatorVCores"u8);
                 writer.WriteNumberValue(CoordinatorVCores.Value);
             }
-            if (Optional.IsDefined(CoordinatorEnablePublicIPAccess))
+            if (Optional.IsDefined(IsCoordinatorPublicIPAccessEnabled))
             {
                 writer.WritePropertyName("coordinatorEnablePublicIpAccess"u8);
-                writer.WriteBooleanValue(CoordinatorEnablePublicIPAccess.Value);
+                writer.WriteBooleanValue(IsCoordinatorPublicIPAccessEnabled.Value);
             }
             if (Optional.IsDefined(NodeServerEdition))
             {

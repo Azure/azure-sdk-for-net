@@ -32,17 +32,17 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql.Models
         /// <param name="citusVersion"> The Citus extension version on all cluster servers. </param>
         /// <param name="maintenanceWindow"> Maintenance window of a cluster. </param>
         /// <param name="preferredPrimaryZone"> Preferred primary availability zone (AZ) for all cluster servers. </param>
-        /// <param name="enableShardsOnCoordinator"> If shards on coordinator is enabled or not for the cluster. </param>
-        /// <param name="enableHa"> If high availability (HA) is enabled or not for the cluster. </param>
+        /// <param name="isShardsOnCoordinatorEnabled"> If shards on coordinator is enabled or not for the cluster. </param>
+        /// <param name="isHAEnabled"> If high availability (HA) is enabled or not for the cluster. </param>
         /// <param name="coordinatorServerEdition"> The edition of a coordinator server (default: GeneralPurpose). Required for creation. </param>
         /// <param name="coordinatorStorageQuotaInMb"> The storage of a server in MB. Required for creation. See https://learn.microsoft.com/azure/cosmos-db/postgresql/resources-compute for more information. </param>
         /// <param name="coordinatorVCores"> The vCores count of a server (max: 96). Required for creation. See https://learn.microsoft.com/azure/cosmos-db/postgresql/resources-compute for more information. </param>
-        /// <param name="coordinatorEnablePublicIPAccess"> If public access is enabled on coordinator. </param>
+        /// <param name="isCoordinatorPublicIPAccessEnabled"> If public access is enabled on coordinator. </param>
         /// <param name="nodeServerEdition"> The edition of a node server (default: MemoryOptimized). </param>
         /// <param name="nodeCount"> Worker node count of the cluster. When node count is 0, it represents a single node configuration with the ability to create distributed tables on that node. 2 or more worker nodes represent multi-node configuration. Node count value cannot be 1. Required for creation. </param>
         /// <param name="nodeStorageQuotaInMb"> The storage in MB on each worker node. See https://learn.microsoft.com/azure/cosmos-db/postgresql/resources-compute for more information. </param>
         /// <param name="nodeVCores"> The compute in vCores on each worker node (max: 104). See https://learn.microsoft.com/azure/cosmos-db/postgresql/resources-compute for more information. </param>
-        /// <param name="nodeEnablePublicIPAccess"> If public access is enabled on worker nodes. </param>
+        /// <param name="isNodePublicIPAccessEnabled"> If public access is enabled on worker nodes. </param>
         /// <param name="serverNames"> The list of server names in the cluster. </param>
         /// <param name="sourceResourceId"> The resource id of source cluster for read replica clusters. </param>
         /// <param name="sourceLocation"> The Azure region of source cluster for read replica clusters. </param>
@@ -51,14 +51,14 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql.Models
         /// <param name="earliestRestoreOn"> The earliest restore point time (ISO8601 format) for the cluster. </param>
         /// <param name="privateEndpointConnections"> The private endpoint connections for a cluster. </param>
         /// <returns> A new <see cref="CosmosDBForPostgreSql.CosmosDBForPostgreSqlClusterData"/> instance for mocking. </returns>
-        public static CosmosDBForPostgreSqlClusterData CosmosDBForPostgreSqlClusterData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, string administratorLogin = null, string administratorLoginPassword = null, string provisioningState = null, string state = null, string postgresqlVersion = null, string citusVersion = null, CosmosDBForPostgreSqlMaintenanceWindow maintenanceWindow = null, string preferredPrimaryZone = null, bool? enableShardsOnCoordinator = null, bool? enableHa = null, string coordinatorServerEdition = null, int? coordinatorStorageQuotaInMb = null, int? coordinatorVCores = null, bool? coordinatorEnablePublicIPAccess = null, string nodeServerEdition = null, int? nodeCount = null, int? nodeStorageQuotaInMb = null, int? nodeVCores = null, bool? nodeEnablePublicIPAccess = null, IEnumerable<ServerNameItem> serverNames = null, ResourceIdentifier sourceResourceId = null, AzureLocation? sourceLocation = null, DateTimeOffset? pointInTimeUTC = null, IEnumerable<string> readReplicas = null, DateTimeOffset? earliestRestoreOn = null, IEnumerable<CosmosDBForPostgreSqlSimplePrivateEndpointConnection> privateEndpointConnections = null)
+        public static CosmosDBForPostgreSqlClusterData CosmosDBForPostgreSqlClusterData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, string administratorLogin = null, string administratorLoginPassword = null, string provisioningState = null, string state = null, string postgresqlVersion = null, string citusVersion = null, CosmosDBForPostgreSqlMaintenanceWindow maintenanceWindow = null, string preferredPrimaryZone = null, bool? isShardsOnCoordinatorEnabled = null, bool? isHAEnabled = null, string coordinatorServerEdition = null, int? coordinatorStorageQuotaInMb = null, int? coordinatorVCores = null, bool? isCoordinatorPublicIPAccessEnabled = null, string nodeServerEdition = null, int? nodeCount = null, int? nodeStorageQuotaInMb = null, int? nodeVCores = null, bool? isNodePublicIPAccessEnabled = null, IEnumerable<ServerNameItem> serverNames = null, ResourceIdentifier sourceResourceId = null, AzureLocation? sourceLocation = null, DateTimeOffset? pointInTimeUTC = null, IEnumerable<string> readReplicas = null, DateTimeOffset? earliestRestoreOn = null, IEnumerable<CosmosDBForPostgreSqlSimplePrivateEndpointConnection> privateEndpointConnections = null)
         {
             tags ??= new Dictionary<string, string>();
             serverNames ??= new List<ServerNameItem>();
             readReplicas ??= new List<string>();
             privateEndpointConnections ??= new List<CosmosDBForPostgreSqlSimplePrivateEndpointConnection>();
 
-            return new CosmosDBForPostgreSqlClusterData(id, name, resourceType, systemData, tags, location, administratorLogin, administratorLoginPassword, provisioningState, state, postgresqlVersion, citusVersion, maintenanceWindow, preferredPrimaryZone, enableShardsOnCoordinator, enableHa, coordinatorServerEdition, coordinatorStorageQuotaInMb, coordinatorVCores, coordinatorEnablePublicIPAccess, nodeServerEdition, nodeCount, nodeStorageQuotaInMb, nodeVCores, nodeEnablePublicIPAccess, serverNames?.ToList(), sourceResourceId, sourceLocation, pointInTimeUTC, readReplicas?.ToList(), earliestRestoreOn, privateEndpointConnections?.ToList());
+            return new CosmosDBForPostgreSqlClusterData(id, name, resourceType, systemData, tags, location, administratorLogin, administratorLoginPassword, provisioningState, state, postgresqlVersion, citusVersion, maintenanceWindow, preferredPrimaryZone, isShardsOnCoordinatorEnabled, isHAEnabled, coordinatorServerEdition, coordinatorStorageQuotaInMb, coordinatorVCores, isCoordinatorPublicIPAccessEnabled, nodeServerEdition, nodeCount, nodeStorageQuotaInMb, nodeVCores, isNodePublicIPAccessEnabled, serverNames?.ToList(), sourceResourceId, sourceLocation, pointInTimeUTC, readReplicas?.ToList(), earliestRestoreOn, privateEndpointConnections?.ToList());
         }
 
         /// <summary> Initializes a new instance of ServerNameItem. </summary>
@@ -94,8 +94,8 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql.Models
         /// <param name="serverEdition"> The edition of a server. </param>
         /// <param name="storageQuotaInMb"> The storage of a server in MB. </param>
         /// <param name="vCores"> The vCores count of a server. </param>
-        /// <param name="enableHa"> If high availability (HA) is enabled or not for the server. </param>
-        /// <param name="enablePublicIPAccess"> If public access is enabled on server. </param>
+        /// <param name="isHAEnabled"> If high availability (HA) is enabled or not for the server. </param>
+        /// <param name="isPublicIPAccessEnabled"> If public access is enabled on server. </param>
         /// <param name="isReadOnly"> If server database is set to read-only by system maintenance depending on high disk space usage. </param>
         /// <param name="administratorLogin"> The administrator&apos;s login name of the servers in the cluster. </param>
         /// <param name="fullyQualifiedDomainName"> The fully qualified domain name of a server. </param>
@@ -106,9 +106,9 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql.Models
         /// <param name="postgresqlVersion"> The major PostgreSQL version of server. </param>
         /// <param name="citusVersion"> The Citus extension version of server. </param>
         /// <returns> A new <see cref="CosmosDBForPostgreSql.CosmosDBForPostgreSqlClusterServerData"/> instance for mocking. </returns>
-        public static CosmosDBForPostgreSqlClusterServerData CosmosDBForPostgreSqlClusterServerData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string serverEdition = null, int? storageQuotaInMb = null, int? vCores = null, bool? enableHa = null, bool? enablePublicIPAccess = null, bool? isReadOnly = null, string administratorLogin = null, string fullyQualifiedDomainName = null, CosmosDBForPostgreSqlServerRole? role = null, string state = null, string haState = null, string availabilityZone = null, string postgresqlVersion = null, string citusVersion = null)
+        public static CosmosDBForPostgreSqlClusterServerData CosmosDBForPostgreSqlClusterServerData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string serverEdition = null, int? storageQuotaInMb = null, int? vCores = null, bool? isHAEnabled = null, bool? isPublicIPAccessEnabled = null, bool? isReadOnly = null, string administratorLogin = null, string fullyQualifiedDomainName = null, CosmosDBForPostgreSqlServerRole? role = null, string state = null, string haState = null, string availabilityZone = null, string postgresqlVersion = null, string citusVersion = null)
         {
-            return new CosmosDBForPostgreSqlClusterServerData(id, name, resourceType, systemData, serverEdition, storageQuotaInMb, vCores, enableHa, enablePublicIPAccess, isReadOnly, administratorLogin, fullyQualifiedDomainName, role, state, haState, availabilityZone, postgresqlVersion, citusVersion);
+            return new CosmosDBForPostgreSqlClusterServerData(id, name, resourceType, systemData, serverEdition, storageQuotaInMb, vCores, isHAEnabled, isPublicIPAccessEnabled, isReadOnly, administratorLogin, fullyQualifiedDomainName, role, state, haState, availabilityZone, postgresqlVersion, citusVersion);
         }
 
         /// <summary> Initializes a new instance of ServerConfigurationData. </summary>
@@ -122,12 +122,12 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql.Models
         /// <param name="defaultValue"> Default value of the configuration. </param>
         /// <param name="dataType"> Data type of the configuration. </param>
         /// <param name="allowedValues"> Allowed values of the configuration. </param>
-        /// <param name="requiresRestart"> If configuration change requires restart. </param>
+        /// <param name="isRestartRequired"> If configuration change requires restart. </param>
         /// <param name="provisioningState"> Provisioning state of the configuration. </param>
         /// <returns> A new <see cref="CosmosDBForPostgreSql.ServerConfigurationData"/> instance for mocking. </returns>
-        public static ServerConfigurationData ServerConfigurationData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string value = null, string source = null, string description = null, string defaultValue = null, CosmosDBForPostgreSqlConfigurationDataType? dataType = null, string allowedValues = null, bool? requiresRestart = null, ProvisioningState? provisioningState = null)
+        public static ServerConfigurationData ServerConfigurationData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string value = null, string source = null, string description = null, string defaultValue = null, CosmosDBForPostgreSqlConfigurationDataType? dataType = null, string allowedValues = null, bool? isRestartRequired = null, ProvisioningState? provisioningState = null)
         {
-            return new ServerConfigurationData(id, name, resourceType, systemData, value, source, description, defaultValue, dataType, allowedValues, requiresRestart, provisioningState);
+            return new ServerConfigurationData(id, name, resourceType, systemData, value, source, description, defaultValue, dataType, allowedValues, isRestartRequired, provisioningState);
         }
 
         /// <summary> Initializes a new instance of CosmosDBForPostgreSqlConfigurationData. </summary>
@@ -138,15 +138,15 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql.Models
         /// <param name="description"> Description of the configuration. </param>
         /// <param name="dataType"> Data type of the configuration. </param>
         /// <param name="allowedValues"> Allowed values of the configuration. </param>
-        /// <param name="requiresRestart"> If configuration change requires restart. </param>
+        /// <param name="isRestartRequired"> If configuration change requires restart. </param>
         /// <param name="serverRoleGroupConfigurations"> The list of server role group configuration values. </param>
         /// <param name="provisioningState"> Provisioning state of the configuration. </param>
         /// <returns> A new <see cref="CosmosDBForPostgreSql.CosmosDBForPostgreSqlConfigurationData"/> instance for mocking. </returns>
-        public static CosmosDBForPostgreSqlConfigurationData CosmosDBForPostgreSqlConfigurationData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string description = null, CosmosDBForPostgreSqlConfigurationDataType? dataType = null, string allowedValues = null, bool? requiresRestart = null, IEnumerable<CosmosDBForPostgreSqlServerRoleGroupConfiguration> serverRoleGroupConfigurations = null, ProvisioningState? provisioningState = null)
+        public static CosmosDBForPostgreSqlConfigurationData CosmosDBForPostgreSqlConfigurationData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string description = null, CosmosDBForPostgreSqlConfigurationDataType? dataType = null, string allowedValues = null, bool? isRestartRequired = null, IEnumerable<CosmosDBForPostgreSqlServerRoleGroupConfiguration> serverRoleGroupConfigurations = null, ProvisioningState? provisioningState = null)
         {
             serverRoleGroupConfigurations ??= new List<CosmosDBForPostgreSqlServerRoleGroupConfiguration>();
 
-            return new CosmosDBForPostgreSqlConfigurationData(id, name, resourceType, systemData, description, dataType, allowedValues, requiresRestart, serverRoleGroupConfigurations?.ToList(), provisioningState);
+            return new CosmosDBForPostgreSqlConfigurationData(id, name, resourceType, systemData, description, dataType, allowedValues, isRestartRequired, serverRoleGroupConfigurations?.ToList(), provisioningState);
         }
 
         /// <summary> Initializes a new instance of CosmosDBForPostgreSqlServerRoleGroupConfiguration. </summary>
@@ -187,15 +187,15 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql.Models
             return new CosmosDBForPostgreSqlRoleData(id, name, resourceType, systemData, password, provisioningState);
         }
 
-        /// <summary> Initializes a new instance of CosmosDBForPostgreSqlNameAvailability. </summary>
+        /// <summary> Initializes a new instance of CosmosDBForPostgreSqlClusterNameAvailabilityResult. </summary>
         /// <param name="message"> Error message. </param>
-        /// <param name="nameAvailable"> Indicates whether the cluster name is available. </param>
+        /// <param name="isNameAvailable"> Indicates whether the cluster name is available. </param>
         /// <param name="name"> Name of the cluster. </param>
         /// <param name="resourceType"> Type of the cluster. </param>
-        /// <returns> A new <see cref="Models.CosmosDBForPostgreSqlNameAvailability"/> instance for mocking. </returns>
-        public static CosmosDBForPostgreSqlNameAvailability CosmosDBForPostgreSqlNameAvailability(string message = null, bool? nameAvailable = null, string name = null, ResourceType? resourceType = null)
+        /// <returns> A new <see cref="Models.CosmosDBForPostgreSqlClusterNameAvailabilityResult"/> instance for mocking. </returns>
+        public static CosmosDBForPostgreSqlClusterNameAvailabilityResult CosmosDBForPostgreSqlClusterNameAvailabilityResult(string message = null, bool? isNameAvailable = null, string name = null, ResourceType? resourceType = null)
         {
-            return new CosmosDBForPostgreSqlNameAvailability(message, nameAvailable, name, resourceType);
+            return new CosmosDBForPostgreSqlClusterNameAvailabilityResult(message, isNameAvailable, name, resourceType);
         }
 
         /// <summary> Initializes a new instance of CosmosDBForPostgreSqlPrivateEndpointConnectionData. </summary>

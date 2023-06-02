@@ -20,10 +20,10 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(RequiresRestart))
+            if (Optional.IsDefined(IsRestartRequired))
             {
                 writer.WritePropertyName("requiresRestart"u8);
-                writer.WriteBooleanValue(RequiresRestart.Value);
+                writer.WriteBooleanValue(IsRestartRequired.Value);
             }
             if (Optional.IsCollectionDefined(ServerRoleGroupConfigurations))
             {

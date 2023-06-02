@@ -28,9 +28,9 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql.Models
         /// <summary> The Citus extension version on all cluster servers. </summary>
         public string CitusVersion { get; set; }
         /// <summary> If shards on coordinator is enabled or not for the cluster. </summary>
-        public bool? EnableShardsOnCoordinator { get; set; }
+        public bool? IsShardsOnCoordinatorEnabled { get; set; }
         /// <summary> If high availability (HA) is enabled or not for the cluster. </summary>
-        public bool? EnableHa { get; set; }
+        public bool? IsHAEnabled { get; set; }
         /// <summary> Preferred primary availability zone (AZ) for all cluster servers. </summary>
         public string PreferredPrimaryZone { get; set; }
         /// <summary> The edition of the coordinator (default: GeneralPurpose). </summary>
@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql.Models
         /// <summary> The vCores count of the coordinator (max: 96). </summary>
         public int? CoordinatorVCores { get; set; }
         /// <summary> If public access is enabled on coordinator. </summary>
-        public bool? CoordinatorEnablePublicIPAccess { get; set; }
+        public bool? IsCoordinatorPublicIPAccessEnabled { get; set; }
         /// <summary> The edition of a node (default: MemoryOptimized). </summary>
         public string NodeServerEdition { get; set; }
         /// <summary> Worker node count of the cluster. When node count is 0, it represents a single node configuration with the ability to create distributed tables on that node. 2 or more worker nodes represent multi-node configuration. Node count value cannot be 1. </summary>
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql.Models
         /// <summary> The compute in vCores on each worker node (max: 104). </summary>
         public int? NodeVCores { get; set; }
         /// <summary> If public access is enabled on worker nodes. </summary>
-        public bool? NodeEnablePublicIPAccess { get; }
+        public bool? IsNodePublicIPAccessEnabled { get; }
         /// <summary> Maintenance window of a cluster. </summary>
         public CosmosDBForPostgreSqlMaintenanceWindow MaintenanceWindow { get; set; }
     }

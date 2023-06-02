@@ -15,7 +15,7 @@ using Azure.ResourceManager.CosmosDBForPostgreSql;
 
 namespace Azure.ResourceManager.CosmosDBForPostgreSql.Samples
 {
-    public partial class Sample_ServerGroupsv2CoordinatorConfigurationResource
+    public partial class Sample_CosmosDBForPostgreSqlCoordinatorConfigurationResource
     {
         // Get configuration details for coordinator.
         [NUnit.Framework.Test]
@@ -30,17 +30,17 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this ServerGroupsv2CoordinatorConfigurationResource created on azure
-            // for more information of creating ServerGroupsv2CoordinatorConfigurationResource, please refer to the document of ServerGroupsv2CoordinatorConfigurationResource
+            // this example assumes you already have this CosmosDBForPostgreSqlCoordinatorConfigurationResource created on azure
+            // for more information of creating CosmosDBForPostgreSqlCoordinatorConfigurationResource, please refer to the document of CosmosDBForPostgreSqlCoordinatorConfigurationResource
             string subscriptionId = "ffffffff-ffff-ffff-ffff-ffffffffffff";
             string resourceGroupName = "TestResourceGroup";
             string clusterName = "testcluster";
             string configurationName = "array_nulls";
-            ResourceIdentifier serverGroupsv2CoordinatorConfigurationResourceId = ServerGroupsv2CoordinatorConfigurationResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, clusterName, configurationName);
-            ServerGroupsv2CoordinatorConfigurationResource serverGroupsv2CoordinatorConfiguration = client.GetServerGroupsv2CoordinatorConfigurationResource(serverGroupsv2CoordinatorConfigurationResourceId);
+            ResourceIdentifier cosmosDBForPostgreSqlCoordinatorConfigurationResourceId = CosmosDBForPostgreSqlCoordinatorConfigurationResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, clusterName, configurationName);
+            CosmosDBForPostgreSqlCoordinatorConfigurationResource cosmosDBForPostgreSqlCoordinatorConfiguration = client.GetCosmosDBForPostgreSqlCoordinatorConfigurationResource(cosmosDBForPostgreSqlCoordinatorConfigurationResourceId);
 
             // invoke the operation
-            ServerGroupsv2CoordinatorConfigurationResource result = await serverGroupsv2CoordinatorConfiguration.GetAsync();
+            CosmosDBForPostgreSqlCoordinatorConfigurationResource result = await cosmosDBForPostgreSqlCoordinatorConfiguration.GetAsync();
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
@@ -62,22 +62,22 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this ServerGroupsv2CoordinatorConfigurationResource created on azure
-            // for more information of creating ServerGroupsv2CoordinatorConfigurationResource, please refer to the document of ServerGroupsv2CoordinatorConfigurationResource
+            // this example assumes you already have this CosmosDBForPostgreSqlCoordinatorConfigurationResource created on azure
+            // for more information of creating CosmosDBForPostgreSqlCoordinatorConfigurationResource, please refer to the document of CosmosDBForPostgreSqlCoordinatorConfigurationResource
             string subscriptionId = "ffffffff-ffff-ffff-ffff-ffffffffffff";
             string resourceGroupName = "TestResourceGroup";
             string clusterName = "testcluster";
             string configurationName = "array_nulls";
-            ResourceIdentifier serverGroupsv2CoordinatorConfigurationResourceId = ServerGroupsv2CoordinatorConfigurationResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, clusterName, configurationName);
-            ServerGroupsv2CoordinatorConfigurationResource serverGroupsv2CoordinatorConfiguration = client.GetServerGroupsv2CoordinatorConfigurationResource(serverGroupsv2CoordinatorConfigurationResourceId);
+            ResourceIdentifier cosmosDBForPostgreSqlCoordinatorConfigurationResourceId = CosmosDBForPostgreSqlCoordinatorConfigurationResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, clusterName, configurationName);
+            CosmosDBForPostgreSqlCoordinatorConfigurationResource cosmosDBForPostgreSqlCoordinatorConfiguration = client.GetCosmosDBForPostgreSqlCoordinatorConfigurationResource(cosmosDBForPostgreSqlCoordinatorConfigurationResourceId);
 
             // invoke the operation
             ServerConfigurationData data = new ServerConfigurationData()
             {
                 Value = "on",
             };
-            ArmOperation<ServerGroupsv2CoordinatorConfigurationResource> lro = await serverGroupsv2CoordinatorConfiguration.UpdateAsync(WaitUntil.Completed, data);
-            ServerGroupsv2CoordinatorConfigurationResource result = lro.Value;
+            ArmOperation<CosmosDBForPostgreSqlCoordinatorConfigurationResource> lro = await cosmosDBForPostgreSqlCoordinatorConfiguration.UpdateAsync(WaitUntil.Completed, data);
+            CosmosDBForPostgreSqlCoordinatorConfigurationResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance

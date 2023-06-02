@@ -43,17 +43,17 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
         /// <param name="citusVersion"> The Citus extension version on all cluster servers. </param>
         /// <param name="maintenanceWindow"> Maintenance window of a cluster. </param>
         /// <param name="preferredPrimaryZone"> Preferred primary availability zone (AZ) for all cluster servers. </param>
-        /// <param name="enableShardsOnCoordinator"> If shards on coordinator is enabled or not for the cluster. </param>
-        /// <param name="enableHa"> If high availability (HA) is enabled or not for the cluster. </param>
+        /// <param name="isShardsOnCoordinatorEnabled"> If shards on coordinator is enabled or not for the cluster. </param>
+        /// <param name="isHAEnabled"> If high availability (HA) is enabled or not for the cluster. </param>
         /// <param name="coordinatorServerEdition"> The edition of a coordinator server (default: GeneralPurpose). Required for creation. </param>
         /// <param name="coordinatorStorageQuotaInMb"> The storage of a server in MB. Required for creation. See https://learn.microsoft.com/azure/cosmos-db/postgresql/resources-compute for more information. </param>
         /// <param name="coordinatorVCores"> The vCores count of a server (max: 96). Required for creation. See https://learn.microsoft.com/azure/cosmos-db/postgresql/resources-compute for more information. </param>
-        /// <param name="coordinatorEnablePublicIPAccess"> If public access is enabled on coordinator. </param>
+        /// <param name="isCoordinatorPublicIPAccessEnabled"> If public access is enabled on coordinator. </param>
         /// <param name="nodeServerEdition"> The edition of a node server (default: MemoryOptimized). </param>
         /// <param name="nodeCount"> Worker node count of the cluster. When node count is 0, it represents a single node configuration with the ability to create distributed tables on that node. 2 or more worker nodes represent multi-node configuration. Node count value cannot be 1. Required for creation. </param>
         /// <param name="nodeStorageQuotaInMb"> The storage in MB on each worker node. See https://learn.microsoft.com/azure/cosmos-db/postgresql/resources-compute for more information. </param>
         /// <param name="nodeVCores"> The compute in vCores on each worker node (max: 104). See https://learn.microsoft.com/azure/cosmos-db/postgresql/resources-compute for more information. </param>
-        /// <param name="nodeEnablePublicIPAccess"> If public access is enabled on worker nodes. </param>
+        /// <param name="isNodePublicIPAccessEnabled"> If public access is enabled on worker nodes. </param>
         /// <param name="serverNames"> The list of server names in the cluster. </param>
         /// <param name="sourceResourceId"> The resource id of source cluster for read replica clusters. </param>
         /// <param name="sourceLocation"> The Azure region of source cluster for read replica clusters. </param>
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
         /// <param name="readReplicas"> The array of read replica clusters. </param>
         /// <param name="earliestRestoreOn"> The earliest restore point time (ISO8601 format) for the cluster. </param>
         /// <param name="privateEndpointConnections"> The private endpoint connections for a cluster. </param>
-        internal CosmosDBForPostgreSqlClusterData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string administratorLogin, string administratorLoginPassword, string provisioningState, string state, string postgresqlVersion, string citusVersion, CosmosDBForPostgreSqlMaintenanceWindow maintenanceWindow, string preferredPrimaryZone, bool? enableShardsOnCoordinator, bool? enableHa, string coordinatorServerEdition, int? coordinatorStorageQuotaInMb, int? coordinatorVCores, bool? coordinatorEnablePublicIPAccess, string nodeServerEdition, int? nodeCount, int? nodeStorageQuotaInMb, int? nodeVCores, bool? nodeEnablePublicIPAccess, IReadOnlyList<ServerNameItem> serverNames, ResourceIdentifier sourceResourceId, AzureLocation? sourceLocation, DateTimeOffset? pointInTimeUTC, IReadOnlyList<string> readReplicas, DateTimeOffset? earliestRestoreOn, IReadOnlyList<CosmosDBForPostgreSqlSimplePrivateEndpointConnection> privateEndpointConnections) : base(id, name, resourceType, systemData, tags, location)
+        internal CosmosDBForPostgreSqlClusterData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string administratorLogin, string administratorLoginPassword, string provisioningState, string state, string postgresqlVersion, string citusVersion, CosmosDBForPostgreSqlMaintenanceWindow maintenanceWindow, string preferredPrimaryZone, bool? isShardsOnCoordinatorEnabled, bool? isHAEnabled, string coordinatorServerEdition, int? coordinatorStorageQuotaInMb, int? coordinatorVCores, bool? isCoordinatorPublicIPAccessEnabled, string nodeServerEdition, int? nodeCount, int? nodeStorageQuotaInMb, int? nodeVCores, bool? isNodePublicIPAccessEnabled, IReadOnlyList<ServerNameItem> serverNames, ResourceIdentifier sourceResourceId, AzureLocation? sourceLocation, DateTimeOffset? pointInTimeUTC, IReadOnlyList<string> readReplicas, DateTimeOffset? earliestRestoreOn, IReadOnlyList<CosmosDBForPostgreSqlSimplePrivateEndpointConnection> privateEndpointConnections) : base(id, name, resourceType, systemData, tags, location)
         {
             AdministratorLogin = administratorLogin;
             AdministratorLoginPassword = administratorLoginPassword;
@@ -71,17 +71,17 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
             CitusVersion = citusVersion;
             MaintenanceWindow = maintenanceWindow;
             PreferredPrimaryZone = preferredPrimaryZone;
-            EnableShardsOnCoordinator = enableShardsOnCoordinator;
-            EnableHa = enableHa;
+            IsShardsOnCoordinatorEnabled = isShardsOnCoordinatorEnabled;
+            IsHAEnabled = isHAEnabled;
             CoordinatorServerEdition = coordinatorServerEdition;
             CoordinatorStorageQuotaInMb = coordinatorStorageQuotaInMb;
             CoordinatorVCores = coordinatorVCores;
-            CoordinatorEnablePublicIPAccess = coordinatorEnablePublicIPAccess;
+            IsCoordinatorPublicIPAccessEnabled = isCoordinatorPublicIPAccessEnabled;
             NodeServerEdition = nodeServerEdition;
             NodeCount = nodeCount;
             NodeStorageQuotaInMb = nodeStorageQuotaInMb;
             NodeVCores = nodeVCores;
-            NodeEnablePublicIPAccess = nodeEnablePublicIPAccess;
+            IsNodePublicIPAccessEnabled = isNodePublicIPAccessEnabled;
             ServerNames = serverNames;
             SourceResourceId = sourceResourceId;
             SourceLocation = sourceLocation;
@@ -108,9 +108,9 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
         /// <summary> Preferred primary availability zone (AZ) for all cluster servers. </summary>
         public string PreferredPrimaryZone { get; set; }
         /// <summary> If shards on coordinator is enabled or not for the cluster. </summary>
-        public bool? EnableShardsOnCoordinator { get; set; }
+        public bool? IsShardsOnCoordinatorEnabled { get; set; }
         /// <summary> If high availability (HA) is enabled or not for the cluster. </summary>
-        public bool? EnableHa { get; set; }
+        public bool? IsHAEnabled { get; set; }
         /// <summary> The edition of a coordinator server (default: GeneralPurpose). Required for creation. </summary>
         public string CoordinatorServerEdition { get; set; }
         /// <summary> The storage of a server in MB. Required for creation. See https://learn.microsoft.com/azure/cosmos-db/postgresql/resources-compute for more information. </summary>
@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
         /// <summary> The vCores count of a server (max: 96). Required for creation. See https://learn.microsoft.com/azure/cosmos-db/postgresql/resources-compute for more information. </summary>
         public int? CoordinatorVCores { get; set; }
         /// <summary> If public access is enabled on coordinator. </summary>
-        public bool? CoordinatorEnablePublicIPAccess { get; set; }
+        public bool? IsCoordinatorPublicIPAccessEnabled { get; set; }
         /// <summary> The edition of a node server (default: MemoryOptimized). </summary>
         public string NodeServerEdition { get; set; }
         /// <summary> Worker node count of the cluster. When node count is 0, it represents a single node configuration with the ability to create distributed tables on that node. 2 or more worker nodes represent multi-node configuration. Node count value cannot be 1. Required for creation. </summary>
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
         /// <summary> The compute in vCores on each worker node (max: 104). See https://learn.microsoft.com/azure/cosmos-db/postgresql/resources-compute for more information. </summary>
         public int? NodeVCores { get; set; }
         /// <summary> If public access is enabled on worker nodes. </summary>
-        public bool? NodeEnablePublicIPAccess { get; set; }
+        public bool? IsNodePublicIPAccessEnabled { get; set; }
         /// <summary> The list of server names in the cluster. </summary>
         public IReadOnlyList<ServerNameItem> ServerNames { get; }
         /// <summary> The resource id of source cluster for read replica clusters. </summary>

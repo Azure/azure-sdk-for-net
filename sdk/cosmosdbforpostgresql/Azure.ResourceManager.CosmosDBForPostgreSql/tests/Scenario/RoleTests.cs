@@ -47,15 +47,15 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql.Tests
                     var data = new CosmosDBForPostgreSqlClusterData(rg.Data.Location)
                     {
                         CoordinatorVCores = 4,
-                        EnableHa = false,
+                        IsHAEnabled = false,
                         CoordinatorStorageQuotaInMb = 524288,
                         NodeCount = 0,
                         CoordinatorServerEdition = "GeneralPurpose",
-                        CoordinatorEnablePublicIPAccess = true,
+                        IsCoordinatorPublicIPAccessEnabled = true,
                         PostgresqlVersion = "14",
                         CitusVersion = "11.1",
                         AdministratorLoginPassword = "P4ssw@rd1234",
-                        EnableShardsOnCoordinator = true,
+                        IsShardsOnCoordinatorEnabled = true,
                         PreferredPrimaryZone = "1"
                     };
 

@@ -32,15 +32,15 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
         /// <param name="description"> Description of the configuration. </param>
         /// <param name="dataType"> Data type of the configuration. </param>
         /// <param name="allowedValues"> Allowed values of the configuration. </param>
-        /// <param name="requiresRestart"> If configuration change requires restart. </param>
+        /// <param name="isRestartRequired"> If configuration change requires restart. </param>
         /// <param name="serverRoleGroupConfigurations"> The list of server role group configuration values. </param>
         /// <param name="provisioningState"> Provisioning state of the configuration. </param>
-        internal CosmosDBForPostgreSqlConfigurationData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string description, CosmosDBForPostgreSqlConfigurationDataType? dataType, string allowedValues, bool? requiresRestart, IList<CosmosDBForPostgreSqlServerRoleGroupConfiguration> serverRoleGroupConfigurations, ProvisioningState? provisioningState) : base(id, name, resourceType, systemData)
+        internal CosmosDBForPostgreSqlConfigurationData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string description, CosmosDBForPostgreSqlConfigurationDataType? dataType, string allowedValues, bool? isRestartRequired, IList<CosmosDBForPostgreSqlServerRoleGroupConfiguration> serverRoleGroupConfigurations, ProvisioningState? provisioningState) : base(id, name, resourceType, systemData)
         {
             Description = description;
             DataType = dataType;
             AllowedValues = allowedValues;
-            RequiresRestart = requiresRestart;
+            IsRestartRequired = isRestartRequired;
             ServerRoleGroupConfigurations = serverRoleGroupConfigurations;
             ProvisioningState = provisioningState;
         }
@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
         /// <summary> Allowed values of the configuration. </summary>
         public string AllowedValues { get; }
         /// <summary> If configuration change requires restart. </summary>
-        public bool? RequiresRestart { get; set; }
+        public bool? IsRestartRequired { get; set; }
         /// <summary> The list of server role group configuration values. </summary>
         public IList<CosmosDBForPostgreSqlServerRoleGroupConfiguration> ServerRoleGroupConfigurations { get; }
         /// <summary> Provisioning state of the configuration. </summary>

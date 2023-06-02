@@ -34,10 +34,10 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
                 writer.WritePropertyName("vCores"u8);
                 writer.WriteNumberValue(VCores.Value);
             }
-            if (Optional.IsDefined(EnableHa))
+            if (Optional.IsDefined(IsHAEnabled))
             {
                 writer.WritePropertyName("enableHa"u8);
-                writer.WriteBooleanValue(EnableHa.Value);
+                writer.WriteBooleanValue(IsHAEnabled.Value);
             }
             if (Optional.IsDefined(Role))
             {

@@ -31,16 +31,16 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this ClusterResource created on azure
-            // for more information of creating ClusterResource, please refer to the document of ClusterResource
+            // this example assumes you already have this CosmosDBForPostgreSqlClusterResource created on azure
+            // for more information of creating CosmosDBForPostgreSqlClusterResource, please refer to the document of CosmosDBForPostgreSqlClusterResource
             string subscriptionId = "ffffffff-ffff-ffff-ffff-ffffffffffff";
             string resourceGroupName = "TestResourceGroup";
             string clusterName = "testcluster";
-            ResourceIdentifier clusterResourceId = ClusterResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, clusterName);
-            ClusterResource cluster = client.GetClusterResource(clusterResourceId);
+            ResourceIdentifier cosmosDBForPostgreSqlClusterResourceId = CosmosDBForPostgreSqlClusterResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, clusterName);
+            CosmosDBForPostgreSqlClusterResource cosmosDBForPostgreSqlCluster = client.GetCosmosDBForPostgreSqlClusterResource(cosmosDBForPostgreSqlClusterResourceId);
 
             // get the collection of this CosmosDBForPostgreSqlPrivateEndpointConnectionResource
-            CosmosDBForPostgreSqlPrivateEndpointConnectionCollection collection = cluster.GetCosmosDBForPostgreSqlPrivateEndpointConnections();
+            CosmosDBForPostgreSqlPrivateEndpointConnectionCollection collection = cosmosDBForPostgreSqlCluster.GetCosmosDBForPostgreSqlPrivateEndpointConnections();
 
             // invoke the operation and iterate over the result
             await foreach (CosmosDBForPostgreSqlPrivateEndpointConnectionResource item in collection.GetAllAsync())
@@ -68,16 +68,16 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this ClusterResource created on azure
-            // for more information of creating ClusterResource, please refer to the document of ClusterResource
+            // this example assumes you already have this CosmosDBForPostgreSqlClusterResource created on azure
+            // for more information of creating CosmosDBForPostgreSqlClusterResource, please refer to the document of CosmosDBForPostgreSqlClusterResource
             string subscriptionId = "ffffffff-ffff-ffff-ffff-ffffffffffff";
             string resourceGroupName = "TestGroup";
             string clusterName = "testcluster";
-            ResourceIdentifier clusterResourceId = ClusterResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, clusterName);
-            ClusterResource cluster = client.GetClusterResource(clusterResourceId);
+            ResourceIdentifier cosmosDBForPostgreSqlClusterResourceId = CosmosDBForPostgreSqlClusterResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, clusterName);
+            CosmosDBForPostgreSqlClusterResource cosmosDBForPostgreSqlCluster = client.GetCosmosDBForPostgreSqlClusterResource(cosmosDBForPostgreSqlClusterResourceId);
 
             // get the collection of this CosmosDBForPostgreSqlPrivateEndpointConnectionResource
-            CosmosDBForPostgreSqlPrivateEndpointConnectionCollection collection = cluster.GetCosmosDBForPostgreSqlPrivateEndpointConnections();
+            CosmosDBForPostgreSqlPrivateEndpointConnectionCollection collection = cosmosDBForPostgreSqlCluster.GetCosmosDBForPostgreSqlPrivateEndpointConnections();
 
             // invoke the operation
             string privateEndpointConnectionName = "private-endpoint-connection-name";
@@ -103,16 +103,16 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this ClusterResource created on azure
-            // for more information of creating ClusterResource, please refer to the document of ClusterResource
+            // this example assumes you already have this CosmosDBForPostgreSqlClusterResource created on azure
+            // for more information of creating CosmosDBForPostgreSqlClusterResource, please refer to the document of CosmosDBForPostgreSqlClusterResource
             string subscriptionId = "ffffffff-ffff-ffff-ffff-ffffffffffff";
             string resourceGroupName = "TestGroup";
             string clusterName = "testcluster";
-            ResourceIdentifier clusterResourceId = ClusterResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, clusterName);
-            ClusterResource cluster = client.GetClusterResource(clusterResourceId);
+            ResourceIdentifier cosmosDBForPostgreSqlClusterResourceId = CosmosDBForPostgreSqlClusterResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, clusterName);
+            CosmosDBForPostgreSqlClusterResource cosmosDBForPostgreSqlCluster = client.GetCosmosDBForPostgreSqlClusterResource(cosmosDBForPostgreSqlClusterResourceId);
 
             // get the collection of this CosmosDBForPostgreSqlPrivateEndpointConnectionResource
-            CosmosDBForPostgreSqlPrivateEndpointConnectionCollection collection = cluster.GetCosmosDBForPostgreSqlPrivateEndpointConnections();
+            CosmosDBForPostgreSqlPrivateEndpointConnectionCollection collection = cosmosDBForPostgreSqlCluster.GetCosmosDBForPostgreSqlPrivateEndpointConnections();
 
             // invoke the operation
             string privateEndpointConnectionName = "private-endpoint-connection-name";
@@ -134,16 +134,16 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this ClusterResource created on azure
-            // for more information of creating ClusterResource, please refer to the document of ClusterResource
+            // this example assumes you already have this CosmosDBForPostgreSqlClusterResource created on azure
+            // for more information of creating CosmosDBForPostgreSqlClusterResource, please refer to the document of CosmosDBForPostgreSqlClusterResource
             string subscriptionId = "ffffffff-ffff-ffff-ffff-ffffffffffff";
             string resourceGroupName = "TestGroup";
             string clusterName = "testcluster";
-            ResourceIdentifier clusterResourceId = ClusterResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, clusterName);
-            ClusterResource cluster = client.GetClusterResource(clusterResourceId);
+            ResourceIdentifier cosmosDBForPostgreSqlClusterResourceId = CosmosDBForPostgreSqlClusterResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, clusterName);
+            CosmosDBForPostgreSqlClusterResource cosmosDBForPostgreSqlCluster = client.GetCosmosDBForPostgreSqlClusterResource(cosmosDBForPostgreSqlClusterResourceId);
 
             // get the collection of this CosmosDBForPostgreSqlPrivateEndpointConnectionResource
-            CosmosDBForPostgreSqlPrivateEndpointConnectionCollection collection = cluster.GetCosmosDBForPostgreSqlPrivateEndpointConnections();
+            CosmosDBForPostgreSqlPrivateEndpointConnectionCollection collection = cosmosDBForPostgreSqlCluster.GetCosmosDBForPostgreSqlPrivateEndpointConnections();
 
             // invoke the operation
             string privateEndpointConnectionName = "private-endpoint-connection-name";

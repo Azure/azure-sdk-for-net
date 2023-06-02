@@ -15,7 +15,7 @@ using Azure.ResourceManager.CosmosDBForPostgreSql;
 
 namespace Azure.ResourceManager.CosmosDBForPostgreSql.Samples
 {
-    public partial class Sample_FirewallRuleCollection
+    public partial class Sample_CosmosDBForPostgreSqlFirewallRuleCollection
     {
         // Create a firewall rule of the cluster
         [NUnit.Framework.Test]
@@ -30,26 +30,26 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this ClusterResource created on azure
-            // for more information of creating ClusterResource, please refer to the document of ClusterResource
+            // this example assumes you already have this CosmosDBForPostgreSqlClusterResource created on azure
+            // for more information of creating CosmosDBForPostgreSqlClusterResource, please refer to the document of CosmosDBForPostgreSqlClusterResource
             string subscriptionId = "ffffffff-ffff-ffff-ffff-ffffffffffff";
             string resourceGroupName = "TestGroup";
             string clusterName = "pgtestsvc4";
-            ResourceIdentifier clusterResourceId = ClusterResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, clusterName);
-            ClusterResource cluster = client.GetClusterResource(clusterResourceId);
+            ResourceIdentifier cosmosDBForPostgreSqlClusterResourceId = CosmosDBForPostgreSqlClusterResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, clusterName);
+            CosmosDBForPostgreSqlClusterResource cosmosDBForPostgreSqlCluster = client.GetCosmosDBForPostgreSqlClusterResource(cosmosDBForPostgreSqlClusterResourceId);
 
-            // get the collection of this FirewallRuleResource
-            FirewallRuleCollection collection = cluster.GetFirewallRules();
+            // get the collection of this CosmosDBForPostgreSqlFirewallRuleResource
+            CosmosDBForPostgreSqlFirewallRuleCollection collection = cosmosDBForPostgreSqlCluster.GetCosmosDBForPostgreSqlFirewallRules();
 
             // invoke the operation
             string firewallRuleName = "rule1";
-            FirewallRuleData data = new FirewallRuleData("0.0.0.0", "255.255.255.255");
-            ArmOperation<FirewallRuleResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, firewallRuleName, data);
-            FirewallRuleResource result = lro.Value;
+            CosmosDBForPostgreSqlFirewallRuleData data = new CosmosDBForPostgreSqlFirewallRuleData("0.0.0.0", "255.255.255.255");
+            ArmOperation<CosmosDBForPostgreSqlFirewallRuleResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, firewallRuleName, data);
+            CosmosDBForPostgreSqlFirewallRuleResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            FirewallRuleData resourceData = result.Data;
+            CosmosDBForPostgreSqlFirewallRuleData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -67,24 +67,24 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this ClusterResource created on azure
-            // for more information of creating ClusterResource, please refer to the document of ClusterResource
+            // this example assumes you already have this CosmosDBForPostgreSqlClusterResource created on azure
+            // for more information of creating CosmosDBForPostgreSqlClusterResource, please refer to the document of CosmosDBForPostgreSqlClusterResource
             string subscriptionId = "ffffffff-ffff-ffff-ffff-ffffffffffff";
             string resourceGroupName = "TestGroup";
             string clusterName = "pgtestsvc4";
-            ResourceIdentifier clusterResourceId = ClusterResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, clusterName);
-            ClusterResource cluster = client.GetClusterResource(clusterResourceId);
+            ResourceIdentifier cosmosDBForPostgreSqlClusterResourceId = CosmosDBForPostgreSqlClusterResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, clusterName);
+            CosmosDBForPostgreSqlClusterResource cosmosDBForPostgreSqlCluster = client.GetCosmosDBForPostgreSqlClusterResource(cosmosDBForPostgreSqlClusterResourceId);
 
-            // get the collection of this FirewallRuleResource
-            FirewallRuleCollection collection = cluster.GetFirewallRules();
+            // get the collection of this CosmosDBForPostgreSqlFirewallRuleResource
+            CosmosDBForPostgreSqlFirewallRuleCollection collection = cosmosDBForPostgreSqlCluster.GetCosmosDBForPostgreSqlFirewallRules();
 
             // invoke the operation
             string firewallRuleName = "rule1";
-            FirewallRuleResource result = await collection.GetAsync(firewallRuleName);
+            CosmosDBForPostgreSqlFirewallRuleResource result = await collection.GetAsync(firewallRuleName);
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            FirewallRuleData resourceData = result.Data;
+            CosmosDBForPostgreSqlFirewallRuleData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -102,16 +102,16 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this ClusterResource created on azure
-            // for more information of creating ClusterResource, please refer to the document of ClusterResource
+            // this example assumes you already have this CosmosDBForPostgreSqlClusterResource created on azure
+            // for more information of creating CosmosDBForPostgreSqlClusterResource, please refer to the document of CosmosDBForPostgreSqlClusterResource
             string subscriptionId = "ffffffff-ffff-ffff-ffff-ffffffffffff";
             string resourceGroupName = "TestGroup";
             string clusterName = "pgtestsvc4";
-            ResourceIdentifier clusterResourceId = ClusterResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, clusterName);
-            ClusterResource cluster = client.GetClusterResource(clusterResourceId);
+            ResourceIdentifier cosmosDBForPostgreSqlClusterResourceId = CosmosDBForPostgreSqlClusterResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, clusterName);
+            CosmosDBForPostgreSqlClusterResource cosmosDBForPostgreSqlCluster = client.GetCosmosDBForPostgreSqlClusterResource(cosmosDBForPostgreSqlClusterResourceId);
 
-            // get the collection of this FirewallRuleResource
-            FirewallRuleCollection collection = cluster.GetFirewallRules();
+            // get the collection of this CosmosDBForPostgreSqlFirewallRuleResource
+            CosmosDBForPostgreSqlFirewallRuleCollection collection = cosmosDBForPostgreSqlCluster.GetCosmosDBForPostgreSqlFirewallRules();
 
             // invoke the operation
             string firewallRuleName = "rule1";
@@ -133,23 +133,23 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this ClusterResource created on azure
-            // for more information of creating ClusterResource, please refer to the document of ClusterResource
+            // this example assumes you already have this CosmosDBForPostgreSqlClusterResource created on azure
+            // for more information of creating CosmosDBForPostgreSqlClusterResource, please refer to the document of CosmosDBForPostgreSqlClusterResource
             string subscriptionId = "ffffffff-ffff-ffff-ffff-ffffffffffff";
             string resourceGroupName = "TestGroup";
             string clusterName = "pgtestsvc4";
-            ResourceIdentifier clusterResourceId = ClusterResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, clusterName);
-            ClusterResource cluster = client.GetClusterResource(clusterResourceId);
+            ResourceIdentifier cosmosDBForPostgreSqlClusterResourceId = CosmosDBForPostgreSqlClusterResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, clusterName);
+            CosmosDBForPostgreSqlClusterResource cosmosDBForPostgreSqlCluster = client.GetCosmosDBForPostgreSqlClusterResource(cosmosDBForPostgreSqlClusterResourceId);
 
-            // get the collection of this FirewallRuleResource
-            FirewallRuleCollection collection = cluster.GetFirewallRules();
+            // get the collection of this CosmosDBForPostgreSqlFirewallRuleResource
+            CosmosDBForPostgreSqlFirewallRuleCollection collection = cosmosDBForPostgreSqlCluster.GetCosmosDBForPostgreSqlFirewallRules();
 
             // invoke the operation and iterate over the result
-            await foreach (FirewallRuleResource item in collection.GetAllAsync())
+            await foreach (CosmosDBForPostgreSqlFirewallRuleResource item in collection.GetAllAsync())
             {
                 // the variable item is a resource, you could call other operations on this instance as well
                 // but just for demo, we get its data from this resource instance
-                FirewallRuleData resourceData = item.Data;
+                CosmosDBForPostgreSqlFirewallRuleData resourceData = item.Data;
                 // for demo we just print out the id
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }

@@ -27,15 +27,15 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql.Tests
             var data = new CosmosDBForPostgreSqlClusterData(rg.Data.Location)
             {
                 CoordinatorVCores = 4,
-                EnableHa = false,
+                IsHAEnabled = false,
                 CoordinatorStorageQuotaInMb = 524288,
                 NodeCount = 0,
                 CoordinatorServerEdition = "GeneralPurpose",
-                CoordinatorEnablePublicIPAccess = true,
+                IsCoordinatorPublicIPAccessEnabled = true,
                 PostgresqlVersion = "14",
                 CitusVersion = "11.1",
                 AdministratorLoginPassword = "P4ssw@rd1234",
-                EnableShardsOnCoordinator = true,
+                IsShardsOnCoordinatorEnabled = true,
                 PreferredPrimaryZone = "1"
             };
 
@@ -66,15 +66,15 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql.Tests
             var data = new CosmosDBForPostgreSqlClusterData(rg.Data.Location)
             {
                 CoordinatorVCores = 4,
-                EnableHa = false,
+                IsHAEnabled = false,
                 CoordinatorStorageQuotaInMb = 524288,
                 NodeCount = 0,
                 CoordinatorServerEdition = "GeneralPurpose",
-                CoordinatorEnablePublicIPAccess = true,
+                IsCoordinatorPublicIPAccessEnabled = true,
                 PostgresqlVersion = "14",
                 CitusVersion = "11.1",
                 AdministratorLoginPassword = "P4ssw@rd1234",
-                EnableShardsOnCoordinator = true,
+                IsShardsOnCoordinatorEnabled = true,
                 PreferredPrimaryZone = "1"
             };
 
@@ -85,12 +85,12 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql.Tests
             // Update
             var updatedData = new CosmosDBForPostgreSqlClusterData(rg.Data.Location)
             {
-                EnableHa = true
+                IsHAEnabled = true
             };
             lro = await clusters.CreateOrUpdateAsync(WaitUntil.Completed, clusterName, updatedData);
             CosmosDBForPostgreSqlClusterResource clusterFromUpdate = lro.Value;
             Assert.AreEqual(clusterName, clusterFromUpdate.Data.Name);
-            Assert.AreEqual(true, clusterFromUpdate.Data.EnableHa);
+            Assert.AreEqual(true, clusterFromUpdate.Data.IsHAEnabled);
 
             // Get
             CosmosDBForPostgreSqlClusterResource clusterFromGet = await clusterFromUpdate.GetAsync();

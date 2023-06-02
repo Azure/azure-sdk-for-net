@@ -336,11 +336,11 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
         /// <param name="content"> The required parameters for checking if cluster name is available. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public static async Task<Response<CosmosDBForPostgreSqlNameAvailability>> CheckNameAvailabilityClusterAsync(this SubscriptionResource subscriptionResource, NameAvailabilityContent content, CancellationToken cancellationToken = default)
+        public static async Task<Response<CosmosDBForPostgreSqlClusterNameAvailabilityResult>> CheckCosmosDBForPostgreSqlClusterNameAvailabilityAsync(this SubscriptionResource subscriptionResource, CosmosDBForPostgreSqlClusterNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            return await GetSubscriptionResourceExtensionClient(subscriptionResource).CheckNameAvailabilityClusterAsync(content, cancellationToken).ConfigureAwait(false);
+            return await GetSubscriptionResourceExtensionClient(subscriptionResource).CheckCosmosDBForPostgreSqlClusterNameAvailabilityAsync(content, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -360,11 +360,11 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
         /// <param name="content"> The required parameters for checking if cluster name is available. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public static Response<CosmosDBForPostgreSqlNameAvailability> CheckNameAvailabilityCluster(this SubscriptionResource subscriptionResource, NameAvailabilityContent content, CancellationToken cancellationToken = default)
+        public static Response<CosmosDBForPostgreSqlClusterNameAvailabilityResult> CheckCosmosDBForPostgreSqlClusterNameAvailability(this SubscriptionResource subscriptionResource, CosmosDBForPostgreSqlClusterNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).CheckNameAvailabilityCluster(content, cancellationToken);
+            return GetSubscriptionResourceExtensionClient(subscriptionResource).CheckCosmosDBForPostgreSqlClusterNameAvailability(content, cancellationToken);
         }
     }
 }

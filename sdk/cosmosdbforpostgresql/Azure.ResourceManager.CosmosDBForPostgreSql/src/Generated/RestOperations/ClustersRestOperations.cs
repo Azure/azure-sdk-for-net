@@ -767,7 +767,7 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
             }
         }
 
-        internal HttpMessage CreateCheckNameAvailabilityRequest(string subscriptionId, NameAvailabilityContent content)
+        internal HttpMessage CreateCheckNameAvailabilityRequest(string subscriptionId, CosmosDBForPostgreSqlClusterNameAvailabilityContent content)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -794,7 +794,7 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<CosmosDBForPostgreSqlNameAvailability>> CheckNameAvailabilityAsync(string subscriptionId, NameAvailabilityContent content, CancellationToken cancellationToken = default)
+        public async Task<Response<CosmosDBForPostgreSqlClusterNameAvailabilityResult>> CheckNameAvailabilityAsync(string subscriptionId, CosmosDBForPostgreSqlClusterNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNull(content, nameof(content));
@@ -805,9 +805,9 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
             {
                 case 200:
                     {
-                        CosmosDBForPostgreSqlNameAvailability value = default;
+                        CosmosDBForPostgreSqlClusterNameAvailabilityResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = CosmosDBForPostgreSqlNameAvailability.DeserializeCosmosDBForPostgreSqlNameAvailability(document.RootElement);
+                        value = CosmosDBForPostgreSqlClusterNameAvailabilityResult.DeserializeCosmosDBForPostgreSqlClusterNameAvailabilityResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -821,7 +821,7 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<CosmosDBForPostgreSqlNameAvailability> CheckNameAvailability(string subscriptionId, NameAvailabilityContent content, CancellationToken cancellationToken = default)
+        public Response<CosmosDBForPostgreSqlClusterNameAvailabilityResult> CheckNameAvailability(string subscriptionId, CosmosDBForPostgreSqlClusterNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNull(content, nameof(content));
@@ -832,9 +832,9 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
             {
                 case 200:
                     {
-                        CosmosDBForPostgreSqlNameAvailability value = default;
+                        CosmosDBForPostgreSqlClusterNameAvailabilityResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = CosmosDBForPostgreSqlNameAvailability.DeserializeCosmosDBForPostgreSqlNameAvailability(document.RootElement);
+                        value = CosmosDBForPostgreSqlClusterNameAvailabilityResult.DeserializeCosmosDBForPostgreSqlClusterNameAvailabilityResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

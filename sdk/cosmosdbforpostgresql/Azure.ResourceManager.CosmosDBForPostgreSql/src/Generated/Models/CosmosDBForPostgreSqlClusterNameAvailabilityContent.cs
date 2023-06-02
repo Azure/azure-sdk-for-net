@@ -11,22 +11,22 @@ using Azure.Core;
 namespace Azure.ResourceManager.CosmosDBForPostgreSql.Models
 {
     /// <summary> Request from client to check cluster name availability. </summary>
-    public partial class NameAvailabilityContent
+    public partial class CosmosDBForPostgreSqlClusterNameAvailabilityContent
     {
-        /// <summary> Initializes a new instance of NameAvailabilityContent. </summary>
+        /// <summary> Initializes a new instance of CosmosDBForPostgreSqlClusterNameAvailabilityContent. </summary>
         /// <param name="name"> Cluster name to verify. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        public NameAvailabilityContent(string name)
+        public CosmosDBForPostgreSqlClusterNameAvailabilityContent(string name)
         {
             Argument.AssertNotNull(name, nameof(name));
 
             Name = name;
-            ResourceType = CosmosDBForPostgreSqlCheckNameAvailabilityResourceType.MicrosoftDBforPostgreSQLServerGroupsv2;
+            ResourceType = CosmosDBForPostgreSqlNameAvailabilityResourceType.ServerGroupsV2;
         }
 
         /// <summary> Cluster name to verify. </summary>
         public string Name { get; }
         /// <summary> Resource type used for verification. </summary>
-        public CosmosDBForPostgreSqlCheckNameAvailabilityResourceType ResourceType { get; }
+        public CosmosDBForPostgreSqlNameAvailabilityResourceType ResourceType { get; }
     }
 }

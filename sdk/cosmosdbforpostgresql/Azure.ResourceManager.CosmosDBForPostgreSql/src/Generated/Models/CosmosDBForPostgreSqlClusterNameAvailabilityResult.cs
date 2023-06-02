@@ -10,22 +10,22 @@ using Azure.Core;
 namespace Azure.ResourceManager.CosmosDBForPostgreSql.Models
 {
     /// <summary> Represents cluster name availability. </summary>
-    public partial class CosmosDBForPostgreSqlNameAvailability
+    public partial class CosmosDBForPostgreSqlClusterNameAvailabilityResult
     {
-        /// <summary> Initializes a new instance of CosmosDBForPostgreSqlNameAvailability. </summary>
-        internal CosmosDBForPostgreSqlNameAvailability()
+        /// <summary> Initializes a new instance of CosmosDBForPostgreSqlClusterNameAvailabilityResult. </summary>
+        internal CosmosDBForPostgreSqlClusterNameAvailabilityResult()
         {
         }
 
-        /// <summary> Initializes a new instance of CosmosDBForPostgreSqlNameAvailability. </summary>
+        /// <summary> Initializes a new instance of CosmosDBForPostgreSqlClusterNameAvailabilityResult. </summary>
         /// <param name="message"> Error message. </param>
-        /// <param name="nameAvailable"> Indicates whether the cluster name is available. </param>
+        /// <param name="isNameAvailable"> Indicates whether the cluster name is available. </param>
         /// <param name="name"> Name of the cluster. </param>
         /// <param name="resourceType"> Type of the cluster. </param>
-        internal CosmosDBForPostgreSqlNameAvailability(string message, bool? nameAvailable, string name, ResourceType? resourceType)
+        internal CosmosDBForPostgreSqlClusterNameAvailabilityResult(string message, bool? isNameAvailable, string name, ResourceType? resourceType)
         {
             Message = message;
-            NameAvailable = nameAvailable;
+            IsNameAvailable = isNameAvailable;
             Name = name;
             ResourceType = resourceType;
         }
@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql.Models
         /// <summary> Error message. </summary>
         public string Message { get; }
         /// <summary> Indicates whether the cluster name is available. </summary>
-        public bool? NameAvailable { get; }
+        public bool? IsNameAvailable { get; }
         /// <summary> Name of the cluster. </summary>
         public string Name { get; }
         /// <summary> Type of the cluster. </summary>

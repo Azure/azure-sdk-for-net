@@ -16,7 +16,7 @@ using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.CosmosDBForPostgreSql.Samples
 {
-    public partial class Sample_ClusterCollection
+    public partial class Sample_CosmosDBForPostgreSqlClusterCollection
     {
         // List the clusters by resource group
         [NUnit.Framework.Test]
@@ -38,15 +38,15 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql.Samples
             ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
 
-            // get the collection of this ClusterResource
-            ClusterCollection collection = resourceGroupResource.GetClusters();
+            // get the collection of this CosmosDBForPostgreSqlClusterResource
+            CosmosDBForPostgreSqlClusterCollection collection = resourceGroupResource.GetCosmosDBForPostgreSqlClusters();
 
             // invoke the operation and iterate over the result
-            await foreach (ClusterResource item in collection.GetAllAsync())
+            await foreach (CosmosDBForPostgreSqlClusterResource item in collection.GetAllAsync())
             {
                 // the variable item is a resource, you could call other operations on this instance as well
                 // but just for demo, we get its data from this resource instance
-                ClusterData resourceData = item.Data;
+                CosmosDBForPostgreSqlClusterData resourceData = item.Data;
                 // for demo we just print out the id
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
@@ -74,38 +74,38 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql.Samples
             ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
 
-            // get the collection of this ClusterResource
-            ClusterCollection collection = resourceGroupResource.GetClusters();
+            // get the collection of this CosmosDBForPostgreSqlClusterResource
+            CosmosDBForPostgreSqlClusterCollection collection = resourceGroupResource.GetCosmosDBForPostgreSqlClusters();
 
             // invoke the operation
             string clusterName = "testcluster";
-            ClusterData data = new ClusterData(new AzureLocation("westus"))
+            CosmosDBForPostgreSqlClusterData data = new CosmosDBForPostgreSqlClusterData(new AzureLocation("westus"))
             {
                 AdministratorLoginPassword = "password",
                 PostgresqlVersion = "15",
                 CitusVersion = "11.1",
                 PreferredPrimaryZone = "1",
-                EnableShardsOnCoordinator = false,
-                EnableHa = true,
+                IsShardsOnCoordinatorEnabled = false,
+                IsHAEnabled = true,
                 CoordinatorServerEdition = "GeneralPurpose",
                 CoordinatorStorageQuotaInMb = 524288,
                 CoordinatorVCores = 4,
-                CoordinatorEnablePublicIPAccess = true,
+                IsCoordinatorPublicIPAccessEnabled = true,
                 NodeServerEdition = "MemoryOptimized",
                 NodeCount = 3,
                 NodeStorageQuotaInMb = 524288,
                 NodeVCores = 8,
-                NodeEnablePublicIPAccess = false,
+                IsNodePublicIPAccessEnabled = false,
                 Tags =
 {
 },
             };
-            ArmOperation<ClusterResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, clusterName, data);
-            ClusterResource result = lro.Value;
+            ArmOperation<CosmosDBForPostgreSqlClusterResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, clusterName, data);
+            CosmosDBForPostgreSqlClusterResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            ClusterData resourceData = result.Data;
+            CosmosDBForPostgreSqlClusterData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -130,23 +130,23 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql.Samples
             ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
 
-            // get the collection of this ClusterResource
-            ClusterCollection collection = resourceGroupResource.GetClusters();
+            // get the collection of this CosmosDBForPostgreSqlClusterResource
+            CosmosDBForPostgreSqlClusterCollection collection = resourceGroupResource.GetCosmosDBForPostgreSqlClusters();
 
             // invoke the operation
             string clusterName = "testcluster";
-            ClusterData data = new ClusterData(new AzureLocation("westus"))
+            CosmosDBForPostgreSqlClusterData data = new CosmosDBForPostgreSqlClusterData(new AzureLocation("westus"))
             {
-                SourceResourceId = "/subscriptions/ffffffff-ffff-ffff-ffff-ffffffffffff/resourceGroups/TestResourceGroup/providers/Microsoft.DBforPostgreSQL/serverGroupsv2/source-cluster",
-                SourceLocation = "westus",
+                SourceResourceId = new ResourceIdentifier("/subscriptions/ffffffff-ffff-ffff-ffff-ffffffffffff/resourceGroups/TestResourceGroup/providers/Microsoft.DBforPostgreSQL/serverGroupsv2/source-cluster"),
+                SourceLocation = new AzureLocation("westus"),
                 PointInTimeUTC = DateTimeOffset.Parse("2017-12-14T00:00:37.467Z"),
             };
-            ArmOperation<ClusterResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, clusterName, data);
-            ClusterResource result = lro.Value;
+            ArmOperation<CosmosDBForPostgreSqlClusterResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, clusterName, data);
+            CosmosDBForPostgreSqlClusterResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            ClusterData resourceData = result.Data;
+            CosmosDBForPostgreSqlClusterData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -171,22 +171,22 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql.Samples
             ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
 
-            // get the collection of this ClusterResource
-            ClusterCollection collection = resourceGroupResource.GetClusters();
+            // get the collection of this CosmosDBForPostgreSqlClusterResource
+            CosmosDBForPostgreSqlClusterCollection collection = resourceGroupResource.GetCosmosDBForPostgreSqlClusters();
 
             // invoke the operation
             string clusterName = "testcluster";
-            ClusterData data = new ClusterData(new AzureLocation("westus"))
+            CosmosDBForPostgreSqlClusterData data = new CosmosDBForPostgreSqlClusterData(new AzureLocation("westus"))
             {
-                SourceResourceId = "/subscriptions/ffffffff-ffff-ffff-ffff-ffffffffffff/resourceGroups/TestResourceGroup/providers/Microsoft.DBforPostgreSQL/serverGroupsv2/sourcecluster",
-                SourceLocation = "westus",
+                SourceResourceId = new ResourceIdentifier("/subscriptions/ffffffff-ffff-ffff-ffff-ffffffffffff/resourceGroups/TestResourceGroup/providers/Microsoft.DBforPostgreSQL/serverGroupsv2/sourcecluster"),
+                SourceLocation = new AzureLocation("westus"),
             };
-            ArmOperation<ClusterResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, clusterName, data);
-            ClusterResource result = lro.Value;
+            ArmOperation<CosmosDBForPostgreSqlClusterResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, clusterName, data);
+            CosmosDBForPostgreSqlClusterResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            ClusterData resourceData = result.Data;
+            CosmosDBForPostgreSqlClusterData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -211,16 +211,16 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql.Samples
             ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
 
-            // get the collection of this ClusterResource
-            ClusterCollection collection = resourceGroupResource.GetClusters();
+            // get the collection of this CosmosDBForPostgreSqlClusterResource
+            CosmosDBForPostgreSqlClusterCollection collection = resourceGroupResource.GetCosmosDBForPostgreSqlClusters();
 
             // invoke the operation
             string clusterName = "testcluster1";
-            ClusterResource result = await collection.GetAsync(clusterName);
+            CosmosDBForPostgreSqlClusterResource result = await collection.GetAsync(clusterName);
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            ClusterData resourceData = result.Data;
+            CosmosDBForPostgreSqlClusterData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -245,8 +245,8 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql.Samples
             ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
 
-            // get the collection of this ClusterResource
-            ClusterCollection collection = resourceGroupResource.GetClusters();
+            // get the collection of this CosmosDBForPostgreSqlClusterResource
+            CosmosDBForPostgreSqlClusterCollection collection = resourceGroupResource.GetCosmosDBForPostgreSqlClusters();
 
             // invoke the operation
             string clusterName = "testcluster1";

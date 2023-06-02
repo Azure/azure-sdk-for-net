@@ -33,9 +33,9 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
         /// <param name="defaultValue"> Default value of the configuration. </param>
         /// <param name="dataType"> Data type of the configuration. </param>
         /// <param name="allowedValues"> Allowed values of the configuration. </param>
-        /// <param name="requiresRestart"> If configuration change requires restart. </param>
+        /// <param name="isRestartRequired"> If configuration change requires restart. </param>
         /// <param name="provisioningState"> Provisioning state of the configuration. </param>
-        internal ServerConfigurationData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string value, string source, string description, string defaultValue, CosmosDBForPostgreSqlConfigurationDataType? dataType, string allowedValues, bool? requiresRestart, ProvisioningState? provisioningState) : base(id, name, resourceType, systemData)
+        internal ServerConfigurationData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string value, string source, string description, string defaultValue, CosmosDBForPostgreSqlConfigurationDataType? dataType, string allowedValues, bool? isRestartRequired, ProvisioningState? provisioningState) : base(id, name, resourceType, systemData)
         {
             Value = value;
             Source = source;
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
             DefaultValue = defaultValue;
             DataType = dataType;
             AllowedValues = allowedValues;
-            RequiresRestart = requiresRestart;
+            IsRestartRequired = isRestartRequired;
             ProvisioningState = provisioningState;
         }
 
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
         /// <summary> Allowed values of the configuration. </summary>
         public string AllowedValues { get; }
         /// <summary> If configuration change requires restart. </summary>
-        public bool? RequiresRestart { get; }
+        public bool? IsRestartRequired { get; }
         /// <summary> Provisioning state of the configuration. </summary>
         public ProvisioningState? ProvisioningState { get; }
     }

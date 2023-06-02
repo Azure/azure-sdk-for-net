@@ -10,9 +10,9 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.CosmosDBForPostgreSql.Models
 {
-    public partial class CosmosDBForPostgreSqlNameAvailability
+    public partial class CosmosDBForPostgreSqlClusterNameAvailabilityResult
     {
-        internal static CosmosDBForPostgreSqlNameAvailability DeserializeCosmosDBForPostgreSqlNameAvailability(JsonElement element)
+        internal static CosmosDBForPostgreSqlClusterNameAvailabilityResult DeserializeCosmosDBForPostgreSqlClusterNameAvailabilityResult(JsonElement element)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql.Models
                     continue;
                 }
             }
-            return new CosmosDBForPostgreSqlNameAvailability(message.Value, Optional.ToNullable(nameAvailable), name.Value, Optional.ToNullable(type));
+            return new CosmosDBForPostgreSqlClusterNameAvailabilityResult(message.Value, Optional.ToNullable(nameAvailable), name.Value, Optional.ToNullable(type));
         }
     }
 }
