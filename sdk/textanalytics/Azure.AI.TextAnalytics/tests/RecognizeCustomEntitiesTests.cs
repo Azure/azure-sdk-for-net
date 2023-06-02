@@ -81,6 +81,7 @@ namespace Azure.AI.TextAnalytics.Tests
 
         [RecordedTest]
         [RetryOnInternalServerError]
+        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/36799")]
         public async Task RecognizeCustomEntitiesWithAADTest()
         {
             TextAnalyticsClient client = GetClient(useTokenCredential: true, useStaticResource: true);

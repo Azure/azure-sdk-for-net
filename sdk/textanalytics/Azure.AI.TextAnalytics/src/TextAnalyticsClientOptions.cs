@@ -40,7 +40,7 @@ namespace Azure.AI.TextAnalytics
             V2022_05_01 = 3,
 
             /// <summary>
-            /// Version 2022-10-01-preview
+            /// Version 2023-04-01
             /// </summary>
             V2023_04_01 = 4,
 #pragma warning restore CA1707 // Identifiers should not contain underscores

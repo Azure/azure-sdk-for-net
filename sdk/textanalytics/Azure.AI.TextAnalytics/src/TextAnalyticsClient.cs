@@ -1717,7 +1717,7 @@ namespace Azure.AI.TextAnalytics
         /// <see cref="AnalyzeHealthcareEntitiesAction"/>, <see cref="MultiLabelClassifyAction"/>,
         /// <see cref="RecognizeCustomEntitiesAction"/>, and <see cref="SingleLabelClassifyAction"/> are only supported
         /// in service API version 2022-05-01 and newer. The <see cref="ExtractiveSummarizeAction"/> and
-        /// <see cref="AbstractiveSummarizeAction"/> are only supported in service API version 2022-10-01-preview and newer.
+        /// <see cref="AbstractiveSummarizeAction"/> are only supported in service API version 2023-04-01 and newer.
         /// </exception>
         /// <exception cref="RequestFailedException">
         /// Service returned a non-success status code.
@@ -1763,7 +1763,7 @@ namespace Azure.AI.TextAnalytics
         /// <see cref="AnalyzeHealthcareEntitiesAction"/>, <see cref="MultiLabelClassifyAction"/>,
         /// <see cref="RecognizeCustomEntitiesAction"/>, and <see cref="SingleLabelClassifyAction"/> are only supported
         /// in service API version 2022-05-01 and newer. The <see cref="ExtractiveSummarizeAction"/> and
-        /// <see cref="AbstractiveSummarizeAction"/> are only supported in service API version 2022-10-01-preview and newer.
+        /// <see cref="AbstractiveSummarizeAction"/> are only supported in service API version 2023-04-01 and newer.
         /// </exception>
         /// <exception cref="RequestFailedException">
         /// Service returned a non-success status code.
@@ -1808,7 +1808,7 @@ namespace Azure.AI.TextAnalytics
         /// <see cref="AnalyzeHealthcareEntitiesAction"/>, <see cref="MultiLabelClassifyAction"/>,
         /// <see cref="RecognizeCustomEntitiesAction"/>, and <see cref="SingleLabelClassifyAction"/> are only supported
         /// in service API version 2022-05-01 and newer. The <see cref="ExtractiveSummarizeAction"/> and
-        /// <see cref="AbstractiveSummarizeAction"/> are only supported in service API version 2022-10-01-preview and newer.
+        /// <see cref="AbstractiveSummarizeAction"/> are only supported in service API version 2023-04-01 and newer.
         /// </exception>
         /// <exception cref="RequestFailedException">
         /// Service returned a non-success status code.
@@ -1852,7 +1852,7 @@ namespace Azure.AI.TextAnalytics
         /// <see cref="AnalyzeHealthcareEntitiesAction"/>, <see cref="MultiLabelClassifyAction"/>,
         /// <see cref="RecognizeCustomEntitiesAction"/>, and <see cref="SingleLabelClassifyAction"/> are only supported
         /// in service API version 2022-05-01 and newer. The <see cref="ExtractiveSummarizeAction"/> and
-        /// <see cref="AbstractiveSummarizeAction"/> are only supported in service API version 2022-10-01-preview and newer.
+        /// <see cref="AbstractiveSummarizeAction"/> are only supported in service API version 2023-04-01 and newer.
         /// </exception>
         /// <exception cref="RequestFailedException">
         /// Service returned a non-success status code.
@@ -2218,7 +2218,7 @@ namespace Azure.AI.TextAnalytics
         /// summarization. Upon completion, the operation will contain the collections of extracted summary sentences
         /// for each document that was successfully analyzed.
         /// </returns>
-        /// <exception cref="NotSupportedException">This method is only supported in service API version 2022-10-01-preview and newer.</exception>
+        /// <exception cref="NotSupportedException">This method is only supported in service API version 2023-04-01 and newer.</exception>
         /// <exception cref="RequestFailedException">The service returned a non-success status code.</exception>
         /// <exception cref="ArgumentException"><paramref name="documents"/> is an empty collection.</exception>
         /// <exception cref="ArgumentNullException"><paramref name="documents"/> is null.</exception>
@@ -2251,7 +2251,7 @@ namespace Azure.AI.TextAnalytics
         /// summarization. Upon completion, the operation will contain the collections of extracted summary sentences
         /// for each document that was successfully analyzed.
         /// </returns>
-        /// <exception cref="NotSupportedException">This method is only supported in service API version 2022-10-01-preview and newer.</exception>
+        /// <exception cref="NotSupportedException">This method is only supported in service API version 2023-04-01 and newer.</exception>
         /// <exception cref="RequestFailedException">The service returned a non-success status code.</exception>
         /// <exception cref="ArgumentException"><paramref name="documents"/> is an empty collection.</exception>
         /// <exception cref="ArgumentNullException"><paramref name="documents"/> is null.</exception>
@@ -2284,7 +2284,7 @@ namespace Azure.AI.TextAnalytics
         /// summarization. Upon completion, the operation will contain the collections of extracted summary sentences
         /// for each document that was successfully analyzed.
         /// </returns>
-        /// <exception cref="NotSupportedException">This method is only supported in service API version 2022-10-01-preview and newer.</exception>
+        /// <exception cref="NotSupportedException">This method is only supported in service API version 2023-04-01 and newer.</exception>
         /// <exception cref="RequestFailedException">The service returned a non-success status code.</exception>
         /// <exception cref="ArgumentException"><paramref name="documents"/> is an empty collection.</exception>
         /// <exception cref="ArgumentNullException"><paramref name="documents"/> is null.</exception>
@@ -2317,7 +2317,7 @@ namespace Azure.AI.TextAnalytics
         /// summarization. Upon completion, the operation will contain the collections of extracted summary sentences
         /// for each document that was successfully analyzed.
         /// </returns>
-        /// <exception cref="NotSupportedException">This method is only supported in service API version 2022-10-01-preview and newer.</exception>
+        /// <exception cref="NotSupportedException">This method is only supported in service API version 2023-04-01 and newer.</exception>
         /// <exception cref="RequestFailedException">The service returned a non-success status code.</exception>
         /// <exception cref="ArgumentException"><paramref name="documents"/> is an empty collection.</exception>
         /// <exception cref="ArgumentNullException"><paramref name="documents"/> is null.</exception>
@@ -2354,7 +2354,7 @@ namespace Azure.AI.TextAnalytics
         /// summarization. Upon completion, the operation will contain the collections of summaries that were generated
         /// for each document that was successfully analyzed.
         /// </returns>
-        /// <exception cref="NotSupportedException">This method is only supported in service API version 2022-10-01-preview and newer.</exception>
+        /// <exception cref="NotSupportedException">This method is only supported in service API version 2023-04-01 and newer.</exception>
         /// <exception cref="RequestFailedException">The service returned a non-success status code.</exception>
         /// <exception cref="ArgumentException"><paramref name="documents"/> is an empty collection.</exception>
         /// <exception cref="ArgumentNullException"><paramref name="documents"/> is null.</exception>
@@ -2387,7 +2387,7 @@ namespace Azure.AI.TextAnalytics
         /// summarization. Upon completion, the operation will contain the collections of summaries that were generated
         /// for each document that was successfully analyzed.
         /// </returns>
-        /// <exception cref="NotSupportedException">This method is only supported in service API version 2022-10-01-preview and newer.</exception>
+        /// <exception cref="NotSupportedException">This method is only supported in service API version 2023-04-01 and newer.</exception>
         /// <exception cref="RequestFailedException">The service returned a non-success status code.</exception>
         /// <exception cref="ArgumentException"><paramref name="documents"/> is an empty collection.</exception>
         /// <exception cref="ArgumentNullException"><paramref name="documents"/> is null.</exception>
@@ -2420,7 +2420,7 @@ namespace Azure.AI.TextAnalytics
         /// summarization. Upon completion, the operation will contain the collections of summaries that were generated
         /// for each document that was successfully analyzed.
         /// </returns>
-        /// <exception cref="NotSupportedException">This method is only supported in service API version 2022-10-01-preview and newer.</exception>
+        /// <exception cref="NotSupportedException">This method is only supported in service API version 2023-04-01 and newer.</exception>
         /// <exception cref="RequestFailedException">The service returned a non-success status code.</exception>
         /// <exception cref="ArgumentException"><paramref name="documents"/> is an empty collection.</exception>
         /// <exception cref="ArgumentNullException"><paramref name="documents"/> is null.</exception>
@@ -2453,7 +2453,7 @@ namespace Azure.AI.TextAnalytics
         /// summarization. Upon completion, the operation will contain the collections of summaries that were generated
         /// for each document that was successfully analyzed.
         /// </returns>
-        /// <exception cref="NotSupportedException">This method is only supported in service API version 2022-10-01-preview and newer.</exception>
+        /// <exception cref="NotSupportedException">This method is only supported in service API version 2023-04-01 and newer.</exception>
         /// <exception cref="RequestFailedException">The service returned a non-success status code.</exception>
         /// <exception cref="ArgumentException"><paramref name="documents"/> is an empty collection.</exception>
         /// <exception cref="ArgumentNullException"><paramref name="documents"/> is null.</exception>
