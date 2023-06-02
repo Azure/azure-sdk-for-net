@@ -41,7 +41,10 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Scenario.Tests
             _blobServiceClient = _fixture.BlobServiceClient;
         }
 
-        [Test]
+        //[Test]
+        // We do not want to run the test in the DevOps pipeline due:
+        // It can take up to an hour for log data to appear in the blobs in the $logs container - https://learn.microsoft.com/en-us/azure/storage/common/storage-analytics-logging#how-logs-are-stored
+        // But the test is still usefull for local runs to ensure sure everything works as expected
         public async Task BlobScaleHostEndToEndTest()
         {
             RandomNameResolver randomNameResolver = new RandomNameResolver();
@@ -130,6 +133,9 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Scenario.Tests
             await client1.UploadBlobAsync("test1.txt", new BinaryData("test1"));
             await client1.UploadBlobAsync("test2.txt", new BinaryData("test2"));
 
+            // It can take up to an hour for log data to appear in the blobs in the $logs container - https://learn.microsoft.com/en-us/azure/storage/common/storage-analytics-logging#how-logs-are-stored
+            int timeout = (60 * 1000) * 60; // 1 hour
+
             // Wait until logs are populated and there is the "scale out" vote
             await TestHelpers.Await(async () =>
             {
@@ -137,7 +143,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Scenario.Tests
 
                 var scaleStatus = await scaleStatusProvider.GetScaleStatusAsync(new ScaleStatusContext() { WorkerCount = 0 });
                 return scaleStatus.Vote == ScaleVote.ScaleOut && scaleStatus.FunctionScaleStatuses[Function1Name].Vote == ScaleVote.ScaleOut;
-            }, 600 * 10000);
+            }, timeout);
 
             // Emulate adding a worker, after adding the worker
             await TestHelpers.Await(async () =>
@@ -146,7 +152,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Scenario.Tests
 
                 var scaleStatus = await scaleStatusProvider.GetScaleStatusAsync(new ScaleStatusContext() { WorkerCount = 1 });
                 return scaleStatus.Vote == ScaleVote.ScaleIn && scaleStatus.FunctionScaleStatuses[Function1Name].Vote == ScaleVote.ScaleIn;
-            }, 600 * 1000);
+            }, timeout);
 
             // Emulate removing the worker
             await TestHelpers.Await(async () =>
@@ -155,7 +161,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Scenario.Tests
 
                 var scaleStatus = await scaleStatusProvider.GetScaleStatusAsync(new ScaleStatusContext() { WorkerCount = 0 });
                 return scaleStatus.Vote == ScaleVote.None && scaleStatus.FunctionScaleStatuses[Function1Name].Vote == ScaleVote.None;
-            }, 600 * 10000);
+            }, timeout);
         }
     }
 }

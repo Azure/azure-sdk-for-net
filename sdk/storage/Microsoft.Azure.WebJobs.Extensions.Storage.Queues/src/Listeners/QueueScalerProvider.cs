@@ -58,12 +58,19 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Queues.Listeners
 
         public IScaleMonitor GetMonitor()
         {
-            return new QueueScaleMonitor(_triggerMetadata.FunctionName, _queueClient, _loggerFactory);
+            return new QueueScaleMonitor(
+                _triggerMetadata.FunctionName,
+                _queueClient,
+                _loggerFactory);
         }
 
         public ITargetScaler GetTargetScaler()
         {
-            return new QueueTargetScaler(_triggerMetadata.FunctionName, _queueClient, _options.Value, _loggerFactory);
+            return new QueueTargetScaler(
+                _triggerMetadata.FunctionName,
+                _queueClient,
+                _options.Value,
+                _loggerFactory);
         }
 
         internal class QueueMetadata

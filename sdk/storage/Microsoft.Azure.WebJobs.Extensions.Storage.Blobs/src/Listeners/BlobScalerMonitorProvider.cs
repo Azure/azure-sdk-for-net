@@ -56,7 +56,10 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs.Listeners
             public ZeroToOneScaleMonitor(string functionId, BlobServiceClient blobServiceClient, ILoggerFactory loggerFactory)
             {
                 _scaleMonitorDescriptor = new ScaleMonitorDescriptor(functionId, functionId);
-                _blobLogListener = new(() => BlobLogListener.CreateAsync(blobServiceClient, loggerFactory.CreateLogger<BlobListener>(), CancellationToken.None));
+                _blobLogListener = new(() => BlobLogListener.CreateAsync(
+                    blobServiceClient,
+                    loggerFactory.CreateLogger<BlobListener>(),
+                    CancellationToken.None));
                 _logger = loggerFactory.CreateLogger<ZeroToOneScaleMonitor>();
             }
 
