@@ -7,10 +7,7 @@
 
 namespace Azure.ResourceManager.SelfHelp.Models
 {
-    /// <summary>
-    /// Detailed insights(s) obtained via the invocation of an insight diagnostic troubleshooter.
-    /// Serialized Name: Insight
-    /// </summary>
+    /// <summary> Detailed insights(s) obtained via the invocation of an insight diagnostic troubleshooter. </summary>
     public partial class SelfHelpDiagnosticInsight
     {
         /// <summary> Initializes a new instance of SelfHelpDiagnosticInsight. </summary>
@@ -19,49 +16,25 @@ namespace Azure.ResourceManager.SelfHelp.Models
         }
 
         /// <summary> Initializes a new instance of SelfHelpDiagnosticInsight. </summary>
-        /// <param name="insightId">
-        /// Article id.
-        /// Serialized Name: Insight.id
-        /// </param>
-        /// <param name="insightTitle">
-        /// This insight&apos;s title.
-        /// Serialized Name: Insight.title
-        /// </param>
-        /// <param name="insightResults">
-        /// Detailed result content.
-        /// Serialized Name: Insight.results
-        /// </param>
-        /// <param name="insightImportanceLevel">
-        /// Importance level of the insight.
-        /// Serialized Name: Insight.importanceLevel
-        /// </param>
-        internal SelfHelpDiagnosticInsight(string insightId, string insightTitle, string insightResults, SelfHelpImportanceLevel? insightImportanceLevel)
+        /// <param name="id"> Article id. </param>
+        /// <param name="title"> This insight&apos;s title. </param>
+        /// <param name="results"> Detailed result content. </param>
+        /// <param name="insightImportanceLevel"> Importance level of the insight. </param>
+        internal SelfHelpDiagnosticInsight(string id, string title, string results, SelfHelpImportanceLevel? insightImportanceLevel)
         {
-            InsightId = insightId;
-            InsightTitle = insightTitle;
-            InsightResults = insightResults;
+            Id = id;
+            Title = title;
+            Results = results;
             InsightImportanceLevel = insightImportanceLevel;
         }
 
-        /// <summary>
-        /// Article id.
-        /// Serialized Name: Insight.id
-        /// </summary>
-        public string InsightId { get; }
-        /// <summary>
-        /// This insight&apos;s title.
-        /// Serialized Name: Insight.title
-        /// </summary>
-        public string InsightTitle { get; }
-        /// <summary>
-        /// Detailed result content.
-        /// Serialized Name: Insight.results
-        /// </summary>
-        public string InsightResults { get; }
-        /// <summary>
-        /// Importance level of the insight.
-        /// Serialized Name: Insight.importanceLevel
-        /// </summary>
+        /// <summary> Article id. </summary>
+        public string Id { get; }
+        /// <summary> This insight&apos;s title. </summary>
+        public string Title { get; }
+        /// <summary> Detailed result content. </summary>
+        public string Results { get; }
+        /// <summary> Importance level of the insight. </summary>
         public SelfHelpImportanceLevel? InsightImportanceLevel { get; }
     }
 }

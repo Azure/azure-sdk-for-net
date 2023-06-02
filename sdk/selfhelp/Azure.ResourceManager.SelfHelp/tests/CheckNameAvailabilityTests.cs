@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.SelfHelp.Tests
         {
             var subId = "6bded6d5-a6af-43e1-96d3-bf71f6f5f8ba";
             ResourceIdentifier checkNameScope = new ResourceIdentifier($"/subscriptions/{subId}");
-            SelfHelpCheckNameAvailabilityContent resourceData = CreateCheckNameAvailabilityResource("sampleName");
+            SelfHelpNameAvailabilityContent resourceData = CreateNameAvailabilityResource("sampleName");
 
             var checkNameAvailabilityData = await Client.CheckSelfHelpNameAvailabilityAsync(checkNameScope, resourceData);
             Assert.NotNull(checkNameAvailabilityData);
@@ -44,18 +44,18 @@ namespace Azure.ResourceManager.SelfHelp.Tests
             var createDiagnosticData = await Client.GetSelfHelpDiagnostics(scope).CreateOrUpdateAsync(WaitUntil.Started, insightsResourceName, resourceData);
             Assert.NotNull(createDiagnosticData);
 
-            SelfHelpCheckNameAvailabilityContent data = CreateCheckNameAvailabilityResource(insightsResourceName);
+            SelfHelpNameAvailabilityContent data = CreateNameAvailabilityResource(insightsResourceName);
 
             var checkNameAvailabilityData = await Client.CheckSelfHelpNameAvailabilityAsync(checkNameScope, data);
             Assert.NotNull(checkNameAvailabilityData);
             Assert.IsFalse(checkNameAvailabilityData.Value.IsNameAvailable);
         }
 
-        private SelfHelpCheckNameAvailabilityContent CreateCheckNameAvailabilityResource(string name)
+        private SelfHelpNameAvailabilityContent CreateNameAvailabilityResource(string name)
         {
-            var data = new SelfHelpCheckNameAvailabilityContent();
+            var data = new SelfHelpNameAvailabilityContent();
             data.ResourceName = name;
-            data.ResourceType = "diagnostics";
+            data.ResourceType = new ResourceType("Microsoft.Help/diagnostics");
 
             return data;
         }

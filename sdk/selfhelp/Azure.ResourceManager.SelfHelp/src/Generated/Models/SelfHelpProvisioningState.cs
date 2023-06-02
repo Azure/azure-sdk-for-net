@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.SelfHelp.Models
 {
-    /// <summary>
-    /// Status of diagnostic provisioning.
-    /// Serialized Name: ProvisioningState
-    /// </summary>
+    /// <summary> Status of diagnostic provisioning. </summary>
     public readonly partial struct SelfHelpProvisioningState : IEquatable<SelfHelpProvisioningState>
     {
         private readonly string _value;
@@ -30,25 +27,13 @@ namespace Azure.ResourceManager.SelfHelp.Models
         private const string FailedValue = "Failed";
         private const string CanceledValue = "Canceled";
 
-        /// <summary>
-        /// All Diagnostics in the Batch succeeded.
-        /// Serialized Name: ProvisioningState.Succeeded
-        /// </summary>
+        /// <summary> All Diagnostics in the Batch succeeded. </summary>
         public static SelfHelpProvisioningState Succeeded { get; } = new SelfHelpProvisioningState(SucceededValue);
-        /// <summary>
-        /// Some Diagnostics are still running or failed.
-        /// Serialized Name: ProvisioningState.PartialComplete
-        /// </summary>
+        /// <summary> Some Diagnostics are still running or failed. </summary>
         public static SelfHelpProvisioningState PartialComplete { get; } = new SelfHelpProvisioningState(PartialCompleteValue);
-        /// <summary>
-        /// All Diagnostics failed to run.
-        /// Serialized Name: ProvisioningState.Failed
-        /// </summary>
+        /// <summary> All Diagnostics failed to run. </summary>
         public static SelfHelpProvisioningState Failed { get; } = new SelfHelpProvisioningState(FailedValue);
-        /// <summary>
-        /// When Diagnostic request gets canceled.
-        /// Serialized Name: ProvisioningState.Canceled
-        /// </summary>
+        /// <summary> When Diagnostic request gets canceled. </summary>
         public static SelfHelpProvisioningState Canceled { get; } = new SelfHelpProvisioningState(CanceledValue);
         /// <summary> Determines if two <see cref="SelfHelpProvisioningState"/> values are the same. </summary>
         public static bool operator ==(SelfHelpProvisioningState left, SelfHelpProvisioningState right) => left.Equals(right);

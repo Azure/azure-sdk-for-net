@@ -57,7 +57,7 @@
       },
       "RequestBody": {
         "name": "sampleName",
-        "type": "diagnostics"
+        "type": "Microsoft.Help/diagnostics"
       },
       "StatusCode": 200,
       "ResponseHeaders": {

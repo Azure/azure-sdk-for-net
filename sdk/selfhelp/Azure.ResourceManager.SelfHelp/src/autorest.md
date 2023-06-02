@@ -14,10 +14,9 @@ clear-output-folder: true
 skip-csproj: true
 modelerfour:
   flatten-payloads: false
-mgmt-debug:
-  show-serialized-names: true
 
-
+#mgmt-debug:
+#  show-serialized-names: true
 
 format-by-name-rules:
   'tenantId': 'uuid'
@@ -54,35 +53,22 @@ list-exception:
 
 rename-mapping:
   DiagnosticResource: SelfHelpDiagnostic
+  DiagnosticResource.properties.acceptedAt: acceptedOn|date-time
   Status: SelfHelpDiagnosticStatus
-  Insight: SelfHelpDiagnosticInsight
-  Error: SelfHelpError
   Diagnostic: SelfHelpDiagnosticInfo
-  DiagnosticResource.properties.acceptedAt: acceptedTime
-  Insight.id: InsightId
-  Insight.title: InsightTitle
-  Insight.results: InsightResults
+  Insight: SelfHelpDiagnosticInsight
   Insight.importanceLevel: InsightImportanceLevel
-  Error.code: ErrorCode
+  CheckNameAvailabilityResponse: SelfHelpkNameAvailabilityResult
   CheckNameAvailabilityResponse.nameAvailable: IsNameAvailable
-  CheckNameAvailabilityResponse.reason: NotAvailableReason
-  CheckNameAvailabilityResponse.message: ErrorMessage
+  CheckNameAvailabilityRequest: SelfHelpNameAvailabilityContent
   CheckNameAvailabilityRequest.name: ResourceName
-  DiscoveryResponse.value: SolutionMetaData
-  Diagnostic.status: DiagnosticStatus
-  Diagnostic.insights: DiagnosticInsights
-  Diagnostic.error: ErrorInfo
-  Error.message: ErrorMessage
-  Error.details: ErrorDetails
-  SolutionMetadataResource.properties.description: SolutionDescription
-  DiagnosticResource.properties.insights: DiagnosticInsights
-  CheckNameAvailabilityRequest: SelfHelpCheckNameAvailabilityContent
-  CheckNameAvailabilityRequest.type: ResourceType
-  CheckNameAvailabilityResponse: SelfHelpCheckNameAvailabilityResult
+  CheckNameAvailabilityRequest.type: ResourceType|resource-type
+  DiscoveryResponse: SelfHelpDiscoverySolutionResult
+  SolutionMetadataResource: SelfHelpSolutionMetadata
+  Error: SelfHelpError
   DiagnosticInvocation: SelfHelpDiagnosticInvocation
   ImportanceLevel: SelfHelpImportanceLevel
   ProvisioningState: SelfHelpProvisioningState
-  SolutionMetadataResource: SelfHelpSolutionMetadata
 
 override-operation-name:
   Diagnostics_CheckNameAvailability: CheckSelfHelpNameAvailability

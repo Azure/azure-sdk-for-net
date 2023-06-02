@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.SelfHelp
         /// </summary>
         /// <param name="content"> The required parameters for availability check. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<SelfHelpCheckNameAvailabilityResult>> CheckSelfHelpNameAvailabilityAsync(SelfHelpCheckNameAvailabilityContent content = null, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<SelfHelpkNameAvailabilityResult>> CheckSelfHelpNameAvailabilityAsync(SelfHelpNameAvailabilityContent content = null, CancellationToken cancellationToken = default)
         {
             using var scope = SelfHelpDiagnosticDiagnosticsClientDiagnostics.CreateScope("ArmResourceExtensionClient.CheckSelfHelpNameAvailability");
             scope.Start();
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.SelfHelp
         /// </summary>
         /// <param name="content"> The required parameters for availability check. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<SelfHelpCheckNameAvailabilityResult> CheckSelfHelpNameAvailability(SelfHelpCheckNameAvailabilityContent content = null, CancellationToken cancellationToken = default)
+        public virtual Response<SelfHelpkNameAvailabilityResult> CheckSelfHelpNameAvailability(SelfHelpNameAvailabilityContent content = null, CancellationToken cancellationToken = default)
         {
             using var scope = SelfHelpDiagnosticDiagnosticsClientDiagnostics.CreateScope("ArmResourceExtensionClient.CheckSelfHelpNameAvailability");
             scope.Start();

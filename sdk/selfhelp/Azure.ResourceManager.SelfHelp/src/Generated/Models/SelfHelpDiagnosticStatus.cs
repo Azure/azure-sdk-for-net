@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.SelfHelp.Models
 {
-    /// <summary>
-    /// Denotes the status of the diagnostic resource.
-    /// Serialized Name: Status
-    /// </summary>
+    /// <summary> Denotes the status of the diagnostic resource. </summary>
     public readonly partial struct SelfHelpDiagnosticStatus : IEquatable<SelfHelpDiagnosticStatus>
     {
         private readonly string _value;
@@ -31,30 +28,15 @@ namespace Azure.ResourceManager.SelfHelp.Models
         private const string SucceededValue = "Succeeded";
         private const string TimeoutValue = "Timeout";
 
-        /// <summary>
-        /// Diagnostic creation failed.
-        /// Serialized Name: Status.Failed
-        /// </summary>
+        /// <summary> Diagnostic creation failed. </summary>
         public static SelfHelpDiagnosticStatus Failed { get; } = new SelfHelpDiagnosticStatus(FailedValue);
-        /// <summary>
-        /// Request is missing required inputs to run.
-        /// Serialized Name: Status.MissingInputs
-        /// </summary>
+        /// <summary> Request is missing required inputs to run. </summary>
         public static SelfHelpDiagnosticStatus MissingInputs { get; } = new SelfHelpDiagnosticStatus(MissingInputsValue);
-        /// <summary>
-        /// Diagnostic is still running.
-        /// Serialized Name: Status.Running
-        /// </summary>
+        /// <summary> Diagnostic is still running. </summary>
         public static SelfHelpDiagnosticStatus Running { get; } = new SelfHelpDiagnosticStatus(RunningValue);
-        /// <summary>
-        /// Diagnostic creation succeeded.
-        /// Serialized Name: Status.Succeeded
-        /// </summary>
+        /// <summary> Diagnostic creation succeeded. </summary>
         public static SelfHelpDiagnosticStatus Succeeded { get; } = new SelfHelpDiagnosticStatus(SucceededValue);
-        /// <summary>
-        /// Diagnostic was timed out.
-        /// Serialized Name: Status.Timeout
-        /// </summary>
+        /// <summary> Diagnostic was timed out. </summary>
         public static SelfHelpDiagnosticStatus Timeout { get; } = new SelfHelpDiagnosticStatus(TimeoutValue);
         /// <summary> Determines if two <see cref="SelfHelpDiagnosticStatus"/> values are the same. </summary>
         public static bool operator ==(SelfHelpDiagnosticStatus left, SelfHelpDiagnosticStatus right) => left.Equals(right);

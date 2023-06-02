@@ -111,7 +111,7 @@
       },
       "RequestBody": {
         "name": "testResource6787",
-        "type": "diagnostics"
+        "type": "Microsoft.Help/diagnostics"
       },
       "StatusCode": 200,
       "ResponseHeaders": {

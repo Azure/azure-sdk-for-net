@@ -11,9 +11,9 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.SelfHelp.Models
 {
-    internal partial class DiscoveryResponse
+    internal partial class SelfHelpDiscoverySolutionResult
     {
-        internal static DiscoveryResponse DeserializeDiscoveryResponse(JsonElement element)
+        internal static SelfHelpDiscoverySolutionResult DeserializeSelfHelpDiscoverySolutionResult(JsonElement element)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
                     continue;
                 }
             }
-            return new DiscoveryResponse(Optional.ToList(value), nextLink.Value);
+            return new SelfHelpDiscoverySolutionResult(Optional.ToList(value), nextLink.Value);
         }
     }
 }

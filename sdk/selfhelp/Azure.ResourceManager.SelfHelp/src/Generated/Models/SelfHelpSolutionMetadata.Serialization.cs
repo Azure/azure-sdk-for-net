@@ -29,10 +29,10 @@ namespace Azure.ResourceManager.SelfHelp.Models
                 writer.WritePropertyName("solutionType"u8);
                 writer.WriteStringValue(SolutionType);
             }
-            if (Optional.IsDefined(SolutionDescription))
+            if (Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
-                writer.WriteStringValue(SolutionDescription);
+                writer.WriteStringValue(Description);
             }
             if (Optional.IsCollectionDefined(RequiredParameterSets))
             {

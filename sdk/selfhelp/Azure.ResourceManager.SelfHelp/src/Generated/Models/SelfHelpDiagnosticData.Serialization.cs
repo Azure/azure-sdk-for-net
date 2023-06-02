@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
@@ -31,11 +32,11 @@ namespace Azure.ResourceManager.SelfHelp
                 }
                 writer.WriteEndObject();
             }
-            if (Optional.IsCollectionDefined(DiagnosticInsights))
+            if (Optional.IsCollectionDefined(Insights))
             {
                 writer.WritePropertyName("insights"u8);
                 writer.WriteStartArray();
-                foreach (var item in DiagnosticInsights)
+                foreach (var item in Insights)
                 {
                     writer.WriteObjectValue(item);
                 }
@@ -57,7 +58,7 @@ namespace Azure.ResourceManager.SelfHelp
             Optional<SystemData> systemData = default;
             Optional<IDictionary<string, string>> globalParameters = default;
             Optional<IList<SelfHelpDiagnosticInvocation>> insights = default;
-            Optional<string> acceptedAt = default;
+            Optional<DateTimeOffset> acceptedAt = default;
             Optional<SelfHelpProvisioningState> provisioningState = default;
             Optional<IReadOnlyList<SelfHelpDiagnosticInfo>> diagnostics = default;
             foreach (var property in element.EnumerateObject())
@@ -125,7 +126,11 @@ namespace Azure.ResourceManager.SelfHelp
                         }
                         if (property0.NameEquals("acceptedAt"u8))
                         {
-                            acceptedAt = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            acceptedAt = property0.Value.GetDateTimeOffset("O");
                             continue;
                         }
                         if (property0.NameEquals("provisioningState"u8))
@@ -155,7 +160,7 @@ namespace Azure.ResourceManager.SelfHelp
                     continue;
                 }
             }
-            return new SelfHelpDiagnosticData(id, name, type, systemData.Value, Optional.ToDictionary(globalParameters), Optional.ToList(insights), acceptedAt.Value, Optional.ToNullable(provisioningState), Optional.ToList(diagnostics));
+            return new SelfHelpDiagnosticData(id, name, type, systemData.Value, Optional.ToDictionary(globalParameters), Optional.ToList(insights), Optional.ToNullable(acceptedAt), Optional.ToNullable(provisioningState), Optional.ToList(diagnostics));
         }
     }
 }
