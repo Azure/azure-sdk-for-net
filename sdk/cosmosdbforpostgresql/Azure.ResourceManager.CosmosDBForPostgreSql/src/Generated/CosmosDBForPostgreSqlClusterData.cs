@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
         /// <param name="readReplicas"> The array of read replica clusters. </param>
         /// <param name="earliestRestoreOn"> The earliest restore point time (ISO8601 format) for the cluster. </param>
         /// <param name="privateEndpointConnections"> The private endpoint connections for a cluster. </param>
-        internal CosmosDBForPostgreSqlClusterData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string administratorLogin, string administratorLoginPassword, string provisioningState, string state, string postgresqlVersion, string citusVersion, CosmosDBForPostgreSqlMaintenanceWindow maintenanceWindow, string preferredPrimaryZone, bool? enableShardsOnCoordinator, bool? enableHa, string coordinatorServerEdition, int? coordinatorStorageQuotaInMb, int? coordinatorVCores, bool? coordinatorEnablePublicIPAccess, string nodeServerEdition, int? nodeCount, int? nodeStorageQuotaInMb, int? nodeVCores, bool? nodeEnablePublicIPAccess, IReadOnlyList<ServerNameItem> serverNames, string sourceResourceId, string sourceLocation, DateTimeOffset? pointInTimeUTC, IReadOnlyList<string> readReplicas, DateTimeOffset? earliestRestoreOn, IReadOnlyList<CosmosDBForPostgreSqlSimplePrivateEndpointConnection> privateEndpointConnections) : base(id, name, resourceType, systemData, tags, location)
+        internal CosmosDBForPostgreSqlClusterData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string administratorLogin, string administratorLoginPassword, string provisioningState, string state, string postgresqlVersion, string citusVersion, CosmosDBForPostgreSqlMaintenanceWindow maintenanceWindow, string preferredPrimaryZone, bool? enableShardsOnCoordinator, bool? enableHa, string coordinatorServerEdition, int? coordinatorStorageQuotaInMb, int? coordinatorVCores, bool? coordinatorEnablePublicIPAccess, string nodeServerEdition, int? nodeCount, int? nodeStorageQuotaInMb, int? nodeVCores, bool? nodeEnablePublicIPAccess, IReadOnlyList<ServerNameItem> serverNames, ResourceIdentifier sourceResourceId, AzureLocation? sourceLocation, DateTimeOffset? pointInTimeUTC, IReadOnlyList<string> readReplicas, DateTimeOffset? earliestRestoreOn, IReadOnlyList<CosmosDBForPostgreSqlSimplePrivateEndpointConnection> privateEndpointConnections) : base(id, name, resourceType, systemData, tags, location)
         {
             AdministratorLogin = administratorLogin;
             AdministratorLoginPassword = administratorLoginPassword;
@@ -132,9 +132,9 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
         /// <summary> The list of server names in the cluster. </summary>
         public IReadOnlyList<ServerNameItem> ServerNames { get; }
         /// <summary> The resource id of source cluster for read replica clusters. </summary>
-        public string SourceResourceId { get; set; }
+        public ResourceIdentifier SourceResourceId { get; set; }
         /// <summary> The Azure region of source cluster for read replica clusters. </summary>
-        public string SourceLocation { get; set; }
+        public AzureLocation? SourceLocation { get; set; }
         /// <summary> Date and time in UTC (ISO8601 format) for cluster restore. </summary>
         public DateTimeOffset? PointInTimeUTC { get; set; }
         /// <summary> The array of read replica clusters. </summary>

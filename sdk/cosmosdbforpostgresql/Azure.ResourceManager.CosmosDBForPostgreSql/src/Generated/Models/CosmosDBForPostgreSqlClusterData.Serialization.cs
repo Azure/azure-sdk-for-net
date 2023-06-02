@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
             if (Optional.IsDefined(SourceLocation))
             {
                 writer.WritePropertyName("sourceLocation"u8);
-                writer.WriteStringValue(SourceLocation);
+                writer.WriteStringValue(SourceLocation.Value);
             }
             if (Optional.IsDefined(PointInTimeUTC))
             {
@@ -165,8 +165,8 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
             Optional<int> nodeVCores = default;
             Optional<bool> nodeEnablePublicIPAccess = default;
             Optional<IReadOnlyList<ServerNameItem>> serverNames = default;
-            Optional<string> sourceResourceId = default;
-            Optional<string> sourceLocation = default;
+            Optional<ResourceIdentifier> sourceResourceId = default;
+            Optional<AzureLocation> sourceLocation = default;
             Optional<DateTimeOffset> pointInTimeUTC = default;
             Optional<IReadOnlyList<string>> readReplicas = default;
             Optional<DateTimeOffset> earliestRestoreTime = default;
@@ -376,12 +376,20 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
                         }
                         if (property0.NameEquals("sourceResourceId"u8))
                         {
-                            sourceResourceId = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            sourceResourceId = new ResourceIdentifier(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("sourceLocation"u8))
                         {
-                            sourceLocation = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            sourceLocation = new AzureLocation(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("pointInTimeUTC"u8))
@@ -434,7 +442,7 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
                     continue;
                 }
             }
-            return new CosmosDBForPostgreSqlClusterData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, administratorLogin.Value, administratorLoginPassword.Value, provisioningState.Value, state.Value, postgresqlVersion.Value, citusVersion.Value, maintenanceWindow.Value, preferredPrimaryZone.Value, Optional.ToNullable(enableShardsOnCoordinator), Optional.ToNullable(enableHa), coordinatorServerEdition.Value, Optional.ToNullable(coordinatorStorageQuotaInMb), Optional.ToNullable(coordinatorVCores), Optional.ToNullable(coordinatorEnablePublicIPAccess), nodeServerEdition.Value, Optional.ToNullable(nodeCount), Optional.ToNullable(nodeStorageQuotaInMb), Optional.ToNullable(nodeVCores), Optional.ToNullable(nodeEnablePublicIPAccess), Optional.ToList(serverNames), sourceResourceId.Value, sourceLocation.Value, Optional.ToNullable(pointInTimeUTC), Optional.ToList(readReplicas), Optional.ToNullable(earliestRestoreTime), Optional.ToList(privateEndpointConnections));
+            return new CosmosDBForPostgreSqlClusterData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, administratorLogin.Value, administratorLoginPassword.Value, provisioningState.Value, state.Value, postgresqlVersion.Value, citusVersion.Value, maintenanceWindow.Value, preferredPrimaryZone.Value, Optional.ToNullable(enableShardsOnCoordinator), Optional.ToNullable(enableHa), coordinatorServerEdition.Value, Optional.ToNullable(coordinatorStorageQuotaInMb), Optional.ToNullable(coordinatorVCores), Optional.ToNullable(coordinatorEnablePublicIPAccess), nodeServerEdition.Value, Optional.ToNullable(nodeCount), Optional.ToNullable(nodeStorageQuotaInMb), Optional.ToNullable(nodeVCores), Optional.ToNullable(nodeEnablePublicIPAccess), Optional.ToList(serverNames), sourceResourceId.Value, Optional.ToNullable(sourceLocation), Optional.ToNullable(pointInTimeUTC), Optional.ToList(readReplicas), Optional.ToNullable(earliestRestoreTime), Optional.ToList(privateEndpointConnections));
         }
     }
 }

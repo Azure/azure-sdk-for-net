@@ -22,6 +22,8 @@ format-by-name-rules:
   'location': 'azure-location'
   '*Uri': 'Uri'
   '*Uris': 'Uri'
+  'sourceResourceId': 'arm-id'
+  'sourceLocation': 'azure-location'
 
 rename-rules:
   CPU: Cpu
@@ -47,26 +49,26 @@ rename-rules:
   Etag: ETag|etag
 
 rename-mapping:
-  ClusterListResult: CosmosDBForPostgreSqlClusterListResult
-  ClusterServerListResult: CosmosDBForPostgreSqlClusterServerListResult
   NameAvailability: CosmosDBForPostgreSqlNameAvailability
-  FirewallRuleListResult: CosmosDBForPostgreSqlFirewallRuleListResult
-  MaintenanceWindow: CosmosDBForPostgreSqlMaintenanceWindow
-  ClusterConfigurationListResult: CosmosDBForPostgreSqlClusterConfigurationListResult
-  ConfigurationDataType: CosmosDBForPostgreSqlConfigurationDataType
   CheckNameAvailabilityResourceType: CosmosDBForPostgreSqlCheckNameAvailabilityResourceType
-  ServerRole: CosmosDBForPostgreSqlServerRole
-  RoleListResult: CosmosDBForPostgreSqlRoleListResult
-  ServerRoleGroupConfiguration: CosmosDBForPostgreSqlServerRoleGroupConfiguration
-  SimplePrivateEndpointConnection: CosmosDBForPostgreSqlSimplePrivateEndpointConnection
-  ServerConfigurationData: CosmosDBForPostgreSqlServerConfigurationData
 
 prepend-rp-prefix:
 - Cluster
-- FirewallRule
-- Configuration
+- ClusterConfigurationListResult
+- ClusterServerListResult
+- ClusterListResult
 - ClusterServer
+- Configuration
+- ConfigurationDataType
+- FirewallRule
+- FirewallRuleListResult
+- MaintenanceWindow
 - Role
+- RoleListResult
+- ServerConfigurationData
+- ServerRole
+- ServerRoleGroupConfiguration
+- SimplePrivateEndpointConnection
 
 list-exception:
 - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DBforPostgreSQL/serverGroupsv2/{clusterName}/coordinatorConfigurations/{configurationName}
