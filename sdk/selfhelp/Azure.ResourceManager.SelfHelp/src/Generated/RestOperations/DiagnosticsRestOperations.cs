@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.SelfHelp
         /// <param name="content"> The required parameters for availability check. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="scope"/> is null. </exception>
-        public async Task<Response<SelfHelpkNameAvailabilityResult>> CheckNameAvailabilityAsync(string scope, SelfHelpNameAvailabilityContent content = null, CancellationToken cancellationToken = default)
+        public async Task<Response<SelfHelpNameAvailabilityResult>> CheckNameAvailabilityAsync(string scope, SelfHelpNameAvailabilityContent content = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(scope, nameof(scope));
 
@@ -76,9 +76,9 @@ namespace Azure.ResourceManager.SelfHelp
             {
                 case 200:
                     {
-                        SelfHelpkNameAvailabilityResult value = default;
+                        SelfHelpNameAvailabilityResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = SelfHelpkNameAvailabilityResult.DeserializeSelfHelpkNameAvailabilityResult(document.RootElement);
+                        value = SelfHelpNameAvailabilityResult.DeserializeSelfHelpNameAvailabilityResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.SelfHelp
         /// <param name="content"> The required parameters for availability check. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="scope"/> is null. </exception>
-        public Response<SelfHelpkNameAvailabilityResult> CheckNameAvailability(string scope, SelfHelpNameAvailabilityContent content = null, CancellationToken cancellationToken = default)
+        public Response<SelfHelpNameAvailabilityResult> CheckNameAvailability(string scope, SelfHelpNameAvailabilityContent content = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(scope, nameof(scope));
 
@@ -101,9 +101,9 @@ namespace Azure.ResourceManager.SelfHelp
             {
                 case 200:
                     {
-                        SelfHelpkNameAvailabilityResult value = default;
+                        SelfHelpNameAvailabilityResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = SelfHelpkNameAvailabilityResult.DeserializeSelfHelpkNameAvailabilityResult(document.RootElement);
+                        value = SelfHelpNameAvailabilityResult.DeserializeSelfHelpNameAvailabilityResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

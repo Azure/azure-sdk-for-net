@@ -10,9 +10,9 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.SelfHelp.Models
 {
-    public partial class SelfHelpkNameAvailabilityResult
+    public partial class SelfHelpNameAvailabilityResult
     {
-        internal static SelfHelpkNameAvailabilityResult DeserializeSelfHelpkNameAvailabilityResult(JsonElement element)
+        internal static SelfHelpNameAvailabilityResult DeserializeSelfHelpNameAvailabilityResult(JsonElement element)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
                     continue;
                 }
             }
-            return new SelfHelpkNameAvailabilityResult(Optional.ToNullable(nameAvailable), reason.Value, message.Value);
+            return new SelfHelpNameAvailabilityResult(Optional.ToNullable(nameAvailable), reason.Value, message.Value);
         }
     }
 }

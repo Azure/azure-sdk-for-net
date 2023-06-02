@@ -17,14 +17,14 @@ namespace Azure.ResourceManager.SelfHelp.Models
     /// <summary> Model factory for models. </summary>
     public static partial class ArmSelfHelpModelFactory
     {
-        /// <summary> Initializes a new instance of SelfHelpkNameAvailabilityResult. </summary>
+        /// <summary> Initializes a new instance of SelfHelpNameAvailabilityResult. </summary>
         /// <param name="isNameAvailable"> Returns true or false depending on the availability of the name. </param>
         /// <param name="reason"> Reason for why value is not available. This field is returned if nameAvailable is false. </param>
         /// <param name="message"> Gets an error message explaining the &apos;reason&apos; value with more details. This field is returned iif nameAvailable is false. </param>
-        /// <returns> A new <see cref="Models.SelfHelpkNameAvailabilityResult"/> instance for mocking. </returns>
-        public static SelfHelpkNameAvailabilityResult SelfHelpkNameAvailabilityResult(bool? isNameAvailable = null, string reason = null, string message = null)
+        /// <returns> A new <see cref="Models.SelfHelpNameAvailabilityResult"/> instance for mocking. </returns>
+        public static SelfHelpNameAvailabilityResult SelfHelpNameAvailabilityResult(bool? isNameAvailable = null, string reason = null, string message = null)
         {
-            return new SelfHelpkNameAvailabilityResult(isNameAvailable, reason, message);
+            return new SelfHelpNameAvailabilityResult(isNameAvailable, reason, message);
         }
 
         /// <summary> Initializes a new instance of SelfHelpDiagnosticData. </summary>

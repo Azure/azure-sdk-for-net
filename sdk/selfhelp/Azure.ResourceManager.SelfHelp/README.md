@@ -1,6 +1,6 @@
 # Microsoft Azure SelfHelp management client library for .NET
 
-**[Describe the service briefly first.]**
+The Azure Help REST API provides you access to rich and powerful self-help solutions and diagnostics to troubleshoot Azure issues anywhere.
 
 This library follows the [new Azure SDK guidelines](https://azure.github.io/azure-sdk/general_introduction.html), and provides many core capabilities:
 

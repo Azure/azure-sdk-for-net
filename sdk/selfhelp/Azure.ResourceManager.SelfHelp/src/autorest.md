@@ -58,7 +58,7 @@ rename-mapping:
   Diagnostic: SelfHelpDiagnosticInfo
   Insight: SelfHelpDiagnosticInsight
   Insight.importanceLevel: InsightImportanceLevel
-  CheckNameAvailabilityResponse: SelfHelpkNameAvailabilityResult
+  CheckNameAvailabilityResponse: SelfHelpNameAvailabilityResult
   CheckNameAvailabilityResponse.nameAvailable: IsNameAvailable
   CheckNameAvailabilityRequest: SelfHelpNameAvailabilityContent
   CheckNameAvailabilityRequest.name: ResourceName
