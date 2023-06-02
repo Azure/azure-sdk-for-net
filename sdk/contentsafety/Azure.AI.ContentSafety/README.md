@@ -6,7 +6,7 @@
 * Image Analysis API: Scans images for sexual content, violence, hate, and self harm with multi-severity levels.
 * Text Blocklist Management APIs: The default AI classifiers are sufficient for most content safety needs; however, you might need to screen for terms that are specific to your use case. You can create blocklists of terms to use with the Text API.
 
-[Source code](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/contentsafety/Azure.AI.ContentSafety) | [Package (NuGet)](https://www.nuget.org) | [API reference documentation](https://azure.github.io/azure-sdk-for-net) | [Product documentation](https://docs.microsoft.com/azure)
+[Source code](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/contentsafety/Azure.AI.ContentSafety) | [Package (NuGet)](https://www.nuget.org/packages/Azure.AI.ContentSafety) | [API reference documentation](https://learn.microsoft.com/en-us/dotnet/api/overview/azure/ai.contentsafety-readme?view=azure-dotnet) | [Product documentation](https://learn.microsoft.com/en-us/azure/cognitive-services/content-safety/)
 
 ## Getting started
 
