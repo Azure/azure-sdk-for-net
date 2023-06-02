@@ -232,7 +232,6 @@ namespace Azure.AI.TextAnalytics.Tests
 
         [RecordedTest]
         [RetryOnInternalServerError]
-        [ServiceVersion(Min = TextAnalyticsClientOptions.ServiceVersion.V2022_10_01_Preview)]
         public async Task AnalyzeOperationAbstractiveSummarize()
         {
             TextAnalyticsClient client = GetClient();
@@ -251,25 +250,6 @@ namespace Azure.AI.TextAnalytics.Tests
 
             AbstractiveSummarizeResultCollection abstractiveSummarizeDocumentsResults = abstractiveSummarizeActionsResults.FirstOrDefault().DocumentsResults;
             ValidateSummaryBatchResult(abstractiveSummarizeDocumentsResults);
-        }
-
-        [RecordedTest]
-        [RetryOnInternalServerError]
-        [ServiceVersion(Max = TextAnalyticsClientOptions.ServiceVersion.V2022_05_01)]
-        public void AnalyzeOperationAbstractiveSummarizeActionNotSupported()
-        {
-            TestDiagnostics = false;
-            TextAnalyticsClient client = GetClient();
-            TextAnalyticsActions batchActions = new()
-            {
-                AbstractiveSummarizeActions = new[]
-                {
-                    new AbstractiveSummarizeAction(),
-                },
-            };
-
-            NotSupportedException ex = Assert.ThrowsAsync<NotSupportedException>(async () => await client.StartAnalyzeActionsAsync(s_batchDocuments, batchActions));
-            Assert.That(ex.Message.EndsWith("Use service API version 2022-10-01-preview or newer."));
         }
 
         [RecordedTest]
