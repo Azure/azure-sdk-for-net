@@ -18,15 +18,6 @@ namespace Azure.ResourceManager.CostManagement.Models
     /// <summary> Model factory for models. </summary>
     public static partial class ArmCostManagementModelFactory
     {
-        /// <summary> Initializes a new instance of ExportRunErrorDetails. </summary>
-        /// <param name="code"> Error code. </param>
-        /// <param name="message"> Error message indicating why the operation failed. </param>
-        /// <returns> A new <see cref="Models.ExportRunErrorDetails"/> instance for mocking. </returns>
-        public static ExportRunErrorDetails ExportRunErrorDetails(string code = null, string message = null)
-        {
-            return new ExportRunErrorDetails(code, message);
-        }
-
         /// <summary> Initializes a new instance of BenefitRecommendationModel. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
@@ -100,6 +91,15 @@ namespace Azure.ResourceManager.CostManagement.Models
             value ??= new List<AllSavingsBenefitDetails>();
 
             return new AllSavingsList(value?.ToList(), nextLink);
+        }
+
+        /// <summary> Initializes a new instance of ExportRunErrorDetails. </summary>
+        /// <param name="code"> Error code. </param>
+        /// <param name="message"> Error message indicating why the operation failed. </param>
+        /// <returns> A new <see cref="Models.ExportRunErrorDetails"/> instance for mocking. </returns>
+        public static ExportRunErrorDetails ExportRunErrorDetails(string code = null, string message = null)
+        {
+            return new ExportRunErrorDetails(code, message);
         }
 
         /// <summary> Initializes a new instance of BenefitUtilizationSummary. </summary>

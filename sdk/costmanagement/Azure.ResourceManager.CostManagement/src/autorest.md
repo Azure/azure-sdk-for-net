@@ -13,7 +13,6 @@ clear-output-folder: true
 skip-csproj: true
 modelerfour:
   flatten-payloads: false
-  lenient-model-deduplication: true
 
 list-exception:
 - /providers/Microsoft.CostManagement/views/{viewName}
@@ -101,6 +100,7 @@ directive:
   - remove-operation: GenerateDetailedCostReport_CreateOperation
   - remove-operation: GenerateDetailedCostReportOperationResults_Get
   - remove-operation: GenerateDetailedCostReportOperationStatus_Get
+  - remove-operation: Operations_List
 
   # Could not set ResourceTypeSegment for request path /{scope}
   - from: scheduledActions.json
@@ -109,4 +109,8 @@ directive:
   - from: costmanagement.json
     where: $.parameters.scopeViewParameter
     transform: $['x-ms-skip-url-encoding'] = true;
+  # Dup schema
+  - from: common-types.json
+    where: $.definitions.ErrorResponse
+    transform: $['x-ms-client-name'] = 'OperationErrorResponse';
 ```
