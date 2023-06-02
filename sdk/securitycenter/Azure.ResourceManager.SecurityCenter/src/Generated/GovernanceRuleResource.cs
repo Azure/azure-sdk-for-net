@@ -7,14 +7,12 @@
 
 using System;
 using System.Globalization;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
-using Azure.ResourceManager.Resources;
 using Azure.ResourceManager.SecurityCenter.Models;
 
 namespace Azure.ResourceManager.SecurityCenter
@@ -23,7 +21,7 @@ namespace Azure.ResourceManager.SecurityCenter
     /// A Class representing a GovernanceRule along with the instance operations that can be performed on it.
     /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="GovernanceRuleResource" />
     /// from an instance of <see cref="ArmClient" /> using the GetGovernanceRuleResource method.
-    /// Otherwise you can get one from its parent resource <see cref="TenantResource" /> using the GetGovernanceRule method.
+    /// Otherwise you can get one from its parent resource <see cref="ArmResource" /> using the GetGovernanceRule method.
     /// </summary>
     public partial class GovernanceRuleResource : ArmResource
     {
@@ -102,19 +100,14 @@ namespace Azure.ResourceManager.SecurityCenter
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="ruleId"> The governance rule key - unique key for the standard governance rule (GUID). </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="ruleId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="ruleId"/> is null. </exception>
-        public virtual async Task<Response<GovernanceRuleResource>> GetAsync(string ruleId, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<GovernanceRuleResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(ruleId, nameof(ruleId));
-
             using var scope = _governanceRuleClientDiagnostics.CreateScope("GovernanceRuleResource.Get");
             scope.Start();
             try
             {
-                var response = await _governanceRuleRestClient.GetAsync(Id.Parent.ResourceType.GetLastType(), ruleId, cancellationToken).ConfigureAwait(false);
+                var response = await _governanceRuleRestClient.GetAsync(Id.Parent, Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new GovernanceRuleResource(Client, response.Value), response.GetRawResponse());
@@ -139,19 +132,14 @@ namespace Azure.ResourceManager.SecurityCenter
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="ruleId"> The governance rule key - unique key for the standard governance rule (GUID). </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="ruleId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="ruleId"/> is null. </exception>
-        public virtual Response<GovernanceRuleResource> Get(string ruleId, CancellationToken cancellationToken = default)
+        public virtual Response<GovernanceRuleResource> Get(CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(ruleId, nameof(ruleId));
-
             using var scope = _governanceRuleClientDiagnostics.CreateScope("GovernanceRuleResource.Get");
             scope.Start();
             try
             {
-                var response = _governanceRuleRestClient.Get(Id.Parent.ResourceType.GetLastType(), ruleId, cancellationToken);
+                var response = _governanceRuleRestClient.Get(Id.Parent, Id.Name, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new GovernanceRuleResource(Client, response.Value), response.GetRawResponse());
@@ -177,20 +165,15 @@ namespace Azure.ResourceManager.SecurityCenter
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="ruleId"> The governance rule key - unique key for the standard governance rule (GUID). </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="ruleId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="ruleId"/> is null. </exception>
-        public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, string ruleId, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(ruleId, nameof(ruleId));
-
             using var scope = _governanceRuleClientDiagnostics.CreateScope("GovernanceRuleResource.Delete");
             scope.Start();
             try
             {
-                var response = await _governanceRuleRestClient.DeleteAsync(Id.Parent.ResourceType.GetLastType(), ruleId, cancellationToken).ConfigureAwait(false);
-                var operation = new SecurityCenterArmOperation(_governanceRuleClientDiagnostics, Pipeline, _governanceRuleRestClient.CreateDeleteRequest(Id.Parent.ResourceType.GetLastType(), ruleId).Request, response, OperationFinalStateVia.Location);
+                var response = await _governanceRuleRestClient.DeleteAsync(Id.Parent, Id.Name, cancellationToken).ConfigureAwait(false);
+                var operation = new SecurityCenterArmOperation(_governanceRuleClientDiagnostics, Pipeline, _governanceRuleRestClient.CreateDeleteRequest(Id.Parent, Id.Name).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -216,20 +199,15 @@ namespace Azure.ResourceManager.SecurityCenter
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="ruleId"> The governance rule key - unique key for the standard governance rule (GUID). </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="ruleId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="ruleId"/> is null. </exception>
-        public virtual ArmOperation Delete(WaitUntil waitUntil, string ruleId, CancellationToken cancellationToken = default)
+        public virtual ArmOperation Delete(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(ruleId, nameof(ruleId));
-
             using var scope = _governanceRuleClientDiagnostics.CreateScope("GovernanceRuleResource.Delete");
             scope.Start();
             try
             {
-                var response = _governanceRuleRestClient.Delete(Id.Parent.ResourceType.GetLastType(), ruleId, cancellationToken);
-                var operation = new SecurityCenterArmOperation(_governanceRuleClientDiagnostics, Pipeline, _governanceRuleRestClient.CreateDeleteRequest(Id.Parent.ResourceType.GetLastType(), ruleId).Request, response, OperationFinalStateVia.Location);
+                var response = _governanceRuleRestClient.Delete(Id.Parent, Id.Name, cancellationToken);
+                var operation = new SecurityCenterArmOperation(_governanceRuleClientDiagnostics, Pipeline, _governanceRuleRestClient.CreateDeleteRequest(Id.Parent, Id.Name).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
@@ -255,21 +233,18 @@ namespace Azure.ResourceManager.SecurityCenter
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="ruleId"> The governance rule key - unique key for the standard governance rule (GUID). </param>
         /// <param name="data"> Governance rule over a given scope. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="ruleId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="ruleId"/> or <paramref name="data"/> is null. </exception>
-        public virtual async Task<ArmOperation<GovernanceRuleResource>> UpdateAsync(WaitUntil waitUntil, string ruleId, GovernanceRuleData data, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
+        public virtual async Task<ArmOperation<GovernanceRuleResource>> UpdateAsync(WaitUntil waitUntil, GovernanceRuleData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(ruleId, nameof(ruleId));
             Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _governanceRuleClientDiagnostics.CreateScope("GovernanceRuleResource.Update");
             scope.Start();
             try
             {
-                var response = await _governanceRuleRestClient.CreateOrUpdateAsync(Id.Parent.ResourceType.GetLastType(), ruleId, data, cancellationToken).ConfigureAwait(false);
+                var response = await _governanceRuleRestClient.CreateOrUpdateAsync(Id.Parent, Id.Name, data, cancellationToken).ConfigureAwait(false);
                 var operation = new SecurityCenterArmOperation<GovernanceRuleResource>(Response.FromValue(new GovernanceRuleResource(Client, response), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
@@ -296,21 +271,18 @@ namespace Azure.ResourceManager.SecurityCenter
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="ruleId"> The governance rule key - unique key for the standard governance rule (GUID). </param>
         /// <param name="data"> Governance rule over a given scope. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="ruleId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="ruleId"/> or <paramref name="data"/> is null. </exception>
-        public virtual ArmOperation<GovernanceRuleResource> Update(WaitUntil waitUntil, string ruleId, GovernanceRuleData data, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
+        public virtual ArmOperation<GovernanceRuleResource> Update(WaitUntil waitUntil, GovernanceRuleData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(ruleId, nameof(ruleId));
             Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _governanceRuleClientDiagnostics.CreateScope("GovernanceRuleResource.Update");
             scope.Start();
             try
             {
-                var response = _governanceRuleRestClient.CreateOrUpdate(Id.Parent.ResourceType.GetLastType(), ruleId, data, cancellationToken);
+                var response = _governanceRuleRestClient.CreateOrUpdate(Id.Parent, Id.Name, data, cancellationToken);
                 var operation = new SecurityCenterArmOperation<GovernanceRuleResource>(Response.FromValue(new GovernanceRuleResource(Client, response), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
@@ -337,21 +309,16 @@ namespace Azure.ResourceManager.SecurityCenter
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="ruleId"> The governance rule key - unique key for the standard governance rule (GUID). </param>
         /// <param name="executeGovernanceRuleParams"> Execute governance rule over a given scope. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="ruleId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="ruleId"/> is null. </exception>
-        public virtual async Task<ArmOperation> ExecuteAsync(WaitUntil waitUntil, string ruleId, ExecuteGovernanceRuleParams executeGovernanceRuleParams = null, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation> ExecuteAsync(WaitUntil waitUntil, ExecuteGovernanceRuleParams executeGovernanceRuleParams = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(ruleId, nameof(ruleId));
-
             using var scope = _governanceRuleClientDiagnostics.CreateScope("GovernanceRuleResource.Execute");
             scope.Start();
             try
             {
-                var response = await _governanceRuleRestClient.ExecuteAsync(Id.Parent.ResourceType.GetLastType(), ruleId, executeGovernanceRuleParams, cancellationToken).ConfigureAwait(false);
-                var operation = new SecurityCenterArmOperation(_governanceRuleClientDiagnostics, Pipeline, _governanceRuleRestClient.CreateExecuteRequest(Id.Parent.ResourceType.GetLastType(), ruleId, executeGovernanceRuleParams).Request, response, OperationFinalStateVia.Location);
+                var response = await _governanceRuleRestClient.ExecuteAsync(Id.Parent, Id.Name, executeGovernanceRuleParams, cancellationToken).ConfigureAwait(false);
+                var operation = new SecurityCenterArmOperation(_governanceRuleClientDiagnostics, Pipeline, _governanceRuleRestClient.CreateExecuteRequest(Id.Parent, Id.Name, executeGovernanceRuleParams).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -377,21 +344,16 @@ namespace Azure.ResourceManager.SecurityCenter
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="ruleId"> The governance rule key - unique key for the standard governance rule (GUID). </param>
         /// <param name="executeGovernanceRuleParams"> Execute governance rule over a given scope. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="ruleId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="ruleId"/> is null. </exception>
-        public virtual ArmOperation Execute(WaitUntil waitUntil, string ruleId, ExecuteGovernanceRuleParams executeGovernanceRuleParams = null, CancellationToken cancellationToken = default)
+        public virtual ArmOperation Execute(WaitUntil waitUntil, ExecuteGovernanceRuleParams executeGovernanceRuleParams = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(ruleId, nameof(ruleId));
-
             using var scope = _governanceRuleClientDiagnostics.CreateScope("GovernanceRuleResource.Execute");
             scope.Start();
             try
             {
-                var response = _governanceRuleRestClient.Execute(Id.Parent.ResourceType.GetLastType(), ruleId, executeGovernanceRuleParams, cancellationToken);
-                var operation = new SecurityCenterArmOperation(_governanceRuleClientDiagnostics, Pipeline, _governanceRuleRestClient.CreateExecuteRequest(Id.Parent.ResourceType.GetLastType(), ruleId, executeGovernanceRuleParams).Request, response, OperationFinalStateVia.Location);
+                var response = _governanceRuleRestClient.Execute(Id.Parent, Id.Name, executeGovernanceRuleParams, cancellationToken);
+                var operation = new SecurityCenterArmOperation(_governanceRuleClientDiagnostics, Pipeline, _governanceRuleRestClient.CreateExecuteRequest(Id.Parent, Id.Name, executeGovernanceRuleParams).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;

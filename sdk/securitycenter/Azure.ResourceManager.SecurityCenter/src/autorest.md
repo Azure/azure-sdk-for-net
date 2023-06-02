@@ -298,9 +298,6 @@ override-operation-name:
   SubscriptionGovernanceRulesExecuteStatus_Get: GetRuleExecutionStatus
   ExternalSecuritySolutions_List: GetExternalSecuritySolutions
 
-request-path-to-resource-type:
-  /{scope}: Microsoft.Security/pricings
-
 request-path-to-resource-name:
   /subscriptions/{subscriptionId}/providers/Microsoft.Security/locations/{ascLocation}/alerts/{alertName}: SubscriptionSecurityAlert
   /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Security/locations/{ascLocation}/alerts/{alertName}: ResourceGroupSecurityAlert
@@ -435,4 +432,13 @@ directive:
     where: $.definitions
     transform: >
         $.OperationResult.properties.status['x-ms-enum']['name'] = 'OperationResultStatus';
+  # The parameter for /{scope} must be defined as x-ms-skip-url-encoding = true
+  - from: governanceRules.json
+    where: $.parameters
+    transform: >
+        $.Scope['x-ms-skip-url-encoding'] = true;
+  - from: governanceAssignments.json
+    where: $.parameters
+    transform: >
+        $.Scope['x-ms-skip-url-encoding'] = true;
 ```

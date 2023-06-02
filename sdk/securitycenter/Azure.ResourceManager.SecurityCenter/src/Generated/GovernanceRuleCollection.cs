@@ -8,27 +8,24 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
-using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.SecurityCenter
 {
     /// <summary>
     /// A class representing a collection of <see cref="GovernanceRuleResource" /> and their operations.
-    /// Each <see cref="GovernanceRuleResource" /> in the collection will belong to the same instance of <see cref="TenantResource" />.
-    /// To get a <see cref="GovernanceRuleCollection" /> instance call the GetGovernanceRules method from an instance of <see cref="TenantResource" />.
+    /// Each <see cref="GovernanceRuleResource" /> in the collection will belong to the same instance of <see cref="ArmResource" />.
+    /// To get a <see cref="GovernanceRuleCollection" /> instance call the GetGovernanceRules method from an instance of <see cref="ArmResource" />.
     /// </summary>
     public partial class GovernanceRuleCollection : ArmCollection, IEnumerable<GovernanceRuleResource>, IAsyncEnumerable<GovernanceRuleResource>
     {
         private readonly ClientDiagnostics _governanceRuleClientDiagnostics;
         private readonly GovernanceRulesRestOperations _governanceRuleRestClient;
-        private readonly string _scope;
 
         /// <summary> Initializes a new instance of the <see cref="GovernanceRuleCollection"/> class for mocking. </summary>
         protected GovernanceRuleCollection()
@@ -38,24 +35,11 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <summary> Initializes a new instance of the <see cref="GovernanceRuleCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
-        /// <param name="scope"> The scope of the Governance rules. Valid scopes are: management group (format: &apos;providers/Microsoft.Management/managementGroups/{managementGroup}&apos;), subscription (format: &apos;subscriptions/{subscriptionId}&apos;), or security connector (format: &apos;subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Security/securityConnectors/{securityConnectorName})&apos;. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="scope"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="scope"/> is an empty string, and was expected to be non-empty. </exception>
-        internal GovernanceRuleCollection(ArmClient client, ResourceIdentifier id, string scope) : base(client, id)
+        internal GovernanceRuleCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _scope = scope;
             _governanceRuleClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.SecurityCenter", GovernanceRuleResource.ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(GovernanceRuleResource.ResourceType, out string governanceRuleApiVersion);
             _governanceRuleRestClient = new GovernanceRulesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, governanceRuleApiVersion);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
-        }
-
-        internal static void ValidateResourceId(ResourceIdentifier id)
-        {
-            if (id.ResourceType != TenantResource.ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, TenantResource.ResourceType), nameof(id));
         }
 
         /// <summary>
@@ -86,7 +70,7 @@ namespace Azure.ResourceManager.SecurityCenter
             scope.Start();
             try
             {
-                var response = await _governanceRuleRestClient.CreateOrUpdateAsync(_scope, ruleId, data, cancellationToken).ConfigureAwait(false);
+                var response = await _governanceRuleRestClient.CreateOrUpdateAsync(Id, ruleId, data, cancellationToken).ConfigureAwait(false);
                 var operation = new SecurityCenterArmOperation<GovernanceRuleResource>(Response.FromValue(new GovernanceRuleResource(Client, response), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
@@ -127,7 +111,7 @@ namespace Azure.ResourceManager.SecurityCenter
             scope.Start();
             try
             {
-                var response = _governanceRuleRestClient.CreateOrUpdate(_scope, ruleId, data, cancellationToken);
+                var response = _governanceRuleRestClient.CreateOrUpdate(Id, ruleId, data, cancellationToken);
                 var operation = new SecurityCenterArmOperation<GovernanceRuleResource>(Response.FromValue(new GovernanceRuleResource(Client, response), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
@@ -165,7 +149,7 @@ namespace Azure.ResourceManager.SecurityCenter
             scope.Start();
             try
             {
-                var response = await _governanceRuleRestClient.GetAsync(_scope, ruleId, cancellationToken).ConfigureAwait(false);
+                var response = await _governanceRuleRestClient.GetAsync(Id, ruleId, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new GovernanceRuleResource(Client, response.Value), response.GetRawResponse());
@@ -202,7 +186,7 @@ namespace Azure.ResourceManager.SecurityCenter
             scope.Start();
             try
             {
-                var response = _governanceRuleRestClient.Get(_scope, ruleId, cancellationToken);
+                var response = _governanceRuleRestClient.Get(Id, ruleId, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new GovernanceRuleResource(Client, response.Value), response.GetRawResponse());
@@ -231,8 +215,8 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <returns> An async collection of <see cref="GovernanceRuleResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<GovernanceRuleResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _governanceRuleRestClient.CreateListRequest(_scope);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _governanceRuleRestClient.CreateListNextPageRequest(nextLink, _scope);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _governanceRuleRestClient.CreateListRequest(Id);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _governanceRuleRestClient.CreateListNextPageRequest(nextLink, Id);
             return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new GovernanceRuleResource(Client, GovernanceRuleData.DeserializeGovernanceRuleData(e)), _governanceRuleClientDiagnostics, Pipeline, "GovernanceRuleCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
@@ -253,8 +237,8 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <returns> A collection of <see cref="GovernanceRuleResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<GovernanceRuleResource> GetAll(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _governanceRuleRestClient.CreateListRequest(_scope);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _governanceRuleRestClient.CreateListNextPageRequest(nextLink, _scope);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _governanceRuleRestClient.CreateListRequest(Id);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _governanceRuleRestClient.CreateListNextPageRequest(nextLink, Id);
             return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new GovernanceRuleResource(Client, GovernanceRuleData.DeserializeGovernanceRuleData(e)), _governanceRuleClientDiagnostics, Pipeline, "GovernanceRuleCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
@@ -283,7 +267,7 @@ namespace Azure.ResourceManager.SecurityCenter
             scope.Start();
             try
             {
-                var response = await _governanceRuleRestClient.GetAsync(_scope, ruleId, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _governanceRuleRestClient.GetAsync(Id, ruleId, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -318,7 +302,7 @@ namespace Azure.ResourceManager.SecurityCenter
             scope.Start();
             try
             {
-                var response = _governanceRuleRestClient.Get(_scope, ruleId, cancellationToken: cancellationToken);
+                var response = _governanceRuleRestClient.Get(Id, ruleId, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)

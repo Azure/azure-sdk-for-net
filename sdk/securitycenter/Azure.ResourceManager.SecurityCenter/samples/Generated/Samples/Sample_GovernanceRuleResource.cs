@@ -40,8 +40,7 @@ namespace Azure.ResourceManager.SecurityCenter.Samples
             GovernanceRuleResource governanceRule = client.GetGovernanceRuleResource(governanceRuleResourceId);
 
             // invoke the operation
-            string ruleId0 = "ad9a8e26-29d9-4829-bb30-e597a58cdbb8";
-            GovernanceRuleResource result = await governanceRule.GetAsync(ruleId0);
+            GovernanceRuleResource result = await governanceRule.GetAsync();
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
@@ -71,8 +70,7 @@ namespace Azure.ResourceManager.SecurityCenter.Samples
             GovernanceRuleResource governanceRule = client.GetGovernanceRuleResource(governanceRuleResourceId);
 
             // invoke the operation
-            string ruleId0 = "ad9a8e26-29d9-4829-bb30-e597a58cdbb8";
-            GovernanceRuleResource result = await governanceRule.GetAsync(ruleId0);
+            GovernanceRuleResource result = await governanceRule.GetAsync();
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
@@ -102,8 +100,7 @@ namespace Azure.ResourceManager.SecurityCenter.Samples
             GovernanceRuleResource governanceRule = client.GetGovernanceRuleResource(governanceRuleResourceId);
 
             // invoke the operation
-            string ruleId0 = "ad9a8e26-29d9-4829-bb30-e597a58cdbb8";
-            GovernanceRuleResource result = await governanceRule.GetAsync(ruleId0);
+            GovernanceRuleResource result = await governanceRule.GetAsync();
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
@@ -133,7 +130,6 @@ namespace Azure.ResourceManager.SecurityCenter.Samples
             GovernanceRuleResource governanceRule = client.GetGovernanceRuleResource(governanceRuleResourceId);
 
             // invoke the operation
-            string ruleId0 = "ad9a8e26-29d9-4829-bb30-e597a58cdbb8";
             GovernanceRuleData data = new GovernanceRuleData()
             {
                 DisplayName = "Management group rule",
@@ -169,7 +165,7 @@ BinaryData.FromObjectAsJson(new Dictionary<string, object>()
                     IsOwnerEmailNotificationDisabled = false,
                 },
             };
-            ArmOperation<GovernanceRuleResource> lro = await governanceRule.UpdateAsync(WaitUntil.Completed, ruleId0, data);
+            ArmOperation<GovernanceRuleResource> lro = await governanceRule.UpdateAsync(WaitUntil.Completed, data);
             GovernanceRuleResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
@@ -200,7 +196,6 @@ BinaryData.FromObjectAsJson(new Dictionary<string, object>()
             GovernanceRuleResource governanceRule = client.GetGovernanceRuleResource(governanceRuleResourceId);
 
             // invoke the operation
-            string ruleId0 = "ad9a8e26-29d9-4829-bb30-e597a58cdbb8";
             GovernanceRuleData data = new GovernanceRuleData()
             {
                 DisplayName = "GCP Admin's rule",
@@ -232,7 +227,7 @@ BinaryData.FromObjectAsJson(new Dictionary<string, object>()
                     IsOwnerEmailNotificationDisabled = false,
                 },
             };
-            ArmOperation<GovernanceRuleResource> lro = await governanceRule.UpdateAsync(WaitUntil.Completed, ruleId0, data);
+            ArmOperation<GovernanceRuleResource> lro = await governanceRule.UpdateAsync(WaitUntil.Completed, data);
             GovernanceRuleResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
@@ -263,7 +258,6 @@ BinaryData.FromObjectAsJson(new Dictionary<string, object>()
             GovernanceRuleResource governanceRule = client.GetGovernanceRuleResource(governanceRuleResourceId);
 
             // invoke the operation
-            string ruleId0 = "ad9a8e26-29d9-4829-bb30-e597a58cdbb8";
             GovernanceRuleData data = new GovernanceRuleData()
             {
                 DisplayName = "Admin's rule",
@@ -295,7 +289,7 @@ BinaryData.FromObjectAsJson(new Dictionary<string, object>()
                     IsOwnerEmailNotificationDisabled = false,
                 },
             };
-            ArmOperation<GovernanceRuleResource> lro = await governanceRule.UpdateAsync(WaitUntil.Completed, ruleId0, data);
+            ArmOperation<GovernanceRuleResource> lro = await governanceRule.UpdateAsync(WaitUntil.Completed, data);
             GovernanceRuleResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
@@ -326,8 +320,7 @@ BinaryData.FromObjectAsJson(new Dictionary<string, object>()
             GovernanceRuleResource governanceRule = client.GetGovernanceRuleResource(governanceRuleResourceId);
 
             // invoke the operation
-            string ruleId0 = "ad9a8e26-29d9-4829-bb30-e597a58cdbb8";
-            await governanceRule.DeleteAsync(WaitUntil.Completed, ruleId0);
+            await governanceRule.DeleteAsync(WaitUntil.Completed);
 
             Console.WriteLine($"Succeeded");
         }
@@ -353,8 +346,7 @@ BinaryData.FromObjectAsJson(new Dictionary<string, object>()
             GovernanceRuleResource governanceRule = client.GetGovernanceRuleResource(governanceRuleResourceId);
 
             // invoke the operation
-            string ruleId0 = "ad9a8e26-29d9-4829-bb30-e597a58cdbb8";
-            await governanceRule.DeleteAsync(WaitUntil.Completed, ruleId0);
+            await governanceRule.DeleteAsync(WaitUntil.Completed);
 
             Console.WriteLine($"Succeeded");
         }
@@ -380,8 +372,7 @@ BinaryData.FromObjectAsJson(new Dictionary<string, object>()
             GovernanceRuleResource governanceRule = client.GetGovernanceRuleResource(governanceRuleResourceId);
 
             // invoke the operation
-            string ruleId0 = "ad9a8e26-29d9-4829-bb30-e597a58cdbb8";
-            await governanceRule.DeleteAsync(WaitUntil.Completed, ruleId0);
+            await governanceRule.DeleteAsync(WaitUntil.Completed);
 
             Console.WriteLine($"Succeeded");
         }
@@ -407,8 +398,7 @@ BinaryData.FromObjectAsJson(new Dictionary<string, object>()
             GovernanceRuleResource governanceRule = client.GetGovernanceRuleResource(governanceRuleResourceId);
 
             // invoke the operation
-            string ruleId0 = "ad9a8e26-29d9-4829-bb30-e597a58cdbb8";
-            await governanceRule.ExecuteAsync(WaitUntil.Completed, ruleId0);
+            await governanceRule.ExecuteAsync(WaitUntil.Completed);
 
             Console.WriteLine($"Succeeded");
         }
@@ -434,8 +424,7 @@ BinaryData.FromObjectAsJson(new Dictionary<string, object>()
             GovernanceRuleResource governanceRule = client.GetGovernanceRuleResource(governanceRuleResourceId);
 
             // invoke the operation
-            string ruleId0 = "ad9a8e26-29d9-4829-bb30-e597a58cdbb8";
-            await governanceRule.ExecuteAsync(WaitUntil.Completed, ruleId0);
+            await governanceRule.ExecuteAsync(WaitUntil.Completed);
 
             Console.WriteLine($"Succeeded");
         }
@@ -461,94 +450,9 @@ BinaryData.FromObjectAsJson(new Dictionary<string, object>()
             GovernanceRuleResource governanceRule = client.GetGovernanceRuleResource(governanceRuleResourceId);
 
             // invoke the operation
-            string ruleId0 = "ad9a8e26-29d9-4829-bb30-e597a58cdbb8";
-            await governanceRule.ExecuteAsync(WaitUntil.Completed, ruleId0);
+            await governanceRule.ExecuteAsync(WaitUntil.Completed);
 
             Console.WriteLine($"Succeeded");
-        }
-
-        // Get governance rules long run operation result over management group
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task OperationResults_GetGovernanceRulesLongRunOperationResultOverManagementGroup()
-        {
-            // Generated from example definition: specification/security/resource-manager/Microsoft.Security/preview/2022-01-01-preview/examples/GovernanceRules/GetManagementGroupGovernanceRuleExecuteStatus_example.json
-            // this example is just showing the usage of "GovernanceRules_OperationResults" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this GovernanceRuleResource created on azure
-            // for more information of creating GovernanceRuleResource, please refer to the document of GovernanceRuleResource
-            string scope = "providers/Microsoft.Management/managementGroups/contoso";
-            string ruleId = "ad9a8e26-29d9-4829-bb30-e597a58cdbb8";
-            ResourceIdentifier governanceRuleResourceId = GovernanceRuleResource.CreateResourceIdentifier(scope, ruleId);
-            GovernanceRuleResource governanceRule = client.GetGovernanceRuleResource(governanceRuleResourceId);
-
-            // invoke the operation
-            string ruleId0 = "ad9a8e26-29d9-4829-bb30-e597a58cdbb8";
-            string operationId = "58b33f4f-c8c7-4b01-99cc-d437db4d40dd";
-            OperationResultAutoGenerated result = await governanceRule.OperationResultsAsync(ruleId0, operationId);
-
-            Console.WriteLine($"Succeeded: {result}");
-        }
-
-        // Get governance rules long run operation result over security connector
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task OperationResults_GetGovernanceRulesLongRunOperationResultOverSecurityConnector()
-        {
-            // Generated from example definition: specification/security/resource-manager/Microsoft.Security/preview/2022-01-01-preview/examples/GovernanceRules/GetSecurityConnectorGovernanceRuleExecuteStatus_example.json
-            // this example is just showing the usage of "GovernanceRules_OperationResults" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this GovernanceRuleResource created on azure
-            // for more information of creating GovernanceRuleResource, please refer to the document of GovernanceRuleResource
-            string scope = "subscriptions/20ff7fc3-e762-44dd-bd96-b71116dcdc23/resourceGroups/gcpResourceGroup/providers/Microsoft.Security/securityConnectors/gcpconnector";
-            string ruleId = "ad9a8e26-29d9-4829-bb30-e597a58cdbb8";
-            ResourceIdentifier governanceRuleResourceId = GovernanceRuleResource.CreateResourceIdentifier(scope, ruleId);
-            GovernanceRuleResource governanceRule = client.GetGovernanceRuleResource(governanceRuleResourceId);
-
-            // invoke the operation
-            string ruleId0 = "ad9a8e26-29d9-4829-bb30-e597a58cdbb8";
-            string operationId = "58b33f4f-c8c7-4b01-99cc-d437db4d40dd";
-            OperationResultAutoGenerated result = await governanceRule.OperationResultsAsync(ruleId0, operationId);
-
-            Console.WriteLine($"Succeeded: {result}");
-        }
-
-        // Get governance rules long run operation result over subscription
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task OperationResults_GetGovernanceRulesLongRunOperationResultOverSubscription()
-        {
-            // Generated from example definition: specification/security/resource-manager/Microsoft.Security/preview/2022-01-01-preview/examples/GovernanceRules/GetGovernanceRuleExecuteStatus_example.json
-            // this example is just showing the usage of "GovernanceRules_OperationResults" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this GovernanceRuleResource created on azure
-            // for more information of creating GovernanceRuleResource, please refer to the document of GovernanceRuleResource
-            string scope = "subscriptions/20ff7fc3-e762-44dd-bd96-b71116dcdc23";
-            string ruleId = "ad9a8e26-29d9-4829-bb30-e597a58cdbb8";
-            ResourceIdentifier governanceRuleResourceId = GovernanceRuleResource.CreateResourceIdentifier(scope, ruleId);
-            GovernanceRuleResource governanceRule = client.GetGovernanceRuleResource(governanceRuleResourceId);
-
-            // invoke the operation
-            string ruleId0 = "ad9a8e26-29d9-4829-bb30-e597a58cdbb8";
-            string operationId = "58b33f4f-c8c7-4b01-99cc-d437db4d40dd";
-            OperationResultAutoGenerated result = await governanceRule.OperationResultsAsync(ruleId0, operationId);
-
-            Console.WriteLine($"Succeeded: {result}");
         }
     }
 }

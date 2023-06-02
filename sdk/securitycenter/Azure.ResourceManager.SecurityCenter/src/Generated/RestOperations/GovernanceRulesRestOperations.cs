@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.SecurityCenter
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/", false);
-            uri.AppendPath(scope, true);
+            uri.AppendPath(scope, false);
             uri.AppendPath("/providers/Microsoft.Security/governanceRules", false);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
@@ -58,10 +58,9 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="scope"> The scope of the Governance rules. Valid scopes are: management group (format: &apos;providers/Microsoft.Management/managementGroups/{managementGroup}&apos;), subscription (format: &apos;subscriptions/{subscriptionId}&apos;), or security connector (format: &apos;subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Security/securityConnectors/{securityConnectorName})&apos;. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="scope"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="scope"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<GovernanceRuleList>> ListAsync(string scope, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(scope, nameof(scope));
+            Argument.AssertNotNull(scope, nameof(scope));
 
             using var message = CreateListRequest(scope);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -83,10 +82,9 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="scope"> The scope of the Governance rules. Valid scopes are: management group (format: &apos;providers/Microsoft.Management/managementGroups/{managementGroup}&apos;), subscription (format: &apos;subscriptions/{subscriptionId}&apos;), or security connector (format: &apos;subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Security/securityConnectors/{securityConnectorName})&apos;. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="scope"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="scope"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<GovernanceRuleList> List(string scope, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(scope, nameof(scope));
+            Argument.AssertNotNull(scope, nameof(scope));
 
             using var message = CreateListRequest(scope);
             _pipeline.Send(message, cancellationToken);
@@ -112,7 +110,7 @@ namespace Azure.ResourceManager.SecurityCenter
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/", false);
-            uri.AppendPath(scope, true);
+            uri.AppendPath(scope, false);
             uri.AppendPath("/providers/Microsoft.Security/governanceRules/", false);
             uri.AppendPath(ruleId, true);
             uri.AppendQuery("api-version", _apiVersion, true);
@@ -127,10 +125,10 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="ruleId"> The governance rule key - unique key for the standard governance rule (GUID). </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="scope"/> or <paramref name="ruleId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="scope"/> or <paramref name="ruleId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="ruleId"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<GovernanceRuleData>> GetAsync(string scope, string ruleId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(scope, nameof(scope));
+            Argument.AssertNotNull(scope, nameof(scope));
             Argument.AssertNotNullOrEmpty(ruleId, nameof(ruleId));
 
             using var message = CreateGetRequest(scope, ruleId);
@@ -156,10 +154,10 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="ruleId"> The governance rule key - unique key for the standard governance rule (GUID). </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="scope"/> or <paramref name="ruleId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="scope"/> or <paramref name="ruleId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="ruleId"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<GovernanceRuleData> Get(string scope, string ruleId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(scope, nameof(scope));
+            Argument.AssertNotNull(scope, nameof(scope));
             Argument.AssertNotNullOrEmpty(ruleId, nameof(ruleId));
 
             using var message = CreateGetRequest(scope, ruleId);
@@ -188,7 +186,7 @@ namespace Azure.ResourceManager.SecurityCenter
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/", false);
-            uri.AppendPath(scope, true);
+            uri.AppendPath(scope, false);
             uri.AppendPath("/providers/Microsoft.Security/governanceRules/", false);
             uri.AppendPath(ruleId, true);
             uri.AppendQuery("api-version", _apiVersion, true);
@@ -208,10 +206,10 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="data"> Governance rule over a given scope. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="scope"/>, <paramref name="ruleId"/> or <paramref name="data"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="scope"/> or <paramref name="ruleId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="ruleId"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<GovernanceRuleData>> CreateOrUpdateAsync(string scope, string ruleId, GovernanceRuleData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(scope, nameof(scope));
+            Argument.AssertNotNull(scope, nameof(scope));
             Argument.AssertNotNullOrEmpty(ruleId, nameof(ruleId));
             Argument.AssertNotNull(data, nameof(data));
 
@@ -238,10 +236,10 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="data"> Governance rule over a given scope. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="scope"/>, <paramref name="ruleId"/> or <paramref name="data"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="scope"/> or <paramref name="ruleId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="ruleId"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<GovernanceRuleData> CreateOrUpdate(string scope, string ruleId, GovernanceRuleData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(scope, nameof(scope));
+            Argument.AssertNotNull(scope, nameof(scope));
             Argument.AssertNotNullOrEmpty(ruleId, nameof(ruleId));
             Argument.AssertNotNull(data, nameof(data));
 
@@ -270,7 +268,7 @@ namespace Azure.ResourceManager.SecurityCenter
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/", false);
-            uri.AppendPath(scope, true);
+            uri.AppendPath(scope, false);
             uri.AppendPath("/providers/Microsoft.Security/governanceRules/", false);
             uri.AppendPath(ruleId, true);
             uri.AppendQuery("api-version", _apiVersion, true);
@@ -284,10 +282,10 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="ruleId"> The governance rule key - unique key for the standard governance rule (GUID). </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="scope"/> or <paramref name="ruleId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="scope"/> or <paramref name="ruleId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="ruleId"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response> DeleteAsync(string scope, string ruleId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(scope, nameof(scope));
+            Argument.AssertNotNull(scope, nameof(scope));
             Argument.AssertNotNullOrEmpty(ruleId, nameof(ruleId));
 
             using var message = CreateDeleteRequest(scope, ruleId);
@@ -308,10 +306,10 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="ruleId"> The governance rule key - unique key for the standard governance rule (GUID). </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="scope"/> or <paramref name="ruleId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="scope"/> or <paramref name="ruleId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="ruleId"/> is an empty string, and was expected to be non-empty. </exception>
         public Response Delete(string scope, string ruleId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(scope, nameof(scope));
+            Argument.AssertNotNull(scope, nameof(scope));
             Argument.AssertNotNullOrEmpty(ruleId, nameof(ruleId));
 
             using var message = CreateDeleteRequest(scope, ruleId);
@@ -335,7 +333,7 @@ namespace Azure.ResourceManager.SecurityCenter
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/", false);
-            uri.AppendPath(scope, true);
+            uri.AppendPath(scope, false);
             uri.AppendPath("/providers/Microsoft.Security/governanceRules/", false);
             uri.AppendPath(ruleId, true);
             uri.AppendPath("/execute", false);
@@ -359,10 +357,10 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="executeGovernanceRuleParams"> Execute governance rule over a given scope. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="scope"/> or <paramref name="ruleId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="scope"/> or <paramref name="ruleId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="ruleId"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response> ExecuteAsync(string scope, string ruleId, ExecuteGovernanceRuleParams executeGovernanceRuleParams = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(scope, nameof(scope));
+            Argument.AssertNotNull(scope, nameof(scope));
             Argument.AssertNotNullOrEmpty(ruleId, nameof(ruleId));
 
             using var message = CreateExecuteRequest(scope, ruleId, executeGovernanceRuleParams);
@@ -382,10 +380,10 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="executeGovernanceRuleParams"> Execute governance rule over a given scope. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="scope"/> or <paramref name="ruleId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="scope"/> or <paramref name="ruleId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="ruleId"/> is an empty string, and was expected to be non-empty. </exception>
         public Response Execute(string scope, string ruleId, ExecuteGovernanceRuleParams executeGovernanceRuleParams = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(scope, nameof(scope));
+            Argument.AssertNotNull(scope, nameof(scope));
             Argument.AssertNotNullOrEmpty(ruleId, nameof(ruleId));
 
             using var message = CreateExecuteRequest(scope, ruleId, executeGovernanceRuleParams);
@@ -418,11 +416,10 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="scope"> The scope of the Governance rules. Valid scopes are: management group (format: &apos;providers/Microsoft.Management/managementGroups/{managementGroup}&apos;), subscription (format: &apos;subscriptions/{subscriptionId}&apos;), or security connector (format: &apos;subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Security/securityConnectors/{securityConnectorName})&apos;. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="scope"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="scope"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<GovernanceRuleList>> ListNextPageAsync(string nextLink, string scope, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
-            Argument.AssertNotNullOrEmpty(scope, nameof(scope));
+            Argument.AssertNotNull(scope, nameof(scope));
 
             using var message = CreateListNextPageRequest(nextLink, scope);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -445,11 +442,10 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="scope"> The scope of the Governance rules. Valid scopes are: management group (format: &apos;providers/Microsoft.Management/managementGroups/{managementGroup}&apos;), subscription (format: &apos;subscriptions/{subscriptionId}&apos;), or security connector (format: &apos;subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Security/securityConnectors/{securityConnectorName})&apos;. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="scope"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="scope"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<GovernanceRuleList> ListNextPage(string nextLink, string scope, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
-            Argument.AssertNotNullOrEmpty(scope, nameof(scope));
+            Argument.AssertNotNull(scope, nameof(scope));
 
             using var message = CreateListNextPageRequest(nextLink, scope);
             _pipeline.Send(message, cancellationToken);

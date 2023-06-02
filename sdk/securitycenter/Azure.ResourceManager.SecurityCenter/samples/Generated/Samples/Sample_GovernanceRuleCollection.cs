@@ -32,13 +32,13 @@ namespace Azure.ResourceManager.SecurityCenter.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this TenantResource created on azure
-            // for more information of creating TenantResource, please refer to the document of TenantResource
-            var tenantResource = client.GetTenants().GetAllAsync().GetAsyncEnumerator().Current;
+            // this example assumes you already have this ArmResource created on azure
+            // for more information of creating ArmResource, please refer to the document of ArmResource
 
             // get the collection of this GovernanceRuleResource
             string scope = "providers/Microsoft.Management/managementGroups/contoso";
-            GovernanceRuleCollection collection = tenantResource.GetGovernanceRules(scope);
+            ResourceIdentifier scopeId = new ResourceIdentifier(string.Format("/{0}", scope));
+            GovernanceRuleCollection collection = client.GetGovernanceRules(scopeId);
 
             // invoke the operation and iterate over the result
             await foreach (GovernanceRuleResource item in collection.GetAllAsync())
@@ -66,13 +66,13 @@ namespace Azure.ResourceManager.SecurityCenter.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this TenantResource created on azure
-            // for more information of creating TenantResource, please refer to the document of TenantResource
-            var tenantResource = client.GetTenants().GetAllAsync().GetAsyncEnumerator().Current;
+            // this example assumes you already have this ArmResource created on azure
+            // for more information of creating ArmResource, please refer to the document of ArmResource
 
             // get the collection of this GovernanceRuleResource
             string scope = "subscriptions/20ff7fc3-e762-44dd-bd96-b71116dcdc23/resourceGroups/gcpResourceGroup/providers/Microsoft.Security/securityConnectors/gcpconnector";
-            GovernanceRuleCollection collection = tenantResource.GetGovernanceRules(scope);
+            ResourceIdentifier scopeId = new ResourceIdentifier(string.Format("/{0}", scope));
+            GovernanceRuleCollection collection = client.GetGovernanceRules(scopeId);
 
             // invoke the operation and iterate over the result
             await foreach (GovernanceRuleResource item in collection.GetAllAsync())
@@ -100,13 +100,13 @@ namespace Azure.ResourceManager.SecurityCenter.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this TenantResource created on azure
-            // for more information of creating TenantResource, please refer to the document of TenantResource
-            var tenantResource = client.GetTenants().GetAllAsync().GetAsyncEnumerator().Current;
+            // this example assumes you already have this ArmResource created on azure
+            // for more information of creating ArmResource, please refer to the document of ArmResource
 
             // get the collection of this GovernanceRuleResource
             string scope = "subscriptions/20ff7fc3-e762-44dd-bd96-b71116dcdc23";
-            GovernanceRuleCollection collection = tenantResource.GetGovernanceRules(scope);
+            ResourceIdentifier scopeId = new ResourceIdentifier(string.Format("/{0}", scope));
+            GovernanceRuleCollection collection = client.GetGovernanceRules(scopeId);
 
             // invoke the operation and iterate over the result
             await foreach (GovernanceRuleResource item in collection.GetAllAsync())
@@ -134,13 +134,13 @@ namespace Azure.ResourceManager.SecurityCenter.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this TenantResource created on azure
-            // for more information of creating TenantResource, please refer to the document of TenantResource
-            var tenantResource = client.GetTenants().GetAllAsync().GetAsyncEnumerator().Current;
+            // this example assumes you already have this ArmResource created on azure
+            // for more information of creating ArmResource, please refer to the document of ArmResource
 
             // get the collection of this GovernanceRuleResource
             string scope = "providers/Microsoft.Management/managementGroups/contoso";
-            GovernanceRuleCollection collection = tenantResource.GetGovernanceRules(scope);
+            ResourceIdentifier scopeId = new ResourceIdentifier(string.Format("/{0}", scope));
+            GovernanceRuleCollection collection = client.GetGovernanceRules(scopeId);
 
             // invoke the operation
             string ruleId = "ad9a8e26-29d9-4829-bb30-e597a58cdbb8";
@@ -166,13 +166,13 @@ namespace Azure.ResourceManager.SecurityCenter.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this TenantResource created on azure
-            // for more information of creating TenantResource, please refer to the document of TenantResource
-            var tenantResource = client.GetTenants().GetAllAsync().GetAsyncEnumerator().Current;
+            // this example assumes you already have this ArmResource created on azure
+            // for more information of creating ArmResource, please refer to the document of ArmResource
 
             // get the collection of this GovernanceRuleResource
             string scope = "providers/Microsoft.Management/managementGroups/contoso";
-            GovernanceRuleCollection collection = tenantResource.GetGovernanceRules(scope);
+            ResourceIdentifier scopeId = new ResourceIdentifier(string.Format("/{0}", scope));
+            GovernanceRuleCollection collection = client.GetGovernanceRules(scopeId);
 
             // invoke the operation
             string ruleId = "ad9a8e26-29d9-4829-bb30-e597a58cdbb8";
@@ -194,13 +194,13 @@ namespace Azure.ResourceManager.SecurityCenter.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this TenantResource created on azure
-            // for more information of creating TenantResource, please refer to the document of TenantResource
-            var tenantResource = client.GetTenants().GetAllAsync().GetAsyncEnumerator().Current;
+            // this example assumes you already have this ArmResource created on azure
+            // for more information of creating ArmResource, please refer to the document of ArmResource
 
             // get the collection of this GovernanceRuleResource
             string scope = "subscriptions/20ff7fc3-e762-44dd-bd96-b71116dcdc23/resourceGroups/gcpResourceGroup/providers/Microsoft.Security/securityConnectors/gcpconnector";
-            GovernanceRuleCollection collection = tenantResource.GetGovernanceRules(scope);
+            ResourceIdentifier scopeId = new ResourceIdentifier(string.Format("/{0}", scope));
+            GovernanceRuleCollection collection = client.GetGovernanceRules(scopeId);
 
             // invoke the operation
             string ruleId = "ad9a8e26-29d9-4829-bb30-e597a58cdbb8";
@@ -226,13 +226,13 @@ namespace Azure.ResourceManager.SecurityCenter.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this TenantResource created on azure
-            // for more information of creating TenantResource, please refer to the document of TenantResource
-            var tenantResource = client.GetTenants().GetAllAsync().GetAsyncEnumerator().Current;
+            // this example assumes you already have this ArmResource created on azure
+            // for more information of creating ArmResource, please refer to the document of ArmResource
 
             // get the collection of this GovernanceRuleResource
             string scope = "subscriptions/20ff7fc3-e762-44dd-bd96-b71116dcdc23/resourceGroups/gcpResourceGroup/providers/Microsoft.Security/securityConnectors/gcpconnector";
-            GovernanceRuleCollection collection = tenantResource.GetGovernanceRules(scope);
+            ResourceIdentifier scopeId = new ResourceIdentifier(string.Format("/{0}", scope));
+            GovernanceRuleCollection collection = client.GetGovernanceRules(scopeId);
 
             // invoke the operation
             string ruleId = "ad9a8e26-29d9-4829-bb30-e597a58cdbb8";
@@ -254,13 +254,13 @@ namespace Azure.ResourceManager.SecurityCenter.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this TenantResource created on azure
-            // for more information of creating TenantResource, please refer to the document of TenantResource
-            var tenantResource = client.GetTenants().GetAllAsync().GetAsyncEnumerator().Current;
+            // this example assumes you already have this ArmResource created on azure
+            // for more information of creating ArmResource, please refer to the document of ArmResource
 
             // get the collection of this GovernanceRuleResource
             string scope = "subscriptions/20ff7fc3-e762-44dd-bd96-b71116dcdc23";
-            GovernanceRuleCollection collection = tenantResource.GetGovernanceRules(scope);
+            ResourceIdentifier scopeId = new ResourceIdentifier(string.Format("/{0}", scope));
+            GovernanceRuleCollection collection = client.GetGovernanceRules(scopeId);
 
             // invoke the operation
             string ruleId = "ad9a8e26-29d9-4829-bb30-e597a58cdbb8";
@@ -286,13 +286,13 @@ namespace Azure.ResourceManager.SecurityCenter.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this TenantResource created on azure
-            // for more information of creating TenantResource, please refer to the document of TenantResource
-            var tenantResource = client.GetTenants().GetAllAsync().GetAsyncEnumerator().Current;
+            // this example assumes you already have this ArmResource created on azure
+            // for more information of creating ArmResource, please refer to the document of ArmResource
 
             // get the collection of this GovernanceRuleResource
             string scope = "subscriptions/20ff7fc3-e762-44dd-bd96-b71116dcdc23";
-            GovernanceRuleCollection collection = tenantResource.GetGovernanceRules(scope);
+            ResourceIdentifier scopeId = new ResourceIdentifier(string.Format("/{0}", scope));
+            GovernanceRuleCollection collection = client.GetGovernanceRules(scopeId);
 
             // invoke the operation
             string ruleId = "ad9a8e26-29d9-4829-bb30-e597a58cdbb8";
@@ -314,13 +314,13 @@ namespace Azure.ResourceManager.SecurityCenter.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this TenantResource created on azure
-            // for more information of creating TenantResource, please refer to the document of TenantResource
-            var tenantResource = client.GetTenants().GetAllAsync().GetAsyncEnumerator().Current;
+            // this example assumes you already have this ArmResource created on azure
+            // for more information of creating ArmResource, please refer to the document of ArmResource
 
             // get the collection of this GovernanceRuleResource
             string scope = "providers/Microsoft.Management/managementGroups/contoso";
-            GovernanceRuleCollection collection = tenantResource.GetGovernanceRules(scope);
+            ResourceIdentifier scopeId = new ResourceIdentifier(string.Format("/{0}", scope));
+            GovernanceRuleCollection collection = client.GetGovernanceRules(scopeId);
 
             // invoke the operation
             string ruleId = "ad9a8e26-29d9-4829-bb30-e597a58cdbb8";
@@ -382,13 +382,13 @@ BinaryData.FromObjectAsJson(new Dictionary<string, object>()
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this TenantResource created on azure
-            // for more information of creating TenantResource, please refer to the document of TenantResource
-            var tenantResource = client.GetTenants().GetAllAsync().GetAsyncEnumerator().Current;
+            // this example assumes you already have this ArmResource created on azure
+            // for more information of creating ArmResource, please refer to the document of ArmResource
 
             // get the collection of this GovernanceRuleResource
             string scope = "subscriptions/20ff7fc3-e762-44dd-bd96-b71116dcdc23/resourceGroups/gcpResourceGroup/providers/Microsoft.Security/securityConnectors/gcpconnector";
-            GovernanceRuleCollection collection = tenantResource.GetGovernanceRules(scope);
+            ResourceIdentifier scopeId = new ResourceIdentifier(string.Format("/{0}", scope));
+            GovernanceRuleCollection collection = client.GetGovernanceRules(scopeId);
 
             // invoke the operation
             string ruleId = "ad9a8e26-29d9-4829-bb30-e597a58cdbb8";
@@ -446,13 +446,13 @@ BinaryData.FromObjectAsJson(new Dictionary<string, object>()
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this TenantResource created on azure
-            // for more information of creating TenantResource, please refer to the document of TenantResource
-            var tenantResource = client.GetTenants().GetAllAsync().GetAsyncEnumerator().Current;
+            // this example assumes you already have this ArmResource created on azure
+            // for more information of creating ArmResource, please refer to the document of ArmResource
 
             // get the collection of this GovernanceRuleResource
             string scope = "subscriptions/20ff7fc3-e762-44dd-bd96-b71116dcdc23";
-            GovernanceRuleCollection collection = tenantResource.GetGovernanceRules(scope);
+            ResourceIdentifier scopeId = new ResourceIdentifier(string.Format("/{0}", scope));
+            GovernanceRuleCollection collection = client.GetGovernanceRules(scopeId);
 
             // invoke the operation
             string ruleId = "ad9a8e26-29d9-4829-bb30-e597a58cdbb8";
