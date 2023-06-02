@@ -1,6 +1,6 @@
 # Release History
 
-## 1.0.0 (Unreleased)
+## 1.0.0 (2023-06-06)
 
 This release is first stable release for the New Relic Observability Management library.
 
@@ -13,10 +13,6 @@ This release is first stable release for the New Relic Observability Management 
 Polishing since last public beta release:
 - Corrected the format of all `ResourceIdentifier` type properties / parameters.
 - Optimized the name of some models and functions.
-
-### Bugs Fixed
-
-### Other Changes
 
 ## 1.0.0-beta.2 (2023-05-30)
 
