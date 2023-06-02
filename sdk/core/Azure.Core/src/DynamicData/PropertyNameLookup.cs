@@ -7,7 +7,7 @@ namespace Azure.Core.Dynamic
 {
     /// <summary>
     /// </summary>
-    public enum DynamicNameBinding
+    public enum PropertyNameLookup
     {
         /// <summary>
         /// </summary>

@@ -52,8 +52,8 @@ namespace Azure.Core.Dynamic
             };
 
             // TODO: Split out serialization and deserialization options
-            if ((options.PropertyNameConversion == PropertyNameConversion.CamelCase) ||
-                (options.DynamicNameBinding == DynamicNameBinding.AllowPascalCase))
+            if ((options.NewPropertyConversion == PropertyNameConversion.CamelCase) ||
+                (options.ExistingPropertyLookup == PropertyNameLookup.AllowPascalCase))
             {
                 serializerOptions.PropertyNamingPolicy = JsonNamingPolicy.CamelCase;
             }
@@ -101,7 +101,7 @@ namespace Azure.Core.Dynamic
 
             // If we're using the PascalToCamel mapping and the strict name lookup
             // failed, do a second lookup with a camelCase name as well.
-            if (_options.DynamicNameBinding == DynamicNameBinding.AllowPascalCase &&
+            if (_options.ExistingPropertyLookup == PropertyNameLookup.AllowPascalCase &&
                 char.IsUpper(name[0]))
             {
                 if (_element.TryGetProperty(ConvertToCamelCase(name), out element))
@@ -173,7 +173,7 @@ namespace Azure.Core.Dynamic
 
             // TODO: reimplement to look up to see if there's a PascalCase property
             // we can use first.
-            if (_options.PropertyNameConversion == PropertyNameConversion.CamelCase)
+            if (_options.NewPropertyConversion == PropertyNameConversion.CamelCase)
             {
                 name = ConvertToCamelCase(name);
             }

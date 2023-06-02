@@ -44,7 +44,7 @@ namespace Azure.Core.Tests
         [Test]
         public void CannotGetPropertiesWithUnmatchedCasingWithNoCaseMapping()
         {
-            dynamic value = new BinaryData(testJson).ToDynamicFromJson(nameBinding: DynamicNameBinding.Strict);
+            dynamic value = new BinaryData(testJson).ToDynamicFromJson(existingPropertyLookup: PropertyNameLookup.Strict);
 
             Assert.IsNull(value.Camel);
             Assert.IsNull(value.pascal);
@@ -75,7 +75,7 @@ namespace Azure.Core.Tests
         [Test]
         public void CannotGetPropertiesWithUnmatchedCasingWithPascalToCamelMapping()
         {
-            DynamicDataOptions options = new() { DynamicNameBinding = DynamicNameBinding.AllowPascalCase };
+            DynamicDataOptions options = new() { ExistingPropertyLookup = PropertyNameLookup.AllowPascalCase };
             dynamic value = new BinaryData(testJson).ToDynamicFromJson(options);
 
             Assert.IsNull(value.pascal);
@@ -136,8 +136,8 @@ namespace Azure.Core.Tests
         {
             DynamicDataOptions options = new()
             {
-                PropertyNameConversion = PropertyNameConversion.CamelCase,
-                DynamicNameBinding = DynamicNameBinding.AllowPascalCase
+                NewPropertyConversion = PropertyNameConversion.CamelCase,
+                ExistingPropertyLookup = PropertyNameLookup.AllowPascalCase
             };
             dynamic value = new BinaryData(testJson).ToDynamicFromJson(options);
 
@@ -163,8 +163,8 @@ namespace Azure.Core.Tests
         {
             DynamicDataOptions options = new()
             {
-                PropertyNameConversion = PropertyNameConversion.CamelCase,
-                DynamicNameBinding = DynamicNameBinding.AllowPascalCase
+                NewPropertyConversion = PropertyNameConversion.CamelCase,
+                ExistingPropertyLookup = PropertyNameLookup.AllowPascalCase
             };
             dynamic value = new BinaryData(testJson).ToDynamicFromJson(options);
 
@@ -208,8 +208,8 @@ namespace Azure.Core.Tests
         {
             DynamicDataOptions options = new()
             {
-                PropertyNameConversion = PropertyNameConversion.CamelCase,
-                DynamicNameBinding = DynamicNameBinding.AllowPascalCase
+                NewPropertyConversion = PropertyNameConversion.CamelCase,
+                ExistingPropertyLookup = PropertyNameLookup.AllowPascalCase
             };
             dynamic value = new BinaryData("""{}""").ToDynamicFromJson(options);
 
@@ -255,8 +255,8 @@ namespace Azure.Core.Tests
 
             DynamicDataOptions options = new()
             {
-                PropertyNameConversion = PropertyNameConversion.CamelCase,
-                DynamicNameBinding = DynamicNameBinding.AllowPascalCase
+                NewPropertyConversion = PropertyNameConversion.CamelCase,
+                ExistingPropertyLookup = PropertyNameLookup.AllowPascalCase
             };
             dynamic dynamicJson = BinaryData.FromString(json).ToDynamicFromJson(options);
             Assert.IsTrue(dynamicJson.root.child[0].item.leaf);
@@ -302,8 +302,8 @@ namespace Azure.Core.Tests
         {
             DynamicDataOptions options = new()
             {
-                PropertyNameConversion = PropertyNameConversion.CamelCase,
-                DynamicNameBinding = DynamicNameBinding.AllowPascalCase
+                NewPropertyConversion = PropertyNameConversion.CamelCase,
+                ExistingPropertyLookup = PropertyNameLookup.AllowPascalCase
             };
             dynamic jsonData = BinaryData.FromString("""
                 {
@@ -371,8 +371,8 @@ namespace Azure.Core.Tests
         {
             DynamicDataOptions options = new()
             {
-                PropertyNameConversion = PropertyNameConversion.CamelCase,
-                DynamicNameBinding = DynamicNameBinding.AllowPascalCase
+                NewPropertyConversion = PropertyNameConversion.CamelCase,
+                ExistingPropertyLookup = PropertyNameLookup.AllowPascalCase
             };
             dynamic jsonData = BinaryData.FromString("""
                 {
@@ -406,8 +406,8 @@ namespace Azure.Core.Tests
         {
             DynamicDataOptions options = new()
             {
-                PropertyNameConversion = PropertyNameConversion.CamelCase,
-                DynamicNameBinding = DynamicNameBinding.AllowPascalCase
+                NewPropertyConversion = PropertyNameConversion.CamelCase,
+                ExistingPropertyLookup = PropertyNameLookup.AllowPascalCase
             };
             dynamic value = new BinaryData(testJson).ToDynamicFromJson(options);
 
@@ -430,8 +430,8 @@ namespace Azure.Core.Tests
         {
             DynamicDataOptions options = new()
             {
-                PropertyNameConversion = PropertyNameConversion.CamelCase,
-                DynamicNameBinding = DynamicNameBinding.AllowPascalCase
+                NewPropertyConversion = PropertyNameConversion.CamelCase,
+                ExistingPropertyLookup = PropertyNameLookup.AllowPascalCase
             };
             dynamic value = new BinaryData("""{}""").ToDynamicFromJson(options);
 
