@@ -51,7 +51,7 @@ var schemaRegistryClient = new SchemaRegistryClient(fullyQualifiedNamespace: ful
 
 ### JSON Schema generator
 
-The `SchemaRegistryJsonSchemaGenerator` is an abstract class that must be implemented and passed into the `SchemaRegistryJsonSerializer` constructor. This allows you to choose the third-party JSON Schema package you would like to use to generate schemas from .NET types. You can optionally provide an implementation to validate a .NET type against a JSON Schema. The default assumes all schemas are valid to long as the payload can be deserialized into the requested type.
+The `SchemaRegistryJsonSchemaGenerator` is an abstract class that must be implemented and passed into the `SchemaRegistryJsonSerializer` constructor. This allows you to choose the third-party JSON Schema package you would like to use to generate schemas from .NET types and validate .NET objects against JSON schemas.
 
 ### Serializer
 
@@ -64,14 +64,16 @@ This library provides a serializer, `SchemaRegistryJsonSerializer` that interact
 ```C# Snippet:SampleSchemaRegistryJsonSchemaGeneratorImplementation
 internal class SampleJsonGenerator : SchemaRegistryJsonSchemaGenerator
 {
-    public override void ThrowIfNotValidAgainstSchema(Object data, Type dataType, string schemaDefinition)
+    public override void Validate(Object data, Type dataType, string schemaDefinition)
     {
-        // Your implementation using the third-party library of your choice goes here.
-        // This method is optional. If it is not overridden, the default always returns true.
+        // Your implementation using the third-party library of your choice goes here. This method throws
+        // an exception if the data argument is not valid according to the schemaDefinition.
+
+        // If you do not wish to validate, you can simply return.
 
         return;
     }
-    public override string GenerateSchemaFromType(Type dataType)
+    public override string GenerateSchema(Type dataType)
     {
         // Your implementation using the third-party library of your choice goes here.
 
@@ -80,11 +82,13 @@ internal class SampleJsonGenerator : SchemaRegistryJsonSchemaGenerator
 }
 ```
 
-For illustration only, here is a sample implementation using `Newtonsoft.Json.Schema`
+The following is a sample implementation using `Newtonsoft.Json.Schema`.
+
+**This is for illustration only**
 ```C#
 internal class SampleJsonGenerator : SchemaRegistryJsonSchemaGenerator
 {
-    public override string GenerateSchemaFromType(Type dataType)
+    public override string GenerateSchema(Type dataType)
     {
         JSchemaGenerator generator = new();
         JSchema schema = generator.Generate(dataType);
@@ -92,7 +96,7 @@ internal class SampleJsonGenerator : SchemaRegistryJsonSchemaGenerator
         return schema.ToString();
     }
 
-    public override void ThrowIfNotValidAgainstSchema(object data, Type dataType, string schemaDefinition)
+    public override void Validate(object data, Type dataType, string schemaDefinition)
     {
         JSchema schema = JSchema.Parse(schemaDefinition);
         JObject jsonObject = JObject.FromObject(data);
@@ -193,7 +197,7 @@ Employee deserializedEmployee = await serializer.DeserializeAsync<Employee>(cont
 
 ### Configuring serialization
 
-By default, the `SchemaRegistryJsonSerializer` serializes and deserializes using the `System.Text.Json.Serializer` with its built-in options. The `SchemaRegistryJsonSerializerOptions` allows you to configure this by specifying an [`ObjectSerializer`][object_serializer] to use for serialization.
+By default, the `SchemaRegistryJsonSerializer` serializes and deserializes using the [`System.Text.Json.Serializer`][json_serializer] with its built-in options. The `SchemaRegistryJsonSerializerOptions` allows you to configure this by specifying an [`ObjectSerializer`][object_serializer] to use for serialization.
 
 To serialize and deserialize with a `NewtonsoftJsonObjectSerializer`:
 ```C# Snippet:SchemaRegistryJsonSerializeDeserializeWithOptionsNewtonsoft
@@ -242,6 +246,7 @@ This project has adopted the [Microsoft Open Source Code of Conduct][code_of_con
 [nuget]: https://www.nuget.org/
 [event_hubs_namespace]: https://docs.microsoft.com/azure/event-hubs/event-hubs-about
 [object_serializer]: https://docs.microsoft.com/dotnet/api/azure.core.serialization.objectserializer?view=azure-dotnet
+[json_serializer]: https://docs.microsoft.com/dotnet/api/system.text.json.jsonserializer?view=azure-dotnet
 [azure_powershell]: https://docs.microsoft.com/powershell/azure/
 [create_event_hubs_namespace]: https://docs.microsoft.com/azure/event-hubs/event-hubs-quickstart-powershell#create-an-event-hubs-namespace
 [quickstart_guide]: https://github.com/Azure/azure-sdk-for-net/blob/main/doc/dev/mgmt_quickstart.md

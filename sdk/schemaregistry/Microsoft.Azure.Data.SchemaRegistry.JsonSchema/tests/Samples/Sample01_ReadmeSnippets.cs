@@ -187,14 +187,16 @@ namespace Microsoft.Azure.Data.SchemaRegistry.JsonSchema.Tests.Samples
         #region Snippet:SampleSchemaRegistryJsonSchemaGeneratorImplementation
         internal class SampleJsonGenerator : SchemaRegistryJsonSchemaGenerator
         {
-            public override void ThrowIfNotValidAgainstSchema(Object data, Type dataType, string schemaDefinition)
+            public override void Validate(Object data, Type dataType, string schemaDefinition)
             {
-                // Your implementation using the third-party library of your choice goes here.
-                // This method is optional. If it is not overridden, the default always returns true.
+                // Your implementation using the third-party library of your choice goes here. This method throws
+                // an exception if the data argument is not valid according to the schemaDefinition.
+
+                // If you do not wish to validate, you can simply return.
 
                 return;
             }
-            public override string GenerateSchemaFromType(Type dataType)
+            public override string GenerateSchema(Type dataType)
             {
 #if SNIPPET
                 // Your implementation using the third-party library of your choice goes here.

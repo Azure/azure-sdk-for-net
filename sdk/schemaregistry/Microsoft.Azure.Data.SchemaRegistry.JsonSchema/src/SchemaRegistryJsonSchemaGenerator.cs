@@ -11,7 +11,7 @@ namespace Microsoft.Azure.Data.SchemaRegistry.JsonSchema
     /// any available library to be used to generate schemas from .NET types and validate objects against schemas.
     /// </summary>
     /// <remarks>
-    /// Defining <see cref="GenerateSchemaFromType(Type)"/> is required. However, defining <see cref="ThrowIfNotValidAgainstSchema(object, Type, string)"/>
+    /// Defining <see cref="GenerateSchema(Type)"/> is required. However, defining <see cref="Validate(object, Type, string)"/>
     /// is optional.
     /// </remarks>
     public abstract class SchemaRegistryJsonSchemaGenerator
@@ -22,13 +22,13 @@ namespace Microsoft.Azure.Data.SchemaRegistry.JsonSchema
         /// <param name="data">The data to use for serialization or the data that was deserialized.</param>
         /// <param name="dataType">The type of the data to serialize or the type of the deserialized data.</param>
         /// <param name="schemaDefinition">The JSON schema definition retrieved using <see cref="SchemaRegistryClient"/>.</param>
-        public abstract void ThrowIfNotValidAgainstSchema(Object data, Type dataType, string schemaDefinition);
+        public abstract void Validate(Object data, Type dataType, string schemaDefinition);
 
         /// <summary>
         /// Generates a JSON schema from <paramref name="dataType"/>.
         /// </summary>
         /// <param name="dataType">The type of the data to serialize.</param>
         /// <returns>The generated JSON schema in string format.</returns>
-        public abstract string GenerateSchemaFromType(Type dataType);
+        public abstract string GenerateSchema(Type dataType);
     }
 }

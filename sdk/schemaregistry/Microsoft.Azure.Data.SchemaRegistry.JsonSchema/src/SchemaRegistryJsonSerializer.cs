@@ -249,6 +249,9 @@ namespace Microsoft.Azure.Data.SchemaRegistry.JsonSchema
             bool async,
             CancellationToken cancellationToken)
         {
+            string schemaString;
+            BinaryData data;
+
             try
             {
                 // Serialize the data
@@ -256,28 +259,38 @@ namespace Microsoft.Azure.Data.SchemaRegistry.JsonSchema
                 var serializer = _jsonSerializerOptions.ObjectSerializer;
 
                 using Stream stream = new MemoryStream();
-                BinaryData data;
                 if (async)
                 {
                     await serializer.SerializeAsync(stream, value, dataType, cancellationToken).ConfigureAwait(false);
-
-                    stream.Position = 0;
-                    data = BinaryData.FromStream(stream);
                 }
                 else
                 {
                     serializer.Serialize(stream, value, dataType, cancellationToken);
-
-                    stream.Position = 0;
-                    data = BinaryData.FromStream(stream);
                 }
 
+                stream.Position = 0;
+                data = BinaryData.FromStream(stream);
+
                 // Use the given schema string definition or generate one from the type
-                string schemaString = _jsonSchemaGenerator.GenerateSchemaFromType(dataType);
+                schemaString = _jsonSchemaGenerator.GenerateSchema(dataType);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("An error occurred while attempting to serialize the data.", ex);
+            }
 
+            try
+            {
                 // Attempt to validate
-                _jsonSchemaGenerator.ThrowIfNotValidAgainstSchema(value, dataType, schemaString);
+                _jsonSchemaGenerator.Validate(value, dataType, schemaString);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception($"An error occurred while attempting to validate the object against the schema.", ex);
+            }
 
+            try
+            {
                 if (async)
                 {
                     return (await GetSchemaIdAsync(schemaString, dataType.Name, true, cancellationToken).ConfigureAwait(false), data);
@@ -293,10 +306,7 @@ namespace Microsoft.Azure.Data.SchemaRegistry.JsonSchema
             }
             catch (Exception ex)
             {
-                throw new Exception(
-                    "An error occurred while attempting to parse the schema to use when serializing to Json. " +
-                    $"Make sure that the schema represents valid Json.",
-                    ex);
+                throw new Exception("An error occured while attempting to get the Id for the schema.", ex);
             }
         }
 
@@ -491,7 +501,7 @@ namespace Microsoft.Azure.Data.SchemaRegistry.JsonSchema
 
             try
             {
-                _jsonSchemaGenerator.ThrowIfNotValidAgainstSchema(objectToReturn, dataType, schemaDefinition);
+                _jsonSchemaGenerator.Validate(objectToReturn, dataType, schemaDefinition);
             }
             catch (Exception ex)
             {
