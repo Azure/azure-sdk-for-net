@@ -384,6 +384,35 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
         }
 
         [Test]
+        public async Task CanRaiseLockLostOnMockProcessor()
+        {
+            var mockProcessor = new MockSessionProcessor();
+            bool processMessageCalled = false;
+            var mockReceiver = new Mock<ServiceBusSessionReceiver>();
+            mockReceiver.Setup(r => r.SessionId).Returns("sessionId");
+            mockReceiver.Setup(r => r.FullyQualifiedNamespace).Returns("namespace");
+            mockReceiver.Setup(r => r.EntityPath).Returns("entityPath");
+
+            var processArgs = new ProcessSessionMessageEventArgs(
+                ServiceBusModelFactory.ServiceBusReceivedMessage(messageId: "1", sessionId: "sessionId", lockedUntil: DateTimeOffset.UtcNow.AddSeconds(-5)),
+                mockReceiver.Object,
+                CancellationToken.None);
+
+            mockProcessor.ProcessMessageAsync += args =>
+            {
+                processMessageCalled = true;
+                Assert.IsTrue(args.LockExpiryCancellationToken.IsCancellationRequested);
+                return Task.CompletedTask;
+            };
+
+            mockProcessor.ProcessErrorAsync += _ => Task.CompletedTask;
+
+            await mockProcessor.OnProcessSessionMessageAsync(processArgs);
+
+            Assert.IsTrue(processMessageCalled);
+        }
+
+        [Test]
         public async Task CloseRespectsCancellationToken()
         {
             var mockProcessor = new Mock<ServiceBusProcessor>() {CallBase = true};

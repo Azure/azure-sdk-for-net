@@ -116,12 +116,36 @@ namespace Azure.Messaging.ServiceBus
         {
             Message = message;
             _manager = manager;
+            // for mocking
+            if (_manager != null)
+            {
+                _manager.SessionLockRenewed += SessionLockRenewed;
+                _manager.SessionLockLost += SessionLockLost;
+            }
 
             // manager would be null in scenarios where customers are using the public constructor for testing purposes.
             _sessionReceiver = (ServiceBusSessionReceiver) _manager?.Receiver;
             _receiveActions = new ProcessorReceiveActions(message, manager, false);
             CancellationToken = cancellationToken;
             LockExpiryCancellationToken = _receiveActions.GetLockExpiryCancellationToken(message);
+        }
+
+        private void SessionLockLost(object sender, EventArgs e)
+        {
+            foreach (var messageAndTokenSource in Messages)
+            {
+                messageAndTokenSource.Value.Cancel();
+            }
+        }
+
+        private void SessionLockRenewed(object sender, EventArgs e)
+        {
+            var utcNow = DateTimeOffset.UtcNow;
+            foreach (var messageAndTokenSource in Messages)
+            {
+                messageAndTokenSource.Key.LockedUntil = _sessionReceiver.SessionLockedUntil;
+                messageAndTokenSource.Value.CancelAfterSessionLockExpired(_sessionReceiver, utcNow);
+            }
         }
 
         [EditorBrowsable(EditorBrowsableState.Never)]
@@ -256,6 +280,12 @@ namespace Azure.Messaging.ServiceBus
 
         internal void EndExecutionScope() => _receiveActions.EndExecutionScope();
 
-        internal async ValueTask ReleaseAsync() => await _receiveActions.ReleaseAsync().ConfigureAwait(false);
+        internal async ValueTask ReleaseAsync()
+        {
+            _manager.SessionLockRenewed -= SessionLockRenewed;
+            _manager.SessionLockLost -= this.SessionLockLost;
+
+            await _receiveActions.ReleaseAsync().ConfigureAwait(false);
+        }
     }
 }

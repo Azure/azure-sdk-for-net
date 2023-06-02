@@ -59,6 +59,8 @@ namespace Azure.Messaging.ServiceBus
             _sessionProcessor = sessionProcessor;
         }
 
+        public event EventHandler SessionLockRenewed;
+
         private async Task<bool> EnsureCanProcess(CancellationToken cancellationToken)
         {
             bool releaseSemaphore = false;
@@ -329,6 +331,7 @@ namespace Azure.Messaging.ServiceBus
                     // single message at one time, so cancelling the token there would serve no purpose.
                     if (sbException.Reason == ServiceBusFailureReason.SessionLockLost)
                     {
+                        OnSessionLockLost();
                         // this will be awaited when closing the receiver
                         _ = CancelAsync();
                     }
@@ -379,16 +382,22 @@ namespace Azure.Messaging.ServiceBus
                         break;
                     }
                     await _receiver.RenewSessionLockAsync(sessionLockRenewalCancellationToken).ConfigureAwait(false);
+                    OnSessionLockRenewed();
                     ServiceBusEventSource.Log.ProcessorRenewSessionLockComplete(Processor.Identifier, _receiver.SessionId);
                 }
-
                 catch (Exception ex) when (ex is not TaskCanceledException)
                 {
+                    var serviceBusException = ex as ServiceBusException;
+                    if (serviceBusException?.Reason == ServiceBusFailureReason.SessionLockLost)
+                    {
+                        OnSessionLockLost();
+                    }
+
                     ServiceBusEventSource.Log.ProcessorRenewSessionLockException(Processor.Identifier, ex.ToString(), _receiver.SessionId);
                     await HandleRenewLockException(ex, sessionLockRenewalCancellationToken).ConfigureAwait(false);
 
                     // if the error was not transient, break out of the loop
-                    if (!(ex as ServiceBusException)?.IsTransient == true)
+                    if (!serviceBusException?.IsTransient == true)
                     {
                         break;
                     }
@@ -431,6 +440,11 @@ namespace Azure.Messaging.ServiceBus
             {
                 await _sessionLockRenewalTask.ConfigureAwait(false);
             }
+        }
+
+        protected virtual void OnSessionLockRenewed()
+        {
+            SessionLockRenewed?.Invoke(this, EventArgs.Empty);
         }
     }
 }

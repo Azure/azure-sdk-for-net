@@ -60,6 +60,8 @@ namespace Azure.Messaging.ServiceBus
             _clientDiagnostics = clientDiagnostics;
         }
 
+        public event EventHandler SessionLockLost;
+
         public virtual async Task CloseReceiverIfNeeded(CancellationToken cancellationToken)
         {
             var capturedReceiver = Receiver;
@@ -338,7 +340,7 @@ namespace Azure.Messaging.ServiceBus
             }
         }
 
-        private static void ThrowIfSessionLockLost(
+        private void ThrowIfSessionLockLost(
             Exception exception,
             ServiceBusErrorSource errorSource)
         {
@@ -348,6 +350,7 @@ namespace Azure.Messaging.ServiceBus
             if (sbException?.Reason == ServiceBusFailureReason.SessionLockLost)
             {
                 sbException.ProcessorErrorSource = errorSource;
+                OnSessionLockLost();
                 throw sbException;
             }
         }
@@ -380,6 +383,11 @@ namespace Azure.Messaging.ServiceBus
                 // don't bubble up exceptions raised from customer exception handler
                 ServiceBusEventSource.Log.ProcessorErrorHandlerThrewException(exception.ToString(), Processor.Identifier);
             }
+        }
+
+        protected virtual void OnSessionLockLost()
+        {
+            SessionLockLost?.Invoke(this, EventArgs.Empty);
         }
 
         protected static TimeSpan CalculateRenewDelay(DateTimeOffset lockedUntil)

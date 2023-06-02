@@ -26,5 +26,24 @@ namespace Azure.Messaging.ServiceBus
                 cancellationTokenSource.Cancel();
             }
         }
+
+        public static void CancelAfterSessionLockExpired(this CancellationTokenSource cancellationTokenSource,
+            ServiceBusSessionReceiver sessionReceiver, DateTimeOffset utcNow)
+        {
+            if (cancellationTokenSource == null || sessionReceiver.SessionLockedUntil == default)
+            {
+                return;
+            }
+
+            var delay = sessionReceiver.SessionLockedUntil.Subtract(utcNow);
+            if (delay > TimeSpan.Zero)
+            {
+                cancellationTokenSource.CancelAfter(delay);
+            }
+            else
+            {
+                cancellationTokenSource.Cancel();
+            }
+        }
     }
 }
