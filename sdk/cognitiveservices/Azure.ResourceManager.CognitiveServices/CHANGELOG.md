@@ -1,6 +1,6 @@
 # Release History
 
-## 1.3.0-beta.2 (Unreleased)
+## 1.4.0 (2023-06-15)
 
 ### Features Added
 
@@ -9,6 +9,10 @@
 ### Bugs Fixed
 
 ### Other Changes
+
+- Upgraded API version to `2023-05-01`.
+- Added API to list models for a subscription in a region.
+- Added API to list usages for a subscription in a region.
 
 ## 1.3.0-beta.1 (2023-05-29)
 

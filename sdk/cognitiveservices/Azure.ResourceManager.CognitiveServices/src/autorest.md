@@ -8,8 +8,7 @@ azure-arm: true
 csharp: true
 library-name: CognitiveServices
 namespace: Azure.ResourceManager.CognitiveServices
-require: https://github.com/Azure/azure-rest-api-specs/blob/fd296f4cbe90e46098824e020e4a02517d56fc35/specification/cognitiveservices/resource-manager/readme.md
-tag: package-2022-12
+require: https://github.com/Azure/azure-rest-api-specs/blob/ba1884683c35d1ea63d229a7106f207e507c3861/specification/cognitiveservices/resource-manager/readme.md
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
 skip-csproj: true
@@ -137,6 +136,7 @@ directive:
       $.CheckDomainAvailabilityParameter.properties.type['x-ms-format'] = 'resource-type';
       $.CheckSkuAvailabilityParameter.properties.type['x-ms-format'] =  'resource-type';
       $.PrivateEndpointConnection.properties.properties['x-ms-client-flatten'] = true;
+      $.ModelSku.properties.rateLimits['readOnly'] = true;
       delete $.AccountProperties.properties.internalId;
   # TODO, these configs will be replaced by the new rename-mapping
   - from: cognitiveservices.json
