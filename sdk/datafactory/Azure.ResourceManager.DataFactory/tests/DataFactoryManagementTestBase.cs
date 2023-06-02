@@ -4,6 +4,7 @@
 using System;
 using System.Threading.Tasks;
 using Azure.Core;
+using Azure.Core.Expressions.DataFactory;
 using Azure.Core.TestFramework;
 using Azure.ResourceManager.DataFactory.Models;
 using Azure.ResourceManager.Resources;
@@ -55,7 +56,7 @@ namespace Azure.ResourceManager.DataFactory.Tests
         {
             AzureBlobStorageLinkedService azureBlobStorageLinkedService = new AzureBlobStorageLinkedService()
             {
-                ConnectionString = BinaryData.FromString($"\"{accessKey}\""),
+                ConnectionString = DataFactoryElement<string>.FromLiteral($"{accessKey}")
             };
             FactoryLinkedServiceData data = new FactoryLinkedServiceData(azureBlobStorageLinkedService);
             var linkedService = await dataFactory.GetFactoryLinkedServices().CreateOrUpdateAsync(WaitUntil.Completed, linkedServiceName, data);

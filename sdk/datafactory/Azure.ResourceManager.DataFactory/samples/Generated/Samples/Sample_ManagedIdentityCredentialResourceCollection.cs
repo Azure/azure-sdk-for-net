@@ -14,15 +14,15 @@ using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Samples
 {
-    public partial class Sample_FactoryLinkedServiceCollection
+    public partial class Sample_ManagedIdentityCredentialResourceCollection
     {
-        // LinkedServices_ListByFactory
+        // Credentials_ListByFactory
         [NUnit.Framework.Test]
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task GetAll_LinkedServicesListByFactory()
+        public async Task GetAll_CredentialsListByFactory()
         {
-            // Generated from example definition: specification/datafactory/resource-manager/Microsoft.DataFactory/stable/2018-06-01/examples/LinkedServices_ListByFactory.json
-            // this example is just showing the usage of "LinkedServices_ListByFactory" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: specification/datafactory/resource-manager/Microsoft.DataFactory/stable/2018-06-01/examples/Credentials_ListByFactory.json
+            // this example is just showing the usage of "CredentialOperations_ListByFactory" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -37,15 +37,15 @@ namespace Azure.ResourceManager.DataFactory.Samples
             ResourceIdentifier dataFactoryResourceId = DataFactoryResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, factoryName);
             DataFactoryResource dataFactory = client.GetDataFactoryResource(dataFactoryResourceId);
 
-            // get the collection of this FactoryLinkedServiceResource
-            FactoryLinkedServiceCollection collection = dataFactory.GetFactoryLinkedServices();
+            // get the collection of this ManagedIdentityCredentialResource
+            ManagedIdentityCredentialResourceCollection collection = dataFactory.GetManagedIdentityCredentialResources();
 
             // invoke the operation and iterate over the result
-            await foreach (FactoryLinkedServiceResource item in collection.GetAllAsync())
+            await foreach (ManagedIdentityCredentialResource item in collection.GetAllAsync())
             {
                 // the variable item is a resource, you could call other operations on this instance as well
                 // but just for demo, we get its data from this resource instance
-                FactoryLinkedServiceData resourceData = item.Data;
+                ManagedIdentityCredentialResourceData resourceData = item.Data;
                 // for demo we just print out the id
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
@@ -53,13 +53,13 @@ namespace Azure.ResourceManager.DataFactory.Samples
             Console.WriteLine($"Succeeded");
         }
 
-        // LinkedServices_Get
+        // Credentials_Get
         [NUnit.Framework.Test]
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task Get_LinkedServicesGet()
+        public async Task Get_CredentialsGet()
         {
-            // Generated from example definition: specification/datafactory/resource-manager/Microsoft.DataFactory/stable/2018-06-01/examples/LinkedServices_Get.json
-            // this example is just showing the usage of "LinkedServices_Get" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: specification/datafactory/resource-manager/Microsoft.DataFactory/stable/2018-06-01/examples/Credentials_Get.json
+            // this example is just showing the usage of "CredentialOperations_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -74,27 +74,27 @@ namespace Azure.ResourceManager.DataFactory.Samples
             ResourceIdentifier dataFactoryResourceId = DataFactoryResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, factoryName);
             DataFactoryResource dataFactory = client.GetDataFactoryResource(dataFactoryResourceId);
 
-            // get the collection of this FactoryLinkedServiceResource
-            FactoryLinkedServiceCollection collection = dataFactory.GetFactoryLinkedServices();
+            // get the collection of this ManagedIdentityCredentialResource
+            ManagedIdentityCredentialResourceCollection collection = dataFactory.GetManagedIdentityCredentialResources();
 
             // invoke the operation
-            string linkedServiceName = "exampleLinkedService";
-            FactoryLinkedServiceResource result = await collection.GetAsync(linkedServiceName);
+            string credentialName = "exampleCredential";
+            ManagedIdentityCredentialResource result = await collection.GetAsync(credentialName);
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            FactoryLinkedServiceData resourceData = result.Data;
+            ManagedIdentityCredentialResourceData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // LinkedServices_Get
+        // Credentials_Get
         [NUnit.Framework.Test]
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task Exists_LinkedServicesGet()
+        public async Task Exists_CredentialsGet()
         {
-            // Generated from example definition: specification/datafactory/resource-manager/Microsoft.DataFactory/stable/2018-06-01/examples/LinkedServices_Get.json
-            // this example is just showing the usage of "LinkedServices_Get" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: specification/datafactory/resource-manager/Microsoft.DataFactory/stable/2018-06-01/examples/Credentials_Get.json
+            // this example is just showing the usage of "CredentialOperations_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -109,12 +109,12 @@ namespace Azure.ResourceManager.DataFactory.Samples
             ResourceIdentifier dataFactoryResourceId = DataFactoryResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, factoryName);
             DataFactoryResource dataFactory = client.GetDataFactoryResource(dataFactoryResourceId);
 
-            // get the collection of this FactoryLinkedServiceResource
-            FactoryLinkedServiceCollection collection = dataFactory.GetFactoryLinkedServices();
+            // get the collection of this ManagedIdentityCredentialResource
+            ManagedIdentityCredentialResourceCollection collection = dataFactory.GetManagedIdentityCredentialResources();
 
             // invoke the operation
-            string linkedServiceName = "exampleLinkedService";
-            bool result = await collection.ExistsAsync(linkedServiceName);
+            string credentialName = "exampleCredential";
+            bool result = await collection.ExistsAsync(credentialName);
 
             Console.WriteLine($"Succeeded: {result}");
         }
