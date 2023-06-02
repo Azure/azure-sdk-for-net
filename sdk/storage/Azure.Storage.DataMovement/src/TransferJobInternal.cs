@@ -262,15 +262,15 @@ namespace Azure.Storage.DataMovement
         /// <returns>The task to wait until the cancellation has been triggered.</returns>
         public async Task TriggerJobCancellationAsync()
         {
-            if (!_dataTransfer._state.CancellationTokenSource.IsCancellationRequested)
-            {
-                _dataTransfer._state.TriggerCancellation();
-            }
-
             // Set CancellationInProgress if we are not already pausing
             if (StorageTransferStatus.PauseInProgress != _dataTransfer.TransferStatus)
             {
                 await OnJobStatusChangedAsync(StorageTransferStatus.CancellationInProgress).ConfigureAwait(false);
+            }
+
+            if (!_dataTransfer._state.CancellationTokenSource.IsCancellationRequested)
+            {
+                _dataTransfer._state.TriggerCancellation();
             }
         }
 
