@@ -23,8 +23,8 @@ namespace Azure.ResourceManager.ConfidentialLedger
         private ConfidentialLedgerRestOperations _defaultRestClient;
         private ClientDiagnostics _confidentialLedgerLedgerClientDiagnostics;
         private LedgerRestOperations _confidentialLedgerLedgerRestClient;
-        private ClientDiagnostics _managedCCFClientDiagnostics;
-        private ManagedCCFRestOperations _managedCCFRestClient;
+        private ClientDiagnostics _managedCcfManagedCcfClientDiagnostics;
+        private ManagedCCFRestOperations _managedCcfManagedCcfRestClient;
 
         /// <summary> Initializes a new instance of the <see cref="SubscriptionResourceExtensionClient"/> class for mocking. </summary>
         protected SubscriptionResourceExtensionClient()
@@ -42,8 +42,8 @@ namespace Azure.ResourceManager.ConfidentialLedger
         private ConfidentialLedgerRestOperations DefaultRestClient => _defaultRestClient ??= new ConfidentialLedgerRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
         private ClientDiagnostics ConfidentialLedgerLedgerClientDiagnostics => _confidentialLedgerLedgerClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.ConfidentialLedger", ConfidentialLedgerResource.ResourceType.Namespace, Diagnostics);
         private LedgerRestOperations ConfidentialLedgerLedgerRestClient => _confidentialLedgerLedgerRestClient ??= new LedgerRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(ConfidentialLedgerResource.ResourceType));
-        private ClientDiagnostics ManagedCCFClientDiagnostics => _managedCCFClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.ConfidentialLedger", ManagedCCFResource.ResourceType.Namespace, Diagnostics);
-        private ManagedCCFRestOperations ManagedCCFRestClient => _managedCCFRestClient ??= new ManagedCCFRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(ManagedCCFResource.ResourceType));
+        private ClientDiagnostics ManagedCcfManagedCCFClientDiagnostics => _managedCcfManagedCcfClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.ConfidentialLedger", ManagedCcfResource.ResourceType.Namespace, Diagnostics);
+        private ManagedCCFRestOperations ManagedCcfManagedCCFRestClient => _managedCcfManagedCcfRestClient ??= new ManagedCCFRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(ManagedCcfResource.ResourceType));
 
         private string GetApiVersionOrNull(ResourceType resourceType)
         {
@@ -174,12 +174,12 @@ namespace Azure.ResourceManager.ConfidentialLedger
         /// </summary>
         /// <param name="filter"> The filter to apply on the list operation. eg. $filter=ledgerType eq &apos;Public&apos;. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ManagedCCFResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<ManagedCCFResource> GetManagedCCFsAsync(string filter = null, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="ManagedCcfResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<ManagedCcfResource> GetManagedCcfsAsync(string filter = null, CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => ManagedCCFRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId, filter);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => ManagedCCFRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId, filter);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ManagedCCFResource(Client, ManagedCCFData.DeserializeManagedCCFData(e)), ManagedCCFClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetManagedCCFs", "value", "nextLink", cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => ManagedCcfManagedCCFRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId, filter);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => ManagedCcfManagedCCFRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId, filter);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ManagedCcfResource(Client, ManagedCcfData.DeserializeManagedCcfData(e)), ManagedCcfManagedCCFClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetManagedCcfs", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -197,12 +197,12 @@ namespace Azure.ResourceManager.ConfidentialLedger
         /// </summary>
         /// <param name="filter"> The filter to apply on the list operation. eg. $filter=ledgerType eq &apos;Public&apos;. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ManagedCCFResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<ManagedCCFResource> GetManagedCCFs(string filter = null, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="ManagedCcfResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<ManagedCcfResource> GetManagedCcfs(string filter = null, CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => ManagedCCFRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId, filter);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => ManagedCCFRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId, filter);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ManagedCCFResource(Client, ManagedCCFData.DeserializeManagedCCFData(e)), ManagedCCFClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetManagedCCFs", "value", "nextLink", cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => ManagedCcfManagedCCFRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId, filter);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => ManagedCcfManagedCCFRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId, filter);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ManagedCcfResource(Client, ManagedCcfData.DeserializeManagedCcfData(e)), ManagedCcfManagedCCFClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetManagedCcfs", "value", "nextLink", cancellationToken);
         }
     }
 }

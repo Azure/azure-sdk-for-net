@@ -12,7 +12,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ConfidentialLedger.Models
 {
-    public partial class ManagedCCFProperties : IUtf8JsonSerializable
+    public partial class ManagedCcfProperties : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.ConfidentialLedger.Models
             writer.WriteEndObject();
         }
 
-        internal static ManagedCCFProperties DeserializeManagedCCFProperties(JsonElement element)
+        internal static ManagedCcfProperties DeserializeManagedCcfProperties(JsonElement element)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.ConfidentialLedger.Models
                     continue;
                 }
             }
-            return new ManagedCCFProperties(appName.Value, appUri.Value, identityServiceUri.Value, Optional.ToList(memberIdentityCertificates), deploymentType.Value, Optional.ToNullable(provisioningState), Optional.ToNullable(nodeCount));
+            return new ManagedCcfProperties(appName.Value, appUri.Value, identityServiceUri.Value, Optional.ToList(memberIdentityCertificates), deploymentType.Value, Optional.ToNullable(provisioningState), Optional.ToNullable(nodeCount));
         }
     }
 }

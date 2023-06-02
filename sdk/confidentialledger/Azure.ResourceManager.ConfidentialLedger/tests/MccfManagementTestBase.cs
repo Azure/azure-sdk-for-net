@@ -63,10 +63,10 @@ namespace Azure.ResourceManager.ConfidentialLedger.Tests
         /// </summary>
         /// <param name="mccfName"></param>
         /// <returns></returns>
-        protected async Task<ManagedCCFResource> GetMccfByName(string mccfName)
+        protected async Task<ManagedCcfResource> GetMccfByName(string mccfName)
         {
             var resourceId = $"/subscriptions/{TestEnvironment.SubscriptionId}/resourceGroups/{_resourceGroupName}/providers/Microsoft.ConfidentialLedger/ManagedCCFs/{mccfName}";
-            return await _resourceGroup.GetManagedCCFs().GetAsync(new ResourceIdentifier(resourceId).Name);
+            return await _resourceGroup.GetManagedCcfs().GetAsync(new ResourceIdentifier(resourceId).Name);
         }
 
         /// <summary>
@@ -76,9 +76,9 @@ namespace Azure.ResourceManager.ConfidentialLedger.Tests
         /// <param name="mccfName"></param>
         protected async Task CreateMccf(string mccfName)
         {
-            ManagedCCFData mccfData = new ManagedCCFData(new AzureLocation(s_defaultTestLocation))
+            ManagedCcfData mccfData = new ManagedCcfData(new AzureLocation(s_defaultTestLocation))
             {
-                Properties = new ManagedCCFProperties()
+                Properties = new ManagedCcfProperties()
                 {
                     MemberIdentityCertificates =
                     {
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.ConfidentialLedger.Tests
                 }
             };
             using AzureEventSourceListener listener = AzureEventSourceListener.CreateConsoleLogger(System.Diagnostics.Tracing.EventLevel.Verbose);
-            await _resourceGroup.GetManagedCCFs().CreateOrUpdateAsync(WaitUntil.Completed, mccfName, mccfData);
+            await _resourceGroup.GetManagedCcfs().CreateOrUpdateAsync(WaitUntil.Completed, mccfName, mccfData);
         }
 
         /// <summary>
@@ -104,9 +104,9 @@ namespace Azure.ResourceManager.ConfidentialLedger.Tests
         /// </summary>
         /// <param name="mccfName"></param>
         /// <param name="mccfData"></param>
-        protected async Task UpdateMccf(string mccfName, ManagedCCFData mccfData)
+        protected async Task UpdateMCcf(string mccfName, ManagedCcfData mccfData)
         {
-            await _resourceGroup.GetManagedCCFs().CreateOrUpdateAsync(WaitUntil.Completed, mccfData.Name, mccfData);
+            await _resourceGroup.GetManagedCcfs().CreateOrUpdateAsync(WaitUntil.Completed, mccfData.Name, mccfData);
         }
     }
 }

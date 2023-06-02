@@ -12,15 +12,15 @@ using Azure.ResourceManager.ConfidentialLedger;
 
 namespace Azure.ResourceManager.ConfidentialLedger.Models
 {
-    internal partial class ManagedCCFList
+    internal partial class ManagedCcfList
     {
-        internal static ManagedCCFList DeserializeManagedCCFList(JsonElement element)
+        internal static ManagedCcfList DeserializeManagedCcfList(JsonElement element)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<IReadOnlyList<ManagedCCFData>> value = default;
+            Optional<IReadOnlyList<ManagedCcfData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -30,10 +30,10 @@ namespace Azure.ResourceManager.ConfidentialLedger.Models
                     {
                         continue;
                     }
-                    List<ManagedCCFData> array = new List<ManagedCCFData>();
+                    List<ManagedCcfData> array = new List<ManagedCcfData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ManagedCCFData.DeserializeManagedCCFData(item));
+                        array.Add(ManagedCcfData.DeserializeManagedCcfData(item));
                     }
                     value = array;
                     continue;
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.ConfidentialLedger.Models
                     continue;
                 }
             }
-            return new ManagedCCFList(Optional.ToList(value), nextLink.Value);
+            return new ManagedCcfList(Optional.ToList(value), nextLink.Value);
         }
     }
 }

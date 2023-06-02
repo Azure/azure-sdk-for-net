@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.ConfidentialLedger.Tests.Scenario
             // Create Mccf App
             await CreateMccf(mccfName);
 
-            ManagedCCFResource mccfResource = await GetMccfByName(mccfName);
+            ManagedCcfResource mccfResource = await GetMccfByName(mccfName);
 
             Assert.NotNull(mccfResource);
             Assert.AreEqual(mccfName, mccfResource.Data.Properties.AppName);

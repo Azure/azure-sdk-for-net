@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.ConfidentialLedger
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="appName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="appName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<ManagedCCFData>> GetAsync(string subscriptionId, string resourceGroupName, string appName, CancellationToken cancellationToken = default)
+        public async Task<Response<ManagedCcfData>> GetAsync(string subscriptionId, string resourceGroupName, string appName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -76,13 +76,13 @@ namespace Azure.ResourceManager.ConfidentialLedger
             {
                 case 200:
                     {
-                        ManagedCCFData value = default;
+                        ManagedCcfData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = ManagedCCFData.DeserializeManagedCCFData(document.RootElement);
+                        value = ManagedCcfData.DeserializeManagedCcfData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((ManagedCCFData)null, message.Response);
+                    return Response.FromValue((ManagedCcfData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.ConfidentialLedger
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="appName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="appName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<ManagedCCFData> Get(string subscriptionId, string resourceGroupName, string appName, CancellationToken cancellationToken = default)
+        public Response<ManagedCcfData> Get(string subscriptionId, string resourceGroupName, string appName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -107,13 +107,13 @@ namespace Azure.ResourceManager.ConfidentialLedger
             {
                 case 200:
                     {
-                        ManagedCCFData value = default;
+                        ManagedCcfData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = ManagedCCFData.DeserializeManagedCCFData(document.RootElement);
+                        value = ManagedCcfData.DeserializeManagedCcfData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((ManagedCCFData)null, message.Response);
+                    return Response.FromValue((ManagedCcfData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -191,7 +191,7 @@ namespace Azure.ResourceManager.ConfidentialLedger
             }
         }
 
-        internal HttpMessage CreateCreateRequest(string subscriptionId, string resourceGroupName, string appName, ManagedCCFData data)
+        internal HttpMessage CreateCreateRequest(string subscriptionId, string resourceGroupName, string appName, ManagedCcfData data)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -223,7 +223,7 @@ namespace Azure.ResourceManager.ConfidentialLedger
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="appName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="appName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> CreateAsync(string subscriptionId, string resourceGroupName, string appName, ManagedCCFData data, CancellationToken cancellationToken = default)
+        public async Task<Response> CreateAsync(string subscriptionId, string resourceGroupName, string appName, ManagedCcfData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -250,7 +250,7 @@ namespace Azure.ResourceManager.ConfidentialLedger
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="appName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="appName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response Create(string subscriptionId, string resourceGroupName, string appName, ManagedCCFData data, CancellationToken cancellationToken = default)
+        public Response Create(string subscriptionId, string resourceGroupName, string appName, ManagedCcfData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -269,7 +269,7 @@ namespace Azure.ResourceManager.ConfidentialLedger
             }
         }
 
-        internal HttpMessage CreateUpdateRequest(string subscriptionId, string resourceGroupName, string appName, ManagedCCFData data)
+        internal HttpMessage CreateUpdateRequest(string subscriptionId, string resourceGroupName, string appName, ManagedCcfData data)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -301,7 +301,7 @@ namespace Azure.ResourceManager.ConfidentialLedger
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="appName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="appName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> UpdateAsync(string subscriptionId, string resourceGroupName, string appName, ManagedCCFData data, CancellationToken cancellationToken = default)
+        public async Task<Response> UpdateAsync(string subscriptionId, string resourceGroupName, string appName, ManagedCcfData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -328,7 +328,7 @@ namespace Azure.ResourceManager.ConfidentialLedger
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="appName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="appName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response Update(string subscriptionId, string resourceGroupName, string appName, ManagedCCFData data, CancellationToken cancellationToken = default)
+        public Response Update(string subscriptionId, string resourceGroupName, string appName, ManagedCcfData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -377,7 +377,7 @@ namespace Azure.ResourceManager.ConfidentialLedger
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<ManagedCCFList>> ListByResourceGroupAsync(string subscriptionId, string resourceGroupName, string filter = null, CancellationToken cancellationToken = default)
+        public async Task<Response<ManagedCcfList>> ListByResourceGroupAsync(string subscriptionId, string resourceGroupName, string filter = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -388,9 +388,9 @@ namespace Azure.ResourceManager.ConfidentialLedger
             {
                 case 200:
                     {
-                        ManagedCCFList value = default;
+                        ManagedCcfList value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = ManagedCCFList.DeserializeManagedCCFList(document.RootElement);
+                        value = ManagedCcfList.DeserializeManagedCcfList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -405,7 +405,7 @@ namespace Azure.ResourceManager.ConfidentialLedger
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<ManagedCCFList> ListByResourceGroup(string subscriptionId, string resourceGroupName, string filter = null, CancellationToken cancellationToken = default)
+        public Response<ManagedCcfList> ListByResourceGroup(string subscriptionId, string resourceGroupName, string filter = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -416,9 +416,9 @@ namespace Azure.ResourceManager.ConfidentialLedger
             {
                 case 200:
                     {
-                        ManagedCCFList value = default;
+                        ManagedCcfList value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = ManagedCCFList.DeserializeManagedCCFList(document.RootElement);
+                        value = ManagedCcfList.DeserializeManagedCcfList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -453,7 +453,7 @@ namespace Azure.ResourceManager.ConfidentialLedger
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<ManagedCCFList>> ListBySubscriptionAsync(string subscriptionId, string filter = null, CancellationToken cancellationToken = default)
+        public async Task<Response<ManagedCcfList>> ListBySubscriptionAsync(string subscriptionId, string filter = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
 
@@ -463,9 +463,9 @@ namespace Azure.ResourceManager.ConfidentialLedger
             {
                 case 200:
                     {
-                        ManagedCCFList value = default;
+                        ManagedCcfList value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = ManagedCCFList.DeserializeManagedCCFList(document.RootElement);
+                        value = ManagedCcfList.DeserializeManagedCcfList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -479,7 +479,7 @@ namespace Azure.ResourceManager.ConfidentialLedger
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<ManagedCCFList> ListBySubscription(string subscriptionId, string filter = null, CancellationToken cancellationToken = default)
+        public Response<ManagedCcfList> ListBySubscription(string subscriptionId, string filter = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
 
@@ -489,9 +489,9 @@ namespace Azure.ResourceManager.ConfidentialLedger
             {
                 case 200:
                     {
-                        ManagedCCFList value = default;
+                        ManagedCcfList value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = ManagedCCFList.DeserializeManagedCCFList(document.RootElement);
+                        value = ManagedCcfList.DeserializeManagedCcfList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -521,7 +521,7 @@ namespace Azure.ResourceManager.ConfidentialLedger
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<ManagedCCFList>> ListByResourceGroupNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string filter = null, CancellationToken cancellationToken = default)
+        public async Task<Response<ManagedCcfList>> ListByResourceGroupNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string filter = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -533,9 +533,9 @@ namespace Azure.ResourceManager.ConfidentialLedger
             {
                 case 200:
                     {
-                        ManagedCCFList value = default;
+                        ManagedCcfList value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = ManagedCCFList.DeserializeManagedCCFList(document.RootElement);
+                        value = ManagedCcfList.DeserializeManagedCcfList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -551,7 +551,7 @@ namespace Azure.ResourceManager.ConfidentialLedger
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<ManagedCCFList> ListByResourceGroupNextPage(string nextLink, string subscriptionId, string resourceGroupName, string filter = null, CancellationToken cancellationToken = default)
+        public Response<ManagedCcfList> ListByResourceGroupNextPage(string nextLink, string subscriptionId, string resourceGroupName, string filter = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -563,9 +563,9 @@ namespace Azure.ResourceManager.ConfidentialLedger
             {
                 case 200:
                     {
-                        ManagedCCFList value = default;
+                        ManagedCcfList value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = ManagedCCFList.DeserializeManagedCCFList(document.RootElement);
+                        value = ManagedCcfList.DeserializeManagedCcfList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -594,7 +594,7 @@ namespace Azure.ResourceManager.ConfidentialLedger
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="subscriptionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<ManagedCCFList>> ListBySubscriptionNextPageAsync(string nextLink, string subscriptionId, string filter = null, CancellationToken cancellationToken = default)
+        public async Task<Response<ManagedCcfList>> ListBySubscriptionNextPageAsync(string nextLink, string subscriptionId, string filter = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -605,9 +605,9 @@ namespace Azure.ResourceManager.ConfidentialLedger
             {
                 case 200:
                     {
-                        ManagedCCFList value = default;
+                        ManagedCcfList value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = ManagedCCFList.DeserializeManagedCCFList(document.RootElement);
+                        value = ManagedCcfList.DeserializeManagedCcfList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -622,7 +622,7 @@ namespace Azure.ResourceManager.ConfidentialLedger
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="subscriptionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<ManagedCCFList> ListBySubscriptionNextPage(string nextLink, string subscriptionId, string filter = null, CancellationToken cancellationToken = default)
+        public Response<ManagedCcfList> ListBySubscriptionNextPage(string nextLink, string subscriptionId, string filter = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -633,9 +633,9 @@ namespace Azure.ResourceManager.ConfidentialLedger
             {
                 case 200:
                     {
-                        ManagedCCFList value = default;
+                        ManagedCcfList value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = ManagedCCFList.DeserializeManagedCCFList(document.RootElement);
+                        value = ManagedCcfList.DeserializeManagedCcfList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

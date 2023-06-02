@@ -69,20 +69,20 @@ namespace Azure.ResourceManager.ConfidentialLedger
         }
         #endregion
 
-        #region ManagedCCFResource
+        #region ManagedCcfResource
         /// <summary>
-        /// Gets an object representing a <see cref="ManagedCCFResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ManagedCCFResource.CreateResourceIdentifier" /> to create a <see cref="ManagedCCFResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="ManagedCcfResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ManagedCcfResource.CreateResourceIdentifier" /> to create a <see cref="ManagedCcfResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ManagedCCFResource" /> object. </returns>
-        public static ManagedCCFResource GetManagedCCFResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="ManagedCcfResource" /> object. </returns>
+        public static ManagedCcfResource GetManagedCcfResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                ManagedCCFResource.ValidateResourceId(id);
-                return new ManagedCCFResource(client, id);
+                ManagedCcfResource.ValidateResourceId(id);
+                return new ManagedCcfResource(client, id);
             }
             );
         }
@@ -144,12 +144,12 @@ namespace Azure.ResourceManager.ConfidentialLedger
             return resourceGroupResource.GetConfidentialLedgers().Get(ledgerName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of ManagedCCFResources in the ResourceGroupResource. </summary>
+        /// <summary> Gets a collection of ManagedCcfResources in the ResourceGroupResource. </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <returns> An object representing collection of ManagedCCFResources and their operations over a ManagedCCFResource. </returns>
-        public static ManagedCCFCollection GetManagedCCFs(this ResourceGroupResource resourceGroupResource)
+        /// <returns> An object representing collection of ManagedCcfResources and their operations over a ManagedCcfResource. </returns>
+        public static ManagedCcfCollection GetManagedCcfs(this ResourceGroupResource resourceGroupResource)
         {
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetManagedCCFs();
+            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetManagedCcfs();
         }
 
         /// <summary>
@@ -171,9 +171,9 @@ namespace Azure.ResourceManager.ConfidentialLedger
         /// <exception cref="ArgumentException"> <paramref name="appName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="appName"/> is null. </exception>
         [ForwardsClientCalls]
-        public static async Task<Response<ManagedCCFResource>> GetManagedCCFAsync(this ResourceGroupResource resourceGroupResource, string appName, CancellationToken cancellationToken = default)
+        public static async Task<Response<ManagedCcfResource>> GetManagedCcfAsync(this ResourceGroupResource resourceGroupResource, string appName, CancellationToken cancellationToken = default)
         {
-            return await resourceGroupResource.GetManagedCCFs().GetAsync(appName, cancellationToken).ConfigureAwait(false);
+            return await resourceGroupResource.GetManagedCcfs().GetAsync(appName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -195,9 +195,9 @@ namespace Azure.ResourceManager.ConfidentialLedger
         /// <exception cref="ArgumentException"> <paramref name="appName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="appName"/> is null. </exception>
         [ForwardsClientCalls]
-        public static Response<ManagedCCFResource> GetManagedCCF(this ResourceGroupResource resourceGroupResource, string appName, CancellationToken cancellationToken = default)
+        public static Response<ManagedCcfResource> GetManagedCcf(this ResourceGroupResource resourceGroupResource, string appName, CancellationToken cancellationToken = default)
         {
-            return resourceGroupResource.GetManagedCCFs().Get(appName, cancellationToken);
+            return resourceGroupResource.GetManagedCcfs().Get(appName, cancellationToken);
         }
 
         /// <summary>
@@ -308,10 +308,10 @@ namespace Azure.ResourceManager.ConfidentialLedger
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="filter"> The filter to apply on the list operation. eg. $filter=ledgerType eq &apos;Public&apos;. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ManagedCCFResource" /> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<ManagedCCFResource> GetManagedCCFsAsync(this SubscriptionResource subscriptionResource, string filter = null, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="ManagedCcfResource" /> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<ManagedCcfResource> GetManagedCcfsAsync(this SubscriptionResource subscriptionResource, string filter = null, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetManagedCCFsAsync(filter, cancellationToken);
+            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetManagedCcfsAsync(filter, cancellationToken);
         }
 
         /// <summary>
@@ -330,10 +330,10 @@ namespace Azure.ResourceManager.ConfidentialLedger
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="filter"> The filter to apply on the list operation. eg. $filter=ledgerType eq &apos;Public&apos;. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ManagedCCFResource" /> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<ManagedCCFResource> GetManagedCCFs(this SubscriptionResource subscriptionResource, string filter = null, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="ManagedCcfResource" /> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<ManagedCcfResource> GetManagedCcfs(this SubscriptionResource subscriptionResource, string filter = null, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetManagedCCFs(filter, cancellationToken);
+            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetManagedCcfs(filter, cancellationToken);
         }
     }
 }

@@ -19,46 +19,46 @@ using Azure.ResourceManager.Resources;
 namespace Azure.ResourceManager.ConfidentialLedger
 {
     /// <summary>
-    /// A Class representing a ManagedCCF along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="ManagedCCFResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetManagedCCFResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource" /> using the GetManagedCCF method.
+    /// A Class representing a ManagedCcf along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="ManagedCcfResource" />
+    /// from an instance of <see cref="ArmClient" /> using the GetManagedCcfResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource" /> using the GetManagedCcf method.
     /// </summary>
-    public partial class ManagedCCFResource : ArmResource
+    public partial class ManagedCcfResource : ArmResource
     {
-        /// <summary> Generate the resource identifier of a <see cref="ManagedCCFResource"/> instance. </summary>
+        /// <summary> Generate the resource identifier of a <see cref="ManagedCcfResource"/> instance. </summary>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string appName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ConfidentialLedger/managedCCFs/{appName}";
             return new ResourceIdentifier(resourceId);
         }
 
-        private readonly ClientDiagnostics _managedCCFClientDiagnostics;
-        private readonly ManagedCCFRestOperations _managedCCFRestClient;
-        private readonly ManagedCCFData _data;
+        private readonly ClientDiagnostics _managedCcfManagedCcfClientDiagnostics;
+        private readonly ManagedCCFRestOperations _managedCcfManagedCcfRestClient;
+        private readonly ManagedCcfData _data;
 
-        /// <summary> Initializes a new instance of the <see cref="ManagedCCFResource"/> class for mocking. </summary>
-        protected ManagedCCFResource()
+        /// <summary> Initializes a new instance of the <see cref="ManagedCcfResource"/> class for mocking. </summary>
+        protected ManagedCcfResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "ManagedCCFResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref = "ManagedCcfResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal ManagedCCFResource(ArmClient client, ManagedCCFData data) : this(client, data.Id)
+        internal ManagedCcfResource(ArmClient client, ManagedCcfData data) : this(client, data.Id)
         {
             HasData = true;
             _data = data;
         }
 
-        /// <summary> Initializes a new instance of the <see cref="ManagedCCFResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="ManagedCcfResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal ManagedCCFResource(ArmClient client, ResourceIdentifier id) : base(client, id)
+        internal ManagedCcfResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _managedCCFClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ConfidentialLedger", ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(ResourceType, out string managedCCFApiVersion);
-            _managedCCFRestClient = new ManagedCCFRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, managedCCFApiVersion);
+            _managedCcfManagedCcfClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ConfidentialLedger", ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(ResourceType, out string managedCcfManagedCcfApiVersion);
+            _managedCcfManagedCcfRestClient = new ManagedCCFRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, managedCcfManagedCcfApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.ConfidentialLedger
 
         /// <summary> Gets the data representing this Feature. </summary>
         /// <exception cref="InvalidOperationException"> Throws if there is no data loaded in the current instance. </exception>
-        public virtual ManagedCCFData Data
+        public virtual ManagedCcfData Data
         {
             get
             {
@@ -102,16 +102,16 @@ namespace Azure.ResourceManager.ConfidentialLedger
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<ManagedCCFResource>> GetAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ManagedCcfResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _managedCCFClientDiagnostics.CreateScope("ManagedCCFResource.Get");
+            using var scope = _managedCcfManagedCcfClientDiagnostics.CreateScope("ManagedCcfResource.Get");
             scope.Start();
             try
             {
-                var response = await _managedCCFRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
+                var response = await _managedCcfManagedCcfRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new ManagedCCFResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ManagedCcfResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -134,16 +134,16 @@ namespace Azure.ResourceManager.ConfidentialLedger
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<ManagedCCFResource> Get(CancellationToken cancellationToken = default)
+        public virtual Response<ManagedCcfResource> Get(CancellationToken cancellationToken = default)
         {
-            using var scope = _managedCCFClientDiagnostics.CreateScope("ManagedCCFResource.Get");
+            using var scope = _managedCcfManagedCcfClientDiagnostics.CreateScope("ManagedCcfResource.Get");
             scope.Start();
             try
             {
-                var response = _managedCCFRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
+                var response = _managedCcfManagedCcfRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new ManagedCCFResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ManagedCcfResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -169,12 +169,12 @@ namespace Azure.ResourceManager.ConfidentialLedger
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _managedCCFClientDiagnostics.CreateScope("ManagedCCFResource.Delete");
+            using var scope = _managedCcfManagedCcfClientDiagnostics.CreateScope("ManagedCcfResource.Delete");
             scope.Start();
             try
             {
-                var response = await _managedCCFRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new ConfidentialLedgerArmOperation(_managedCCFClientDiagnostics, Pipeline, _managedCCFRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var response = await _managedCcfManagedCcfRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
+                var operation = new ConfidentialLedgerArmOperation(_managedCcfManagedCcfClientDiagnostics, Pipeline, _managedCcfManagedCcfRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -203,12 +203,12 @@ namespace Azure.ResourceManager.ConfidentialLedger
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual ArmOperation Delete(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _managedCCFClientDiagnostics.CreateScope("ManagedCCFResource.Delete");
+            using var scope = _managedCcfManagedCcfClientDiagnostics.CreateScope("ManagedCcfResource.Delete");
             scope.Start();
             try
             {
-                var response = _managedCCFRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
-                var operation = new ConfidentialLedgerArmOperation(_managedCCFClientDiagnostics, Pipeline, _managedCCFRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var response = _managedCcfManagedCcfRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
+                var operation = new ConfidentialLedgerArmOperation(_managedCcfManagedCcfClientDiagnostics, Pipeline, _managedCcfManagedCcfRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
@@ -237,16 +237,16 @@ namespace Azure.ResourceManager.ConfidentialLedger
         /// <param name="data"> Request body for Updating Managed CCF App. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public virtual async Task<ArmOperation> UpdateAsync(WaitUntil waitUntil, ManagedCCFData data, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation> UpdateAsync(WaitUntil waitUntil, ManagedCcfData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _managedCCFClientDiagnostics.CreateScope("ManagedCCFResource.Update");
+            using var scope = _managedCcfManagedCcfClientDiagnostics.CreateScope("ManagedCcfResource.Update");
             scope.Start();
             try
             {
-                var response = await _managedCCFRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, data, cancellationToken).ConfigureAwait(false);
-                var operation = new ConfidentialLedgerArmOperation(_managedCCFClientDiagnostics, Pipeline, _managedCCFRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, data).Request, response, OperationFinalStateVia.Location);
+                var response = await _managedCcfManagedCcfRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, data, cancellationToken).ConfigureAwait(false);
+                var operation = new ConfidentialLedgerArmOperation(_managedCcfManagedCcfClientDiagnostics, Pipeline, _managedCcfManagedCcfRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, data).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -275,16 +275,16 @@ namespace Azure.ResourceManager.ConfidentialLedger
         /// <param name="data"> Request body for Updating Managed CCF App. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public virtual ArmOperation Update(WaitUntil waitUntil, ManagedCCFData data, CancellationToken cancellationToken = default)
+        public virtual ArmOperation Update(WaitUntil waitUntil, ManagedCcfData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _managedCCFClientDiagnostics.CreateScope("ManagedCCFResource.Update");
+            using var scope = _managedCcfManagedCcfClientDiagnostics.CreateScope("ManagedCcfResource.Update");
             scope.Start();
             try
             {
-                var response = _managedCCFRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, data, cancellationToken);
-                var operation = new ConfidentialLedgerArmOperation(_managedCCFClientDiagnostics, Pipeline, _managedCCFRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, data).Request, response, OperationFinalStateVia.Location);
+                var response = _managedCcfManagedCcfRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, data, cancellationToken);
+                var operation = new ConfidentialLedgerArmOperation(_managedCcfManagedCcfClientDiagnostics, Pipeline, _managedCcfManagedCcfRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, data).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
@@ -313,12 +313,12 @@ namespace Azure.ResourceManager.ConfidentialLedger
         /// <param name="value"> The value for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="value"/> is null. </exception>
-        public virtual async Task<Response<ManagedCCFResource>> AddTagAsync(string key, string value, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ManagedCcfResource>> AddTagAsync(string key, string value, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(key, nameof(key));
             Argument.AssertNotNull(value, nameof(value));
 
-            using var scope = _managedCCFClientDiagnostics.CreateScope("ManagedCCFResource.AddTag");
+            using var scope = _managedCcfManagedCcfClientDiagnostics.CreateScope("ManagedCcfResource.AddTag");
             scope.Start();
             try
             {
@@ -327,13 +327,13 @@ namespace Azure.ResourceManager.ConfidentialLedger
                     var originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
                     originalTags.Value.Data.TagValues[key] = value;
                     await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    var originalResponse = await _managedCCFRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                    return Response.FromValue(new ManagedCCFResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                    var originalResponse = await _managedCcfManagedCcfRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
+                    return Response.FromValue(new ManagedCcfResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
                 }
                 else
                 {
                     var current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
-                    var patch = new ManagedCCFData(current.Location);
+                    var patch = new ManagedCcfData(current.Location);
                     foreach (var tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
@@ -367,12 +367,12 @@ namespace Azure.ResourceManager.ConfidentialLedger
         /// <param name="value"> The value for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="value"/> is null. </exception>
-        public virtual Response<ManagedCCFResource> AddTag(string key, string value, CancellationToken cancellationToken = default)
+        public virtual Response<ManagedCcfResource> AddTag(string key, string value, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(key, nameof(key));
             Argument.AssertNotNull(value, nameof(value));
 
-            using var scope = _managedCCFClientDiagnostics.CreateScope("ManagedCCFResource.AddTag");
+            using var scope = _managedCcfManagedCcfClientDiagnostics.CreateScope("ManagedCcfResource.AddTag");
             scope.Start();
             try
             {
@@ -381,13 +381,13 @@ namespace Azure.ResourceManager.ConfidentialLedger
                     var originalTags = GetTagResource().Get(cancellationToken);
                     originalTags.Value.Data.TagValues[key] = value;
                     GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken);
-                    var originalResponse = _managedCCFRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
-                    return Response.FromValue(new ManagedCCFResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                    var originalResponse = _managedCcfManagedCcfRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
+                    return Response.FromValue(new ManagedCcfResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
                 }
                 else
                 {
                     var current = Get(cancellationToken: cancellationToken).Value.Data;
-                    var patch = new ManagedCCFData(current.Location);
+                    var patch = new ManagedCcfData(current.Location);
                     foreach (var tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
@@ -420,11 +420,11 @@ namespace Azure.ResourceManager.ConfidentialLedger
         /// <param name="tags"> The set of tags to use as replacement. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
-        public virtual async Task<Response<ManagedCCFResource>> SetTagsAsync(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ManagedCcfResource>> SetTagsAsync(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(tags, nameof(tags));
 
-            using var scope = _managedCCFClientDiagnostics.CreateScope("ManagedCCFResource.SetTags");
+            using var scope = _managedCcfManagedCcfClientDiagnostics.CreateScope("ManagedCcfResource.SetTags");
             scope.Start();
             try
             {
@@ -434,13 +434,13 @@ namespace Azure.ResourceManager.ConfidentialLedger
                     var originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
                     originalTags.Value.Data.TagValues.ReplaceWith(tags);
                     await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    var originalResponse = await _managedCCFRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                    return Response.FromValue(new ManagedCCFResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                    var originalResponse = await _managedCcfManagedCcfRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
+                    return Response.FromValue(new ManagedCcfResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
                 }
                 else
                 {
                     var current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
-                    var patch = new ManagedCCFData(current.Location);
+                    var patch = new ManagedCcfData(current.Location);
                     patch.Tags.ReplaceWith(tags);
                     var result = await UpdateAsync(WaitUntil.Completed, patch, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false);
@@ -469,11 +469,11 @@ namespace Azure.ResourceManager.ConfidentialLedger
         /// <param name="tags"> The set of tags to use as replacement. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
-        public virtual Response<ManagedCCFResource> SetTags(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
+        public virtual Response<ManagedCcfResource> SetTags(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(tags, nameof(tags));
 
-            using var scope = _managedCCFClientDiagnostics.CreateScope("ManagedCCFResource.SetTags");
+            using var scope = _managedCcfManagedCcfClientDiagnostics.CreateScope("ManagedCcfResource.SetTags");
             scope.Start();
             try
             {
@@ -483,13 +483,13 @@ namespace Azure.ResourceManager.ConfidentialLedger
                     var originalTags = GetTagResource().Get(cancellationToken);
                     originalTags.Value.Data.TagValues.ReplaceWith(tags);
                     GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken);
-                    var originalResponse = _managedCCFRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
-                    return Response.FromValue(new ManagedCCFResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                    var originalResponse = _managedCcfManagedCcfRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
+                    return Response.FromValue(new ManagedCcfResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
                 }
                 else
                 {
                     var current = Get(cancellationToken: cancellationToken).Value.Data;
-                    var patch = new ManagedCCFData(current.Location);
+                    var patch = new ManagedCcfData(current.Location);
                     patch.Tags.ReplaceWith(tags);
                     var result = Update(WaitUntil.Completed, patch, cancellationToken: cancellationToken);
                     return Get(cancellationToken: cancellationToken);
@@ -518,11 +518,11 @@ namespace Azure.ResourceManager.ConfidentialLedger
         /// <param name="key"> The key for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
-        public virtual async Task<Response<ManagedCCFResource>> RemoveTagAsync(string key, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ManagedCcfResource>> RemoveTagAsync(string key, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(key, nameof(key));
 
-            using var scope = _managedCCFClientDiagnostics.CreateScope("ManagedCCFResource.RemoveTag");
+            using var scope = _managedCcfManagedCcfClientDiagnostics.CreateScope("ManagedCcfResource.RemoveTag");
             scope.Start();
             try
             {
@@ -531,13 +531,13 @@ namespace Azure.ResourceManager.ConfidentialLedger
                     var originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
                     originalTags.Value.Data.TagValues.Remove(key);
                     await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    var originalResponse = await _managedCCFRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                    return Response.FromValue(new ManagedCCFResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                    var originalResponse = await _managedCcfManagedCcfRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
+                    return Response.FromValue(new ManagedCcfResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
                 }
                 else
                 {
                     var current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
-                    var patch = new ManagedCCFData(current.Location);
+                    var patch = new ManagedCcfData(current.Location);
                     foreach (var tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
@@ -570,11 +570,11 @@ namespace Azure.ResourceManager.ConfidentialLedger
         /// <param name="key"> The key for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
-        public virtual Response<ManagedCCFResource> RemoveTag(string key, CancellationToken cancellationToken = default)
+        public virtual Response<ManagedCcfResource> RemoveTag(string key, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(key, nameof(key));
 
-            using var scope = _managedCCFClientDiagnostics.CreateScope("ManagedCCFResource.RemoveTag");
+            using var scope = _managedCcfManagedCcfClientDiagnostics.CreateScope("ManagedCcfResource.RemoveTag");
             scope.Start();
             try
             {
@@ -583,13 +583,13 @@ namespace Azure.ResourceManager.ConfidentialLedger
                     var originalTags = GetTagResource().Get(cancellationToken);
                     originalTags.Value.Data.TagValues.Remove(key);
                     GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken);
-                    var originalResponse = _managedCCFRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
-                    return Response.FromValue(new ManagedCCFResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                    var originalResponse = _managedCcfManagedCcfRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
+                    return Response.FromValue(new ManagedCcfResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
                 }
                 else
                 {
                     var current = Get(cancellationToken: cancellationToken).Value.Data;
-                    var patch = new ManagedCCFData(current.Location);
+                    var patch = new ManagedCcfData(current.Location);
                     foreach (var tag in current.Tags)
                     {
                         patch.Tags.Add(tag);

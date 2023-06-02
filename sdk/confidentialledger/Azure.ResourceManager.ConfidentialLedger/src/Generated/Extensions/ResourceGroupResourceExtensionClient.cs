@@ -38,11 +38,11 @@ namespace Azure.ResourceManager.ConfidentialLedger
             return GetCachedClient(Client => new ConfidentialLedgerCollection(Client, Id));
         }
 
-        /// <summary> Gets a collection of ManagedCCFResources in the ResourceGroupResource. </summary>
-        /// <returns> An object representing collection of ManagedCCFResources and their operations over a ManagedCCFResource. </returns>
-        public virtual ManagedCCFCollection GetManagedCCFs()
+        /// <summary> Gets a collection of ManagedCcfResources in the ResourceGroupResource. </summary>
+        /// <returns> An object representing collection of ManagedCcfResources and their operations over a ManagedCcfResource. </returns>
+        public virtual ManagedCcfCollection GetManagedCcfs()
         {
-            return GetCachedClient(Client => new ManagedCCFCollection(Client, Id));
+            return GetCachedClient(Client => new ManagedCcfCollection(Client, Id));
         }
     }
 }
