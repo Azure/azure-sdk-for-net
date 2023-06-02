@@ -34,26 +34,14 @@ namespace Azure.AI.ContentSafety.Tests.Samples
             }
             catch (RequestFailedException ex)
             {
-                Console.WriteLine(String.Format("Analyze text failed.\nStatus code: {0}, Error code: {1}, Error message: {2}", ex.Status, ex.ErrorCode, ex.Message));
+                Console.WriteLine("Analyze text failed.\nStatus code: {0}, Error code: {1}, Error message: {2}", ex.Status, ex.ErrorCode, ex.Message);
                 throw;
             }
 
-            if (response.Value.HateResult != null)
-            {
-                Console.WriteLine(String.Format("Hate severity: {0}", response.Value.HateResult.Severity));
-            }
-            if (response.Value.SelfHarmResult != null)
-            {
-                Console.WriteLine(String.Format("SelfHarm severity: {0}", response.Value.SelfHarmResult.Severity));
-            }
-            if (response.Value.SexualResult != null)
-            {
-                Console.WriteLine(String.Format("Sexual severity: {0}", response.Value.SexualResult.Severity));
-            }
-            if (response.Value.ViolenceResult != null)
-            {
-                Console.WriteLine(String.Format("Violence severity: {0}", response.Value.ViolenceResult.Severity));
-            }
+            Console.WriteLine("Hate severity: {0}", response.Value.HateResult?.Severity ?? 0);
+            Console.WriteLine("SelfHarm severity: {0}", response.Value.SelfHarmResult?.Severity ?? 0);
+            Console.WriteLine("Sexual severity: {0}", response.Value.SexualResult?.Severity ?? 0);
+            Console.WriteLine("Violence severity: {0}", response.Value.ViolenceResult?.Severity ?? 0);
 
             #endregion Snippet:Azure_AI_ContentSafety_AnalyzeText
         }

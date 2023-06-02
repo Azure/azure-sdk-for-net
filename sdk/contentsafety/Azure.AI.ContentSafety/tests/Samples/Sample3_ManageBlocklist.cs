@@ -34,11 +34,11 @@ namespace Azure.AI.ContentSafety.Tests.Samples
             var createResponse = client.CreateOrUpdateTextBlocklist(blocklistName, RequestContent.Create(data));
             if (createResponse.Status == 201)
             {
-                Console.WriteLine(String.Format("\nBlocklist {0} created.", blocklistName));
+                Console.WriteLine("\nBlocklist {0} created.", blocklistName);
             }
             else if (createResponse.Status == 200)
             {
-                Console.WriteLine(String.Format("\nBlocklist {0} updated.", blocklistName));
+                Console.WriteLine("\nBlocklist {0} updated.", blocklistName);
             }
 
             #endregion Snippet:Azure_AI_ContentSafety_CreateNewBlocklist
@@ -57,7 +57,7 @@ namespace Azure.AI.ContentSafety.Tests.Samples
                 foreach (var addedBlockItem in addedBlockItems.Value.Value)
                 {
                     {
-                        Console.WriteLine(String.Format("BlockItemId: {0}, Text: {1}, Description: {2}", addedBlockItem.BlockItemId, addedBlockItem.Text, addedBlockItem.Description));
+                        Console.WriteLine("BlockItemId: {0}, Text: {1}, Description: {2}", addedBlockItem.BlockItemId, addedBlockItem.Text, addedBlockItem.Description);
                     }
                 }
             }
@@ -78,7 +78,7 @@ namespace Azure.AI.ContentSafety.Tests.Samples
             }
             catch (RequestFailedException ex)
             {
-                Console.WriteLine(String.Format("Analyze text failed.\nError code: {0}, Error message: {1}", ex.ErrorCode, ex.Message));
+                Console.WriteLine("Analyze text failed.\nStatus code: {0}, Error code: {1}, Error message: {2}", ex.Status, ex.ErrorCode, ex.Message);
                 throw;
             }
 
@@ -87,8 +87,8 @@ namespace Azure.AI.ContentSafety.Tests.Samples
                 Console.WriteLine("\nBlocklist match result:");
                 foreach (var matchResult in response.Value.BlocklistsMatchResults)
                 {
-                    Console.WriteLine(String.Format("Blockitem was hit in text: Offset: {0}, Length: {1}", matchResult.Offset, matchResult.Length));
-                    Console.WriteLine(String.Format("BlocklistName: {0}, BlockItemId: {1}, BlockItemText: {2}, ", matchResult.BlocklistName, matchResult.BlockItemId, matchResult.BlockItemText));
+                    Console.WriteLine("Blockitem was hit in text: Offset: {0}, Length: {1}", matchResult.Offset, matchResult.Length);
+                    Console.WriteLine("BlocklistName: {0}, BlockItemId: {1}, BlockItemText: {2}, ", matchResult.BlocklistName, matchResult.BlockItemId, matchResult.BlockItemText);
                 }
             }
 
@@ -100,7 +100,7 @@ namespace Azure.AI.ContentSafety.Tests.Samples
             Console.WriteLine("\nList blocklists:");
             foreach (var blocklist in blocklists)
             {
-                Console.WriteLine(String.Format("BlocklistName: {0}, Description: {1}", blocklist.BlocklistName, blocklist.Description));
+                Console.WriteLine("BlocklistName: {0}, Description: {1}", blocklist.BlocklistName, blocklist.Description);
             }
 
             #endregion Snippet:Azure_AI_ContentSafety_ListBlocklists
@@ -111,7 +111,7 @@ namespace Azure.AI.ContentSafety.Tests.Samples
             if (getBlocklist != null && getBlocklist.Value != null)
             {
                 Console.WriteLine("\nGet blocklist:");
-                Console.WriteLine(String.Format("BlocklistName: {0}, Description: {1}", getBlocklist.Value.BlocklistName, getBlocklist.Value.Description));
+                Console.WriteLine("BlocklistName: {0}, Description: {1}", getBlocklist.Value.BlocklistName, getBlocklist.Value.Description);
             }
 
             #endregion Snippet:Azure_AI_ContentSafety_GetBlocklist
@@ -122,7 +122,7 @@ namespace Azure.AI.ContentSafety.Tests.Samples
             Console.WriteLine("\nList BlockItems:");
             foreach (var blocklistItem in allBlockitems)
             {
-                Console.WriteLine(String.Format("BlockItemId: {0}, Text: {1}, Description: {2}", blocklistItem.BlockItemId, blocklistItem.Text, blocklistItem.Description));
+                Console.WriteLine("BlockItemId: {0}, Text: {1}, Description: {2}", blocklistItem.BlockItemId, blocklistItem.Text, blocklistItem.Description);
             }
 
             #endregion Snippet:Azure_AI_ContentSafety_ListBlockItems
@@ -132,7 +132,7 @@ namespace Azure.AI.ContentSafety.Tests.Samples
             var getBlockItemId = addedBlockItems.Value.Value[0].BlockItemId;
             var getBlockItem = client.GetTextBlocklistItem(blocklistName, getBlockItemId);
             Console.WriteLine("\nGet BlockItem:");
-            Console.WriteLine(String.Format("BlockItemId: {0}, Text: {1}, Description: {2}", getBlockItem.Value.BlockItemId, getBlockItem.Value.Text, getBlockItem.Value.Description));
+            Console.WriteLine("BlockItemId: {0}, Text: {1}, Description: {2}", getBlockItem.Value.BlockItemId, getBlockItem.Value.Text, getBlockItem.Value.Description);
 
             #endregion Snippet:Azure_AI_ContentSafety_GetBlockItem
 
@@ -144,7 +144,7 @@ namespace Azure.AI.ContentSafety.Tests.Samples
 
             if (removeResult != null && removeResult.Status == 204)
             {
-                Console.WriteLine(String.Format("\nBlockItem removed: {0}.", removeBlockItemId));
+                Console.WriteLine("\nBlockItem removed: {0}.", removeBlockItemId);
             }
 
             #endregion Snippet:Azure_AI_ContentSafety_RemoveBlockItems

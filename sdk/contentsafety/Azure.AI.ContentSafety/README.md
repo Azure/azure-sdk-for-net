@@ -129,26 +129,14 @@ try
 }
 catch (RequestFailedException ex)
 {
-    Console.WriteLine(String.Format("Analyze text failed.\nStatus code: {0}, Error code: {1}, Error message: {2}", ex.Status, ex.ErrorCode, ex.Message));
+    Console.WriteLine("Analyze text failed.\nStatus code: {0}, Error code: {1}, Error message: {2}", ex.Status, ex.ErrorCode, ex.Message);
     throw;
 }
 
-if (response.Value.HateResult != null)
-{
-    Console.WriteLine(String.Format("Hate severity: {0}", response.Value.HateResult.Severity));
-}
-if (response.Value.SelfHarmResult != null)
-{
-    Console.WriteLine(String.Format("SelfHarm severity: {0}", response.Value.SelfHarmResult.Severity));
-}
-if (response.Value.SexualResult != null)
-{
-    Console.WriteLine(String.Format("Sexual severity: {0}", response.Value.SexualResult.Severity));
-}
-if (response.Value.ViolenceResult != null)
-{
-    Console.WriteLine(String.Format("Violence severity: {0}", response.Value.ViolenceResult.Severity));
-}
+Console.WriteLine("Hate severity: {0}", response.Value.HateResult?.Severity ?? 0);
+Console.WriteLine("SelfHarm severity: {0}", response.Value.SelfHarmResult?.Severity ?? 0);
+Console.WriteLine("Sexual severity: {0}", response.Value.SexualResult?.Severity ?? 0);
+Console.WriteLine("Violence severity: {0}", response.Value.ViolenceResult?.Severity ?? 0);
 ```
 
 #### Analyze text with blocklists
@@ -165,7 +153,7 @@ try
 }
 catch (RequestFailedException ex)
 {
-    Console.WriteLine(String.Format("Analyze text failed.\nError code: {0}, Error message: {1}", ex.ErrorCode, ex.Message));
+    Console.WriteLine("Analyze text failed.\nStatus code: {0}, Error code: {1}, Error message: {2}", ex.Status, ex.ErrorCode, ex.Message);
     throw;
 }
 
@@ -174,8 +162,8 @@ if (response.Value.BlocklistsMatchResults != null)
     Console.WriteLine("\nBlocklist match result:");
     foreach (var matchResult in response.Value.BlocklistsMatchResults)
     {
-        Console.WriteLine(String.Format("Blockitem was hit in text: Offset: {0}, Length: {1}", matchResult.Offset, matchResult.Length));
-        Console.WriteLine(String.Format("BlocklistName: {0}, BlockItemId: {1}, BlockItemText: {2}, ", matchResult.BlocklistName, matchResult.BlockItemId, matchResult.BlockItemText));
+        Console.WriteLine("Blockitem was hit in text: Offset: {0}, Length: {1}", matchResult.Offset, matchResult.Length);
+        Console.WriteLine("BlocklistName: {0}, BlockItemId: {1}, BlockItemText: {2}, ", matchResult.BlocklistName, matchResult.BlockItemId, matchResult.BlockItemText);
     }
 }
 ```
@@ -195,26 +183,14 @@ try
 }
 catch (RequestFailedException ex)
 {
-    Console.WriteLine(String.Format("Analyze image failed.\nError code: {0}, Error message: {1}", ex.ErrorCode, ex.Message));
+    Console.WriteLine("Analyze image failed.\nStatus code: {0}, Error code: {1}, Error message: {2}", ex.Status, ex.ErrorCode, ex.Message);
     throw;
 }
 
-if (response.Value.HateResult != null)
-{
-    Console.WriteLine(String.Format("Hate severity: {0}", response.Value.HateResult.Severity));
-}
-if (response.Value.SelfHarmResult != null)
-{
-    Console.WriteLine(String.Format("SelfHarm severity: {0}", response.Value.SelfHarmResult.Severity));
-}
-if (response.Value.SexualResult != null)
-{
-    Console.WriteLine(String.Format("Sexual severity: {0}", response.Value.SexualResult.Severity));
-}
-if (response.Value.ViolenceResult != null)
-{
-    Console.WriteLine(String.Format("Violence severity: {0}", response.Value.ViolenceResult.Severity));
-}
+Console.WriteLine("Hate severity: {0}", response.Value.HateResult?.Severity ?? 0);
+Console.WriteLine("SelfHarm severity: {0}", response.Value.SelfHarmResult?.Severity ?? 0);
+Console.WriteLine("Sexual severity: {0}", response.Value.SexualResult?.Severity ?? 0);
+Console.WriteLine("Violence severity: {0}", response.Value.ViolenceResult?.Severity ?? 0);
 ```
 
 ### Manage text blocklist
@@ -233,11 +209,11 @@ var data = new
 var createResponse = client.CreateOrUpdateTextBlocklist(blocklistName, RequestContent.Create(data));
 if (createResponse.Status == 201)
 {
-    Console.WriteLine(String.Format("\nBlocklist {0} created.", blocklistName));
+    Console.WriteLine("\nBlocklist {0} created.", blocklistName);
 }
 else if (createResponse.Status == 200)
 {
-    Console.WriteLine(String.Format("\nBlocklist {0} updated.", blocklistName));
+    Console.WriteLine("\nBlocklist {0} updated.", blocklistName);
 }
 ```
 
@@ -256,7 +232,7 @@ if (addedBlockItems != null && addedBlockItems.Value != null)
     foreach (var addedBlockItem in addedBlockItems.Value.Value)
     {
         {
-            Console.WriteLine(String.Format("BlockItemId: {0}, Text: {1}, Description: {2}", addedBlockItem.BlockItemId, addedBlockItem.Text, addedBlockItem.Description));
+            Console.WriteLine("BlockItemId: {0}, Text: {1}, Description: {2}", addedBlockItem.BlockItemId, addedBlockItem.Text, addedBlockItem.Description);
         }
     }
 }
@@ -269,7 +245,7 @@ var blocklists = client.GetTextBlocklists();
 Console.WriteLine("\nList blocklists:");
 foreach (var blocklist in blocklists)
 {
-    Console.WriteLine(String.Format("BlocklistName: {0}, Description: {1}", blocklist.BlocklistName, blocklist.Description));
+    Console.WriteLine("BlocklistName: {0}, Description: {1}", blocklist.BlocklistName, blocklist.Description);
 }
 ```
 
@@ -280,7 +256,7 @@ var getBlocklist = client.GetTextBlocklist(blocklistName);
 if (getBlocklist != null && getBlocklist.Value != null)
 {
     Console.WriteLine("\nGet blocklist:");
-    Console.WriteLine(String.Format("BlocklistName: {0}, Description: {1}", getBlocklist.Value.BlocklistName, getBlocklist.Value.Description));
+    Console.WriteLine("BlocklistName: {0}, Description: {1}", getBlocklist.Value.BlocklistName, getBlocklist.Value.Description);
 }
 ```
 
@@ -291,7 +267,7 @@ var allBlockitems = client.GetTextBlocklistItems(blocklistName);
 Console.WriteLine("\nList BlockItems:");
 foreach (var blocklistItem in allBlockitems)
 {
-    Console.WriteLine(String.Format("BlockItemId: {0}, Text: {1}, Description: {2}", blocklistItem.BlockItemId, blocklistItem.Text, blocklistItem.Description));
+    Console.WriteLine("BlockItemId: {0}, Text: {1}, Description: {2}", blocklistItem.BlockItemId, blocklistItem.Text, blocklistItem.Description);
 }
 ```
 
@@ -301,7 +277,7 @@ foreach (var blocklistItem in allBlockitems)
 var getBlockItemId = addedBlockItems.Value.Value[0].BlockItemId;
 var getBlockItem = client.GetTextBlocklistItem(blocklistName, getBlockItemId);
 Console.WriteLine("\nGet BlockItem:");
-Console.WriteLine(String.Format("BlockItemId: {0}, Text: {1}, Description: {2}", getBlockItem.Value.BlockItemId, getBlockItem.Value.Text, getBlockItem.Value.Description));
+Console.WriteLine("BlockItemId: {0}, Text: {1}, Description: {2}", getBlockItem.Value.BlockItemId, getBlockItem.Value.Text, getBlockItem.Value.Description);
 ```
 
 #### Remove blockItems
@@ -313,7 +289,7 @@ var removeResult = client.RemoveBlockItems(blocklistName, new RemoveBlockItemsOp
 
 if (removeResult != null && removeResult.Status == 204)
 {
-    Console.WriteLine(String.Format("\nBlockItem removed: {0}.", removeBlockItemId));
+    Console.WriteLine("\nBlockItem removed: {0}.", removeBlockItemId);
 }
 ```
 
@@ -340,7 +316,7 @@ try
 }
 catch (RequestFailedException ex)
 {
-    Console.WriteLine(String.Format("Analyze text failed.\nStatus code: {0}, Error code: {1}, Error message: {2}", ex.Status, ex.ErrorCode, ex.Message));
+    Console.WriteLine("Analyze text failed.\nStatus code: {0}, Error code: {1}, Error message: {2}", ex.Status, ex.ErrorCode, ex.Message);
     throw;
 }
 ```
