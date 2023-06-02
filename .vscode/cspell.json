@@ -280,15 +280,22 @@
       ]
     },
     {
+      "filename": "**/sdk/consumption/**/*",
+      "words": [
+        "payg"
+      ]
+    },
+    {
       "filename": "**/sdk/cosmosdbforpostgresql/**/*",
       "words": [
         "Citus"
       ]
     },
     {
-      "filename": "**/sdk/consumption/**/*",
+      "filename": "**/sdk/costmanagement/**/*",
       "words": [
-        "payg"
+        "ahub",
+        "kpis"
       ]
     },
     {
