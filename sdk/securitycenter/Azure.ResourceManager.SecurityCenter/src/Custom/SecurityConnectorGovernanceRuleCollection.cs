@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.ComponentModel;
 using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
@@ -23,6 +24,8 @@ namespace Azure.ResourceManager.SecurityCenter
     /// Each <see cref="SecurityConnectorGovernanceRuleResource" /> in the collection will belong to the same instance of <see cref="SecurityConnectorResource" />.
     /// To get a <see cref="SecurityConnectorGovernanceRuleCollection" /> instance call the GetSecurityConnectorGovernanceRules method from an instance of <see cref="SecurityConnectorResource" />.
     /// </summary>
+    [EditorBrowsable(EditorBrowsableState.Never)]
+    [Obsolete("This class is obsolete and will be removed in a future release.", false)]
     public partial class SecurityConnectorGovernanceRuleCollection : ArmCollection, IEnumerable<SecurityConnectorGovernanceRuleResource>, IAsyncEnumerable<SecurityConnectorGovernanceRuleResource>
     {
         private readonly ClientDiagnostics _securityConnectorGovernanceRuleClientDiagnostics;
