@@ -305,7 +305,7 @@ if (removeResult != null && removeResult.Status == 204)
 var deleteResult = client.DeleteTextBlocklist(blocklistName);
 if (deleteResult != null && deleteResult.Status == 204)
 {
-    Console.WriteLine("\nDelete blocklist succeded.");
+    Console.WriteLine("\nDeleted blocklist.");
 }
 ```
 
