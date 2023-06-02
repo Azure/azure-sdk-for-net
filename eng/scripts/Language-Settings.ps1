@@ -435,16 +435,28 @@ function EnsureCustomSource($package) {
   return $package
 }
 
+$PackageExclusions = @{
+  'Azure.Messaging.EventGrid' = 'Fails docs CI: https://github.com/Azure/azure-sdk-for-net/issues/36474'
+}
+
 function Update-dotnet-DocsMsPackages($DocsRepoLocation, $DocsMetadata) {
+
+  Write-Host "Excluded packages:"
+  foreach ($excludedPackage in $PackageExclusions.Keys) {
+    Write-Host "  $excludedPackage - $($PackageExclusions[$excludedPackage])"
+  }
+
+  $FilteredMetadata = $DocsMetadata.Where({ !($PackageExclusions.ContainsKey($_.Package)) })
+
   UpdateDocsMsPackages `
     (Join-Path $DocsRepoLocation 'bundlepackages/azure-dotnet-preview.csv') `
     'preview' `
-    $DocsMetadata
+    $FilteredMetadata
 
   UpdateDocsMsPackages `
     (Join-Path $DocsRepoLocation 'bundlepackages/azure-dotnet.csv') `
     'latest' `
-    $DocsMetadata
+    $FilteredMetadata
 }
 
 function UpdateDocsMsPackages($DocConfigFile, $Mode, $DocsMetadata) {

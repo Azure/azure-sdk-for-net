@@ -67,7 +67,7 @@ namespace Azure.AI.TextAnalytics.Samples
             ExtractiveSummarizeOptions options = new()
             {
                 MaxSentenceCount = 5,
-                OrderBy = SummarySentencesOrder.Rank
+                OrderBy = ExtractiveSummarySentencesOrder.Rank
             };
 
             // Perform the text analysis operation.
@@ -104,7 +104,7 @@ namespace Azure.AI.TextAnalytics.Samples
                     Console.WriteLine($"  Extracted {documentResult.Sentences.Count} sentence(s):");
                     Console.WriteLine();
 
-                    foreach (SummarySentence sentence in documentResult.Sentences)
+                    foreach (ExtractiveSummarySentence sentence in documentResult.Sentences)
                     {
                         Console.WriteLine($"  Sentence: {sentence.Text}");
                         Console.WriteLine($"  Rank Score: {sentence.RankScore}");

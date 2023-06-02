@@ -93,7 +93,7 @@ namespace Azure.AI.TextAnalytics.Tests
 
             // Take the first page.
             ExtractiveSummarizeResultCollection resultCollection = resultInPages.FirstOrDefault();
-            ValidateSummaryBatchResult(resultCollection, SummarySentencesOrder.Offset);
+            ValidateSummaryBatchResult(resultCollection, ExtractiveSummarySentencesOrder.Offset);
         }
 
         [RecordedTest]
@@ -105,7 +105,7 @@ namespace Azure.AI.TextAnalytics.Tests
             ExtractiveSummarizeOptions options = new ExtractiveSummarizeOptions()
             {
                 MaxSentenceCount = ExtractiveSummarizeMaxSentenceCount,
-                OrderBy = SummarySentencesOrder.Rank
+                OrderBy = ExtractiveSummarySentencesOrder.Rank
             };
 
             ExtractiveSummarizeOperation operation = await client.StartExtractiveSummarizeAsync(s_batchDocuments, options);
@@ -117,7 +117,7 @@ namespace Azure.AI.TextAnalytics.Tests
 
             // Take the first page.
             ExtractiveSummarizeResultCollection resultCollection = resultInPages.FirstOrDefault();
-            ValidateSummaryBatchResult(resultCollection, SummarySentencesOrder.Rank, ExtractiveSummarizeMaxSentenceCount);
+            ValidateSummaryBatchResult(resultCollection, ExtractiveSummarySentencesOrder.Rank, ExtractiveSummarizeMaxSentenceCount);
         }
 
         [RecordedTest]
@@ -161,7 +161,7 @@ namespace Azure.AI.TextAnalytics.Tests
 
             // Take the first page.
             ExtractiveSummarizeResultCollection resultCollection = resultInPages.FirstOrDefault();
-            ValidateSummaryBatchResult(resultCollection, SummarySentencesOrder.Offset);
+            ValidateSummaryBatchResult(resultCollection, ExtractiveSummarySentencesOrder.Offset);
         }
 
         [RecordedTest]
@@ -185,7 +185,7 @@ namespace Azure.AI.TextAnalytics.Tests
 
             // Take the first page.
             ExtractiveSummarizeResultCollection resultCollection = resultInPages.FirstOrDefault();
-            ValidateSummaryBatchResult(resultCollection, SummarySentencesOrder.Offset, ExtractiveSummarizeMaxSentenceCount, true);
+            ValidateSummaryBatchResult(resultCollection, ExtractiveSummarySentencesOrder.Offset, ExtractiveSummarizeMaxSentenceCount, true);
         }
 
         [RecordedTest]
@@ -203,7 +203,7 @@ namespace Azure.AI.TextAnalytics.Tests
 
             // Take the first page.
             ExtractiveSummarizeResultCollection resultCollection = resultInPages.FirstOrDefault();
-            ValidateSummaryBatchResult(resultCollection, SummarySentencesOrder.Offset);
+            ValidateSummaryBatchResult(resultCollection, ExtractiveSummarySentencesOrder.Offset);
         }
 
         [RecordedTest]
@@ -227,7 +227,7 @@ namespace Azure.AI.TextAnalytics.Tests
 
             // Take the first page.
             ExtractiveSummarizeResultCollection resultCollection = resultInPages.FirstOrDefault();
-            ValidateSummaryBatchResult(resultCollection, SummarySentencesOrder.Offset, ExtractiveSummarizeMaxSentenceCount, true);
+            ValidateSummaryBatchResult(resultCollection, ExtractiveSummarySentencesOrder.Offset, ExtractiveSummarizeMaxSentenceCount, true);
         }
 
         [RecordedTest]
@@ -245,12 +245,11 @@ namespace Azure.AI.TextAnalytics.Tests
 
             // Take the first page.
             ExtractiveSummarizeResultCollection resultCollection = resultInPages.FirstOrDefault();
-            ValidateSummaryBatchResult(resultCollection, SummarySentencesOrder.Offset, isLanguageAutoDetected: true);
+            ValidateSummaryBatchResult(resultCollection, ExtractiveSummarySentencesOrder.Offset, isLanguageAutoDetected: true);
         }
 
         [RecordedTest]
         [RetryOnInternalServerError]
-        [ServiceVersion(Min = TextAnalyticsClientOptions.ServiceVersion.V2022_10_01_Preview)]
         public async Task AnalyzeOperationExtractiveSummarize()
         {
             TextAnalyticsClient client = GetClient();
@@ -268,26 +267,7 @@ namespace Azure.AI.TextAnalytics.Tests
             Assert.IsNotNull(extractiveSummarizeActionsResults);
 
             ExtractiveSummarizeResultCollection extractiveSummarizeDocumentsResults = extractiveSummarizeActionsResults.FirstOrDefault().DocumentsResults;
-            ValidateSummaryBatchResult(extractiveSummarizeDocumentsResults, SummarySentencesOrder.Offset);
-        }
-
-        [RecordedTest]
-        [RetryOnInternalServerError]
-        [ServiceVersion(Max = TextAnalyticsClientOptions.ServiceVersion.V2022_05_01)]
-        public void AnalyzeOperationExtractiveSummarizeActionNotSupported()
-        {
-            TestDiagnostics = false;
-            TextAnalyticsClient client = GetClient();
-            TextAnalyticsActions batchActions = new()
-            {
-                ExtractiveSummarizeActions = new[]
-                {
-                    new ExtractiveSummarizeAction(),
-                },
-            };
-
-            NotSupportedException ex = Assert.ThrowsAsync<NotSupportedException>(async () => await client.StartAnalyzeActionsAsync(s_batchDocuments, batchActions));
-            Assert.That(ex.Message.EndsWith("Use service API version 2022-10-01-preview or newer."));
+            ValidateSummaryBatchResult(extractiveSummarizeDocumentsResults, ExtractiveSummarySentencesOrder.Offset);
         }
 
         [RecordedTest]
@@ -311,7 +291,7 @@ namespace Azure.AI.TextAnalytics.Tests
             Assert.IsNotNull(actionResults);
 
             ExtractiveSummarizeResultCollection results = actionResults.FirstOrDefault().DocumentsResults;
-            ValidateSummaryBatchResult(results, SummarySentencesOrder.Offset, isLanguageAutoDetected: true);
+            ValidateSummaryBatchResult(results, ExtractiveSummarySentencesOrder.Offset, isLanguageAutoDetected: true);
         }
 
         private void ValidateOperationProperties(ExtractiveSummarizeOperation operation)
@@ -327,15 +307,15 @@ namespace Azure.AI.TextAnalytics.Tests
         }
 
         private void ValidateSummaryDocumentResult(
-            IReadOnlyCollection<SummarySentence> sentences,
+            IReadOnlyCollection<ExtractiveSummarySentence> sentences,
             int maxSentenceCount,
-            SummarySentencesOrder expectedOrder)
+            ExtractiveSummarySentencesOrder expectedOrder)
         {
             Assert.LessOrEqual(sentences.Count, maxSentenceCount);
 
             for (int i = 0; i < sentences.Count; i++)
             {
-                SummarySentence sentence = sentences.ElementAt(i);
+                ExtractiveSummarySentence sentence = sentences.ElementAt(i);
                 string originalDocument = s_batchConvenienceDocuments.Where(document => document.Contains(sentence.Text)).FirstOrDefault();
 
                 Assert.False(string.IsNullOrEmpty(originalDocument));
@@ -347,13 +327,13 @@ namespace Azure.AI.TextAnalytics.Tests
 
                 if (i > 0)
                 {
-                    SummarySentence previousSentence = sentences.ElementAt(i - 1);
+                    ExtractiveSummarySentence previousSentence = sentences.ElementAt(i - 1);
 
-                    if (expectedOrder == SummarySentencesOrder.Offset)
+                    if (expectedOrder == ExtractiveSummarySentencesOrder.Offset)
                     {
                         Assert.Greater(sentence.Offset, previousSentence.Offset);
                     }
-                    else if (expectedOrder == SummarySentencesOrder.Rank)
+                    else if (expectedOrder == ExtractiveSummarySentencesOrder.Rank)
                     {
                         Assert.LessOrEqual(sentence.RankScore, previousSentence.RankScore);
                     }
@@ -363,7 +343,7 @@ namespace Azure.AI.TextAnalytics.Tests
 
         private void ValidateSummaryBatchResult(
             ExtractiveSummarizeResultCollection results,
-            SummarySentencesOrder expectedOrder,
+            ExtractiveSummarySentencesOrder expectedOrder,
             int maxSentenceCount = DefaultSummaryMaxSentenceCount,
             bool includeStatistics = default,
             bool isLanguageAutoDetected = default)
