@@ -544,7 +544,7 @@ namespace Azure.Core
         public static Azure.Core.RequestContent Create(System.IO.Stream stream) { throw null; }
         public static Azure.Core.RequestContent Create(object serializable) { throw null; }
         public static Azure.Core.RequestContent Create(object serializable, Azure.Core.Serialization.ObjectSerializer? serializer) { throw null; }
-        public static Azure.Core.RequestContent Create(object serializable, Azure.Core.Serialization.PropertyNameConversion propertyNameHandling, Azure.Core.Serialization.DateTimeHandling dateTimeHandling = Azure.Core.Serialization.DateTimeHandling.Rfc3339) { throw null; }
+        public static Azure.Core.RequestContent Create(object serializable, Azure.Core.Serialization.PropertyNameConversion propertyNameConversion, Azure.Core.Serialization.DateTimeHandling dateTimeHandling = Azure.Core.Serialization.DateTimeHandling.Rfc3339) { throw null; }
         public static Azure.Core.RequestContent Create(System.ReadOnlyMemory<byte> bytes) { throw null; }
         public static Azure.Core.RequestContent Create(string content) { throw null; }
         public abstract void Dispose();
