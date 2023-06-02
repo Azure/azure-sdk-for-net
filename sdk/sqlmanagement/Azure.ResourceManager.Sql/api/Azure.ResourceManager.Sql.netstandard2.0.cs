@@ -8291,7 +8291,7 @@ namespace Azure.ResourceManager.Sql.Models
         public Azure.ResourceManager.Sql.Models.SqlMetricPrimaryAggregationType? PrimaryAggregationType { get { throw null; } }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         [System.ObsoleteAttribute("This property has been replaced by ResourceUriString", false)]
-        public System.Uri ResourceUri { get { throw null; } set { } }
+        public System.Uri ResourceUri { get { throw null; } }
         public string ResourceUriString { get { throw null; } }
         public Azure.ResourceManager.Sql.Models.SqlMetricDefinitionUnitType? Unit { get { throw null; } }
     }

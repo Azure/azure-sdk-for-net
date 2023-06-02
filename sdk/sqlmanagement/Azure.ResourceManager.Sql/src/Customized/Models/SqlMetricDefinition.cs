@@ -13,6 +13,6 @@ namespace Azure.ResourceManager.Sql.Models
         /// <summary> Uri of the resource. </summary>
         [EditorBrowsableAttribute(EditorBrowsableState.Never)]
         [ObsoleteAttribute("This property has been replaced by ResourceUriString", false)]
-        public Uri ResourceUri { get; set; }
+        public Uri ResourceUri => string.IsNullOrEmpty(ResourceUriString) ? null : new Uri(ResourceUriString);
     }
 }
