@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
             Optional<SystemData> systemData = default;
             Optional<string> organizationId = default;
             Optional<string> organizationName = default;
-            Optional<BillingSource> billingSource = default;
+            Optional<NewRelicObservabilityBillingSource> billingSource = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
                             {
                                 continue;
                             }
-                            billingSource = new BillingSource(property0.Value.GetString());
+                            billingSource = new NewRelicObservabilityBillingSource(property0.Value.GetString());
                             continue;
                         }
                     }

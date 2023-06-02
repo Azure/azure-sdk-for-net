@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.NewRelicObservability.Samples
                 NewRelicAccountProperties = new NewRelicAccountProperties()
                 {
                     UserId = "vcscxlncofcuduadesd",
-                    AccountInfo = new AccountInfo()
+                    AccountInfo = new NewRelicObservabilityAccountInfo()
                     {
                         AccountId = "xhqmg",
                         IngestionKey = "wltnimmhqt",
@@ -130,13 +130,13 @@ namespace Azure.ResourceManager.NewRelicObservability.Samples
                     OrganizationId = "k",
                     SingleSignOnProperties = new NewRelicSingleSignOnProperties()
                     {
-                        SingleSignOnState = SingleSignOnState.Initial,
+                        SingleSignOnState = NewRelicSingleSignOnState.Initial,
                         EnterpriseAppId = "kwiwfz",
                         SingleSignOnUri = new Uri("kvseueuljsxmfwpqctz"),
                         ProvisioningState = NewrelicProvisioningState.Accepted,
                     },
                 },
-                UserInfo = new UserInfo()
+                UserInfo = new NewRelicObservabilityUserInfo()
                 {
                     FirstName = "vdftzcggirefejajwahhwhyibutramdaotvnuf",
                     LastName = "bcsztgqovdlmzfkjdrngidwzqsevagexzzilnlc",
@@ -146,13 +146,13 @@ namespace Azure.ResourceManager.NewRelicObservability.Samples
                 },
                 PlanData = new NewRelicPlan()
                 {
-                    UsageType = UsageType.Payg,
-                    BillingCycle = BillingCycle.Yearly,
+                    UsageType = NewRelicObservabilityUsageType.Payg,
+                    BillingCycle = NewRelicObservabilityBillingCycle.Yearly,
                     PlanDetails = "tbbiaga",
                     EffectiveOn = DateTimeOffset.Parse("2022-12-05T14:11:37.786Z"),
                 },
-                OrgCreationSource = OrgCreationSource.Liftr,
-                AccountCreationSource = AccountCreationSource.Liftr,
+                OrgCreationSource = NewRelicObservabilityOrgCreationSource.Liftr,
+                AccountCreationSource = NewRelicObservabilityAccountCreationSource.Liftr,
             };
             NewRelicMonitorResource result = await newRelicMonitorResource.UpdateAsync(patch);
 
@@ -241,8 +241,8 @@ namespace Azure.ResourceManager.NewRelicObservability.Samples
             NewRelicMonitorResource newRelicMonitorResource = client.GetNewRelicMonitorResource(newRelicMonitorResourceId);
 
             // invoke the operation
-            MetricsContent content = new MetricsContent("ruxvg@xqkmdhrnoo.hlmbpm");
-            MetricRules result = await newRelicMonitorResource.GetMetricRulesAsync(content);
+            NewrelicMetricsContent content = new NewrelicMetricsContent("ruxvg@xqkmdhrnoo.hlmbpm");
+            NewRelicObservabilityMetricRules result = await newRelicMonitorResource.GetMetricRulesAsync(content);
 
             Console.WriteLine($"Succeeded: {result}");
         }
@@ -269,8 +269,8 @@ namespace Azure.ResourceManager.NewRelicObservability.Samples
             NewRelicMonitorResource newRelicMonitorResource = client.GetNewRelicMonitorResource(newRelicMonitorResourceId);
 
             // invoke the operation
-            MetricsContent content = new MetricsContent("ruxvg@xqkmdhrnoo.hlmbpm");
-            MetricRules result = await newRelicMonitorResource.GetMetricRulesAsync(content);
+            NewrelicMetricsContent content = new NewrelicMetricsContent("ruxvg@xqkmdhrnoo.hlmbpm");
+            NewRelicObservabilityMetricRules result = await newRelicMonitorResource.GetMetricRulesAsync(content);
 
             Console.WriteLine($"Succeeded: {result}");
         }
@@ -297,14 +297,14 @@ namespace Azure.ResourceManager.NewRelicObservability.Samples
             NewRelicMonitorResource newRelicMonitorResource = client.GetNewRelicMonitorResource(newRelicMonitorResourceId);
 
             // invoke the operation
-            MetricsStatusContent content = new MetricsStatusContent("ruxvg@xqkmdhrnoo.hlmbpm")
+            NewrelicMetricsStatusContent content = new NewrelicMetricsStatusContent("ruxvg@xqkmdhrnoo.hlmbpm")
             {
                 AzureResourceIds =
 {
 "enfghpfw"
 },
             };
-            MetricsStatusResult result = await newRelicMonitorResource.GetMetricStatusAsync(content);
+            NewrelicMetricsStatusResult result = await newRelicMonitorResource.GetMetricStatusAsync(content);
 
             Console.WriteLine($"Succeeded: {result}");
         }
@@ -331,8 +331,8 @@ namespace Azure.ResourceManager.NewRelicObservability.Samples
             NewRelicMonitorResource newRelicMonitorResource = client.GetNewRelicMonitorResource(newRelicMonitorResourceId);
 
             // invoke the operation
-            MetricsStatusContent content = new MetricsStatusContent("ruxvg@xqkmdhrnoo.hlmbpm");
-            MetricsStatusResult result = await newRelicMonitorResource.GetMetricStatusAsync(content);
+            NewrelicMetricsStatusContent content = new NewrelicMetricsStatusContent("ruxvg@xqkmdhrnoo.hlmbpm");
+            NewrelicMetricsStatusResult result = await newRelicMonitorResource.GetMetricStatusAsync(content);
 
             Console.WriteLine($"Succeeded: {result}");
         }
@@ -359,14 +359,14 @@ namespace Azure.ResourceManager.NewRelicObservability.Samples
             NewRelicMonitorResource newRelicMonitorResource = client.GetNewRelicMonitorResource(newRelicMonitorResourceId);
 
             // invoke the operation and iterate over the result
-            AppServicesGetContent content = new AppServicesGetContent("ruxvg@xqkmdhrnoo.hlmbpm")
+            NewrelicAppServicesGetContent content = new NewrelicAppServicesGetContent("ruxvg@xqkmdhrnoo.hlmbpm")
             {
                 AzureResourceIds =
 {
 "pvzrksrmzowobuhxpwiotnpcvjbu"
 },
             };
-            await foreach (AppServiceInfo item in newRelicMonitorResource.GetAppServicesAsync(content))
+            await foreach (NewRelicObservabilityAppServiceInfo item in newRelicMonitorResource.GetAppServicesAsync(content))
             {
                 Console.WriteLine($"Succeeded: {item}");
             }
@@ -396,8 +396,8 @@ namespace Azure.ResourceManager.NewRelicObservability.Samples
             NewRelicMonitorResource newRelicMonitorResource = client.GetNewRelicMonitorResource(newRelicMonitorResourceId);
 
             // invoke the operation and iterate over the result
-            AppServicesGetContent content = new AppServicesGetContent("ruxvg@xqkmdhrnoo.hlmbpm");
-            await foreach (AppServiceInfo item in newRelicMonitorResource.GetAppServicesAsync(content))
+            NewrelicAppServicesGetContent content = new NewrelicAppServicesGetContent("ruxvg@xqkmdhrnoo.hlmbpm");
+            await foreach (NewRelicObservabilityAppServiceInfo item in newRelicMonitorResource.GetAppServicesAsync(content))
             {
                 Console.WriteLine($"Succeeded: {item}");
             }
@@ -427,14 +427,14 @@ namespace Azure.ResourceManager.NewRelicObservability.Samples
             NewRelicMonitorResource newRelicMonitorResource = client.GetNewRelicMonitorResource(newRelicMonitorResourceId);
 
             // invoke the operation
-            SwitchBillingContent content = new SwitchBillingContent("ruxvg@xqkmdhrnoo.hlmbpm")
+            NewrelicSwitchBillingContent content = new NewrelicSwitchBillingContent("ruxvg@xqkmdhrnoo.hlmbpm")
             {
                 AzureResourceId = "enfghpfw",
                 OrganizationId = "k",
                 PlanData = new NewRelicPlan()
                 {
-                    UsageType = UsageType.Payg,
-                    BillingCycle = BillingCycle.Yearly,
+                    UsageType = NewRelicObservabilityUsageType.Payg,
+                    BillingCycle = NewRelicObservabilityBillingCycle.Yearly,
                     PlanDetails = "tbbiaga",
                     EffectiveOn = DateTimeOffset.Parse("2022-12-05T14:11:37.786Z"),
                 },
@@ -470,7 +470,7 @@ namespace Azure.ResourceManager.NewRelicObservability.Samples
             NewRelicMonitorResource newRelicMonitorResource = client.GetNewRelicMonitorResource(newRelicMonitorResourceId);
 
             // invoke the operation
-            SwitchBillingContent content = new SwitchBillingContent("ruxvg@xqkmdhrnoo.hlmbpm");
+            NewrelicSwitchBillingContent content = new NewrelicSwitchBillingContent("ruxvg@xqkmdhrnoo.hlmbpm");
             NewRelicMonitorResource result = await newRelicMonitorResource.SwitchBillingAsync(content);
 
             // the variable result is a resource, you could call other operations on this instance as well
@@ -502,14 +502,14 @@ namespace Azure.ResourceManager.NewRelicObservability.Samples
             NewRelicMonitorResource newRelicMonitorResource = client.GetNewRelicMonitorResource(newRelicMonitorResourceId);
 
             // invoke the operation and iterate over the result
-            HostsGetContent content = new HostsGetContent("ruxvg@xqkmdhrnoo.hlmbpm")
+            NewrelicHostsGetContent content = new NewrelicHostsGetContent("ruxvg@xqkmdhrnoo.hlmbpm")
             {
                 VmIds =
 {
 "xzphvxvfmvjrnsgyns"
 },
             };
-            await foreach (VmInfo item in newRelicMonitorResource.GetHostsAsync(content))
+            await foreach (NewRelicObservabilityVmInfo item in newRelicMonitorResource.GetHostsAsync(content))
             {
                 Console.WriteLine($"Succeeded: {item}");
             }
@@ -539,14 +539,14 @@ namespace Azure.ResourceManager.NewRelicObservability.Samples
             NewRelicMonitorResource newRelicMonitorResource = client.GetNewRelicMonitorResource(newRelicMonitorResourceId);
 
             // invoke the operation and iterate over the result
-            HostsGetContent content = new HostsGetContent("ruxvg@xqkmdhrnoo.hlmbpm")
+            NewrelicHostsGetContent content = new NewrelicHostsGetContent("ruxvg@xqkmdhrnoo.hlmbpm")
             {
                 VmIds =
 {
 "xzphvxvfmvjrnsgyns"
 },
             };
-            await foreach (VmInfo item in newRelicMonitorResource.GetHostsAsync(content))
+            await foreach (NewRelicObservabilityVmInfo item in newRelicMonitorResource.GetHostsAsync(content))
             {
                 Console.WriteLine($"Succeeded: {item}");
             }
@@ -636,7 +636,7 @@ namespace Azure.ResourceManager.NewRelicObservability.Samples
             NewRelicMonitorResource newRelicMonitorResource = client.GetNewRelicMonitorResource(newRelicMonitorResourceId);
 
             // invoke the operation
-            VmExtensionPayload result = await newRelicMonitorResource.VmHostPayloadAsync();
+            NewRelicObservabilityVmExtensionPayload result = await newRelicMonitorResource.VmHostPayloadAsync();
 
             Console.WriteLine($"Succeeded: {result}");
         }
@@ -663,7 +663,7 @@ namespace Azure.ResourceManager.NewRelicObservability.Samples
             NewRelicMonitorResource newRelicMonitorResource = client.GetNewRelicMonitorResource(newRelicMonitorResourceId);
 
             // invoke the operation
-            VmExtensionPayload result = await newRelicMonitorResource.VmHostPayloadAsync();
+            NewRelicObservabilityVmExtensionPayload result = await newRelicMonitorResource.VmHostPayloadAsync();
 
             Console.WriteLine($"Succeeded: {result}");
         }

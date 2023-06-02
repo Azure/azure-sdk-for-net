@@ -19,9 +19,9 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
                 return null;
             }
             Optional<ResourceIdentifier> id = default;
-            Optional<SendingMetricsStatus> sendingMetrics = default;
+            Optional<NewRelicObservabilitySendingMetricsStatus> sendingMetrics = default;
             Optional<string> reasonForMetricsStatus = default;
-            Optional<SendingLogsStatus> sendingLogs = default;
+            Optional<NewRelicObservabilitySendingLogsStatus> sendingLogs = default;
             Optional<string> reasonForLogsStatus = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
                     {
                         continue;
                     }
-                    sendingMetrics = new SendingMetricsStatus(property.Value.GetString());
+                    sendingMetrics = new NewRelicObservabilitySendingMetricsStatus(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("reasonForMetricsStatus"u8))
@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
                     {
                         continue;
                     }
-                    sendingLogs = new SendingLogsStatus(property.Value.GetString());
+                    sendingLogs = new NewRelicObservabilitySendingLogsStatus(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("reasonForLogsStatus"u8))

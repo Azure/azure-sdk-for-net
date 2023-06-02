@@ -24,6 +24,45 @@ format-by-name-rules:
   '*Uri': 'Uri'
   '*Uris': 'Uri'
 
+prepend-rp-prefix:
+- AccountCreationSource
+- AccountInfo
+- Agent
+- AppServiceInfo
+- AppServicesGetContent
+- AppServicesListResult
+- BillingCycle
+- BillingSource
+- Endpoint
+- FilteringTag
+- HostsGetContent
+- LogRules
+- MarketplaceSubscriptionStatus
+- MetricRules
+- MetricsContent
+- MetricsStatusContent
+- MetricsStatusResult
+- MonitoredResourceListResult
+- MonitoringStatus
+- OrganizationInfo
+- OrgCreationSource
+- SendAadLogsStatus
+- SendActivityLogsStatus
+- SendingLogsStatus
+- SendingMetricsStatus
+- SendMetricsStatus
+- SendSubscriptionLogsStatus
+- SingleSignOnState
+- SwitchBillingContent
+- TagAction
+- TagRuleListResult
+- TagRule
+- UsageType
+- UserInfo
+- VmExtensionPayload
+- VmHostsListResponse
+- VmInfo
+
 rename-rules:
   CPU: Cpu
   CPUs: Cpus
@@ -48,49 +87,58 @@ rename-rules:
   Etag: ETag|etag
 
 rename-mapping:
-    AccountResource: NewRelicAccountResourceData
-    AccountsListResponse: NewRelicAccountsListResult
-    Agent: NewrelicAgent
-    AgentData.ArcResourceId: -|arm-id
-    AgentData.ArcVmUuid: -|uuid
-    AppServicesListResponse: AppServicesListResult
-    AzureStorageBlobContainerEndpointProperties: StorageBlobContainerEndpointProperties
-    AzureStorageBlobContainerNewrelicEndpointProperties.StorageAccountResourceId: -|arm-id
-    Endpoint: NewrelicEndpoint
-    JobDefinitionData: NewrelicJobDefinitionData
-    JobRun: NewrelicJobRun
-    JobDefinitionData.AgentResourceId: -|arm-id
-    JobDefinitionData.LatestJobRunResourceId: -|arm-id
-    JobDefinitionData.SourceResourceId: -|arm-id
-    JobDefinitionData.TargetResourceId: -|arm-id
-    JobRunData.AgentResourceId: -|arm-id
-    JobRunData.SourceResourceId: -|arm-id
-    NewRelicMonitorResource.properties.marketplaceSubscriptionId: -|arm-id
-    MetricsStatusResponse: MetricsStatusResult
-    MonitoredResource: ResourceMonitoredByNewRelic
-    MonitoredResource.id: -|arm-id
-    MonitoredResourceListResponse: MonitoredResourceListResult
-    MonitoringStatus.Disabled: IsDisabled
-    MonitoringStatus.Enabled: IsEnabled
-    NewrelicAgentData.LocalIPAddress: -|ip-address
-    OrganizationsListResponse: OrganizationsListResult
-    ProvisioningState: NewrelicProvisioningState
-    Project: NewrelicProject
-    PlanDataListResponse: PlanDataListResult
-    PlanData: NewRelicPlan
-    PlanDataResource: NewRelicPlanResourceData
-    OrganizationResource: NewRelicOrganizationResourceData
-    SendAadLogsStatus.Disabled: IsDisabled
-    SendAadLogsStatus.Enabled: IsEnabled
-    SendingLogsStatus.Disabled: IsDisabled
-    SendingLogsStatus.Enabled: IsEnabled
-    SendActivityLogsStatus.Disabled: IsDisabled
-    SendActivityLogsStatus.Enabled: IsEnabled
-    SendingMetricsStatus.Disabled: IsDisabled
-    SendingMetricsStatus.Enabled: IsEnabled
-    SendSubscriptionLogsStatus.Disabled: IsDisabled
-    SendSubscriptionLogsStatus.Enabled: IsEnabled
-    StorageMover: NewrelicStorageMover
-    VMInfo.vmId: -|arm-id
+  AccountResource: NewRelicAccountResourceData
+  AccountsListResponse: NewRelicAccountsListResult
+  AgentData.ArcResourceId: -|arm-id
+  AgentData.ArcVmUuid: -|uuid
+  AppServicesGetRequest: NewrelicAppServicesGetContent
+  AppServicesListResponse: NewrelicAppServicesListResult
+  AzureStorageBlobContainerEndpointProperties: StorageBlobContainerEndpointProperties
+  AzureStorageBlobContainerNewrelicEndpointProperties.StorageAccountResourceId: -|arm-id
+  HostsGetRequest: NewrelicHostsGetContent
+  JobDefinitionData: NewrelicJobDefinitionData
+  JobRun: NewrelicJobRun
+  JobDefinitionData.AgentResourceId: -|arm-id
+  JobDefinitionData.LatestJobRunResourceId: -|arm-id
+  JobDefinitionData.SourceResourceId: -|arm-id
+  JobDefinitionData.TargetResourceId: -|arm-id
+  JobRunData.AgentResourceId: -|arm-id
+  JobRunData.SourceResourceId: -|arm-id
+  NewRelicMonitorResource.properties.marketplaceSubscriptionId: -|arm-id
+  MetricsRequest: NewrelicMetricsContent
+  MetricsStatusRequest: NewrelicMetricsStatusContent
+  MetricsStatusResponse: NewrelicMetricsStatusResult
+  MonitoredResource: ResourceMonitoredByNewRelic
+  MonitoredResource.id: -|arm-id
+  MonitoredResourceListResponse: MonitoredResourceListResult
+  MonitoringStatus.Disabled: IsDisabled
+  MonitoringStatus.Enabled: IsEnabled
+  NewrelicAgentData.LocalIPAddress: -|ip-address
+  OrganizationsListResponse: NewrelicOrganizationsListResult
+  ProvisioningState: NewrelicProvisioningState
+  Project: NewrelicProject
+  PlanDataListResponse: NewrelicPlanDataListResult
+  PlanData: NewRelicPlan
+  PlanDataResource: NewRelicPlanResourceData
+  OrganizationResource: NewRelicOrganizationResourceData
+  SendAadLogsStatus.Disabled: IsDisabled
+  SendAadLogsStatus.Enabled: IsEnabled
+  SendingLogsStatus.Disabled: IsDisabled
+  SendingLogsStatus.Enabled: IsEnabled
+  SendActivityLogsStatus.Disabled: IsDisabled
+  SendActivityLogsStatus.Enabled: IsEnabled
+  SendingMetricsStatus.Disabled: IsDisabled
+  SendingMetricsStatus.Enabled: IsEnabled
+  SendSubscriptionLogsStatus.Disabled: IsDisabled
+  SendSubscriptionLogsStatus.Enabled: IsEnabled
+  SingleSignOnStates: NewRelicSingleSignOnState
+  StorageMover: NewrelicStorageMover
+  SwitchBillingRequest: NewrelicSwitchBillingContent
+  VMInfo.vmId: -|arm-id
+
+override-operation-name:
+  Accounts_List: GetNewrelicAccounts
+  Organizations_List: GetNewrelicOrganizations
+  Plans_List: GetNewrelicPlans
 
 ```

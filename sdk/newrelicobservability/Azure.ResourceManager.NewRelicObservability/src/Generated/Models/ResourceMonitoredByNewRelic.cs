@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
         /// <param name="reasonForMetricsStatus"> Reason for why the resource is sending metrics (or why it is not sending). </param>
         /// <param name="sendingLogs"> Flag indicating if resource is sending logs to NewRelic. </param>
         /// <param name="reasonForLogsStatus"> Reason for why the resource is sending logs (or why it is not sending). </param>
-        internal ResourceMonitoredByNewRelic(ResourceIdentifier id, SendingMetricsStatus? sendingMetrics, string reasonForMetricsStatus, SendingLogsStatus? sendingLogs, string reasonForLogsStatus)
+        internal ResourceMonitoredByNewRelic(ResourceIdentifier id, NewRelicObservabilitySendingMetricsStatus? sendingMetrics, string reasonForMetricsStatus, NewRelicObservabilitySendingLogsStatus? sendingLogs, string reasonForLogsStatus)
         {
             Id = id;
             SendingMetrics = sendingMetrics;
@@ -35,11 +35,11 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
         /// <summary> The ARM id of the resource. </summary>
         public ResourceIdentifier Id { get; }
         /// <summary> Flag indicating if resource is sending metrics to NewRelic. </summary>
-        public SendingMetricsStatus? SendingMetrics { get; }
+        public NewRelicObservabilitySendingMetricsStatus? SendingMetrics { get; }
         /// <summary> Reason for why the resource is sending metrics (or why it is not sending). </summary>
         public string ReasonForMetricsStatus { get; }
         /// <summary> Flag indicating if resource is sending logs to NewRelic. </summary>
-        public SendingLogsStatus? SendingLogs { get; }
+        public NewRelicObservabilitySendingLogsStatus? SendingLogs { get; }
         /// <summary> Reason for why the resource is sending logs (or why it is not sending). </summary>
         public string ReasonForLogsStatus { get; }
     }

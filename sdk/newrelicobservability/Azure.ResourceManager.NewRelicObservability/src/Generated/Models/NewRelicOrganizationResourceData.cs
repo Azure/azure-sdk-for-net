@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
         /// <param name="organizationId"> organization id. </param>
         /// <param name="organizationName"> organization name. </param>
         /// <param name="billingSource"> Billing source. </param>
-        internal NewRelicOrganizationResourceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string organizationId, string organizationName, BillingSource? billingSource) : base(id, name, resourceType, systemData)
+        internal NewRelicOrganizationResourceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string organizationId, string organizationName, NewRelicObservabilityBillingSource? billingSource) : base(id, name, resourceType, systemData)
         {
             OrganizationId = organizationId;
             OrganizationName = organizationName;
@@ -38,6 +38,6 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
         /// <summary> organization name. </summary>
         public string OrganizationName { get; set; }
         /// <summary> Billing source. </summary>
-        public BillingSource? BillingSource { get; set; }
+        public NewRelicObservabilityBillingSource? BillingSource { get; set; }
     }
 }

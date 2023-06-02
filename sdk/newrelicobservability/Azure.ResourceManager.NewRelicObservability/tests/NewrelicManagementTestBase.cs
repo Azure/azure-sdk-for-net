@@ -6,9 +6,7 @@ using Azure.Core.TestFramework;
 using Azure.ResourceManager.Resources;
 using Azure.ResourceManager.TestFramework;
 using NUnit.Framework;
-using System;
 using System.Threading.Tasks;
-using Azure.ResourceManager.Models;
 using Azure.ResourceManager.NewRelicObservability.Models;
 using System.Collections.Generic;
 
@@ -87,7 +85,7 @@ namespace Azure.ResourceManager.NewRelicObservability.Tests
 
             return new NewRelicMonitorResourceData(DefaultLocation)
             {
-                UserInfo = new UserInfo
+                UserInfo = new NewRelicObservabilityUserInfo
                 {
                     FirstName = "vipray",
                     LastName = "jain",
@@ -112,7 +110,7 @@ namespace Azure.ResourceManager.NewRelicObservability.Tests
 
             return new NewRelicMonitorResourceData(DefaultLocation)
             {
-                UserInfo = new UserInfo
+                UserInfo = new NewRelicObservabilityUserInfo
                 {
                     FirstName = "vipray",
                     LastName = "jain",
@@ -129,7 +127,7 @@ namespace Azure.ResourceManager.NewRelicObservability.Tests
                 },
                 NewRelicAccountProperties = new NewRelicAccountProperties
                 {
-                    OrganizationInfo = new OrganizationInfo
+                    OrganizationInfo = new NewRelicObservabilityOrganizationInfo
                     {
                         OrganizationId = "fe5759fb-092a-4353-906b-74df3b17f3d4"
                     }
@@ -144,7 +142,7 @@ namespace Azure.ResourceManager.NewRelicObservability.Tests
 
             return new NewRelicMonitorResourceData(DefaultLocation)
             {
-                UserInfo = new UserInfo
+                UserInfo = new NewRelicObservabilityUserInfo
                 {
                     FirstName = "vipray",
                     LastName = "jain",
@@ -154,7 +152,7 @@ namespace Azure.ResourceManager.NewRelicObservability.Tests
                 },
                 NewRelicAccountProperties = new NewRelicAccountProperties
                 {
-                    OrganizationInfo = new OrganizationInfo
+                    OrganizationInfo = new NewRelicObservabilityOrganizationInfo
                     {
                         OrganizationId = "fe5759fb-092a-4353-906b-74df3b17f3d4"
                     }

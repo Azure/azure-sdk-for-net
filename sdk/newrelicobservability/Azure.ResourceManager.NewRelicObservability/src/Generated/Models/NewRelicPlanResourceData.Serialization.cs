@@ -48,8 +48,8 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
             ResourceType type = default;
             Optional<SystemData> systemData = default;
             Optional<NewRelicPlan> planData = default;
-            Optional<OrgCreationSource> orgCreationSource = default;
-            Optional<AccountCreationSource> accountCreationSource = default;
+            Optional<NewRelicObservabilityOrgCreationSource> orgCreationSource = default;
+            Optional<NewRelicObservabilityAccountCreationSource> accountCreationSource = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
                             {
                                 continue;
                             }
-                            orgCreationSource = new OrgCreationSource(property0.Value.GetString());
+                            orgCreationSource = new NewRelicObservabilityOrgCreationSource(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("accountCreationSource"u8))
@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
                             {
                                 continue;
                             }
-                            accountCreationSource = new AccountCreationSource(property0.Value.GetString());
+                            accountCreationSource = new NewRelicObservabilityAccountCreationSource(property0.Value.GetString());
                             continue;
                         }
                     }

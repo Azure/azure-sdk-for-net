@@ -157,7 +157,7 @@ namespace Azure.ResourceManager.NewRelicObservability.Samples
                 NewRelicAccountProperties = new NewRelicAccountProperties()
                 {
                     UserId = "vcscxlncofcuduadesd",
-                    AccountInfo = new AccountInfo()
+                    AccountInfo = new NewRelicObservabilityAccountInfo()
                     {
                         AccountId = "xhqmg",
                         IngestionKey = "wltnimmhqt",
@@ -166,13 +166,13 @@ namespace Azure.ResourceManager.NewRelicObservability.Samples
                     OrganizationId = "k",
                     SingleSignOnProperties = new NewRelicSingleSignOnProperties()
                     {
-                        SingleSignOnState = SingleSignOnState.Initial,
+                        SingleSignOnState = NewRelicSingleSignOnState.Initial,
                         EnterpriseAppId = "kwiwfz",
                         SingleSignOnUri = new Uri("kvseueuljsxmfwpqctz"),
                         ProvisioningState = NewrelicProvisioningState.Accepted,
                     },
                 },
-                UserInfo = new UserInfo()
+                UserInfo = new NewRelicObservabilityUserInfo()
                 {
                     FirstName = "vdftzcggirefejajwahhwhyibutramdaotvnuf",
                     LastName = "bcsztgqovdlmzfkjdrngidwzqsevagexzzilnlc",
@@ -182,13 +182,13 @@ namespace Azure.ResourceManager.NewRelicObservability.Samples
                 },
                 PlanData = new NewRelicPlan()
                 {
-                    UsageType = UsageType.Payg,
-                    BillingCycle = BillingCycle.Yearly,
+                    UsageType = NewRelicObservabilityUsageType.Payg,
+                    BillingCycle = NewRelicObservabilityBillingCycle.Yearly,
                     PlanDetails = "tbbiaga",
                     EffectiveOn = DateTimeOffset.Parse("2022-12-05T14:11:37.786Z"),
                 },
-                OrgCreationSource = OrgCreationSource.Liftr,
-                AccountCreationSource = AccountCreationSource.Liftr,
+                OrgCreationSource = NewRelicObservabilityOrgCreationSource.Liftr,
+                AccountCreationSource = NewRelicObservabilityAccountCreationSource.Liftr,
                 Tags =
 {
 ["key6976"] = "oaxfhf",

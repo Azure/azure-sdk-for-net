@@ -81,16 +81,16 @@ namespace Azure.ResourceManager.NewRelicObservability
             ResourceType type = default;
             Optional<SystemData> systemData = default;
             Optional<NewrelicProvisioningState> provisioningState = default;
-            Optional<MonitoringStatus> monitoringStatus = default;
-            Optional<MarketplaceSubscriptionStatus> marketplaceSubscriptionStatus = default;
+            Optional<NewRelicObservabilityMonitoringStatus> monitoringStatus = default;
+            Optional<NewRelicObservabilityMarketplaceSubscriptionStatus> marketplaceSubscriptionStatus = default;
             Optional<ResourceIdentifier> marketplaceSubscriptionId = default;
             Optional<NewRelicAccountProperties> newRelicAccountProperties = default;
-            Optional<UserInfo> userInfo = default;
+            Optional<NewRelicObservabilityUserInfo> userInfo = default;
             Optional<NewRelicPlan> planData = default;
             Optional<LiftrResourceCategory> liftrResourceCategory = default;
             Optional<int> liftrResourcePreference = default;
-            Optional<OrgCreationSource> orgCreationSource = default;
-            Optional<AccountCreationSource> accountCreationSource = default;
+            Optional<NewRelicObservabilityOrgCreationSource> orgCreationSource = default;
+            Optional<NewRelicObservabilityAccountCreationSource> accountCreationSource = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("identity"u8))
@@ -169,7 +169,7 @@ namespace Azure.ResourceManager.NewRelicObservability
                             {
                                 continue;
                             }
-                            monitoringStatus = new MonitoringStatus(property0.Value.GetString());
+                            monitoringStatus = new NewRelicObservabilityMonitoringStatus(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("marketplaceSubscriptionStatus"u8))
@@ -178,7 +178,7 @@ namespace Azure.ResourceManager.NewRelicObservability
                             {
                                 continue;
                             }
-                            marketplaceSubscriptionStatus = new MarketplaceSubscriptionStatus(property0.Value.GetString());
+                            marketplaceSubscriptionStatus = new NewRelicObservabilityMarketplaceSubscriptionStatus(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("marketplaceSubscriptionId"u8))
@@ -205,7 +205,7 @@ namespace Azure.ResourceManager.NewRelicObservability
                             {
                                 continue;
                             }
-                            userInfo = UserInfo.DeserializeUserInfo(property0.Value);
+                            userInfo = NewRelicObservabilityUserInfo.DeserializeNewRelicObservabilityUserInfo(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("planData"u8))
@@ -241,7 +241,7 @@ namespace Azure.ResourceManager.NewRelicObservability
                             {
                                 continue;
                             }
-                            orgCreationSource = new OrgCreationSource(property0.Value.GetString());
+                            orgCreationSource = new NewRelicObservabilityOrgCreationSource(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("accountCreationSource"u8))
@@ -250,7 +250,7 @@ namespace Azure.ResourceManager.NewRelicObservability
                             {
                                 continue;
                             }
-                            accountCreationSource = new AccountCreationSource(property0.Value.GetString());
+                            accountCreationSource = new NewRelicObservabilityAccountCreationSource(property0.Value.GetString());
                             continue;
                         }
                     }

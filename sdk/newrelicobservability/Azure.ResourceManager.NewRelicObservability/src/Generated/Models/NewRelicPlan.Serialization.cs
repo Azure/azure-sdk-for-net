@@ -45,8 +45,8 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
             {
                 return null;
             }
-            Optional<UsageType> usageType = default;
-            Optional<BillingCycle> billingCycle = default;
+            Optional<NewRelicObservabilityUsageType> usageType = default;
+            Optional<NewRelicObservabilityBillingCycle> billingCycle = default;
             Optional<string> planDetails = default;
             Optional<DateTimeOffset> effectiveDate = default;
             foreach (var property in element.EnumerateObject())
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
                     {
                         continue;
                     }
-                    usageType = new UsageType(property.Value.GetString());
+                    usageType = new NewRelicObservabilityUsageType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("billingCycle"u8))
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
                     {
                         continue;
                     }
-                    billingCycle = new BillingCycle(property.Value.GetString());
+                    billingCycle = new NewRelicObservabilityBillingCycle(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("planDetails"u8))

@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
         /// <param name="enterpriseAppId"> The Id of the Enterprise App used for Single sign-on. </param>
         /// <param name="singleSignOnUri"> The login URL specific to this NewRelic Organization. </param>
         /// <param name="provisioningState"> Provisioning state. </param>
-        internal NewRelicSingleSignOnProperties(SingleSignOnState? singleSignOnState, string enterpriseAppId, Uri singleSignOnUri, NewrelicProvisioningState? provisioningState)
+        internal NewRelicSingleSignOnProperties(NewRelicSingleSignOnState? singleSignOnState, string enterpriseAppId, Uri singleSignOnUri, NewrelicProvisioningState? provisioningState)
         {
             SingleSignOnState = singleSignOnState;
             EnterpriseAppId = enterpriseAppId;
@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
         }
 
         /// <summary> Single sign-on state. </summary>
-        public SingleSignOnState? SingleSignOnState { get; set; }
+        public NewRelicSingleSignOnState? SingleSignOnState { get; set; }
         /// <summary> The Id of the Enterprise App used for Single sign-on. </summary>
         public string EnterpriseAppId { get; set; }
         /// <summary> The login URL specific to this NewRelic Organization. </summary>

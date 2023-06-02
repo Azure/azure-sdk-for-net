@@ -69,20 +69,20 @@ namespace Azure.ResourceManager.NewRelicObservability
         }
         #endregion
 
-        #region TagRuleResource
+        #region NewRelicObservabilityTagRuleResource
         /// <summary>
-        /// Gets an object representing a <see cref="TagRuleResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="TagRuleResource.CreateResourceIdentifier" /> to create a <see cref="TagRuleResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="NewRelicObservabilityTagRuleResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="NewRelicObservabilityTagRuleResource.CreateResourceIdentifier" /> to create a <see cref="NewRelicObservabilityTagRuleResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="TagRuleResource" /> object. </returns>
-        public static TagRuleResource GetTagRuleResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="NewRelicObservabilityTagRuleResource" /> object. </returns>
+        public static NewRelicObservabilityTagRuleResource GetNewRelicObservabilityTagRuleResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                TagRuleResource.ValidateResourceId(id);
-                return new TagRuleResource(client, id);
+                NewRelicObservabilityTagRuleResource.ValidateResourceId(id);
+                return new NewRelicObservabilityTagRuleResource(client, id);
             }
             );
         }
@@ -163,11 +163,11 @@ namespace Azure.ResourceManager.NewRelicObservability
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="userEmail"/> is null. </exception>
         /// <returns> An async collection of <see cref="NewRelicAccountResourceData" /> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<NewRelicAccountResourceData> GetAccountsAsync(this SubscriptionResource subscriptionResource, string userEmail, AzureLocation location, CancellationToken cancellationToken = default)
+        public static AsyncPageable<NewRelicAccountResourceData> GetNewrelicAccountsAsync(this SubscriptionResource subscriptionResource, string userEmail, AzureLocation location, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(userEmail, nameof(userEmail));
 
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetAccountsAsync(userEmail, location, cancellationToken);
+            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetNewrelicAccountsAsync(userEmail, location, cancellationToken);
         }
 
         /// <summary>
@@ -189,11 +189,11 @@ namespace Azure.ResourceManager.NewRelicObservability
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="userEmail"/> is null. </exception>
         /// <returns> A collection of <see cref="NewRelicAccountResourceData" /> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<NewRelicAccountResourceData> GetAccounts(this SubscriptionResource subscriptionResource, string userEmail, AzureLocation location, CancellationToken cancellationToken = default)
+        public static Pageable<NewRelicAccountResourceData> GetNewrelicAccounts(this SubscriptionResource subscriptionResource, string userEmail, AzureLocation location, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(userEmail, nameof(userEmail));
 
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetAccounts(userEmail, location, cancellationToken);
+            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetNewrelicAccounts(userEmail, location, cancellationToken);
         }
 
         /// <summary>
@@ -257,11 +257,11 @@ namespace Azure.ResourceManager.NewRelicObservability
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="userEmail"/> is null. </exception>
         /// <returns> An async collection of <see cref="NewRelicOrganizationResourceData" /> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<NewRelicOrganizationResourceData> GetOrganizationsAsync(this SubscriptionResource subscriptionResource, string userEmail, AzureLocation location, CancellationToken cancellationToken = default)
+        public static AsyncPageable<NewRelicOrganizationResourceData> GetNewrelicOrganizationsAsync(this SubscriptionResource subscriptionResource, string userEmail, AzureLocation location, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(userEmail, nameof(userEmail));
 
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetOrganizationsAsync(userEmail, location, cancellationToken);
+            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetNewrelicOrganizationsAsync(userEmail, location, cancellationToken);
         }
 
         /// <summary>
@@ -283,11 +283,11 @@ namespace Azure.ResourceManager.NewRelicObservability
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="userEmail"/> is null. </exception>
         /// <returns> A collection of <see cref="NewRelicOrganizationResourceData" /> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<NewRelicOrganizationResourceData> GetOrganizations(this SubscriptionResource subscriptionResource, string userEmail, AzureLocation location, CancellationToken cancellationToken = default)
+        public static Pageable<NewRelicOrganizationResourceData> GetNewrelicOrganizations(this SubscriptionResource subscriptionResource, string userEmail, AzureLocation location, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(userEmail, nameof(userEmail));
 
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetOrganizations(userEmail, location, cancellationToken);
+            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetNewrelicOrganizations(userEmail, location, cancellationToken);
         }
 
         /// <summary>
@@ -308,9 +308,9 @@ namespace Azure.ResourceManager.NewRelicObservability
         /// <param name="organizationId"> Organization Id. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="NewRelicPlanResourceData" /> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<NewRelicPlanResourceData> GetPlansAsync(this SubscriptionResource subscriptionResource, string accountId = null, string organizationId = null, CancellationToken cancellationToken = default)
+        public static AsyncPageable<NewRelicPlanResourceData> GetNewrelicPlansAsync(this SubscriptionResource subscriptionResource, string accountId = null, string organizationId = null, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetPlansAsync(accountId, organizationId, cancellationToken);
+            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetNewrelicPlansAsync(accountId, organizationId, cancellationToken);
         }
 
         /// <summary>
@@ -331,9 +331,9 @@ namespace Azure.ResourceManager.NewRelicObservability
         /// <param name="organizationId"> Organization Id. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="NewRelicPlanResourceData" /> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<NewRelicPlanResourceData> GetPlans(this SubscriptionResource subscriptionResource, string accountId = null, string organizationId = null, CancellationToken cancellationToken = default)
+        public static Pageable<NewRelicPlanResourceData> GetNewrelicPlans(this SubscriptionResource subscriptionResource, string accountId = null, string organizationId = null, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetPlans(accountId, organizationId, cancellationToken);
+            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetNewrelicPlans(accountId, organizationId, cancellationToken);
         }
     }
 }

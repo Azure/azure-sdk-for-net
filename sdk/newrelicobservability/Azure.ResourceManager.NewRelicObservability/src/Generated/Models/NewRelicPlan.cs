@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
         /// <param name="billingCycle"> Different billing cycles like MONTHLY/WEEKLY. this could be enum. </param>
         /// <param name="planDetails"> plan id as published by NewRelic. </param>
         /// <param name="effectiveOn"> date when plan was applied. </param>
-        internal NewRelicPlan(UsageType? usageType, BillingCycle? billingCycle, string planDetails, DateTimeOffset? effectiveOn)
+        internal NewRelicPlan(NewRelicObservabilityUsageType? usageType, NewRelicObservabilityBillingCycle? billingCycle, string planDetails, DateTimeOffset? effectiveOn)
         {
             UsageType = usageType;
             BillingCycle = billingCycle;
@@ -31,9 +31,9 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
         }
 
         /// <summary> Different usage type like PAYG/COMMITTED. this could be enum. </summary>
-        public UsageType? UsageType { get; set; }
+        public NewRelicObservabilityUsageType? UsageType { get; set; }
         /// <summary> Different billing cycles like MONTHLY/WEEKLY. this could be enum. </summary>
-        public BillingCycle? BillingCycle { get; set; }
+        public NewRelicObservabilityBillingCycle? BillingCycle { get; set; }
         /// <summary> plan id as published by NewRelic. </summary>
         public string PlanDetails { get; set; }
         /// <summary> date when plan was applied. </summary>
