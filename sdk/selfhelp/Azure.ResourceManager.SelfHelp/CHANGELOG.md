@@ -1,6 +1,6 @@
 # Release History
 
-## 1.0.0 (2022-06-02)
+## 1.0.0 (2023-06-02)
 
 This release is the first stable release of the Azure Help management library.
 
