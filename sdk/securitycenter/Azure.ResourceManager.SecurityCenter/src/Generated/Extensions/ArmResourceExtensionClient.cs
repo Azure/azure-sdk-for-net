@@ -86,6 +86,13 @@ namespace Azure.ResourceManager.SecurityCenter
             return GetCachedClient(Client => new SecurityAssessmentCollection(Client, Id));
         }
 
+        /// <summary> Gets a collection of GovernanceRuleResources in the ArmResource. </summary>
+        /// <returns> An object representing collection of GovernanceRuleResources and their operations over a GovernanceRuleResource. </returns>
+        public virtual GovernanceRuleCollection GetGovernanceRules()
+        {
+            return GetCachedClient(Client => new GovernanceRuleCollection(Client, Id));
+        }
+
         /// <summary> Gets a collection of SqlVulnerabilityAssessmentScanResources in the ArmResource. </summary>
         /// <returns> An object representing collection of SqlVulnerabilityAssessmentScanResources and their operations over a SqlVulnerabilityAssessmentScanResource. </returns>
         public virtual SqlVulnerabilityAssessmentScanCollection GetSqlVulnerabilityAssessmentScans()

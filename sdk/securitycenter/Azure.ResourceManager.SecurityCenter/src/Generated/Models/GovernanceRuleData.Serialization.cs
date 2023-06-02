@@ -61,6 +61,16 @@ namespace Azure.ResourceManager.SecurityCenter
                 writer.WritePropertyName("sourceResourceType"u8);
                 writer.WriteStringValue(SourceResourceType.Value.ToString());
             }
+            if (Optional.IsCollectionDefined(ExcludedScopes))
+            {
+                writer.WritePropertyName("excludedScopes"u8);
+                writer.WriteStartArray();
+                foreach (var item in ExcludedScopes)
+                {
+                    writer.WriteStringValue(item);
+                }
+                writer.WriteEndArray();
+            }
             if (Optional.IsCollectionDefined(ConditionSets))
             {
                 writer.WritePropertyName("conditionSets"u8);
@@ -80,6 +90,11 @@ namespace Azure.ResourceManager.SecurityCenter
                 }
                 writer.WriteEndArray();
             }
+            if (Optional.IsDefined(IncludeMemberScopes))
+            {
+                writer.WritePropertyName("includeMemberScopes"u8);
+                writer.WriteBooleanValue(IncludeMemberScopes.Value);
+            }
             if (Optional.IsDefined(OwnerSource))
             {
                 writer.WritePropertyName("ownerSource"u8);
@@ -89,6 +104,11 @@ namespace Azure.ResourceManager.SecurityCenter
             {
                 writer.WritePropertyName("governanceEmailNotification"u8);
                 writer.WriteObjectValue(GovernanceEmailNotification);
+            }
+            if (Optional.IsDefined(Metadata))
+            {
+                writer.WritePropertyName("metadata"u8);
+                writer.WriteObjectValue(Metadata);
             }
             writer.WriteEndObject();
             writer.WriteEndObject();
@@ -104,6 +124,7 @@ namespace Azure.ResourceManager.SecurityCenter
             string name = default;
             ResourceType type = default;
             Optional<SystemData> systemData = default;
+            Optional<Guid> tenantId = default;
             Optional<string> displayName = default;
             Optional<string> description = default;
             Optional<string> remediationTimeframe = default;
@@ -112,9 +133,12 @@ namespace Azure.ResourceManager.SecurityCenter
             Optional<bool> isDisabled = default;
             Optional<GovernanceRuleType> ruleType = default;
             Optional<GovernanceRuleSourceResourceType> sourceResourceType = default;
+            Optional<IList<string>> excludedScopes = default;
             Optional<IList<BinaryData>> conditionSets = default;
+            Optional<bool> includeMemberScopes = default;
             Optional<GovernanceRuleOwnerSource> ownerSource = default;
             Optional<GovernanceRuleEmailNotification> governanceEmailNotification = default;
+            Optional<GovernanceRuleMetadata> metadata = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -150,6 +174,15 @@ namespace Azure.ResourceManager.SecurityCenter
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
+                        if (property0.NameEquals("tenantId"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            tenantId = property0.Value.GetGuid();
+                            continue;
+                        }
                         if (property0.NameEquals("displayName"u8))
                         {
                             displayName = property0.Value.GetString();
@@ -210,6 +243,20 @@ namespace Azure.ResourceManager.SecurityCenter
                             sourceResourceType = new GovernanceRuleSourceResourceType(property0.Value.GetString());
                             continue;
                         }
+                        if (property0.NameEquals("excludedScopes"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            List<string> array = new List<string>();
+                            foreach (var item in property0.Value.EnumerateArray())
+                            {
+                                array.Add(item.GetString());
+                            }
+                            excludedScopes = array;
+                            continue;
+                        }
                         if (property0.NameEquals("conditionSets"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
@@ -231,6 +278,15 @@ namespace Azure.ResourceManager.SecurityCenter
                             conditionSets = array;
                             continue;
                         }
+                        if (property0.NameEquals("includeMemberScopes"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            includeMemberScopes = property0.Value.GetBoolean();
+                            continue;
+                        }
                         if (property0.NameEquals("ownerSource"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
@@ -249,11 +305,20 @@ namespace Azure.ResourceManager.SecurityCenter
                             governanceEmailNotification = GovernanceRuleEmailNotification.DeserializeGovernanceRuleEmailNotification(property0.Value);
                             continue;
                         }
+                        if (property0.NameEquals("metadata"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            metadata = GovernanceRuleMetadata.DeserializeGovernanceRuleMetadata(property0.Value);
+                            continue;
+                        }
                     }
                     continue;
                 }
             }
-            return new GovernanceRuleData(id, name, type, systemData.Value, displayName.Value, description.Value, remediationTimeframe.Value, Optional.ToNullable(isGracePeriod), Optional.ToNullable(rulePriority), Optional.ToNullable(isDisabled), Optional.ToNullable(ruleType), Optional.ToNullable(sourceResourceType), Optional.ToList(conditionSets), ownerSource.Value, governanceEmailNotification.Value);
+            return new GovernanceRuleData(id, name, type, systemData.Value, Optional.ToNullable(tenantId), displayName.Value, description.Value, remediationTimeframe.Value, Optional.ToNullable(isGracePeriod), Optional.ToNullable(rulePriority), Optional.ToNullable(isDisabled), Optional.ToNullable(ruleType), Optional.ToNullable(sourceResourceType), Optional.ToList(excludedScopes), Optional.ToList(conditionSets), Optional.ToNullable(includeMemberScopes), ownerSource.Value, governanceEmailNotification.Value, metadata.Value);
         }
     }
 }

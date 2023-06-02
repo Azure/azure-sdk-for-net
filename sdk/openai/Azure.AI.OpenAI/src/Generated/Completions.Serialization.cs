@@ -20,11 +20,9 @@ namespace Azure.AI.OpenAI
             {
                 return null;
             }
-            Optional<string> id = default;
-            CompletionsObject @object = default;
-            Optional<int> created = default;
-            Optional<string> model = default;
-            Optional<IReadOnlyList<Choice>> choices = default;
+            string id = default;
+            int created = default;
+            IReadOnlyList<Choice> choices = default;
             CompletionsUsage usage = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -33,31 +31,13 @@ namespace Azure.AI.OpenAI
                     id = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("object"u8))
-                {
-                    @object = new CompletionsObject(property.Value.GetString());
-                    continue;
-                }
                 if (property.NameEquals("created"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     created = property.Value.GetInt32();
-                    continue;
-                }
-                if (property.NameEquals("model"u8))
-                {
-                    model = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("choices"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     List<Choice> array = new List<Choice>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
@@ -72,7 +52,7 @@ namespace Azure.AI.OpenAI
                     continue;
                 }
             }
-            return new Completions(id, @object, Optional.ToNullable(created), model, Optional.ToList(choices), usage);
+            return new Completions(id, created, choices, usage);
         }
 
         /// <summary> Deserializes the model from a raw response. </summary>
