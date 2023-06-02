@@ -16,31 +16,20 @@ param (
 Install-ModuleIfNotInstalled "powershell-yaml" "0.4.1" | Import-Module
 
 function CreateUpdate-TspLocation([System.Object]$tspConfig, [string]$TypeSpecProjectDirectory, [string]$CommitHash, [string]$repo, [string]$repoRoot) {
-  $serviceDir = ""
   $additionalDirs = @()
-
-  # Parse tspcofig.yaml to get service-dir, additionalDirectories, and package-dir
-  if ($tspConfig["parameters"] -and $tspConfig["parameters"]["service-dir"]) {
-    $serviceDir = $tspConfig["parameters"]["service-dir"]["default"];
-  }
-  else {
-    Write-Error "Missing service-dir in parameters section of tspconfig.yaml."
-    exit 1
-  }
   if ($tspConfig["parameters"]["dependencies"] -and $tspConfig["parameters"]["dependencies"]["additionalDirectories"]) {
     $additionalDirs = $tspConfig["parameters"]["dependencies"]["additionalDirectories"];
   }
 
-  $packageDir = Get-PackageDir $tspConfig
-
   # Create service-dir if not exist
-  $serviceDir = Join-Path $repoRoot $serviceDir
+  $serviceDir = Get-ServiceDir $tspConfig $repoRoot
   if (!(Test-Path -Path $serviceDir)) {
     New-Item -Path $serviceDir -ItemType Directory | Out-Null
     Write-Host "created service folder $serviceDir"
   }
 
   # Create package-dir if not exist
+  $packageDir = Get-PackageDir $tspConfig
   $packageDir = Join-Path $serviceDir $packageDir
   if (!(Test-Path -Path $packageDir)) {
     New-Item -Path $packageDir -ItemType Directory | Out-Null
@@ -71,6 +60,20 @@ function CreateUpdate-TspLocation([System.Object]$tspConfig, [string]$TypeSpecPr
   return $packageDir
 }
 
+function Get-ServiceDir([System.Object]$tspConfig, [string]$repoRoot) {
+  $serviceDir = ""
+  if ($tspConfig["parameters"] -and $tspConfig["parameters"]["service-dir"]) {
+    $serviceDir = $tspConfig["parameters"]["service-dir"]["default"];
+  }
+  else {
+    Write-Error "Missing service-dir in parameters section of tspconfig.yaml."
+    exit 1
+  }
+
+  # Create service-dir if not exist
+  $serviceDir = Join-Path $repoRoot $serviceDir
+  return $serviceDir
+}
 function Get-PackageDir([System.Object]$tspConfig) {
   $emitterName = ""
   if (Test-Path "Function:$GetEmitterNameFn") {
@@ -91,6 +94,13 @@ function Get-PackageDir([System.Object]$tspConfig) {
   return $packageDir
 }
 
+function Get-TspLocationFolder([System.Object]$tspConfig, [string]$repoRoot) {
+  $serviceDir = Get-ServiceDir $tspConfig $repoRoot
+  $packageDir = Get-PackageDir $tspConfig
+  $packageDir = Join-Path $serviceDir $packageDir
+  return $packageDir
+}
+
 $sdkRepoRootPath =  (Join-Path $PSScriptRoot .. .. ..)
 $sdkRepoRootPath = Resolve-Path $sdkRepoRootPath
 $sdkRepoRootPath = $sdkRepoRootPath -replace "\\", "/"
@@ -98,6 +108,7 @@ $tspConfigPath = Join-Path $sdkRepoRootPath 'tspconfig.yaml'
 $tmpTspConfigPath = $tspConfigPath
 $repo = ""
 $specRepoRoot = ""
+$generateFromLocalTypeSpec = $false
 # remote url scenario
 # example url of tspconfig.yaml: https://github.com/Azure/azure-rest-api-specs-pr/blob/724ccc4d7ef7655c0b4d5c5ac4a5513f19bbef35/specification/containerservice/Fleet.Management/tspconfig.yaml
 if ($TypeSpecProjectDirectory -match '^https://github.com/(?<repo>Azure/azure-rest-api-specs(-pr)?)/blob/(?<commit>[0-9a-f]{40})/(?<path>.*)/tspconfig.yaml$') {
@@ -129,20 +140,19 @@ if ($TypeSpecProjectDirectory -match '^https://github.com/(?<repo>Azure/azure-re
     Write-Error "$TypeSpecProjectDirectory doesn't have 'specification' in path."
     exit 1
   }
-  if (!$CommitHash) {
-    Write-Error "Parameter of Commithash is not provided in the local path scenario."
-    exit 1
+  if (!$CommitHash -or !$RepoUrl) {
+    Write-Warning "Parameter of Commithash or RepoUrl are not provided along with the local path of tspconfig.yaml, trying to re-generate sdk code based on the local type specs."
+    $generateFromLocalTypeSpec = $true
   }
-  if (!$RepoUrl) {
-    Write-Error "Parameter of RepoUrl:$RepoUrl is not provided in the local path scenario."
-    exit 1
-  }
-  if ($RepoUrl -match "^https://github.com/(?<repo>[^/]*/azure-rest-api-specs(-pr)?).*") {
-    $repo = $Matches["repo"]
-  }
-  else {
-    Write-Error "Parameter 'RepoUrl' has incorrect value:$RepoUrl. It should be similar like 'https://github.com/Azure/azure-rest-api-specs'"
-    exit 1
+  
+  if ($RepoUrl) {
+    if ($RepoUrl -match "^https://github.com/(?<repo>[^/]*/azure-rest-api-specs(-pr)?).*") {
+      $repo = $Matches["repo"]
+    }
+    else {
+      Write-Error "Parameter 'RepoUrl' has incorrect value:$RepoUrl. It should be similar like 'https://github.com/Azure/azure-rest-api-specs'"
+      exit 1
+    }
   }
 }
 
@@ -152,8 +162,19 @@ $tspConfigYaml = Get-Content $tspConfigPath -Raw | ConvertFrom-Yaml
 if (Test-Path $tmpTspConfigPath) {
   Remove-Item $tspConfigPath
 }
-# call CreateUpdate-TspLocation function
-$sdkProjectFolder = CreateUpdate-TspLocation $tspConfigYaml $TypeSpecProjectDirectory $CommitHash $repo $sdkRepoRootPath
+
+$sdkProjectFolder = ""
+if ($generateFromLocalTypeSpec) {
+  $sdkProjectFolder = Get-TspLocationFolder $tspConfigYaml $sdkRepoRootPath
+  $tspLocationYamlPath = Join-Path $sdkProjectFolder "tsp-location.yaml"
+  if (!(Test-Path -Path $tspLocationYamlPath)) {
+    Write-Error "Failed to find tsp-location.yaml in '$sdkProjectFolder', please make sure to provide CommitHash and RepoUrl parameters along with the local path of tspconfig.yaml in order to create tsp-location.yaml."
+    exit 1
+  }
+} else {
+  # call CreateUpdate-TspLocation function
+  $sdkProjectFolder = CreateUpdate-TspLocation $tspConfigYaml $TypeSpecProjectDirectory $CommitHash $repo $sdkRepoRootPath  
+}
 
 # call TypeSpec-Project-Sync.ps1
 $syncScript = Join-Path $PSScriptRoot TypeSpec-Project-Sync.ps1
