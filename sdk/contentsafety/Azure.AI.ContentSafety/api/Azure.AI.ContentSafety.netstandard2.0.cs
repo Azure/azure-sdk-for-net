@@ -92,6 +92,17 @@ namespace Azure.AI.ContentSafety
             V2023_04_30_Preview = 1,
         }
     }
+    public static partial class ContentSafetyModelFactory
+    {
+        public static Azure.AI.ContentSafety.AddBlockItemsResult AddBlockItemsResult(System.Collections.Generic.IEnumerable<Azure.AI.ContentSafety.TextBlockItem> value = null) { throw null; }
+        public static Azure.AI.ContentSafety.AnalyzeImageResult AnalyzeImageResult(Azure.AI.ContentSafety.ImageAnalyzeSeverityResult hateResult = null, Azure.AI.ContentSafety.ImageAnalyzeSeverityResult selfHarmResult = null, Azure.AI.ContentSafety.ImageAnalyzeSeverityResult sexualResult = null, Azure.AI.ContentSafety.ImageAnalyzeSeverityResult violenceResult = null) { throw null; }
+        public static Azure.AI.ContentSafety.AnalyzeTextResult AnalyzeTextResult(System.Collections.Generic.IEnumerable<Azure.AI.ContentSafety.TextBlocklistMatchResult> blocklistsMatchResults = null, Azure.AI.ContentSafety.TextAnalyzeSeverityResult hateResult = null, Azure.AI.ContentSafety.TextAnalyzeSeverityResult selfHarmResult = null, Azure.AI.ContentSafety.TextAnalyzeSeverityResult sexualResult = null, Azure.AI.ContentSafety.TextAnalyzeSeverityResult violenceResult = null) { throw null; }
+        public static Azure.AI.ContentSafety.ImageAnalyzeSeverityResult ImageAnalyzeSeverityResult(Azure.AI.ContentSafety.ImageCategory category = default(Azure.AI.ContentSafety.ImageCategory), int severity = 0) { throw null; }
+        public static Azure.AI.ContentSafety.TextAnalyzeSeverityResult TextAnalyzeSeverityResult(Azure.AI.ContentSafety.TextCategory category = default(Azure.AI.ContentSafety.TextCategory), int severity = 0) { throw null; }
+        public static Azure.AI.ContentSafety.TextBlockItem TextBlockItem(string blockItemId = null, string description = null, string text = null) { throw null; }
+        public static Azure.AI.ContentSafety.TextBlocklist TextBlocklist(string blocklistName = null, string description = null) { throw null; }
+        public static Azure.AI.ContentSafety.TextBlocklistMatchResult TextBlocklistMatchResult(string blocklistName = null, string blockItemId = null, string blockItemText = null, int offset = 0, int length = 0) { throw null; }
+    }
     public partial class ImageAnalyzeSeverityResult
     {
         internal ImageAnalyzeSeverityResult() { }
