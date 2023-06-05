@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.NewRelicObservability.Tests
                 {
                     UsageType = "PAYG",
                     BillingCycle = "MONTHLY",
-                    PlanDetails = "newrelic-pay-as-you-go-free-live@TIDgmz7xq9ge3py",
+                    PlanDetails = "newrelic-pay-as-you-go-free-live@TIDgmz7xq9ge3py@PUBIDnewrelicinc1635200720692.newrelic_liftr_payg",
                     EffectiveOn = new System.DateTimeOffset(2022, 9, 28, 8, 12, 30, new System.TimeSpan(1, 0, 0))
                 }
             };
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.NewRelicObservability.Tests
                 {
                     UsageType = "PAYG",
                     BillingCycle = "MONTHLY",
-                    PlanDetails = "newrelic-pay-as-you-go-free-live@TIDgmz7xq9ge3py",
+                    PlanDetails = "newrelic-pay-as-you-go-free-live@TIDgmz7xq9ge3py@PUBIDnewrelicinc1635200720692.newrelic_liftr_payg",
                     EffectiveOn = new System.DateTimeOffset(2022, 9, 28, 8, 12, 30, new System.TimeSpan(1, 0, 0))
                 },
                 NewRelicAccountProperties = new NewRelicAccountProperties
