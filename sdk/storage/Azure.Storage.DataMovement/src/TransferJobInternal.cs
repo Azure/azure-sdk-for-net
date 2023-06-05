@@ -29,6 +29,11 @@ namespace Azure.Storage.DataMovement
         internal TransferCheckpointer _checkpointer { get; set; }
 
         /// <summary>
+        /// Internal progress tracker for tracking and reporting progress of the transfer
+        /// </summary>
+        internal TransferProgressTracker _progressTracker;
+
+        /// <summary>
         /// Source resource
         /// </summary>
         internal StorageResource _sourceResource;
@@ -137,7 +142,7 @@ namespace Azure.Storage.DataMovement
         {
         }
 
-        internal TransferJobInternal(
+        private TransferJobInternal(
             DataTransfer dataTransfer,
             QueueChunkTaskInternal queueChunkTask,
             TransferCheckpointer checkPointer,
@@ -197,6 +202,7 @@ namespace Azure.Storage.DataMovement
             _isSingleResource = true;
             _initialTransferSize = transferOptions?.InitialTransferSize;
             _maximumTransferChunkSize = transferOptions?.MaximumTransferChunkSize;
+            _progressTracker = new TransferProgressTracker(transferOptions?.ProgressHandler, transferOptions?.ProgressHandlerOptions);
         }
 
         /// <summary>
@@ -227,6 +233,7 @@ namespace Azure.Storage.DataMovement
             _isSingleResource = false;
             _initialTransferSize = transferOptions?.InitialTransferSize;
             _maximumTransferChunkSize = transferOptions?.MaximumTransferChunkSize;
+            _progressTracker = new TransferProgressTracker(transferOptions?.ProgressHandler, transferOptions?.ProgressHandlerOptions);
         }
 
         public void Dispose()
@@ -310,6 +317,9 @@ namespace Azure.Storage.DataMovement
         /// </summary>
         public async Task JobPartEvent(TransferStatusEventArgs args)
         {
+            // NOTE: There is a chance this event can be triggered after the transfer has
+            // completed if more job parts complete before the next instance of this event is handled.
+
             StorageTransferStatus jobPartStatus = args.StorageTransferStatus;
             StorageTransferStatus jobStatus = _dataTransfer._state.GetTransferStatus();
 
@@ -474,6 +484,11 @@ namespace Azure.Storage.DataMovement
         internal List<string> GetJobPartSourceResourcePaths()
         {
             return _jobParts.Select( x => x._sourceResource.Path ).ToList();
+        }
+
+        internal void QueueJobPart()
+        {
+            _progressTracker.IncrementQueuedFiles();
         }
     }
 }
