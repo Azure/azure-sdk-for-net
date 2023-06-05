@@ -1,7 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <Description>Microsoft Azure Schema Registry Json Schema SDK</Description>
-    <AssemblyTitle>Microsoft Azure Schema Registry Json Schema SDK</AssemblyTitle>
+    <Description>Azure Schema Registry Json Schema SDK</Description>
+    <AssemblyTitle>Azure Schema Registry Json Schema SDK</AssemblyTitle>
     <Version>1.0.0-beta.1</Version>
     <!--The ApiCompatVersion is managed automatically and should not generally be modified manually.-->
     <PackageTags>Azure;Schema Registry;SchemaRegistry;.NET;Data;JsonSchema;$(PackageCommonTags)</PackageTags>

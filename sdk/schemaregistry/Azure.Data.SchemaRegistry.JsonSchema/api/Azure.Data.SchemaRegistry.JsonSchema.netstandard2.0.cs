@@ -1,4 +1,4 @@
-namespace Microsoft.Azure.Data.SchemaRegistry.JsonSchema
+namespace Azure.Data.SchemaRegistry.JsonSchema
 {
     public abstract partial class SchemaRegistryJsonSchemaGenerator
     {
@@ -9,10 +9,10 @@ namespace Microsoft.Azure.Data.SchemaRegistry.JsonSchema
     public partial class SchemaRegistryJsonSerializer
     {
         protected SchemaRegistryJsonSerializer() { }
-        public SchemaRegistryJsonSerializer(Azure.Data.SchemaRegistry.SchemaRegistryClient client, Microsoft.Azure.Data.SchemaRegistry.JsonSchema.SchemaRegistryJsonSchemaGenerator jsonSchemaGenerator) { }
-        public SchemaRegistryJsonSerializer(Azure.Data.SchemaRegistry.SchemaRegistryClient client, Microsoft.Azure.Data.SchemaRegistry.JsonSchema.SchemaRegistryJsonSchemaGenerator jsonSchemaGenerator, Microsoft.Azure.Data.SchemaRegistry.JsonSchema.SchemaRegistryJsonSerializerOptions serializerOptions) { }
-        public SchemaRegistryJsonSerializer(Azure.Data.SchemaRegistry.SchemaRegistryClient client, string groupName, Microsoft.Azure.Data.SchemaRegistry.JsonSchema.SchemaRegistryJsonSchemaGenerator jsonSchemaGenerator) { }
-        public SchemaRegistryJsonSerializer(Azure.Data.SchemaRegistry.SchemaRegistryClient client, string groupName, Microsoft.Azure.Data.SchemaRegistry.JsonSchema.SchemaRegistryJsonSchemaGenerator jsonSchemaGenerator, Microsoft.Azure.Data.SchemaRegistry.JsonSchema.SchemaRegistryJsonSerializerOptions serializerOptions) { }
+        public SchemaRegistryJsonSerializer(Azure.Data.SchemaRegistry.SchemaRegistryClient client, Azure.Data.SchemaRegistry.JsonSchema.SchemaRegistryJsonSchemaGenerator jsonSchemaGenerator) { }
+        public SchemaRegistryJsonSerializer(Azure.Data.SchemaRegistry.SchemaRegistryClient client, Azure.Data.SchemaRegistry.JsonSchema.SchemaRegistryJsonSchemaGenerator jsonSchemaGenerator, Azure.Data.SchemaRegistry.JsonSchema.SchemaRegistryJsonSerializerOptions serializerOptions) { }
+        public SchemaRegistryJsonSerializer(Azure.Data.SchemaRegistry.SchemaRegistryClient client, string groupName, Azure.Data.SchemaRegistry.JsonSchema.SchemaRegistryJsonSchemaGenerator jsonSchemaGenerator) { }
+        public SchemaRegistryJsonSerializer(Azure.Data.SchemaRegistry.SchemaRegistryClient client, string groupName, Azure.Data.SchemaRegistry.JsonSchema.SchemaRegistryJsonSchemaGenerator jsonSchemaGenerator, Azure.Data.SchemaRegistry.JsonSchema.SchemaRegistryJsonSerializerOptions serializerOptions) { }
         public object Deserialize(Azure.Messaging.MessageContent content, System.Type dataType, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public System.Threading.Tasks.ValueTask<object> DeserializeAsync(Azure.Messaging.MessageContent content, System.Type dataType, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public System.Threading.Tasks.ValueTask<TData> DeserializeAsync<TData>(Azure.Messaging.MessageContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
