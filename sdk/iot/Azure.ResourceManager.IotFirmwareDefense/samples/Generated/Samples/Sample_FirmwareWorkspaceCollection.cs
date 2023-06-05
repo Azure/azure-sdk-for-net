@@ -16,7 +16,7 @@ using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.IotFirmwareDefense.Samples
 {
-    public partial class Sample_WorkspaceCollection
+    public partial class Sample_FirmwareWorkspaceCollection
     {
         // Workspaces_ListByResourceGroup_MaximumSet_Gen
         [NUnit.Framework.Test]
@@ -38,15 +38,15 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Samples
             ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
 
-            // get the collection of this WorkspaceResource
-            WorkspaceCollection collection = resourceGroupResource.GetWorkspaces();
+            // get the collection of this FirmwareWorkspaceResource
+            FirmwareWorkspaceCollection collection = resourceGroupResource.GetFirmwareWorkspaces();
 
             // invoke the operation and iterate over the result
-            await foreach (WorkspaceResource item in collection.GetAllAsync())
+            await foreach (FirmwareWorkspaceResource item in collection.GetAllAsync())
             {
                 // the variable item is a resource, you could call other operations on this instance as well
                 // but just for demo, we get its data from this resource instance
-                WorkspaceData resourceData = item.Data;
+                FirmwareWorkspaceData resourceData = item.Data;
                 // for demo we just print out the id
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
@@ -74,15 +74,15 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Samples
             ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
 
-            // get the collection of this WorkspaceResource
-            WorkspaceCollection collection = resourceGroupResource.GetWorkspaces();
+            // get the collection of this FirmwareWorkspaceResource
+            FirmwareWorkspaceCollection collection = resourceGroupResource.GetFirmwareWorkspaces();
 
             // invoke the operation and iterate over the result
-            await foreach (WorkspaceResource item in collection.GetAllAsync())
+            await foreach (FirmwareWorkspaceResource item in collection.GetAllAsync())
             {
                 // the variable item is a resource, you could call other operations on this instance as well
                 // but just for demo, we get its data from this resource instance
-                WorkspaceData resourceData = item.Data;
+                FirmwareWorkspaceData resourceData = item.Data;
                 // for demo we just print out the id
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
@@ -110,24 +110,24 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Samples
             ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
 
-            // get the collection of this WorkspaceResource
-            WorkspaceCollection collection = resourceGroupResource.GetWorkspaces();
+            // get the collection of this FirmwareWorkspaceResource
+            FirmwareWorkspaceCollection collection = resourceGroupResource.GetFirmwareWorkspaces();
 
             // invoke the operation
             string workspaceName = "E___-3";
-            WorkspaceData data = new WorkspaceData(new AzureLocation("jjwbseilitjgdrhbvvkwviqj"))
+            FirmwareWorkspaceData data = new FirmwareWorkspaceData(new AzureLocation("jjwbseilitjgdrhbvvkwviqj"))
             {
                 Tags =
 {
 ["key450"] = "rzqqumbpfsbibnpirsm",
 },
             };
-            ArmOperation<WorkspaceResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, workspaceName, data);
-            WorkspaceResource result = lro.Value;
+            ArmOperation<FirmwareWorkspaceResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, workspaceName, data);
+            FirmwareWorkspaceResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            WorkspaceData resourceData = result.Data;
+            FirmwareWorkspaceData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -152,18 +152,18 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Samples
             ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
 
-            // get the collection of this WorkspaceResource
-            WorkspaceCollection collection = resourceGroupResource.GetWorkspaces();
+            // get the collection of this FirmwareWorkspaceResource
+            FirmwareWorkspaceCollection collection = resourceGroupResource.GetFirmwareWorkspaces();
 
             // invoke the operation
             string workspaceName = "E___-3";
-            WorkspaceData data = new WorkspaceData(new AzureLocation("jjwbseilitjgdrhbvvkwviqj"));
-            ArmOperation<WorkspaceResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, workspaceName, data);
-            WorkspaceResource result = lro.Value;
+            FirmwareWorkspaceData data = new FirmwareWorkspaceData(new AzureLocation("jjwbseilitjgdrhbvvkwviqj"));
+            ArmOperation<FirmwareWorkspaceResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, workspaceName, data);
+            FirmwareWorkspaceResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            WorkspaceData resourceData = result.Data;
+            FirmwareWorkspaceData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -188,16 +188,16 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Samples
             ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
 
-            // get the collection of this WorkspaceResource
-            WorkspaceCollection collection = resourceGroupResource.GetWorkspaces();
+            // get the collection of this FirmwareWorkspaceResource
+            FirmwareWorkspaceCollection collection = resourceGroupResource.GetFirmwareWorkspaces();
 
             // invoke the operation
             string workspaceName = "E_US";
-            WorkspaceResource result = await collection.GetAsync(workspaceName);
+            FirmwareWorkspaceResource result = await collection.GetAsync(workspaceName);
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            WorkspaceData resourceData = result.Data;
+            FirmwareWorkspaceData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -222,8 +222,8 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Samples
             ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
 
-            // get the collection of this WorkspaceResource
-            WorkspaceCollection collection = resourceGroupResource.GetWorkspaces();
+            // get the collection of this FirmwareWorkspaceResource
+            FirmwareWorkspaceCollection collection = resourceGroupResource.GetFirmwareWorkspaces();
 
             // invoke the operation
             string workspaceName = "E_US";
@@ -252,16 +252,16 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Samples
             ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
 
-            // get the collection of this WorkspaceResource
-            WorkspaceCollection collection = resourceGroupResource.GetWorkspaces();
+            // get the collection of this FirmwareWorkspaceResource
+            FirmwareWorkspaceCollection collection = resourceGroupResource.GetFirmwareWorkspaces();
 
             // invoke the operation
             string workspaceName = "E_US";
-            WorkspaceResource result = await collection.GetAsync(workspaceName);
+            FirmwareWorkspaceResource result = await collection.GetAsync(workspaceName);
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            WorkspaceData resourceData = result.Data;
+            FirmwareWorkspaceData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -286,8 +286,8 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Samples
             ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
 
-            // get the collection of this WorkspaceResource
-            WorkspaceCollection collection = resourceGroupResource.GetWorkspaces();
+            // get the collection of this FirmwareWorkspaceResource
+            FirmwareWorkspaceCollection collection = resourceGroupResource.GetFirmwareWorkspaces();
 
             // invoke the operation
             string workspaceName = "E_US";

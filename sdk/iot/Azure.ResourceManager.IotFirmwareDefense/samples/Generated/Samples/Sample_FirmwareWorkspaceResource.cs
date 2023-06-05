@@ -17,12 +17,12 @@ using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.IotFirmwareDefense.Samples
 {
-    public partial class Sample_WorkspaceResource
+    public partial class Sample_FirmwareWorkspaceResource
     {
         // Workspaces_ListBySubscription_MaximumSet_Gen
         [NUnit.Framework.Test]
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task GetWorkspaces_WorkspacesListBySubscriptionMaximumSetGen()
+        public async Task GetFirmwareWorkspaces_WorkspacesListBySubscriptionMaximumSetGen()
         {
             // Generated from example definition: specification/fist/resource-manager/Microsoft.IoTFirmwareDefense/preview/2023-02-08-preview/examples/Workspaces_ListBySubscription_MaximumSet_Gen.json
             // this example is just showing the usage of "Workspaces_ListBySubscription" operation, for the dependent resources, they will have to be created separately.
@@ -39,11 +39,11 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Samples
             SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
 
             // invoke the operation and iterate over the result
-            await foreach (WorkspaceResource item in subscriptionResource.GetWorkspacesAsync())
+            await foreach (FirmwareWorkspaceResource item in subscriptionResource.GetFirmwareWorkspacesAsync())
             {
                 // the variable item is a resource, you could call other operations on this instance as well
                 // but just for demo, we get its data from this resource instance
-                WorkspaceData resourceData = item.Data;
+                FirmwareWorkspaceData resourceData = item.Data;
                 // for demo we just print out the id
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Samples
         // Workspaces_ListBySubscription_MinimumSet_Gen
         [NUnit.Framework.Test]
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task GetWorkspaces_WorkspacesListBySubscriptionMinimumSetGen()
+        public async Task GetFirmwareWorkspaces_WorkspacesListBySubscriptionMinimumSetGen()
         {
             // Generated from example definition: specification/fist/resource-manager/Microsoft.IoTFirmwareDefense/preview/2023-02-08-preview/examples/Workspaces_ListBySubscription_MinimumSet_Gen.json
             // this example is just showing the usage of "Workspaces_ListBySubscription" operation, for the dependent resources, they will have to be created separately.
@@ -71,11 +71,11 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Samples
             SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
 
             // invoke the operation and iterate over the result
-            await foreach (WorkspaceResource item in subscriptionResource.GetWorkspacesAsync())
+            await foreach (FirmwareWorkspaceResource item in subscriptionResource.GetFirmwareWorkspacesAsync())
             {
                 // the variable item is a resource, you could call other operations on this instance as well
                 // but just for demo, we get its data from this resource instance
-                WorkspaceData resourceData = item.Data;
+                FirmwareWorkspaceData resourceData = item.Data;
                 // for demo we just print out the id
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
@@ -96,21 +96,21 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this WorkspaceResource created on azure
-            // for more information of creating WorkspaceResource, please refer to the document of WorkspaceResource
+            // this example assumes you already have this FirmwareWorkspaceResource created on azure
+            // for more information of creating FirmwareWorkspaceResource, please refer to the document of FirmwareWorkspaceResource
             string subscriptionId = "5443A01A-5242-4950-AC1A-2DD362180254";
             string resourceGroupName = "rgworkspaces";
             string workspaceName = "E___-3";
-            ResourceIdentifier workspaceResourceId = WorkspaceResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, workspaceName);
-            WorkspaceResource workspace = client.GetWorkspaceResource(workspaceResourceId);
+            ResourceIdentifier firmwareWorkspaceResourceId = FirmwareWorkspaceResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, workspaceName);
+            FirmwareWorkspaceResource firmwareWorkspace = client.GetFirmwareWorkspaceResource(firmwareWorkspaceResourceId);
 
             // invoke the operation
-            WorkspacePatch patch = new WorkspacePatch();
-            WorkspaceResource result = await workspace.UpdateAsync(patch);
+            FirmwareWorkspacePatch patch = new FirmwareWorkspacePatch();
+            FirmwareWorkspaceResource result = await firmwareWorkspace.UpdateAsync(patch);
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            WorkspaceData resourceData = result.Data;
+            FirmwareWorkspaceData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -128,21 +128,21 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this WorkspaceResource created on azure
-            // for more information of creating WorkspaceResource, please refer to the document of WorkspaceResource
+            // this example assumes you already have this FirmwareWorkspaceResource created on azure
+            // for more information of creating FirmwareWorkspaceResource, please refer to the document of FirmwareWorkspaceResource
             string subscriptionId = "5443A01A-5242-4950-AC1A-2DD362180254";
             string resourceGroupName = "rgworkspaces";
             string workspaceName = "E___-3";
-            ResourceIdentifier workspaceResourceId = WorkspaceResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, workspaceName);
-            WorkspaceResource workspace = client.GetWorkspaceResource(workspaceResourceId);
+            ResourceIdentifier firmwareWorkspaceResourceId = FirmwareWorkspaceResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, workspaceName);
+            FirmwareWorkspaceResource firmwareWorkspace = client.GetFirmwareWorkspaceResource(firmwareWorkspaceResourceId);
 
             // invoke the operation
-            WorkspacePatch patch = new WorkspacePatch();
-            WorkspaceResource result = await workspace.UpdateAsync(patch);
+            FirmwareWorkspacePatch patch = new FirmwareWorkspacePatch();
+            FirmwareWorkspaceResource result = await firmwareWorkspace.UpdateAsync(patch);
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            WorkspaceData resourceData = result.Data;
+            FirmwareWorkspaceData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -160,16 +160,16 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this WorkspaceResource created on azure
-            // for more information of creating WorkspaceResource, please refer to the document of WorkspaceResource
+            // this example assumes you already have this FirmwareWorkspaceResource created on azure
+            // for more information of creating FirmwareWorkspaceResource, please refer to the document of FirmwareWorkspaceResource
             string subscriptionId = "5443A01A-5242-4950-AC1A-2DD362180254";
             string resourceGroupName = "rgworkspaces";
             string workspaceName = "E___-3";
-            ResourceIdentifier workspaceResourceId = WorkspaceResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, workspaceName);
-            WorkspaceResource workspace = client.GetWorkspaceResource(workspaceResourceId);
+            ResourceIdentifier firmwareWorkspaceResourceId = FirmwareWorkspaceResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, workspaceName);
+            FirmwareWorkspaceResource firmwareWorkspace = client.GetFirmwareWorkspaceResource(firmwareWorkspaceResourceId);
 
             // invoke the operation
-            await workspace.DeleteAsync(WaitUntil.Completed);
+            await firmwareWorkspace.DeleteAsync(WaitUntil.Completed);
 
             Console.WriteLine($"Succeeded");
         }
@@ -187,16 +187,16 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this WorkspaceResource created on azure
-            // for more information of creating WorkspaceResource, please refer to the document of WorkspaceResource
+            // this example assumes you already have this FirmwareWorkspaceResource created on azure
+            // for more information of creating FirmwareWorkspaceResource, please refer to the document of FirmwareWorkspaceResource
             string subscriptionId = "5443A01A-5242-4950-AC1A-2DD362180254";
             string resourceGroupName = "rgworkspaces";
             string workspaceName = "E___-3";
-            ResourceIdentifier workspaceResourceId = WorkspaceResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, workspaceName);
-            WorkspaceResource workspace = client.GetWorkspaceResource(workspaceResourceId);
+            ResourceIdentifier firmwareWorkspaceResourceId = FirmwareWorkspaceResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, workspaceName);
+            FirmwareWorkspaceResource firmwareWorkspace = client.GetFirmwareWorkspaceResource(firmwareWorkspaceResourceId);
 
             // invoke the operation
-            await workspace.DeleteAsync(WaitUntil.Completed);
+            await firmwareWorkspace.DeleteAsync(WaitUntil.Completed);
 
             Console.WriteLine($"Succeeded");
         }
@@ -214,20 +214,20 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this WorkspaceResource created on azure
-            // for more information of creating WorkspaceResource, please refer to the document of WorkspaceResource
+            // this example assumes you already have this FirmwareWorkspaceResource created on azure
+            // for more information of creating FirmwareWorkspaceResource, please refer to the document of FirmwareWorkspaceResource
             string subscriptionId = "9781B4B5-0922-472A-80F0-B743D0596694";
             string resourceGroupName = "rgworkspaces";
             string workspaceName = "E_US";
-            ResourceIdentifier workspaceResourceId = WorkspaceResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, workspaceName);
-            WorkspaceResource workspace = client.GetWorkspaceResource(workspaceResourceId);
+            ResourceIdentifier firmwareWorkspaceResourceId = FirmwareWorkspaceResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, workspaceName);
+            FirmwareWorkspaceResource firmwareWorkspace = client.GetFirmwareWorkspaceResource(firmwareWorkspaceResourceId);
 
             // invoke the operation
-            WorkspaceResource result = await workspace.GetAsync();
+            FirmwareWorkspaceResource result = await firmwareWorkspace.GetAsync();
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            WorkspaceData resourceData = result.Data;
+            FirmwareWorkspaceData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -245,20 +245,20 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this WorkspaceResource created on azure
-            // for more information of creating WorkspaceResource, please refer to the document of WorkspaceResource
+            // this example assumes you already have this FirmwareWorkspaceResource created on azure
+            // for more information of creating FirmwareWorkspaceResource, please refer to the document of FirmwareWorkspaceResource
             string subscriptionId = "9781B4B5-0922-472A-80F0-B743D0596694";
             string resourceGroupName = "rgworkspaces";
             string workspaceName = "E_US";
-            ResourceIdentifier workspaceResourceId = WorkspaceResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, workspaceName);
-            WorkspaceResource workspace = client.GetWorkspaceResource(workspaceResourceId);
+            ResourceIdentifier firmwareWorkspaceResourceId = FirmwareWorkspaceResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, workspaceName);
+            FirmwareWorkspaceResource firmwareWorkspace = client.GetFirmwareWorkspaceResource(firmwareWorkspaceResourceId);
 
             // invoke the operation
-            WorkspaceResource result = await workspace.GetAsync();
+            FirmwareWorkspaceResource result = await firmwareWorkspace.GetAsync();
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            WorkspaceData resourceData = result.Data;
+            FirmwareWorkspaceData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -276,20 +276,20 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this WorkspaceResource created on azure
-            // for more information of creating WorkspaceResource, please refer to the document of WorkspaceResource
+            // this example assumes you already have this FirmwareWorkspaceResource created on azure
+            // for more information of creating FirmwareWorkspaceResource, please refer to the document of FirmwareWorkspaceResource
             string subscriptionId = "5443A01A-5242-4950-AC1A-2DD362180254";
             string resourceGroupName = "rgworkspaces";
             string workspaceName = "E___-3";
-            ResourceIdentifier workspaceResourceId = WorkspaceResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, workspaceName);
-            WorkspaceResource workspace = client.GetWorkspaceResource(workspaceResourceId);
+            ResourceIdentifier firmwareWorkspaceResourceId = FirmwareWorkspaceResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, workspaceName);
+            FirmwareWorkspaceResource firmwareWorkspace = client.GetFirmwareWorkspaceResource(firmwareWorkspaceResourceId);
 
             // invoke the operation
             UploadUrlContent content = new UploadUrlContent()
             {
                 FirmwareName = "ytsfprbywi",
             };
-            UriToken result = await workspace.GenerateUploadUrlAsync(content);
+            UriToken result = await firmwareWorkspace.GenerateUploadUrlAsync(content);
 
             Console.WriteLine($"Succeeded: {result}");
         }
@@ -307,17 +307,17 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this WorkspaceResource created on azure
-            // for more information of creating WorkspaceResource, please refer to the document of WorkspaceResource
+            // this example assumes you already have this FirmwareWorkspaceResource created on azure
+            // for more information of creating FirmwareWorkspaceResource, please refer to the document of FirmwareWorkspaceResource
             string subscriptionId = "5443A01A-5242-4950-AC1A-2DD362180254";
             string resourceGroupName = "rgworkspaces";
             string workspaceName = "E___-3";
-            ResourceIdentifier workspaceResourceId = WorkspaceResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, workspaceName);
-            WorkspaceResource workspace = client.GetWorkspaceResource(workspaceResourceId);
+            ResourceIdentifier firmwareWorkspaceResourceId = FirmwareWorkspaceResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, workspaceName);
+            FirmwareWorkspaceResource firmwareWorkspace = client.GetFirmwareWorkspaceResource(firmwareWorkspaceResourceId);
 
             // invoke the operation
             UploadUrlContent content = new UploadUrlContent();
-            UriToken result = await workspace.GenerateUploadUrlAsync(content);
+            UriToken result = await firmwareWorkspace.GenerateUploadUrlAsync(content);
 
             Console.WriteLine($"Succeeded: {result}");
         }

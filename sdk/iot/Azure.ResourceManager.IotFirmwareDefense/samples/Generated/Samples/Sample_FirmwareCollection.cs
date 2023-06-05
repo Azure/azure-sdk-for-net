@@ -32,16 +32,16 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this WorkspaceResource created on azure
-            // for more information of creating WorkspaceResource, please refer to the document of WorkspaceResource
+            // this example assumes you already have this FirmwareWorkspaceResource created on azure
+            // for more information of creating FirmwareWorkspaceResource, please refer to the document of FirmwareWorkspaceResource
             string subscriptionId = "685C0C6F-9867-4B1C-A534-AA3A05B54BCE";
             string resourceGroupName = "rgworkspaces-firmwares";
             string workspaceName = "A7";
-            ResourceIdentifier workspaceResourceId = WorkspaceResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, workspaceName);
-            WorkspaceResource workspace = client.GetWorkspaceResource(workspaceResourceId);
+            ResourceIdentifier firmwareWorkspaceResourceId = FirmwareWorkspaceResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, workspaceName);
+            FirmwareWorkspaceResource firmwareWorkspace = client.GetFirmwareWorkspaceResource(firmwareWorkspaceResourceId);
 
             // get the collection of this FirmwareResource
-            FirmwareCollection collection = workspace.GetFirmwares();
+            FirmwareCollection collection = firmwareWorkspace.GetFirmwares();
 
             // invoke the operation and iterate over the result
             await foreach (FirmwareResource item in collection.GetAllAsync())
@@ -69,16 +69,16 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this WorkspaceResource created on azure
-            // for more information of creating WorkspaceResource, please refer to the document of WorkspaceResource
+            // this example assumes you already have this FirmwareWorkspaceResource created on azure
+            // for more information of creating FirmwareWorkspaceResource, please refer to the document of FirmwareWorkspaceResource
             string subscriptionId = "685C0C6F-9867-4B1C-A534-AA3A05B54BCE";
             string resourceGroupName = "rgworkspaces-firmwares";
             string workspaceName = "A7";
-            ResourceIdentifier workspaceResourceId = WorkspaceResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, workspaceName);
-            WorkspaceResource workspace = client.GetWorkspaceResource(workspaceResourceId);
+            ResourceIdentifier firmwareWorkspaceResourceId = FirmwareWorkspaceResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, workspaceName);
+            FirmwareWorkspaceResource firmwareWorkspace = client.GetFirmwareWorkspaceResource(firmwareWorkspaceResourceId);
 
             // get the collection of this FirmwareResource
-            FirmwareCollection collection = workspace.GetFirmwares();
+            FirmwareCollection collection = firmwareWorkspace.GetFirmwares();
 
             // invoke the operation and iterate over the result
             await foreach (FirmwareResource item in collection.GetAllAsync())
@@ -106,16 +106,16 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this WorkspaceResource created on azure
-            // for more information of creating WorkspaceResource, please refer to the document of WorkspaceResource
+            // this example assumes you already have this FirmwareWorkspaceResource created on azure
+            // for more information of creating FirmwareWorkspaceResource, please refer to the document of FirmwareWorkspaceResource
             string subscriptionId = "685C0C6F-9867-4B1C-A534-AA3A05B54BCE";
             string resourceGroupName = "rgworkspaces-firmwares";
             string workspaceName = "A7";
-            ResourceIdentifier workspaceResourceId = WorkspaceResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, workspaceName);
-            WorkspaceResource workspace = client.GetWorkspaceResource(workspaceResourceId);
+            ResourceIdentifier firmwareWorkspaceResourceId = FirmwareWorkspaceResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, workspaceName);
+            FirmwareWorkspaceResource firmwareWorkspace = client.GetFirmwareWorkspaceResource(firmwareWorkspaceResourceId);
 
             // get the collection of this FirmwareResource
-            FirmwareCollection collection = workspace.GetFirmwares();
+            FirmwareCollection collection = firmwareWorkspace.GetFirmwares();
 
             // invoke the operation
             string firmwareName = "umrkdttp";
@@ -158,16 +158,16 @@ BinaryData.FromObjectAsJson(new Dictionary<string, object>()
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this WorkspaceResource created on azure
-            // for more information of creating WorkspaceResource, please refer to the document of WorkspaceResource
+            // this example assumes you already have this FirmwareWorkspaceResource created on azure
+            // for more information of creating FirmwareWorkspaceResource, please refer to the document of FirmwareWorkspaceResource
             string subscriptionId = "685C0C6F-9867-4B1C-A534-AA3A05B54BCE";
             string resourceGroupName = "rgworkspaces-firmwares";
             string workspaceName = "A7";
-            ResourceIdentifier workspaceResourceId = WorkspaceResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, workspaceName);
-            WorkspaceResource workspace = client.GetWorkspaceResource(workspaceResourceId);
+            ResourceIdentifier firmwareWorkspaceResourceId = FirmwareWorkspaceResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, workspaceName);
+            FirmwareWorkspaceResource firmwareWorkspace = client.GetFirmwareWorkspaceResource(firmwareWorkspaceResourceId);
 
             // get the collection of this FirmwareResource
-            FirmwareCollection collection = workspace.GetFirmwares();
+            FirmwareCollection collection = firmwareWorkspace.GetFirmwares();
 
             // invoke the operation
             string firmwareName = "umrkdttp";
@@ -195,16 +195,16 @@ BinaryData.FromObjectAsJson(new Dictionary<string, object>()
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this WorkspaceResource created on azure
-            // for more information of creating WorkspaceResource, please refer to the document of WorkspaceResource
+            // this example assumes you already have this FirmwareWorkspaceResource created on azure
+            // for more information of creating FirmwareWorkspaceResource, please refer to the document of FirmwareWorkspaceResource
             string subscriptionId = "685C0C6F-9867-4B1C-A534-AA3A05B54BCE";
             string resourceGroupName = "rgworkspaces-firmwares";
             string workspaceName = "A7";
-            ResourceIdentifier workspaceResourceId = WorkspaceResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, workspaceName);
-            WorkspaceResource workspace = client.GetWorkspaceResource(workspaceResourceId);
+            ResourceIdentifier firmwareWorkspaceResourceId = FirmwareWorkspaceResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, workspaceName);
+            FirmwareWorkspaceResource firmwareWorkspace = client.GetFirmwareWorkspaceResource(firmwareWorkspaceResourceId);
 
             // get the collection of this FirmwareResource
-            FirmwareCollection collection = workspace.GetFirmwares();
+            FirmwareCollection collection = firmwareWorkspace.GetFirmwares();
 
             // invoke the operation
             string firmwareName = "umrkdttp";
@@ -230,16 +230,16 @@ BinaryData.FromObjectAsJson(new Dictionary<string, object>()
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this WorkspaceResource created on azure
-            // for more information of creating WorkspaceResource, please refer to the document of WorkspaceResource
+            // this example assumes you already have this FirmwareWorkspaceResource created on azure
+            // for more information of creating FirmwareWorkspaceResource, please refer to the document of FirmwareWorkspaceResource
             string subscriptionId = "685C0C6F-9867-4B1C-A534-AA3A05B54BCE";
             string resourceGroupName = "rgworkspaces-firmwares";
             string workspaceName = "A7";
-            ResourceIdentifier workspaceResourceId = WorkspaceResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, workspaceName);
-            WorkspaceResource workspace = client.GetWorkspaceResource(workspaceResourceId);
+            ResourceIdentifier firmwareWorkspaceResourceId = FirmwareWorkspaceResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, workspaceName);
+            FirmwareWorkspaceResource firmwareWorkspace = client.GetFirmwareWorkspaceResource(firmwareWorkspaceResourceId);
 
             // get the collection of this FirmwareResource
-            FirmwareCollection collection = workspace.GetFirmwares();
+            FirmwareCollection collection = firmwareWorkspace.GetFirmwares();
 
             // invoke the operation
             string firmwareName = "umrkdttp";
@@ -261,16 +261,16 @@ BinaryData.FromObjectAsJson(new Dictionary<string, object>()
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this WorkspaceResource created on azure
-            // for more information of creating WorkspaceResource, please refer to the document of WorkspaceResource
+            // this example assumes you already have this FirmwareWorkspaceResource created on azure
+            // for more information of creating FirmwareWorkspaceResource, please refer to the document of FirmwareWorkspaceResource
             string subscriptionId = "685C0C6F-9867-4B1C-A534-AA3A05B54BCE";
             string resourceGroupName = "rgworkspaces-firmwares";
             string workspaceName = "A7";
-            ResourceIdentifier workspaceResourceId = WorkspaceResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, workspaceName);
-            WorkspaceResource workspace = client.GetWorkspaceResource(workspaceResourceId);
+            ResourceIdentifier firmwareWorkspaceResourceId = FirmwareWorkspaceResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, workspaceName);
+            FirmwareWorkspaceResource firmwareWorkspace = client.GetFirmwareWorkspaceResource(firmwareWorkspaceResourceId);
 
             // get the collection of this FirmwareResource
-            FirmwareCollection collection = workspace.GetFirmwares();
+            FirmwareCollection collection = firmwareWorkspace.GetFirmwares();
 
             // invoke the operation
             string firmwareName = "umrkdttp";
@@ -296,16 +296,16 @@ BinaryData.FromObjectAsJson(new Dictionary<string, object>()
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this WorkspaceResource created on azure
-            // for more information of creating WorkspaceResource, please refer to the document of WorkspaceResource
+            // this example assumes you already have this FirmwareWorkspaceResource created on azure
+            // for more information of creating FirmwareWorkspaceResource, please refer to the document of FirmwareWorkspaceResource
             string subscriptionId = "685C0C6F-9867-4B1C-A534-AA3A05B54BCE";
             string resourceGroupName = "rgworkspaces-firmwares";
             string workspaceName = "A7";
-            ResourceIdentifier workspaceResourceId = WorkspaceResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, workspaceName);
-            WorkspaceResource workspace = client.GetWorkspaceResource(workspaceResourceId);
+            ResourceIdentifier firmwareWorkspaceResourceId = FirmwareWorkspaceResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, workspaceName);
+            FirmwareWorkspaceResource firmwareWorkspace = client.GetFirmwareWorkspaceResource(firmwareWorkspaceResourceId);
 
             // get the collection of this FirmwareResource
-            FirmwareCollection collection = workspace.GetFirmwares();
+            FirmwareCollection collection = firmwareWorkspace.GetFirmwares();
 
             // invoke the operation
             string firmwareName = "umrkdttp";

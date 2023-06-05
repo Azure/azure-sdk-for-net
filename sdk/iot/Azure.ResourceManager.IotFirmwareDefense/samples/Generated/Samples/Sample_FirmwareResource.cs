@@ -765,7 +765,7 @@ BinaryData.FromObjectAsJson(new Dictionary<string, object>()
             FirmwareResource firmware = client.GetFirmwareResource(firmwareResourceId);
 
             // invoke the operation and iterate over the result
-            await foreach (Cve item in firmware.GetCvesAsync())
+            await foreach (FirmwareCve item in firmware.GetCvesAsync())
             {
                 Console.WriteLine($"Succeeded: {item}");
             }
@@ -796,7 +796,7 @@ BinaryData.FromObjectAsJson(new Dictionary<string, object>()
             FirmwareResource firmware = client.GetFirmwareResource(firmwareResourceId);
 
             // invoke the operation and iterate over the result
-            await foreach (Cve item in firmware.GetCvesAsync())
+            await foreach (FirmwareCve item in firmware.GetCvesAsync())
             {
                 Console.WriteLine($"Succeeded: {item}");
             }
