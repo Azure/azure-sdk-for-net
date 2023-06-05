@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<WorkspaceData>> value = default;
+            Optional<IReadOnlyList<FirmwareWorkspaceData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -30,10 +30,10 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
                     {
                         continue;
                     }
-                    List<WorkspaceData> array = new List<WorkspaceData>();
+                    List<FirmwareWorkspaceData> array = new List<FirmwareWorkspaceData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(WorkspaceData.DeserializeWorkspaceData(item));
+                        array.Add(FirmwareWorkspaceData.DeserializeFirmwareWorkspaceData(item));
                     }
                     value = array;
                     continue;

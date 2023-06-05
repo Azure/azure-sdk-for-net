@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense
     /// A Class representing a Firmware along with the instance operations that can be performed on it.
     /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="FirmwareResource" />
     /// from an instance of <see cref="ArmClient" /> using the GetFirmwareResource method.
-    /// Otherwise you can get one from its parent resource <see cref="WorkspaceResource" /> using the GetFirmware method.
+    /// Otherwise you can get one from its parent resource <see cref="FirmwareWorkspaceResource" /> using the GetFirmware method.
     /// </summary>
     public partial class FirmwareResource : ArmResource
     {

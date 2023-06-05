@@ -31,11 +31,11 @@ namespace Azure.ResourceManager.IotFirmwareDefense
             return apiVersion;
         }
 
-        /// <summary> Gets a collection of WorkspaceResources in the ResourceGroupResource. </summary>
-        /// <returns> An object representing collection of WorkspaceResources and their operations over a WorkspaceResource. </returns>
-        public virtual WorkspaceCollection GetWorkspaces()
+        /// <summary> Gets a collection of FirmwareWorkspaceResources in the ResourceGroupResource. </summary>
+        /// <returns> An object representing collection of FirmwareWorkspaceResources and their operations over a FirmwareWorkspaceResource. </returns>
+        public virtual FirmwareWorkspaceCollection GetFirmwareWorkspaces()
         {
-            return GetCachedClient(Client => new WorkspaceCollection(Client, Id));
+            return GetCachedClient(Client => new FirmwareWorkspaceCollection(Client, Id));
         }
     }
 }

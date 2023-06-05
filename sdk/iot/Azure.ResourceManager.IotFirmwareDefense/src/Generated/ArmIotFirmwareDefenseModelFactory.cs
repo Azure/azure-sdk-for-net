@@ -262,7 +262,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
             return new FirmwareCryptoKey(firmwareCryptoKeyId, keyType, keySize, keyAlgorithm, usage?.ToList(), filePaths?.ToList(), pairedKey, isShortKeySize);
         }
 
-        /// <summary> Initializes a new instance of WorkspaceData. </summary>
+        /// <summary> Initializes a new instance of FirmwareWorkspaceData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -270,12 +270,12 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
         /// <param name="provisioningState"> Provisioning state of the resource. </param>
-        /// <returns> A new <see cref="IotFirmwareDefense.WorkspaceData"/> instance for mocking. </returns>
-        public static WorkspaceData WorkspaceData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, ProvisioningState? provisioningState = null)
+        /// <returns> A new <see cref="IotFirmwareDefense.FirmwareWorkspaceData"/> instance for mocking. </returns>
+        public static FirmwareWorkspaceData FirmwareWorkspaceData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, ProvisioningState? provisioningState = null)
         {
             tags ??= new Dictionary<string, string>();
 
-            return new WorkspaceData(id, name, resourceType, systemData, tags, location, provisioningState);
+            return new FirmwareWorkspaceData(id, name, resourceType, systemData, tags, location, provisioningState);
         }
     }
 }

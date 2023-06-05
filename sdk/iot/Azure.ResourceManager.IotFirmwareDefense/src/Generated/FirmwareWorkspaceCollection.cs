@@ -20,28 +20,28 @@ using Azure.ResourceManager.Resources;
 namespace Azure.ResourceManager.IotFirmwareDefense
 {
     /// <summary>
-    /// A class representing a collection of <see cref="WorkspaceResource" /> and their operations.
-    /// Each <see cref="WorkspaceResource" /> in the collection will belong to the same instance of <see cref="ResourceGroupResource" />.
-    /// To get a <see cref="WorkspaceCollection" /> instance call the GetWorkspaces method from an instance of <see cref="ResourceGroupResource" />.
+    /// A class representing a collection of <see cref="FirmwareWorkspaceResource" /> and their operations.
+    /// Each <see cref="FirmwareWorkspaceResource" /> in the collection will belong to the same instance of <see cref="ResourceGroupResource" />.
+    /// To get a <see cref="FirmwareWorkspaceCollection" /> instance call the GetFirmwareWorkspaces method from an instance of <see cref="ResourceGroupResource" />.
     /// </summary>
-    public partial class WorkspaceCollection : ArmCollection, IEnumerable<WorkspaceResource>, IAsyncEnumerable<WorkspaceResource>
+    public partial class FirmwareWorkspaceCollection : ArmCollection, IEnumerable<FirmwareWorkspaceResource>, IAsyncEnumerable<FirmwareWorkspaceResource>
     {
-        private readonly ClientDiagnostics _workspaceClientDiagnostics;
-        private readonly WorkspacesRestOperations _workspaceRestClient;
+        private readonly ClientDiagnostics _firmwareWorkspaceWorkspacesClientDiagnostics;
+        private readonly WorkspacesRestOperations _firmwareWorkspaceWorkspacesRestClient;
 
-        /// <summary> Initializes a new instance of the <see cref="WorkspaceCollection"/> class for mocking. </summary>
-        protected WorkspaceCollection()
+        /// <summary> Initializes a new instance of the <see cref="FirmwareWorkspaceCollection"/> class for mocking. </summary>
+        protected FirmwareWorkspaceCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="WorkspaceCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="FirmwareWorkspaceCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
-        internal WorkspaceCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
+        internal FirmwareWorkspaceCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _workspaceClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.IotFirmwareDefense", WorkspaceResource.ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(WorkspaceResource.ResourceType, out string workspaceApiVersion);
-            _workspaceRestClient = new WorkspacesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, workspaceApiVersion);
+            _firmwareWorkspaceWorkspacesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.IotFirmwareDefense", FirmwareWorkspaceResource.ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(FirmwareWorkspaceResource.ResourceType, out string firmwareWorkspaceWorkspacesApiVersion);
+            _firmwareWorkspaceWorkspacesRestClient = new WorkspacesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, firmwareWorkspaceWorkspacesApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -72,17 +72,17 @@ namespace Azure.ResourceManager.IotFirmwareDefense
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="workspaceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="workspaceName"/> or <paramref name="data"/> is null. </exception>
-        public virtual async Task<ArmOperation<WorkspaceResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string workspaceName, WorkspaceData data, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<FirmwareWorkspaceResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string workspaceName, FirmwareWorkspaceData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(workspaceName, nameof(workspaceName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _workspaceClientDiagnostics.CreateScope("WorkspaceCollection.CreateOrUpdate");
+            using var scope = _firmwareWorkspaceWorkspacesClientDiagnostics.CreateScope("FirmwareWorkspaceCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = await _workspaceRestClient.CreateAsync(Id.SubscriptionId, Id.ResourceGroupName, workspaceName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new IotFirmwareDefenseArmOperation<WorkspaceResource>(Response.FromValue(new WorkspaceResource(Client, response), response.GetRawResponse()));
+                var response = await _firmwareWorkspaceWorkspacesRestClient.CreateAsync(Id.SubscriptionId, Id.ResourceGroupName, workspaceName, data, cancellationToken).ConfigureAwait(false);
+                var operation = new IotFirmwareDefenseArmOperation<FirmwareWorkspaceResource>(Response.FromValue(new FirmwareWorkspaceResource(Client, response), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -113,17 +113,17 @@ namespace Azure.ResourceManager.IotFirmwareDefense
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="workspaceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="workspaceName"/> or <paramref name="data"/> is null. </exception>
-        public virtual ArmOperation<WorkspaceResource> CreateOrUpdate(WaitUntil waitUntil, string workspaceName, WorkspaceData data, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<FirmwareWorkspaceResource> CreateOrUpdate(WaitUntil waitUntil, string workspaceName, FirmwareWorkspaceData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(workspaceName, nameof(workspaceName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _workspaceClientDiagnostics.CreateScope("WorkspaceCollection.CreateOrUpdate");
+            using var scope = _firmwareWorkspaceWorkspacesClientDiagnostics.CreateScope("FirmwareWorkspaceCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _workspaceRestClient.Create(Id.SubscriptionId, Id.ResourceGroupName, workspaceName, data, cancellationToken);
-                var operation = new IotFirmwareDefenseArmOperation<WorkspaceResource>(Response.FromValue(new WorkspaceResource(Client, response), response.GetRawResponse()));
+                var response = _firmwareWorkspaceWorkspacesRestClient.Create(Id.SubscriptionId, Id.ResourceGroupName, workspaceName, data, cancellationToken);
+                var operation = new IotFirmwareDefenseArmOperation<FirmwareWorkspaceResource>(Response.FromValue(new FirmwareWorkspaceResource(Client, response), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -152,18 +152,18 @@ namespace Azure.ResourceManager.IotFirmwareDefense
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="workspaceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="workspaceName"/> is null. </exception>
-        public virtual async Task<Response<WorkspaceResource>> GetAsync(string workspaceName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<FirmwareWorkspaceResource>> GetAsync(string workspaceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(workspaceName, nameof(workspaceName));
 
-            using var scope = _workspaceClientDiagnostics.CreateScope("WorkspaceCollection.Get");
+            using var scope = _firmwareWorkspaceWorkspacesClientDiagnostics.CreateScope("FirmwareWorkspaceCollection.Get");
             scope.Start();
             try
             {
-                var response = await _workspaceRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, workspaceName, cancellationToken).ConfigureAwait(false);
+                var response = await _firmwareWorkspaceWorkspacesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, workspaceName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new WorkspaceResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new FirmwareWorkspaceResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -189,18 +189,18 @@ namespace Azure.ResourceManager.IotFirmwareDefense
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="workspaceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="workspaceName"/> is null. </exception>
-        public virtual Response<WorkspaceResource> Get(string workspaceName, CancellationToken cancellationToken = default)
+        public virtual Response<FirmwareWorkspaceResource> Get(string workspaceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(workspaceName, nameof(workspaceName));
 
-            using var scope = _workspaceClientDiagnostics.CreateScope("WorkspaceCollection.Get");
+            using var scope = _firmwareWorkspaceWorkspacesClientDiagnostics.CreateScope("FirmwareWorkspaceCollection.Get");
             scope.Start();
             try
             {
-                var response = _workspaceRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, workspaceName, cancellationToken);
+                var response = _firmwareWorkspaceWorkspacesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, workspaceName, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new WorkspaceResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new FirmwareWorkspaceResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -223,12 +223,12 @@ namespace Azure.ResourceManager.IotFirmwareDefense
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="WorkspaceResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<WorkspaceResource> GetAllAsync(CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="FirmwareWorkspaceResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<FirmwareWorkspaceResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _workspaceRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _workspaceRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new WorkspaceResource(Client, WorkspaceData.DeserializeWorkspaceData(e)), _workspaceClientDiagnostics, Pipeline, "WorkspaceCollection.GetAll", "value", "nextLink", cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _firmwareWorkspaceWorkspacesRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _firmwareWorkspaceWorkspacesRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new FirmwareWorkspaceResource(Client, FirmwareWorkspaceData.DeserializeFirmwareWorkspaceData(e)), _firmwareWorkspaceWorkspacesClientDiagnostics, Pipeline, "FirmwareWorkspaceCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -245,12 +245,12 @@ namespace Azure.ResourceManager.IotFirmwareDefense
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="WorkspaceResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<WorkspaceResource> GetAll(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="FirmwareWorkspaceResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<FirmwareWorkspaceResource> GetAll(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _workspaceRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _workspaceRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new WorkspaceResource(Client, WorkspaceData.DeserializeWorkspaceData(e)), _workspaceClientDiagnostics, Pipeline, "WorkspaceCollection.GetAll", "value", "nextLink", cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _firmwareWorkspaceWorkspacesRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _firmwareWorkspaceWorkspacesRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new FirmwareWorkspaceResource(Client, FirmwareWorkspaceData.DeserializeFirmwareWorkspaceData(e)), _firmwareWorkspaceWorkspacesClientDiagnostics, Pipeline, "FirmwareWorkspaceCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -274,11 +274,11 @@ namespace Azure.ResourceManager.IotFirmwareDefense
         {
             Argument.AssertNotNullOrEmpty(workspaceName, nameof(workspaceName));
 
-            using var scope = _workspaceClientDiagnostics.CreateScope("WorkspaceCollection.Exists");
+            using var scope = _firmwareWorkspaceWorkspacesClientDiagnostics.CreateScope("FirmwareWorkspaceCollection.Exists");
             scope.Start();
             try
             {
-                var response = await _workspaceRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, workspaceName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _firmwareWorkspaceWorkspacesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, workspaceName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -309,11 +309,11 @@ namespace Azure.ResourceManager.IotFirmwareDefense
         {
             Argument.AssertNotNullOrEmpty(workspaceName, nameof(workspaceName));
 
-            using var scope = _workspaceClientDiagnostics.CreateScope("WorkspaceCollection.Exists");
+            using var scope = _firmwareWorkspaceWorkspacesClientDiagnostics.CreateScope("FirmwareWorkspaceCollection.Exists");
             scope.Start();
             try
             {
-                var response = _workspaceRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, workspaceName, cancellationToken: cancellationToken);
+                var response = _firmwareWorkspaceWorkspacesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, workspaceName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -323,7 +323,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense
             }
         }
 
-        IEnumerator<WorkspaceResource> IEnumerable<WorkspaceResource>.GetEnumerator()
+        IEnumerator<FirmwareWorkspaceResource> IEnumerable<FirmwareWorkspaceResource>.GetEnumerator()
         {
             return GetAll().GetEnumerator();
         }
@@ -333,7 +333,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense
             return GetAll().GetEnumerator();
         }
 
-        IAsyncEnumerator<WorkspaceResource> IAsyncEnumerable<WorkspaceResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
+        IAsyncEnumerator<FirmwareWorkspaceResource> IAsyncEnumerable<FirmwareWorkspaceResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }

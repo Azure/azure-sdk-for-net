@@ -69,5 +69,6 @@ rename-mapping:
   GenerateUploadUrlRequest: UploadUrlRequest
   Models.Status: AnalysisStatus
   Component: SbomComponent
+  Workspace: FirmwareWorkspace
 
 ```

@@ -13,7 +13,7 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.IotFirmwareDefense
 {
-    public partial class WorkspaceData : IUtf8JsonSerializable
+    public partial class FirmwareWorkspaceData : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense
             writer.WriteEndObject();
         }
 
-        internal static WorkspaceData DeserializeWorkspaceData(JsonElement element)
+        internal static FirmwareWorkspaceData DeserializeFirmwareWorkspaceData(JsonElement element)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense
                     continue;
                 }
             }
-            return new WorkspaceData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, Optional.ToNullable(provisioningState));
+            return new FirmwareWorkspaceData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, Optional.ToNullable(provisioningState));
         }
     }
 }

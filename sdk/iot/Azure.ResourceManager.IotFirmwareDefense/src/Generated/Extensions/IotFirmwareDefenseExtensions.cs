@@ -68,31 +68,31 @@ namespace Azure.ResourceManager.IotFirmwareDefense
         }
         #endregion
 
-        #region WorkspaceResource
+        #region FirmwareWorkspaceResource
         /// <summary>
-        /// Gets an object representing a <see cref="WorkspaceResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="WorkspaceResource.CreateResourceIdentifier" /> to create a <see cref="WorkspaceResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="FirmwareWorkspaceResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="FirmwareWorkspaceResource.CreateResourceIdentifier" /> to create a <see cref="FirmwareWorkspaceResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="WorkspaceResource" /> object. </returns>
-        public static WorkspaceResource GetWorkspaceResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="FirmwareWorkspaceResource" /> object. </returns>
+        public static FirmwareWorkspaceResource GetFirmwareWorkspaceResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                WorkspaceResource.ValidateResourceId(id);
-                return new WorkspaceResource(client, id);
+                FirmwareWorkspaceResource.ValidateResourceId(id);
+                return new FirmwareWorkspaceResource(client, id);
             }
             );
         }
         #endregion
 
-        /// <summary> Gets a collection of WorkspaceResources in the ResourceGroupResource. </summary>
+        /// <summary> Gets a collection of FirmwareWorkspaceResources in the ResourceGroupResource. </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <returns> An object representing collection of WorkspaceResources and their operations over a WorkspaceResource. </returns>
-        public static WorkspaceCollection GetWorkspaces(this ResourceGroupResource resourceGroupResource)
+        /// <returns> An object representing collection of FirmwareWorkspaceResources and their operations over a FirmwareWorkspaceResource. </returns>
+        public static FirmwareWorkspaceCollection GetFirmwareWorkspaces(this ResourceGroupResource resourceGroupResource)
         {
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetWorkspaces();
+            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetFirmwareWorkspaces();
         }
 
         /// <summary>
@@ -114,9 +114,9 @@ namespace Azure.ResourceManager.IotFirmwareDefense
         /// <exception cref="ArgumentException"> <paramref name="workspaceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="workspaceName"/> is null. </exception>
         [ForwardsClientCalls]
-        public static async Task<Response<WorkspaceResource>> GetWorkspaceAsync(this ResourceGroupResource resourceGroupResource, string workspaceName, CancellationToken cancellationToken = default)
+        public static async Task<Response<FirmwareWorkspaceResource>> GetFirmwareWorkspaceAsync(this ResourceGroupResource resourceGroupResource, string workspaceName, CancellationToken cancellationToken = default)
         {
-            return await resourceGroupResource.GetWorkspaces().GetAsync(workspaceName, cancellationToken).ConfigureAwait(false);
+            return await resourceGroupResource.GetFirmwareWorkspaces().GetAsync(workspaceName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -138,9 +138,9 @@ namespace Azure.ResourceManager.IotFirmwareDefense
         /// <exception cref="ArgumentException"> <paramref name="workspaceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="workspaceName"/> is null. </exception>
         [ForwardsClientCalls]
-        public static Response<WorkspaceResource> GetWorkspace(this ResourceGroupResource resourceGroupResource, string workspaceName, CancellationToken cancellationToken = default)
+        public static Response<FirmwareWorkspaceResource> GetFirmwareWorkspace(this ResourceGroupResource resourceGroupResource, string workspaceName, CancellationToken cancellationToken = default)
         {
-            return resourceGroupResource.GetWorkspaces().Get(workspaceName, cancellationToken);
+            return resourceGroupResource.GetFirmwareWorkspaces().Get(workspaceName, cancellationToken);
         }
 
         /// <summary>
@@ -158,10 +158,10 @@ namespace Azure.ResourceManager.IotFirmwareDefense
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="WorkspaceResource" /> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<WorkspaceResource> GetWorkspacesAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="FirmwareWorkspaceResource" /> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<FirmwareWorkspaceResource> GetFirmwareWorkspacesAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetWorkspacesAsync(cancellationToken);
+            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetFirmwareWorkspacesAsync(cancellationToken);
         }
 
         /// <summary>
@@ -179,10 +179,10 @@ namespace Azure.ResourceManager.IotFirmwareDefense
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="WorkspaceResource" /> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<WorkspaceResource> GetWorkspaces(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="FirmwareWorkspaceResource" /> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<FirmwareWorkspaceResource> GetFirmwareWorkspaces(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetWorkspaces(cancellationToken);
+            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetFirmwareWorkspaces(cancellationToken);
         }
     }
 }

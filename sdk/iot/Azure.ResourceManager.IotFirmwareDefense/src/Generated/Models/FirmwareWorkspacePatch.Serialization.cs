@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.IotFirmwareDefense.Models
 {
-    public partial class WorkspacePatch : IUtf8JsonSerializable
+    public partial class FirmwareWorkspacePatch : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {

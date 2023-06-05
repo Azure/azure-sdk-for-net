@@ -17,20 +17,20 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
         /// <summary> Initializes a new instance of WorkspaceList. </summary>
         internal WorkspaceList()
         {
-            Value = new ChangeTrackingList<WorkspaceData>();
+            Value = new ChangeTrackingList<FirmwareWorkspaceData>();
         }
 
         /// <summary> Initializes a new instance of WorkspaceList. </summary>
         /// <param name="value"> The list of firmware analysis workspaces. </param>
         /// <param name="nextLink"> The uri to fetch the next page of asset. </param>
-        internal WorkspaceList(IReadOnlyList<WorkspaceData> value, string nextLink)
+        internal WorkspaceList(IReadOnlyList<FirmwareWorkspaceData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
         /// <summary> The list of firmware analysis workspaces. </summary>
-        public IReadOnlyList<WorkspaceData> Value { get; }
+        public IReadOnlyList<FirmwareWorkspaceData> Value { get; }
         /// <summary> The uri to fetch the next page of asset. </summary>
         public string NextLink { get; }
     }

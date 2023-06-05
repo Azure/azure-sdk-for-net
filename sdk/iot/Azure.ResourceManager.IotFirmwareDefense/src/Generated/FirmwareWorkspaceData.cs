@@ -13,18 +13,18 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.IotFirmwareDefense
 {
     /// <summary>
-    /// A class representing the Workspace data model.
+    /// A class representing the FirmwareWorkspace data model.
     /// Firmware analysis workspace.
     /// </summary>
-    public partial class WorkspaceData : TrackedResourceData
+    public partial class FirmwareWorkspaceData : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of WorkspaceData. </summary>
+        /// <summary> Initializes a new instance of FirmwareWorkspaceData. </summary>
         /// <param name="location"> The location. </param>
-        public WorkspaceData(AzureLocation location) : base(location)
+        public FirmwareWorkspaceData(AzureLocation location) : base(location)
         {
         }
 
-        /// <summary> Initializes a new instance of WorkspaceData. </summary>
+        /// <summary> Initializes a new instance of FirmwareWorkspaceData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
         /// <param name="provisioningState"> Provisioning state of the resource. </param>
-        internal WorkspaceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ProvisioningState? provisioningState) : base(id, name, resourceType, systemData, tags, location)
+        internal FirmwareWorkspaceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ProvisioningState? provisioningState) : base(id, name, resourceType, systemData, tags, location)
         {
             ProvisioningState = provisioningState;
         }
