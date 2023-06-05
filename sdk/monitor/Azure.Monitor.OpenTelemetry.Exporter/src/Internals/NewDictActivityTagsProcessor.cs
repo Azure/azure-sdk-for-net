@@ -7,9 +7,9 @@ using System.Diagnostics;
 
 namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
 {
-    internal struct ActivityTagsProcessor
+    internal struct NewDictActivityTagsProcessor
     {
-        private static readonly string[] s_semantics = {
+        private static readonly string[] semantics = {
             SemanticConventions.AttributeDbStatement,
             SemanticConventions.AttributeDbSystem,
             SemanticConventions.AttributeDbName,
@@ -66,7 +66,15 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
             SemanticConventions.AttributeMessagingUrl
         };
 
-        private static readonly HashSet<string> s_semanticsSet = new(s_semantics);
+        private static readonly HashSet<string> s_semanticsSet = new(semantics);
+
+        private static IReadOnlyDictionary<string, OperationType> s_semanticTypeMapping = new Dictionary<string, OperationType>()
+        {
+            [SemanticConventions.AttributeHttpMethod] = OperationType.Http,
+            [SemanticConventions.AttributeDbSystem] = OperationType.Db,
+            [SemanticConventions.AttributeMessagingSystem] = OperationType.Messaging,
+            [SemanticConventions.AttributeAzureNameSpace] = OperationType.Azure,
+        };
 
         public AzMonList MappedTags;
         public AzMonList UnMappedTags;
@@ -75,7 +83,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
 
         public bool HasAzureNamespace { get; private set; } = false;
 
-        public ActivityTagsProcessor()
+        public NewDictActivityTagsProcessor()
         {
             MappedTags = AzMonList.Initialize();
             UnMappedTags = AzMonList.Initialize();
@@ -93,22 +101,8 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
                 if (s_semanticsSet.Contains(tag.Key))
                 {
                     AzMonList.Add(ref MappedTags, tag);
-
-                    switch (tag.Key)
-                    {
-                        case SemanticConventions.AttributeHttpMethod:
-                            activityType |= OperationType.Http;
-                            break;
-                        case SemanticConventions.AttributeDbSystem:
-                            activityType |= OperationType.Db;
-                            break;
-                        case SemanticConventions.AttributeMessagingSystem:
-                            activityType |= OperationType.Messaging;
-                            break;
-                        case SemanticConventions.AttributeAzureNameSpace:
-                            activityType |= OperationType.Azure;
-                            break;
-                    }
+                    s_semanticTypeMapping.TryGetValue(tag.Key, out OperationType operationType);
+                    activityType |= operationType;
                 }
                 else
                 {
