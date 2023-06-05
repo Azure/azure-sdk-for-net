@@ -545,7 +545,7 @@ namespace Azure.Core
         public static Azure.Core.RequestContent Create(System.IO.Stream stream) { throw null; }
         public static Azure.Core.RequestContent Create(object serializable) { throw null; }
         public static Azure.Core.RequestContent Create(object serializable, Azure.Core.Serialization.ObjectSerializer? serializer) { throw null; }
-        public static Azure.Core.RequestContent Create(object serializable, Azure.Core.Serialization.PropertyNameConversion propertyNameConversion, Azure.Core.Serialization.DateTimeHandling dateTimeHandling = Azure.Core.Serialization.DateTimeHandling.Rfc3339) { throw null; }
+        public static Azure.Core.RequestContent Create(object serializable, Azure.Core.Serialization.PropertyNameConversion propertyNameConversion) { throw null; }
         public static Azure.Core.RequestContent Create(System.ReadOnlyMemory<byte> bytes) { throw null; }
         public static Azure.Core.RequestContent Create(string content) { throw null; }
         public abstract void Dispose();
@@ -815,11 +815,6 @@ namespace Azure.Core.Dynamic
     {
         public DynamicDataOptions() { }
         public Azure.Core.Serialization.PropertyNameConversion PropertyNameConversion { get { throw null; } set { } }
-    }
-    public enum PropertyNameLookup
-    {
-        Strict = 0,
-        AllowConversion = 1,
     }
 }
 namespace Azure.Core.Extensions
@@ -1113,11 +1108,6 @@ namespace Azure.Core.Pipeline
 }
 namespace Azure.Core.Serialization
 {
-    public enum DateTimeHandling
-    {
-        Rfc3339 = 0,
-        UnixTime = 1,
-    }
     public partial interface IMemberNameConverter
     {
         string? ConvertMemberName(System.Reflection.MemberInfo member);
