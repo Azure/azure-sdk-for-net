@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.Quota.Models
         /// <param name="usages"> The quota limit properties for this resource. </param>
         /// <param name="unit"> The units for the quota usage, such as Count and Bytes. When requesting quota, use the **unit** value returned in the GET response in the request body of your PUT operation. </param>
         /// <param name="name"> Resource name provided by the resource provider. Use this property name when requesting quota. </param>
-        /// <param name="resourceType"> The name of the resource type. Optional field. </param>
+        /// <param name="resourceTypeName"> The name of the resource type. Optional field. </param>
         /// <param name="quotaPeriod">
         /// The time period for the summary of the quota usage values. For example:
         /// *P1D (per one day)
@@ -31,12 +31,12 @@ namespace Azure.ResourceManager.Quota.Models
         /// </param>
         /// <param name="isQuotaApplicable"> States if quota can be requested for this resource. </param>
         /// <param name="properties"> Additional properties for the specific resource provider. </param>
-        internal QuotaUsagesProperties(QuotaUsagesObject usages, string unit, QuotaRequestResourceName name, string resourceType, TimeSpan? quotaPeriod, bool? isQuotaApplicable, BinaryData properties)
+        internal QuotaUsagesProperties(QuotaUsagesObject usages, string unit, QuotaRequestResourceName name, string resourceTypeName, TimeSpan? quotaPeriod, bool? isQuotaApplicable, BinaryData properties)
         {
             Usages = usages;
             Unit = unit;
             Name = name;
-            ResourceType = resourceType;
+            ResourceTypeName = resourceTypeName;
             QuotaPeriod = quotaPeriod;
             IsQuotaApplicable = isQuotaApplicable;
             Properties = properties;
@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.Quota.Models
         /// <summary> Resource name provided by the resource provider. Use this property name when requesting quota. </summary>
         public QuotaRequestResourceName Name { get; }
         /// <summary> The name of the resource type. Optional field. </summary>
-        public string ResourceType { get; }
+        public string ResourceTypeName { get; }
         /// <summary>
         /// The time period for the summary of the quota usage values. For example:
         /// *P1D (per one day)

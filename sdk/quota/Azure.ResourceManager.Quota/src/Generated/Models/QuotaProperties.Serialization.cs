@@ -26,10 +26,10 @@ namespace Azure.ResourceManager.Quota.Models
                 writer.WritePropertyName("name"u8);
                 writer.WriteObjectValue(Name);
             }
-            if (Optional.IsDefined(ResourceType))
+            if (Optional.IsDefined(ResourceTypeName))
             {
                 writer.WritePropertyName("resourceType"u8);
-                writer.WriteStringValue(ResourceType);
+                writer.WriteStringValue(ResourceTypeName);
             }
             if (Optional.IsDefined(Properties))
             {

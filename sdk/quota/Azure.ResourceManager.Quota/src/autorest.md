@@ -58,6 +58,11 @@ rename-mapping:
   UsagesObject: QuotaUsagesObject
   UsagesProperties: QuotaUsagesProperties
   UsagesTypes: QuotaUsagesType
+  UsagesProperties.resourceType: ResourceTypeName
+  QuotaProperties.resourceType: ResourceTypeName
+  SubRequest.resourceType: ResourceTypeName
+  # QuotaRequestStatusDetails.resourceType: ResourceTypeName
+  # quotaRequestOneResourceProperties.resourceType: ResourceTypeName
 
 directive:
 # Correct the type of properties
