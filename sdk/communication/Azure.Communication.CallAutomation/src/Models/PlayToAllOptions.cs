@@ -39,5 +39,12 @@ namespace Azure.Communication.CallAutomation
         {
             PlaySources = playSources.ToList();
         }
+
+        /// <summary>
+        /// Creates a new PlayToAllOptions object.
+        /// </summary>
+        public PlayToAllOptions(PlaySource playSource)
+        {
+            PlaySources = new List<PlaySource> { playSource };
     }
 }

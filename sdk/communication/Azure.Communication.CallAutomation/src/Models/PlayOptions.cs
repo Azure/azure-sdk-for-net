@@ -45,5 +45,14 @@ namespace Azure.Communication.CallAutomation
             PlaySources = playSources.ToList();
             PlayTo = playTo.ToList();
         }
+
+        /// <summary>
+        /// Creates a new PlayOptions object.
+        /// </summary>
+        public PlayOptions(PlaySource playSource, IEnumerable<CommunicationIdentifier> playTo)
+        {
+            PlaySources = new List<PlaySource> { playSource };
+            PlayTo = playTo.ToList();
+        }
     }
 }

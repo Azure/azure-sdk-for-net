@@ -26,13 +26,13 @@ namespace Azure.Communication.CallAutomation.Tests.CallMedias
             CustomVoiceEndpointId = "customVoiceEndpointId"
         };
 
-        private static readonly PlayOptions _fileOptions = new PlayOptions(new List<PlaySource> { _fileSource }, _target)
+        private static readonly PlayOptions _fileOptions = new PlayOptions(_fileSource, _target)
         {
             Loop = false,
             OperationContext = "context"
         };
 
-        private static readonly PlayToAllOptions _filePlayToAllOptions = new PlayToAllOptions(new List<PlaySource> { _fileSource })
+        private static readonly PlayToAllOptions _filePlayToAllOptions = new PlayToAllOptions(_fileSource )
         {
             Loop = false,
             OperationContext = "context"
