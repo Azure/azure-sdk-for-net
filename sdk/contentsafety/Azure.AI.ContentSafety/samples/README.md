@@ -5,7 +5,6 @@ languages:
 products:
 - azure
 - azure-cognitive-services
-- azure-ai-content-safety
 name: Azure AI Content Safety samples for .NET
 description: Samples for the Azure.AI.ContentSafety client library
 ---
