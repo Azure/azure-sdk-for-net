@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.Quota.Tests.Tests
                     {
                         Value = ResourceName,
                     },
-                    ResourceType = ResourceName,
+                    ResourceTypeName = ResourceName,
                 },
             };
 
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.Quota.Tests.Tests
                     {
                         Value = "Invalid",
                     },
-                    ResourceType = "Invalid",
+                    ResourceTypeName = "Invalid",
                 },
             };
 

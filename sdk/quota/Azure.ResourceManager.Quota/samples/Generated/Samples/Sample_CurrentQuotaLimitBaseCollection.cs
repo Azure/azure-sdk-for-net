@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.Quota.Samples
                     {
                         Value = "MinPublicIpInterNetworkPrefixLength",
                     },
-                    ResourceType = "MinPublicIpInterNetworkPrefixLength",
+                    ResourceTypeName = "MinPublicIpInterNetworkPrefixLength",
                 },
             };
             ArmOperation<CurrentQuotaLimitBaseResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, resourceName, data);
@@ -215,7 +215,7 @@ namespace Azure.ResourceManager.Quota.Samples
                     {
                         Value = "StandardSkuPublicIpAddresses",
                     },
-                    ResourceType = "PublicIpAddresses",
+                    ResourceTypeName = "PublicIpAddresses",
                 },
             };
             ArmOperation<CurrentQuotaLimitBaseResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, resourceName, data);
@@ -304,7 +304,7 @@ namespace Azure.ResourceManager.Quota.Samples
                     {
                         Value = "TotalLowPriorityCores",
                     },
-                    ResourceType = "lowPriority",
+                    ResourceTypeName = "lowPriority",
                 },
             };
             ArmOperation<CurrentQuotaLimitBaseResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, resourceName, data);

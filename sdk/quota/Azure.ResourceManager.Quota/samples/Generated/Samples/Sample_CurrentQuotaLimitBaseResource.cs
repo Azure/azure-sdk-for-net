@@ -150,7 +150,7 @@ namespace Azure.ResourceManager.Quota.Samples
                     {
                         Value = "MinPublicIpInterNetworkPrefixLength",
                     },
-                    ResourceType = "MinPublicIpInterNetworkPrefixLength",
+                    ResourceTypeName = "MinPublicIpInterNetworkPrefixLength",
                 },
             };
             ArmOperation<CurrentQuotaLimitBaseResource> lro = await currentQuotaLimitBase.UpdateAsync(WaitUntil.Completed, data);
