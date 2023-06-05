@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure.Communication.Chat.Models;
 using Azure.Communication.Pipeline;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -64,6 +65,43 @@ namespace Azure.Communication.Chat
             try
             {
                 return await _chatThreadRestClient.UpdateChatThreadPropertiesAsync(Id, topic, null, cancellationToken).ConfigureAwait(false);
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+        }
+
+        /// <summary> Updates the thread's properties. </summary>
+        /// <param name="options"> Chat thread options. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
+        public virtual Response UpdateChatThreadProperties(UpdateChatThreadOptions options, CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(ChatThreadClient)}.{nameof(UpdateTopic)}");
+            scope.Start();
+            try
+            {
+                return _chatThreadRestClient.UpdateChatThreadProperties(Id, options.Topic, options.Metadata, cancellationToken);
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+        }
+        /// <summary> Updates the thread's properties asynchronously. </summary>
+        /// <param name="options"> Chat thread options. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
+        public virtual async Task<Response> UpdateChatThreadPropertiesAsync(UpdateChatThreadOptions options, CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(ChatThreadClient)}.{nameof(UpdateTopic)}");
+            scope.Start();
+            try
+            {
+                return await _chatThreadRestClient.UpdateChatThreadPropertiesAsync(Id, options.Topic, options.Metadata, cancellationToken).ConfigureAwait(false);
             }
             catch (Exception ex)
             {
