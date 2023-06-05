@@ -17,17 +17,16 @@ Intel Core i7-8650U CPU 1.90GHz (Kaby Lake R), 1 CPU, 8 logical and 4 physical c
 
 Job=InProcess  Toolchain=InProcessEmitToolchain
 
-|                              Method |     Mean |   Error |   StdDev |   Median |   Gen0 | Allocated |
-|------------------------------------ |---------:|--------:|---------:|---------:|-------:|----------:|
-|     Benchmark_ActivityTagsProcessor | 282.5 ns | 5.61 ns | 13.66 ns | 279.0 ns | 0.1335 |     560 B |
-|  Benchmark_OldActivityTagsProcessor | 288.3 ns | 5.78 ns | 12.06 ns | 283.5 ns | 0.1335 |     560 B |
-| Benchmark_NewActivityTagsProcessor2 | 328.2 ns | 2.82 ns |  2.36 ns | 328.1 ns | 0.1335 |     560 B |
+|                              Method    |     Mean |   Error |   StdDev |   Median |   Gen0 | Allocated |
+|--------------------------------------- |---------:|--------:|---------:|---------:|-------:|----------:|
+|     Benchmark_ActivityTagsProcessor    | 282.5 ns | 5.61 ns | 13.66 ns | 279.0 ns | 0.1335 |     560 B |
+|  Benchmark_OldActivityTagsProcessor    | 288.3 ns | 5.78 ns | 12.06 ns | 283.5 ns | 0.1335 |     560 B |
+| Benchmark_NewDictActivityTagsProcessor | 328.2 ns | 2.82 ns |  2.36 ns | 328.1 ns | 0.1335 |     560 B |
 */
 
 namespace Azure.Monitor.OpenTelemetry.Exporter.Benchmarks
 {
     [MemoryDiagnoser]
-    [InProcess]
     public class ActivityTagsProcessorBenchmarks
     {
         private Activity? _activity;
@@ -82,7 +81,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Benchmarks
         }
 
         [Benchmark]
-        public void Benchmark_NewActivityTagsProcessor2()
+        public void Benchmark_NewDictActivityTagsProcessor()
         {
             var newDictActivityTagsProcessor = new NewDictActivityTagsProcessor();
             newDictActivityTagsProcessor.CategorizeTags(_activity!);

@@ -1,7 +1,6 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using BenchmarkDotNet.Configs;
 using BenchmarkDotNet.Running;
 
 namespace Azure.Monitor.OpenTelemetry.Exporter.Benchmarks
@@ -10,8 +9,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Benchmarks
     {
         public static void Main(string[] args)
         {
-            BenchmarkRunner.Run<ActivityTagsProcessorBenchmarks>();
-            // BenchmarkSwitcher.FromAssembly(typeof(Program).Assembly).Run(args);
+            BenchmarkSwitcher.FromAssembly(typeof(Program).Assembly).Run(args);
             // DebugInProcessConfig helps debug Benchmark within the same process.
             // Comment line 13 and remove comment from line 16 to launch Benchmarks in debug mode.
             // BenchmarkSwitcher.FromAssembly(typeof(Program).Assembly).Run(args, new DebugInProcessConfig());
