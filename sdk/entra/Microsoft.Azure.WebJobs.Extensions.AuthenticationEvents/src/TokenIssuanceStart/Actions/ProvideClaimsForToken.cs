@@ -23,8 +23,8 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.TokenIssuanceS
         /// <summary>Gets the type of the action of ProvideClaimsForToken.</summary>
         /// <value>The type of the action.</value>
         [JsonPropertyName("actionType")]
-        [OneOf("microsoft.graph.provideClaimsForToken")]
-        internal override string ActionType => "microsoft.graph.provideClaimsForToken";
+        [OneOf("microsoft.graph.tokenIssuanceStart.provideClaimsForToken")]
+        internal override string ActionType => "microsoft.graph.tokenIssuanceStart.provideClaimsForToken";
 
         /// <summary>Initializes a new instance of the <see cref="ProvideClaimsForToken" /> class.</summary>
         public ProvideClaimsForToken() { }

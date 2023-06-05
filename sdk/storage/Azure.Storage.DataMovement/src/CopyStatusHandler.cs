@@ -2,9 +2,6 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Collections.Generic;
-using System.ComponentModel.Design;
-using System.Text;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Storage.DataMovement.Models;
@@ -64,12 +61,10 @@ namespace Azure.Storage.DataMovement
 
         private async Task StatusEvent(CopyStatusEventArgs args)
         {
-            // Use progress tracker to get the amount of bytes transferred
-            // Nothing needs to be done except update the bytes transfered if it was updated.
+            // Report the progress regardless of status
             _reportProgressInBytes(args.CurrentBytesTransferred);
             if (args.CopyStatus == ServiceCopyStatus.Success)
             {
-                // Add CommitBlockList task to the channel
                 await _updateTransferStatus(StorageTransferStatus.Completed).ConfigureAwait(false);
             }
             else if (args.CopyStatus == ServiceCopyStatus.Aborted)

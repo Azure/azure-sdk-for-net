@@ -14,7 +14,6 @@ namespace Azure.Storage.Blobs.Models
     {
         public BlobContainerClientTransferOptions() { }
         public Azure.Storage.DataMovement.Blobs.BlobStorageResourceContainerOptions BlobContainerOptions { get { throw null; } set { } }
-        public string BlobDirectoryPrefix { get { throw null; } set { } }
         public Azure.Storage.DataMovement.Models.TransferOptions TransferOptions { get { throw null; } set { } }
     }
 }
@@ -56,16 +55,6 @@ namespace Azure.Storage.DataMovement.Blobs
         public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } set { } }
         public Azure.Storage.UploadTransferValidationOptions UploadTransferValidationOptions { get { throw null; } set { } }
     }
-    public partial class BlobDirectoryStorageResourceContainer : Azure.Storage.DataMovement.StorageResourceContainer
-    {
-        public BlobDirectoryStorageResourceContainer(Azure.Storage.Blobs.BlobContainerClient containerClient, string directoryPrefix, Azure.Storage.DataMovement.Blobs.BlobStorageResourceContainerOptions options = null) { }
-        public override Azure.Storage.DataMovement.ProduceUriType CanProduceUri { get { throw null; } }
-        public override string Path { get { throw null; } }
-        public override System.Uri Uri { get { throw null; } }
-        public override Azure.Storage.DataMovement.StorageResource GetChildStorageResource(string path) { throw null; }
-        public override Azure.Storage.DataMovement.StorageResourceContainer GetParentStorageResourceContainer() { throw null; }
-        public override System.Collections.Generic.IAsyncEnumerable<Azure.Storage.DataMovement.StorageResourceBase> GetStorageResourcesAsync([System.Runtime.CompilerServices.EnumeratorCancellationAttribute] System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-    }
     public partial class BlobStorageResourceContainer : Azure.Storage.DataMovement.StorageResourceContainer
     {
         public BlobStorageResourceContainer(Azure.Storage.Blobs.BlobContainerClient blobContainerClient, Azure.Storage.DataMovement.Blobs.BlobStorageResourceContainerOptions options = null) { }
@@ -81,6 +70,7 @@ namespace Azure.Storage.DataMovement.Blobs
         public BlobStorageResourceContainerOptions() { }
         public Azure.Storage.Blobs.Models.BlobType BlobType { get { throw null; } set { } }
         public Azure.Storage.DataMovement.Models.TransferCopyMethod CopyMethod { get { throw null; } set { } }
+        public string DirectoryPrefix { get { throw null; } set { } }
         public Azure.Storage.Blobs.Models.BlobStates States { get { throw null; } set { } }
         public Azure.Storage.Blobs.Models.BlobTraits Traits { get { throw null; } set { } }
     }

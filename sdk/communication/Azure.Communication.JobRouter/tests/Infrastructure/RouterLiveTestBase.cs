@@ -4,6 +4,7 @@
 using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
@@ -59,6 +60,24 @@ namespace Azure.Communication.JobRouter.Tests.Infrastructure
                     }
                 }
             }
+        }
+
+        protected DateTimeOffset GetOrSetScheduledTimeUtc(DateTimeOffset scheduledTime)
+        {
+            var mode = TestEnvironment.Mode ?? Mode;
+            DateTimeOffset? result = null;
+
+            if (mode == RecordedTestMode.Playback)
+            {
+                var resultAsString = Recording.GetVariable("scheduled-time-utc", string.Empty);
+                result = DateTimeOffset.ParseExact(resultAsString, "O", CultureInfo.InvariantCulture);
+            }
+            else
+            {
+                Recording.SetVariable("scheduled-time-utc", scheduledTime.ToString("O"));
+            }
+
+            return result ?? scheduledTime;
         }
 
         protected RouterClient CreateRouterClientWithConnectionString()

@@ -8,7 +8,7 @@ namespace Azure.Storage.DataMovement
         public Azure.Storage.DataMovement.StorageTransferStatus TransferStatus { get { throw null; } }
         public System.Threading.Tasks.Task AwaitCompletion(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public void EnsureCompleted(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { }
-        public System.Threading.Tasks.Task<bool> TryPauseAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task PauseIfRunningAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     [System.FlagsAttribute]
     public enum ErrorHandlingOptions
@@ -101,6 +101,16 @@ namespace Azure.Storage.DataMovement
         protected StorageTransferEventArgs(string transferId, bool isRunningSynchronously, System.Threading.CancellationToken cancellationToken) : base (default(bool), default(System.Threading.CancellationToken)) { }
         public string TransferId { get { throw null; } }
     }
+    public partial class StorageTransferProgress
+    {
+        public StorageTransferProgress() { }
+        public long? BytesTransferred { get { throw null; } }
+        public long CompletedCount { get { throw null; } }
+        public long FailedCount { get { throw null; } }
+        public long InProgressCount { get { throw null; } }
+        public long QueuedCount { get { throw null; } }
+        public long SkippedCount { get { throw null; } }
+    }
     public enum StorageTransferStatus
     {
         None = 0,
@@ -117,11 +127,12 @@ namespace Azure.Storage.DataMovement
     {
         protected TransferManager() { }
         public TransferManager(Azure.Storage.DataMovement.TransferManagerOptions options = null) { }
+        public virtual System.Collections.Generic.IAsyncEnumerable<Azure.Storage.DataMovement.DataTransfer> GetTransfersAsync(Azure.Storage.DataMovement.StorageTransferStatus[] filterByStatus = null) { throw null; }
+        public virtual System.Threading.Tasks.Task PauseTransferIfRunningAsync(Azure.Storage.DataMovement.DataTransfer transfer, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task PauseTransferIfRunningAsync(string transferId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Storage.DataMovement.DataTransfer> StartTransferAsync(Azure.Storage.DataMovement.StorageResource sourceResource, Azure.Storage.DataMovement.StorageResource destinationResource, Azure.Storage.DataMovement.Models.TransferOptions transferOptions = null) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Storage.DataMovement.DataTransfer> StartTransferAsync(Azure.Storage.DataMovement.StorageResourceContainer sourceResource, Azure.Storage.DataMovement.StorageResourceContainer destinationResource, Azure.Storage.DataMovement.Models.TransferOptions transferOptions = null) { throw null; }
         System.Threading.Tasks.ValueTask System.IAsyncDisposable.DisposeAsync() { throw null; }
-        public virtual System.Threading.Tasks.Task<bool> TryPauseTransferAsync(Azure.Storage.DataMovement.DataTransfer transfer, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<bool> TryPauseTransferAsync(string transferId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     public partial class TransferManagerOptions
     {
@@ -138,6 +149,11 @@ namespace Azure.Storage.DataMovement
 }
 namespace Azure.Storage.DataMovement.Models
 {
+    public partial class ProgressHandlerOptions
+    {
+        public ProgressHandlerOptions() { }
+        public bool TrackBytesTransferred { get { throw null; } set { } }
+    }
     public partial class ReadStreamStorageResourceResult
     {
         public ReadStreamStorageResourceResult(System.IO.Stream content) { }
@@ -197,6 +213,8 @@ namespace Azure.Storage.DataMovement.Models
         public Azure.Storage.DataMovement.StorageResourceCreateMode CreateMode { get { throw null; } set { } }
         public long? InitialTransferSize { get { throw null; } set { } }
         public long? MaximumTransferChunkSize { get { throw null; } set { } }
+        public System.IProgress<Azure.Storage.DataMovement.StorageTransferProgress> ProgressHandler { get { throw null; } set { } }
+        public Azure.Storage.DataMovement.Models.ProgressHandlerOptions ProgressHandlerOptions { get { throw null; } set { } }
         public string ResumeFromCheckpointId { get { throw null; } set { } }
         public event Azure.Core.SyncAsyncEventHandler<Azure.Storage.DataMovement.Models.SingleTransferCompletedEventArgs> SingleTransferCompleted { add { } remove { } }
         public event Azure.Core.SyncAsyncEventHandler<Azure.Storage.DataMovement.Models.TransferFailedEventArgs> TransferFailed { add { } remove { } }

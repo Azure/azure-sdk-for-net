@@ -17,6 +17,15 @@ namespace Azure.Communication.Chat
             DeletedOn = chatThreadPropertiesInternal.DeletedOn;
         }
 
+        internal ChatThreadProperties(string id, string topic, DateTimeOffset createdOn, CommunicationIdentifier createdBy, DateTimeOffset deletedOn)
+        {
+            Id = id;
+            Topic = topic;
+            CreatedOn = createdOn;
+            CreatedBy = createdBy;
+            DeletedOn = deletedOn;
+        }
+
         /// <summary> Chat thread id. </summary>
         public string Id { get; }
         /// <summary> Chat thread topic. </summary>
