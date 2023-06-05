@@ -33,7 +33,7 @@ namespace Azure.Communication.Chat
         /// <param name="endpoint"> The endpoint of the Azure Communication resource. </param>
         /// <param name="apiVersion"> Api Version. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="clientDiagnostics"/>, <paramref name="pipeline"/>, <paramref name="endpoint"/> or <paramref name="apiVersion"/> is null. </exception>
-        public ChatThreadRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string endpoint, string apiVersion = "2023-07-01-preview")
+        public ChatThreadRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string endpoint, string apiVersion = "2021-09-07")
         {
             ClientDiagnostics = clientDiagnostics ?? throw new ArgumentNullException(nameof(clientDiagnostics));
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
@@ -708,7 +708,7 @@ namespace Azure.Communication.Chat
             }
         }
 
-        internal HttpMessage CreateRemoveChatParticipantRequest(string chatThreadId, CommunicationIdentifierModelKind? kind, string rawId, CommunicationUserIdentifierModel communicationUser, PhoneNumberIdentifierModel phoneNumber, MicrosoftTeamsUserIdentifierModel microsoftTeamsUser)
+        internal HttpMessage CreateRemoveChatParticipantRequest(string chatThreadId, string rawId, CommunicationUserIdentifierModel communicationUser, PhoneNumberIdentifierModel phoneNumber, MicrosoftTeamsUserIdentifierModel microsoftTeamsUser)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -724,7 +724,6 @@ namespace Azure.Communication.Chat
             request.Headers.Add("Content-Type", "application/json");
             var model = new CommunicationIdentifierModel()
             {
-                Kind = kind,
                 RawId = rawId,
                 CommunicationUser = communicationUser,
                 PhoneNumber = phoneNumber,
@@ -738,21 +737,20 @@ namespace Azure.Communication.Chat
 
         /// <summary> Remove a participant from a thread. </summary>
         /// <param name="chatThreadId"> Thread id to remove the participant from. </param>
-        /// <param name="kind"> The identifier kind. Only required in responses. </param>
         /// <param name="rawId"> Raw Id of the identifier. Optional in requests, required in responses. </param>
         /// <param name="communicationUser"> The communication user. </param>
         /// <param name="phoneNumber"> The phone number. </param>
         /// <param name="microsoftTeamsUser"> The Microsoft Teams user. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="chatThreadId"/> is null. </exception>
-        public async Task<Response> RemoveChatParticipantAsync(string chatThreadId, CommunicationIdentifierModelKind? kind = null, string rawId = null, CommunicationUserIdentifierModel communicationUser = null, PhoneNumberIdentifierModel phoneNumber = null, MicrosoftTeamsUserIdentifierModel microsoftTeamsUser = null, CancellationToken cancellationToken = default)
+        public async Task<Response> RemoveChatParticipantAsync(string chatThreadId, string rawId = null, CommunicationUserIdentifierModel communicationUser = null, PhoneNumberIdentifierModel phoneNumber = null, MicrosoftTeamsUserIdentifierModel microsoftTeamsUser = null, CancellationToken cancellationToken = default)
         {
             if (chatThreadId == null)
             {
                 throw new ArgumentNullException(nameof(chatThreadId));
             }
 
-            using var message = CreateRemoveChatParticipantRequest(chatThreadId, kind, rawId, communicationUser, phoneNumber, microsoftTeamsUser);
+            using var message = CreateRemoveChatParticipantRequest(chatThreadId, rawId, communicationUser, phoneNumber, microsoftTeamsUser);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -765,21 +763,20 @@ namespace Azure.Communication.Chat
 
         /// <summary> Remove a participant from a thread. </summary>
         /// <param name="chatThreadId"> Thread id to remove the participant from. </param>
-        /// <param name="kind"> The identifier kind. Only required in responses. </param>
         /// <param name="rawId"> Raw Id of the identifier. Optional in requests, required in responses. </param>
         /// <param name="communicationUser"> The communication user. </param>
         /// <param name="phoneNumber"> The phone number. </param>
         /// <param name="microsoftTeamsUser"> The Microsoft Teams user. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="chatThreadId"/> is null. </exception>
-        public Response RemoveChatParticipant(string chatThreadId, CommunicationIdentifierModelKind? kind = null, string rawId = null, CommunicationUserIdentifierModel communicationUser = null, PhoneNumberIdentifierModel phoneNumber = null, MicrosoftTeamsUserIdentifierModel microsoftTeamsUser = null, CancellationToken cancellationToken = default)
+        public Response RemoveChatParticipant(string chatThreadId, string rawId = null, CommunicationUserIdentifierModel communicationUser = null, PhoneNumberIdentifierModel phoneNumber = null, MicrosoftTeamsUserIdentifierModel microsoftTeamsUser = null, CancellationToken cancellationToken = default)
         {
             if (chatThreadId == null)
             {
                 throw new ArgumentNullException(nameof(chatThreadId));
             }
 
-            using var message = CreateRemoveChatParticipantRequest(chatThreadId, kind, rawId, communicationUser, phoneNumber, microsoftTeamsUser);
+            using var message = CreateRemoveChatParticipantRequest(chatThreadId, rawId, communicationUser, phoneNumber, microsoftTeamsUser);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -933,7 +930,7 @@ namespace Azure.Communication.Chat
         /// <summary> Updates a thread's properties. </summary>
         /// <param name="chatThreadId"> The id of the thread to update. </param>
         /// <param name="topic"> Chat thread topic. </param>
-        /// <param name="metadata"> Contextual metadata for the thread. Note: Has a size limit of 1KB. </param>
+        /// /// <param name="metadata"> Contextual metadata for the thread. Note: Has a size limit of 1KB. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="chatThreadId"/> is null. </exception>
         public Response UpdateChatThreadProperties(string chatThreadId, string topic = null, IDictionary<string, string> metadata = null, CancellationToken cancellationToken = default)
