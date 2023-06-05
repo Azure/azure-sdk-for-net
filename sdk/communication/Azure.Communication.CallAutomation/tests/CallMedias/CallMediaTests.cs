@@ -18,13 +18,13 @@ namespace Azure.Communication.CallAutomation.Tests.CallMedias
         };
         private static readonly FileSource _fileSource = new FileSource(new System.Uri("file://path/to/file"));
 
-        private static readonly PlayOptions _fileOptions = new PlayOptions(new List<PlaySource> { _fileSource }, _target)
+        private static readonly PlayOptions _fileOptions = new PlayOptions(_fileSource, _target)
         {
             Loop = false,
             OperationContext = "context"
         };
 
-        private static readonly PlayToAllOptions _filePlayToAllOptions = new PlayToAllOptions(new List<PlaySource> { _fileSource })
+        private static readonly PlayToAllOptions _filePlayToAllOptions = new PlayToAllOptions(_fileSource )
         {
             Loop = false,
             OperationContext = "context"
