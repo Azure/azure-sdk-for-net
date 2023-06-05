@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
             return new PasswordHash(passwordHashId, filePath, salt, hash, context, username, algorithm);
         }
 
-        /// <summary> Initializes a new instance of Cve. </summary>
+        /// <summary> Initializes a new instance of FirmwareCve. </summary>
         /// <param name="cveId"> ID of CVE. </param>
         /// <param name="component"> Component of CVE. </param>
         /// <param name="severity"> Severity of CVE. </param>
@@ -136,12 +136,12 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
         /// <param name="updatedOn"> Updated date of CVE. </param>
         /// <param name="links"> The list of CVE links. </param>
         /// <param name="description"> Description of CVE. </param>
-        /// <returns> A new <see cref="Models.Cve"/> instance for mocking. </returns>
-        public static Cve Cve(string cveId = null, BinaryData component = null, string severity = null, string name = null, string cvssScore = null, string cvssVersion = null, string cvssV2Score = null, string cvssV3Score = null, DateTimeOffset? publishOn = null, DateTimeOffset? updatedOn = null, IEnumerable<CveLink> links = null, string description = null)
+        /// <returns> A new <see cref="Models.FirmwareCve"/> instance for mocking. </returns>
+        public static FirmwareCve FirmwareCve(string cveId = null, BinaryData component = null, string severity = null, string name = null, string cvssScore = null, string cvssVersion = null, string cvssV2Score = null, string cvssV3Score = null, DateTimeOffset? publishOn = null, DateTimeOffset? updatedOn = null, IEnumerable<CveLink> links = null, string description = null)
         {
             links ??= new List<CveLink>();
 
-            return new Cve(cveId, component, severity, name, cvssScore, cvssVersion, cvssV2Score, cvssV3Score, publishOn, updatedOn, links?.ToList(), description);
+            return new FirmwareCve(cveId, component, severity, name, cvssScore, cvssVersion, cvssV2Score, cvssV3Score, publishOn, updatedOn, links?.ToList(), description);
         }
 
         /// <summary> Initializes a new instance of CveLink. </summary>

@@ -16,20 +16,20 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
         /// <summary> Initializes a new instance of CveList. </summary>
         internal CveList()
         {
-            Value = new ChangeTrackingList<Cve>();
+            Value = new ChangeTrackingList<FirmwareCve>();
         }
 
         /// <summary> Initializes a new instance of CveList. </summary>
         /// <param name="value"> The list of CVE results. </param>
         /// <param name="nextLink"> The uri to fetch the next page of asset. </param>
-        internal CveList(IReadOnlyList<Cve> value, string nextLink)
+        internal CveList(IReadOnlyList<FirmwareCve> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
         /// <summary> The list of CVE results. </summary>
-        public IReadOnlyList<Cve> Value { get; }
+        public IReadOnlyList<FirmwareCve> Value { get; }
         /// <summary> The uri to fetch the next page of asset. </summary>
         public string NextLink { get; }
     }

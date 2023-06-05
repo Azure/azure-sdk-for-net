@@ -65,10 +65,10 @@ rename-rules:
   GenerateSummary: GetFirmwareSummary
 
 rename-mapping:
-  CveLink.Href: Href|Uri
   GenerateUploadUrlRequest: UploadUrlRequest
   Models.Status: AnalysisStatus
   Component: SbomComponent
   Workspace: FirmwareWorkspace
+  Cve: FirmwareCve
 
 ```

@@ -793,12 +793,12 @@ namespace Azure.ResourceManager.IotFirmwareDefense
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="Cve" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<Cve> GetCvesAsync(CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="FirmwareCve" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<FirmwareCve> GetCvesAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _firmwareRestClient.CreateListCvesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _firmwareRestClient.CreateListCvesNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, Cve.DeserializeCve, _firmwareClientDiagnostics, Pipeline, "FirmwareResource.GetCves", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, FirmwareCve.DeserializeFirmwareCve, _firmwareClientDiagnostics, Pipeline, "FirmwareResource.GetCves", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -815,12 +815,12 @@ namespace Azure.ResourceManager.IotFirmwareDefense
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="Cve" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<Cve> GetCves(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="FirmwareCve" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<FirmwareCve> GetCves(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _firmwareRestClient.CreateListCvesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _firmwareRestClient.CreateListCvesNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, Cve.DeserializeCve, _firmwareClientDiagnostics, Pipeline, "FirmwareResource.GetCves", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, FirmwareCve.DeserializeFirmwareCve, _firmwareClientDiagnostics, Pipeline, "FirmwareResource.GetCves", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

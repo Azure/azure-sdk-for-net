@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<Cve>> value = default;
+            Optional<IReadOnlyList<FirmwareCve>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -29,10 +29,10 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
                     {
                         continue;
                     }
-                    List<Cve> array = new List<Cve>();
+                    List<FirmwareCve> array = new List<FirmwareCve>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(Cve.DeserializeCve(item));
+                        array.Add(FirmwareCve.DeserializeFirmwareCve(item));
                     }
                     value = array;
                     continue;
