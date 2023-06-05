@@ -74,7 +74,7 @@ namespace Azure
         /// get or set an existing property may be used to retrieve a "camelCase" property name from the JSON content.</paramref>
         /// <paramref name="dateTimeHandling"></paramref>
         /// </summary>
-        public static dynamic ToDynamicFromJson(this BinaryData utf8Json, PropertyNameLookup existingPropertyLookup, PropertyNameConversion newPropertyConversion = PropertyNameConversion.None, DateTimeHandling dateTimeHandling = DateTimeHandling.Rfc3339)
+        public static dynamic ToDynamicFromJson(this BinaryData utf8Json, PropertyNameLookup existingPropertyLookup, PropertyNameConversion newPropertyConversion = PropertyNameConversion.None, DynamicDateTimeHandling dateTimeHandling = DynamicDateTimeHandling.Rfc3339)
         {
             DynamicDataOptions options = new()
             {

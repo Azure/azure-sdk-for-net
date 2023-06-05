@@ -12,7 +12,7 @@ namespace Azure.Core.Dynamic
     {
         private static readonly DynamicDataOptions _default = new()
         {
-            DateTimeHandling = DateTimeHandling.Rfc3339
+            DateTimeHandling = DynamicDateTimeHandling.Rfc3339
         };
         internal static DynamicDataOptions Default { get => _default; }
 
@@ -34,6 +34,6 @@ namespace Azure.Core.Dynamic
         /// <summary>
         /// Gets or sets an object that specifies how DateTime and DateTimeOffset should be handled when serializing and deserializing.
         /// </summary>
-        public DateTimeHandling DateTimeHandling { get; set; }
+        public DynamicDateTimeHandling DateTimeHandling { get; set; }
     }
 }
