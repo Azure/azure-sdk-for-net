@@ -29,7 +29,7 @@ namespace Azure.Analytics.Synapse.Artifacts
         internal DatasetCreateOrUpdateDatasetOperation(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
         {
             IOperation<DatasetResource> nextLinkOperation = NextLinkOperationImplementation.Create(this, pipeline, request.Method, request.Uri.ToUri(), response, OperationFinalStateVia.Location);
-            _operation = new OperationInternal<DatasetResource>(clientDiagnostics, nextLinkOperation, response, "DatasetCreateOrUpdateDatasetOperation");
+            _operation = new OperationInternal<DatasetResource>(nextLinkOperation, clientDiagnostics, response, "DatasetCreateOrUpdateDatasetOperation");
         }
 
         /// <inheritdoc />

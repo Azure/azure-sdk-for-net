@@ -29,7 +29,6 @@ namespace Azure.AI.Translation.Text
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     detectedLanguage = DetectedLanguage.DeserializeDetectedLanguage(property.Value);
@@ -49,14 +48,13 @@ namespace Azure.AI.Translation.Text
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     sourceText = SourceText.DeserializeSourceText(property.Value);
                     continue;
                 }
             }
-            return new TranslatedTextItem(detectedLanguage, translations, sourceText);
+            return new TranslatedTextItem(detectedLanguage.Value, translations, sourceText.Value);
         }
 
         /// <summary> Deserializes the model from a raw response. </summary>

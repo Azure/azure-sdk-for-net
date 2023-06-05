@@ -56,7 +56,6 @@ namespace Azure.ResourceManager.Synapse.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        hostServiceUri = null;
                         continue;
                     }
                     hostServiceUri = new Uri(property.Value.GetString());
@@ -66,7 +65,6 @@ namespace Azure.ResourceManager.Synapse.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     status = new SynapseSelfHostedIntegrationRuntimeNodeStatus(property.Value.GetString());
@@ -76,7 +74,6 @@ namespace Azure.ResourceManager.Synapse.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();
@@ -101,7 +98,6 @@ namespace Azure.ResourceManager.Synapse.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     registerTime = property.Value.GetDateTimeOffset("O");
@@ -111,7 +107,6 @@ namespace Azure.ResourceManager.Synapse.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     lastConnectTime = property.Value.GetDateTimeOffset("O");
@@ -121,7 +116,6 @@ namespace Azure.ResourceManager.Synapse.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     expiryTime = property.Value.GetDateTimeOffset("O");
@@ -131,7 +125,6 @@ namespace Azure.ResourceManager.Synapse.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     lastStartTime = property.Value.GetDateTimeOffset("O");
@@ -141,7 +134,6 @@ namespace Azure.ResourceManager.Synapse.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     lastStopTime = property.Value.GetDateTimeOffset("O");
@@ -151,7 +143,6 @@ namespace Azure.ResourceManager.Synapse.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     lastUpdateResult = new SynapseIntegrationRuntimeUpdateResult(property.Value.GetString());
@@ -161,7 +152,6 @@ namespace Azure.ResourceManager.Synapse.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     lastStartUpdateTime = property.Value.GetDateTimeOffset("O");
@@ -171,7 +161,6 @@ namespace Azure.ResourceManager.Synapse.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     lastEndUpdateTime = property.Value.GetDateTimeOffset("O");
@@ -181,7 +170,6 @@ namespace Azure.ResourceManager.Synapse.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     isActiveDispatcher = property.Value.GetBoolean();
@@ -191,7 +179,6 @@ namespace Azure.ResourceManager.Synapse.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     concurrentJobsLimit = property.Value.GetInt32();
@@ -201,7 +188,6 @@ namespace Azure.ResourceManager.Synapse.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     maxConcurrentJobs = property.Value.GetInt32();

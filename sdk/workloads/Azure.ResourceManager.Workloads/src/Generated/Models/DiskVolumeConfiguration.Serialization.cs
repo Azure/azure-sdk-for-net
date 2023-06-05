@@ -20,10 +20,10 @@ namespace Azure.ResourceManager.Workloads.Models
                 writer.WritePropertyName("count"u8);
                 writer.WriteNumberValue(Count.Value);
             }
-            if (Optional.IsDefined(SizeGB))
+            if (Optional.IsDefined(SizeInGB))
             {
                 writer.WritePropertyName("sizeGB"u8);
-                writer.WriteNumberValue(SizeGB.Value);
+                writer.WriteNumberValue(SizeInGB.Value);
             }
             if (Optional.IsDefined(Sku))
             {
@@ -41,14 +41,13 @@ namespace Azure.ResourceManager.Workloads.Models
             }
             Optional<long> count = default;
             Optional<long> sizeGB = default;
-            Optional<DiskSku> sku = default;
+            Optional<SapDiskSku> sku = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("count"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     count = property.Value.GetInt64();
@@ -58,7 +57,6 @@ namespace Azure.ResourceManager.Workloads.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     sizeGB = property.Value.GetInt64();
@@ -68,10 +66,9 @@ namespace Azure.ResourceManager.Workloads.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    sku = DiskSku.DeserializeDiskSku(property.Value);
+                    sku = SapDiskSku.DeserializeSapDiskSku(property.Value);
                     continue;
                 }
             }

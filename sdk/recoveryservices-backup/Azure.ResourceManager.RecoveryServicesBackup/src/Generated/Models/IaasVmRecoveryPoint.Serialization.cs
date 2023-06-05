@@ -164,7 +164,6 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     recoveryPointTime = property.Value.GetDateTimeOffset("O");
@@ -184,7 +183,6 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     isSourceVmEncrypted = property.Value.GetBoolean();
@@ -194,7 +192,6 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     keyAndSecret = KeyAndSecretDetails.DeserializeKeyAndSecretDetails(property.Value);
@@ -204,7 +201,6 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     isInstantIlrSessionActive = property.Value.GetBoolean();
@@ -214,7 +210,6 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<RecoveryPointTierInformationV2> array = new List<RecoveryPointTierInformationV2>();
@@ -229,7 +224,6 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     isManagedVirtualMachine = property.Value.GetBoolean();
@@ -244,7 +238,6 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     originalStorageAccountOption = property.Value.GetBoolean();
@@ -259,7 +252,6 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     recoveryPointDiskConfiguration = RecoveryPointDiskConfiguration.DeserializeRecoveryPointDiskConfiguration(property.Value);
@@ -269,7 +261,6 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<string> array = new List<string>();
@@ -284,7 +275,6 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     Dictionary<string, RecoveryPointMoveReadinessInfo> dictionary = new Dictionary<string, RecoveryPointMoveReadinessInfo>();
@@ -304,7 +294,6 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     recoveryPointProperties = RecoveryPointProperties.DeserializeRecoveryPointProperties(property.Value);
@@ -314,7 +303,6 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     isPrivateAccessEnabledOnAnyDisk = property.Value.GetBoolean();

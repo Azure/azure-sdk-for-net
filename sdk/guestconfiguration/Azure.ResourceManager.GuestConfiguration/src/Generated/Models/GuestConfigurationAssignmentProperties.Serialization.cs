@@ -86,7 +86,6 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     guestConfiguration = GuestConfigurationNavigation.DeserializeGuestConfigurationNavigation(property.Value);
@@ -96,7 +95,6 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     complianceStatus = new AssignedGuestConfigurationMachineComplianceStatus(property.Value.GetString());
@@ -136,7 +134,6 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     latestAssignmentReport = GuestConfigurationAssignmentReportInfo.DeserializeGuestConfigurationAssignmentReportInfo(property.Value);

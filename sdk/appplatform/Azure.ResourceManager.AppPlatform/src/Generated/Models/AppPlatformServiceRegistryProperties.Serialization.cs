@@ -34,7 +34,6 @@ namespace Azure.ResourceManager.AppPlatform.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     provisioningState = new AppPlatformServiceRegistryProvisioningState(property.Value.GetString());
@@ -44,7 +43,6 @@ namespace Azure.ResourceManager.AppPlatform.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     resourceRequests = AppPlatformServiceRegistryResourceRequirements.DeserializeAppPlatformServiceRegistryResourceRequirements(property.Value);
@@ -54,7 +52,6 @@ namespace Azure.ResourceManager.AppPlatform.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<AppPlatformServiceRegistryInstance> array = new List<AppPlatformServiceRegistryInstance>();

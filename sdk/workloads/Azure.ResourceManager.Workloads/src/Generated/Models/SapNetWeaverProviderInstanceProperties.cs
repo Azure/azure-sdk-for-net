@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.Workloads.Models
         /// <param name="sapPortNumber"> Gets or sets the SAP HTTP port number. </param>
         /// <param name="sslCertificateUri"> Gets or sets the blob URI to SSL certificate for the SAP system. </param>
         /// <param name="sslPreference"> Gets or sets certificate preference if secure communication is enabled. </param>
-        internal SapNetWeaverProviderInstanceProperties(string providerType, string sapSid, string sapHostname, string sapInstanceNr, IList<string> sapHostFileEntries, string sapUsername, string sapPassword, Uri sapPasswordUri, string sapClientId, string sapPortNumber, Uri sslCertificateUri, SslPreference? sslPreference) : base(providerType)
+        internal SapNetWeaverProviderInstanceProperties(string providerType, string sapSid, string sapHostname, string sapInstanceNr, IList<string> sapHostFileEntries, string sapUsername, string sapPassword, Uri sapPasswordUri, string sapClientId, string sapPortNumber, Uri sslCertificateUri, SapSslPreference? sslPreference) : base(providerType)
         {
             SapSid = sapSid;
             SapHostname = sapHostname;
@@ -71,6 +71,6 @@ namespace Azure.ResourceManager.Workloads.Models
         /// <summary> Gets or sets the blob URI to SSL certificate for the SAP system. </summary>
         public Uri SslCertificateUri { get; set; }
         /// <summary> Gets or sets certificate preference if secure communication is enabled. </summary>
-        public SslPreference? SslPreference { get; set; }
+        public SapSslPreference? SslPreference { get; set; }
     }
 }

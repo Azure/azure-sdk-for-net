@@ -67,7 +67,6 @@ namespace Azure.ResourceManager.Cdn.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     cacheConfiguration = CacheConfiguration.DeserializeCacheConfiguration(property.Value);

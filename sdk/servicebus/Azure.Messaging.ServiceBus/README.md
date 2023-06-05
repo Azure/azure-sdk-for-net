@@ -229,7 +229,7 @@ foreach (ServiceBusReceivedMessage receivedMessage in receivedMessages)
 
 ### Complete a message
 
-In order to remove a message from a queue or subscription, we can call the `CompleteAsync` method.
+In order to remove a message from a queue or subscription, we can call the `CompleteMessageAsync` method.
 
 ```C# Snippet:ServiceBusCompleteMessage
 string connectionString = "<connection_string>";

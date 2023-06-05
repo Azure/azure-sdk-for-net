@@ -59,7 +59,6 @@ namespace Azure.ResourceManager.ServiceFabric.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     maximumCapacity = property.Value.GetInt64();
@@ -69,7 +68,6 @@ namespace Azure.ResourceManager.ServiceFabric.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     reservationCapacity = property.Value.GetInt64();
@@ -79,7 +77,6 @@ namespace Azure.ResourceManager.ServiceFabric.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     totalApplicationCapacity = property.Value.GetInt64();

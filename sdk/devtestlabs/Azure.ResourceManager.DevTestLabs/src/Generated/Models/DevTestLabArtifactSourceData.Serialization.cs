@@ -107,7 +107,6 @@ namespace Azure.ResourceManager.DevTestLabs
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();
@@ -142,7 +141,6 @@ namespace Azure.ResourceManager.DevTestLabs
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
@@ -166,7 +164,6 @@ namespace Azure.ResourceManager.DevTestLabs
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                uri = null;
                                 continue;
                             }
                             uri = new Uri(property0.Value.GetString());
@@ -176,7 +173,6 @@ namespace Azure.ResourceManager.DevTestLabs
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             sourceType = new DevTestLabSourceControlType(property0.Value.GetString());
@@ -206,7 +202,6 @@ namespace Azure.ResourceManager.DevTestLabs
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             status = new DevTestLabEnableStatus(property0.Value.GetString());
@@ -216,7 +211,6 @@ namespace Azure.ResourceManager.DevTestLabs
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             createdDate = property0.Value.GetDateTimeOffset("O");
@@ -231,7 +225,6 @@ namespace Azure.ResourceManager.DevTestLabs
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             uniqueIdentifier = property0.Value.GetGuid();

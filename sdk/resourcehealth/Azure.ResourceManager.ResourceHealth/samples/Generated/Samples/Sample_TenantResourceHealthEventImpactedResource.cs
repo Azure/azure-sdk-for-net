@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.ResourceHealth.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Get_ImpactedResourcesGet()
         {
-            // Generated from example definition: specification/resourcehealth/resource-manager/Microsoft.ResourceHealth/preview/2022-10-01-preview/examples/ImpactedResources_GetByTenantId.json
+            // Generated from example definition: specification/resourcehealth/resource-manager/Microsoft.ResourceHealth/stable/2022-10-01/examples/ImpactedResources_GetByTenantId.json
             // this example is just showing the usage of "ImpactedResources_GetByTenantId" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.ResourceHealth.Samples
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            EventImpactedResourceData resourceData = result.Data;
+            ResourceHealthEventImpactedResourceData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }

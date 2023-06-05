@@ -1,12 +1,9 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
+
 using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Runtime.InteropServices.ComTypes;
-using System.Text;
 using Azure.Storage.DataMovement;
-using static Azure.Storage.Constants.Sas;
 
 namespace Azure.Storage
 {
@@ -56,9 +53,6 @@ namespace Azure.Storage
         public static ArgumentException MismatchIdSingleContainer(string transferId)
             => throw new ArgumentException($"Cannot Resume Error: Transfer Id, {transferId} is being attempted as a single transfer when it's a container transfer.");
 
-        public static ArgumentException MismatchIdContainer(string transferId)
-            => throw new ArgumentException($"Cannot Resume Error: Transfer Id, {transferId} is being attempted as a container transfer when it's a single transfer.");
-
         public static ArgumentException CollisionJobPart(string transferId, int jobPart)
             => throw new ArgumentException($"Job Part Collision Checkpointer: The job part {jobPart} for transfer id {transferId}, already exists in the checkpointer.");
 
@@ -83,12 +77,20 @@ namespace Azure.Storage
         public static ArgumentException InvalidStringToDictionary(string elementName, string value)
             => throw new ArgumentException($"Invalid Job Part Plan File: Attempt to set element, \"{elementName}\" failed.\n Expected format stored was invalid, \"{value}\"");
 
-        public static void ThrowIfElementIsNotPositive(string elementName, long actualValue)
-        {
-            if (actualValue <= 0)
-            {
-                throw new ArgumentException($"Invalid Job Part Plan File: Value of {elementName} was expected to be a non-zero positive value but instead was {actualValue}");
-            }
-        }
+        public static IOException LocalFileAlreadyExists(string pathName)
+            => new IOException($"File path `{pathName}` already exists. Cannot overwrite file.");
+
+        public static ArgumentException MismatchResumeTransferArguments(string elementName, string checkpointerValue, string passedValue)
+            => new ArgumentException($"Mismatch Value to Resume Job: The following parameter, {elementName}, does not match the stored value in the transfer checkpointer. Please ensure the value passed to resume the transfer matches the value used when the transfer was started.\n" +
+                $"Checkpointer Value: {checkpointerValue}\n" +
+                $"New Value: {passedValue}");
+
+        public static ArgumentException MismatchResumeCreateMode(bool checkpointerValue, StorageResourceCreateMode passedValue)
+            => new ArgumentException($"Mismatch Value to Resume Job: The value to overwrite / create files when they exist does not match the stored value in the transfer checkpointer. Please ensure the value passed to resume the transfer matches the value in order to prevent overwriting or failing files.\n" +
+                $"Checkpointer Value to overwrite was set to {checkpointerValue.ToString()}.\n" +
+                $"The value passed in was {passedValue.ToString()}");
+
+        public static InvalidOperationException SingleDownloadLengthMismatch(long expectedLength, long actualLength)
+            => new InvalidOperationException($"Download length {actualLength} did not match expected length {expectedLength}.");
     }
 }

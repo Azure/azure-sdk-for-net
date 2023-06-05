@@ -20,6 +20,11 @@ namespace Azure.Storage.DataMovement
             return BitConverter.ToInt64(bytes, 0);
         }
 
+        public static ushort ToUShort(this byte[] bytes)
+        {
+            return BitConverter.ToUInt16(bytes, 0);
+        }
+
         internal static StorageResourceProperties ToStorageResourceProperties(this FileInfo fileInfo)
         {
             return new StorageResourceProperties(

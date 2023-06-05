@@ -18,7 +18,7 @@ try
 
     Response<IReadOnlyList<DictionaryLookupItem>> response = await client.LookupDictionaryEntriesAsync(sourceLanguage, targetLanguage, inputTextElements).ConfigureAwait(false);
     IReadOnlyList<DictionaryLookupItem> dictionaryEntries = response.Value;
-    DictionaryLookupElement dictionaryEntry = dictionaryEntries.FirstOrDefault();
+    DictionaryLookupItem dictionaryEntry = dictionaryEntries.FirstOrDefault();
 
     Console.WriteLine($"For the given input {dictionaryEntry?.Translations?.Count} entries were found in the dictionary.");
     Console.WriteLine($"First entry: '{dictionaryEntry?.Translations?.FirstOrDefault()?.DisplayTarget}', confidence: {dictionaryEntry?.Translations?.FirstOrDefault()?.Confidence}.");

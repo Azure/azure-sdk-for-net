@@ -77,7 +77,6 @@ namespace Azure.ResourceManager.Authorization.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     approvalStageTimeOutInDays = property.Value.GetInt32();
@@ -87,7 +86,6 @@ namespace Azure.ResourceManager.Authorization.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     isApproverJustificationRequired = property.Value.GetBoolean();
@@ -97,7 +95,6 @@ namespace Azure.ResourceManager.Authorization.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     escalationTimeInMinutes = property.Value.GetInt32();
@@ -107,7 +104,6 @@ namespace Azure.ResourceManager.Authorization.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<RoleManagementUserInfo> array = new List<RoleManagementUserInfo>();
@@ -122,7 +118,6 @@ namespace Azure.ResourceManager.Authorization.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     isEscalationEnabled = property.Value.GetBoolean();
@@ -132,7 +127,6 @@ namespace Azure.ResourceManager.Authorization.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<RoleManagementUserInfo> array = new List<RoleManagementUserInfo>();

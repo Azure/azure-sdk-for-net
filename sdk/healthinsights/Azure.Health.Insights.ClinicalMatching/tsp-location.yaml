@@ -2,5 +2,5 @@ directory: specification/cognitiveservices/HealthInsights/healthinsights.trialma
 additionalDirectories:
   - specification/cognitiveservices/HealthInsights/healthinsights.openapi/
   - specification/cognitiveservices/HealthInsights/healthinsights.common/
-commit: aa3618d1bd4b18cdbd308b1572c68393beaca9a6
+commit: bdc89afc8a56a7268828efa4cd81a50bf7ebde2f
 repo: azure/azure-rest-api-specs

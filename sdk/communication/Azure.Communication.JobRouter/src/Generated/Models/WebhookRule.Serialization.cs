@@ -52,7 +52,6 @@ namespace Azure.Communication.JobRouter
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     authorizationServerUri = new Uri(property.Value.GetString());
@@ -62,7 +61,6 @@ namespace Azure.Communication.JobRouter
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     clientCredential = Oauth2ClientCredential.DeserializeOauth2ClientCredential(property.Value);
@@ -72,7 +70,6 @@ namespace Azure.Communication.JobRouter
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     webhookUri = new Uri(property.Value.GetString());

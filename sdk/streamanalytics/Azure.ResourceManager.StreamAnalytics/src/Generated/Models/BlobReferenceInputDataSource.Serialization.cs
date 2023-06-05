@@ -123,7 +123,6 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             List<StreamAnalyticsStorageAccount> array = new List<StreamAnalyticsStorageAccount>();
@@ -158,7 +157,6 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             authenticationMode = new StreamAnalyticsAuthenticationMode(property0.Value.GetString());
@@ -178,7 +176,6 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             sourcePartitionCount = property0.Value.GetInt32();
@@ -188,7 +185,6 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             fullSnapshotRefreshRate = property0.Value.GetTimeSpan("T");
@@ -198,7 +194,6 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             deltaSnapshotRefreshRate = property0.Value.GetTimeSpan("T");

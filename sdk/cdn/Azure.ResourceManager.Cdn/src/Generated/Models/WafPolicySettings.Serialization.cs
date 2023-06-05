@@ -79,7 +79,6 @@ namespace Azure.ResourceManager.Cdn.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     enabledState = new PolicyEnabledState(property.Value.GetString());
@@ -89,7 +88,6 @@ namespace Azure.ResourceManager.Cdn.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     mode = new PolicyMode(property.Value.GetString());
@@ -99,7 +97,6 @@ namespace Azure.ResourceManager.Cdn.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        defaultRedirectUri = null;
                         continue;
                     }
                     defaultRedirectUri = new Uri(property.Value.GetString());

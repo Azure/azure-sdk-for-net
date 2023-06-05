@@ -61,7 +61,6 @@ namespace Azure.ResourceManager.SignalR.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<SignalRRequestType> array = new List<SignalRRequestType>();
@@ -76,7 +75,6 @@ namespace Azure.ResourceManager.SignalR.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<SignalRRequestType> array = new List<SignalRRequestType>();

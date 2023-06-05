@@ -67,7 +67,6 @@ namespace Azure.ResourceManager.MobileNetwork.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     ruleQosPolicy = PccRuleQosPolicy.DeserializePccRuleQosPolicy(property.Value);
@@ -77,7 +76,6 @@ namespace Azure.ResourceManager.MobileNetwork.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     trafficControl = new TrafficControlPermission(property.Value.GetString());

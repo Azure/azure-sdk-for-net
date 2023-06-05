@@ -45,7 +45,6 @@ namespace Azure.ResourceManager.AgFoodPlatform
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     eTag = new ETag(property.Value.GetString());
@@ -70,7 +69,6 @@ namespace Azure.ResourceManager.AgFoodPlatform
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());

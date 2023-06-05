@@ -27,7 +27,6 @@ namespace Azure.ResourceManager.NetApp.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     storageToNetworkProximity = new RegionStorageToNetworkProximity(property.Value.GetString());
@@ -37,7 +36,6 @@ namespace Azure.ResourceManager.NetApp.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<AvailabilityZoneMapping> array = new List<AvailabilityZoneMapping>();

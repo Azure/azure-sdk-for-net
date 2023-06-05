@@ -84,7 +84,6 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     virtualNetworkId = new ResourceIdentifier(property.Value.GetString());
@@ -94,7 +93,6 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     subnetId = new ResourceIdentifier(property.Value.GetString());
@@ -104,7 +102,6 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     publicIPAddressId = new ResourceIdentifier(property.Value.GetString());
@@ -139,7 +136,6 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     sharedPublicIPAddressConfiguration = SharedPublicIPAddressConfiguration.DeserializeSharedPublicIPAddressConfiguration(property.Value);

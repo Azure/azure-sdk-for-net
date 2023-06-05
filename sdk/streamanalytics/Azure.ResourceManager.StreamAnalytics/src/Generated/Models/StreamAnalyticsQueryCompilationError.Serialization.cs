@@ -35,7 +35,6 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     startLine = property.Value.GetInt32();
@@ -45,7 +44,6 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     startColumn = property.Value.GetInt32();
@@ -55,7 +53,6 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     endLine = property.Value.GetInt32();
@@ -65,7 +62,6 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     endColumn = property.Value.GetInt32();
@@ -75,7 +71,6 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     isGlobal = property.Value.GetBoolean();

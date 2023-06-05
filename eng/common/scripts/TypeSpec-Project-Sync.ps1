@@ -105,8 +105,8 @@ if ( $configuration["repo"] -and $configuration["commit"]) {
     try {
         if (!(Test-Path ".git")) {
             InitializeSparseGitClone $gitRemoteValue
-            UpdateSparseCheckoutFile $specSubDirectory $configuration["additionalDirectories"]
         }
+        UpdateSparseCheckoutFile $specSubDirectory $configuration["additionalDirectories"]
         git checkout $configuration["commit"]
         if ($LASTEXITCODE) { exit $LASTEXITCODE }
     }

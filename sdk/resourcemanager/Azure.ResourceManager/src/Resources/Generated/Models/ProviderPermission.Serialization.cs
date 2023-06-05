@@ -33,7 +33,6 @@ namespace Azure.ResourceManager.Resources.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     roleDefinition = AzureRoleDefinition.DeserializeAzureRoleDefinition(property.Value);
@@ -43,7 +42,6 @@ namespace Azure.ResourceManager.Resources.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     managedByRoleDefinition = AzureRoleDefinition.DeserializeAzureRoleDefinition(property.Value);
@@ -53,7 +51,6 @@ namespace Azure.ResourceManager.Resources.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     providerAuthorizationConsentState = new ProviderAuthorizationConsentState(property.Value.GetString());

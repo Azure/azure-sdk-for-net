@@ -7,9 +7,9 @@ using Azure.Storage.Test.Shared;
 using System.IO;
 using System.Collections.Generic;
 using System;
-using Azure.Storage.DataMovement.JobPlanModels;
 using Azure.Storage.Test;
 using System.Threading.Tasks;
+using Azure.Storage.DataMovement.Models.JobPlan;
 
 namespace Azure.Storage.DataMovement.Tests
 {
@@ -18,6 +18,14 @@ namespace Azure.Storage.DataMovement.Tests
     /// </summary>
     public abstract class DataMovementTestBase : StorageTestBase<StorageTestEnvironment>
     {
+        public enum TransferType
+        {
+            Upload,
+            Download,
+            AsyncCopy,
+            SyncCopy
+        }
+
         public DataMovementTestBase(bool async, RecordedTestMode? mode = null)
             : base(async, mode /* RecordedTestMode.Record /* to re-record */)
         {
@@ -80,16 +88,6 @@ namespace Azure.Storage.DataMovement.Tests
             return files;
         }
 
-        public static DisposingLocalDirectory GetTestLocalDirectory(string directoryPath = default)
-        {
-            if (string.IsNullOrEmpty(directoryPath))
-            {
-                directoryPath = Path.Combine(Path.GetTempPath(), Guid.NewGuid().ToString());
-            }
-            Directory.CreateDirectory(directoryPath);
-            return new DisposingLocalDirectory(directoryPath);
-        }
-
         public Dictionary<string, string> BuildTags()
             => new Dictionary<string, string>
             {
@@ -122,7 +120,7 @@ namespace Azure.Storage.DataMovement.Tests
         internal const string _testCpkScopeInfo = "cpk-scope-info";
         internal const long _testBlockSize = 4 * Constants.KB;
         internal const byte _testS2sInvalidMetadataHandleOption = 0;
-        internal const byte _testMd5VerificationOption = 0;
+        internal const byte _testChecksumVerificationOption = 0;
         internal const JobPartDeleteSnapshotsOption _testDeleteSnapshotsOption = JobPartDeleteSnapshotsOption.None;
         internal const JobPartPermanentDeleteOption _testPermanentDeleteOption = JobPartPermanentDeleteOption.None;
         internal const JobPartPlanRehydratePriorityType _testRehydratePriorityType = JobPartPlanRehydratePriorityType.None;
@@ -163,7 +161,7 @@ namespace Azure.Storage.DataMovement.Tests
             string cpkScopeInfo = _testCpkScopeInfo,
             long blockSize = _testBlockSize,
             bool preserveLastModifiedTime = false,
-            byte md5VerificationOption = _testMd5VerificationOption,
+            byte checksumVerificationOption = _testChecksumVerificationOption,
             bool preserveSMBPermissions = false,
             bool preserveSMBInfo = false,
             bool s2sGetPropertiesInBackend = false,
@@ -206,7 +204,7 @@ namespace Azure.Storage.DataMovement.Tests
 
             JobPartPlanDestinationLocal dstLocalData = new JobPartPlanDestinationLocal(
                 preserveLastModifiedTime: preserveLastModifiedTime,
-                md5VerificationOption: md5VerificationOption);
+                checksumVerificationOption: checksumVerificationOption);
 
             return new JobPartPlanHeader(
                 version: version,

@@ -26,7 +26,6 @@ namespace Azure.ResourceManager.Automation.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<AutomationKey> array = new List<AutomationKey>();

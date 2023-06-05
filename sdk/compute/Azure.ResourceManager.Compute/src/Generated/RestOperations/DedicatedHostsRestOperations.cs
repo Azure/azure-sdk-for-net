@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Compute
         {
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _apiVersion = apiVersion ?? "2022-11-01";
+            _apiVersion = apiVersion ?? "2023-03-01";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.Compute
             return message;
         }
 
-        /// <summary> Update an dedicated host . </summary>
+        /// <summary> Update a dedicated host . </summary>
         /// <param name="subscriptionId"> Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="hostGroupName"> The name of the dedicated host group. </param>
@@ -175,7 +175,7 @@ namespace Azure.ResourceManager.Compute
             }
         }
 
-        /// <summary> Update an dedicated host . </summary>
+        /// <summary> Update a dedicated host . </summary>
         /// <param name="subscriptionId"> Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="hostGroupName"> The name of the dedicated host group. </param>
@@ -524,6 +524,91 @@ namespace Azure.ResourceManager.Compute
             {
                 case 200:
                     return message.Response;
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
+        }
+
+        internal HttpMessage CreateListAvailableSizesRequest(string subscriptionId, string resourceGroupName, string hostGroupName, string hostName)
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Compute/hostGroups/", false);
+            uri.AppendPath(hostGroupName, true);
+            uri.AppendPath("/hosts/", false);
+            uri.AppendPath(hostName, true);
+            uri.AppendPath("/hostSizes", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            _userAgent.Apply(message);
+            return message;
+        }
+
+        /// <summary> Lists all available dedicated host sizes to which the specified dedicated host can be resized. NOTE: The dedicated host sizes provided can be used to only scale up the existing dedicated host. </summary>
+        /// <param name="subscriptionId"> Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. </param>
+        /// <param name="hostGroupName"> The name of the dedicated host group. </param>
+        /// <param name="hostName"> The name of the dedicated host. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="hostGroupName"/> or <paramref name="hostName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="hostGroupName"/> or <paramref name="hostName"/> is an empty string, and was expected to be non-empty. </exception>
+        public async Task<Response<DedicatedHostSizeListResult>> ListAvailableSizesAsync(string subscriptionId, string resourceGroupName, string hostGroupName, string hostName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(hostGroupName, nameof(hostGroupName));
+            Argument.AssertNotNullOrEmpty(hostName, nameof(hostName));
+
+            using var message = CreateListAvailableSizesRequest(subscriptionId, resourceGroupName, hostGroupName, hostName);
+            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        DedicatedHostSizeListResult value = default;
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        value = DedicatedHostSizeListResult.DeserializeDedicatedHostSizeListResult(document.RootElement);
+                        return Response.FromValue(value, message.Response);
+                    }
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
+        }
+
+        /// <summary> Lists all available dedicated host sizes to which the specified dedicated host can be resized. NOTE: The dedicated host sizes provided can be used to only scale up the existing dedicated host. </summary>
+        /// <param name="subscriptionId"> Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. </param>
+        /// <param name="hostGroupName"> The name of the dedicated host group. </param>
+        /// <param name="hostName"> The name of the dedicated host. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="hostGroupName"/> or <paramref name="hostName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="hostGroupName"/> or <paramref name="hostName"/> is an empty string, and was expected to be non-empty. </exception>
+        public Response<DedicatedHostSizeListResult> ListAvailableSizes(string subscriptionId, string resourceGroupName, string hostGroupName, string hostName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(hostGroupName, nameof(hostGroupName));
+            Argument.AssertNotNullOrEmpty(hostName, nameof(hostName));
+
+            using var message = CreateListAvailableSizesRequest(subscriptionId, resourceGroupName, hostGroupName, hostName);
+            _pipeline.Send(message, cancellationToken);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        DedicatedHostSizeListResult value = default;
+                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        value = DedicatedHostSizeListResult.DeserializeDedicatedHostSizeListResult(document.RootElement);
+                        return Response.FromValue(value, message.Response);
+                    }
                 default:
                     throw new RequestFailedException(message.Response);
             }

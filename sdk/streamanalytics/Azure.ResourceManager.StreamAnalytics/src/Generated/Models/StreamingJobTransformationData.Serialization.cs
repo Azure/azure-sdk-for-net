@@ -67,7 +67,6 @@ namespace Azure.ResourceManager.StreamAnalytics
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     id = new ResourceIdentifier(property.Value.GetString());
@@ -82,7 +81,6 @@ namespace Azure.ResourceManager.StreamAnalytics
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     type = new ResourceType(property.Value.GetString());
@@ -101,7 +99,6 @@ namespace Azure.ResourceManager.StreamAnalytics
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             streamingUnits = property0.Value.GetInt32();
@@ -111,7 +108,6 @@ namespace Azure.ResourceManager.StreamAnalytics
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             List<int> array = new List<int>();
@@ -131,7 +127,6 @@ namespace Azure.ResourceManager.StreamAnalytics
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             etag = new ETag(property0.Value.GetString());

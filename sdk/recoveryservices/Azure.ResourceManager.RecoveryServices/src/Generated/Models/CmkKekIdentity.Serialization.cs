@@ -42,7 +42,6 @@ namespace Azure.ResourceManager.RecoveryServices.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     useSystemAssignedIdentity = property.Value.GetBoolean();
@@ -52,7 +51,6 @@ namespace Azure.ResourceManager.RecoveryServices.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     userAssignedIdentity = new ResourceIdentifier(property.Value.GetString());

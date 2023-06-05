@@ -4,6 +4,7 @@
 using System;
 using Azure.Core;
 using Azure.Core.TestFramework;
+using Microsoft.Azure.Amqp.Framing;
 using NUnit.Framework;
 
 namespace Azure.Communication.CallAutomation.Tests.Infrastructure
@@ -69,8 +70,9 @@ namespace Azure.Communication.CallAutomation.Tests.Infrastructure
                 }
             }
 
-            var callAutomationClientOptions = new CallAutomationClientOptions(source: new CommunicationUserIdentifier("12345"))
+            var callAutomationClientOptions = new CallAutomationClientOptions()
             {
+                Source = new CommunicationUserIdentifier("12345"),
                 Transport = new MockTransport(mockResponse)
             };
 
@@ -97,7 +99,7 @@ namespace Azure.Communication.CallAutomation.Tests.Infrastructure
             var targetUser = (CommunicationUserIdentifier)callConnectionProperties.Targets[0];
             Assert.AreEqual(TargetId, targetUser.Id);
             Assert.AreEqual(CallConnectionState.Connecting, callConnectionProperties.CallConnectionState);
-            Assert.AreEqual(CallBackUri, callConnectionProperties.CallbackEndpoint.ToString());
+            Assert.AreEqual(CallBackUri, callConnectionProperties.CallbackUri.ToString());
             Assert.AreEqual(DisplayName, callConnectionProperties.SourceDisplayName);
         }
     }

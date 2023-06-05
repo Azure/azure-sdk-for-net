@@ -66,7 +66,6 @@ namespace Azure.ResourceManager.SecurityCenter
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
@@ -85,7 +84,6 @@ namespace Azure.ResourceManager.SecurityCenter
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             hybridComputeSettings = HybridComputeSettingsProperties.DeserializeHybridComputeSettingsProperties(property0.Value);
@@ -95,7 +93,6 @@ namespace Azure.ResourceManager.SecurityCenter
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             authenticationDetails = AuthenticationDetailsProperties.DeserializeAuthenticationDetailsProperties(property0.Value);

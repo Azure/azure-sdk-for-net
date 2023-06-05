@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.ServiceNetworking
         {
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _apiVersion = apiVersion ?? "2022-10-01-preview";
+            _apiVersion = apiVersion ?? "2023-05-01-preview";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.ServiceNetworking
             return message;
         }
 
-        /// <summary> Get a Traffic Controller Association. </summary>
+        /// <summary> Get a Association. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="trafficControllerName"> traffic controller name for path. </param>
@@ -171,7 +171,7 @@ namespace Azure.ResourceManager.ServiceNetworking
             }
         }
 
-        /// <summary> Get a Traffic Controller Association. </summary>
+        /// <summary> Get a Association. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="trafficControllerName"> traffic controller name for path. </param>
@@ -230,7 +230,7 @@ namespace Azure.ResourceManager.ServiceNetworking
             return message;
         }
 
-        /// <summary> Create a Traffic Controller Association. </summary>
+        /// <summary> Create a Association. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="trafficControllerName"> traffic controller name for path. </param>
@@ -259,7 +259,7 @@ namespace Azure.ResourceManager.ServiceNetworking
             }
         }
 
-        /// <summary> Create a Traffic Controller Association. </summary>
+        /// <summary> Create a Association. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="trafficControllerName"> traffic controller name for path. </param>
@@ -314,7 +314,7 @@ namespace Azure.ResourceManager.ServiceNetworking
             return message;
         }
 
-        /// <summary> Update a Traffic Controller Association. </summary>
+        /// <summary> Update a Association. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="trafficControllerName"> traffic controller name for path. </param>
@@ -347,7 +347,7 @@ namespace Azure.ResourceManager.ServiceNetworking
             }
         }
 
-        /// <summary> Update a Traffic Controller Association. </summary>
+        /// <summary> Update a Association. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="trafficControllerName"> traffic controller name for path. </param>
@@ -402,7 +402,7 @@ namespace Azure.ResourceManager.ServiceNetworking
             return message;
         }
 
-        /// <summary> Delete a Traffic Controller Association. </summary>
+        /// <summary> Delete a Association. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="trafficControllerName"> traffic controller name for path. </param>
@@ -430,7 +430,7 @@ namespace Azure.ResourceManager.ServiceNetworking
             }
         }
 
-        /// <summary> Delete a Traffic Controller Association. </summary>
+        /// <summary> Delete a Association. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="trafficControllerName"> traffic controller name for path. </param>

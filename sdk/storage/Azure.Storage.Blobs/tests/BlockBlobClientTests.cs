@@ -2788,7 +2788,7 @@ namespace Azure.Storage.Blobs.Test
 
         [RecordedTest]
         [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2020_04_08)]
-        public async Task SyncUploadFromUriAsync_OverwiteSourceBlobProperties()
+        public async Task SyncUploadFromUriAsync_OverwriteSourceBlobProperties()
         {
             // Arrange
             var constants = TestConstants.Create(this);

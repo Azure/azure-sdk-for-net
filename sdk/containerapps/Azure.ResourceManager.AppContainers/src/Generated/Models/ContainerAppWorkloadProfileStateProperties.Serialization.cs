@@ -48,7 +48,6 @@ namespace Azure.ResourceManager.AppContainers.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     minimumCount = property.Value.GetInt32();
@@ -58,7 +57,6 @@ namespace Azure.ResourceManager.AppContainers.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     maximumCount = property.Value.GetInt32();
@@ -68,7 +66,6 @@ namespace Azure.ResourceManager.AppContainers.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     currentCount = property.Value.GetInt32();

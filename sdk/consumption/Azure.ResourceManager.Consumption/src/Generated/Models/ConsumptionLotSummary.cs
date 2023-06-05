@@ -12,7 +12,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Consumption.Models
 {
-    /// <summary> A lot summary resource. </summary>
+    /// <summary>
+    /// A lot summary resource.
+    /// Serialized Name: LotSummary
+    /// </summary>
     public partial class ConsumptionLotSummary : ResourceData
     {
         /// <summary> Initializes a new instance of ConsumptionLotSummary. </summary>
@@ -25,20 +28,62 @@ namespace Azure.ResourceManager.Consumption.Models
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="originalAmount"> The original amount of a lot. </param>
-        /// <param name="closedBalance"> The balance as of the last invoice. </param>
-        /// <param name="source"> The source of the lot. </param>
-        /// <param name="startOn"> The date when the lot became effective. </param>
-        /// <param name="expireOn"> The expiration date of a lot. </param>
-        /// <param name="poNumber"> The po number of the invoice on which the lot was added. This property is not available for ConsumptionCommitment lots. </param>
-        /// <param name="purchasedOn"> The date when the lot was added. </param>
-        /// <param name="status"> The status of the lot. </param>
-        /// <param name="creditCurrency"> The currency of the lot. </param>
-        /// <param name="billingCurrency"> The billing currency of the lot. </param>
-        /// <param name="originalAmountInBillingCurrency"> The original amount of a lot in billing currency. </param>
-        /// <param name="closedBalanceInBillingCurrency"> The balance as of the last invoice in billing currency. </param>
-        /// <param name="reseller"> The reseller of the lot. </param>
-        /// <param name="etag"> eTag of the resource. To handle concurrent update scenario, this field will be used to determine whether the user is updating the latest version or not. </param>
+        /// <param name="originalAmount">
+        /// The original amount of a lot.
+        /// Serialized Name: LotSummary.properties.originalAmount
+        /// </param>
+        /// <param name="closedBalance">
+        /// The balance as of the last invoice.
+        /// Serialized Name: LotSummary.properties.closedBalance
+        /// </param>
+        /// <param name="source">
+        /// The source of the lot.
+        /// Serialized Name: LotSummary.properties.source
+        /// </param>
+        /// <param name="startOn">
+        /// The date when the lot became effective.
+        /// Serialized Name: LotSummary.properties.startDate
+        /// </param>
+        /// <param name="expireOn">
+        /// The expiration date of a lot.
+        /// Serialized Name: LotSummary.properties.expirationDate
+        /// </param>
+        /// <param name="poNumber">
+        /// The po number of the invoice on which the lot was added. This property is not available for ConsumptionCommitment lots.
+        /// Serialized Name: LotSummary.properties.poNumber
+        /// </param>
+        /// <param name="purchasedOn">
+        /// The date when the lot was added.
+        /// Serialized Name: LotSummary.properties.purchasedDate
+        /// </param>
+        /// <param name="status">
+        /// The status of the lot.
+        /// Serialized Name: LotSummary.properties.status
+        /// </param>
+        /// <param name="creditCurrency">
+        /// The currency of the lot.
+        /// Serialized Name: LotSummary.properties.creditCurrency
+        /// </param>
+        /// <param name="billingCurrency">
+        /// The billing currency of the lot.
+        /// Serialized Name: LotSummary.properties.billingCurrency
+        /// </param>
+        /// <param name="originalAmountInBillingCurrency">
+        /// The original amount of a lot in billing currency.
+        /// Serialized Name: LotSummary.properties.originalAmountInBillingCurrency
+        /// </param>
+        /// <param name="closedBalanceInBillingCurrency">
+        /// The balance as of the last invoice in billing currency.
+        /// Serialized Name: LotSummary.properties.closedBalanceInBillingCurrency
+        /// </param>
+        /// <param name="reseller">
+        /// The reseller of the lot.
+        /// Serialized Name: LotSummary.properties.reseller
+        /// </param>
+        /// <param name="etag">
+        /// eTag of the resource. To handle concurrent update scenario, this field will be used to determine whether the user is updating the latest version or not.
+        /// Serialized Name: ProxyResource.eTag
+        /// </param>
         internal ConsumptionLotSummary(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ConsumptionAmount originalAmount, ConsumptionAmount closedBalance, ConsumptionLotSource? source, DateTimeOffset? startOn, DateTimeOffset? expireOn, string poNumber, DateTimeOffset? purchasedOn, ConsumptionLotStatus? status, string creditCurrency, string billingCurrency, ConsumptionAmountWithExchangeRate originalAmountInBillingCurrency, ConsumptionAmountWithExchangeRate closedBalanceInBillingCurrency, ConsumptionReseller reseller, ETag? etag) : base(id, name, resourceType, systemData)
         {
             OriginalAmount = originalAmount;
@@ -57,33 +102,75 @@ namespace Azure.ResourceManager.Consumption.Models
             ETag = etag;
         }
 
-        /// <summary> The original amount of a lot. </summary>
+        /// <summary>
+        /// The original amount of a lot.
+        /// Serialized Name: LotSummary.properties.originalAmount
+        /// </summary>
         public ConsumptionAmount OriginalAmount { get; }
-        /// <summary> The balance as of the last invoice. </summary>
+        /// <summary>
+        /// The balance as of the last invoice.
+        /// Serialized Name: LotSummary.properties.closedBalance
+        /// </summary>
         public ConsumptionAmount ClosedBalance { get; }
-        /// <summary> The source of the lot. </summary>
+        /// <summary>
+        /// The source of the lot.
+        /// Serialized Name: LotSummary.properties.source
+        /// </summary>
         public ConsumptionLotSource? Source { get; }
-        /// <summary> The date when the lot became effective. </summary>
+        /// <summary>
+        /// The date when the lot became effective.
+        /// Serialized Name: LotSummary.properties.startDate
+        /// </summary>
         public DateTimeOffset? StartOn { get; }
-        /// <summary> The expiration date of a lot. </summary>
+        /// <summary>
+        /// The expiration date of a lot.
+        /// Serialized Name: LotSummary.properties.expirationDate
+        /// </summary>
         public DateTimeOffset? ExpireOn { get; }
-        /// <summary> The po number of the invoice on which the lot was added. This property is not available for ConsumptionCommitment lots. </summary>
+        /// <summary>
+        /// The po number of the invoice on which the lot was added. This property is not available for ConsumptionCommitment lots.
+        /// Serialized Name: LotSummary.properties.poNumber
+        /// </summary>
         public string PoNumber { get; }
-        /// <summary> The date when the lot was added. </summary>
+        /// <summary>
+        /// The date when the lot was added.
+        /// Serialized Name: LotSummary.properties.purchasedDate
+        /// </summary>
         public DateTimeOffset? PurchasedOn { get; }
-        /// <summary> The status of the lot. </summary>
+        /// <summary>
+        /// The status of the lot.
+        /// Serialized Name: LotSummary.properties.status
+        /// </summary>
         public ConsumptionLotStatus? Status { get; }
-        /// <summary> The currency of the lot. </summary>
+        /// <summary>
+        /// The currency of the lot.
+        /// Serialized Name: LotSummary.properties.creditCurrency
+        /// </summary>
         public string CreditCurrency { get; }
-        /// <summary> The billing currency of the lot. </summary>
+        /// <summary>
+        /// The billing currency of the lot.
+        /// Serialized Name: LotSummary.properties.billingCurrency
+        /// </summary>
         public string BillingCurrency { get; }
-        /// <summary> The original amount of a lot in billing currency. </summary>
+        /// <summary>
+        /// The original amount of a lot in billing currency.
+        /// Serialized Name: LotSummary.properties.originalAmountInBillingCurrency
+        /// </summary>
         public ConsumptionAmountWithExchangeRate OriginalAmountInBillingCurrency { get; }
-        /// <summary> The balance as of the last invoice in billing currency. </summary>
+        /// <summary>
+        /// The balance as of the last invoice in billing currency.
+        /// Serialized Name: LotSummary.properties.closedBalanceInBillingCurrency
+        /// </summary>
         public ConsumptionAmountWithExchangeRate ClosedBalanceInBillingCurrency { get; }
-        /// <summary> The reseller of the lot. </summary>
+        /// <summary>
+        /// The reseller of the lot.
+        /// Serialized Name: LotSummary.properties.reseller
+        /// </summary>
         public ConsumptionReseller Reseller { get; }
-        /// <summary> eTag of the resource. To handle concurrent update scenario, this field will be used to determine whether the user is updating the latest version or not. </summary>
+        /// <summary>
+        /// eTag of the resource. To handle concurrent update scenario, this field will be used to determine whether the user is updating the latest version or not.
+        /// Serialized Name: ProxyResource.eTag
+        /// </summary>
         public ETag? ETag { get; set; }
     }
 }

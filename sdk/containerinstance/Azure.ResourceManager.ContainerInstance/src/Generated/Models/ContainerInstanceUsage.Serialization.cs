@@ -39,7 +39,6 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     currentValue = property.Value.GetInt32();
@@ -49,7 +48,6 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     limit = property.Value.GetInt32();
@@ -59,7 +57,6 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     name = ContainerInstanceUsageName.DeserializeContainerInstanceUsageName(property.Value);

@@ -4,22 +4,25 @@
 using System;
 using System.Threading;
 using System.Timers;
+using Azure.Monitor.OpenTelemetry.Exporter.Internals.ConnectionString;
 using OpenTelemetry;
-using OpenTelemetry.Extensions.PersistentStorage.Abstractions;
+using OpenTelemetry.PersistentStorage.Abstractions;
 
 namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
 {
     internal class TransmitFromStorageHandler : IDisposable
     {
         private readonly ApplicationInsightsRestClient _applicationInsightsRestClient;
+        private readonly ConnectionVars _connectionVars;
         internal PersistentBlobProvider _blobProvider;
         private readonly TransmissionStateManager _transmissionStateManager;
         private readonly System.Timers.Timer _transmitFromStorageTimer;
         private bool _disposed;
 
-        internal TransmitFromStorageHandler(ApplicationInsightsRestClient applicationInsightsRestClient, PersistentBlobProvider blobProvider, TransmissionStateManager transmissionStateManager)
+        internal TransmitFromStorageHandler(ApplicationInsightsRestClient applicationInsightsRestClient, PersistentBlobProvider blobProvider, TransmissionStateManager transmissionStateManager, ConnectionVars connectionVars)
         {
             _applicationInsightsRestClient = applicationInsightsRestClient;
+            _connectionVars = connectionVars;
             _blobProvider = blobProvider;
             _transmissionStateManager = transmissionStateManager;
             _transmitFromStorageTimer = new System.Timers.Timer();
@@ -59,7 +62,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
                         else
                         {
                             _transmissionStateManager.EnableBackOff(httpMessage.Response);
-                            HttpPipelineHelper.HandleFailures(httpMessage, blob, _blobProvider);
+                            HttpPipelineHelper.HandleFailures(httpMessage, blob, _blobProvider, _connectionVars);
                             break;
                         }
                     }

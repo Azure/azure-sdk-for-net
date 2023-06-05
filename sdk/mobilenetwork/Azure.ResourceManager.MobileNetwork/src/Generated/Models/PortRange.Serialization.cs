@@ -42,7 +42,6 @@ namespace Azure.ResourceManager.MobileNetwork.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     minPort = property.Value.GetInt32();
@@ -52,7 +51,6 @@ namespace Azure.ResourceManager.MobileNetwork.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     maxPort = property.Value.GetInt32();

@@ -83,7 +83,6 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        url = null;
                         continue;
                     }
                     url = new Uri(property.Value.GetString());
@@ -93,7 +92,6 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();

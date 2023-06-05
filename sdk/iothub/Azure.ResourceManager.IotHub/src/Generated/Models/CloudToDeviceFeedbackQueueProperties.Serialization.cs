@@ -49,7 +49,6 @@ namespace Azure.ResourceManager.IotHub.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     lockDurationAsIso8601 = property.Value.GetTimeSpan("P");
@@ -59,7 +58,6 @@ namespace Azure.ResourceManager.IotHub.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     ttlAsIso8601 = property.Value.GetTimeSpan("P");
@@ -69,7 +67,6 @@ namespace Azure.ResourceManager.IotHub.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     maxDeliveryCount = property.Value.GetInt32();

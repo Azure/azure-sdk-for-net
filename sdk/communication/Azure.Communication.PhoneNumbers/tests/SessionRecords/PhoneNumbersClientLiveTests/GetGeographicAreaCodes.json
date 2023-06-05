@@ -6,11 +6,10 @@
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "traceparent": "00-b774a073c086d2aab7a9a80409628e3a-dab09fb3f1dc638e-00",
-        "User-Agent": "azsdk-net-Communication.PhoneNumbers/1.1.0-alpha.20230131.1 (.NET 7.0.2; Microsoft Windows 10.0.22621)",
-        "x-ms-client-request-id": "786381508cad2abc8020242ff1febd5c",
+        "User-Agent": "azsdk-net-Communication.PhoneNumbers/1.2.0-alpha.20230515.1 (.NET 7.0.5; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "1ae03c0e8596938b604d9b3b5b4d01a1",
         "x-ms-content-sha256": "Sanitized",
-        "x-ms-date": "Tue, 31 Jan 2023 20:31:05 GMT",
+        "x-ms-date": "Mon, 15 May 2023 15:53:41 GMT",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
@@ -18,17 +17,31 @@
       "ResponseHeaders": {
         "api-supported-versions": "2022-12-01, 2022-12-02-preview2",
         "Cache-Control": "max-age=21600, private, stale-while-revalidate=86400",
+        "Content-Length": "10206",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Tue, 31 Jan 2023 20:31:05 GMT",
-        "MS-CV": "IyAPM9EvDUOltaOIt6RYoA.0",
+        "Date": "Mon, 15 May 2023 15:53:42 GMT",
+        "MS-CV": "jJ8D3bsymUWhl5rgRNr\u002B\u002Bw.0",
         "Strict-Transport-Security": "max-age=2592000",
-        "Transfer-Encoding": "chunked",
-        "X-Azure-Ref": "0iXrZYwAAAAD3LqhqR5TwTK2GRyzW1bdeTUVYMzFFREdFMDQxNwA5ZmM3YjUxOS1hOGNjLTRmODktOTM1ZS1jOTE0OGFlMDllODE=",
+        "X-Azure-Ref": "0hlViZAAAAAACF6z3Z8JERKPfyJO5yMRMU0FPMzFFREdFMTExNwA5ZmM3YjUxOS1hOGNjLTRmODktOTM1ZS1jOTE0OGFlMDllODE=",
         "X-Cache": "CONFIG_NOCACHE",
-        "X-Processing-Time": "419ms"
+        "X-Processing-Time": "191ms"
       },
       "ResponseBody": {
         "phoneNumberLocalities": [
+          {
+            "localizedName": "Anchorage",
+            "administrativeDivision": {
+              "localizedName": "AK",
+              "abbreviatedName": "AK"
+            }
+          },
+          {
+            "localizedName": "Birmingham",
+            "administrativeDivision": {
+              "localizedName": "AL",
+              "abbreviatedName": "AL"
+            }
+          },
           {
             "localizedName": "Huntsville",
             "administrativeDivision": {
@@ -38,6 +51,13 @@
           },
           {
             "localizedName": "Mobile",
+            "administrativeDivision": {
+              "localizedName": "AL",
+              "abbreviatedName": "AL"
+            }
+          },
+          {
+            "localizedName": "Montgomery",
             "administrativeDivision": {
               "localizedName": "AL",
               "abbreviatedName": "AL"
@@ -93,6 +113,13 @@
             }
           },
           {
+            "localizedName": "Escondido",
+            "administrativeDivision": {
+              "localizedName": "CA",
+              "abbreviatedName": "CA"
+            }
+          },
+          {
             "localizedName": "Fresno",
             "administrativeDivision": {
               "localizedName": "CA",
@@ -122,6 +149,13 @@
           },
           {
             "localizedName": "Sacramento",
+            "administrativeDivision": {
+              "localizedName": "CA",
+              "abbreviatedName": "CA"
+            }
+          },
+          {
+            "localizedName": "Salinas",
             "administrativeDivision": {
               "localizedName": "CA",
               "abbreviatedName": "CA"
@@ -219,6 +253,13 @@
             }
           },
           {
+            "localizedName": "Wilmington",
+            "administrativeDivision": {
+              "localizedName": "DE",
+              "abbreviatedName": "DE"
+            }
+          },
+          {
             "localizedName": "Daytona Beach",
             "administrativeDivision": {
               "localizedName": "FL",
@@ -283,6 +324,13 @@
           },
           {
             "localizedName": "St. Petersburg",
+            "administrativeDivision": {
+              "localizedName": "FL",
+              "abbreviatedName": "FL"
+            }
+          },
+          {
+            "localizedName": "Tallahassee",
             "administrativeDivision": {
               "localizedName": "FL",
               "abbreviatedName": "FL"
@@ -360,6 +408,13 @@
           },
           {
             "localizedName": "Iowa City",
+            "administrativeDivision": {
+              "localizedName": "IA",
+              "abbreviatedName": "IA"
+            }
+          },
+          {
+            "localizedName": "Mason City",
             "administrativeDivision": {
               "localizedName": "IA",
               "abbreviatedName": "IA"
@@ -471,13 +526,6 @@
             }
           },
           {
-            "localizedName": "Dodge City",
-            "administrativeDivision": {
-              "localizedName": "KS",
-              "abbreviatedName": "KS"
-            }
-          },
-          {
             "localizedName": "Kansas City",
             "administrativeDivision": {
               "localizedName": "KS",
@@ -569,6 +617,20 @@
             }
           },
           {
+            "localizedName": "Lowell",
+            "administrativeDivision": {
+              "localizedName": "MA",
+              "abbreviatedName": "MA"
+            }
+          },
+          {
+            "localizedName": "Lynn",
+            "administrativeDivision": {
+              "localizedName": "MA",
+              "abbreviatedName": "MA"
+            }
+          },
+          {
             "localizedName": "Worcester",
             "administrativeDivision": {
               "localizedName": "MA",
@@ -584,6 +646,13 @@
           },
           {
             "localizedName": "Bethesda",
+            "administrativeDivision": {
+              "localizedName": "MD",
+              "abbreviatedName": "MD"
+            }
+          },
+          {
+            "localizedName": "Silver Spring",
             "administrativeDivision": {
               "localizedName": "MD",
               "abbreviatedName": "MD"
@@ -639,6 +708,13 @@
             }
           },
           {
+            "localizedName": "Otsego",
+            "administrativeDivision": {
+              "localizedName": "MI",
+              "abbreviatedName": "MI"
+            }
+          },
+          {
             "localizedName": "Pontiac",
             "administrativeDivision": {
               "localizedName": "MI",
@@ -651,99 +727,21 @@
               "localizedName": "MI",
               "abbreviatedName": "MI"
             }
-          },
-          {
-            "localizedName": "Sault Ste Marie",
-            "administrativeDivision": {
-              "localizedName": "MI",
-              "abbreviatedName": "MI"
-            }
-          },
-          {
-            "localizedName": "Alexandria",
-            "administrativeDivision": {
-              "localizedName": "MN",
-              "abbreviatedName": "MN"
-            }
-          },
-          {
-            "localizedName": "Duluth",
-            "administrativeDivision": {
-              "localizedName": "MN",
-              "abbreviatedName": "MN"
-            }
-          },
-          {
-            "localizedName": "Mankato",
-            "administrativeDivision": {
-              "localizedName": "MN",
-              "abbreviatedName": "MN"
-            }
-          },
-          {
-            "localizedName": "Minneapolis",
-            "administrativeDivision": {
-              "localizedName": "MN",
-              "abbreviatedName": "MN"
-            }
-          },
-          {
-            "localizedName": "St. Paul",
-            "administrativeDivision": {
-              "localizedName": "MN",
-              "abbreviatedName": "MN"
-            }
-          },
-          {
-            "localizedName": "Kansas City",
-            "administrativeDivision": {
-              "localizedName": "MO",
-              "abbreviatedName": "MO"
-            }
-          },
-          {
-            "localizedName": "Marshall",
-            "administrativeDivision": {
-              "localizedName": "MO",
-              "abbreviatedName": "MO"
-            }
-          },
-          {
-            "localizedName": "Springfield",
-            "administrativeDivision": {
-              "localizedName": "MO",
-              "abbreviatedName": "MO"
-            }
-          },
-          {
-            "localizedName": "St. Charles",
-            "administrativeDivision": {
-              "localizedName": "MO",
-              "abbreviatedName": "MO"
-            }
-          },
-          {
-            "localizedName": "Biloxi",
-            "administrativeDivision": {
-              "localizedName": "MS",
-              "abbreviatedName": "MS"
-            }
           }
         ],
         "nextLink": "/availablePhoneNumbers/countries/US/localities?api-version=2022-12-01\u0026skip=100\u0026maxPageSize=100"
       }
     },
     {
-      "RequestUri": "https://smstestapp.communication.azure.com/availablePhoneNumbers/countries/US/areaCodes?phoneNumberType=geographic\u0026assignmentType=person\u0026locality=Huntsville\u0026administrativeDivision=AL\u0026api-version=2022-12-01",
+      "RequestUri": "https://smstestapp.communication.azure.com/availablePhoneNumbers/countries/US/areaCodes?phoneNumberType=geographic\u0026assignmentType=person\u0026locality=Anchorage\u0026administrativeDivision=AK\u0026api-version=2022-12-01",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "traceparent": "00-cb6f3ed5061e258a5276451cda8b3d6d-98c2850228cf1422-00",
-        "User-Agent": "azsdk-net-Communication.PhoneNumbers/1.1.0-alpha.20230131.1 (.NET 7.0.2; Microsoft Windows 10.0.22621)",
-        "x-ms-client-request-id": "27429c2692a8f13889bf3cddd5e2f1e6",
+        "User-Agent": "azsdk-net-Communication.PhoneNumbers/1.2.0-alpha.20230515.1 (.NET 7.0.5; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "72ab77345db9388e3d19ab889429f5bc",
         "x-ms-content-sha256": "Sanitized",
-        "x-ms-date": "Tue, 31 Jan 2023 20:31:05 GMT",
+        "x-ms-date": "Mon, 15 May 2023 15:53:41 GMT",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
@@ -751,22 +749,19 @@
       "ResponseHeaders": {
         "api-supported-versions": "2021-03-07, 2022-12-01, 2022-12-02-preview2",
         "Cache-Control": "max-age=21600, private, stale-while-revalidate=86400",
+        "Content-Length": "50",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Tue, 31 Jan 2023 20:31:06 GMT",
-        "MS-CV": "mfdUaZcaL0OtjSVeUJmDsw.0",
+        "Date": "Mon, 15 May 2023 15:53:44 GMT",
+        "MS-CV": "igGWz\u002BO900GAYnsSxTg7jA.0",
         "Strict-Transport-Security": "max-age=2592000",
-        "Transfer-Encoding": "chunked",
-        "X-Azure-Ref": "0iXrZYwAAAAAD3qSafTS1RK0TNesGUz1WTUVYMzFFREdFMDQxNwA5ZmM3YjUxOS1hOGNjLTRmODktOTM1ZS1jOTE0OGFlMDllODE=",
+        "X-Azure-Ref": "0h1ViZAAAAACLQTZxH2SlR6Pq3mxxhfp8U0FPMzFFREdFMTExNwA5ZmM3YjUxOS1hOGNjLTRmODktOTM1ZS1jOTE0OGFlMDllODE=",
         "X-Cache": "CONFIG_NOCACHE",
-        "X-Processing-Time": "1098ms"
+        "X-Processing-Time": "2054ms"
       },
       "ResponseBody": {
         "areaCodes": [
           {
-            "areaCode": "256"
-          },
-          {
-            "areaCode": "938"
+            "areaCode": "907"
           }
         ],
         "nextLink": null
@@ -775,6 +770,6 @@
   ],
   "Variables": {
     "COMMUNICATION_LIVETEST_STATIC_CONNECTION_STRING": "endpoint=https://smstestapp.communication.azure.com/;accesskey=Kg==",
-    "RandomSeed": "2123060574"
+    "RandomSeed": "1054975072"
   }
 }

@@ -26,7 +26,6 @@ namespace Azure.ResourceManager.Attestation.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<AttestationPrivateLinkResource> array = new List<AttestationPrivateLinkResource>();

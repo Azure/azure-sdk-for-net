@@ -249,7 +249,7 @@ namespace Azure.Storage.Blobs.Test
                             s_immutabilityPolicy,
                             s_legalHold,
                             s_progress,
-                            s_validationEmpty,
+                            It.IsNotNull<UploadTransferValidationOptions>(),
                             default,
                             true,
                             s_cancellationToken))
@@ -266,7 +266,7 @@ namespace Azure.Storage.Blobs.Test
                     s_immutabilityPolicy,
                     s_legalHold,
                     s_progress,
-                    s_validationEmpty,
+                    It.IsNotNull<UploadTransferValidationOptions>(),
                     default,
                     false,
                     s_cancellationToken))

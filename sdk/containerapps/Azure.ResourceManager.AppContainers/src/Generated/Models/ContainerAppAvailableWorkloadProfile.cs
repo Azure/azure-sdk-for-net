@@ -10,7 +10,7 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.AppContainers.Models
 {
-    /// <summary> A premium workload profile. </summary>
+    /// <summary> A workload profile with specific hardware configure to run container apps. </summary>
     public partial class ContainerAppAvailableWorkloadProfile : ResourceData
     {
         /// <summary> Initializes a new instance of ContainerAppAvailableWorkloadProfile. </summary>

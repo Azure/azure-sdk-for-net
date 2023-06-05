@@ -3,6 +3,8 @@
 
 using System;
 using System.Collections;
+using System.Diagnostics;
+using System.IO;
 using System.Runtime.InteropServices;
 
 namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.Platform
@@ -32,5 +34,25 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.Platform
         }
 
         public bool IsOSPlatform(OSPlatform osPlatform) => RuntimeInformation.IsOSPlatform(osPlatform);
+
+        public bool CreateDirectory(string path)
+        {
+            try
+            {
+                Directory.CreateDirectory(path);
+                return true;
+            }
+            catch (Exception ex)
+            {
+                AzureMonitorExporterEventSource.Log.WriteError("ErrorCreatingStorageFolder", ex);
+                return false;
+            }
+        }
+
+        public string GetEnvironmentUserName() => Environment.UserName;
+
+        public string GetCurrentProcessName() => Process.GetCurrentProcess().ProcessName;
+
+        public string GetApplicationBaseDirectory() => AppContext.BaseDirectory;
     }
 }

@@ -26,7 +26,6 @@ namespace Azure.ResourceManager.HDInsight.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     clusterMonitoringEnabled = property.Value.GetBoolean();

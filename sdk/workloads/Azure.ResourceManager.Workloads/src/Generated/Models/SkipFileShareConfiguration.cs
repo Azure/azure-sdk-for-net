@@ -7,7 +7,7 @@
 
 namespace Azure.ResourceManager.Workloads.Models
 {
-    /// <summary> Gets or sets the skip file share configuration. </summary>
+    /// <summary> Gets or sets the file share configuration for scenarios where transport directory fileshare is not created or required. </summary>
     public partial class SkipFileShareConfiguration : FileShareConfiguration
     {
         /// <summary> Initializes a new instance of SkipFileShareConfiguration. </summary>

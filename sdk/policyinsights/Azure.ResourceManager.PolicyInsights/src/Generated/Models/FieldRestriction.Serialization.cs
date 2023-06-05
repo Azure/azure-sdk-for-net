@@ -29,7 +29,6 @@ namespace Azure.ResourceManager.PolicyInsights.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     result = new FieldRestrictionResult(property.Value.GetString());
@@ -44,7 +43,6 @@ namespace Azure.ResourceManager.PolicyInsights.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<string> array = new List<string>();
@@ -59,7 +57,6 @@ namespace Azure.ResourceManager.PolicyInsights.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     policy = PolicyReference.DeserializePolicyReference(property.Value);

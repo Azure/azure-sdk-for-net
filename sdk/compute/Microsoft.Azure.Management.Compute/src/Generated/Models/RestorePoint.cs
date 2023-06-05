@@ -86,7 +86,7 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// point creation.
         /// </summary>
         [JsonProperty(PropertyName = "properties.sourceMetadata")]
-        public RestorePointSourceMetadata SourceMetadata { get; private set; }
+        public RestorePointSourceMetadata SourceMetadata { get; set; }
 
         /// <summary>
         /// Gets the provisioning state of the restore point.

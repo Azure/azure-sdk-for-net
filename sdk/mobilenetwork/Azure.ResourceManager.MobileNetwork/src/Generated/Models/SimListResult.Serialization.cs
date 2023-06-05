@@ -28,7 +28,6 @@ namespace Azure.ResourceManager.MobileNetwork.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<SimData> array = new List<SimData>();

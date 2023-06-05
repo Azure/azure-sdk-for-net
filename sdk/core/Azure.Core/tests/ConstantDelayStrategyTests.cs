@@ -11,30 +11,21 @@ namespace Azure.Core.Tests.DelayStrategies
     {
         private static readonly MockResponse _mockResponse = new MockResponse(200);
 
-        [Test]
-        public void WillHonorSuggest(
-           [Values(90, 100, 120)] int suggest)
-        {
-            var strategy = new ConstantDelayStrategy();
-            var expected = TimeSpan.FromSeconds(suggest);
-            Assert.AreEqual(expected, strategy.GetNextDelay(_mockResponse, TimeSpan.FromSeconds(suggest)));
-        }
-
         [TestCase(1)]
         [TestCase(2)]
         [TestCase(3)]
-        public void DefaultShouldUseOneSecond(int count)
+        public void DefaultFixedDelay(int count)
         {
-            var strategy = new ConstantDelayStrategy();
+            var strategy = DelayStrategy.CreateFixedDelayStrategy();
             TimeSpan total = TimeSpan.Zero;
-            TimeSpan expected = TimeSpan.FromSeconds(count);
+            TimeSpan expected = TimeSpan.FromSeconds(0.8 * count);
 
-            for (int i=0; i < count; i++)
+            for (int i = 0; i < count; i++)
             {
-                total += strategy.GetNextDelay(_mockResponse, null);
+                total += strategy.GetNextDelay(_mockResponse, i + 1);
             }
 
-            Assert.AreEqual(expected, total);
+            Assert.That(total, Is.EqualTo(expected).Within(TimeSpan.FromSeconds(0.2 * count)));
         }
     }
 }

@@ -40,7 +40,6 @@ namespace Azure.ResourceManager.ManagedServices.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     provisioningState = new ManagedServicesProvisioningState(property.Value.GetString());
@@ -50,7 +49,6 @@ namespace Azure.ResourceManager.ManagedServices.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     registrationDefinition = ManagedServicesRegistrationAssignmentRegistrationData.DeserializeManagedServicesRegistrationAssignmentRegistrationData(property.Value);

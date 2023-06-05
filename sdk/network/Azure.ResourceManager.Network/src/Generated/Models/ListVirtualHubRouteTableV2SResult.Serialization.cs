@@ -28,7 +28,6 @@ namespace Azure.ResourceManager.Network.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<VirtualHubRouteTableV2Data> array = new List<VirtualHubRouteTableV2Data>();

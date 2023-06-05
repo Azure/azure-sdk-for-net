@@ -1,20 +1,19 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://azs-net-shrejaazsearch.search.windows.net/indexes?api-version=2021-04-30-Preview",
+      "RequestUri": "https://azs-net-t0eeade0124fbb432.search.windows.net/indexes?api-version=2023-07-01-Preview",
       "RequestMethod": "POST",
       "RequestHeaders": {
         "Accept": "application/json; odata.metadata=minimal",
         "api-key": "Sanitized",
-        "Connection": "keep-alive",
         "Content-Length": "880",
         "Content-Type": "application/json",
-        "User-Agent": "azsdk-net-Search.Documents/11.5.0-alpha.20230107.1 (.NET Framework 4.8.9105.0; Microsoft Windows 10.0.22621 )",
-        "x-ms-client-request-id": "cec40a359cce22d0aaf5d57721eb5173",
+        "User-Agent": "azsdk-net-Search.Documents/11.5.0-alpha.20230508.1 (.NET 6.0.16; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "9eedbae9d39541706006882ad7e633ae",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
-        "name": "kswwhqpx",
+        "name": "gsxkkwul",
         "fields": [
           {
             "name": "id",
@@ -82,26 +81,27 @@
       },
       "StatusCode": 201,
       "ResponseHeaders": {
-        "Cache-Control": "no-cache",
-        "client-request-id": "cec40a35-9cce-22d0-aaf5-d57721eb5173",
-        "Content-Length": "1711",
-        "Content-Type": "application/json; odata.metadata=minimal",
-        "Date": "Mon, 09 Jan 2023 18:07:19 GMT",
-        "elapsed-time": "689",
-        "ETag": "W/\u00220x8DAF26C59576010\u0022",
-        "Expires": "-1",
-        "Location": "https://azs-net-shrejaazsearch.search.windows.net/indexes(\u0027kswwhqpx\u0027)?api-version=2021-04-30-Preview",
+        "client-request-id": "9eedbae9-d395-4170-6006-882ad7e633ae",
+        "Content-Type": "application/json; odata.metadata=minimal; odata.streaming=true; charset=utf-8",
+        "Date": "Tue, 09 May 2023 01:06:50 GMT",
+        "elapsed-time": "590",
+        "ETag": "\u00220x8DB5029ABFB39A9\u0022",
+        "Location": "https://azs-net-t0eeade0124fbb432.search.windows.net/indexes(\u0027gsxkkwul\u0027)?api-version=2023-07-01-Preview",
         "OData-Version": "4.0",
-        "Pragma": "no-cache",
         "Preference-Applied": "odata.include-annotations=\u0022*\u0022",
-        "request-id": "cec40a35-9cce-22d0-aaf5-d57721eb5173",
-        "Strict-Transport-Security": "max-age=15724800; includeSubDomains",
-        "x-ms-client-request-id": "cec40a35-9cce-22d0-aaf5-d57721eb5173"
+        "request-id": "9eedbae9-d395-4170-6006-882ad7e633ae",
+        "Server": "Microsoft-IIS/10.0",
+        "Strict-Transport-Security": [
+          "max-age=2592000",
+          "max-age=15724800; includeSubDomains"
+        ],
+        "Transfer-Encoding": "chunked",
+        "x-ms-client-request-id": "9eedbae9-d395-4170-6006-882ad7e633ae"
       },
       "ResponseBody": {
-        "@odata.context": "https://azs-net-shrejaazsearch.search.windows.net/$metadata#indexes/$entity",
-        "@odata.etag": "\u00220x8DAF26C59576010\u0022",
-        "name": "kswwhqpx",
+        "@odata.context": "https://azs-net-t0eeade0124fbb432.search.windows.net/$metadata#indexes/$entity",
+        "@odata.etag": "\u00220x8DB5029ABFB39A9\u0022",
+        "name": "gsxkkwul",
         "defaultScoringProfile": null,
         "fields": [
           {
@@ -117,6 +117,8 @@
             "searchAnalyzer": null,
             "analyzer": null,
             "normalizer": null,
+            "dimensions": null,
+            "vectorSearchConfiguration": null,
             "synonymMaps": []
           },
           {
@@ -132,6 +134,8 @@
             "searchAnalyzer": null,
             "analyzer": "en.lucene",
             "normalizer": null,
+            "dimensions": null,
+            "vectorSearchConfiguration": null,
             "synonymMaps": []
           },
           {
@@ -147,6 +151,8 @@
             "searchAnalyzer": null,
             "analyzer": null,
             "normalizer": null,
+            "dimensions": null,
+            "vectorSearchConfiguration": null,
             "synonymMaps": []
           },
           {
@@ -162,6 +168,8 @@
             "searchAnalyzer": null,
             "analyzer": null,
             "normalizer": null,
+            "dimensions": null,
+            "vectorSearchConfiguration": null,
             "synonymMaps": []
           },
           {
@@ -177,6 +185,8 @@
             "searchAnalyzer": null,
             "analyzer": "en.lucene",
             "normalizer": "lowercase",
+            "dimensions": null,
+            "vectorSearchConfiguration": null,
             "synonymMaps": []
           }
         ],
@@ -202,53 +212,55 @@
           "k1": null,
           "b": null
         },
-        "semantic": null
+        "semantic": null,
+        "vectorSearch": null
       }
     },
     {
-      "RequestUri": "https://azs-net-shrejaazsearch.search.windows.net/indexes(\u0027kswwhqpx\u0027)/docs/search.index?api-version=2021-04-30-Preview",
+      "RequestUri": "https://azs-net-t0eeade0124fbb432.search.windows.net/indexes(\u0027gsxkkwul\u0027)/docs/search.index?api-version=2023-07-01-Preview",
       "RequestMethod": "POST",
       "RequestHeaders": {
         "Accept": "application/json; odata.metadata=none",
         "api-key": "Sanitized",
-        "Content-Length": "192",
+        "Content-Length": "177",
         "Content-Type": "application/json",
-        "User-Agent": "azsdk-net-Search.Documents/11.5.0-alpha.20230107.1 (.NET Framework 4.8.9105.0; Microsoft Windows 10.0.22621 )",
-        "x-ms-client-request-id": "ade8aec40a39369b5bd79f3dca8239de",
+        "User-Agent": "azsdk-net-Search.Documents/11.5.0-alpha.20230508.1 (.NET 6.0.16; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "b7f2e17320d396fac45b55ee84510595",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
         "value": [
           {
             "@search.action": "upload",
-            "id": "147ca0f2e7c74db6a256e1b2b469d48b",
+            "id": "755f4970c61e46368ed534498ebb32d8",
             "name": "The Lord of the Rings: The Return of the King",
             "genre": "Fantasy",
             "year": 2003,
-            "rating": 9.0999999999999996
+            "rating": 9.1
           }
         ]
       },
       "StatusCode": 200,
       "ResponseHeaders": {
-        "Cache-Control": "no-cache",
-        "client-request-id": "ade8aec4-0a39-369b-5bd7-9f3dca8239de",
-        "Content-Length": "105",
-        "Content-Type": "application/json; odata.metadata=none",
-        "Date": "Mon, 09 Jan 2023 18:07:19 GMT",
-        "elapsed-time": "97",
-        "Expires": "-1",
+        "client-request-id": "b7f2e173-20d3-96fa-c45b-55ee84510595",
+        "Content-Type": "application/json; odata.metadata=none; odata.streaming=true; charset=utf-8",
+        "Date": "Tue, 09 May 2023 01:06:50 GMT",
+        "elapsed-time": "82",
         "OData-Version": "4.0",
-        "Pragma": "no-cache",
         "Preference-Applied": "odata.include-annotations=\u0022*\u0022",
-        "request-id": "ade8aec4-0a39-369b-5bd7-9f3dca8239de",
-        "Strict-Transport-Security": "max-age=15724800; includeSubDomains",
-        "x-ms-client-request-id": "ade8aec4-0a39-369b-5bd7-9f3dca8239de"
+        "request-id": "b7f2e173-20d3-96fa-c45b-55ee84510595",
+        "Server": "Microsoft-IIS/10.0",
+        "Strict-Transport-Security": [
+          "max-age=2592000",
+          "max-age=15724800; includeSubDomains"
+        ],
+        "Transfer-Encoding": "chunked",
+        "x-ms-client-request-id": "b7f2e173-20d3-96fa-c45b-55ee84510595"
       },
       "ResponseBody": {
         "value": [
           {
-            "key": "147ca0f2e7c74db6a256e1b2b469d48b",
+            "key": "755f4970c61e46368ed534498ebb32d8",
             "status": true,
             "errorMessage": null,
             "statusCode": 201
@@ -257,38 +269,39 @@
       }
     },
     {
-      "RequestUri": "https://azs-net-shrejaazsearch.search.windows.net/indexes(\u0027kswwhqpx\u0027)?api-version=2021-04-30-Preview",
+      "RequestUri": "https://azs-net-t0eeade0124fbb432.search.windows.net/indexes(\u0027gsxkkwul\u0027)?api-version=2023-07-01-Preview",
       "RequestMethod": "DELETE",
       "RequestHeaders": {
         "Accept": "application/json; odata.metadata=minimal",
         "api-key": "Sanitized",
-        "Content-Length": "0",
-        "traceparent": "00-e0bdf32364e0df4b99eea864b2f00fb5-6adef58d89bf9d4e-00",
-        "User-Agent": "azsdk-net-Search.Documents/11.5.0-alpha.20230107.1 (.NET Framework 4.8.9105.0; Microsoft Windows 10.0.22621 )",
-        "x-ms-client-request-id": "a63d85a72cae890b0f3ad43156a9b63f",
+        "traceparent": "00-f79c360fd322f2c8cb1409b38df7003a-530ec8c398d15601-00",
+        "User-Agent": "azsdk-net-Search.Documents/11.5.0-alpha.20230508.1 (.NET 6.0.16; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "f55b7c01984ce7866270aa33b5063164",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
       "StatusCode": 204,
       "ResponseHeaders": {
-        "Cache-Control": "no-cache",
-        "client-request-id": "a63d85a7-2cae-890b-0f3a-d43156a9b63f",
-        "Date": "Mon, 09 Jan 2023 18:07:21 GMT",
-        "elapsed-time": "189",
-        "Expires": "-1",
-        "Pragma": "no-cache",
-        "request-id": "a63d85a7-2cae-890b-0f3a-d43156a9b63f",
-        "Strict-Transport-Security": "max-age=15724800; includeSubDomains",
-        "x-ms-client-request-id": "a63d85a7-2cae-890b-0f3a-d43156a9b63f"
+        "client-request-id": "f55b7c01-984c-e786-6270-aa33b5063164",
+        "Date": "Tue, 09 May 2023 01:06:51 GMT",
+        "elapsed-time": "169",
+        "Preference-Applied": "odata.include-annotations=\u0022*\u0022",
+        "request-id": "f55b7c01-984c-e786-6270-aa33b5063164",
+        "Server": "Microsoft-IIS/10.0",
+        "Strict-Transport-Security": [
+          "max-age=2592000",
+          "max-age=15724800; includeSubDomains"
+        ],
+        "x-ms-client-request-id": "f55b7c01-984c-e786-6270-aa33b5063164"
       },
       "ResponseBody": null
     }
   ],
   "Variables": {
-    "RandomSeed": "511290995",
-    "SearchIndexName": "kswwhqpx",
+    "RandomSeed": "1087732989",
+    "SearchIndexName": "gsxkkwul",
     "SEARCH_ADMIN_API_KEY": "Sanitized",
     "SEARCH_ENDPOINT_SUFFIX": "search.windows.net",
-    "SEARCH_SERVICE_NAME": "azs-net-shrejaazsearch"
+    "SEARCH_SERVICE_NAME": "azs-net-t0eeade0124fbb432"
   }
 }

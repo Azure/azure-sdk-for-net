@@ -43,7 +43,6 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     mode = new PostgreSqlFlexibleServerHighAvailabilityMode(property.Value.GetString());
@@ -53,7 +52,6 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     state = new PostgreSqlFlexibleServerHAState(property.Value.GetString());

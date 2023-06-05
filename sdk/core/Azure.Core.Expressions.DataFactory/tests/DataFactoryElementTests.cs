@@ -37,7 +37,7 @@ namespace Azure.Core.Expressions.DataFactory.Tests
 
             public override int GetHashCode()
             {
-#if NET461_OR_GREATER
+#if NET462
                 return X.GetHashCode() ^ Y.GetHashCode();
 #else
                 return HashCode.Combine(X, Y);
@@ -583,7 +583,7 @@ namespace Azure.Core.Expressions.DataFactory.Tests
         {
             var dfe = DataFactoryElement<double>.FromLiteral(DoubleValue);
             var actual = GetSerializedString(dfe);
-#if NET461_OR_GREATER
+#if NET462
             Assert.AreEqual("1.1000000000000001", actual);
 #else
             Assert.AreEqual(DoubleJson, actual);
@@ -1058,7 +1058,7 @@ namespace Azure.Core.Expressions.DataFactory.Tests
         {
             var dfe = JsonSerializer.Deserialize<DataFactoryElement<double>>(DoubleJson);
             var actual = GetSerializedString(dfe!);
-#if NET461_OR_GREATER
+#if NET462
             Assert.AreEqual("1.1000000000000001", actual);
 #else
             Assert.AreEqual(DoubleJson, actual);

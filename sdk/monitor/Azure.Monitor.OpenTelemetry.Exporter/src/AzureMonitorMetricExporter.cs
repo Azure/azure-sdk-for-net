@@ -5,7 +5,6 @@ using System;
 using System.Threading;
 using Azure.Core.Pipeline;
 using Azure.Monitor.OpenTelemetry.Exporter.Internals;
-using Azure.Monitor.OpenTelemetry.Exporter.Internals.PersistentStorage;
 using OpenTelemetry;
 using OpenTelemetry.Metrics;
 
@@ -28,7 +27,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
             _instrumentationKey = transmitter.InstrumentationKey;
         }
 
-        internal AzureMonitorResource? MetricResource => _resource ??= ParentProvider?.GetResource().UpdateRoleNameAndInstance();
+        internal AzureMonitorResource? MetricResource => _resource ??= ParentProvider?.GetResource().CreateAzureMonitorResource(_instrumentationKey);
 
         /// <inheritdoc/>
         public override ExportResult Export(in Batch<Metric> batch)

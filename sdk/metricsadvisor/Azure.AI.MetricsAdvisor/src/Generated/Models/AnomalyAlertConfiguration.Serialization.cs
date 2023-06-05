@@ -89,7 +89,6 @@ namespace Azure.AI.MetricsAdvisor.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     crossMetricsOperator = new MetricAlertConfigurationsOperator(property.Value.GetString());
@@ -99,7 +98,6 @@ namespace Azure.AI.MetricsAdvisor.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<string> array = new List<string>();

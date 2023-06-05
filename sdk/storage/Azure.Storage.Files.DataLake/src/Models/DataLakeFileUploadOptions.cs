@@ -74,5 +74,14 @@ namespace Azure.Storage.Files.DataLake.Models
         /// Optional override settings for this client's <see cref="DataLakeClientOptions.TransferValidation"/> settings.
         /// </summary>
         public UploadTransferValidationOptions TransferValidation { get; set; }
+
+        /// <summary>
+        /// Optional encryption context that can be set the file.
+        /// Encryption context is file metadata that is not encrypted when stored on the file.
+        /// The primary application of this field is to store non-encrypted data that can be used to derive the customer-provided key
+        /// for a file.
+        /// Not applicable for directories.
+        /// </summary>
+        public string EncryptionContext { get; set; }
     }
 }

@@ -114,22 +114,38 @@ namespace Azure.Core.Samples
         }
 
         [Test]
-        public void CustomizedJitterExponentialDelay()
+        public void CustomizedDelayStrategy()
         {
-            #region Snippet:CustomizeExponentialDelay
+            #region Snippet:CustomizedDelay
             SecretClientOptions options = new SecretClientOptions()
             {
-                RetryPolicy = new RetryPolicy(delayStrategy: new MyCustomDelayStrategy())
+                RetryPolicy = new RetryPolicy(delayStrategy: new SequentialDelayStrategy())
             };
             #endregion
         }
 
-        private class MyCustomDelayStrategy : DelayStrategy
+        #region Snippet:SequentialDelayStrategy
+        public class SequentialDelayStrategy : DelayStrategy
         {
+            private static readonly TimeSpan[] PollingSequence = new TimeSpan[]
+            {
+                TimeSpan.FromSeconds(1),
+                TimeSpan.FromSeconds(1),
+                TimeSpan.FromSeconds(1),
+                TimeSpan.FromSeconds(2),
+                TimeSpan.FromSeconds(4),
+                TimeSpan.FromSeconds(8),
+                TimeSpan.FromSeconds(16),
+                TimeSpan.FromSeconds(32)
+            };
+            private static readonly TimeSpan MaxDelay = PollingSequence[PollingSequence.Length - 1];
+
             protected override TimeSpan GetNextDelayCore(Response response, int retryNumber)
             {
-                throw new NotImplementedException();
+                int index = retryNumber - 1;
+                return index >= PollingSequence.Length ? MaxDelay : PollingSequence[index];
             }
         }
+        #endregion
     }
 }

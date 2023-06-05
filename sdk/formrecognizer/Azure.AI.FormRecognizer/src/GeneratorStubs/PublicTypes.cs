@@ -13,6 +13,15 @@ using Azure.Core;
 
 #pragma warning disable SA1402 // File may only contain a single type
 
+namespace Azure.AI.FormRecognizer.DocumentAnalysis
+{
+    [CodeGenModel("DocumentAnalysisFeature")]
+    public partial struct DocumentAnalysisFeature { }
+
+    [CodeGenModel("OperationKind")]
+    public partial struct DocumentOperationKind { }
+}
+
 namespace Azure.AI.FormRecognizer
 {
     [CodeGenModel("Language")]

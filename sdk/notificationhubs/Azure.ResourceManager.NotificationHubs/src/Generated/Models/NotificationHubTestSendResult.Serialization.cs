@@ -83,7 +83,6 @@ namespace Azure.ResourceManager.NotificationHubs.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     sku = NotificationHubSku.DeserializeNotificationHubSku(property.Value);
@@ -93,7 +92,6 @@ namespace Azure.ResourceManager.NotificationHubs.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();
@@ -128,7 +126,6 @@ namespace Azure.ResourceManager.NotificationHubs.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
@@ -147,7 +144,6 @@ namespace Azure.ResourceManager.NotificationHubs.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             success = property0.Value.GetInt32();
@@ -157,7 +153,6 @@ namespace Azure.ResourceManager.NotificationHubs.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             failure = property0.Value.GetInt32();
@@ -167,7 +162,6 @@ namespace Azure.ResourceManager.NotificationHubs.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             results = BinaryData.FromString(property0.Value.GetRawText());

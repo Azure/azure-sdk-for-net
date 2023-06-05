@@ -60,7 +60,6 @@ namespace Azure.ResourceManager.Storage.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     tierToCool = DateAfterCreation.DeserializeDateAfterCreation(property.Value);
@@ -70,7 +69,6 @@ namespace Azure.ResourceManager.Storage.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     tierToArchive = DateAfterCreation.DeserializeDateAfterCreation(property.Value);
@@ -80,7 +78,6 @@ namespace Azure.ResourceManager.Storage.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     tierToCold = DateAfterCreation.DeserializeDateAfterCreation(property.Value);
@@ -90,7 +87,6 @@ namespace Azure.ResourceManager.Storage.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     tierToHot = DateAfterCreation.DeserializeDateAfterCreation(property.Value);
@@ -100,7 +96,6 @@ namespace Azure.ResourceManager.Storage.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     delete = DateAfterCreation.DeserializeDateAfterCreation(property.Value);

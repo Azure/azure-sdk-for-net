@@ -45,7 +45,6 @@ namespace Azure.MixedReality.ObjectAnchors.Conversion.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<ErrorDetail> array = new List<ErrorDetail>();
@@ -60,7 +59,6 @@ namespace Azure.MixedReality.ObjectAnchors.Conversion.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     innererror = InnerError.DeserializeInnerError(property.Value);

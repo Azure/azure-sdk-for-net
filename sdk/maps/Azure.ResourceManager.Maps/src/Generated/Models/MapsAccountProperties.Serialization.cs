@@ -39,7 +39,6 @@ namespace Azure.ResourceManager.Maps.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     uniqueId = property.Value.GetGuid();
@@ -49,7 +48,6 @@ namespace Azure.ResourceManager.Maps.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     disableLocalAuth = property.Value.GetBoolean();

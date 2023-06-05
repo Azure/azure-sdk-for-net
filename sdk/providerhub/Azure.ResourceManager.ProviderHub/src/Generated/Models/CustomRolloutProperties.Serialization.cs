@@ -45,7 +45,6 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     provisioningState = new ProviderHubProvisioningState(property.Value.GetString());
@@ -60,7 +59,6 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     status = CustomRolloutStatus.DeserializeCustomRolloutStatus(property.Value);

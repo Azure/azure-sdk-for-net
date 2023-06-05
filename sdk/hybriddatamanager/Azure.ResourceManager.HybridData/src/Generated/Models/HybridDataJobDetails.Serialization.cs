@@ -66,7 +66,6 @@ namespace Azure.ResourceManager.HybridData.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<HybridDataJobStage> array = new List<HybridDataJobStage>();
@@ -81,7 +80,6 @@ namespace Azure.ResourceManager.HybridData.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     jobDefinition = HybridDataJobDefinitionData.DeserializeHybridDataJobDefinitionData(property.Value);
@@ -91,7 +89,6 @@ namespace Azure.ResourceManager.HybridData.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<HybridDataJobErrorDetails> array = new List<HybridDataJobErrorDetails>();

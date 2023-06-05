@@ -28,7 +28,6 @@ namespace Azure.ResourceManager.StorageSync.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     lastUpdatedTimestamp = property.Value.GetDateTimeOffset("O");
@@ -38,7 +37,6 @@ namespace Azure.ResourceManager.StorageSync.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     effectiveVolumeFreeSpacePolicy = property.Value.GetInt32();
@@ -48,7 +46,6 @@ namespace Azure.ResourceManager.StorageSync.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     currentVolumeFreeSpacePercent = property.Value.GetInt32();

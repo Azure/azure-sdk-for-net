@@ -47,7 +47,6 @@ namespace Azure.ResourceManager.DataLakeAnalytics
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
@@ -66,7 +65,6 @@ namespace Azure.ResourceManager.DataLakeAnalytics
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             startIPAddress = IPAddress.Parse(property0.Value.GetString());
@@ -76,7 +74,6 @@ namespace Azure.ResourceManager.DataLakeAnalytics
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             endIPAddress = IPAddress.Parse(property0.Value.GetString());

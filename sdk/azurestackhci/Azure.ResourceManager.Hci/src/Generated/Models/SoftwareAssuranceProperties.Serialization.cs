@@ -44,7 +44,6 @@ namespace Azure.ResourceManager.Hci.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     softwareAssuranceStatus = new SoftwareAssuranceStatus(property.Value.GetString());
@@ -54,7 +53,6 @@ namespace Azure.ResourceManager.Hci.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     softwareAssuranceIntent = new SoftwareAssuranceIntent(property.Value.GetString());
@@ -64,7 +62,6 @@ namespace Azure.ResourceManager.Hci.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     lastUpdated = property.Value.GetDateTimeOffset("O");

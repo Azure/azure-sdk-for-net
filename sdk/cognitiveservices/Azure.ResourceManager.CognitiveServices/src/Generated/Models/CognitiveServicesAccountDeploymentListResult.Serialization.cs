@@ -33,7 +33,6 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<CognitiveServicesAccountDeploymentData> array = new List<CognitiveServicesAccountDeploymentData>();

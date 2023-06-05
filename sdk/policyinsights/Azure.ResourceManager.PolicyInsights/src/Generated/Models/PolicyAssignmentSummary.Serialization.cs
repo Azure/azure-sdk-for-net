@@ -28,9 +28,8 @@ namespace Azure.ResourceManager.PolicyInsights.Models
             {
                 if (property.NameEquals("policyAssignmentId"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null || property.Value.ValueKind == JsonValueKind.String && property.Value.GetString().Length == 0)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     policyAssignmentId = new ResourceIdentifier(property.Value.GetString());
@@ -38,9 +37,8 @@ namespace Azure.ResourceManager.PolicyInsights.Models
                 }
                 if (property.NameEquals("policySetDefinitionId"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null || property.Value.ValueKind == JsonValueKind.String && property.Value.GetString().Length == 0)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     policySetDefinitionId = new ResourceIdentifier(property.Value.GetString());
@@ -50,7 +48,6 @@ namespace Azure.ResourceManager.PolicyInsights.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     results = PolicySummaryResults.DeserializePolicySummaryResults(property.Value);
@@ -60,7 +57,6 @@ namespace Azure.ResourceManager.PolicyInsights.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<PolicyDefinitionSummary> array = new List<PolicyDefinitionSummary>();
@@ -75,7 +71,6 @@ namespace Azure.ResourceManager.PolicyInsights.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<PolicyGroupSummary> array = new List<PolicyGroupSummary>();

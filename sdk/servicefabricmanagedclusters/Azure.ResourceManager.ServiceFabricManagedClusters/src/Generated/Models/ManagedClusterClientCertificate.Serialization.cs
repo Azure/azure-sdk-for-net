@@ -65,7 +65,6 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     thumbprint = BinaryData.FromString(property.Value.GetRawText());
@@ -80,7 +79,6 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     issuerThumbprint = BinaryData.FromString(property.Value.GetRawText());

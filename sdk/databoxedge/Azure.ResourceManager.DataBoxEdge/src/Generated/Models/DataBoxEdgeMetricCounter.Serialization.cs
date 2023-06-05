@@ -72,7 +72,6 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<DataBoxEdgeMetricDimension> array = new List<DataBoxEdgeMetricDimension>();
@@ -87,7 +86,6 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<DataBoxEdgeMetricDimension> array = new List<DataBoxEdgeMetricDimension>();

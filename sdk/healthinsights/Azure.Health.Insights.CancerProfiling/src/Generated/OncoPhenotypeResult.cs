@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using Azure;
 using Azure.Core;
 
@@ -30,19 +29,19 @@ namespace Azure.Health.Insights.CancerProfiling
         /// <param name="status"> The status of the processing job. </param>
         /// <param name="errors"> An array of errors, if any errors occurred during the processing job. </param>
         /// <param name="results"> The inference results for the Onco Phenotype request. </param>
-        internal OncoPhenotypeResult(string jobId, DateTimeOffset createdDateTime, DateTimeOffset expirationDateTime, DateTimeOffset lastUpdateDateTime, JobStatus status, IReadOnlyList<ResponseError> errors, OncoPhenotypeResults results)
+        internal OncoPhenotypeResult(Guid jobId, DateTimeOffset createdDateTime, DateTimeOffset expirationDateTime, DateTimeOffset lastUpdateDateTime, JobStatus status, IReadOnlyList<ResponseError> errors, OncoPhenotypeResults results)
         {
             JobId = jobId;
             CreatedDateTime = createdDateTime;
             ExpirationDateTime = expirationDateTime;
             LastUpdateDateTime = lastUpdateDateTime;
             Status = status;
-            Errors = errors.ToList();
+            Errors = errors;
             Results = results;
         }
 
         /// <summary> A processing job identifier. </summary>
-        public string JobId { get; }
+        public Guid JobId { get; }
         /// <summary> The date and time when the processing job was created. </summary>
         public DateTimeOffset CreatedDateTime { get; }
         /// <summary> The date and time when the processing job is set to expire. </summary>

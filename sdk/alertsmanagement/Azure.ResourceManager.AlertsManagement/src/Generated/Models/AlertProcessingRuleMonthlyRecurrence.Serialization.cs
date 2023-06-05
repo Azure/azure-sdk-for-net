@@ -70,7 +70,6 @@ namespace Azure.ResourceManager.AlertsManagement.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     startTime = property.Value.GetTimeSpan("T");
@@ -80,7 +79,6 @@ namespace Azure.ResourceManager.AlertsManagement.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     endTime = property.Value.GetTimeSpan("T");

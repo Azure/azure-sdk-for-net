@@ -94,7 +94,6 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     enabled = property.Value.GetBoolean();
@@ -104,7 +103,6 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<string> array = new List<string>();
@@ -119,7 +117,6 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<AzureLocation> array = new List<AzureLocation>();
@@ -134,7 +131,6 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<string> array = new List<string>();
@@ -149,7 +145,6 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     featuresRule = FeaturesRule.DeserializeFeaturesRule(property.Value);
@@ -159,7 +154,6 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<ResourceTypeExtension> array = new List<ResourceTypeExtension>();
@@ -174,7 +168,6 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     timeout = property.Value.GetTimeSpan("P");

@@ -31,7 +31,6 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     id = new ResourceIdentifier(property.Value.GetString());
@@ -46,7 +45,6 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     startTime = property.Value.GetDateTimeOffset("O");
@@ -56,7 +54,6 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     endTime = property.Value.GetDateTimeOffset("O");
@@ -71,7 +68,6 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     error = ErrorResponse.DeserializeErrorResponse(property.Value);

@@ -48,7 +48,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     livenessRoute = MachineLearningInferenceContainerRoute.DeserializeMachineLearningInferenceContainerRoute(property.Value);
@@ -58,7 +57,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     readinessRoute = MachineLearningInferenceContainerRoute.DeserializeMachineLearningInferenceContainerRoute(property.Value);
@@ -68,7 +66,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     scoringRoute = MachineLearningInferenceContainerRoute.DeserializeMachineLearningInferenceContainerRoute(property.Value);

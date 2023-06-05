@@ -21,7 +21,7 @@ namespace Azure.Health.Insights.CancerProfiling
             {
                 return null;
             }
-            string jobId = default;
+            Guid jobId = default;
             DateTimeOffset createdDateTime = default;
             DateTimeOffset expirationDateTime = default;
             DateTimeOffset lastUpdateDateTime = default;
@@ -32,7 +32,7 @@ namespace Azure.Health.Insights.CancerProfiling
             {
                 if (property.NameEquals("jobId"u8))
                 {
-                    jobId = property.Value.GetString();
+                    jobId = property.Value.GetGuid();
                     continue;
                 }
                 if (property.NameEquals("createdDateTime"u8))
@@ -59,7 +59,6 @@ namespace Azure.Health.Insights.CancerProfiling
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<ResponseError> array = new List<ResponseError>();
@@ -74,14 +73,13 @@ namespace Azure.Health.Insights.CancerProfiling
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     results = OncoPhenotypeResults.DeserializeOncoPhenotypeResults(property.Value);
                     continue;
                 }
             }
-            return new OncoPhenotypeResult(jobId, createdDateTime, expirationDateTime, lastUpdateDateTime, status, Optional.ToList(errors), results);
+            return new OncoPhenotypeResult(jobId, createdDateTime, expirationDateTime, lastUpdateDateTime, status, Optional.ToList(errors), results.Value);
         }
 
         /// <summary> Deserializes the model from a raw response. </summary>

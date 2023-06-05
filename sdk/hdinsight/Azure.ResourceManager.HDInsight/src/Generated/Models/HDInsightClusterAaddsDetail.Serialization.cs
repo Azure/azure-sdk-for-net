@@ -37,7 +37,6 @@ namespace Azure.ResourceManager.HDInsight.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     initialSyncComplete = property.Value.GetBoolean();
@@ -47,7 +46,6 @@ namespace Azure.ResourceManager.HDInsight.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     ldapsEnabled = property.Value.GetBoolean();
@@ -62,7 +60,6 @@ namespace Azure.ResourceManager.HDInsight.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     resourceId = new ResourceIdentifier(property.Value.GetString());
@@ -72,7 +69,6 @@ namespace Azure.ResourceManager.HDInsight.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     subnetId = new ResourceIdentifier(property.Value.GetString());
@@ -82,7 +78,6 @@ namespace Azure.ResourceManager.HDInsight.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     tenantId = property.Value.GetGuid();

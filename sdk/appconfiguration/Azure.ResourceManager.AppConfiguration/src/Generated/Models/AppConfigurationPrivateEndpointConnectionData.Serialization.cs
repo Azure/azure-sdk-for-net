@@ -68,7 +68,6 @@ namespace Azure.ResourceManager.AppConfiguration
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
@@ -87,7 +86,6 @@ namespace Azure.ResourceManager.AppConfiguration
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             provisioningState = new AppConfigurationProvisioningState(property0.Value.GetString());
@@ -97,7 +95,6 @@ namespace Azure.ResourceManager.AppConfiguration
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             privateEndpoint = JsonSerializer.Deserialize<WritableSubResource>(property0.Value.GetRawText());
@@ -107,7 +104,6 @@ namespace Azure.ResourceManager.AppConfiguration
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             privateLinkServiceConnectionState = AppConfigurationPrivateLinkServiceConnectionState.DeserializeAppConfigurationPrivateLinkServiceConnectionState(property0.Value);

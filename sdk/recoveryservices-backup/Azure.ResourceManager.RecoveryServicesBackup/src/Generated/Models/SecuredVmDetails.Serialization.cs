@@ -36,7 +36,6 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     securedVmOSDiskEncryptionSetId = new ResourceIdentifier(property.Value.GetString());

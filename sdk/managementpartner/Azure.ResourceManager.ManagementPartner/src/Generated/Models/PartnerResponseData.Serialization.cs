@@ -40,7 +40,6 @@ namespace Azure.ResourceManager.ManagementPartner
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     etag = property.Value.GetInt32();
@@ -65,7 +64,6 @@ namespace Azure.ResourceManager.ManagementPartner
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
@@ -94,7 +92,6 @@ namespace Azure.ResourceManager.ManagementPartner
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             tenantId = property0.Value.GetGuid();
@@ -109,7 +106,6 @@ namespace Azure.ResourceManager.ManagementPartner
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             version = property0.Value.GetInt32();
@@ -119,7 +115,6 @@ namespace Azure.ResourceManager.ManagementPartner
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             updatedTime = property0.Value.GetDateTimeOffset("O");
@@ -129,7 +124,6 @@ namespace Azure.ResourceManager.ManagementPartner
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             createdTime = property0.Value.GetDateTimeOffset("O");
@@ -139,7 +133,6 @@ namespace Azure.ResourceManager.ManagementPartner
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             state = new ManagementPartnerState(property0.Value.GetString());

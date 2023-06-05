@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.Workloads.Models
         /// <param name="virtualMachineConfiguration"> Gets or sets the virtual machine configuration. </param>
         /// <param name="instanceCount"> The number of database VMs. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subnetId"/> or <paramref name="virtualMachineConfiguration"/> is null. </exception>
-        public DatabaseConfiguration(ResourceIdentifier subnetId, VirtualMachineConfiguration virtualMachineConfiguration, long instanceCount)
+        public DatabaseConfiguration(ResourceIdentifier subnetId, SapVirtualMachineConfiguration virtualMachineConfiguration, long instanceCount)
         {
             Argument.AssertNotNull(subnetId, nameof(subnetId));
             Argument.AssertNotNull(virtualMachineConfiguration, nameof(virtualMachineConfiguration));
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.Workloads.Models
         /// <param name="virtualMachineConfiguration"> Gets or sets the virtual machine configuration. </param>
         /// <param name="instanceCount"> The number of database VMs. </param>
         /// <param name="diskConfiguration"> Gets or sets the disk configuration. </param>
-        internal DatabaseConfiguration(SapDatabaseType? databaseType, ResourceIdentifier subnetId, VirtualMachineConfiguration virtualMachineConfiguration, long instanceCount, DiskConfiguration diskConfiguration)
+        internal DatabaseConfiguration(SapDatabaseType? databaseType, ResourceIdentifier subnetId, SapVirtualMachineConfiguration virtualMachineConfiguration, long instanceCount, DiskConfiguration diskConfiguration)
         {
             DatabaseType = databaseType;
             SubnetId = subnetId;
@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.Workloads.Models
         /// <summary> The subnet id. </summary>
         public ResourceIdentifier SubnetId { get; set; }
         /// <summary> Gets or sets the virtual machine configuration. </summary>
-        public VirtualMachineConfiguration VirtualMachineConfiguration { get; set; }
+        public SapVirtualMachineConfiguration VirtualMachineConfiguration { get; set; }
         /// <summary> The number of database VMs. </summary>
         public long InstanceCount { get; set; }
         /// <summary> Gets or sets the disk configuration. </summary>

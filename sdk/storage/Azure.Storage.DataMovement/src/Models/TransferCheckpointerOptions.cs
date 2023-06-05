@@ -1,15 +1,11 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System;
-using System.Collections.Generic;
-using System.Text;
-
 namespace Azure.Storage.DataMovement.Models
 {
     /// <summary>
-    /// Base Checkpointer class to create the checkpointing logic
-    /// to resume from.
+    /// Options for Checkpointer used for saving transfer state to allow for
+    /// resuming a transfer.
     /// </summary>
     public class TransferCheckpointerOptions
     {

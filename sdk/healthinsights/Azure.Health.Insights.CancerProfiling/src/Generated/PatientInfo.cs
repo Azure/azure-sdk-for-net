@@ -20,6 +20,17 @@ namespace Azure.Health.Insights.CancerProfiling
             ClinicalInfo = new ChangeTrackingList<ClinicalCodedElement>();
         }
 
+        /// <summary> Initializes a new instance of PatientInfo. </summary>
+        /// <param name="sex"> The patient's sex. </param>
+        /// <param name="birthDate"> The patient's date of birth. </param>
+        /// <param name="clinicalInfo"> Known clinical information for the patient, structured. </param>
+        internal PatientInfo(PatientInfoSex? sex, DateTimeOffset? birthDate, IList<ClinicalCodedElement> clinicalInfo)
+        {
+            Sex = sex;
+            BirthDate = birthDate;
+            ClinicalInfo = clinicalInfo;
+        }
+
         /// <summary> The patient's sex. </summary>
         public PatientInfoSex? Sex { get; set; }
         /// <summary> The patient's date of birth. </summary>

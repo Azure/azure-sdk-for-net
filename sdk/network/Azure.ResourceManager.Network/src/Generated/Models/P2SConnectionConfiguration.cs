@@ -8,6 +8,8 @@
 using System.Collections.Generic;
 using Azure;
 using Azure.Core;
+using Azure.ResourceManager.Network;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -17,6 +19,8 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Initializes a new instance of P2SConnectionConfiguration. </summary>
         public P2SConnectionConfiguration()
         {
+            ConfigurationPolicyGroupAssociations = new ChangeTrackingList<WritableSubResource>();
+            PreviousConfigurationPolicyGroupAssociations = new ChangeTrackingList<VpnServerConfigurationPolicyGroupData>();
         }
 
         /// <summary> Initializes a new instance of P2SConnectionConfiguration. </summary>
@@ -27,13 +31,17 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="vpnClientAddressPool"> The reference to the address space resource which represents Address space for P2S VpnClient. </param>
         /// <param name="routingConfiguration"> The Routing Configuration indicating the associated and propagated route tables on this connection. </param>
         /// <param name="enableInternetSecurity"> Flag indicating whether the enable internet security flag is turned on for the P2S Connections or not. </param>
+        /// <param name="configurationPolicyGroupAssociations"> List of Configuration Policy Groups that this P2SConnectionConfiguration is attached to. </param>
+        /// <param name="previousConfigurationPolicyGroupAssociations"> List of previous Configuration Policy Groups that this P2SConnectionConfiguration was attached to. </param>
         /// <param name="provisioningState"> The provisioning state of the P2SConnectionConfiguration resource. </param>
-        internal P2SConnectionConfiguration(ResourceIdentifier id, string name, ResourceType? resourceType, ETag? etag, AddressSpace vpnClientAddressPool, RoutingConfiguration routingConfiguration, bool? enableInternetSecurity, NetworkProvisioningState? provisioningState) : base(id, name, resourceType)
+        internal P2SConnectionConfiguration(ResourceIdentifier id, string name, ResourceType? resourceType, ETag? etag, AddressSpace vpnClientAddressPool, RoutingConfiguration routingConfiguration, bool? enableInternetSecurity, IReadOnlyList<WritableSubResource> configurationPolicyGroupAssociations, IReadOnlyList<VpnServerConfigurationPolicyGroupData> previousConfigurationPolicyGroupAssociations, NetworkProvisioningState? provisioningState) : base(id, name, resourceType)
         {
             ETag = etag;
             VpnClientAddressPool = vpnClientAddressPool;
             RoutingConfiguration = routingConfiguration;
             EnableInternetSecurity = enableInternetSecurity;
+            ConfigurationPolicyGroupAssociations = configurationPolicyGroupAssociations;
+            PreviousConfigurationPolicyGroupAssociations = previousConfigurationPolicyGroupAssociations;
             ProvisioningState = provisioningState;
         }
 
@@ -56,6 +64,10 @@ namespace Azure.ResourceManager.Network.Models
         public RoutingConfiguration RoutingConfiguration { get; set; }
         /// <summary> Flag indicating whether the enable internet security flag is turned on for the P2S Connections or not. </summary>
         public bool? EnableInternetSecurity { get; set; }
+        /// <summary> List of Configuration Policy Groups that this P2SConnectionConfiguration is attached to. </summary>
+        public IReadOnlyList<WritableSubResource> ConfigurationPolicyGroupAssociations { get; }
+        /// <summary> List of previous Configuration Policy Groups that this P2SConnectionConfiguration was attached to. </summary>
+        public IReadOnlyList<VpnServerConfigurationPolicyGroupData> PreviousConfigurationPolicyGroupAssociations { get; }
         /// <summary> The provisioning state of the P2SConnectionConfiguration resource. </summary>
         public NetworkProvisioningState? ProvisioningState { get; }
     }

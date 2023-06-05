@@ -33,7 +33,6 @@ namespace Azure.ResourceManager.ContainerService.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     sku = ManagedClusterSku.DeserializeManagedClusterSku(property.Value);
@@ -43,7 +42,6 @@ namespace Azure.ResourceManager.ContainerService.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     enableRbac = property.Value.GetBoolean();
@@ -53,7 +51,6 @@ namespace Azure.ResourceManager.ContainerService.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     networkProfile = ContainerServiceNetworkProfileForSnapshot.DeserializeContainerServiceNetworkProfileForSnapshot(property.Value);

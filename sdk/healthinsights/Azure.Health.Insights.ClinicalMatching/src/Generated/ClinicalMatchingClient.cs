@@ -69,6 +69,7 @@ namespace Azure.Health.Insights.ClinicalMatching
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="trialMatcherData"/> is null. </exception>
         /// <remarks> Creates a Trial Matcher job with the given request body. </remarks>
+        /// <include file="Docs/ClinicalMatchingClient.xml" path="doc/members/member[@name='MatchTrialsAsync(WaitUntil,TrialMatcherData,string,DateTimeOffset?,CancellationToken)']/*" />
         public virtual async Task<Operation<TrialMatcherResult>> MatchTrialsAsync(WaitUntil waitUntil, TrialMatcherData trialMatcherData, string repeatabilityRequestId = null, DateTimeOffset? repeatabilityFirstSent = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(trialMatcherData, nameof(trialMatcherData));
@@ -86,6 +87,7 @@ namespace Azure.Health.Insights.ClinicalMatching
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="trialMatcherData"/> is null. </exception>
         /// <remarks> Creates a Trial Matcher job with the given request body. </remarks>
+        /// <include file="Docs/ClinicalMatchingClient.xml" path="doc/members/member[@name='MatchTrials(WaitUntil,TrialMatcherData,string,DateTimeOffset?,CancellationToken)']/*" />
         public virtual Operation<TrialMatcherResult> MatchTrials(WaitUntil waitUntil, TrialMatcherData trialMatcherData, string repeatabilityRequestId = null, DateTimeOffset? repeatabilityFirstSent = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(trialMatcherData, nameof(trialMatcherData));
@@ -95,16 +97,30 @@ namespace Azure.Health.Insights.ClinicalMatching
             return ProtocolOperationHelpers.Convert(response, TrialMatcherResult.FromResponse, ClientDiagnostics, "ClinicalMatchingClient.MatchTrials");
         }
 
-        /// <summary> Create Trial Matcher job. </summary>
+        /// <summary>
+        /// [Protocol Method] Create Trial Matcher job
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// <item>
+        /// <description>
+        /// Please try the simpler <see cref="MatchTrialsAsync(WaitUntil,TrialMatcherData,string,DateTimeOffset?,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="content"> The content to send as the body of the request. Details of the request body schema are in the Remarks section below. </param>
+        /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="repeatabilityRequestId"> An opaque, globally-unique, client-generated string identifier for the request. </param>
         /// <param name="repeatabilityFirstSent"> Specifies the date and time at which the request was first created. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The <see cref="Operation{T}"/> from the service that will contain a <see cref="BinaryData"/> object once the asynchronous operation on the service has completed. Details of the body schema for the operation's final value are in the Remarks section below. </returns>
-        /// <include file="Docs/ClinicalMatchingClient.xml" path="doc/members/member[@name='MatchTrialsAsync(WaitUntil,RequestContent,String,DateTimeOffset,RequestContext)']/*" />
+        /// <returns> The <see cref="Operation"/> representing an asynchronous operation on the service. </returns>
+        /// <include file="Docs/ClinicalMatchingClient.xml" path="doc/members/member[@name='MatchTrialsAsync(WaitUntil,RequestContent,string,DateTimeOffset?,RequestContext)']/*" />
         public virtual async Task<Operation<BinaryData>> MatchTrialsAsync(WaitUntil waitUntil, RequestContent content, string repeatabilityRequestId = null, DateTimeOffset? repeatabilityFirstSent = null, RequestContext context = null)
         {
             Argument.AssertNotNull(content, nameof(content));
@@ -123,16 +139,30 @@ namespace Azure.Health.Insights.ClinicalMatching
             }
         }
 
-        /// <summary> Create Trial Matcher job. </summary>
+        /// <summary>
+        /// [Protocol Method] Create Trial Matcher job
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// <item>
+        /// <description>
+        /// Please try the simpler <see cref="MatchTrials(WaitUntil,TrialMatcherData,string,DateTimeOffset?,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="content"> The content to send as the body of the request. Details of the request body schema are in the Remarks section below. </param>
+        /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="repeatabilityRequestId"> An opaque, globally-unique, client-generated string identifier for the request. </param>
         /// <param name="repeatabilityFirstSent"> Specifies the date and time at which the request was first created. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The <see cref="Operation{T}"/> from the service that will contain a <see cref="BinaryData"/> object once the asynchronous operation on the service has completed. Details of the body schema for the operation's final value are in the Remarks section below. </returns>
-        /// <include file="Docs/ClinicalMatchingClient.xml" path="doc/members/member[@name='MatchTrials(WaitUntil,RequestContent,String,DateTimeOffset,RequestContext)']/*" />
+        /// <returns> The <see cref="Operation"/> representing an asynchronous operation on the service. </returns>
+        /// <include file="Docs/ClinicalMatchingClient.xml" path="doc/members/member[@name='MatchTrials(WaitUntil,RequestContent,string,DateTimeOffset?,RequestContext)']/*" />
         public virtual Operation<BinaryData> MatchTrials(WaitUntil waitUntil, RequestContent content, string repeatabilityRequestId = null, DateTimeOffset? repeatabilityFirstSent = null, RequestContext context = null)
         {
             Argument.AssertNotNull(content, nameof(content));

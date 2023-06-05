@@ -28,7 +28,6 @@ namespace Azure.ResourceManager.Hci.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<OfferData> array = new List<OfferData>();

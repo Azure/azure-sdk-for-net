@@ -45,7 +45,6 @@ namespace Azure.ResourceManager.Automation.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     isMandatory = property.Value.GetBoolean();
@@ -55,7 +54,6 @@ namespace Azure.ResourceManager.Automation.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     isDynamic = property.Value.GetBoolean();
@@ -65,7 +63,6 @@ namespace Azure.ResourceManager.Automation.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     position = property.Value.GetInt64();
@@ -75,7 +72,6 @@ namespace Azure.ResourceManager.Automation.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     valueFromPipeline = property.Value.GetBoolean();
@@ -85,7 +81,6 @@ namespace Azure.ResourceManager.Automation.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     valueFromPipelineByPropertyName = property.Value.GetBoolean();
@@ -95,7 +90,6 @@ namespace Azure.ResourceManager.Automation.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     valueFromRemainingArguments = property.Value.GetBoolean();
@@ -110,7 +104,6 @@ namespace Azure.ResourceManager.Automation.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<AutomationActivityParameterValidationSet> array = new List<AutomationActivityParameterValidationSet>();

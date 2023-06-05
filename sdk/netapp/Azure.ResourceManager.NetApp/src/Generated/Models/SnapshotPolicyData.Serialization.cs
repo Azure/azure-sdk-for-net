@@ -88,7 +88,6 @@ namespace Azure.ResourceManager.NetApp
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     etag = new ETag(property.Value.GetString());
@@ -98,7 +97,6 @@ namespace Azure.ResourceManager.NetApp
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();
@@ -133,7 +131,6 @@ namespace Azure.ResourceManager.NetApp
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
@@ -152,7 +149,6 @@ namespace Azure.ResourceManager.NetApp
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             hourlySchedule = SnapshotPolicyHourlySchedule.DeserializeSnapshotPolicyHourlySchedule(property0.Value);
@@ -162,7 +158,6 @@ namespace Azure.ResourceManager.NetApp
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             dailySchedule = SnapshotPolicyDailySchedule.DeserializeSnapshotPolicyDailySchedule(property0.Value);
@@ -172,7 +167,6 @@ namespace Azure.ResourceManager.NetApp
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             weeklySchedule = SnapshotPolicyWeeklySchedule.DeserializeSnapshotPolicyWeeklySchedule(property0.Value);
@@ -182,7 +176,6 @@ namespace Azure.ResourceManager.NetApp
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             monthlySchedule = SnapshotPolicyMonthlySchedule.DeserializeSnapshotPolicyMonthlySchedule(property0.Value);
@@ -192,7 +185,6 @@ namespace Azure.ResourceManager.NetApp
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             enabled = property0.Value.GetBoolean();

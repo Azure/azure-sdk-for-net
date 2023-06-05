@@ -19,1320 +19,21 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
     /// <summary> A class to add extension methods to Azure.ResourceManager.RecoveryServicesSiteRecovery. </summary>
     public static partial class RecoveryServicesSiteRecoveryExtensions
     {
-        private static ResourceGroupResourceExtensionClient GetExtensionClient(ResourceGroupResource resourceGroupResource)
+        private static ResourceGroupResourceExtensionClient GetResourceGroupResourceExtensionClient(ArmResource resource)
         {
-            return resourceGroupResource.GetCachedClient((client) =>
+            return resource.GetCachedClient(client =>
             {
-                return new ResourceGroupResourceExtensionClient(client, resourceGroupResource.Id);
-            }
-            );
+                return new ResourceGroupResourceExtensionClient(client, resource.Id);
+            });
         }
 
-        /// <summary> Gets a collection of ReplicationAlertResources in the ResourceGroupResource. </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <param name="resourceName"> The name of the recovery services vault. </param>
-        /// <exception cref="ArgumentException"> <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceName"/> is null. </exception>
-        /// <returns> An object representing collection of ReplicationAlertResources and their operations over a ReplicationAlertResource. </returns>
-        public static ReplicationAlertCollection GetReplicationAlerts(this ResourceGroupResource resourceGroupResource, string resourceName)
+        private static ResourceGroupResourceExtensionClient GetResourceGroupResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
         {
-            Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
-
-            return GetExtensionClient(resourceGroupResource).GetReplicationAlerts(resourceName);
+            return client.GetResourceClient(() =>
+            {
+                return new ResourceGroupResourceExtensionClient(client, scope);
+            });
         }
-
-        /// <summary>
-        /// Gets the details of the specified email notification(alert) configuration.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{resourceName}/replicationAlertSettings/{alertSettingName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ReplicationAlertSettings_Get</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <param name="resourceName"> The name of the recovery services vault. </param>
-        /// <param name="alertSettingName"> The name of the email notification configuration. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="resourceName"/> or <paramref name="alertSettingName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceName"/> or <paramref name="alertSettingName"/> is null. </exception>
-        [ForwardsClientCalls]
-        public static async Task<Response<ReplicationAlertResource>> GetReplicationAlertAsync(this ResourceGroupResource resourceGroupResource, string resourceName, string alertSettingName, CancellationToken cancellationToken = default)
-        {
-            return await resourceGroupResource.GetReplicationAlerts(resourceName).GetAsync(alertSettingName, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Gets the details of the specified email notification(alert) configuration.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{resourceName}/replicationAlertSettings/{alertSettingName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ReplicationAlertSettings_Get</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <param name="resourceName"> The name of the recovery services vault. </param>
-        /// <param name="alertSettingName"> The name of the email notification configuration. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="resourceName"/> or <paramref name="alertSettingName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceName"/> or <paramref name="alertSettingName"/> is null. </exception>
-        [ForwardsClientCalls]
-        public static Response<ReplicationAlertResource> GetReplicationAlert(this ResourceGroupResource resourceGroupResource, string resourceName, string alertSettingName, CancellationToken cancellationToken = default)
-        {
-            return resourceGroupResource.GetReplicationAlerts(resourceName).Get(alertSettingName, cancellationToken);
-        }
-
-        /// <summary> Gets a collection of ReplicationEligibilityResultResources in the ResourceGroupResource. </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <param name="virtualMachineName"> Virtual Machine name. </param>
-        /// <exception cref="ArgumentException"> <paramref name="virtualMachineName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="virtualMachineName"/> is null. </exception>
-        /// <returns> An object representing collection of ReplicationEligibilityResultResources and their operations over a ReplicationEligibilityResultResource. </returns>
-        public static ReplicationEligibilityResultCollection GetReplicationEligibilityResults(this ResourceGroupResource resourceGroupResource, string virtualMachineName)
-        {
-            Argument.AssertNotNullOrEmpty(virtualMachineName, nameof(virtualMachineName));
-
-            return GetExtensionClient(resourceGroupResource).GetReplicationEligibilityResults(virtualMachineName);
-        }
-
-        /// <summary>
-        /// Validates whether a given VM can be protected or not in which case returns list of errors.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachines/{virtualMachineName}/providers/Microsoft.RecoveryServices/replicationEligibilityResults/default</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ReplicationEligibilityResults_Get</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <param name="virtualMachineName"> Virtual Machine name. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="virtualMachineName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="virtualMachineName"/> is null. </exception>
-        [ForwardsClientCalls]
-        public static async Task<Response<ReplicationEligibilityResultResource>> GetReplicationEligibilityResultAsync(this ResourceGroupResource resourceGroupResource, string virtualMachineName, CancellationToken cancellationToken = default)
-        {
-            return await resourceGroupResource.GetReplicationEligibilityResults(virtualMachineName).GetAsync(cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Validates whether a given VM can be protected or not in which case returns list of errors.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachines/{virtualMachineName}/providers/Microsoft.RecoveryServices/replicationEligibilityResults/default</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ReplicationEligibilityResults_Get</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <param name="virtualMachineName"> Virtual Machine name. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="virtualMachineName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="virtualMachineName"/> is null. </exception>
-        [ForwardsClientCalls]
-        public static Response<ReplicationEligibilityResultResource> GetReplicationEligibilityResult(this ResourceGroupResource resourceGroupResource, string virtualMachineName, CancellationToken cancellationToken = default)
-        {
-            return resourceGroupResource.GetReplicationEligibilityResults(virtualMachineName).Get(cancellationToken);
-        }
-
-        /// <summary> Gets a collection of SiteRecoveryEventResources in the ResourceGroupResource. </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <param name="resourceName"> The name of the recovery services vault. </param>
-        /// <exception cref="ArgumentException"> <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceName"/> is null. </exception>
-        /// <returns> An object representing collection of SiteRecoveryEventResources and their operations over a SiteRecoveryEventResource. </returns>
-        public static SiteRecoveryEventCollection GetSiteRecoveryEvents(this ResourceGroupResource resourceGroupResource, string resourceName)
-        {
-            Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
-
-            return GetExtensionClient(resourceGroupResource).GetSiteRecoveryEvents(resourceName);
-        }
-
-        /// <summary>
-        /// The operation to get the details of an Azure Site recovery event.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{resourceName}/replicationEvents/{eventName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ReplicationEvents_Get</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <param name="resourceName"> The name of the recovery services vault. </param>
-        /// <param name="eventName"> The name of the Azure Site Recovery event. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="resourceName"/> or <paramref name="eventName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceName"/> or <paramref name="eventName"/> is null. </exception>
-        [ForwardsClientCalls]
-        public static async Task<Response<SiteRecoveryEventResource>> GetSiteRecoveryEventAsync(this ResourceGroupResource resourceGroupResource, string resourceName, string eventName, CancellationToken cancellationToken = default)
-        {
-            return await resourceGroupResource.GetSiteRecoveryEvents(resourceName).GetAsync(eventName, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// The operation to get the details of an Azure Site recovery event.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{resourceName}/replicationEvents/{eventName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ReplicationEvents_Get</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <param name="resourceName"> The name of the recovery services vault. </param>
-        /// <param name="eventName"> The name of the Azure Site Recovery event. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="resourceName"/> or <paramref name="eventName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceName"/> or <paramref name="eventName"/> is null. </exception>
-        [ForwardsClientCalls]
-        public static Response<SiteRecoveryEventResource> GetSiteRecoveryEvent(this ResourceGroupResource resourceGroupResource, string resourceName, string eventName, CancellationToken cancellationToken = default)
-        {
-            return resourceGroupResource.GetSiteRecoveryEvents(resourceName).Get(eventName, cancellationToken);
-        }
-
-        /// <summary> Gets a collection of SiteRecoveryFabricResources in the ResourceGroupResource. </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <param name="resourceName"> The name of the recovery services vault. </param>
-        /// <exception cref="ArgumentException"> <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceName"/> is null. </exception>
-        /// <returns> An object representing collection of SiteRecoveryFabricResources and their operations over a SiteRecoveryFabricResource. </returns>
-        public static SiteRecoveryFabricCollection GetSiteRecoveryFabrics(this ResourceGroupResource resourceGroupResource, string resourceName)
-        {
-            Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
-
-            return GetExtensionClient(resourceGroupResource).GetSiteRecoveryFabrics(resourceName);
-        }
-
-        /// <summary>
-        /// Gets the details of an Azure Site Recovery fabric.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{resourceName}/replicationFabrics/{fabricName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ReplicationFabrics_Get</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <param name="resourceName"> The name of the recovery services vault. </param>
-        /// <param name="fabricName"> Fabric name. </param>
-        /// <param name="filter"> OData filter options. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="resourceName"/> or <paramref name="fabricName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceName"/> or <paramref name="fabricName"/> is null. </exception>
-        [ForwardsClientCalls]
-        public static async Task<Response<SiteRecoveryFabricResource>> GetSiteRecoveryFabricAsync(this ResourceGroupResource resourceGroupResource, string resourceName, string fabricName, string filter = null, CancellationToken cancellationToken = default)
-        {
-            return await resourceGroupResource.GetSiteRecoveryFabrics(resourceName).GetAsync(fabricName, filter, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Gets the details of an Azure Site Recovery fabric.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{resourceName}/replicationFabrics/{fabricName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ReplicationFabrics_Get</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <param name="resourceName"> The name of the recovery services vault. </param>
-        /// <param name="fabricName"> Fabric name. </param>
-        /// <param name="filter"> OData filter options. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="resourceName"/> or <paramref name="fabricName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceName"/> or <paramref name="fabricName"/> is null. </exception>
-        [ForwardsClientCalls]
-        public static Response<SiteRecoveryFabricResource> GetSiteRecoveryFabric(this ResourceGroupResource resourceGroupResource, string resourceName, string fabricName, string filter = null, CancellationToken cancellationToken = default)
-        {
-            return resourceGroupResource.GetSiteRecoveryFabrics(resourceName).Get(fabricName, filter, cancellationToken);
-        }
-
-        /// <summary> Gets a collection of SiteRecoveryJobResources in the ResourceGroupResource. </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <param name="resourceName"> The name of the recovery services vault. </param>
-        /// <exception cref="ArgumentException"> <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceName"/> is null. </exception>
-        /// <returns> An object representing collection of SiteRecoveryJobResources and their operations over a SiteRecoveryJobResource. </returns>
-        public static SiteRecoveryJobCollection GetSiteRecoveryJobs(this ResourceGroupResource resourceGroupResource, string resourceName)
-        {
-            Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
-
-            return GetExtensionClient(resourceGroupResource).GetSiteRecoveryJobs(resourceName);
-        }
-
-        /// <summary>
-        /// Get the details of an Azure Site Recovery job.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{resourceName}/replicationJobs/{jobName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ReplicationJobs_Get</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <param name="resourceName"> The name of the recovery services vault. </param>
-        /// <param name="jobName"> Job identifier. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="resourceName"/> or <paramref name="jobName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceName"/> or <paramref name="jobName"/> is null. </exception>
-        [ForwardsClientCalls]
-        public static async Task<Response<SiteRecoveryJobResource>> GetSiteRecoveryJobAsync(this ResourceGroupResource resourceGroupResource, string resourceName, string jobName, CancellationToken cancellationToken = default)
-        {
-            return await resourceGroupResource.GetSiteRecoveryJobs(resourceName).GetAsync(jobName, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Get the details of an Azure Site Recovery job.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{resourceName}/replicationJobs/{jobName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ReplicationJobs_Get</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <param name="resourceName"> The name of the recovery services vault. </param>
-        /// <param name="jobName"> Job identifier. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="resourceName"/> or <paramref name="jobName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceName"/> or <paramref name="jobName"/> is null. </exception>
-        [ForwardsClientCalls]
-        public static Response<SiteRecoveryJobResource> GetSiteRecoveryJob(this ResourceGroupResource resourceGroupResource, string resourceName, string jobName, CancellationToken cancellationToken = default)
-        {
-            return resourceGroupResource.GetSiteRecoveryJobs(resourceName).Get(jobName, cancellationToken);
-        }
-
-        /// <summary> Gets a collection of ReplicationPolicyResources in the ResourceGroupResource. </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <param name="resourceName"> The name of the recovery services vault. </param>
-        /// <exception cref="ArgumentException"> <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceName"/> is null. </exception>
-        /// <returns> An object representing collection of ReplicationPolicyResources and their operations over a ReplicationPolicyResource. </returns>
-        public static ReplicationPolicyCollection GetReplicationPolicies(this ResourceGroupResource resourceGroupResource, string resourceName)
-        {
-            Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
-
-            return GetExtensionClient(resourceGroupResource).GetReplicationPolicies(resourceName);
-        }
-
-        /// <summary>
-        /// Gets the details of a replication policy.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{resourceName}/replicationPolicies/{policyName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ReplicationPolicies_Get</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <param name="resourceName"> The name of the recovery services vault. </param>
-        /// <param name="policyName"> Replication policy name. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="resourceName"/> or <paramref name="policyName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceName"/> or <paramref name="policyName"/> is null. </exception>
-        [ForwardsClientCalls]
-        public static async Task<Response<ReplicationPolicyResource>> GetReplicationPolicyAsync(this ResourceGroupResource resourceGroupResource, string resourceName, string policyName, CancellationToken cancellationToken = default)
-        {
-            return await resourceGroupResource.GetReplicationPolicies(resourceName).GetAsync(policyName, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Gets the details of a replication policy.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{resourceName}/replicationPolicies/{policyName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ReplicationPolicies_Get</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <param name="resourceName"> The name of the recovery services vault. </param>
-        /// <param name="policyName"> Replication policy name. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="resourceName"/> or <paramref name="policyName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceName"/> or <paramref name="policyName"/> is null. </exception>
-        [ForwardsClientCalls]
-        public static Response<ReplicationPolicyResource> GetReplicationPolicy(this ResourceGroupResource resourceGroupResource, string resourceName, string policyName, CancellationToken cancellationToken = default)
-        {
-            return resourceGroupResource.GetReplicationPolicies(resourceName).Get(policyName, cancellationToken);
-        }
-
-        /// <summary> Gets a collection of ReplicationProtectionIntentResources in the ResourceGroupResource. </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <param name="resourceName"> The name of the recovery services vault. </param>
-        /// <exception cref="ArgumentException"> <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceName"/> is null. </exception>
-        /// <returns> An object representing collection of ReplicationProtectionIntentResources and their operations over a ReplicationProtectionIntentResource. </returns>
-        public static ReplicationProtectionIntentCollection GetReplicationProtectionIntents(this ResourceGroupResource resourceGroupResource, string resourceName)
-        {
-            Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
-
-            return GetExtensionClient(resourceGroupResource).GetReplicationProtectionIntents(resourceName);
-        }
-
-        /// <summary>
-        /// Gets the details of an ASR replication protection intent.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{resourceName}/replicationProtectionIntents/{intentObjectName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ReplicationProtectionIntents_Get</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <param name="resourceName"> The name of the recovery services vault. </param>
-        /// <param name="intentObjectName"> Replication protection intent name. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="resourceName"/> or <paramref name="intentObjectName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceName"/> or <paramref name="intentObjectName"/> is null. </exception>
-        [ForwardsClientCalls]
-        public static async Task<Response<ReplicationProtectionIntentResource>> GetReplicationProtectionIntentAsync(this ResourceGroupResource resourceGroupResource, string resourceName, string intentObjectName, CancellationToken cancellationToken = default)
-        {
-            return await resourceGroupResource.GetReplicationProtectionIntents(resourceName).GetAsync(intentObjectName, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Gets the details of an ASR replication protection intent.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{resourceName}/replicationProtectionIntents/{intentObjectName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ReplicationProtectionIntents_Get</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <param name="resourceName"> The name of the recovery services vault. </param>
-        /// <param name="intentObjectName"> Replication protection intent name. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="resourceName"/> or <paramref name="intentObjectName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceName"/> or <paramref name="intentObjectName"/> is null. </exception>
-        [ForwardsClientCalls]
-        public static Response<ReplicationProtectionIntentResource> GetReplicationProtectionIntent(this ResourceGroupResource resourceGroupResource, string resourceName, string intentObjectName, CancellationToken cancellationToken = default)
-        {
-            return resourceGroupResource.GetReplicationProtectionIntents(resourceName).Get(intentObjectName, cancellationToken);
-        }
-
-        /// <summary> Gets a collection of ReplicationRecoveryPlanResources in the ResourceGroupResource. </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <param name="resourceName"> The name of the recovery services vault. </param>
-        /// <exception cref="ArgumentException"> <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceName"/> is null. </exception>
-        /// <returns> An object representing collection of ReplicationRecoveryPlanResources and their operations over a ReplicationRecoveryPlanResource. </returns>
-        public static ReplicationRecoveryPlanCollection GetReplicationRecoveryPlans(this ResourceGroupResource resourceGroupResource, string resourceName)
-        {
-            Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
-
-            return GetExtensionClient(resourceGroupResource).GetReplicationRecoveryPlans(resourceName);
-        }
-
-        /// <summary>
-        /// Gets the details of the recovery plan.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{resourceName}/replicationRecoveryPlans/{recoveryPlanName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ReplicationRecoveryPlans_Get</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <param name="resourceName"> The name of the recovery services vault. </param>
-        /// <param name="recoveryPlanName"> Name of the recovery plan. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="resourceName"/> or <paramref name="recoveryPlanName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceName"/> or <paramref name="recoveryPlanName"/> is null. </exception>
-        [ForwardsClientCalls]
-        public static async Task<Response<ReplicationRecoveryPlanResource>> GetReplicationRecoveryPlanAsync(this ResourceGroupResource resourceGroupResource, string resourceName, string recoveryPlanName, CancellationToken cancellationToken = default)
-        {
-            return await resourceGroupResource.GetReplicationRecoveryPlans(resourceName).GetAsync(recoveryPlanName, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Gets the details of the recovery plan.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{resourceName}/replicationRecoveryPlans/{recoveryPlanName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ReplicationRecoveryPlans_Get</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <param name="resourceName"> The name of the recovery services vault. </param>
-        /// <param name="recoveryPlanName"> Name of the recovery plan. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="resourceName"/> or <paramref name="recoveryPlanName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceName"/> or <paramref name="recoveryPlanName"/> is null. </exception>
-        [ForwardsClientCalls]
-        public static Response<ReplicationRecoveryPlanResource> GetReplicationRecoveryPlan(this ResourceGroupResource resourceGroupResource, string resourceName, string recoveryPlanName, CancellationToken cancellationToken = default)
-        {
-            return resourceGroupResource.GetReplicationRecoveryPlans(resourceName).Get(recoveryPlanName, cancellationToken);
-        }
-
-        /// <summary> Gets a collection of ReplicationVaultSettingResources in the ResourceGroupResource. </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <param name="resourceName"> The name of the recovery services vault. </param>
-        /// <exception cref="ArgumentException"> <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceName"/> is null. </exception>
-        /// <returns> An object representing collection of ReplicationVaultSettingResources and their operations over a ReplicationVaultSettingResource. </returns>
-        public static ReplicationVaultSettingCollection GetReplicationVaultSettings(this ResourceGroupResource resourceGroupResource, string resourceName)
-        {
-            Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
-
-            return GetExtensionClient(resourceGroupResource).GetReplicationVaultSettings(resourceName);
-        }
-
-        /// <summary>
-        /// Gets the vault setting. This includes the Migration Hub connection settings.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{resourceName}/replicationVaultSettings/{vaultSettingName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ReplicationVaultSetting_Get</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <param name="resourceName"> The name of the recovery services vault. </param>
-        /// <param name="vaultSettingName"> Vault setting name. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="resourceName"/> or <paramref name="vaultSettingName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceName"/> or <paramref name="vaultSettingName"/> is null. </exception>
-        [ForwardsClientCalls]
-        public static async Task<Response<ReplicationVaultSettingResource>> GetReplicationVaultSettingAsync(this ResourceGroupResource resourceGroupResource, string resourceName, string vaultSettingName, CancellationToken cancellationToken = default)
-        {
-            return await resourceGroupResource.GetReplicationVaultSettings(resourceName).GetAsync(vaultSettingName, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Gets the vault setting. This includes the Migration Hub connection settings.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{resourceName}/replicationVaultSettings/{vaultSettingName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ReplicationVaultSetting_Get</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <param name="resourceName"> The name of the recovery services vault. </param>
-        /// <param name="vaultSettingName"> Vault setting name. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="resourceName"/> or <paramref name="vaultSettingName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceName"/> or <paramref name="vaultSettingName"/> is null. </exception>
-        [ForwardsClientCalls]
-        public static Response<ReplicationVaultSettingResource> GetReplicationVaultSetting(this ResourceGroupResource resourceGroupResource, string resourceName, string vaultSettingName, CancellationToken cancellationToken = default)
-        {
-            return resourceGroupResource.GetReplicationVaultSettings(resourceName).Get(vaultSettingName, cancellationToken);
-        }
-
-        /// <summary>
-        /// Gets the list of Azure Site Recovery appliances for the vault.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{resourceName}/replicationAppliances</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ReplicationAppliances_List</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <param name="resourceName"> The name of the recovery services vault. </param>
-        /// <param name="filter"> OData filter options. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceName"/> is null. </exception>
-        /// <returns> An async collection of <see cref="ReplicationAppliance" /> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<ReplicationAppliance> GetReplicationAppliancesAsync(this ResourceGroupResource resourceGroupResource, string resourceName, string filter = null, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
-
-            return GetExtensionClient(resourceGroupResource).GetReplicationAppliancesAsync(resourceName, filter, cancellationToken);
-        }
-
-        /// <summary>
-        /// Gets the list of Azure Site Recovery appliances for the vault.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{resourceName}/replicationAppliances</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ReplicationAppliances_List</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <param name="resourceName"> The name of the recovery services vault. </param>
-        /// <param name="filter"> OData filter options. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceName"/> is null. </exception>
-        /// <returns> A collection of <see cref="ReplicationAppliance" /> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<ReplicationAppliance> GetReplicationAppliances(this ResourceGroupResource resourceGroupResource, string resourceName, string filter = null, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
-
-            return GetExtensionClient(resourceGroupResource).GetReplicationAppliances(resourceName, filter, cancellationToken);
-        }
-
-        /// <summary>
-        /// Lists the networks available in a vault.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{resourceName}/replicationNetworks</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ReplicationNetworks_List</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <param name="resourceName"> The name of the recovery services vault. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceName"/> is null. </exception>
-        /// <returns> An async collection of <see cref="ReplicationNetworkResource" /> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<ReplicationNetworkResource> GetReplicationNetworksAsync(this ResourceGroupResource resourceGroupResource, string resourceName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
-
-            return GetExtensionClient(resourceGroupResource).GetReplicationNetworksAsync(resourceName, cancellationToken);
-        }
-
-        /// <summary>
-        /// Lists the networks available in a vault.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{resourceName}/replicationNetworks</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ReplicationNetworks_List</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <param name="resourceName"> The name of the recovery services vault. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceName"/> is null. </exception>
-        /// <returns> A collection of <see cref="ReplicationNetworkResource" /> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<ReplicationNetworkResource> GetReplicationNetworks(this ResourceGroupResource resourceGroupResource, string resourceName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
-
-            return GetExtensionClient(resourceGroupResource).GetReplicationNetworks(resourceName, cancellationToken);
-        }
-
-        /// <summary>
-        /// Lists all ASR network mappings in the vault.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{resourceName}/replicationNetworkMappings</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ReplicationNetworkMappings_List</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <param name="resourceName"> The name of the recovery services vault. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceName"/> is null. </exception>
-        /// <returns> An async collection of <see cref="ReplicationNetworkMappingResource" /> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<ReplicationNetworkMappingResource> GetReplicationNetworkMappingsAsync(this ResourceGroupResource resourceGroupResource, string resourceName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
-
-            return GetExtensionClient(resourceGroupResource).GetReplicationNetworkMappingsAsync(resourceName, cancellationToken);
-        }
-
-        /// <summary>
-        /// Lists all ASR network mappings in the vault.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{resourceName}/replicationNetworkMappings</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ReplicationNetworkMappings_List</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <param name="resourceName"> The name of the recovery services vault. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceName"/> is null. </exception>
-        /// <returns> A collection of <see cref="ReplicationNetworkMappingResource" /> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<ReplicationNetworkMappingResource> GetReplicationNetworkMappings(this ResourceGroupResource resourceGroupResource, string resourceName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
-
-            return GetExtensionClient(resourceGroupResource).GetReplicationNetworkMappings(resourceName, cancellationToken);
-        }
-
-        /// <summary>
-        /// Lists the protection containers in a vault.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{resourceName}/replicationProtectionContainers</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ReplicationProtectionContainers_List</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <param name="resourceName"> The name of the recovery services vault. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceName"/> is null. </exception>
-        /// <returns> An async collection of <see cref="ReplicationProtectionContainerResource" /> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<ReplicationProtectionContainerResource> GetReplicationProtectionContainersAsync(this ResourceGroupResource resourceGroupResource, string resourceName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
-
-            return GetExtensionClient(resourceGroupResource).GetReplicationProtectionContainersAsync(resourceName, cancellationToken);
-        }
-
-        /// <summary>
-        /// Lists the protection containers in a vault.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{resourceName}/replicationProtectionContainers</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ReplicationProtectionContainers_List</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <param name="resourceName"> The name of the recovery services vault. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceName"/> is null. </exception>
-        /// <returns> A collection of <see cref="ReplicationProtectionContainerResource" /> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<ReplicationProtectionContainerResource> GetReplicationProtectionContainers(this ResourceGroupResource resourceGroupResource, string resourceName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
-
-            return GetExtensionClient(resourceGroupResource).GetReplicationProtectionContainers(resourceName, cancellationToken);
-        }
-
-        /// <summary>
-        /// Gets the list of migration items in the vault.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{resourceName}/replicationMigrationItems</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ReplicationMigrationItems_List</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <param name="resourceName"> The name of the recovery services vault. </param>
-        /// <param name="skipToken"> The pagination token. </param>
-        /// <param name="takeToken"> The page size. </param>
-        /// <param name="filter"> OData filter options. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceName"/> is null. </exception>
-        /// <returns> An async collection of <see cref="ReplicationMigrationItemResource" /> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<ReplicationMigrationItemResource> GetReplicationMigrationItemsAsync(this ResourceGroupResource resourceGroupResource, string resourceName, string skipToken = null, string takeToken = null, string filter = null, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
-
-            return GetExtensionClient(resourceGroupResource).GetReplicationMigrationItemsAsync(resourceName, skipToken, takeToken, filter, cancellationToken);
-        }
-
-        /// <summary>
-        /// Gets the list of migration items in the vault.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{resourceName}/replicationMigrationItems</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ReplicationMigrationItems_List</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <param name="resourceName"> The name of the recovery services vault. </param>
-        /// <param name="skipToken"> The pagination token. </param>
-        /// <param name="takeToken"> The page size. </param>
-        /// <param name="filter"> OData filter options. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceName"/> is null. </exception>
-        /// <returns> A collection of <see cref="ReplicationMigrationItemResource" /> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<ReplicationMigrationItemResource> GetReplicationMigrationItems(this ResourceGroupResource resourceGroupResource, string resourceName, string skipToken = null, string takeToken = null, string filter = null, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
-
-            return GetExtensionClient(resourceGroupResource).GetReplicationMigrationItems(resourceName, skipToken, takeToken, filter, cancellationToken);
-        }
-
-        /// <summary>
-        /// Gets the list of ASR replication protected items in the vault.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{resourceName}/replicationProtectedItems</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ReplicationProtectedItems_List</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <param name="resourceName"> The name of the recovery services vault. </param>
-        /// <param name="skipToken"> The pagination token. Possible values: &quot;FabricId&quot; or &quot;FabricId_CloudId&quot; or null. </param>
-        /// <param name="filter"> OData filter options. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceName"/> is null. </exception>
-        /// <returns> An async collection of <see cref="ReplicationProtectedItemResource" /> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<ReplicationProtectedItemResource> GetReplicationProtectedItemsAsync(this ResourceGroupResource resourceGroupResource, string resourceName, string skipToken = null, string filter = null, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
-
-            return GetExtensionClient(resourceGroupResource).GetReplicationProtectedItemsAsync(resourceName, skipToken, filter, cancellationToken);
-        }
-
-        /// <summary>
-        /// Gets the list of ASR replication protected items in the vault.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{resourceName}/replicationProtectedItems</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ReplicationProtectedItems_List</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <param name="resourceName"> The name of the recovery services vault. </param>
-        /// <param name="skipToken"> The pagination token. Possible values: &quot;FabricId&quot; or &quot;FabricId_CloudId&quot; or null. </param>
-        /// <param name="filter"> OData filter options. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceName"/> is null. </exception>
-        /// <returns> A collection of <see cref="ReplicationProtectedItemResource" /> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<ReplicationProtectedItemResource> GetReplicationProtectedItems(this ResourceGroupResource resourceGroupResource, string resourceName, string skipToken = null, string filter = null, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
-
-            return GetExtensionClient(resourceGroupResource).GetReplicationProtectedItems(resourceName, skipToken, filter, cancellationToken);
-        }
-
-        /// <summary>
-        /// Lists the protection container mappings in the vault.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{resourceName}/replicationProtectionContainerMappings</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ReplicationProtectionContainerMappings_List</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <param name="resourceName"> The name of the recovery services vault. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceName"/> is null. </exception>
-        /// <returns> An async collection of <see cref="ReplicationProtectionContainerMappingResource" /> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<ReplicationProtectionContainerMappingResource> GetReplicationProtectionContainerMappingsAsync(this ResourceGroupResource resourceGroupResource, string resourceName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
-
-            return GetExtensionClient(resourceGroupResource).GetReplicationProtectionContainerMappingsAsync(resourceName, cancellationToken);
-        }
-
-        /// <summary>
-        /// Lists the protection container mappings in the vault.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{resourceName}/replicationProtectionContainerMappings</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ReplicationProtectionContainerMappings_List</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <param name="resourceName"> The name of the recovery services vault. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceName"/> is null. </exception>
-        /// <returns> A collection of <see cref="ReplicationProtectionContainerMappingResource" /> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<ReplicationProtectionContainerMappingResource> GetReplicationProtectionContainerMappings(this ResourceGroupResource resourceGroupResource, string resourceName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
-
-            return GetExtensionClient(resourceGroupResource).GetReplicationProtectionContainerMappings(resourceName, cancellationToken);
-        }
-
-        /// <summary>
-        /// Lists the registered recovery services providers in the vault.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{resourceName}/replicationRecoveryServicesProviders</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ReplicationRecoveryServicesProviders_List</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <param name="resourceName"> The name of the recovery services vault. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceName"/> is null. </exception>
-        /// <returns> An async collection of <see cref="SiteRecoveryServicesProviderResource" /> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<SiteRecoveryServicesProviderResource> GetSiteRecoveryServicesProvidersAsync(this ResourceGroupResource resourceGroupResource, string resourceName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
-
-            return GetExtensionClient(resourceGroupResource).GetSiteRecoveryServicesProvidersAsync(resourceName, cancellationToken);
-        }
-
-        /// <summary>
-        /// Lists the registered recovery services providers in the vault.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{resourceName}/replicationRecoveryServicesProviders</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ReplicationRecoveryServicesProviders_List</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <param name="resourceName"> The name of the recovery services vault. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceName"/> is null. </exception>
-        /// <returns> A collection of <see cref="SiteRecoveryServicesProviderResource" /> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<SiteRecoveryServicesProviderResource> GetSiteRecoveryServicesProviders(this ResourceGroupResource resourceGroupResource, string resourceName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
-
-            return GetExtensionClient(resourceGroupResource).GetSiteRecoveryServicesProviders(resourceName, cancellationToken);
-        }
-
-        /// <summary>
-        /// Lists the storage classifications in the vault.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{resourceName}/replicationStorageClassifications</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ReplicationStorageClassifications_List</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <param name="resourceName"> The name of the recovery services vault. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceName"/> is null. </exception>
-        /// <returns> An async collection of <see cref="ReplicationStorageClassificationResource" /> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<ReplicationStorageClassificationResource> GetReplicationStorageClassificationsAsync(this ResourceGroupResource resourceGroupResource, string resourceName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
-
-            return GetExtensionClient(resourceGroupResource).GetReplicationStorageClassificationsAsync(resourceName, cancellationToken);
-        }
-
-        /// <summary>
-        /// Lists the storage classifications in the vault.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{resourceName}/replicationStorageClassifications</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ReplicationStorageClassifications_List</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <param name="resourceName"> The name of the recovery services vault. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceName"/> is null. </exception>
-        /// <returns> A collection of <see cref="ReplicationStorageClassificationResource" /> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<ReplicationStorageClassificationResource> GetReplicationStorageClassifications(this ResourceGroupResource resourceGroupResource, string resourceName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
-
-            return GetExtensionClient(resourceGroupResource).GetReplicationStorageClassifications(resourceName, cancellationToken);
-        }
-
-        /// <summary>
-        /// Lists the storage classification mappings in the vault.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{resourceName}/replicationStorageClassificationMappings</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ReplicationStorageClassificationMappings_List</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <param name="resourceName"> The name of the recovery services vault. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceName"/> is null. </exception>
-        /// <returns> An async collection of <see cref="ReplicationStorageClassificationMappingResource" /> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<ReplicationStorageClassificationMappingResource> GetReplicationStorageClassificationMappingsAsync(this ResourceGroupResource resourceGroupResource, string resourceName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
-
-            return GetExtensionClient(resourceGroupResource).GetReplicationStorageClassificationMappingsAsync(resourceName, cancellationToken);
-        }
-
-        /// <summary>
-        /// Lists the storage classification mappings in the vault.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{resourceName}/replicationStorageClassificationMappings</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ReplicationStorageClassificationMappings_List</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <param name="resourceName"> The name of the recovery services vault. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceName"/> is null. </exception>
-        /// <returns> A collection of <see cref="ReplicationStorageClassificationMappingResource" /> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<ReplicationStorageClassificationMappingResource> GetReplicationStorageClassificationMappings(this ResourceGroupResource resourceGroupResource, string resourceName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
-
-            return GetExtensionClient(resourceGroupResource).GetReplicationStorageClassificationMappings(resourceName, cancellationToken);
-        }
-
-        /// <summary>
-        /// Lists the vCenter servers registered in the vault.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{resourceName}/replicationvCenters</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ReplicationvCenters_List</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <param name="resourceName"> The name of the recovery services vault. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceName"/> is null. </exception>
-        /// <returns> An async collection of <see cref="ReplicationVCenterResource" /> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<ReplicationVCenterResource> GetReplicationVCentersAsync(this ResourceGroupResource resourceGroupResource, string resourceName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
-
-            return GetExtensionClient(resourceGroupResource).GetReplicationVCentersAsync(resourceName, cancellationToken);
-        }
-
-        /// <summary>
-        /// Lists the vCenter servers registered in the vault.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{resourceName}/replicationvCenters</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ReplicationvCenters_List</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <param name="resourceName"> The name of the recovery services vault. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceName"/> is null. </exception>
-        /// <returns> A collection of <see cref="ReplicationVCenterResource" /> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<ReplicationVCenterResource> GetReplicationVCenters(this ResourceGroupResource resourceGroupResource, string resourceName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
-
-            return GetExtensionClient(resourceGroupResource).GetReplicationVCenters(resourceName, cancellationToken);
-        }
-
-        /// <summary>
-        /// Gets the data of supported operating systems by SRS.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{resourceName}/replicationSupportedOperatingSystems</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>SupportedOperatingSystems_Get</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <param name="resourceName"> The name of the recovery services vault. </param>
-        /// <param name="instanceType"> The instance type. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceName"/> is null. </exception>
-        public static async Task<Response<SupportedOperatingSystems>> GetSupportedOperatingSystemAsync(this ResourceGroupResource resourceGroupResource, string resourceName, string instanceType = null, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
-
-            return await GetExtensionClient(resourceGroupResource).GetSupportedOperatingSystemAsync(resourceName, instanceType, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Gets the data of supported operating systems by SRS.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{resourceName}/replicationSupportedOperatingSystems</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>SupportedOperatingSystems_Get</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <param name="resourceName"> The name of the recovery services vault. </param>
-        /// <param name="instanceType"> The instance type. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceName"/> is null. </exception>
-        public static Response<SupportedOperatingSystems> GetSupportedOperatingSystem(this ResourceGroupResource resourceGroupResource, string resourceName, string instanceType = null, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
-
-            return GetExtensionClient(resourceGroupResource).GetSupportedOperatingSystem(resourceName, instanceType, cancellationToken);
-        }
-
-        /// <summary>
-        /// Gets the health details of the vault.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{resourceName}/replicationVaultHealth</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ReplicationVaultHealth_Get</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <param name="resourceName"> The name of the recovery services vault. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceName"/> is null. </exception>
-        public static async Task<Response<VaultHealthDetails>> GetReplicationVaultHealthAsync(this ResourceGroupResource resourceGroupResource, string resourceName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
-
-            return await GetExtensionClient(resourceGroupResource).GetReplicationVaultHealthAsync(resourceName, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Gets the health details of the vault.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{resourceName}/replicationVaultHealth</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ReplicationVaultHealth_Get</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <param name="resourceName"> The name of the recovery services vault. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceName"/> is null. </exception>
-        public static Response<VaultHealthDetails> GetReplicationVaultHealth(this ResourceGroupResource resourceGroupResource, string resourceName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
-
-            return GetExtensionClient(resourceGroupResource).GetReplicationVaultHealth(resourceName, cancellationToken);
-        }
-
-        /// <summary>
-        /// Refreshes health summary of the vault.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{resourceName}/replicationVaultHealth/default/refresh</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ReplicationVaultHealth_Refresh</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="resourceName"> The name of the recovery services vault. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceName"/> is null. </exception>
-        public static async Task<ArmOperation<VaultHealthDetails>> RefreshReplicationVaultHealthAsync(this ResourceGroupResource resourceGroupResource, WaitUntil waitUntil, string resourceName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
-
-            return await GetExtensionClient(resourceGroupResource).RefreshReplicationVaultHealthAsync(waitUntil, resourceName, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Refreshes health summary of the vault.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{resourceName}/replicationVaultHealth/default/refresh</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ReplicationVaultHealth_Refresh</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="resourceName"> The name of the recovery services vault. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceName"/> is null. </exception>
-        public static ArmOperation<VaultHealthDetails> RefreshReplicationVaultHealth(this ResourceGroupResource resourceGroupResource, WaitUntil waitUntil, string resourceName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
-
-            return GetExtensionClient(resourceGroupResource).RefreshReplicationVaultHealth(waitUntil, resourceName, cancellationToken);
-        }
-
         #region ReplicationAlertResource
         /// <summary>
         /// Gets an object representing a <see cref="ReplicationAlertResource" /> along with the instance operations that can be performed on it but with no data.
@@ -1769,5 +470,1310 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
             );
         }
         #endregion
+
+        /// <summary> Gets a collection of ReplicationAlertResources in the ResourceGroupResource. </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
+        /// <param name="resourceName"> The name of the recovery services vault. </param>
+        /// <exception cref="ArgumentException"> <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceName"/> is null. </exception>
+        /// <returns> An object representing collection of ReplicationAlertResources and their operations over a ReplicationAlertResource. </returns>
+        public static ReplicationAlertCollection GetReplicationAlerts(this ResourceGroupResource resourceGroupResource, string resourceName)
+        {
+            Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
+
+            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetReplicationAlerts(resourceName);
+        }
+
+        /// <summary>
+        /// Gets the details of the specified email notification(alert) configuration.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{resourceName}/replicationAlertSettings/{alertSettingName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ReplicationAlertSettings_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
+        /// <param name="resourceName"> The name of the recovery services vault. </param>
+        /// <param name="alertSettingName"> The name of the email notification configuration. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="resourceName"/> or <paramref name="alertSettingName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceName"/> or <paramref name="alertSettingName"/> is null. </exception>
+        [ForwardsClientCalls]
+        public static async Task<Response<ReplicationAlertResource>> GetReplicationAlertAsync(this ResourceGroupResource resourceGroupResource, string resourceName, string alertSettingName, CancellationToken cancellationToken = default)
+        {
+            return await resourceGroupResource.GetReplicationAlerts(resourceName).GetAsync(alertSettingName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Gets the details of the specified email notification(alert) configuration.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{resourceName}/replicationAlertSettings/{alertSettingName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ReplicationAlertSettings_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
+        /// <param name="resourceName"> The name of the recovery services vault. </param>
+        /// <param name="alertSettingName"> The name of the email notification configuration. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="resourceName"/> or <paramref name="alertSettingName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceName"/> or <paramref name="alertSettingName"/> is null. </exception>
+        [ForwardsClientCalls]
+        public static Response<ReplicationAlertResource> GetReplicationAlert(this ResourceGroupResource resourceGroupResource, string resourceName, string alertSettingName, CancellationToken cancellationToken = default)
+        {
+            return resourceGroupResource.GetReplicationAlerts(resourceName).Get(alertSettingName, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of ReplicationEligibilityResultResources in the ResourceGroupResource. </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
+        /// <param name="virtualMachineName"> Virtual Machine name. </param>
+        /// <exception cref="ArgumentException"> <paramref name="virtualMachineName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="virtualMachineName"/> is null. </exception>
+        /// <returns> An object representing collection of ReplicationEligibilityResultResources and their operations over a ReplicationEligibilityResultResource. </returns>
+        public static ReplicationEligibilityResultCollection GetReplicationEligibilityResults(this ResourceGroupResource resourceGroupResource, string virtualMachineName)
+        {
+            Argument.AssertNotNullOrEmpty(virtualMachineName, nameof(virtualMachineName));
+
+            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetReplicationEligibilityResults(virtualMachineName);
+        }
+
+        /// <summary>
+        /// Validates whether a given VM can be protected or not in which case returns list of errors.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachines/{virtualMachineName}/providers/Microsoft.RecoveryServices/replicationEligibilityResults/default</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ReplicationEligibilityResults_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
+        /// <param name="virtualMachineName"> Virtual Machine name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="virtualMachineName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="virtualMachineName"/> is null. </exception>
+        [ForwardsClientCalls]
+        public static async Task<Response<ReplicationEligibilityResultResource>> GetReplicationEligibilityResultAsync(this ResourceGroupResource resourceGroupResource, string virtualMachineName, CancellationToken cancellationToken = default)
+        {
+            return await resourceGroupResource.GetReplicationEligibilityResults(virtualMachineName).GetAsync(cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Validates whether a given VM can be protected or not in which case returns list of errors.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachines/{virtualMachineName}/providers/Microsoft.RecoveryServices/replicationEligibilityResults/default</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ReplicationEligibilityResults_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
+        /// <param name="virtualMachineName"> Virtual Machine name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="virtualMachineName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="virtualMachineName"/> is null. </exception>
+        [ForwardsClientCalls]
+        public static Response<ReplicationEligibilityResultResource> GetReplicationEligibilityResult(this ResourceGroupResource resourceGroupResource, string virtualMachineName, CancellationToken cancellationToken = default)
+        {
+            return resourceGroupResource.GetReplicationEligibilityResults(virtualMachineName).Get(cancellationToken);
+        }
+
+        /// <summary> Gets a collection of SiteRecoveryEventResources in the ResourceGroupResource. </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
+        /// <param name="resourceName"> The name of the recovery services vault. </param>
+        /// <exception cref="ArgumentException"> <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceName"/> is null. </exception>
+        /// <returns> An object representing collection of SiteRecoveryEventResources and their operations over a SiteRecoveryEventResource. </returns>
+        public static SiteRecoveryEventCollection GetSiteRecoveryEvents(this ResourceGroupResource resourceGroupResource, string resourceName)
+        {
+            Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
+
+            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetSiteRecoveryEvents(resourceName);
+        }
+
+        /// <summary>
+        /// The operation to get the details of an Azure Site recovery event.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{resourceName}/replicationEvents/{eventName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ReplicationEvents_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
+        /// <param name="resourceName"> The name of the recovery services vault. </param>
+        /// <param name="eventName"> The name of the Azure Site Recovery event. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="resourceName"/> or <paramref name="eventName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceName"/> or <paramref name="eventName"/> is null. </exception>
+        [ForwardsClientCalls]
+        public static async Task<Response<SiteRecoveryEventResource>> GetSiteRecoveryEventAsync(this ResourceGroupResource resourceGroupResource, string resourceName, string eventName, CancellationToken cancellationToken = default)
+        {
+            return await resourceGroupResource.GetSiteRecoveryEvents(resourceName).GetAsync(eventName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// The operation to get the details of an Azure Site recovery event.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{resourceName}/replicationEvents/{eventName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ReplicationEvents_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
+        /// <param name="resourceName"> The name of the recovery services vault. </param>
+        /// <param name="eventName"> The name of the Azure Site Recovery event. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="resourceName"/> or <paramref name="eventName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceName"/> or <paramref name="eventName"/> is null. </exception>
+        [ForwardsClientCalls]
+        public static Response<SiteRecoveryEventResource> GetSiteRecoveryEvent(this ResourceGroupResource resourceGroupResource, string resourceName, string eventName, CancellationToken cancellationToken = default)
+        {
+            return resourceGroupResource.GetSiteRecoveryEvents(resourceName).Get(eventName, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of SiteRecoveryFabricResources in the ResourceGroupResource. </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
+        /// <param name="resourceName"> The name of the recovery services vault. </param>
+        /// <exception cref="ArgumentException"> <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceName"/> is null. </exception>
+        /// <returns> An object representing collection of SiteRecoveryFabricResources and their operations over a SiteRecoveryFabricResource. </returns>
+        public static SiteRecoveryFabricCollection GetSiteRecoveryFabrics(this ResourceGroupResource resourceGroupResource, string resourceName)
+        {
+            Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
+
+            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetSiteRecoveryFabrics(resourceName);
+        }
+
+        /// <summary>
+        /// Gets the details of an Azure Site Recovery fabric.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{resourceName}/replicationFabrics/{fabricName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ReplicationFabrics_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
+        /// <param name="resourceName"> The name of the recovery services vault. </param>
+        /// <param name="fabricName"> Fabric name. </param>
+        /// <param name="filter"> OData filter options. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="resourceName"/> or <paramref name="fabricName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceName"/> or <paramref name="fabricName"/> is null. </exception>
+        [ForwardsClientCalls]
+        public static async Task<Response<SiteRecoveryFabricResource>> GetSiteRecoveryFabricAsync(this ResourceGroupResource resourceGroupResource, string resourceName, string fabricName, string filter = null, CancellationToken cancellationToken = default)
+        {
+            return await resourceGroupResource.GetSiteRecoveryFabrics(resourceName).GetAsync(fabricName, filter, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Gets the details of an Azure Site Recovery fabric.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{resourceName}/replicationFabrics/{fabricName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ReplicationFabrics_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
+        /// <param name="resourceName"> The name of the recovery services vault. </param>
+        /// <param name="fabricName"> Fabric name. </param>
+        /// <param name="filter"> OData filter options. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="resourceName"/> or <paramref name="fabricName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceName"/> or <paramref name="fabricName"/> is null. </exception>
+        [ForwardsClientCalls]
+        public static Response<SiteRecoveryFabricResource> GetSiteRecoveryFabric(this ResourceGroupResource resourceGroupResource, string resourceName, string fabricName, string filter = null, CancellationToken cancellationToken = default)
+        {
+            return resourceGroupResource.GetSiteRecoveryFabrics(resourceName).Get(fabricName, filter, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of SiteRecoveryJobResources in the ResourceGroupResource. </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
+        /// <param name="resourceName"> The name of the recovery services vault. </param>
+        /// <exception cref="ArgumentException"> <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceName"/> is null. </exception>
+        /// <returns> An object representing collection of SiteRecoveryJobResources and their operations over a SiteRecoveryJobResource. </returns>
+        public static SiteRecoveryJobCollection GetSiteRecoveryJobs(this ResourceGroupResource resourceGroupResource, string resourceName)
+        {
+            Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
+
+            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetSiteRecoveryJobs(resourceName);
+        }
+
+        /// <summary>
+        /// Get the details of an Azure Site Recovery job.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{resourceName}/replicationJobs/{jobName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ReplicationJobs_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
+        /// <param name="resourceName"> The name of the recovery services vault. </param>
+        /// <param name="jobName"> Job identifier. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="resourceName"/> or <paramref name="jobName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceName"/> or <paramref name="jobName"/> is null. </exception>
+        [ForwardsClientCalls]
+        public static async Task<Response<SiteRecoveryJobResource>> GetSiteRecoveryJobAsync(this ResourceGroupResource resourceGroupResource, string resourceName, string jobName, CancellationToken cancellationToken = default)
+        {
+            return await resourceGroupResource.GetSiteRecoveryJobs(resourceName).GetAsync(jobName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Get the details of an Azure Site Recovery job.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{resourceName}/replicationJobs/{jobName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ReplicationJobs_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
+        /// <param name="resourceName"> The name of the recovery services vault. </param>
+        /// <param name="jobName"> Job identifier. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="resourceName"/> or <paramref name="jobName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceName"/> or <paramref name="jobName"/> is null. </exception>
+        [ForwardsClientCalls]
+        public static Response<SiteRecoveryJobResource> GetSiteRecoveryJob(this ResourceGroupResource resourceGroupResource, string resourceName, string jobName, CancellationToken cancellationToken = default)
+        {
+            return resourceGroupResource.GetSiteRecoveryJobs(resourceName).Get(jobName, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of ReplicationPolicyResources in the ResourceGroupResource. </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
+        /// <param name="resourceName"> The name of the recovery services vault. </param>
+        /// <exception cref="ArgumentException"> <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceName"/> is null. </exception>
+        /// <returns> An object representing collection of ReplicationPolicyResources and their operations over a ReplicationPolicyResource. </returns>
+        public static ReplicationPolicyCollection GetReplicationPolicies(this ResourceGroupResource resourceGroupResource, string resourceName)
+        {
+            Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
+
+            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetReplicationPolicies(resourceName);
+        }
+
+        /// <summary>
+        /// Gets the details of a replication policy.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{resourceName}/replicationPolicies/{policyName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ReplicationPolicies_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
+        /// <param name="resourceName"> The name of the recovery services vault. </param>
+        /// <param name="policyName"> Replication policy name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="resourceName"/> or <paramref name="policyName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceName"/> or <paramref name="policyName"/> is null. </exception>
+        [ForwardsClientCalls]
+        public static async Task<Response<ReplicationPolicyResource>> GetReplicationPolicyAsync(this ResourceGroupResource resourceGroupResource, string resourceName, string policyName, CancellationToken cancellationToken = default)
+        {
+            return await resourceGroupResource.GetReplicationPolicies(resourceName).GetAsync(policyName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Gets the details of a replication policy.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{resourceName}/replicationPolicies/{policyName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ReplicationPolicies_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
+        /// <param name="resourceName"> The name of the recovery services vault. </param>
+        /// <param name="policyName"> Replication policy name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="resourceName"/> or <paramref name="policyName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceName"/> or <paramref name="policyName"/> is null. </exception>
+        [ForwardsClientCalls]
+        public static Response<ReplicationPolicyResource> GetReplicationPolicy(this ResourceGroupResource resourceGroupResource, string resourceName, string policyName, CancellationToken cancellationToken = default)
+        {
+            return resourceGroupResource.GetReplicationPolicies(resourceName).Get(policyName, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of ReplicationProtectionIntentResources in the ResourceGroupResource. </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
+        /// <param name="resourceName"> The name of the recovery services vault. </param>
+        /// <exception cref="ArgumentException"> <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceName"/> is null. </exception>
+        /// <returns> An object representing collection of ReplicationProtectionIntentResources and their operations over a ReplicationProtectionIntentResource. </returns>
+        public static ReplicationProtectionIntentCollection GetReplicationProtectionIntents(this ResourceGroupResource resourceGroupResource, string resourceName)
+        {
+            Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
+
+            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetReplicationProtectionIntents(resourceName);
+        }
+
+        /// <summary>
+        /// Gets the details of an ASR replication protection intent.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{resourceName}/replicationProtectionIntents/{intentObjectName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ReplicationProtectionIntents_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
+        /// <param name="resourceName"> The name of the recovery services vault. </param>
+        /// <param name="intentObjectName"> Replication protection intent name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="resourceName"/> or <paramref name="intentObjectName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceName"/> or <paramref name="intentObjectName"/> is null. </exception>
+        [ForwardsClientCalls]
+        public static async Task<Response<ReplicationProtectionIntentResource>> GetReplicationProtectionIntentAsync(this ResourceGroupResource resourceGroupResource, string resourceName, string intentObjectName, CancellationToken cancellationToken = default)
+        {
+            return await resourceGroupResource.GetReplicationProtectionIntents(resourceName).GetAsync(intentObjectName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Gets the details of an ASR replication protection intent.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{resourceName}/replicationProtectionIntents/{intentObjectName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ReplicationProtectionIntents_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
+        /// <param name="resourceName"> The name of the recovery services vault. </param>
+        /// <param name="intentObjectName"> Replication protection intent name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="resourceName"/> or <paramref name="intentObjectName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceName"/> or <paramref name="intentObjectName"/> is null. </exception>
+        [ForwardsClientCalls]
+        public static Response<ReplicationProtectionIntentResource> GetReplicationProtectionIntent(this ResourceGroupResource resourceGroupResource, string resourceName, string intentObjectName, CancellationToken cancellationToken = default)
+        {
+            return resourceGroupResource.GetReplicationProtectionIntents(resourceName).Get(intentObjectName, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of ReplicationRecoveryPlanResources in the ResourceGroupResource. </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
+        /// <param name="resourceName"> The name of the recovery services vault. </param>
+        /// <exception cref="ArgumentException"> <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceName"/> is null. </exception>
+        /// <returns> An object representing collection of ReplicationRecoveryPlanResources and their operations over a ReplicationRecoveryPlanResource. </returns>
+        public static ReplicationRecoveryPlanCollection GetReplicationRecoveryPlans(this ResourceGroupResource resourceGroupResource, string resourceName)
+        {
+            Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
+
+            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetReplicationRecoveryPlans(resourceName);
+        }
+
+        /// <summary>
+        /// Gets the details of the recovery plan.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{resourceName}/replicationRecoveryPlans/{recoveryPlanName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ReplicationRecoveryPlans_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
+        /// <param name="resourceName"> The name of the recovery services vault. </param>
+        /// <param name="recoveryPlanName"> Name of the recovery plan. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="resourceName"/> or <paramref name="recoveryPlanName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceName"/> or <paramref name="recoveryPlanName"/> is null. </exception>
+        [ForwardsClientCalls]
+        public static async Task<Response<ReplicationRecoveryPlanResource>> GetReplicationRecoveryPlanAsync(this ResourceGroupResource resourceGroupResource, string resourceName, string recoveryPlanName, CancellationToken cancellationToken = default)
+        {
+            return await resourceGroupResource.GetReplicationRecoveryPlans(resourceName).GetAsync(recoveryPlanName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Gets the details of the recovery plan.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{resourceName}/replicationRecoveryPlans/{recoveryPlanName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ReplicationRecoveryPlans_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
+        /// <param name="resourceName"> The name of the recovery services vault. </param>
+        /// <param name="recoveryPlanName"> Name of the recovery plan. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="resourceName"/> or <paramref name="recoveryPlanName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceName"/> or <paramref name="recoveryPlanName"/> is null. </exception>
+        [ForwardsClientCalls]
+        public static Response<ReplicationRecoveryPlanResource> GetReplicationRecoveryPlan(this ResourceGroupResource resourceGroupResource, string resourceName, string recoveryPlanName, CancellationToken cancellationToken = default)
+        {
+            return resourceGroupResource.GetReplicationRecoveryPlans(resourceName).Get(recoveryPlanName, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of ReplicationVaultSettingResources in the ResourceGroupResource. </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
+        /// <param name="resourceName"> The name of the recovery services vault. </param>
+        /// <exception cref="ArgumentException"> <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceName"/> is null. </exception>
+        /// <returns> An object representing collection of ReplicationVaultSettingResources and their operations over a ReplicationVaultSettingResource. </returns>
+        public static ReplicationVaultSettingCollection GetReplicationVaultSettings(this ResourceGroupResource resourceGroupResource, string resourceName)
+        {
+            Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
+
+            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetReplicationVaultSettings(resourceName);
+        }
+
+        /// <summary>
+        /// Gets the vault setting. This includes the Migration Hub connection settings.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{resourceName}/replicationVaultSettings/{vaultSettingName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ReplicationVaultSetting_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
+        /// <param name="resourceName"> The name of the recovery services vault. </param>
+        /// <param name="vaultSettingName"> Vault setting name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="resourceName"/> or <paramref name="vaultSettingName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceName"/> or <paramref name="vaultSettingName"/> is null. </exception>
+        [ForwardsClientCalls]
+        public static async Task<Response<ReplicationVaultSettingResource>> GetReplicationVaultSettingAsync(this ResourceGroupResource resourceGroupResource, string resourceName, string vaultSettingName, CancellationToken cancellationToken = default)
+        {
+            return await resourceGroupResource.GetReplicationVaultSettings(resourceName).GetAsync(vaultSettingName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Gets the vault setting. This includes the Migration Hub connection settings.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{resourceName}/replicationVaultSettings/{vaultSettingName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ReplicationVaultSetting_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
+        /// <param name="resourceName"> The name of the recovery services vault. </param>
+        /// <param name="vaultSettingName"> Vault setting name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="resourceName"/> or <paramref name="vaultSettingName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceName"/> or <paramref name="vaultSettingName"/> is null. </exception>
+        [ForwardsClientCalls]
+        public static Response<ReplicationVaultSettingResource> GetReplicationVaultSetting(this ResourceGroupResource resourceGroupResource, string resourceName, string vaultSettingName, CancellationToken cancellationToken = default)
+        {
+            return resourceGroupResource.GetReplicationVaultSettings(resourceName).Get(vaultSettingName, cancellationToken);
+        }
+
+        /// <summary>
+        /// Gets the list of Azure Site Recovery appliances for the vault.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{resourceName}/replicationAppliances</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ReplicationAppliances_List</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
+        /// <param name="resourceName"> The name of the recovery services vault. </param>
+        /// <param name="filter"> OData filter options. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceName"/> is null. </exception>
+        /// <returns> An async collection of <see cref="ReplicationAppliance" /> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<ReplicationAppliance> GetReplicationAppliancesAsync(this ResourceGroupResource resourceGroupResource, string resourceName, string filter = null, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
+
+            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetReplicationAppliancesAsync(resourceName, filter, cancellationToken);
+        }
+
+        /// <summary>
+        /// Gets the list of Azure Site Recovery appliances for the vault.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{resourceName}/replicationAppliances</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ReplicationAppliances_List</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
+        /// <param name="resourceName"> The name of the recovery services vault. </param>
+        /// <param name="filter"> OData filter options. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceName"/> is null. </exception>
+        /// <returns> A collection of <see cref="ReplicationAppliance" /> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<ReplicationAppliance> GetReplicationAppliances(this ResourceGroupResource resourceGroupResource, string resourceName, string filter = null, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
+
+            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetReplicationAppliances(resourceName, filter, cancellationToken);
+        }
+
+        /// <summary>
+        /// Lists the networks available in a vault.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{resourceName}/replicationNetworks</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ReplicationNetworks_List</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
+        /// <param name="resourceName"> The name of the recovery services vault. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceName"/> is null. </exception>
+        /// <returns> An async collection of <see cref="ReplicationNetworkResource" /> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<ReplicationNetworkResource> GetReplicationNetworksAsync(this ResourceGroupResource resourceGroupResource, string resourceName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
+
+            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetReplicationNetworksAsync(resourceName, cancellationToken);
+        }
+
+        /// <summary>
+        /// Lists the networks available in a vault.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{resourceName}/replicationNetworks</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ReplicationNetworks_List</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
+        /// <param name="resourceName"> The name of the recovery services vault. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceName"/> is null. </exception>
+        /// <returns> A collection of <see cref="ReplicationNetworkResource" /> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<ReplicationNetworkResource> GetReplicationNetworks(this ResourceGroupResource resourceGroupResource, string resourceName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
+
+            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetReplicationNetworks(resourceName, cancellationToken);
+        }
+
+        /// <summary>
+        /// Lists all ASR network mappings in the vault.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{resourceName}/replicationNetworkMappings</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ReplicationNetworkMappings_List</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
+        /// <param name="resourceName"> The name of the recovery services vault. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceName"/> is null. </exception>
+        /// <returns> An async collection of <see cref="ReplicationNetworkMappingResource" /> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<ReplicationNetworkMappingResource> GetReplicationNetworkMappingsAsync(this ResourceGroupResource resourceGroupResource, string resourceName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
+
+            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetReplicationNetworkMappingsAsync(resourceName, cancellationToken);
+        }
+
+        /// <summary>
+        /// Lists all ASR network mappings in the vault.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{resourceName}/replicationNetworkMappings</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ReplicationNetworkMappings_List</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
+        /// <param name="resourceName"> The name of the recovery services vault. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceName"/> is null. </exception>
+        /// <returns> A collection of <see cref="ReplicationNetworkMappingResource" /> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<ReplicationNetworkMappingResource> GetReplicationNetworkMappings(this ResourceGroupResource resourceGroupResource, string resourceName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
+
+            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetReplicationNetworkMappings(resourceName, cancellationToken);
+        }
+
+        /// <summary>
+        /// Lists the protection containers in a vault.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{resourceName}/replicationProtectionContainers</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ReplicationProtectionContainers_List</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
+        /// <param name="resourceName"> The name of the recovery services vault. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceName"/> is null. </exception>
+        /// <returns> An async collection of <see cref="ReplicationProtectionContainerResource" /> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<ReplicationProtectionContainerResource> GetReplicationProtectionContainersAsync(this ResourceGroupResource resourceGroupResource, string resourceName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
+
+            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetReplicationProtectionContainersAsync(resourceName, cancellationToken);
+        }
+
+        /// <summary>
+        /// Lists the protection containers in a vault.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{resourceName}/replicationProtectionContainers</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ReplicationProtectionContainers_List</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
+        /// <param name="resourceName"> The name of the recovery services vault. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceName"/> is null. </exception>
+        /// <returns> A collection of <see cref="ReplicationProtectionContainerResource" /> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<ReplicationProtectionContainerResource> GetReplicationProtectionContainers(this ResourceGroupResource resourceGroupResource, string resourceName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
+
+            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetReplicationProtectionContainers(resourceName, cancellationToken);
+        }
+
+        /// <summary>
+        /// Gets the list of migration items in the vault.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{resourceName}/replicationMigrationItems</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ReplicationMigrationItems_List</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
+        /// <param name="resourceName"> The name of the recovery services vault. </param>
+        /// <param name="skipToken"> The pagination token. </param>
+        /// <param name="takeToken"> The page size. </param>
+        /// <param name="filter"> OData filter options. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceName"/> is null. </exception>
+        /// <returns> An async collection of <see cref="ReplicationMigrationItemResource" /> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<ReplicationMigrationItemResource> GetReplicationMigrationItemsAsync(this ResourceGroupResource resourceGroupResource, string resourceName, string skipToken = null, string takeToken = null, string filter = null, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
+
+            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetReplicationMigrationItemsAsync(resourceName, skipToken, takeToken, filter, cancellationToken);
+        }
+
+        /// <summary>
+        /// Gets the list of migration items in the vault.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{resourceName}/replicationMigrationItems</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ReplicationMigrationItems_List</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
+        /// <param name="resourceName"> The name of the recovery services vault. </param>
+        /// <param name="skipToken"> The pagination token. </param>
+        /// <param name="takeToken"> The page size. </param>
+        /// <param name="filter"> OData filter options. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceName"/> is null. </exception>
+        /// <returns> A collection of <see cref="ReplicationMigrationItemResource" /> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<ReplicationMigrationItemResource> GetReplicationMigrationItems(this ResourceGroupResource resourceGroupResource, string resourceName, string skipToken = null, string takeToken = null, string filter = null, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
+
+            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetReplicationMigrationItems(resourceName, skipToken, takeToken, filter, cancellationToken);
+        }
+
+        /// <summary>
+        /// Gets the list of ASR replication protected items in the vault.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{resourceName}/replicationProtectedItems</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ReplicationProtectedItems_List</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
+        /// <param name="resourceName"> The name of the recovery services vault. </param>
+        /// <param name="skipToken"> The pagination token. Possible values: &quot;FabricId&quot; or &quot;FabricId_CloudId&quot; or null. </param>
+        /// <param name="filter"> OData filter options. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceName"/> is null. </exception>
+        /// <returns> An async collection of <see cref="ReplicationProtectedItemResource" /> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<ReplicationProtectedItemResource> GetReplicationProtectedItemsAsync(this ResourceGroupResource resourceGroupResource, string resourceName, string skipToken = null, string filter = null, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
+
+            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetReplicationProtectedItemsAsync(resourceName, skipToken, filter, cancellationToken);
+        }
+
+        /// <summary>
+        /// Gets the list of ASR replication protected items in the vault.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{resourceName}/replicationProtectedItems</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ReplicationProtectedItems_List</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
+        /// <param name="resourceName"> The name of the recovery services vault. </param>
+        /// <param name="skipToken"> The pagination token. Possible values: &quot;FabricId&quot; or &quot;FabricId_CloudId&quot; or null. </param>
+        /// <param name="filter"> OData filter options. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceName"/> is null. </exception>
+        /// <returns> A collection of <see cref="ReplicationProtectedItemResource" /> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<ReplicationProtectedItemResource> GetReplicationProtectedItems(this ResourceGroupResource resourceGroupResource, string resourceName, string skipToken = null, string filter = null, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
+
+            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetReplicationProtectedItems(resourceName, skipToken, filter, cancellationToken);
+        }
+
+        /// <summary>
+        /// Lists the protection container mappings in the vault.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{resourceName}/replicationProtectionContainerMappings</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ReplicationProtectionContainerMappings_List</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
+        /// <param name="resourceName"> The name of the recovery services vault. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceName"/> is null. </exception>
+        /// <returns> An async collection of <see cref="ReplicationProtectionContainerMappingResource" /> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<ReplicationProtectionContainerMappingResource> GetReplicationProtectionContainerMappingsAsync(this ResourceGroupResource resourceGroupResource, string resourceName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
+
+            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetReplicationProtectionContainerMappingsAsync(resourceName, cancellationToken);
+        }
+
+        /// <summary>
+        /// Lists the protection container mappings in the vault.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{resourceName}/replicationProtectionContainerMappings</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ReplicationProtectionContainerMappings_List</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
+        /// <param name="resourceName"> The name of the recovery services vault. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceName"/> is null. </exception>
+        /// <returns> A collection of <see cref="ReplicationProtectionContainerMappingResource" /> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<ReplicationProtectionContainerMappingResource> GetReplicationProtectionContainerMappings(this ResourceGroupResource resourceGroupResource, string resourceName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
+
+            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetReplicationProtectionContainerMappings(resourceName, cancellationToken);
+        }
+
+        /// <summary>
+        /// Lists the registered recovery services providers in the vault.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{resourceName}/replicationRecoveryServicesProviders</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ReplicationRecoveryServicesProviders_List</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
+        /// <param name="resourceName"> The name of the recovery services vault. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceName"/> is null. </exception>
+        /// <returns> An async collection of <see cref="SiteRecoveryServicesProviderResource" /> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<SiteRecoveryServicesProviderResource> GetSiteRecoveryServicesProvidersAsync(this ResourceGroupResource resourceGroupResource, string resourceName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
+
+            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetSiteRecoveryServicesProvidersAsync(resourceName, cancellationToken);
+        }
+
+        /// <summary>
+        /// Lists the registered recovery services providers in the vault.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{resourceName}/replicationRecoveryServicesProviders</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ReplicationRecoveryServicesProviders_List</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
+        /// <param name="resourceName"> The name of the recovery services vault. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceName"/> is null. </exception>
+        /// <returns> A collection of <see cref="SiteRecoveryServicesProviderResource" /> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<SiteRecoveryServicesProviderResource> GetSiteRecoveryServicesProviders(this ResourceGroupResource resourceGroupResource, string resourceName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
+
+            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetSiteRecoveryServicesProviders(resourceName, cancellationToken);
+        }
+
+        /// <summary>
+        /// Lists the storage classifications in the vault.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{resourceName}/replicationStorageClassifications</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ReplicationStorageClassifications_List</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
+        /// <param name="resourceName"> The name of the recovery services vault. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceName"/> is null. </exception>
+        /// <returns> An async collection of <see cref="ReplicationStorageClassificationResource" /> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<ReplicationStorageClassificationResource> GetReplicationStorageClassificationsAsync(this ResourceGroupResource resourceGroupResource, string resourceName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
+
+            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetReplicationStorageClassificationsAsync(resourceName, cancellationToken);
+        }
+
+        /// <summary>
+        /// Lists the storage classifications in the vault.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{resourceName}/replicationStorageClassifications</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ReplicationStorageClassifications_List</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
+        /// <param name="resourceName"> The name of the recovery services vault. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceName"/> is null. </exception>
+        /// <returns> A collection of <see cref="ReplicationStorageClassificationResource" /> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<ReplicationStorageClassificationResource> GetReplicationStorageClassifications(this ResourceGroupResource resourceGroupResource, string resourceName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
+
+            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetReplicationStorageClassifications(resourceName, cancellationToken);
+        }
+
+        /// <summary>
+        /// Lists the storage classification mappings in the vault.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{resourceName}/replicationStorageClassificationMappings</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ReplicationStorageClassificationMappings_List</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
+        /// <param name="resourceName"> The name of the recovery services vault. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceName"/> is null. </exception>
+        /// <returns> An async collection of <see cref="ReplicationStorageClassificationMappingResource" /> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<ReplicationStorageClassificationMappingResource> GetReplicationStorageClassificationMappingsAsync(this ResourceGroupResource resourceGroupResource, string resourceName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
+
+            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetReplicationStorageClassificationMappingsAsync(resourceName, cancellationToken);
+        }
+
+        /// <summary>
+        /// Lists the storage classification mappings in the vault.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{resourceName}/replicationStorageClassificationMappings</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ReplicationStorageClassificationMappings_List</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
+        /// <param name="resourceName"> The name of the recovery services vault. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceName"/> is null. </exception>
+        /// <returns> A collection of <see cref="ReplicationStorageClassificationMappingResource" /> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<ReplicationStorageClassificationMappingResource> GetReplicationStorageClassificationMappings(this ResourceGroupResource resourceGroupResource, string resourceName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
+
+            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetReplicationStorageClassificationMappings(resourceName, cancellationToken);
+        }
+
+        /// <summary>
+        /// Lists the vCenter servers registered in the vault.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{resourceName}/replicationvCenters</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ReplicationvCenters_List</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
+        /// <param name="resourceName"> The name of the recovery services vault. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceName"/> is null. </exception>
+        /// <returns> An async collection of <see cref="ReplicationVCenterResource" /> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<ReplicationVCenterResource> GetReplicationVCentersAsync(this ResourceGroupResource resourceGroupResource, string resourceName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
+
+            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetReplicationVCentersAsync(resourceName, cancellationToken);
+        }
+
+        /// <summary>
+        /// Lists the vCenter servers registered in the vault.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{resourceName}/replicationvCenters</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ReplicationvCenters_List</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
+        /// <param name="resourceName"> The name of the recovery services vault. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceName"/> is null. </exception>
+        /// <returns> A collection of <see cref="ReplicationVCenterResource" /> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<ReplicationVCenterResource> GetReplicationVCenters(this ResourceGroupResource resourceGroupResource, string resourceName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
+
+            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetReplicationVCenters(resourceName, cancellationToken);
+        }
+
+        /// <summary>
+        /// Gets the data of supported operating systems by SRS.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{resourceName}/replicationSupportedOperatingSystems</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>SupportedOperatingSystems_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
+        /// <param name="resourceName"> The name of the recovery services vault. </param>
+        /// <param name="instanceType"> The instance type. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceName"/> is null. </exception>
+        public static async Task<Response<SupportedOperatingSystems>> GetSupportedOperatingSystemAsync(this ResourceGroupResource resourceGroupResource, string resourceName, string instanceType = null, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
+
+            return await GetResourceGroupResourceExtensionClient(resourceGroupResource).GetSupportedOperatingSystemAsync(resourceName, instanceType, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Gets the data of supported operating systems by SRS.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{resourceName}/replicationSupportedOperatingSystems</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>SupportedOperatingSystems_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
+        /// <param name="resourceName"> The name of the recovery services vault. </param>
+        /// <param name="instanceType"> The instance type. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceName"/> is null. </exception>
+        public static Response<SupportedOperatingSystems> GetSupportedOperatingSystem(this ResourceGroupResource resourceGroupResource, string resourceName, string instanceType = null, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
+
+            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetSupportedOperatingSystem(resourceName, instanceType, cancellationToken);
+        }
+
+        /// <summary>
+        /// Gets the health details of the vault.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{resourceName}/replicationVaultHealth</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ReplicationVaultHealth_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
+        /// <param name="resourceName"> The name of the recovery services vault. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceName"/> is null. </exception>
+        public static async Task<Response<VaultHealthDetails>> GetReplicationVaultHealthAsync(this ResourceGroupResource resourceGroupResource, string resourceName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
+
+            return await GetResourceGroupResourceExtensionClient(resourceGroupResource).GetReplicationVaultHealthAsync(resourceName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Gets the health details of the vault.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{resourceName}/replicationVaultHealth</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ReplicationVaultHealth_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
+        /// <param name="resourceName"> The name of the recovery services vault. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceName"/> is null. </exception>
+        public static Response<VaultHealthDetails> GetReplicationVaultHealth(this ResourceGroupResource resourceGroupResource, string resourceName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
+
+            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetReplicationVaultHealth(resourceName, cancellationToken);
+        }
+
+        /// <summary>
+        /// Refreshes health summary of the vault.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{resourceName}/replicationVaultHealth/default/refresh</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ReplicationVaultHealth_Refresh</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="resourceName"> The name of the recovery services vault. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceName"/> is null. </exception>
+        public static async Task<ArmOperation<VaultHealthDetails>> RefreshReplicationVaultHealthAsync(this ResourceGroupResource resourceGroupResource, WaitUntil waitUntil, string resourceName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
+
+            return await GetResourceGroupResourceExtensionClient(resourceGroupResource).RefreshReplicationVaultHealthAsync(waitUntil, resourceName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Refreshes health summary of the vault.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{resourceName}/replicationVaultHealth/default/refresh</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ReplicationVaultHealth_Refresh</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="resourceName"> The name of the recovery services vault. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceName"/> is null. </exception>
+        public static ArmOperation<VaultHealthDetails> RefreshReplicationVaultHealth(this ResourceGroupResource resourceGroupResource, WaitUntil waitUntil, string resourceName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
+
+            return GetResourceGroupResourceExtensionClient(resourceGroupResource).RefreshReplicationVaultHealth(waitUntil, resourceName, cancellationToken);
+        }
     }
 }

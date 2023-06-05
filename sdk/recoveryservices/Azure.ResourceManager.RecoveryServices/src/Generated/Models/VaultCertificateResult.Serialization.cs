@@ -30,7 +30,6 @@ namespace Azure.ResourceManager.RecoveryServices.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     properties = ResourceCertificateDetails.DeserializeResourceCertificateDetails(property.Value);
@@ -55,7 +54,6 @@ namespace Azure.ResourceManager.RecoveryServices.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());

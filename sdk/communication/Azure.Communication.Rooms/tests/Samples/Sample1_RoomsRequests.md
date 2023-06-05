@@ -14,112 +14,96 @@ using Azure.Communication.Rooms
 
 ## Create a new room
 
-To create a new  ACS room, call the `CreateRoom` or `CreateRoomAsync` function from the RoomsClient. The returned value is `RoomResult` objects that contains the status and associated error codes in case of a failure.
+To create a new  ACS room, call the `CreateRoom` or `CreateRoomAsync` function from the RoomsClient. The returned value is `Response<CommunicationRoom>` which contains `CommunicationRoom` as well as the status and associated error codes in case of a failure.
 
 ```C# Snippet:Azure_Communication_Rooms_Tests_Samples_CreateRoomAsync
-var validFrom = DateTime.UtcNow;
-var validUntil = validFrom.AddDays(1);
-List<RoomParticipant> createRoomParticipants = new List<RoomParticipant>();
-RoomParticipant participant1 = new RoomParticipant(new CommunicationUserIdentifier(communicationUser1), RoleType.Presenter);
-RoomParticipant participant2 = new RoomParticipant(new CommunicationUserIdentifier(communicationUser2), RoleType.Attendee);
-createRoomParticipants.Add(participant1);
-createRoomParticipants.Add(participant2);
-Response<CommunicationRoom> createRoomResponse = await roomsClient.CreateRoomAsync(validFrom, validUntil, RoomJoinPolicy.InviteOnly, createRoomParticipants);
+// Create communication users using the CommunicationIdentityClient
+Response<CommunicationUserIdentifier> communicationUser1 = await communicationIdentityClient.CreateUserAsync();
+Response<CommunicationUserIdentifier> communicationUser2 = await communicationIdentityClient.CreateUserAsync();
+
+DateTimeOffset validFrom = DateTimeOffset.UtcNow;
+DateTimeOffset validUntil = validFrom.AddDays(1);
+RoomParticipant participant1 = new RoomParticipant(communicationUser1.Value); // If role is not provided, then it is set as Attendee by default
+RoomParticipant participant2 = new RoomParticipant(communicationUser2.Value) { Role = ParticipantRole.Presenter};
+List<RoomParticipant> invitedParticipants = new List<RoomParticipant>
+{
+    participant1,
+    participant2
+};
+
+Response<CommunicationRoom> createRoomResponse = await roomsClient.CreateRoomAsync(validFrom, validUntil, invitedParticipants);
 CommunicationRoom createCommunicationRoom = createRoomResponse.Value;
-```
-
-```C# Snippet:Azure_Communication_Rooms_Tests_Samples_CreateRoomAsync
-var validFrom = DateTime.UtcNow;
-var validUntil = validFrom.AddDays(1);
-List<RoomParticipant> createRoomParticipants = new List<RoomParticipant>();
-RoomParticipant participant1 = new RoomParticipant(new CommunicationUserIdentifier(communicationUser1), RoleType.Presenter);
-RoomParticipant participant2 = new RoomParticipant(new CommunicationUserIdentifier(communicationUser2), RoleType.Attendee);
-createRoomParticipants.Add(participant1);
-createRoomParticipants.Add(participant2);
-Response<CommunicationRoom> createRoomResponse = await roomsClient.CreateRoomAsync(validFrom, validUntil, RoomJoinPolicy.InviteOnly, createRoomParticipants);
-CommunicationRoom createCommunicationRoom = createRoomResponse.Value;
-```
-
-## Create a new open room
-
-To create a new  ACS open room, call the `CreateRoom` or `CreateRoomAsync` function from the RoomsClient with the roomJoinPolicy set to CommunicationServiceUsersValue. The returned value is `RoomResult` objects that contains the status and associated error codes in case of a failure.
-
-```C# Snippet:Azure_Communication_Rooms_Tests_Samples_CreateOpenRoomAsync
-Response<CommunicationRoom> createOpenRoomResponse = await roomsClient.CreateRoomAsync(validFrom, validUntil, RoomJoinPolicy.CommunicationServiceUsers);
-CommunicationRoom createCommunicationOpenRoom = createOpenRoomResponse.Value;
 ```
 
 ## Update an existing room
 
-To update an existing ACS room, call the `UpdateRoom` or `UpdateRoomAsync` function from the RoomsClient. The returned value is `RoomModel` objects that contains the status and associated error codes in case of a failure.
+To update an existing ACS room, call the `UpdateRoom` or `UpdateRoomAsync` function from the RoomsClient. The returned value is `Response<CommunicationRoom>` which contains `CommunicationRoom` as well as the status and associated error codes in case of a failure.
 
 ```C# Snippet:Azure_Communication_Rooms_Tests_Samples_UpdateRoomAsync
-Response<CommunicationRoom> updateRoomResponse = await roomsClient.UpdateRoomAsync(createdRoomId, validFrom, validUntil);
-CommunicationRoom updateCommunicationRoom = updateRoomResponse.Value;
-```
-```C# Snippet:Azure_Communication_Rooms_Tests_Samples_UpdateRoomAsync
+validUntil = validFrom.AddDays(30);
 Response<CommunicationRoom> updateRoomResponse = await roomsClient.UpdateRoomAsync(createdRoomId, validFrom, validUntil);
 CommunicationRoom updateCommunicationRoom = updateRoomResponse.Value;
 ```
 
 ## Get an existing room
 
-To create an existing ACS room, call the `GetRoom` or `GetRoomAsync` function from the RoomsClient. The returned value is `RoomModel` objects that contains the status and associated error codes in case of a failure.
+To create an existing ACS room, call the `GetRoom` or `GetRoomAsync` function from the RoomsClient. The returned value is `Response<CommunicationRoom>` which contains `CommunicationRoom` as well as the status and associated error codes in case of a failure.
 
 ```C# Snippet:Azure_Communication_Rooms_Tests_Samples_GetRoomAsync
-Response<CommunicationRoom> getRoomResponse = await roomsClient.GetRoomAsync(
-    createdRoomId: "existing room Id which is created already
-    createdRoomId);
+Response<CommunicationRoom> getRoomResponse = await roomsClient.GetRoomAsync(createdRoomId);
 CommunicationRoom getCommunicationRoom = getRoomResponse.Value;
 ```
 
 
 ## Delete an existing room
 
-To delete an existing ACS room, call the `DeleteRoom` or `DeleteRoomAsync` function from the RoomsClient. The returned value is `RoomResult` objects that contains the status and associated error codes in case of a failure.
+To delete an existing ACS room, call the `DeleteRoom` or `DeleteRoomAsync` function from the RoomsClient. The returned value is `Response` object that contains the status and associated error codes in case of a failure.
 
 ```C# Snippet:Azure_Communication_Rooms_Tests_Samples_DeleteRoomAsync
-Response deleteRoomResponse = await roomsClient.DeleteRoomAsync(
-    createdRoomId: "existing room Id which is created already
-     createdRoomId);
+Response deleteRoomResponse = await roomsClient.DeleteRoomAsync(createdRoomId);
 ```
 
-## Add Participants to an existing room
+## Add or update participants in an existing room
 
-To add participants to an existing ACS room, call the `AddParticipants` or `AddParticipantsAsync` function from the RoomsClient. The returned value is `RoomModel` objects that contains the status and associated error codes in case of a failure.
+To add or update participants in an existing ACS room, call the `AddOrUpdateParticipants` or `AddOrUpdateParticipantsAsync` function from the RoomsClient.
 
-```C# Snippet:Azure_Communication_Rooms_Tests_Samples_AddParticipants
-List<RoomParticipant> toAddCommunicationUsers = new List<RoomParticipant>();
-toAddCommunicationUsers.Add(participant3);
+```C# Snippet:Azure_Communication_Rooms_Tests_Samples_AddOrUpdateParticipants
+Response<CommunicationUserIdentifier> communicationUser3 = await communicationIdentityClient.CreateUserAsync();
+RoomParticipant newParticipant = new RoomParticipant(communicationUser3.Value) { Role = ParticipantRole.Consumer };
 
-Response addParticipantResponse = await roomsClient.AddParticipantsAsync(createdRoomId, toAddCommunicationUsers);
+// Previous snippet for create room added participant2 as Presenter
+participant2 = new RoomParticipant(communicationUser2) { Role = ParticipantRole.Attendee };
+
+List<RoomParticipant> participantsToAddOrUpdate = new List<RoomParticipant>
+{
+    participant2,   // participant2 updated from Presenter to Attendee
+    newParticipant, // newParticipant added to the room
+};
+
+Response addOrUpdateParticipantResponse = await roomsClient.AddOrUpdateParticipantsAsync(createdRoomId, participantsToAddOrUpdate);
 ```
 
-## Update Participants in an existing room
+## Remove Participants in an existing room
 
-To update participants in an existing ACS room, call the `UpdateParticipants` or `UpdateParticipantsAsync` function from the RoomsClient. The returned value is `RoomModel` objects that contains the status and associated error codes in case of a failure.
-
-```C# Snippet:Azure_Communication_Rooms_Tests_Samples_UpdateParticipants
-List<RoomParticipant> toUpdateCommunicationUsers = new List<RoomParticipant>();
-participant3 = new RoomParticipant(new CommunicationUserIdentifier(communicationUser3), "Presenter");
-participant4 = new RoomParticipant(new CommunicationUserIdentifier(communicationUser4), "Presenter");
-toUpdateCommunicationUsers.Add(participant3);
-toUpdateCommunicationUsers.Add(participant4);
-
-Response updateParticipantResponse = await roomsClient.UpdateParticipantsAsync(createdRoomId, toUpdateCommunicationUsers);
-```
-
+To remove participants in an existing ACS room, call the `RemoveParticipants` or `RemoveParticipantsAsync` function from the RoomsClient.
 ```C# Snippet:Azure_Communication_Rooms_Tests_Samples_RemoveParticipants
-List<CommunicationIdentifier> toRemoveCommunicationUsers = new List<CommunicationIdentifier>();
-toRemoveCommunicationUsers.Add(new CommunicationUserIdentifier(communicationUser2));
-
-Response removeParticipantResponse = await roomsClient.RemoveParticipantsAsync(createdRoomId, toRemoveCommunicationUsers);
+List<CommunicationIdentifier> participantsToRemove = new List<CommunicationIdentifier>
+{
+   communicationUser1,
+   communicationUser2
+};
+Response removeParticipantResponse = await roomsClient.RemoveParticipantsAsync(createdRoomId, participantsToRemove);
 ```
 
 ## Get participants in an existing room
 
-To get participants from an existing ACS room, call the `GetParticipants` or `GetParticipantsAsync` function from the RoomsClient. The returned value is `RoomResult` objects that contains the status and associated error codes in case of a failure.
+To get participants from an existing ACS room, call the `GetParticipants` or `GetParticipantsAsync` function from the RoomsClient.
+The returned value is `AsyncPageable<RoomParticipant>` or `Pageable<RoomParticipant>` which contains the paginated list of participants.
 
 ```C# Snippet:Azure_Communication_Rooms_Tests_Samples_GetParticipants
-Response<ParticipantsCollection> participantResponse = await roomsClient.GetParticipantsAsync(createdRoomId);
+AsyncPageable<RoomParticipant> allParticipants = roomsClient.GetParticipantsAsync(createdRoomId);
+await foreach (RoomParticipant participant in allParticipants)
+{
+    Console.WriteLine($" Participant with id {participant.CommunicationIdentifier.RawId} is a {participant.Role}");
+}
 ```

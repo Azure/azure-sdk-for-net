@@ -60,7 +60,6 @@ namespace Azure.ResourceManager.MachineLearningCompute.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     status = new Status(property.Value.GetString());
@@ -70,7 +69,6 @@ namespace Azure.ResourceManager.MachineLearningCompute.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     minReplicas = property.Value.GetInt32();
@@ -80,7 +78,6 @@ namespace Azure.ResourceManager.MachineLearningCompute.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     maxReplicas = property.Value.GetInt32();
@@ -90,7 +87,6 @@ namespace Azure.ResourceManager.MachineLearningCompute.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     targetUtilization = property.Value.GetSingle();
@@ -100,7 +96,6 @@ namespace Azure.ResourceManager.MachineLearningCompute.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     refreshPeriodInSeconds = property.Value.GetInt32();

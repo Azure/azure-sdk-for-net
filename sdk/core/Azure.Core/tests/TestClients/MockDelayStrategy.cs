@@ -5,11 +5,11 @@ using System;
 
 namespace Azure.Core.Tests.TestClients
 {
-    internal class MockDelayStrategy : DelayStrategyInternal
+    internal class MockDelayStrategy : DelayStrategy
     {
         public int CallCount { get; private set; }
 
-        public override TimeSpan GetNextDelay(Response response, TimeSpan? suggestedInterval)
+        protected override TimeSpan GetNextDelayCore(Response response, int retryNumber)
         {
             CallCount++;
             return TimeSpan.Zero;

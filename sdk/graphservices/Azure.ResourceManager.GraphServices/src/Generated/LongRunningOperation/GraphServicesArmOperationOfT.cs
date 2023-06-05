@@ -31,10 +31,10 @@ namespace Azure.ResourceManager.GraphServices
             _operation = OperationInternal<T>.Succeeded(response.GetRawResponse(), response.Value);
         }
 
-        internal GraphServicesArmOperation(IOperationSource<T> source, ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response, OperationFinalStateVia finalStateVia)
+        internal GraphServicesArmOperation(IOperationSource<T> source, ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response, OperationFinalStateVia finalStateVia, bool skipApiVersionOverride = false, string apiVersionOverrideValue = null)
         {
-            var nextLinkOperation = NextLinkOperationImplementation.Create(source, pipeline, request.Method, request.Uri.ToUri(), response, finalStateVia);
-            _operation = new OperationInternal<T>(clientDiagnostics, nextLinkOperation, response, "GraphServicesArmOperation", fallbackStrategy: new ExponentialDelayStrategy());
+            var nextLinkOperation = NextLinkOperationImplementation.Create(source, pipeline, request.Method, request.Uri.ToUri(), response, finalStateVia, skipApiVersionOverride, apiVersionOverrideValue);
+            _operation = new OperationInternal<T>(nextLinkOperation, clientDiagnostics, response, "GraphServicesArmOperation", fallbackStrategy: new SequentialDelayStrategy());
         }
 
         /// <inheritdoc />

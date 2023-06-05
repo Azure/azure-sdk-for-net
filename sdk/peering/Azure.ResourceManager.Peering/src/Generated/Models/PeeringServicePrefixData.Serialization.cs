@@ -72,7 +72,6 @@ namespace Azure.ResourceManager.Peering
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
@@ -96,7 +95,6 @@ namespace Azure.ResourceManager.Peering
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             prefixValidationState = new PeeringPrefixValidationState(property0.Value.GetString());
@@ -106,7 +104,6 @@ namespace Azure.ResourceManager.Peering
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             learnedType = new PeeringLearnedType(property0.Value.GetString());
@@ -121,7 +118,6 @@ namespace Azure.ResourceManager.Peering
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             List<PeeringServicePrefixEvent> array = new List<PeeringServicePrefixEvent>();
@@ -141,7 +137,6 @@ namespace Azure.ResourceManager.Peering
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             provisioningState = new PeeringProvisioningState(property0.Value.GetString());

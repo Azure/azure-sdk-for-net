@@ -61,7 +61,6 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     encryptionAtRestType = new BackupEncryptionAtRestType(property.Value.GetString());
@@ -71,7 +70,6 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        keyUri = null;
                         continue;
                     }
                     keyUri = new Uri(property.Value.GetString());
@@ -86,7 +84,6 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     lastUpdateStatus = new LastUpdateStatus(property.Value.GetString());
@@ -96,7 +93,6 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     infrastructureEncryptionState = new InfrastructureEncryptionState(property.Value.GetString());

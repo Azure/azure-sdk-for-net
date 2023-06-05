@@ -59,7 +59,6 @@ namespace Azure.ResourceManager.EventGrid.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        setupUri = null;
                         continue;
                     }
                     setupUri = new Uri(property.Value.GetString());

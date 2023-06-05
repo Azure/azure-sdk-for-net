@@ -45,7 +45,6 @@ namespace Azure.Communication.Sms
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     repeatabilityResult = new SmsSendResponseItemRepeatabilityResult(property.Value.GetString());

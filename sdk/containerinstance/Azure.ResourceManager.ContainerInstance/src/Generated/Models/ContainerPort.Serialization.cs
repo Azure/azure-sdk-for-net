@@ -39,7 +39,6 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     protocol = new ContainerNetworkProtocol(property.Value.GetString());

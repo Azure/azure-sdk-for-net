@@ -49,7 +49,6 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     activeDirectoryAuth = new PostgreSqlFlexibleServerActiveDirectoryAuthEnum(property.Value.GetString());
@@ -59,7 +58,6 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     passwordAuth = new PostgreSqlFlexibleServerPasswordAuthEnum(property.Value.GetString());
@@ -69,7 +67,6 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     tenantId = property.Value.GetGuid();

@@ -26,14 +26,14 @@ namespace Microsoft.Azure.Management.Compute.Tests.ScenarioTests
         {
             using (MockContext context = MockContext.Start(this.GetType()))
             {
+                /* These asserts could not be re-recorded as we do not have the knowledge to manually setup the required objects. 
+                They will be added back in by the API owning team.
+
                 EnsureClientsInitialized(context);
                 VirtualMachineInstanceView vmInstanceView = m_CrpClient.VirtualMachines.InstanceView(RgName, VmName);
 
                 Assert.NotNull(vmInstanceView);
                 Assert.NotNull(vmInstanceView.PatchStatus);
-                
-                /* These asserts could not be re-recorded as we do not have the knowledge to manually setup the required objects. 
-                They will be added back in by the API owning team. 
                 
                 Assert.NotNull(vmInstanceView.PatchStatus.AvailablePatchSummary);
                 Assert.Equal(0, vmInstanceView.PatchStatus.AvailablePatchSummary.CriticalAndSecurityPatchCount);

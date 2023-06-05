@@ -19,6 +19,23 @@ namespace Azure.Health.Insights.CancerProfiling
             InferenceTypes = new ChangeTrackingList<OncoPhenotypeInferenceType>();
         }
 
+        /// <summary> Initializes a new instance of OncoPhenotypeModelConfiguration. </summary>
+        /// <param name="verbose"> An indication whether the model should produce verbose output. </param>
+        /// <param name="includeEvidence"> An indication whether the model's output should include evidence for the inferences. </param>
+        /// <param name="inferenceTypes">
+        /// A list of inference types to be inferred for the current request.
+        /// This could be used if only part of the Onco Phenotype inferences are required.
+        /// If this list is omitted or empty, the model will return all the inference types.
+        /// </param>
+        /// <param name="checkForCancerCase"> An indication whether to perform a preliminary step on the patient's documents to determine whether they relate to a Cancer case. </param>
+        internal OncoPhenotypeModelConfiguration(bool? verbose, bool? includeEvidence, IList<OncoPhenotypeInferenceType> inferenceTypes, bool? checkForCancerCase)
+        {
+            Verbose = verbose;
+            IncludeEvidence = includeEvidence;
+            InferenceTypes = inferenceTypes;
+            CheckForCancerCase = checkForCancerCase;
+        }
+
         /// <summary> An indication whether the model should produce verbose output. </summary>
         public bool? Verbose { get; set; }
         /// <summary> An indication whether the model's output should include evidence for the inferences. </summary>

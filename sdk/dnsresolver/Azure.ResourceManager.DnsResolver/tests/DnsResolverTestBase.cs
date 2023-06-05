@@ -8,22 +8,26 @@ using Azure.ResourceManager.Resources;
 using Azure.ResourceManager.TestFramework;
 using Azure.ResourceManager.Network;
 using NUnit.Framework;
+using Azure.ResourceManager.Network.Models;
 
 namespace Azure.ResourceManager.DnsResolver.Tests
 {
     public class DnsResolverTestBase : ManagementRecordedTestBase<DnsResolverManagementTestEnvironment>
     {
         protected string SubnetName => "snet-endpoint";
-
+        public ResourceIdentifier DefaultVnetID;
+        public ResourceIdentifier DefaultSubnetID;
         protected AzureLocation DefaultLocation => AzureLocation.AustraliaEast;
         protected ArmClient Client { get; private set; }
         protected SubscriptionResource DefaultSubscription { get; private set; }
         public DnsResolverTestBase(bool isAsync) : base(isAsync)
         {
+            IgnoreNetworkDependencyVersions();
         }
 
         public DnsResolverTestBase(bool isAsync, RecordedTestMode mode) : base(isAsync, mode)
         {
+            IgnoreNetworkDependencyVersions();
         }
 
         [SetUp]
@@ -49,11 +53,11 @@ namespace Azure.ResourceManager.DnsResolver.Tests
             return rgOp.Value;
         }
 
-        protected async Task CreateVirtualNetworkAsync(string virtualNetworkName)
+        protected async Task<(ResourceIdentifier DefaultVnetID, ResourceIdentifier DefaultSubnetID)> CreateVirtualNetworkAsync()
         {
             var vnet = new VirtualNetworkData()
             {
-                Location = TestEnvironment.Location,
+                Location = DefaultLocation,
                 Subnets = {
                     new SubnetData()
                     {
@@ -66,10 +70,19 @@ namespace Azure.ResourceManager.DnsResolver.Tests
             vnet.AddressPrefixes.Add("10.0.0.0/8");
 
             var subscription = await Client.GetSubscriptions().GetAsync(TestEnvironment.SubscriptionId);
-            var resourceGroup = await subscription.Value.GetResourceGroups().GetAsync(TestEnvironment.ResourceGroup);
+            var resourceGroup = await CreateResourceGroupAsync();
+            var vnetName = Recording.GenerateAssetName("dnsResolver-");
 
-            var virtualNetworks = resourceGroup.Value.GetVirtualNetworks();
-            await virtualNetworks.CreateOrUpdateAsync(WaitUntil.Completed, virtualNetworkName, vnet);
+            var virtualNetworks = resourceGroup.GetVirtualNetworks();
+            //await virtualNetworks.CreateOrUpdateAsync(WaitUntil.Completed, virtualNetworkName, vnet);
+            ResourceIdentifier vnetID;
+            ResourceIdentifier subnetID;
+            var vnetResource = await resourceGroup.GetVirtualNetworks().CreateOrUpdateAsync(WaitUntil.Completed, vnetName, vnet);
+            vnetID = vnetResource.Value.Data.Id;
+            subnetID = vnetResource.Value.Data.Subnets[0].Id;
+            DefaultVnetID = vnetID;
+            DefaultSubnetID = subnetID;
+            return (DefaultVnetID, DefaultSubnetID);
         }
     }
 }

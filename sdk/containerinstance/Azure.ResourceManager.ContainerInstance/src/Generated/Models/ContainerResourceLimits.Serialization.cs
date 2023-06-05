@@ -48,7 +48,6 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     memoryInGB = property.Value.GetDouble();
@@ -58,7 +57,6 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     cpu = property.Value.GetDouble();
@@ -68,7 +66,6 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     gpu = ContainerGpuResourceInfo.DeserializeContainerGpuResourceInfo(property.Value);

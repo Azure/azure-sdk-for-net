@@ -78,7 +78,6 @@ namespace Azure.ResourceManager.AppContainers.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     registryInfo = ContainerAppRegistryInfo.DeserializeContainerAppRegistryInfo(property.Value);
@@ -88,7 +87,6 @@ namespace Azure.ResourceManager.AppContainers.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     azureCredentials = ContainerAppCredentials.DeserializeContainerAppCredentials(property.Value);

@@ -25,7 +25,6 @@ namespace Azure.Communication.Email
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     error = ErrorDetail.DeserializeErrorDetail(property.Value);

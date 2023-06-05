@@ -18,7 +18,7 @@ try
 
     Response<IReadOnlyList<BreakSentenceItem>> response = await client.FindSentenceBoundariesAsync(inputTextElements, language: sourceLanguage, script: sourceScript).ConfigureAwait(false);
     IReadOnlyList<BreakSentenceItem> brokenSentences = response.Value;
-    BreakSentenceElement brokenSentence = brokenSentences.FirstOrDefault();
+    BreakSentenceItem brokenSentence = brokenSentences.FirstOrDefault();
 
     Console.WriteLine($"Detected languages of the input text: {brokenSentence?.DetectedLanguage?.Language} with score: {brokenSentence?.DetectedLanguage?.Score}.");
     Console.WriteLine($"The detected sentece boundaries: '{string.Join(",", brokenSentence?.SentLen)}'.");
@@ -46,7 +46,7 @@ try
 
     Response<IReadOnlyList<BreakSentenceItem>> response = await client.FindSentenceBoundariesAsync(inputTextElements).ConfigureAwait(false);
     IReadOnlyList<BreakSentenceItem> brokenSentences = response.Value;
-    BreakSentenceElement brokenSentence = brokenSentences.FirstOrDefault();
+    BreakSentenceItem brokenSentence = brokenSentences.FirstOrDefault();
 
     Console.WriteLine($"Detected languages of the input text: {brokenSentence?.DetectedLanguage?.Language} with score: {brokenSentence?.DetectedLanguage?.Score}.");
     Console.WriteLine($"The detected sentece boundaries: '{string.Join(",", brokenSentence?.SentLen)}'.");

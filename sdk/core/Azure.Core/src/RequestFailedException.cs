@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Globalization;
 using System.IO;
 using System.Runtime.Serialization;
@@ -31,6 +32,11 @@ namespace Azure
         /// </summary>
         public string? ErrorCode { get; }
 
+        /// <summary>
+        /// Gets the response, if any, that led to the exception.
+        /// </summary>
+        private readonly Response? _response;
+
         /// <summary>Initializes a new instance of the <see cref="RequestFailedException"></see> class with a specified error message.</summary>
         /// <param name="message">The message that describes the error.</param>
         public RequestFailedException(string message) : this(0, message)
@@ -47,6 +53,7 @@ namespace Azure
         /// <summary>Initializes a new instance of the <see cref="RequestFailedException"></see> class with a specified error message and HTTP status code.</summary>
         /// <param name="status">The HTTP status code, or <c>0</c> if not available.</param>
         /// <param name="message">The message that describes the error.</param>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public RequestFailedException(int status, string message)
             : this(status, message, null)
         {
@@ -56,6 +63,7 @@ namespace Azure
         /// <param name="status">The HTTP status code, or <c>0</c> if not available.</param>
         /// <param name="message">The error message that explains the reason for the exception.</param>
         /// <param name="innerException">The exception that is the cause of the current exception, or a null reference (Nothing in Visual Basic) if no inner exception is specified.</param>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public RequestFailedException(int status, string message, Exception? innerException)
             : this(status, message, null, innerException)
         {
@@ -66,6 +74,7 @@ namespace Azure
         /// <param name="message">The error message that explains the reason for the exception.</param>
         /// <param name="errorCode">The service specific error code.</param>
         /// <param name="innerException">The exception that is the cause of the current exception, or a null reference (Nothing in Visual Basic) if no inner exception is specified.</param>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public RequestFailedException(int status, string message, string? errorCode, Exception? innerException)
             : base(message, innerException)
         {
@@ -91,7 +100,7 @@ namespace Azure
         }
 
         /// <summary>Initializes a new instance of the <see cref="RequestFailedException"></see> class
-        /// with an error message, HTTP status code, error code obtained from the specified response.</summary>
+        /// with an error message, HTTP status code, and error code obtained from the specified response.</summary>
         /// <param name="response">The response to obtain error details from.</param>
         public RequestFailedException(Response response)
             : this(response, null)
@@ -99,12 +108,23 @@ namespace Azure
         }
 
         /// <summary>Initializes a new instance of the <see cref="RequestFailedException"></see> class
-        /// with an error message, HTTP status code, error code obtained from the specified response.</summary>
+        /// with an error message, HTTP status code, and error code obtained from the specified response.</summary>
         /// <param name="response">The response to obtain error details from.</param>
         /// <param name="innerException">An inner exception to associate with the new <see cref="RequestFailedException"/>.</param>
         public RequestFailedException(Response response, Exception? innerException)
-            : this(response.Status, GetRequestFailedExceptionContent(response), innerException)
+            : this(response, innerException, null)
         {
+        }
+
+        /// <summary>Initializes a new instance of the <see cref="RequestFailedException"></see> class
+        /// with an error message, HTTP status code, and error code obtained from the specified response.</summary>
+        /// <param name="response">The response to obtain error details from.</param>
+        /// <param name="innerException">An inner exception to associate with the new <see cref="RequestFailedException"/>.</param>
+        /// <param name="detailsParser">The parser to use to parse the response content.</param>
+        public RequestFailedException(Response response, Exception? innerException, RequestFailedDetailsParser? detailsParser)
+            : this(response.Status, GetRequestFailedExceptionContent(response, detailsParser), innerException)
+        {
+            _response = response;
         }
 
         /// <inheritdoc />
@@ -126,9 +146,22 @@ namespace Azure
             base.GetObjectData(info, context);
         }
 
-        internal static (string FormattedError, string? ErrorCode, IDictionary<string, string>? Data) GetRequestFailedExceptionContent(Response response)
+        /// <summary>
+        /// Gets the response, if any, that led to the exception.
+        /// </summary>
+        public Response? GetRawResponse() => _response;
+
+        internal static (string FormattedError, string? ErrorCode, IDictionary<string, string>? Data) GetRequestFailedExceptionContent(Response response, RequestFailedDetailsParser? parser)
         {
-            bool parseSuccess = response.RequestFailedDetailsParser == null ? TryExtractErrorContent(response, out ResponseError? error, out IDictionary<string, string>? data) : response.RequestFailedDetailsParser.TryParse(response, out error, out data);
+            BufferResponseIfNeeded(response);
+            parser ??= response.RequestFailedDetailsParser;
+
+            bool parseSuccess = parser == null ? TryExtractErrorContent(response, out ResponseError? error, out IDictionary<string, string>? additionalInfo) : parser.TryParse(response, out error, out additionalInfo);
+            if (!parseSuccess)
+            {
+                error = null;
+                additionalInfo = null;
+            }
             StringBuilder messageBuilder = new();
 
             messageBuilder
@@ -154,12 +187,12 @@ namespace Azure
                     .AppendLine();
             }
 
-            if (parseSuccess && data != null && data.Count > 0)
+            if (additionalInfo is { Count: > 0 })
             {
                 messageBuilder
                     .AppendLine()
                     .AppendLine("Additional Information:");
-                foreach (KeyValuePair<string, string> info in data)
+                foreach (KeyValuePair<string, string> info in additionalInfo)
                 {
                     messageBuilder
                         .Append(info.Key)
@@ -188,54 +221,46 @@ namespace Azure
             }
 
             var formatMessage = messageBuilder.ToString();
-            return (formatMessage, error?.Code, data);
+            return (formatMessage, error?.Code, additionalInfo);
         }
 
-        /// <summary>
-        /// This is intentionally sync-only as it will only be called by the ctor.
-        /// </summary>
-        /// <param name="response"></param>
-        /// <returns></returns>
-        internal static string? ReadContent(Response response)
+        private static void BufferResponseIfNeeded(Response response)
         {
-            string? content = null;
-
-            if (response.ContentStream != null &&
-                ContentTypeUtilities.TryGetTextEncoding(response.Headers.ContentType, out var encoding))
+            // Buffer into a memory stream if not already buffered
+            if (response.ContentStream is null or MemoryStream)
             {
-                using (var streamReader = new StreamReader(response.ContentStream, encoding))
-                {
-                    content = streamReader.ReadToEnd();
-                }
+                return;
             }
 
-            return content;
+            var bufferedStream = new MemoryStream();
+            response.ContentStream.CopyTo(bufferedStream);
+
+            // Dispose the unbuffered stream
+            response.ContentStream.Dispose();
+
+            // Reset the position of the buffered stream and set it on the response
+            bufferedStream.Position = 0;
+            response.ContentStream = bufferedStream;
         }
 
         internal static bool TryExtractErrorContent(Response response, out ResponseError? error, out IDictionary<string, string>? data)
         {
             error = null;
             data = null;
+
             try
             {
-                string? content = null;
-                if (response.ContentStream != null && response.ContentStream.CanSeek)
-                {
-                    content = response.Content.ToString();
-                }
-                else
-                {
-                    // this path should only happen in exceptional cases such as when
-                    // the RFE ctor was called directly by client or customer code with an un-buffered response.
-                    // Generated code would never do this.
-                    content = ReadContent(response);
-                }
+                // The response content is buffered at this point.
+                string? content = response.Content.ToString();
+
                 // Optimistic check for JSON object we expect
                 if (content == null || !content.StartsWith("{", StringComparison.OrdinalIgnoreCase))
                 {
                     return false;
                 }
+                // Try the ErrorResponse format and fallback to the ResponseError format.
                 error = System.Text.Json.JsonSerializer.Deserialize<ErrorResponse>(content)?.Error;
+                error ??= System.Text.Json.JsonSerializer.Deserialize<ResponseError>(content);
             }
             catch (Exception)
             {

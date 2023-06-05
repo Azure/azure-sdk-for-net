@@ -24,7 +24,10 @@ namespace Azure.Storage.DataMovement
         /// <summary>
         /// Creating job part based on a single transfer job
         /// </summary>
-        private StreamToUriJobPart(StreamToUriTransferJob job, int partNumber)
+        private StreamToUriJobPart(
+            StreamToUriTransferJob job,
+            int partNumber,
+            bool isFinalPart)
             : base(dataTransfer: job._dataTransfer,
                   partNumber: partNumber,
                   sourceResource: job._sourceResource,
@@ -34,7 +37,9 @@ namespace Azure.Storage.DataMovement
                   errorHandling: job._errorHandling,
                   createMode: job._createMode,
                   checkpointer: job._checkpointer,
+                  progressTracker: job._progressTracker,
                   arrayPool: job.UploadArrayPool,
+                  isFinalPart: isFinalPart,
                   jobPartEventHandler: job.GetJobPartStatus(),
                   statusEventHandler: job.TransferStatusEventHandler,
                   failedEventHandler: job.TransferFailedEventHandler,
@@ -52,6 +57,7 @@ namespace Azure.Storage.DataMovement
             int partNumber,
             StorageResource sourceResource,
             StorageResource destinationResource,
+            bool isFinalPart,
             StorageTransferStatus jobPartStatus = StorageTransferStatus.Queued,
             long? length = default)
             : base(dataTransfer: job._dataTransfer,
@@ -63,7 +69,9 @@ namespace Azure.Storage.DataMovement
                   errorHandling: job._errorHandling,
                   createMode: job._createMode,
                   checkpointer: job._checkpointer,
+                  progressTracker: job._progressTracker,
                   arrayPool: job.UploadArrayPool,
+                  isFinalPart: isFinalPart,
                   jobPartEventHandler: job.GetJobPartStatus(),
                   statusEventHandler: job.TransferStatusEventHandler,
                   failedEventHandler: job.TransferFailedEventHandler,
@@ -82,13 +90,17 @@ namespace Azure.Storage.DataMovement
 
         public static async Task<StreamToUriJobPart> CreateJobPartAsync(
             StreamToUriTransferJob job,
-            int partNumber)
+            int partNumber,
+            bool isFinalPart)
         {
             // Create Job Part file as we're intializing the job part
             StreamToUriJobPart part = new StreamToUriJobPart(
                 job: job,
-                partNumber: partNumber);
-            await part.AddJobPartToCheckpointer(1).ConfigureAwait(false); // For now we only store 1 chunk
+                partNumber: partNumber,
+                isFinalPart: isFinalPart);
+            await part.AddJobPartToCheckpointerAsync(
+                chunksTotal: 1, // For now we only store 1 chunk
+                isFinalPart: isFinalPart).ConfigureAwait(false);
             return part;
         }
 
@@ -97,6 +109,7 @@ namespace Azure.Storage.DataMovement
             int partNumber,
             StorageResource sourceResource,
             StorageResource destinationResource,
+            bool isFinalPart,
             StorageTransferStatus jobPartStatus = default,
             long? length = default,
             bool partPlanFileExists = false)
@@ -108,10 +121,13 @@ namespace Azure.Storage.DataMovement
                 jobPartStatus: jobPartStatus,
                 sourceResource: sourceResource,
                 destinationResource: destinationResource,
-                length: length);
+                length: length,
+                isFinalPart: isFinalPart);
             if (!partPlanFileExists)
             {
-                await part.AddJobPartToCheckpointer(1).ConfigureAwait(false); // For now we only store 1 chunk
+                await part.AddJobPartToCheckpointerAsync(
+                    chunksTotal: 1,
+                    isFinalPart: isFinalPart).ConfigureAwait(false); // For now we only store 1 chunk
             }
             return part;
         }
@@ -145,10 +161,12 @@ namespace Azure.Storage.DataMovement
                 if (_initialTransferSize >= length)
                 {
                     // If we can create the destination in one call
-                    await QueueChunkToChannelAsync(CreateDestinationResource(
+                    await QueueChunkToChannelAsync(
+                        async () =>
+                        await CreateDestinationResource(
                             blockSize: length,
                             length: length,
-                            singleCall: true)).ConfigureAwait(false);
+                            singleCall: true).ConfigureAwait(false)).ConfigureAwait(false);
                     return;
                 }
                 long blockSize = CalculateBlockSize(length);
@@ -172,10 +190,11 @@ namespace Azure.Storage.DataMovement
                     {
                         // Queue paritioned block task
                         await QueueChunkToChannelAsync(
-                            StageBlockInternal(
+                            async () =>
+                            await StageBlockInternal(
                                 rangeList[0].Offset,
                                 rangeList[0].Length,
-                                length)).ConfigureAwait(false);
+                                length).ConfigureAwait(false)).ConfigureAwait(false);
                     }
                 }
             }
@@ -215,7 +234,7 @@ namespace Azure.Storage.DataMovement
         /// Made to do the initial creation of the blob (if needed). And also
         /// to make an write if necessary.
         /// </summary>
-        internal async Task InitialUploadCall(long blockSize, long expectedlength, bool singleCall)
+        internal async Task InitialUploadCall(long blockSize, long expectedLength, bool singleCall)
         {
             try
             {
@@ -229,9 +248,12 @@ namespace Azure.Storage.DataMovement
                             overwrite: _createMode == StorageResourceCreateMode.Overwrite,
                             position: 0,
                             streamLength: blockSize,
-                            completeLength: expectedlength,
+                            completeLength: expectedLength,
                             options: default,
                             cancellationToken: _cancellationToken).ConfigureAwait(false);
+
+                    // Report bytes written before completion
+                    ReportBytesWritten(blockSize);
 
                     // Set completion status to completed
                     await OnTransferStatusChanged(StorageTransferStatus.Completed).ConfigureAwait(false);
@@ -256,21 +278,18 @@ namespace Azure.Storage.DataMovement
                             streamLength: blockSize,
                             overwrite: _createMode == StorageResourceCreateMode.Overwrite,
                             position: 0,
-                            completeLength: expectedlength,
+                            completeLength: expectedLength,
                             default,
                             _cancellationToken).ConfigureAwait(false);
                     }
+
+                    ReportBytesWritten(blockSize);
                 }
-                ReportBytesWritten(blockSize);
             }
             catch (RequestFailedException ex)
             when (ex.ErrorCode == "BlobAlreadyExists" && _createMode == StorageResourceCreateMode.Skip)
             {
                 await InvokeSkippedArg().ConfigureAwait(false);
-            }
-            catch (OperationCanceledException)
-            {
-                // expected exception during job part cancellation or pause.
             }
             catch (Exception ex)
             {
@@ -343,13 +362,6 @@ namespace Azure.Storage.DataMovement
                         true,
                         _cancellationToken)).ConfigureAwait(false);
             }
-            // If we fail to stage a block, we need to make sure the rest of the stage blocks are cancelled
-            // (Core already performs the retry policy on the one stage block request
-            // which means the rest are not worth to continue)
-            catch (OperationCanceledException)
-            {
-                // Job was cancelled
-            }
             catch (Exception ex)
             {
                 await InvokeFailedArg(ex).ConfigureAwait(false);
@@ -382,10 +394,12 @@ namespace Azure.Storage.DataMovement
             foreach ((long Offset, long Length) block in rangeList)
             {
                 // Queue paritioned block task
-                await QueueChunkToChannelAsync(StageBlockInternal(
+                await QueueChunkToChannelAsync(
+                    async () =>
+                    await StageBlockInternal(
                     block.Offset,
                     block.Length,
-                    completeLength)).ConfigureAwait(false);
+                    completeLength).ConfigureAwait(false)).ConfigureAwait(false);
             }
         }
 

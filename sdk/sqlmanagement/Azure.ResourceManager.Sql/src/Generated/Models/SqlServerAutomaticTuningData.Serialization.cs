@@ -74,7 +74,6 @@ namespace Azure.ResourceManager.Sql
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
@@ -93,7 +92,6 @@ namespace Azure.ResourceManager.Sql
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             desiredState = property0.Value.GetString().ToAutomaticTuningServerMode();
@@ -103,7 +101,6 @@ namespace Azure.ResourceManager.Sql
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             actualState = property0.Value.GetString().ToAutomaticTuningServerMode();
@@ -113,7 +110,6 @@ namespace Azure.ResourceManager.Sql
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             Dictionary<string, AutomaticTuningServerOptions> dictionary = new Dictionary<string, AutomaticTuningServerOptions>();

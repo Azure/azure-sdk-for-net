@@ -40,7 +40,6 @@ namespace Azure.AI.Translation.Text
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     transliteration = TransliteratedText.DeserializeTransliteratedText(property.Value);
@@ -50,7 +49,6 @@ namespace Azure.AI.Translation.Text
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     alignment = TranslatedTextAlignment.DeserializeTranslatedTextAlignment(property.Value);
@@ -60,14 +58,13 @@ namespace Azure.AI.Translation.Text
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     sentLen = SentenceLength.DeserializeSentenceLength(property.Value);
                     continue;
                 }
             }
-            return new Translation(to, text, transliteration, alignment, sentLen);
+            return new Translation(to, text, transliteration.Value, alignment.Value, sentLen.Value);
         }
 
         /// <summary> Deserializes the model from a raw response. </summary>

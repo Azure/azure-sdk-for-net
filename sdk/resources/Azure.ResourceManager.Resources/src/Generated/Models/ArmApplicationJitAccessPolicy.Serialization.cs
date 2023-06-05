@@ -63,7 +63,6 @@ namespace Azure.ResourceManager.Resources.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     jitApprovalMode = new JitApprovalMode(property.Value.GetString());
@@ -73,7 +72,6 @@ namespace Azure.ResourceManager.Resources.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<JitApprover> array = new List<JitApprover>();
@@ -88,7 +86,6 @@ namespace Azure.ResourceManager.Resources.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     maximumJitAccessDuration = property.Value.GetTimeSpan("P");

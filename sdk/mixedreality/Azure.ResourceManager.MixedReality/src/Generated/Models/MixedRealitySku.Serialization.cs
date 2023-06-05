@@ -62,7 +62,6 @@ namespace Azure.ResourceManager.MixedReality.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     tier = property.Value.GetString().ToMixedRealitySkuTier();
@@ -82,7 +81,6 @@ namespace Azure.ResourceManager.MixedReality.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     capacity = property.Value.GetInt32();

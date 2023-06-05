@@ -14,18 +14,24 @@ namespace Azure.AI.TextAnalytics.Tests
     public class RetryOnInternalServerErrorAttributeTests
     {
         private const string FailedToProcessTaskExceptionMessage =
-            "Failed to process task after several retry,"
-            + " Status: 200 (OK),"
-            + " ErrorCode: InternalServerError";
+            "Failed to process task after several retry"
+            + ", Status: 200 (OK)"
+            + ", ErrorCode: InternalServerError";
 
         private const string InvalidTaskTypeExceptionMessage =
-            "Invalid Task Type,"
-            + " Status: 500 (Internal Server Error),"
-            + " ErrorCode: InternalServerError";
+            "Invalid Task Type"
+            + ", Status: 500 (Internal Server Error)"
+            + ", ErrorCode: InternalServerError";
+
+        private const string InternalServerErrorExceptionMessage =
+            "Internal Server Error."
+            + ", Status: 200 (OK)"
+            + ", ErrorCode: InternalServerError";
 
         [Test]
         [TestCase(FailedToProcessTaskExceptionMessage)]
         [TestCase(InvalidTaskTypeExceptionMessage)]
+        [TestCase(InternalServerErrorExceptionMessage)]
         public void FailingTestIsRetried(string exceptionMessage)
         {
             RequestFailedException exception = new(200, exceptionMessage, "InternalServerError", null);

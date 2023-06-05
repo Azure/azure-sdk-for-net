@@ -55,7 +55,6 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        endpointUri = null;
                         continue;
                     }
                     endpointUri = new Uri(property.Value.GetString());
@@ -65,7 +64,6 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<ResourceTypeExtensionCategory> array = new List<ResourceTypeExtensionCategory>();
@@ -80,7 +78,6 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     timeout = property.Value.GetTimeSpan("P");

@@ -47,7 +47,6 @@ namespace Azure.IoT.TimeSeriesInsights
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     innerError = DeserializeTimeSeriesOperationError(property.Value);
@@ -57,7 +56,6 @@ namespace Azure.IoT.TimeSeriesInsights
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<TimeSeriesOperationErrorDetails> array = new List<TimeSeriesOperationErrorDetails>();

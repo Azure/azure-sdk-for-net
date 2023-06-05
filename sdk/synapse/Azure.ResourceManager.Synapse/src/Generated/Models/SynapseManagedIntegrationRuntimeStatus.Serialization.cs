@@ -45,7 +45,6 @@ namespace Azure.ResourceManager.Synapse.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     state = new SynapseIntegrationRuntimeState(property.Value.GetString());
@@ -64,7 +63,6 @@ namespace Azure.ResourceManager.Synapse.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             createTime = property0.Value.GetDateTimeOffset("O");
@@ -74,7 +72,6 @@ namespace Azure.ResourceManager.Synapse.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             List<SynapseManagedIntegrationRuntimeNode> array = new List<SynapseManagedIntegrationRuntimeNode>();
@@ -89,7 +86,6 @@ namespace Azure.ResourceManager.Synapse.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             List<SynapseManagedIntegrationRuntimeError> array = new List<SynapseManagedIntegrationRuntimeError>();
@@ -104,7 +100,6 @@ namespace Azure.ResourceManager.Synapse.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             lastOperation = SynapseManagedIntegrationRuntimeOperationResult.DeserializeSynapseManagedIntegrationRuntimeOperationResult(property0.Value);

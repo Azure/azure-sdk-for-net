@@ -64,5 +64,17 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
         public string CountryRegion { get; }
         /// <summary> Street-level address, excluding city, state, countryRegion, and postalCode. </summary>
         public string StreetAddress { get; }
+        /// <summary> Apartment or office number. </summary>
+        public string Unit { get; }
+        /// <summary> Districts or boroughs within a city, such as Brooklyn in New York City or City of Westminster in London. </summary>
+        public string CityDistrict { get; }
+        /// <summary> Second-level administrative division used in certain locales. </summary>
+        public string StateDistrict { get; }
+        /// <summary> Unofficial neighborhood name, like Chinatown. </summary>
+        public string Suburb { get; }
+        /// <summary> Build name, such as World Trade Center. </summary>
+        public string House { get; }
+        /// <summary> Floor number, such as 3F. </summary>
+        public string Level { get; }
     }
 }

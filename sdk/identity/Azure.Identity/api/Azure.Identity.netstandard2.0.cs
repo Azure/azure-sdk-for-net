@@ -61,7 +61,7 @@ namespace Azure.Identity
     {
         public AzureCliCredentialOptions() { }
         public System.Collections.Generic.IList<string> AdditionallyAllowedTenants { get { throw null; } }
-        public System.TimeSpan? CliProcessTimeout { get { throw null; } set { } }
+        public System.TimeSpan? ProcessTimeout { get { throw null; } set { } }
         public string TenantId { get { throw null; } set { } }
     }
     public partial class AzureDeveloperCliCredential : Azure.Core.TokenCredential
@@ -75,7 +75,7 @@ namespace Azure.Identity
     {
         public AzureDeveloperCliCredentialOptions() { }
         public System.Collections.Generic.IList<string> AdditionallyAllowedTenants { get { throw null; } }
-        public System.TimeSpan? AzdCliProcessTimeout { get { throw null; } set { } }
+        public System.TimeSpan? ProcessTimeout { get { throw null; } set { } }
         public string TenantId { get { throw null; } set { } }
     }
     public partial class AzurePowerShellCredential : Azure.Core.TokenCredential
@@ -89,7 +89,7 @@ namespace Azure.Identity
     {
         public AzurePowerShellCredentialOptions() { }
         public System.Collections.Generic.IList<string> AdditionallyAllowedTenants { get { throw null; } }
-        public System.TimeSpan? PowerShellProcessTimeout { get { throw null; } set { } }
+        public System.TimeSpan? ProcessTimeout { get { throw null; } set { } }
         public string TenantId { get { throw null; } set { } }
     }
     public partial class ChainedTokenCredential : Azure.Core.TokenCredential
@@ -167,7 +167,7 @@ namespace Azure.Identity
     {
         public DefaultAzureCredentialOptions() { }
         public System.Collections.Generic.IList<string> AdditionallyAllowedTenants { get { throw null; } }
-        public System.TimeSpan? DeveloperCredentialTimeout { get { throw null; } set { } }
+        public System.TimeSpan? CredentialProcessTimeout { get { throw null; } set { } }
         public bool DisableInstanceDiscovery { get { throw null; } set { } }
         public bool ExcludeAzureCliCredential { get { throw null; } set { } }
         public bool ExcludeAzureDeveloperCliCredential { get { throw null; } set { } }
@@ -238,6 +238,7 @@ namespace Azure.Identity
     {
         public EnvironmentCredential() { }
         public EnvironmentCredential(Azure.Identity.EnvironmentCredentialOptions options) { }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public EnvironmentCredential(Azure.Identity.TokenCredentialOptions options) { }
         public override Azure.Core.AccessToken GetToken(Azure.Core.TokenRequestContext requestContext, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public override System.Threading.Tasks.ValueTask<Azure.Core.AccessToken> GetTokenAsync(Azure.Core.TokenRequestContext requestContext, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -246,15 +247,7 @@ namespace Azure.Identity
     {
         public EnvironmentCredentialOptions() { }
         public System.Collections.Generic.IList<string> AdditionallyAllowedTenants { get { throw null; } }
-        public string ClientCertificatePassword { get { throw null; } set { } }
-        public string ClientCertificatePath { get { throw null; } set { } }
-        public string ClientId { get { throw null; } set { } }
-        public string ClientSecret { get { throw null; } set { } }
         public bool DisableInstanceDiscovery { get { throw null; } set { } }
-        public string Password { get { throw null; } set { } }
-        public bool SendCertificateChain { get { throw null; } set { } }
-        public string TenantId { get { throw null; } set { } }
-        public string Username { get { throw null; } set { } }
     }
     public static partial class IdentityModelFactory
     {
@@ -422,8 +415,8 @@ namespace Azure.Identity
     {
         public VisualStudioCredentialOptions() { }
         public System.Collections.Generic.IList<string> AdditionallyAllowedTenants { get { throw null; } }
+        public System.TimeSpan? ProcessTimeout { get { throw null; } set { } }
         public string TenantId { get { throw null; } set { } }
-        public System.TimeSpan? VisualStudioProcessTimeout { get { throw null; } set { } }
     }
     public partial class WorkloadIdentityCredential : Azure.Core.TokenCredential
     {

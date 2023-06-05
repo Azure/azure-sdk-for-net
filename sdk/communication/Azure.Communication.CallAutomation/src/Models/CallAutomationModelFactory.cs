@@ -36,7 +36,7 @@ namespace Azure.Communication.CallAutomation
         /// <param name="serverCallId">The server call id.</param>
         /// <param name="targets">The targets of the call.</param>
         /// <param name="callConnectionState">The state of the call connection.</param>
-        /// <param name="callbackEndpoint">The callback URI.</param>
+        /// <param name="callbackUri">The callback URI.</param>
         /// <param name="sourceIdentity">Source identity.</param>
         /// <param name="sourceCallerIdNumber">Caller ID phone number to appear on the invitee.</param>
         /// <param name="sourceDisplayName">Display name to appear on the invitee.</param>
@@ -47,13 +47,13 @@ namespace Azure.Communication.CallAutomation
             string serverCallId = default,
             IEnumerable<CommunicationIdentifier> targets = default,
             CallConnectionState callConnectionState = default,
-            Uri callbackEndpoint = default,
+            Uri callbackUri = default,
             CommunicationIdentifier sourceIdentity = default,
             PhoneNumberIdentifier sourceCallerIdNumber = default,
             string sourceDisplayName = default,
             string mediaSubscriptionId = default)
         {
-            return new CallConnectionProperties(callConnectionId, serverCallId, targets, callConnectionState, callbackEndpoint, sourceIdentity, sourceCallerIdNumber, sourceDisplayName, mediaSubscriptionId);
+            return new CallConnectionProperties(callConnectionId, serverCallId, targets, callConnectionState, callbackUri, sourceIdentity, sourceCallerIdNumber, sourceDisplayName, mediaSubscriptionId);
         }
 
         /// <summary> Initializes a new instance of CallParticipant. </summary>
@@ -141,10 +141,10 @@ namespace Azure.Communication.CallAutomation
                 callConnectionId,
                 serverCallId,
                 correlationId,
+                sequenceNumber,
                 participants == null
                     ? new List<CallParticipantInternal>()
-                    : participants.Select(p => new CallParticipantInternal(CommunicationIdentifierSerializer.Serialize(p.Identifier), p.IsMuted)).ToList(),
-                sequenceNumber
+                    : participants.Select(p => new CallParticipantInternal(CommunicationIdentifierSerializer.Serialize(p.Identifier), p.IsMuted)).ToList()
                 );
 
             return new ParticipantsUpdated(internalObject);
@@ -194,12 +194,11 @@ namespace Azure.Communication.CallAutomation
         /// Determines the sub-type of the recognize operation.
         /// In case of cancel operation the this field is not set and is returned empty
         /// </param>
-        /// <param name="collectTonesResult"> Defines the result for RecognitionType = Dtmf. </param>
-        /// <param name="choiceResult"> Defines the result for RecognitionType = Choices. </param>
+        /// <param name="recognizeResult"> Defines the result for RecognitionType = Dtmf,Choice,Speech. </param>
         /// <returns> A new <see cref="CallAutomation.RecognizeCompleted"/> instance for mocking. </returns>
-        public static RecognizeCompleted RecognizeCompleted(string callConnectionId = null, string serverCallId = null, string correlationId = null, string operationContext = null, ResultInformation resultInformation = null, CallMediaRecognitionType recognitionType = default, CollectTonesResult collectTonesResult = null, ChoiceResult choiceResult = null)
+        public static RecognizeCompleted RecognizeCompleted(string callConnectionId = null, string serverCallId = null, string correlationId = null, string operationContext = null, ResultInformation resultInformation = null, CallMediaRecognitionType recognitionType = default, RecognizeResult recognizeResult = null)
         {
-            return new RecognizeCompleted(callConnectionId, serverCallId, correlationId, operationContext, resultInformation, recognitionType, collectTonesResult, choiceResult);
+            return new RecognizeCompleted(callConnectionId, serverCallId, correlationId, operationContext, resultInformation, recognitionType, recognizeResult);
         }
     }
 }

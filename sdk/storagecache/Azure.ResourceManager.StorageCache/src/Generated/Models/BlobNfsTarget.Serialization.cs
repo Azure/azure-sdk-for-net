@@ -54,7 +54,6 @@ namespace Azure.ResourceManager.StorageCache.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     target = new ResourceIdentifier(property.Value.GetString());
@@ -69,7 +68,6 @@ namespace Azure.ResourceManager.StorageCache.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     verificationTimer = property.Value.GetInt32();
@@ -79,7 +77,6 @@ namespace Azure.ResourceManager.StorageCache.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     writeBackTimer = property.Value.GetInt32();

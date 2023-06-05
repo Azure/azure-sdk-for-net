@@ -83,7 +83,6 @@ namespace Azure.ResourceManager.FrontDoor
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();
@@ -118,7 +117,6 @@ namespace Azure.ResourceManager.FrontDoor
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
@@ -142,7 +140,6 @@ namespace Azure.ResourceManager.FrontDoor
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             endpointA = FrontDoorExperimentEndpointProperties.DeserializeFrontDoorExperimentEndpointProperties(property0.Value);
@@ -152,7 +149,6 @@ namespace Azure.ResourceManager.FrontDoor
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             endpointB = FrontDoorExperimentEndpointProperties.DeserializeFrontDoorExperimentEndpointProperties(property0.Value);
@@ -162,7 +158,6 @@ namespace Azure.ResourceManager.FrontDoor
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             enabledState = new FrontDoorExperimentState(property0.Value.GetString());
@@ -172,7 +167,6 @@ namespace Azure.ResourceManager.FrontDoor
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             resourceState = new NetworkExperimentResourceState(property0.Value.GetString());
@@ -187,7 +181,6 @@ namespace Azure.ResourceManager.FrontDoor
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                scriptFileUri = null;
                                 continue;
                             }
                             scriptFileUri = new Uri(property0.Value.GetString());

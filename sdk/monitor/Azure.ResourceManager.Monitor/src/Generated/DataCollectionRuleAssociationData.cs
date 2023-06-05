@@ -55,11 +55,6 @@ namespace Azure.ResourceManager.Monitor
         /// <summary> The resource provisioning state. </summary>
         public DataCollectionRuleAssociationProvisioningState? ProvisioningState { get; }
         /// <summary> Metadata about the resource. </summary>
-        internal DataCollectionRuleAssociationMetadata Metadata { get; }
-        /// <summary> Azure offering managing this resource on-behalf-of customer. </summary>
-        public string MetadataProvisionedBy
-        {
-            get => Metadata?.ProvisionedBy;
-        }
+        public DataCollectionRuleAssociationMetadata Metadata { get; }
     }
 }

@@ -66,7 +66,6 @@ namespace Azure.ResourceManager.StorageMover.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     provisioningState = new StorageMoverProvisioningState(property.Value.GetString());

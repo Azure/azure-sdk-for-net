@@ -48,7 +48,6 @@ namespace Azure.ResourceManager.HybridContainerService.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     hci = VirtualNetworksPropertiesInfraVnetProfileHci.DeserializeVirtualNetworksPropertiesInfraVnetProfileHci(property.Value);
@@ -58,7 +57,6 @@ namespace Azure.ResourceManager.HybridContainerService.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     networkCloud = VirtualNetworksPropertiesInfraVnetProfileNetworkCloud.DeserializeVirtualNetworksPropertiesInfraVnetProfileNetworkCloud(property.Value);
@@ -68,7 +66,6 @@ namespace Azure.ResourceManager.HybridContainerService.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     vmware = VirtualNetworksPropertiesInfraVnetProfileVmware.DeserializeVirtualNetworksPropertiesInfraVnetProfileVmware(property.Value);

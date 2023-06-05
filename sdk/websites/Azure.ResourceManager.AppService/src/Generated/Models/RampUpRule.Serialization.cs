@@ -84,7 +84,6 @@ namespace Azure.ResourceManager.AppService.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     reroutePercentage = property.Value.GetDouble();
@@ -94,7 +93,6 @@ namespace Azure.ResourceManager.AppService.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     changeStep = property.Value.GetDouble();
@@ -104,7 +102,6 @@ namespace Azure.ResourceManager.AppService.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     changeIntervalInMinutes = property.Value.GetInt32();
@@ -114,7 +111,6 @@ namespace Azure.ResourceManager.AppService.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     minReroutePercentage = property.Value.GetDouble();
@@ -124,7 +120,6 @@ namespace Azure.ResourceManager.AppService.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     maxReroutePercentage = property.Value.GetDouble();
@@ -134,7 +129,6 @@ namespace Azure.ResourceManager.AppService.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        changeDecisionCallbackUrl = null;
                         continue;
                     }
                     changeDecisionCallbackUrl = new Uri(property.Value.GetString());

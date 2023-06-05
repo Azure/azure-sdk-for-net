@@ -48,7 +48,6 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     enable = property.Value.GetBoolean();
@@ -58,7 +57,6 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     runImmediately = property.Value.GetBoolean();
@@ -68,7 +66,6 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     schedule = SqlVmAssessmentSchedule.DeserializeSqlVmAssessmentSchedule(property.Value);

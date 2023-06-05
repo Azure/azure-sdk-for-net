@@ -29,7 +29,6 @@ namespace Azure.ResourceManager.Workloads.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     type = new ApplicationServerVirtualMachineType(property.Value.GetString());
@@ -39,7 +38,6 @@ namespace Azure.ResourceManager.Workloads.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     virtualMachineId = new ResourceIdentifier(property.Value.GetString());
@@ -49,7 +47,6 @@ namespace Azure.ResourceManager.Workloads.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<SubResource> array = new List<SubResource>();

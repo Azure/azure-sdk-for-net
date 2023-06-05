@@ -89,7 +89,6 @@ namespace Azure.ResourceManager.Datadog.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        redirectUri = null;
                         continue;
                     }
                     redirectUri = new Uri(property.Value.GetString());

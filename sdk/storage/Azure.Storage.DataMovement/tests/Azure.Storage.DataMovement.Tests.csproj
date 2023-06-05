@@ -29,6 +29,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)..\..\Azure.Storage.Blobs\tests\BlobsClientTestFixtureAttribute.cs" LinkBase="Shared\Storage" />
     <Compile Remove="$(AzureStorageSharedTestSources)\ClientSideEncryptionTestExtensions.cs" />
     <Compile Remove="$(AzureStorageSharedTestSources)\StorageTestBase.SasVersion.cs" />
+    <Compile Remove="$(AzureStorageSharedTestSources)\TransferValidationTestBase.cs" />
     <Compile Remove="$(AzureStorageSharedTestSources)\Sas\*.cs" />
     <None Include="$(AzureStorageSharedTestSources)\*.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>

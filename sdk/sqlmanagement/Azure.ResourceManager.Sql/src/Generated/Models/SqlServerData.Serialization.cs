@@ -129,7 +129,6 @@ namespace Azure.ResourceManager.Sql
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     var serializeOptions = new JsonSerializerOptions { Converters = { new ManagedServiceIdentityTypeV3Converter() } };
@@ -145,7 +144,6 @@ namespace Azure.ResourceManager.Sql
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();
@@ -180,7 +178,6 @@ namespace Azure.ResourceManager.Sql
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
@@ -224,7 +221,6 @@ namespace Azure.ResourceManager.Sql
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             List<SqlServerPrivateEndpointConnection> array = new List<SqlServerPrivateEndpointConnection>();
@@ -244,7 +240,6 @@ namespace Azure.ResourceManager.Sql
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             publicNetworkAccess = new ServerNetworkAccessFlag(property0.Value.GetString());
@@ -254,7 +249,6 @@ namespace Azure.ResourceManager.Sql
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             workspaceFeature = new ServerWorkspaceFeature(property0.Value.GetString());
@@ -264,7 +258,6 @@ namespace Azure.ResourceManager.Sql
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             primaryUserAssignedIdentityId = new ResourceIdentifier(property0.Value.GetString());
@@ -274,7 +267,6 @@ namespace Azure.ResourceManager.Sql
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             federatedClientId = property0.Value.GetGuid();
@@ -284,7 +276,6 @@ namespace Azure.ResourceManager.Sql
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                keyId = null;
                                 continue;
                             }
                             keyId = new Uri(property0.Value.GetString());
@@ -294,7 +285,6 @@ namespace Azure.ResourceManager.Sql
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             administrators = ServerExternalAdministrator.DeserializeServerExternalAdministrator(property0.Value);
@@ -304,7 +294,6 @@ namespace Azure.ResourceManager.Sql
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             restrictOutboundNetworkAccess = new ServerNetworkAccessFlag(property0.Value.GetString());
@@ -314,7 +303,6 @@ namespace Azure.ResourceManager.Sql
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             externalGovernanceStatus = new ExternalGovernanceStatus(property0.Value.GetString());

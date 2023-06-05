@@ -79,7 +79,6 @@ namespace Azure.ResourceManager.ContainerService.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     managed = property.Value.GetBoolean();
@@ -89,7 +88,6 @@ namespace Azure.ResourceManager.ContainerService.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     enableAzureRBAC = property.Value.GetBoolean();
@@ -99,7 +97,6 @@ namespace Azure.ResourceManager.ContainerService.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<Guid> array = new List<Guid>();
@@ -114,7 +111,6 @@ namespace Azure.ResourceManager.ContainerService.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     clientAppId = property.Value.GetGuid();
@@ -124,7 +120,6 @@ namespace Azure.ResourceManager.ContainerService.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     serverAppId = property.Value.GetGuid();
@@ -139,7 +134,6 @@ namespace Azure.ResourceManager.ContainerService.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     tenantId = property.Value.GetGuid();

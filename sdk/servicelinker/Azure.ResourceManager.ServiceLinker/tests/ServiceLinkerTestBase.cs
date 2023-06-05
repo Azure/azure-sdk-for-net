@@ -19,11 +19,13 @@ namespace Azure.ResourceManager.ServiceLinker.Tests
         protected ResourceGroupCollection ResourceGroups { get; private set; }
         public ServiceLinkerTestBase(bool isAsync) : base(isAsync)
         {
+            IgnoreKeyVaultDependencyVersions();
             SanitizedHeaders.Add(UserTokenPolicy.UserTokenHeader);
         }
 
         public ServiceLinkerTestBase(bool isAsync, RecordedTestMode mode) : base(isAsync, mode)
         {
+            IgnoreKeyVaultDependencyVersions();
             SanitizedHeaders.Add(UserTokenPolicy.UserTokenHeader);
         }
 

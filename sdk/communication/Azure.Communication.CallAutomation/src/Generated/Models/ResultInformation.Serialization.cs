@@ -27,7 +27,6 @@ namespace Azure.Communication.CallAutomation
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     code = property.Value.GetInt32();
@@ -37,7 +36,6 @@ namespace Azure.Communication.CallAutomation
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     subCode = property.Value.GetInt32();

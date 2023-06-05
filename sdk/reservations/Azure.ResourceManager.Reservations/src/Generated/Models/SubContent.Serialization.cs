@@ -32,7 +32,6 @@ namespace Azure.ResourceManager.Reservations.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     limit = property.Value.GetInt32();
@@ -42,7 +41,6 @@ namespace Azure.ResourceManager.Reservations.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     name = ReservationResourceName.DeserializeReservationResourceName(property.Value);
@@ -62,7 +60,6 @@ namespace Azure.ResourceManager.Reservations.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     provisioningState = new QuotaRequestState(property.Value.GetString());
@@ -77,7 +74,6 @@ namespace Azure.ResourceManager.Reservations.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     subRequestId = property.Value.GetGuid();

@@ -132,7 +132,7 @@ try
 
     Response<IReadOnlyList<TranslatedTextItem>> response = await client.TranslateAsync(targetLanguage, inputText).ConfigureAwait(false);
     IReadOnlyList<TranslatedTextItem> translations = response.Value;
-    TranslatedTextElement translation = translations.FirstOrDefault();
+    TranslatedTextItem translation = translations.FirstOrDefault();
 
     Console.WriteLine($"Detected languages of the input text: {translation?.DetectedLanguage?.Language} with score: {translation?.DetectedLanguage?.Score}.");
     Console.WriteLine($"Text was translated to: '{translation?.Translations?.FirstOrDefault().To}' and the result is: '{translation?.Translations?.FirstOrDefault()?.Text}'.");
@@ -189,7 +189,7 @@ try
 
     Response<IReadOnlyList<BreakSentenceItem>> response = await client.FindSentenceBoundariesAsync(inputText).ConfigureAwait(false);
     IReadOnlyList<BreakSentenceItem> brokenSentences = response.Value;
-    BreakSentenceElement brokenSentence = brokenSentences.FirstOrDefault();
+    BreakSentenceItem brokenSentence = brokenSentences.FirstOrDefault();
 
     Console.WriteLine($"Detected languages of the input text: {brokenSentence?.DetectedLanguage?.Language} with score: {brokenSentence?.DetectedLanguage?.Score}.");
     Console.WriteLine($"The detected sentece boundaries: '{string.Join(",", brokenSentence?.SentLen)}'.");
@@ -219,7 +219,7 @@ try
 
     Response<IReadOnlyList<DictionaryLookupItem>> response = await client.LookupDictionaryEntriesAsync(sourceLanguage, targetLanguage, inputText).ConfigureAwait(false);
     IReadOnlyList<DictionaryLookupItem> dictionaryEntries = response.Value;
-    DictionaryLookupElement dictionaryEntry = dictionaryEntries.FirstOrDefault();
+    DictionaryLookupItem dictionaryEntry = dictionaryEntries.FirstOrDefault();
 
     Console.WriteLine($"For the given input {dictionaryEntry?.Translations?.Count} entries were found in the dictionary.");
     Console.WriteLine($"First entry: '{dictionaryEntry?.Translations?.FirstOrDefault()?.DisplayTarget}', confidence: {dictionaryEntry?.Translations?.FirstOrDefault()?.Confidence}.");
@@ -247,15 +247,15 @@ try
     string targetLanguage = "es";
     IEnumerable<InputTextWithTranslation> inputTextElements = new[]
     {
-        new InputTextWithTranslation { Text = "fly", Translation = "volar" }
+        new InputTextWithTranslation("fly", "volar")
     };
 
     Response<IReadOnlyList<DictionaryExampleItem>> response = await client.LookupDictionaryExamplesAsync(sourceLanguage, targetLanguage, inputTextElements).ConfigureAwait(false);
     IReadOnlyList<DictionaryExampleItem> dictionaryEntries = response.Value;
-    DictionaryExampleElement dictionaryEntry = dictionaryEntries.FirstOrDefault();
+    DictionaryExampleItem dictionaryEntry = dictionaryEntries.FirstOrDefault();
 
     Console.WriteLine($"For the given input {dictionaryEntry?.Examples?.Count} examples were found in the dictionary.");
-    Example firstExample = dictionaryEntry?.Examples?.FirstOrDefault();
+    DictionaryExample firstExample = dictionaryEntry?.Examples?.FirstOrDefault();
     Console.WriteLine($"Example: '{string.Concat(firstExample.TargetPrefix, firstExample.TargetTerm, firstExample.TargetSuffix)}'.");
 
 }

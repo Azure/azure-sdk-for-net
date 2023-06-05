@@ -251,7 +251,6 @@ namespace Azure.ResourceManager.Advisor
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
@@ -270,7 +269,6 @@ namespace Azure.ResourceManager.Advisor
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             category = new Category(property0.Value.GetString());
@@ -280,7 +278,6 @@ namespace Azure.ResourceManager.Advisor
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             impact = new Impact(property0.Value.GetString());
@@ -300,7 +297,6 @@ namespace Azure.ResourceManager.Advisor
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             lastUpdated = property0.Value.GetDateTimeOffset("O");
@@ -310,7 +306,6 @@ namespace Azure.ResourceManager.Advisor
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             Dictionary<string, BinaryData> dictionary = new Dictionary<string, BinaryData>();
@@ -337,7 +332,6 @@ namespace Azure.ResourceManager.Advisor
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             risk = new Risk(property0.Value.GetString());
@@ -347,7 +341,6 @@ namespace Azure.ResourceManager.Advisor
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             shortDescription = ShortDescription.DeserializeShortDescription(property0.Value);
@@ -357,7 +350,6 @@ namespace Azure.ResourceManager.Advisor
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             List<Guid> array = new List<Guid>();
@@ -372,7 +364,6 @@ namespace Azure.ResourceManager.Advisor
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             Dictionary<string, string> dictionary = new Dictionary<string, string>();
@@ -387,7 +378,6 @@ namespace Azure.ResourceManager.Advisor
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             resourceMetadata = ResourceMetadata.DeserializeResourceMetadata(property0.Value);
@@ -417,7 +407,6 @@ namespace Azure.ResourceManager.Advisor
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             List<IDictionary<string, BinaryData>> array = new List<IDictionary<string, BinaryData>>();
@@ -451,7 +440,6 @@ namespace Azure.ResourceManager.Advisor
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             Dictionary<string, BinaryData> dictionary = new Dictionary<string, BinaryData>();
@@ -473,7 +461,6 @@ namespace Azure.ResourceManager.Advisor
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             Dictionary<string, BinaryData> dictionary = new Dictionary<string, BinaryData>();

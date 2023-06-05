@@ -26,7 +26,6 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     networkGroup = new DataBoxEdgeNetworkGroup(property.Value.GetString());
@@ -36,7 +35,6 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     port = property.Value.GetInt32();

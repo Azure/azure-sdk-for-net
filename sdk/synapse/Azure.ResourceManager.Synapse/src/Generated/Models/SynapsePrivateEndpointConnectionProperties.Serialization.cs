@@ -28,7 +28,6 @@ namespace Azure.ResourceManager.Synapse.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     privateEndpoint = JsonSerializer.Deserialize<SubResource>(property.Value.GetRawText());
@@ -38,7 +37,6 @@ namespace Azure.ResourceManager.Synapse.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     privateLinkServiceConnectionState = SynapsePrivateLinkServiceConnectionState.DeserializeSynapsePrivateLinkServiceConnectionState(property.Value);

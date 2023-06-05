@@ -63,7 +63,6 @@ namespace Azure.ResourceManager.DataFactory.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     schemaLinkedService = FactoryLinkedServiceReference.DeserializeFactoryLinkedServiceReference(property.Value);
@@ -83,7 +82,6 @@ namespace Azure.ResourceManager.DataFactory.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     dataset = DatasetReference.DeserializeDatasetReference(property.Value);
@@ -93,7 +91,6 @@ namespace Azure.ResourceManager.DataFactory.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     linkedService = FactoryLinkedServiceReference.DeserializeFactoryLinkedServiceReference(property.Value);
@@ -103,7 +100,6 @@ namespace Azure.ResourceManager.DataFactory.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     flowlet = DataFlowReference.DeserializeDataFlowReference(property.Value);

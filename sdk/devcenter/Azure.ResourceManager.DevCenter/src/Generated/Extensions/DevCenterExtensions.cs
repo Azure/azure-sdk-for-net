@@ -19,302 +19,366 @@ namespace Azure.ResourceManager.DevCenter
     /// <summary> A class to add extension methods to Azure.ResourceManager.DevCenter. </summary>
     public static partial class DevCenterExtensions
     {
-        private static SubscriptionResourceExtensionClient GetExtensionClient(SubscriptionResource subscriptionResource)
+        private static ResourceGroupResourceExtensionClient GetResourceGroupResourceExtensionClient(ArmResource resource)
         {
-            return subscriptionResource.GetCachedClient((client) =>
+            return resource.GetCachedClient(client =>
             {
-                return new SubscriptionResourceExtensionClient(client, subscriptionResource.Id);
+                return new ResourceGroupResourceExtensionClient(client, resource.Id);
+            });
+        }
+
+        private static ResourceGroupResourceExtensionClient GetResourceGroupResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
+        {
+            return client.GetResourceClient(() =>
+            {
+                return new ResourceGroupResourceExtensionClient(client, scope);
+            });
+        }
+
+        private static SubscriptionResourceExtensionClient GetSubscriptionResourceExtensionClient(ArmResource resource)
+        {
+            return resource.GetCachedClient(client =>
+            {
+                return new SubscriptionResourceExtensionClient(client, resource.Id);
+            });
+        }
+
+        private static SubscriptionResourceExtensionClient GetSubscriptionResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
+        {
+            return client.GetResourceClient(() =>
+            {
+                return new SubscriptionResourceExtensionClient(client, scope);
+            });
+        }
+        #region DevCenterResource
+        /// <summary>
+        /// Gets an object representing a <see cref="DevCenterResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="DevCenterResource.CreateResourceIdentifier" /> to create a <see cref="DevCenterResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="DevCenterResource" /> object. </returns>
+        public static DevCenterResource GetDevCenterResource(this ArmClient client, ResourceIdentifier id)
+        {
+            return client.GetResourceClient(() =>
+            {
+                DevCenterResource.ValidateResourceId(id);
+                return new DevCenterResource(client, id);
             }
             );
         }
+        #endregion
 
+        #region DevCenterProjectResource
         /// <summary>
-        /// Lists all devcenters in a subscription.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.DevCenter/devcenters</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>DevCenters_ListBySubscription</description>
-        /// </item>
-        /// </list>
+        /// Gets an object representing a <see cref="DevCenterProjectResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="DevCenterProjectResource.CreateResourceIdentifier" /> to create a <see cref="DevCenterProjectResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="top"> The maximum number of resources to return from the operation. Example: &apos;$top=10&apos;. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="DevCenterResource" /> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<DevCenterResource> GetDevCentersAsync(this SubscriptionResource subscriptionResource, int? top = null, CancellationToken cancellationToken = default)
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="DevCenterProjectResource" /> object. </returns>
+        public static DevCenterProjectResource GetDevCenterProjectResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetExtensionClient(subscriptionResource).GetDevCentersAsync(top, cancellationToken);
-        }
-
-        /// <summary>
-        /// Lists all devcenters in a subscription.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.DevCenter/devcenters</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>DevCenters_ListBySubscription</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="top"> The maximum number of resources to return from the operation. Example: &apos;$top=10&apos;. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="DevCenterResource" /> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<DevCenterResource> GetDevCenters(this SubscriptionResource subscriptionResource, int? top = null, CancellationToken cancellationToken = default)
-        {
-            return GetExtensionClient(subscriptionResource).GetDevCenters(top, cancellationToken);
-        }
-
-        /// <summary>
-        /// Lists all projects in the subscription.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.DevCenter/projects</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Projects_ListBySubscription</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="top"> The maximum number of resources to return from the operation. Example: &apos;$top=10&apos;. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ProjectResource" /> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<ProjectResource> GetProjectsAsync(this SubscriptionResource subscriptionResource, int? top = null, CancellationToken cancellationToken = default)
-        {
-            return GetExtensionClient(subscriptionResource).GetProjectsAsync(top, cancellationToken);
-        }
-
-        /// <summary>
-        /// Lists all projects in the subscription.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.DevCenter/projects</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Projects_ListBySubscription</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="top"> The maximum number of resources to return from the operation. Example: &apos;$top=10&apos;. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ProjectResource" /> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<ProjectResource> GetProjects(this SubscriptionResource subscriptionResource, int? top = null, CancellationToken cancellationToken = default)
-        {
-            return GetExtensionClient(subscriptionResource).GetProjects(top, cancellationToken);
-        }
-
-        /// <summary>
-        /// Gets the current status of an async operation.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.DevCenter/locations/{location}/operationStatuses/{operationId}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>OperationStatuses_Get</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="location"> The Azure region. </param>
-        /// <param name="operationId"> The ID of an ongoing async operation. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="operationId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="operationId"/> is null. </exception>
-        public static async Task<Response<OperationStatus>> GetOperationStatusAsync(this SubscriptionResource subscriptionResource, AzureLocation location, string operationId, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(operationId, nameof(operationId));
-
-            return await GetExtensionClient(subscriptionResource).GetOperationStatusAsync(location, operationId, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Gets the current status of an async operation.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.DevCenter/locations/{location}/operationStatuses/{operationId}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>OperationStatuses_Get</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="location"> The Azure region. </param>
-        /// <param name="operationId"> The ID of an ongoing async operation. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="operationId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="operationId"/> is null. </exception>
-        public static Response<OperationStatus> GetOperationStatus(this SubscriptionResource subscriptionResource, AzureLocation location, string operationId, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(operationId, nameof(operationId));
-
-            return GetExtensionClient(subscriptionResource).GetOperationStatus(location, operationId, cancellationToken);
-        }
-
-        /// <summary>
-        /// Lists the current usages and limits in this location for the provided subscription.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.DevCenter/locations/{location}/usages</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Usages_ListByLocation</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="location"> The Azure region. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="DevCenterUsage" /> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<DevCenterUsage> GetUsagesByLocationAsync(this SubscriptionResource subscriptionResource, AzureLocation location, CancellationToken cancellationToken = default)
-        {
-            return GetExtensionClient(subscriptionResource).GetUsagesByLocationAsync(location, cancellationToken);
-        }
-
-        /// <summary>
-        /// Lists the current usages and limits in this location for the provided subscription.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.DevCenter/locations/{location}/usages</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Usages_ListByLocation</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="location"> The Azure region. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="DevCenterUsage" /> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<DevCenterUsage> GetUsagesByLocation(this SubscriptionResource subscriptionResource, AzureLocation location, CancellationToken cancellationToken = default)
-        {
-            return GetExtensionClient(subscriptionResource).GetUsagesByLocation(location, cancellationToken);
-        }
-
-        /// <summary>
-        /// Lists the Microsoft.DevCenter SKUs available in a subscription
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.DevCenter/skus</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Skus_ListBySubscription</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="top"> The maximum number of resources to return from the operation. Example: &apos;$top=10&apos;. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="DevCenterSkuDetails" /> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<DevCenterSkuDetails> GetSkusBySubscriptionAsync(this SubscriptionResource subscriptionResource, int? top = null, CancellationToken cancellationToken = default)
-        {
-            return GetExtensionClient(subscriptionResource).GetSkusBySubscriptionAsync(top, cancellationToken);
-        }
-
-        /// <summary>
-        /// Lists the Microsoft.DevCenter SKUs available in a subscription
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.DevCenter/skus</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Skus_ListBySubscription</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="top"> The maximum number of resources to return from the operation. Example: &apos;$top=10&apos;. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="DevCenterSkuDetails" /> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<DevCenterSkuDetails> GetSkusBySubscription(this SubscriptionResource subscriptionResource, int? top = null, CancellationToken cancellationToken = default)
-        {
-            return GetExtensionClient(subscriptionResource).GetSkusBySubscription(top, cancellationToken);
-        }
-
-        /// <summary>
-        /// Lists network connections in a subscription
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.DevCenter/networkConnections</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>NetworkConnections_ListBySubscription</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="top"> The maximum number of resources to return from the operation. Example: &apos;$top=10&apos;. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="NetworkConnectionResource" /> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<NetworkConnectionResource> GetNetworkConnectionsAsync(this SubscriptionResource subscriptionResource, int? top = null, CancellationToken cancellationToken = default)
-        {
-            return GetExtensionClient(subscriptionResource).GetNetworkConnectionsAsync(top, cancellationToken);
-        }
-
-        /// <summary>
-        /// Lists network connections in a subscription
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.DevCenter/networkConnections</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>NetworkConnections_ListBySubscription</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="top"> The maximum number of resources to return from the operation. Example: &apos;$top=10&apos;. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="NetworkConnectionResource" /> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<NetworkConnectionResource> GetNetworkConnections(this SubscriptionResource subscriptionResource, int? top = null, CancellationToken cancellationToken = default)
-        {
-            return GetExtensionClient(subscriptionResource).GetNetworkConnections(top, cancellationToken);
-        }
-
-        private static ResourceGroupResourceExtensionClient GetExtensionClient(ResourceGroupResource resourceGroupResource)
-        {
-            return resourceGroupResource.GetCachedClient((client) =>
+            return client.GetResourceClient(() =>
             {
-                return new ResourceGroupResourceExtensionClient(client, resourceGroupResource.Id);
+                DevCenterProjectResource.ValidateResourceId(id);
+                return new DevCenterProjectResource(client, id);
             }
             );
         }
+        #endregion
+
+        #region ProjectAttachedNetworkConnectionResource
+        /// <summary>
+        /// Gets an object representing a <see cref="ProjectAttachedNetworkConnectionResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ProjectAttachedNetworkConnectionResource.CreateResourceIdentifier" /> to create a <see cref="ProjectAttachedNetworkConnectionResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="ProjectAttachedNetworkConnectionResource" /> object. </returns>
+        public static ProjectAttachedNetworkConnectionResource GetProjectAttachedNetworkConnectionResource(this ArmClient client, ResourceIdentifier id)
+        {
+            return client.GetResourceClient(() =>
+            {
+                ProjectAttachedNetworkConnectionResource.ValidateResourceId(id);
+                return new ProjectAttachedNetworkConnectionResource(client, id);
+            }
+            );
+        }
+        #endregion
+
+        #region AttachedNetworkConnectionResource
+        /// <summary>
+        /// Gets an object representing an <see cref="AttachedNetworkConnectionResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="AttachedNetworkConnectionResource.CreateResourceIdentifier" /> to create an <see cref="AttachedNetworkConnectionResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="AttachedNetworkConnectionResource" /> object. </returns>
+        public static AttachedNetworkConnectionResource GetAttachedNetworkConnectionResource(this ArmClient client, ResourceIdentifier id)
+        {
+            return client.GetResourceClient(() =>
+            {
+                AttachedNetworkConnectionResource.ValidateResourceId(id);
+                return new AttachedNetworkConnectionResource(client, id);
+            }
+            );
+        }
+        #endregion
+
+        #region DevCenterGalleryResource
+        /// <summary>
+        /// Gets an object representing a <see cref="DevCenterGalleryResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="DevCenterGalleryResource.CreateResourceIdentifier" /> to create a <see cref="DevCenterGalleryResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="DevCenterGalleryResource" /> object. </returns>
+        public static DevCenterGalleryResource GetDevCenterGalleryResource(this ArmClient client, ResourceIdentifier id)
+        {
+            return client.GetResourceClient(() =>
+            {
+                DevCenterGalleryResource.ValidateResourceId(id);
+                return new DevCenterGalleryResource(client, id);
+            }
+            );
+        }
+        #endregion
+
+        #region DevCenterImageResource
+        /// <summary>
+        /// Gets an object representing a <see cref="DevCenterImageResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="DevCenterImageResource.CreateResourceIdentifier" /> to create a <see cref="DevCenterImageResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="DevCenterImageResource" /> object. </returns>
+        public static DevCenterImageResource GetDevCenterImageResource(this ArmClient client, ResourceIdentifier id)
+        {
+            return client.GetResourceClient(() =>
+            {
+                DevCenterImageResource.ValidateResourceId(id);
+                return new DevCenterImageResource(client, id);
+            }
+            );
+        }
+        #endregion
+
+        #region ImageVersionResource
+        /// <summary>
+        /// Gets an object representing an <see cref="ImageVersionResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ImageVersionResource.CreateResourceIdentifier" /> to create an <see cref="ImageVersionResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="ImageVersionResource" /> object. </returns>
+        public static ImageVersionResource GetImageVersionResource(this ArmClient client, ResourceIdentifier id)
+        {
+            return client.GetResourceClient(() =>
+            {
+                ImageVersionResource.ValidateResourceId(id);
+                return new ImageVersionResource(client, id);
+            }
+            );
+        }
+        #endregion
+
+        #region DevCenterCatalogResource
+        /// <summary>
+        /// Gets an object representing a <see cref="DevCenterCatalogResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="DevCenterCatalogResource.CreateResourceIdentifier" /> to create a <see cref="DevCenterCatalogResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="DevCenterCatalogResource" /> object. </returns>
+        public static DevCenterCatalogResource GetDevCenterCatalogResource(this ArmClient client, ResourceIdentifier id)
+        {
+            return client.GetResourceClient(() =>
+            {
+                DevCenterCatalogResource.ValidateResourceId(id);
+                return new DevCenterCatalogResource(client, id);
+            }
+            );
+        }
+        #endregion
+
+        #region DevCenterEnvironmentTypeResource
+        /// <summary>
+        /// Gets an object representing a <see cref="DevCenterEnvironmentTypeResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="DevCenterEnvironmentTypeResource.CreateResourceIdentifier" /> to create a <see cref="DevCenterEnvironmentTypeResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="DevCenterEnvironmentTypeResource" /> object. </returns>
+        public static DevCenterEnvironmentTypeResource GetDevCenterEnvironmentTypeResource(this ArmClient client, ResourceIdentifier id)
+        {
+            return client.GetResourceClient(() =>
+            {
+                DevCenterEnvironmentTypeResource.ValidateResourceId(id);
+                return new DevCenterEnvironmentTypeResource(client, id);
+            }
+            );
+        }
+        #endregion
+
+        #region AllowedEnvironmentTypeResource
+        /// <summary>
+        /// Gets an object representing an <see cref="AllowedEnvironmentTypeResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="AllowedEnvironmentTypeResource.CreateResourceIdentifier" /> to create an <see cref="AllowedEnvironmentTypeResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="AllowedEnvironmentTypeResource" /> object. </returns>
+        public static AllowedEnvironmentTypeResource GetAllowedEnvironmentTypeResource(this ArmClient client, ResourceIdentifier id)
+        {
+            return client.GetResourceClient(() =>
+            {
+                AllowedEnvironmentTypeResource.ValidateResourceId(id);
+                return new AllowedEnvironmentTypeResource(client, id);
+            }
+            );
+        }
+        #endregion
+
+        #region DevCenterProjectEnvironmentResource
+        /// <summary>
+        /// Gets an object representing a <see cref="DevCenterProjectEnvironmentResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="DevCenterProjectEnvironmentResource.CreateResourceIdentifier" /> to create a <see cref="DevCenterProjectEnvironmentResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="DevCenterProjectEnvironmentResource" /> object. </returns>
+        public static DevCenterProjectEnvironmentResource GetDevCenterProjectEnvironmentResource(this ArmClient client, ResourceIdentifier id)
+        {
+            return client.GetResourceClient(() =>
+            {
+                DevCenterProjectEnvironmentResource.ValidateResourceId(id);
+                return new DevCenterProjectEnvironmentResource(client, id);
+            }
+            );
+        }
+        #endregion
+
+        #region DevBoxDefinitionResource
+        /// <summary>
+        /// Gets an object representing a <see cref="DevBoxDefinitionResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="DevBoxDefinitionResource.CreateResourceIdentifier" /> to create a <see cref="DevBoxDefinitionResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="DevBoxDefinitionResource" /> object. </returns>
+        public static DevBoxDefinitionResource GetDevBoxDefinitionResource(this ArmClient client, ResourceIdentifier id)
+        {
+            return client.GetResourceClient(() =>
+            {
+                DevBoxDefinitionResource.ValidateResourceId(id);
+                return new DevBoxDefinitionResource(client, id);
+            }
+            );
+        }
+        #endregion
+
+        #region ProjectDevBoxDefinitionResource
+        /// <summary>
+        /// Gets an object representing a <see cref="ProjectDevBoxDefinitionResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ProjectDevBoxDefinitionResource.CreateResourceIdentifier" /> to create a <see cref="ProjectDevBoxDefinitionResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="ProjectDevBoxDefinitionResource" /> object. </returns>
+        public static ProjectDevBoxDefinitionResource GetProjectDevBoxDefinitionResource(this ArmClient client, ResourceIdentifier id)
+        {
+            return client.GetResourceClient(() =>
+            {
+                ProjectDevBoxDefinitionResource.ValidateResourceId(id);
+                return new ProjectDevBoxDefinitionResource(client, id);
+            }
+            );
+        }
+        #endregion
+
+        #region DevCenterPoolResource
+        /// <summary>
+        /// Gets an object representing a <see cref="DevCenterPoolResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="DevCenterPoolResource.CreateResourceIdentifier" /> to create a <see cref="DevCenterPoolResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="DevCenterPoolResource" /> object. </returns>
+        public static DevCenterPoolResource GetDevCenterPoolResource(this ArmClient client, ResourceIdentifier id)
+        {
+            return client.GetResourceClient(() =>
+            {
+                DevCenterPoolResource.ValidateResourceId(id);
+                return new DevCenterPoolResource(client, id);
+            }
+            );
+        }
+        #endregion
+
+        #region DevCenterScheduleResource
+        /// <summary>
+        /// Gets an object representing a <see cref="DevCenterScheduleResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="DevCenterScheduleResource.CreateResourceIdentifier" /> to create a <see cref="DevCenterScheduleResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="DevCenterScheduleResource" /> object. </returns>
+        public static DevCenterScheduleResource GetDevCenterScheduleResource(this ArmClient client, ResourceIdentifier id)
+        {
+            return client.GetResourceClient(() =>
+            {
+                DevCenterScheduleResource.ValidateResourceId(id);
+                return new DevCenterScheduleResource(client, id);
+            }
+            );
+        }
+        #endregion
+
+        #region DevCenterNetworkConnectionResource
+        /// <summary>
+        /// Gets an object representing a <see cref="DevCenterNetworkConnectionResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="DevCenterNetworkConnectionResource.CreateResourceIdentifier" /> to create a <see cref="DevCenterNetworkConnectionResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="DevCenterNetworkConnectionResource" /> object. </returns>
+        public static DevCenterNetworkConnectionResource GetDevCenterNetworkConnectionResource(this ArmClient client, ResourceIdentifier id)
+        {
+            return client.GetResourceClient(() =>
+            {
+                DevCenterNetworkConnectionResource.ValidateResourceId(id);
+                return new DevCenterNetworkConnectionResource(client, id);
+            }
+            );
+        }
+        #endregion
+
+        #region HealthCheckStatusDetailResource
+        /// <summary>
+        /// Gets an object representing a <see cref="HealthCheckStatusDetailResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="HealthCheckStatusDetailResource.CreateResourceIdentifier" /> to create a <see cref="HealthCheckStatusDetailResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="HealthCheckStatusDetailResource" /> object. </returns>
+        public static HealthCheckStatusDetailResource GetHealthCheckStatusDetailResource(this ArmClient client, ResourceIdentifier id)
+        {
+            return client.GetResourceClient(() =>
+            {
+                HealthCheckStatusDetailResource.ValidateResourceId(id);
+                return new HealthCheckStatusDetailResource(client, id);
+            }
+            );
+        }
+        #endregion
 
         /// <summary> Gets a collection of DevCenterResources in the ResourceGroupResource. </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <returns> An object representing collection of DevCenterResources and their operations over a DevCenterResource. </returns>
         public static DevCenterCollection GetDevCenters(this ResourceGroupResource resourceGroupResource)
         {
-            return GetExtensionClient(resourceGroupResource).GetDevCenters();
+            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetDevCenters();
         }
 
         /// <summary>
@@ -365,12 +429,12 @@ namespace Azure.ResourceManager.DevCenter
             return resourceGroupResource.GetDevCenters().Get(devCenterName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of ProjectResources in the ResourceGroupResource. </summary>
+        /// <summary> Gets a collection of DevCenterProjectResources in the ResourceGroupResource. </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <returns> An object representing collection of ProjectResources and their operations over a ProjectResource. </returns>
-        public static ProjectCollection GetProjects(this ResourceGroupResource resourceGroupResource)
+        /// <returns> An object representing collection of DevCenterProjectResources and their operations over a DevCenterProjectResource. </returns>
+        public static DevCenterProjectCollection GetDevCenterProjects(this ResourceGroupResource resourceGroupResource)
         {
-            return GetExtensionClient(resourceGroupResource).GetProjects();
+            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetDevCenterProjects();
         }
 
         /// <summary>
@@ -392,9 +456,9 @@ namespace Azure.ResourceManager.DevCenter
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> is null. </exception>
         [ForwardsClientCalls]
-        public static async Task<Response<ProjectResource>> GetProjectAsync(this ResourceGroupResource resourceGroupResource, string projectName, CancellationToken cancellationToken = default)
+        public static async Task<Response<DevCenterProjectResource>> GetDevCenterProjectAsync(this ResourceGroupResource resourceGroupResource, string projectName, CancellationToken cancellationToken = default)
         {
-            return await resourceGroupResource.GetProjects().GetAsync(projectName, cancellationToken).ConfigureAwait(false);
+            return await resourceGroupResource.GetDevCenterProjects().GetAsync(projectName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -416,17 +480,17 @@ namespace Azure.ResourceManager.DevCenter
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> is null. </exception>
         [ForwardsClientCalls]
-        public static Response<ProjectResource> GetProject(this ResourceGroupResource resourceGroupResource, string projectName, CancellationToken cancellationToken = default)
+        public static Response<DevCenterProjectResource> GetDevCenterProject(this ResourceGroupResource resourceGroupResource, string projectName, CancellationToken cancellationToken = default)
         {
-            return resourceGroupResource.GetProjects().Get(projectName, cancellationToken);
+            return resourceGroupResource.GetDevCenterProjects().Get(projectName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of NetworkConnectionResources in the ResourceGroupResource. </summary>
+        /// <summary> Gets a collection of DevCenterNetworkConnectionResources in the ResourceGroupResource. </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <returns> An object representing collection of NetworkConnectionResources and their operations over a NetworkConnectionResource. </returns>
-        public static NetworkConnectionCollection GetNetworkConnections(this ResourceGroupResource resourceGroupResource)
+        /// <returns> An object representing collection of DevCenterNetworkConnectionResources and their operations over a DevCenterNetworkConnectionResource. </returns>
+        public static DevCenterNetworkConnectionCollection GetDevCenterNetworkConnections(this ResourceGroupResource resourceGroupResource)
         {
-            return GetExtensionClient(resourceGroupResource).GetNetworkConnections();
+            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetDevCenterNetworkConnections();
         }
 
         /// <summary>
@@ -448,9 +512,9 @@ namespace Azure.ResourceManager.DevCenter
         /// <exception cref="ArgumentException"> <paramref name="networkConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="networkConnectionName"/> is null. </exception>
         [ForwardsClientCalls]
-        public static async Task<Response<NetworkConnectionResource>> GetNetworkConnectionAsync(this ResourceGroupResource resourceGroupResource, string networkConnectionName, CancellationToken cancellationToken = default)
+        public static async Task<Response<DevCenterNetworkConnectionResource>> GetDevCenterNetworkConnectionAsync(this ResourceGroupResource resourceGroupResource, string networkConnectionName, CancellationToken cancellationToken = default)
         {
-            return await resourceGroupResource.GetNetworkConnections().GetAsync(networkConnectionName, cancellationToken).ConfigureAwait(false);
+            return await resourceGroupResource.GetDevCenterNetworkConnections().GetAsync(networkConnectionName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -472,313 +536,329 @@ namespace Azure.ResourceManager.DevCenter
         /// <exception cref="ArgumentException"> <paramref name="networkConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="networkConnectionName"/> is null. </exception>
         [ForwardsClientCalls]
-        public static Response<NetworkConnectionResource> GetNetworkConnection(this ResourceGroupResource resourceGroupResource, string networkConnectionName, CancellationToken cancellationToken = default)
+        public static Response<DevCenterNetworkConnectionResource> GetDevCenterNetworkConnection(this ResourceGroupResource resourceGroupResource, string networkConnectionName, CancellationToken cancellationToken = default)
         {
-            return resourceGroupResource.GetNetworkConnections().Get(networkConnectionName, cancellationToken);
+            return resourceGroupResource.GetDevCenterNetworkConnections().Get(networkConnectionName, cancellationToken);
         }
 
-        #region DevCenterResource
         /// <summary>
-        /// Gets an object representing a <see cref="DevCenterResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="DevCenterResource.CreateResourceIdentifier" /> to create a <see cref="DevCenterResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Lists all devcenters in a subscription.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.DevCenter/devcenters</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>DevCenters_ListBySubscription</description>
+        /// </item>
+        /// </list>
         /// </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="DevCenterResource" /> object. </returns>
-        public static DevCenterResource GetDevCenterResource(this ArmClient client, ResourceIdentifier id)
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="top"> The maximum number of resources to return from the operation. Example: &apos;$top=10&apos;. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> An async collection of <see cref="DevCenterResource" /> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<DevCenterResource> GetDevCentersAsync(this SubscriptionResource subscriptionResource, int? top = null, CancellationToken cancellationToken = default)
         {
-            return client.GetResourceClient(() =>
-            {
-                DevCenterResource.ValidateResourceId(id);
-                return new DevCenterResource(client, id);
-            }
-            );
+            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetDevCentersAsync(top, cancellationToken);
         }
-        #endregion
 
-        #region ProjectResource
         /// <summary>
-        /// Gets an object representing a <see cref="ProjectResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ProjectResource.CreateResourceIdentifier" /> to create a <see cref="ProjectResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Lists all devcenters in a subscription.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.DevCenter/devcenters</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>DevCenters_ListBySubscription</description>
+        /// </item>
+        /// </list>
         /// </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ProjectResource" /> object. </returns>
-        public static ProjectResource GetProjectResource(this ArmClient client, ResourceIdentifier id)
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="top"> The maximum number of resources to return from the operation. Example: &apos;$top=10&apos;. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="DevCenterResource" /> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<DevCenterResource> GetDevCenters(this SubscriptionResource subscriptionResource, int? top = null, CancellationToken cancellationToken = default)
         {
-            return client.GetResourceClient(() =>
-            {
-                ProjectResource.ValidateResourceId(id);
-                return new ProjectResource(client, id);
-            }
-            );
+            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetDevCenters(top, cancellationToken);
         }
-        #endregion
 
-        #region ProjectAttachedNetworkConnectionResource
         /// <summary>
-        /// Gets an object representing a <see cref="ProjectAttachedNetworkConnectionResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ProjectAttachedNetworkConnectionResource.CreateResourceIdentifier" /> to create a <see cref="ProjectAttachedNetworkConnectionResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Lists all projects in the subscription.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.DevCenter/projects</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Projects_ListBySubscription</description>
+        /// </item>
+        /// </list>
         /// </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ProjectAttachedNetworkConnectionResource" /> object. </returns>
-        public static ProjectAttachedNetworkConnectionResource GetProjectAttachedNetworkConnectionResource(this ArmClient client, ResourceIdentifier id)
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="top"> The maximum number of resources to return from the operation. Example: &apos;$top=10&apos;. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> An async collection of <see cref="DevCenterProjectResource" /> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<DevCenterProjectResource> GetDevCenterProjectsAsync(this SubscriptionResource subscriptionResource, int? top = null, CancellationToken cancellationToken = default)
         {
-            return client.GetResourceClient(() =>
-            {
-                ProjectAttachedNetworkConnectionResource.ValidateResourceId(id);
-                return new ProjectAttachedNetworkConnectionResource(client, id);
-            }
-            );
+            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetDevCenterProjectsAsync(top, cancellationToken);
         }
-        #endregion
 
-        #region AttachedNetworkConnectionResource
         /// <summary>
-        /// Gets an object representing an <see cref="AttachedNetworkConnectionResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="AttachedNetworkConnectionResource.CreateResourceIdentifier" /> to create an <see cref="AttachedNetworkConnectionResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Lists all projects in the subscription.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.DevCenter/projects</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Projects_ListBySubscription</description>
+        /// </item>
+        /// </list>
         /// </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="AttachedNetworkConnectionResource" /> object. </returns>
-        public static AttachedNetworkConnectionResource GetAttachedNetworkConnectionResource(this ArmClient client, ResourceIdentifier id)
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="top"> The maximum number of resources to return from the operation. Example: &apos;$top=10&apos;. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="DevCenterProjectResource" /> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<DevCenterProjectResource> GetDevCenterProjects(this SubscriptionResource subscriptionResource, int? top = null, CancellationToken cancellationToken = default)
         {
-            return client.GetResourceClient(() =>
-            {
-                AttachedNetworkConnectionResource.ValidateResourceId(id);
-                return new AttachedNetworkConnectionResource(client, id);
-            }
-            );
+            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetDevCenterProjects(top, cancellationToken);
         }
-        #endregion
 
-        #region GalleryResource
         /// <summary>
-        /// Gets an object representing a <see cref="GalleryResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="GalleryResource.CreateResourceIdentifier" /> to create a <see cref="GalleryResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets the current status of an async operation.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.DevCenter/locations/{location}/operationStatuses/{operationId}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>OperationStatuses_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="GalleryResource" /> object. </returns>
-        public static GalleryResource GetGalleryResource(this ArmClient client, ResourceIdentifier id)
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="location"> The Azure region. </param>
+        /// <param name="operationId"> The ID of an ongoing async operation. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="operationId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="operationId"/> is null. </exception>
+        public static async Task<Response<DevCenterOperationStatus>> GetDevCenterOperationStatusAsync(this SubscriptionResource subscriptionResource, AzureLocation location, string operationId, CancellationToken cancellationToken = default)
         {
-            return client.GetResourceClient(() =>
-            {
-                GalleryResource.ValidateResourceId(id);
-                return new GalleryResource(client, id);
-            }
-            );
-        }
-        #endregion
+            Argument.AssertNotNullOrEmpty(operationId, nameof(operationId));
 
-        #region ImageResource
-        /// <summary>
-        /// Gets an object representing an <see cref="ImageResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ImageResource.CreateResourceIdentifier" /> to create an <see cref="ImageResource" /> <see cref="ResourceIdentifier" /> from its components.
-        /// </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ImageResource" /> object. </returns>
-        public static ImageResource GetImageResource(this ArmClient client, ResourceIdentifier id)
-        {
-            return client.GetResourceClient(() =>
-            {
-                ImageResource.ValidateResourceId(id);
-                return new ImageResource(client, id);
-            }
-            );
+            return await GetSubscriptionResourceExtensionClient(subscriptionResource).GetDevCenterOperationStatusAsync(location, operationId, cancellationToken).ConfigureAwait(false);
         }
-        #endregion
 
-        #region ImageVersionResource
         /// <summary>
-        /// Gets an object representing an <see cref="ImageVersionResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ImageVersionResource.CreateResourceIdentifier" /> to create an <see cref="ImageVersionResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets the current status of an async operation.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.DevCenter/locations/{location}/operationStatuses/{operationId}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>OperationStatuses_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ImageVersionResource" /> object. </returns>
-        public static ImageVersionResource GetImageVersionResource(this ArmClient client, ResourceIdentifier id)
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="location"> The Azure region. </param>
+        /// <param name="operationId"> The ID of an ongoing async operation. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="operationId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="operationId"/> is null. </exception>
+        public static Response<DevCenterOperationStatus> GetDevCenterOperationStatus(this SubscriptionResource subscriptionResource, AzureLocation location, string operationId, CancellationToken cancellationToken = default)
         {
-            return client.GetResourceClient(() =>
-            {
-                ImageVersionResource.ValidateResourceId(id);
-                return new ImageVersionResource(client, id);
-            }
-            );
-        }
-        #endregion
+            Argument.AssertNotNullOrEmpty(operationId, nameof(operationId));
 
-        #region CatalogResource
-        /// <summary>
-        /// Gets an object representing a <see cref="CatalogResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="CatalogResource.CreateResourceIdentifier" /> to create a <see cref="CatalogResource" /> <see cref="ResourceIdentifier" /> from its components.
-        /// </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="CatalogResource" /> object. </returns>
-        public static CatalogResource GetCatalogResource(this ArmClient client, ResourceIdentifier id)
-        {
-            return client.GetResourceClient(() =>
-            {
-                CatalogResource.ValidateResourceId(id);
-                return new CatalogResource(client, id);
-            }
-            );
+            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetDevCenterOperationStatus(location, operationId, cancellationToken);
         }
-        #endregion
 
-        #region EnvironmentTypeResource
         /// <summary>
-        /// Gets an object representing an <see cref="EnvironmentTypeResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="EnvironmentTypeResource.CreateResourceIdentifier" /> to create an <see cref="EnvironmentTypeResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Lists the current usages and limits in this location for the provided subscription.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.DevCenter/locations/{location}/usages</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Usages_ListByLocation</description>
+        /// </item>
+        /// </list>
         /// </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="EnvironmentTypeResource" /> object. </returns>
-        public static EnvironmentTypeResource GetEnvironmentTypeResource(this ArmClient client, ResourceIdentifier id)
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="location"> The Azure region. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> An async collection of <see cref="DevCenterUsage" /> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<DevCenterUsage> GetDevCenterUsagesByLocationAsync(this SubscriptionResource subscriptionResource, AzureLocation location, CancellationToken cancellationToken = default)
         {
-            return client.GetResourceClient(() =>
-            {
-                EnvironmentTypeResource.ValidateResourceId(id);
-                return new EnvironmentTypeResource(client, id);
-            }
-            );
+            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetDevCenterUsagesByLocationAsync(location, cancellationToken);
         }
-        #endregion
 
-        #region ProjectEnvironmentTypeResource
         /// <summary>
-        /// Gets an object representing a <see cref="ProjectEnvironmentTypeResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ProjectEnvironmentTypeResource.CreateResourceIdentifier" /> to create a <see cref="ProjectEnvironmentTypeResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Lists the current usages and limits in this location for the provided subscription.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.DevCenter/locations/{location}/usages</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Usages_ListByLocation</description>
+        /// </item>
+        /// </list>
         /// </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ProjectEnvironmentTypeResource" /> object. </returns>
-        public static ProjectEnvironmentTypeResource GetProjectEnvironmentTypeResource(this ArmClient client, ResourceIdentifier id)
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="location"> The Azure region. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="DevCenterUsage" /> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<DevCenterUsage> GetDevCenterUsagesByLocation(this SubscriptionResource subscriptionResource, AzureLocation location, CancellationToken cancellationToken = default)
         {
-            return client.GetResourceClient(() =>
-            {
-                ProjectEnvironmentTypeResource.ValidateResourceId(id);
-                return new ProjectEnvironmentTypeResource(client, id);
-            }
-            );
+            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetDevCenterUsagesByLocation(location, cancellationToken);
         }
-        #endregion
 
-        #region DevBoxDefinitionResource
         /// <summary>
-        /// Gets an object representing a <see cref="DevBoxDefinitionResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="DevBoxDefinitionResource.CreateResourceIdentifier" /> to create a <see cref="DevBoxDefinitionResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Check the availability of name for resource
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.DevCenter/checkNameAvailability</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>CheckNameAvailability_Execute</description>
+        /// </item>
+        /// </list>
         /// </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="DevBoxDefinitionResource" /> object. </returns>
-        public static DevBoxDefinitionResource GetDevBoxDefinitionResource(this ArmClient client, ResourceIdentifier id)
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="content"> The required parameters for checking if resource name is available. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public static async Task<Response<DevCenterNameAvailabilityResult>> CheckDevCenterNameAvailabilityAsync(this SubscriptionResource subscriptionResource, DevCenterNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            return client.GetResourceClient(() =>
-            {
-                DevBoxDefinitionResource.ValidateResourceId(id);
-                return new DevBoxDefinitionResource(client, id);
-            }
-            );
-        }
-        #endregion
+            Argument.AssertNotNull(content, nameof(content));
 
-        #region ProjectDevBoxDefinitionResource
-        /// <summary>
-        /// Gets an object representing a <see cref="ProjectDevBoxDefinitionResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ProjectDevBoxDefinitionResource.CreateResourceIdentifier" /> to create a <see cref="ProjectDevBoxDefinitionResource" /> <see cref="ResourceIdentifier" /> from its components.
-        /// </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ProjectDevBoxDefinitionResource" /> object. </returns>
-        public static ProjectDevBoxDefinitionResource GetProjectDevBoxDefinitionResource(this ArmClient client, ResourceIdentifier id)
-        {
-            return client.GetResourceClient(() =>
-            {
-                ProjectDevBoxDefinitionResource.ValidateResourceId(id);
-                return new ProjectDevBoxDefinitionResource(client, id);
-            }
-            );
+            return await GetSubscriptionResourceExtensionClient(subscriptionResource).CheckDevCenterNameAvailabilityAsync(content, cancellationToken).ConfigureAwait(false);
         }
-        #endregion
 
-        #region PoolResource
         /// <summary>
-        /// Gets an object representing a <see cref="PoolResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="PoolResource.CreateResourceIdentifier" /> to create a <see cref="PoolResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Check the availability of name for resource
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.DevCenter/checkNameAvailability</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>CheckNameAvailability_Execute</description>
+        /// </item>
+        /// </list>
         /// </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="PoolResource" /> object. </returns>
-        public static PoolResource GetPoolResource(this ArmClient client, ResourceIdentifier id)
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="content"> The required parameters for checking if resource name is available. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public static Response<DevCenterNameAvailabilityResult> CheckDevCenterNameAvailability(this SubscriptionResource subscriptionResource, DevCenterNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            return client.GetResourceClient(() =>
-            {
-                PoolResource.ValidateResourceId(id);
-                return new PoolResource(client, id);
-            }
-            );
-        }
-        #endregion
+            Argument.AssertNotNull(content, nameof(content));
 
-        #region ScheduleResource
-        /// <summary>
-        /// Gets an object representing a <see cref="ScheduleResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ScheduleResource.CreateResourceIdentifier" /> to create a <see cref="ScheduleResource" /> <see cref="ResourceIdentifier" /> from its components.
-        /// </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ScheduleResource" /> object. </returns>
-        public static ScheduleResource GetScheduleResource(this ArmClient client, ResourceIdentifier id)
-        {
-            return client.GetResourceClient(() =>
-            {
-                ScheduleResource.ValidateResourceId(id);
-                return new ScheduleResource(client, id);
-            }
-            );
+            return GetSubscriptionResourceExtensionClient(subscriptionResource).CheckDevCenterNameAvailability(content, cancellationToken);
         }
-        #endregion
 
-        #region NetworkConnectionResource
         /// <summary>
-        /// Gets an object representing a <see cref="NetworkConnectionResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="NetworkConnectionResource.CreateResourceIdentifier" /> to create a <see cref="NetworkConnectionResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Lists the Microsoft.DevCenter SKUs available in a subscription
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.DevCenter/skus</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Skus_ListBySubscription</description>
+        /// </item>
+        /// </list>
         /// </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="NetworkConnectionResource" /> object. </returns>
-        public static NetworkConnectionResource GetNetworkConnectionResource(this ArmClient client, ResourceIdentifier id)
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="top"> The maximum number of resources to return from the operation. Example: &apos;$top=10&apos;. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> An async collection of <see cref="DevCenterSkuDetails" /> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<DevCenterSkuDetails> GetDevCenterSkusBySubscriptionAsync(this SubscriptionResource subscriptionResource, int? top = null, CancellationToken cancellationToken = default)
         {
-            return client.GetResourceClient(() =>
-            {
-                NetworkConnectionResource.ValidateResourceId(id);
-                return new NetworkConnectionResource(client, id);
-            }
-            );
+            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetDevCenterSkusBySubscriptionAsync(top, cancellationToken);
         }
-        #endregion
 
-        #region HealthCheckStatusDetailResource
         /// <summary>
-        /// Gets an object representing a <see cref="HealthCheckStatusDetailResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="HealthCheckStatusDetailResource.CreateResourceIdentifier" /> to create a <see cref="HealthCheckStatusDetailResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Lists the Microsoft.DevCenter SKUs available in a subscription
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.DevCenter/skus</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Skus_ListBySubscription</description>
+        /// </item>
+        /// </list>
         /// </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="HealthCheckStatusDetailResource" /> object. </returns>
-        public static HealthCheckStatusDetailResource GetHealthCheckStatusDetailResource(this ArmClient client, ResourceIdentifier id)
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="top"> The maximum number of resources to return from the operation. Example: &apos;$top=10&apos;. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="DevCenterSkuDetails" /> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<DevCenterSkuDetails> GetDevCenterSkusBySubscription(this SubscriptionResource subscriptionResource, int? top = null, CancellationToken cancellationToken = default)
         {
-            return client.GetResourceClient(() =>
-            {
-                HealthCheckStatusDetailResource.ValidateResourceId(id);
-                return new HealthCheckStatusDetailResource(client, id);
-            }
-            );
+            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetDevCenterSkusBySubscription(top, cancellationToken);
         }
-        #endregion
+
+        /// <summary>
+        /// Lists network connections in a subscription
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.DevCenter/networkConnections</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>NetworkConnections_ListBySubscription</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="top"> The maximum number of resources to return from the operation. Example: &apos;$top=10&apos;. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> An async collection of <see cref="DevCenterNetworkConnectionResource" /> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<DevCenterNetworkConnectionResource> GetDevCenterNetworkConnectionsAsync(this SubscriptionResource subscriptionResource, int? top = null, CancellationToken cancellationToken = default)
+        {
+            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetDevCenterNetworkConnectionsAsync(top, cancellationToken);
+        }
+
+        /// <summary>
+        /// Lists network connections in a subscription
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.DevCenter/networkConnections</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>NetworkConnections_ListBySubscription</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="top"> The maximum number of resources to return from the operation. Example: &apos;$top=10&apos;. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="DevCenterNetworkConnectionResource" /> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<DevCenterNetworkConnectionResource> GetDevCenterNetworkConnections(this SubscriptionResource subscriptionResource, int? top = null, CancellationToken cancellationToken = default)
+        {
+            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetDevCenterNetworkConnections(top, cancellationToken);
+        }
     }
 }

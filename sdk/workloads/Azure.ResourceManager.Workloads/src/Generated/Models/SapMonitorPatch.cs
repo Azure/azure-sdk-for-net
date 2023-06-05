@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.Workloads.Models
 
         /// <summary> Gets or sets the Resource tags. </summary>
         public IDictionary<string, string> Tags { get; }
-        /// <summary> Managed service identity (user assigned identities). </summary>
+        /// <summary> [currently not in use] Managed service identity(user assigned identities). </summary>
         public UserAssignedServiceIdentity Identity { get; set; }
     }
 }

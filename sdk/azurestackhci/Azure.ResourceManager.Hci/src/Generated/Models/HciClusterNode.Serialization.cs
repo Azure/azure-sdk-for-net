@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Text.Json;
 using Azure.Core;
 
@@ -31,6 +32,7 @@ namespace Azure.ResourceManager.Hci.Models
             Optional<string> serialNumber = default;
             Optional<float> coreCount = default;
             Optional<float> memoryInGiB = default;
+            Optional<DateTimeOffset> lastLicensingTimestamp = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -42,7 +44,6 @@ namespace Azure.ResourceManager.Hci.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     id = property.Value.GetSingle();
@@ -52,7 +53,6 @@ namespace Azure.ResourceManager.Hci.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     windowsServerSubscription = new WindowsServerSubscription(property.Value.GetString());
@@ -62,7 +62,6 @@ namespace Azure.ResourceManager.Hci.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     nodeType = new ClusterNodeType(property.Value.GetString());
@@ -107,7 +106,6 @@ namespace Azure.ResourceManager.Hci.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     coreCount = property.Value.GetSingle();
@@ -117,14 +115,22 @@ namespace Azure.ResourceManager.Hci.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     memoryInGiB = property.Value.GetSingle();
                     continue;
                 }
+                if (property.NameEquals("lastLicensingTimestamp"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    lastLicensingTimestamp = property.Value.GetDateTimeOffset("O");
+                    continue;
+                }
             }
-            return new HciClusterNode(name.Value, Optional.ToNullable(id), Optional.ToNullable(windowsServerSubscription), Optional.ToNullable(nodeType), ehcResourceId.Value, manufacturer.Value, model.Value, osName.Value, osVersion.Value, osDisplayVersion.Value, serialNumber.Value, Optional.ToNullable(coreCount), Optional.ToNullable(memoryInGiB));
+            return new HciClusterNode(name.Value, Optional.ToNullable(id), Optional.ToNullable(windowsServerSubscription), Optional.ToNullable(nodeType), ehcResourceId.Value, manufacturer.Value, model.Value, osName.Value, osVersion.Value, osDisplayVersion.Value, serialNumber.Value, Optional.ToNullable(coreCount), Optional.ToNullable(memoryInGiB), Optional.ToNullable(lastLicensingTimestamp));
         }
     }
 }
