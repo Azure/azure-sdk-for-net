@@ -23,7 +23,7 @@ namespace Azure.AI.ContentSafety
             if (Optional.IsDefined(BlobUrl))
             {
                 writer.WritePropertyName("blobUrl"u8);
-                writer.WriteStringValue(BlobUrl);
+                writer.WriteStringValue(BlobUrl.AbsoluteUri);
             }
             writer.WriteEndObject();
         }

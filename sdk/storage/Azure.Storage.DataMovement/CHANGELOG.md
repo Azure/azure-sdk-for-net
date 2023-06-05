@@ -5,6 +5,7 @@
 ### Features Added
 - `TransferManager` new API `PauseAllRunningTransfersAsync`.
 - Added support for `TransferManager.GetTransfers`, to retrieve the list of transfers in the `TransferManager`.
+- Added support for tracking progress of transfers. See `TransferOptions.ProgressHandler` and `TransferOptions.ProgressHandlerOptions`.
 
 ### Breaking Changes
 - [BREAKING CHANGE] Altered API signatures on `TransferManager` and `DataTransfer` for pausing.

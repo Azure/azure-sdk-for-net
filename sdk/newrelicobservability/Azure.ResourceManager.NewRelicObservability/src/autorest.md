@@ -12,7 +12,6 @@ tag: package-2022-07-01-preview
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
 skip-csproj: true
-generate-model-factory: false
 modelerfour:
   flatten-payloads: false
 
