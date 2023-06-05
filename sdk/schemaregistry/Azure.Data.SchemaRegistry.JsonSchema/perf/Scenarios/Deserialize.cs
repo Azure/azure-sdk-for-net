@@ -8,7 +8,7 @@ using Azure.Messaging;
 using Azure.Test.Perf;
 using TestSchema;
 
-namespace Microsoft.Azure.Data.SchemaRegistry.JsonSchema.Perf.Scenarios
+namespace Azure.Data.SchemaRegistry.JsonSchema.Perf.Scenarios
 {
     public class Deserialize : SchemaRegistryJsonSerializerPerfTestBase
     {

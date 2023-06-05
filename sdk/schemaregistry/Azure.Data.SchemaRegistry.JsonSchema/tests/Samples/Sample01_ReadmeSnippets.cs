@@ -19,7 +19,7 @@ using Newtonsoft.Json.Schema;
 using Azure.Core.Serialization;
 using System.Text.Json;
 
-namespace Microsoft.Azure.Data.SchemaRegistry.JsonSchema.Tests.Samples
+namespace Azure.Data.SchemaRegistry.JsonSchema.Tests.Samples
 {
     public class Sample01_ReadmeSnippets : SamplesBase<SchemaRegistryJsonSerializerTestEnvironment>
     {
@@ -165,7 +165,7 @@ namespace Microsoft.Azure.Data.SchemaRegistry.JsonSchema.Tests.Samples
             #region Snippet:SchemaRegistryJsonSerializeDeserializeWithOptionsNewtonsoft
             var newtonsoftSerializerOptions = new SchemaRegistryJsonSerializerOptions
             {
-                ObjectSerializer = new NewtonsoftJsonObjectSerializer()
+                Serializer = new NewtonsoftJsonObjectSerializer()
             };
             var newtonsoftSerializer = new SchemaRegistryJsonSerializer(client, groupName, new SampleJsonGenerator(), newtonsoftSerializerOptions);
             #endregion
@@ -178,7 +178,7 @@ namespace Microsoft.Azure.Data.SchemaRegistry.JsonSchema.Tests.Samples
 
             var serializerOptions = new SchemaRegistryJsonSerializerOptions
             {
-                ObjectSerializer = new JsonObjectSerializer(jsonSerializerOptions)
+                Serializer = new JsonObjectSerializer(jsonSerializerOptions)
             };
             var serializer = new SchemaRegistryJsonSerializer(client, groupName, new SampleJsonGenerator(), serializerOptions);
             #endregion

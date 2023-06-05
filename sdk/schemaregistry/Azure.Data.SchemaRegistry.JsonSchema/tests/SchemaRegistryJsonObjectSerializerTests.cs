@@ -12,7 +12,7 @@ using Newtonsoft.Json.Schema;
 using NUnit.Framework;
 using TestSchema;
 
-namespace Microsoft.Azure.Data.SchemaRegistry.JsonSchema.Tests
+namespace Azure.Data.SchemaRegistry.JsonSchema.Tests
 {
     public class SchemaRegistryJsonObjectSerializerTests
     {

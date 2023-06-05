@@ -13,16 +13,15 @@ using Azure.Messaging;
 using System.Text.Json;
 using Azure.Core.Serialization;
 
-namespace Microsoft.Azure.Data.SchemaRegistry.JsonSchema
+namespace Azure.Data.SchemaRegistry.JsonSchema
 {
     /// <summary>
-    /// A <see cref="SchemaRegistryJsonSerializer"/> serializes and deserializes JSON payloads using <see cref="System.Text.Json"/>.
-    /// It requires an implemented <see cref="SchemaRegistryJsonSchemaGenerator"/> and a <see cref="SchemaRegistryClient"/> in order
-    /// to enrich messages inheriting from <see cref="MessageContent"/> with the Schema ID.
+    /// The Schema Registry Json serializer serializes and deserializes JSON payloads. It uses an implemented
+    /// <see cref="SchemaRegistryJsonSchemaGenerator"/> and a <see cref="SchemaRegistryClient"/> to enrich messages
+    /// inheriting from <see cref="MessageContent"/> with a Schema Id.
     /// </summary>
     /// <remarks>
-    /// Taking in an implementation of <see cref="SchemaRegistryJsonSchemaGenerator"/> allows any JSON schema generation or validation
-    /// library to be used.
+    /// See <see cref="SchemaRegistryJsonSchemaGenerator"/> for additional information.
     /// </remarks>
     public class SchemaRegistryJsonSerializer
     {
@@ -87,7 +86,7 @@ namespace Microsoft.Azure.Data.SchemaRegistry.JsonSchema
             _client = client ?? throw new ArgumentNullException(nameof(client));
             _groupName = groupName;
             _jsonSchemaGenerator = jsonSchemaGenerator ?? throw new ArgumentNullException(nameof(jsonSchemaGenerator));
-            _jsonSerializerOptions = serializerOptions ?? new SchemaRegistryJsonSerializerOptions();
+            _jsonSerializerOptions = serializerOptions?.Clone() ?? new SchemaRegistryJsonSerializerOptions();
         }
 
         /// <summary>
@@ -107,7 +106,7 @@ namespace Microsoft.Azure.Data.SchemaRegistry.JsonSchema
         #region Serialize
         /// <summary>
         /// Serializes the message data as JSON and stores it in <see cref="MessageContent.Data"/>. The <see cref="MessageContent.ContentType"/>
-        /// will be set to "application/json+schemaId" where schemaId is the ID of the schema that was generated from the type.
+        /// will be set to "application/json+schemaId" where schemaId is the Id of the schema that was generated from the type.
         /// </summary>
         /// <param name="data">The data to serialize to JSON and serialize into the message.</param>
         /// <param name="cancellationToken">An optional <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
@@ -118,7 +117,8 @@ namespace Microsoft.Azure.Data.SchemaRegistry.JsonSchema
         ///   It can also occur if the <typeparamref name="TMessage"/> type does not have a public parameterless constructor.
         /// </exception>
         /// <exception cref="RequestFailedException">
-        ///   An error occurred while attempting to communicate with the Schema Registry service.
+        ///   An error occurred while attempting to communicate with the Schema Registry service. This can occur if the schema generated from the type
+        ///   does not exist in the registry.
         /// </exception>
         /// <exception cref="Exception">
         ///   The data did not adhere to the JSON schema, or the schema itself was invalid.
@@ -131,7 +131,7 @@ namespace Microsoft.Azure.Data.SchemaRegistry.JsonSchema
 
         /// <summary>
         /// Serializes the message data as JSON and stores it in <see cref="MessageContent.Data"/>. The <see cref="MessageContent.ContentType"/>
-        /// will be set to "application/json+schemaId" where schemaId is the ID of the schema that was generated from the type.
+        /// will be set to "application/json+schemaId" where schemaId is the Id of the schema that was generated from the type.
         /// </summary>
         /// <param name="data">The data to serialize to JSON and serialize into the message.</param>
         /// <param name="cancellationToken">An optional <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
@@ -142,7 +142,8 @@ namespace Microsoft.Azure.Data.SchemaRegistry.JsonSchema
         ///   It can also occur if the <typeparamref name="TMessage"/> type does not have a public parameterless constructor.
         /// </exception>
         /// <exception cref="RequestFailedException">
-        ///   An error occurred while attempting to communicate with the Schema Registry service.
+        ///   An error occurred while attempting to communicate with the Schema Registry service. This can occur if the schema generated from the type
+        ///   does not exist in the registry.
         /// </exception>
         /// <exception cref="Exception">
         ///   The data did not adhere to the JSON schema, or the schema itself was invalid.
@@ -155,7 +156,7 @@ namespace Microsoft.Azure.Data.SchemaRegistry.JsonSchema
 
         /// <summary>
         /// Serializes the message data as JSON and stores it in <see cref="MessageContent.Data"/>. The <see cref="MessageContent.ContentType"/>
-        /// will be set to "application/json+schemaId" where schemaId is the ID of the schema that was generated from the type.
+        /// will be set to "application/json+schemaId" where schemaId is the Id of the schema that was generated from the type.
         /// </summary>
         /// <param name="data">The data to serialize to JSON and serialize into the message.</param>
         /// <param name="dataType">The type of the data to serialize. If left blank, the type will be determined at runtime by
@@ -169,7 +170,8 @@ namespace Microsoft.Azure.Data.SchemaRegistry.JsonSchema
         ///   It can also occur if the <paramref name="messageType"/> does not have a public parameterless constructor.
         /// </exception>
         /// <exception cref="RequestFailedException">
-        ///   An error occurred while attempting to communicate with the Schema Registry service.
+        ///   An error occurred while attempting to communicate with the Schema Registry service. This can occur if the schema generated from the type
+        ///   does not exist in the registry.
         /// </exception>
         /// <exception cref="Exception">
         ///   The data did not adhere to the JSON schema, or the schema itself was invalid.
@@ -184,7 +186,7 @@ namespace Microsoft.Azure.Data.SchemaRegistry.JsonSchema
 
         /// <summary>
         /// Serializes the message data as JSON and stores it in <see cref="MessageContent.Data"/>. The <see cref="MessageContent.ContentType"/>
-        /// will be set to "application/json+schemaId" where schemaId is the ID of the schema that was generated from the type.
+        /// will be set to "application/json+schemaId" where schemaId is the Id of the schema that was generated from the type.
         /// </summary>
         /// <param name="data">The data to serialize to JSON and serialize into the message.</param>
         /// <param name="dataType">The type of the data to serialize. If left blank, the type will be determined at runtime by
@@ -198,7 +200,8 @@ namespace Microsoft.Azure.Data.SchemaRegistry.JsonSchema
         ///   It can also occur if the <paramref name="messageType"/> does not have a public parameterless constructor.
         /// </exception>
         /// <exception cref="RequestFailedException">
-        ///   An error occurred while attempting to communicate with the Schema Registry service.
+        ///   An error occurred while attempting to communicate with the Schema Registry service. This can occur if the schema generated from the type
+        ///   does not exist in the registry.
         /// </exception>
         /// <exception cref="Exception">
         ///   The data did not adhere to the JSON schema, or the schema itself was invalid.
@@ -256,7 +259,7 @@ namespace Microsoft.Azure.Data.SchemaRegistry.JsonSchema
             {
                 // Serialize the data
                 dataType ??= value?.GetType() ?? typeof(object);
-                var serializer = _jsonSerializerOptions.ObjectSerializer;
+                var serializer = _jsonSerializerOptions.Serializer;
 
                 using Stream stream = new MemoryStream();
                 if (async)
@@ -271,7 +274,7 @@ namespace Microsoft.Azure.Data.SchemaRegistry.JsonSchema
                 stream.Position = 0;
                 data = BinaryData.FromStream(stream);
 
-                // Use the given schema string definition or generate one from the type
+                // Generate the schema from the type
                 schemaString = _jsonSchemaGenerator.GenerateSchema(dataType);
             }
             catch (Exception ex)
@@ -291,6 +294,7 @@ namespace Microsoft.Azure.Data.SchemaRegistry.JsonSchema
 
             try
             {
+                // Try to get the schema Id for the schema
                 if (async)
                 {
                     return (await GetSchemaIdAsync(schemaString, dataType.Name, true, cancellationToken).ConfigureAwait(false), data);
@@ -312,6 +316,7 @@ namespace Microsoft.Azure.Data.SchemaRegistry.JsonSchema
 
         private async Task<string> GetSchemaIdAsync(string schema, string schemaName, bool async, CancellationToken cancellationToken)
         {
+            // Check the cache
             if (_schemaToIdMap.TryGet(schema, out var value))
             {
                 return value;
@@ -340,10 +345,11 @@ namespace Microsoft.Azure.Data.SchemaRegistry.JsonSchema
         /// <returns>The deserialized data.</returns>
         /// <exception cref="FormatException">
         ///   The ContentType is not in the expected format. The ContentType is expected to be 'application/json+schema-id', where 'schema-id' is
-        ///   the Schema Registry schema ID.
+        ///   the Schema Registry schema Id.
         /// </exception>
         /// <exception cref="RequestFailedException">
-        ///   An error occurred while attempting to communicate with the Schema Registry service.
+        ///   An error occurred while attempting to communicate with the Schema Registry service. This can occur if the schema generated from the type
+        ///   does not exist in the registry.
         /// </exception>
         /// <exception cref="Exception">
         ///   The schema from <typeparamref name="TData"/> was not compatible with the schema used to serialize the data, or the schema itself was invalid.
@@ -363,10 +369,11 @@ namespace Microsoft.Azure.Data.SchemaRegistry.JsonSchema
         /// <returns>The deserialized data.</returns>
         /// <exception cref="FormatException">
         ///   The ContentType is not in the expected format. The ContentType is expected to be 'application/json+schema-id', where 'schema-id' is
-        ///   the Schema Registry schema ID.
+        ///   the Schema Registry schema Id.
         /// </exception>
         /// <exception cref="RequestFailedException">
-        ///   An error occurred while attempting to communicate with the Schema Registry service.
+        ///   An error occurred while attempting to communicate with the Schema Registry service. This can occur if the schema generated from the type
+        ///   does not exist in the registry.
         /// </exception>
         /// <exception cref="Exception">
         ///   The schema from <typeparamref name="TData"/> was not compatible with the schema used to serialize the data, or the schema itself was invalid.
@@ -386,10 +393,11 @@ namespace Microsoft.Azure.Data.SchemaRegistry.JsonSchema
         /// <returns>The deserialized data.</returns>
         /// <exception cref="FormatException">
         ///   The ContentType is not in the expected format. The ContentType is expected to be 'application/json+schema-id', where 'schema-id' is
-        ///   the Schema Registry schema ID.
+        ///   the Schema Registry schema Id.
         /// </exception>
         /// <exception cref="RequestFailedException">
-        ///   An error occurred while attempting to communicate with the Schema Registry service.
+        ///   An error occurred while attempting to communicate with the Schema Registry service. This can occur if the schema generated from the type
+        ///   does not exist in the registry.
         /// </exception>
         /// <exception cref="Exception">
         ///   The schema from <paramref name="dataType"/> was not compatible with the schema used to serialize the data, or the schema itself was invalid.
@@ -410,10 +418,11 @@ namespace Microsoft.Azure.Data.SchemaRegistry.JsonSchema
         /// <returns>The deserialized data.</returns>
         /// <exception cref="FormatException">
         ///   The ContentType is not in the expected format. The ContentType is expected to be 'application/json+schema-id', where 'schema-id' is
-        ///   the Schema Registry schema ID.
+        ///   the Schema Registry schema Id.
         /// </exception>
         /// <exception cref="RequestFailedException">
-        ///   An error occurred while attempting to communicate with the Schema Registry service.
+        ///   An error occurred while attempting to communicate with the Schema Registry service. This can occur if the schema generated from the type
+        ///   does not exist in the registry.
         /// </exception>
         /// <exception cref="Exception">
         ///   The schema from <paramref name="dataType"/> was not compatible with the schema used to serialize the data, or the schema itself was invalid.
@@ -466,6 +475,7 @@ namespace Microsoft.Azure.Data.SchemaRegistry.JsonSchema
             string schemaDefinition;
             try
             {
+                // Attempt to get the schema definition using the schema Id from the Content Type
                 if (async)
                 {
                     schemaDefinition = await GetSchemaByIdAsync(schemaId, true, cancellationToken).ConfigureAwait(false);
@@ -480,10 +490,11 @@ namespace Microsoft.Azure.Data.SchemaRegistry.JsonSchema
                 throw new Exception($"An error occurred while attempting to retrieve the schema with id {schemaId}.", ex);
             }
 
-            var deserializer = _jsonSerializerOptions.ObjectSerializer;
+            var deserializer = _jsonSerializerOptions.Serializer;
             object objectToReturn;
             try
             {
+                // Attempt to deserialize
                 var dataStream = data.ToStream();
                 if (async)
                 {
@@ -501,6 +512,7 @@ namespace Microsoft.Azure.Data.SchemaRegistry.JsonSchema
 
             try
             {
+                // Attempt to validate the object against the schema definition
                 _jsonSchemaGenerator.Validate(objectToReturn, dataType, schemaDefinition);
             }
             catch (Exception ex)
@@ -513,6 +525,7 @@ namespace Microsoft.Azure.Data.SchemaRegistry.JsonSchema
 
         private async Task<string> GetSchemaByIdAsync(string schemaId, bool async, CancellationToken cancellationToken)
         {
+            // Check the cache
             if (_idToSchemaMap.TryGet(schemaId, out var cachedSchema))
             {
                 return cachedSchema;

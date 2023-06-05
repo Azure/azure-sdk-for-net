@@ -6,7 +6,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\..\..\common\Perf\Azure.Test.Perf\Azure.Test.Perf.csproj" />
-    <ProjectReference Include="..\tests\Microsoft.Azure.Data.SchemaRegistry.JsonSchema.Tests.csproj" />
+    <ProjectReference Include="..\tests\Azure.Data.SchemaRegistry.JsonSchema.Tests.csproj" />
   </ItemGroup>
 
 </Project>

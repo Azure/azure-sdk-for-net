@@ -4,7 +4,7 @@
 using System.Collections;
 using System.Collections.Generic;
 
-namespace Microsoft.Azure.Data.SchemaRegistry.JsonSchema
+namespace Azure.Data.SchemaRegistry.JsonSchema
 {
     /// <summary>
     /// A simple LRU cache implementation using a doubly linked list and dictionary.

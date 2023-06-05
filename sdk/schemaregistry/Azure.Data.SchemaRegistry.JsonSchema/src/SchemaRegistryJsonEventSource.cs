@@ -4,7 +4,7 @@
 using System.Diagnostics.Tracing;
 using Azure.Core.Diagnostics;
 
-namespace Microsoft.Azure.Data.SchemaRegistry.JsonSchema
+namespace Azure.Data.SchemaRegistry.JsonSchema
 {
     /// <summary>
     ///   Serves as an ETW event source for logging of information about

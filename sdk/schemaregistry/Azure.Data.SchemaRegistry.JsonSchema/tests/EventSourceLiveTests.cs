@@ -13,7 +13,7 @@ using Azure.Messaging.EventHubs;
 using NUnit.Framework;
 using TestSchema;
 
-namespace Microsoft.Azure.Data.SchemaRegistry.JsonSchema.Tests
+namespace Azure.Data.SchemaRegistry.JsonSchema.Tests
 {
     [NonParallelizable]
     public class EventSourceLiveTests : SchemaRegistryJsonObjectSerializerLiveTestBase

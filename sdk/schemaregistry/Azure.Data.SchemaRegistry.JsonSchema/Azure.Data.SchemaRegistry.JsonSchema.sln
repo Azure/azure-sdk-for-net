@@ -3,9 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.5.33530.505
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Microsoft.Azure.Data.SchemaRegistry.JsonSchema", "src\Microsoft.Azure.Data.SchemaRegistry.JsonSchema.csproj", "{E33D09D9-D809-472C-82E6-6A26BDB86FC2}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Data.SchemaRegistry.JsonSchema", "src\Azure.Data.SchemaRegistry.JsonSchema.csproj", "{E33D09D9-D809-472C-82E6-6A26BDB86FC2}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Microsoft.Azure.Data.SchemaRegistry.JsonSchema.Tests", "tests\Microsoft.Azure.Data.SchemaRegistry.JsonSchema.Tests.csproj", "{4F476D56-DDE7-43D3-8CB4-BA1E77F5A300}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Data.SchemaRegistry.JsonSchema.Tests", "tests\Azure.Data.SchemaRegistry.JsonSchema.Tests.csproj", "{4F476D56-DDE7-43D3-8CB4-BA1E77F5A300}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Core.TestFramework", "..\..\core\Azure.Core.TestFramework\src\Azure.Core.TestFramework.csproj", "{8052009B-2126-44A3-88CD-4F3B17894C64}"
 EndProject
@@ -15,7 +15,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Messaging.EventHubs",
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Messaging.ServiceBus", "..\..\servicebus\Azure.Messaging.ServiceBus\src\Azure.Messaging.ServiceBus.csproj", "{69E3D417-F0A9-4C6B-B9C5-8C29E9F2A660}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Microsoft.Azure.Data.SchemaRegistry.JsonSchema.Perf", "perf\Microsoft.Azure.Data.SchemaRegistry.JsonSchema.Perf.csproj", "{B31ED76A-14DC-428E-9E57-46A974584635}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Data.SchemaRegistry.JsonSchema.Perf", "perf\Azure.Data.SchemaRegistry.JsonSchema.Perf.csproj", "{B31ED76A-14DC-428E-9E57-46A974584635}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

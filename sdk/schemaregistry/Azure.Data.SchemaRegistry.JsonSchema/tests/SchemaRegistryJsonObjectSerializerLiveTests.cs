@@ -20,7 +20,7 @@ using Microsoft.Identity.Client;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 
-namespace Microsoft.Azure.Data.SchemaRegistry.JsonSchema.Tests
+namespace Azure.Data.SchemaRegistry.JsonSchema.Tests
 {
     public class SchemaRegistryJsonObjectSerializerLiveTests : SchemaRegistryJsonObjectSerializerLiveTestBase
     {
@@ -60,7 +60,7 @@ namespace Microsoft.Azure.Data.SchemaRegistry.JsonSchema.Tests
 
             var serializerOptions = new SchemaRegistryJsonSerializerOptions
             {
-                ObjectSerializer = new NewtonsoftJsonObjectSerializer()
+                Serializer = new NewtonsoftJsonObjectSerializer()
             };
             var serializer = new SchemaRegistryJsonSerializer(client, groupName, new SampleJsonGenerator(), serializerOptions);
             MessageContent content = await serializer.SerializeAsync<MessageContent, Employee>(employee);

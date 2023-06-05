@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 using Azure.Test.Perf;
 using TestSchema;
 
-namespace Microsoft.Azure.Data.SchemaRegistry.JsonSchema.Perf.Scenarios
+namespace Azure.Data.SchemaRegistry.JsonSchema.Perf.Scenarios
 {
     public class Serialize : SchemaRegistryJsonSerializerPerfTestBase
     {

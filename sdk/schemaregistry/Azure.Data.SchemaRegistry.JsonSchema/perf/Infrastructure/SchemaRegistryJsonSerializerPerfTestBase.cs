@@ -3,11 +3,11 @@
 
 using Azure.Data.SchemaRegistry;
 using Azure.Test.Perf;
-using Microsoft.Azure.Data.SchemaRegistry.JsonSchema.Tests;
+using Azure.Data.SchemaRegistry.JsonSchema.Tests;
 using System;
 using System.Security.Cryptography;
 
-namespace Microsoft.Azure.Data.SchemaRegistry.JsonSchema.Perf
+namespace Azure.Data.SchemaRegistry.JsonSchema.Perf
 {
     public abstract class SchemaRegistryJsonSerializerPerfTestBase : PerfTest<SizeCountOptions>
     {

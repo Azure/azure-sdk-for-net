@@ -4,11 +4,11 @@
 using Azure.Core.TestFramework;
 using Azure.Data.SchemaRegistry;
 
-namespace Microsoft.Azure.Data.SchemaRegistry.JsonSchema.Tests
+namespace Azure.Data.SchemaRegistry.JsonSchema.Tests
 {
     public class SchemaRegistryJsonObjectSerializerLiveTestBase : RecordedTestBase<SchemaRegistryJsonSerializerTestEnvironment>
     {
-        public SchemaRegistryJsonObjectSerializerLiveTestBase(bool isAsync) : base(isAsync, RecordedTestMode.Playback)
+        public SchemaRegistryJsonObjectSerializerLiveTestBase(bool isAsync) : base(isAsync)
         {
             TestDiagnostics = false;
         }

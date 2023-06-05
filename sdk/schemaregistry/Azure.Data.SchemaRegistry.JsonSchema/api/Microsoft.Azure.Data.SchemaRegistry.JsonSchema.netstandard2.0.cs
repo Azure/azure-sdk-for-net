@@ -25,6 +25,6 @@ namespace Microsoft.Azure.Data.SchemaRegistry.JsonSchema
     public partial class SchemaRegistryJsonSerializerOptions
     {
         public SchemaRegistryJsonSerializerOptions() { }
-        public Azure.Core.Serialization.ObjectSerializer ObjectSerializer { get { throw null; } set { } }
+        public Azure.Core.Serialization.ObjectSerializer Serializer { get { throw null; } set { } }
     }
 }

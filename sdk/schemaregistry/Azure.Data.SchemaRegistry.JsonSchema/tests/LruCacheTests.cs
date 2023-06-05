@@ -3,7 +3,7 @@
 
 using NUnit.Framework;
 
-namespace Microsoft.Azure.Data.SchemaRegistry.JsonSchema
+namespace Azure.Data.SchemaRegistry.JsonSchema
 {
     public class LruCacheTests
     {

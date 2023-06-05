@@ -203,7 +203,7 @@ To serialize and deserialize with a `NewtonsoftJsonObjectSerializer`:
 ```C# Snippet:SchemaRegistryJsonSerializeDeserializeWithOptionsNewtonsoft
 var newtonsoftSerializerOptions = new SchemaRegistryJsonSerializerOptions
 {
-    ObjectSerializer = new NewtonsoftJsonObjectSerializer()
+    Serializer = new NewtonsoftJsonObjectSerializer()
 };
 var newtonsoftSerializer = new SchemaRegistryJsonSerializer(client, groupName, new SampleJsonGenerator(), newtonsoftSerializerOptions);
 ```
@@ -217,7 +217,7 @@ var jsonSerializerOptions = new JsonSerializerOptions
 
 var serializerOptions = new SchemaRegistryJsonSerializerOptions
 {
-    ObjectSerializer = new JsonObjectSerializer(jsonSerializerOptions)
+    Serializer = new JsonObjectSerializer(jsonSerializerOptions)
 };
 var serializer = new SchemaRegistryJsonSerializer(client, groupName, new SampleJsonGenerator(), serializerOptions);
 ```

@@ -3,7 +3,7 @@
 
 using Azure.Core.TestFramework;
 
-namespace Microsoft.Azure.Data.SchemaRegistry.JsonSchema.Tests
+namespace Azure.Data.SchemaRegistry.JsonSchema.Tests
 {
     public class SchemaRegistryJsonSerializerTestEnvironment : TestEnvironment
     {
