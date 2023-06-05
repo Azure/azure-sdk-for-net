@@ -597,10 +597,9 @@ namespace Azure.Communication.Chat
             {
                 CommunicationIdentifierModel communicationIdentifierModel = CommunicationIdentifierSerializer.Serialize(identifier);
                 return await _chatThreadRestClient.RemoveChatParticipantAsync(Id, communicationIdentifierModel.RawId,
-                    null,
-                    null,
-                    null,
-                    null,
+                    communicationIdentifierModel.CommunicationUser,
+                    communicationIdentifierModel.PhoneNumber,
+                    communicationIdentifierModel.MicrosoftTeamsUser,
                     cancellationToken).ConfigureAwait(false);
             }
             catch (Exception ex)
@@ -622,10 +621,9 @@ namespace Azure.Communication.Chat
             {
                 CommunicationIdentifierModel communicationIdentifierModel = CommunicationIdentifierSerializer.Serialize(identifier);
                 return _chatThreadRestClient.RemoveChatParticipant(Id, communicationIdentifierModel.RawId,
-                    null,
-                    null,
-                    null,
-                    null,
+                    communicationIdentifierModel.CommunicationUser,
+                    communicationIdentifierModel.PhoneNumber,
+                    communicationIdentifierModel.MicrosoftTeamsUser,
                     cancellationToken);
             }
             catch (Exception ex)
