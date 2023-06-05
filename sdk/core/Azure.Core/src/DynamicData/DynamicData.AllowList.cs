@@ -39,59 +39,6 @@ namespace Azure.Core.Dynamic
                 return IsAllowedPoco(type, new HashSet<Type>());
             }
 
-            private static bool IsAllowedPoco(Type type, HashSet<Type> ancestorTypes)
-            {
-                if (!HasPublicParameterlessConstructor(type) && !IsAnonymousType(type))
-                {
-                    return false;
-                }
-
-                foreach (PropertyInfo property in type.GetProperties())
-                {
-                    if (!property.CanRead)
-                    {
-                        return false;
-                    }
-
-                    if (!property.CanWrite && !IsAnonymousType(type))
-                    {
-                        return false;
-                    }
-
-                    if (IsAllowedKnownType(property.PropertyType))
-                    {
-                        continue;
-                    }
-
-                    // Trust but verify
-                    if (ancestorTypes.Contains(property.PropertyType))
-                    {
-                        continue;
-                    }
-
-                    // Recurse
-                    ancestorTypes.Add(type);
-                    if (!IsAllowedPoco(property.PropertyType, ancestorTypes))
-                    {
-                        return false;
-                    }
-                }
-
-                return true;
-            }
-
-            private static bool HasPublicParameterlessConstructor(Type type)
-            {
-                return type.GetConstructor(Type.EmptyTypes) != null;
-            }
-
-            private static bool IsAnonymousType(Type type)
-            {
-                return
-                    type.Namespace == null &&
-                    Attribute.IsDefined(type, typeof(CompilerGeneratedAttribute), false);
-            }
-
             private static bool IsAllowedKnownType(Type type)
             {
                 return IsAllowedPrimitive(type) ||
@@ -152,6 +99,59 @@ namespace Azure.Core.Dynamic
                 return
                     type == typeof(IEnumerable<bool>) ||
                     type == typeof(IEnumerable<int>);
+            }
+
+            private static bool IsAllowedPoco(Type type, HashSet<Type> ancestorTypes)
+            {
+                if (!HasPublicParameterlessConstructor(type) && !IsAnonymousType(type))
+                {
+                    return false;
+                }
+
+                foreach (PropertyInfo property in type.GetProperties())
+                {
+                    if (!property.CanRead)
+                    {
+                        return false;
+                    }
+
+                    if (!property.CanWrite && !IsAnonymousType(type))
+                    {
+                        return false;
+                    }
+
+                    if (IsAllowedKnownType(property.PropertyType))
+                    {
+                        continue;
+                    }
+
+                    // Trust but verify
+                    if (ancestorTypes.Contains(property.PropertyType))
+                    {
+                        continue;
+                    }
+
+                    // Recurse
+                    ancestorTypes.Add(type);
+                    if (!IsAllowedPoco(property.PropertyType, ancestorTypes))
+                    {
+                        return false;
+                    }
+                }
+
+                return true;
+            }
+
+            private static bool HasPublicParameterlessConstructor(Type type)
+            {
+                return type.GetConstructor(Type.EmptyTypes) != null;
+            }
+
+            private static bool IsAnonymousType(Type type)
+            {
+                return
+                    type.Namespace == null &&
+                    Attribute.IsDefined(type, typeof(CompilerGeneratedAttribute), false);
             }
         }
     }
