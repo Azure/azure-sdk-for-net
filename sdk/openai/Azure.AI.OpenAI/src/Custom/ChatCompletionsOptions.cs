@@ -3,7 +3,9 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using Azure.Core;
 
@@ -15,30 +17,15 @@ namespace Azure.AI.OpenAI
     public partial class ChatCompletionsOptions
     {
         /// <inheritdoc cref="CompletionsOptions.ChoicesPerPrompt"/>
-        [CodeGenMember("N")]
-        public int? ChoicesPerPrompt { get; set; }
+        public int? ChoiceCount { get; set; }
 
         /// <inheritdoc cref="CompletionsOptions.FrequencyPenalty"/>
         public float? FrequencyPenalty { get; set; }
 
-        /// <inheritdoc cref="CompletionsOptions.TokenSelectionBiases"/>
-        public IDictionary<int, int> TokenSelectionBiases { get; }
-
         /// <inheritdoc cref="CompletionsOptions.MaxTokens"/>
         public int? MaxTokens { get; set; }
 
-        /// <summary>
-        ///     Gets or sets the set of chat messages associated with a chat completions request.
-        /// </summary>
-        /// <remarks>
-        ///     This is the full set of chat messages for the history of a conversation between an assistant and user.
-        ///     Typical usage begins with a chat message for the System role that provides instructions for the
-        ///     behavior of the assistant followed by alternating messages between the User role and Assistant role.
-        /// </remarks>
-        public IList<ChatMessage> Messages { get; }
-
         /// <inheritdoc cref="CompletionsOptions.NucleusSamplingFactor"/>
-        [CodeGenMember("TopP")]
         public float? NucleusSamplingFactor { get; set; }
 
         /// <inheritdoc cref="CompletionsOptions.PresencePenalty"/>
@@ -50,41 +37,39 @@ namespace Azure.AI.OpenAI
         /// <inheritdoc cref="CompletionsOptions.Temperature"/>
         public float? Temperature { get; set; }
 
+        /// <inheritdoc cref="CompletionsOptions.TokenSelectionBiases"/>
+        public IDictionary<int, int> TokenSelectionBiases { get; }
+
         /// <inheritdoc cref="CompletionsOptions.User"/>
         public string User { get; set; }
 
-        internal string NonAzureModel { get; set; }
+        internal IDictionary<string, int> InternalStringKeyedTokenSelectionBiases { get; }
+
+        internal string InternalNonAzureModelName { get; set; }
+
+        internal bool? InternalShouldStreamResponse { get; set; }
 
         /// <summary> Initializes a new instance of ChatCompletionsOptions. </summary>
-        public ChatCompletionsOptions()
+        /// <param name="messages">
+        /// The collection of context messages associated with this chat completions request.
+        /// Typical usage begins with a chat message for the System role that provides instructions for
+        /// the behavior of the assistant, followed by alternating messages between the User and
+        /// Assistant roles.
+        /// </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="messages"/> is null. </exception>
+        public ChatCompletionsOptions(IEnumerable<ChatMessage> messages)
         {
-            Messages = new ChangeTrackingList<ChatMessage>();
+            Argument.AssertNotNull(messages, nameof(messages));
+
+            Messages = messages.ToList();
             TokenSelectionBiases = new ChangeTrackingDictionary<int, int>();
             StopSequences = new ChangeTrackingList<string>();
         }
 
-        internal ChatCompletionsOptions(
-            IList<ChatMessage> messages,
-            int? maxTokens,
-            float? temperature,
-            float? nucleusSamplingFactor,
-            IDictionary<int, int> tokenSelectionBiases,
-            string user,
-            int? choicesPerPrompt,
-            IList<string> stopSequences,
-            float? presencePenalty,
-            float? frequencyPenalty)
+        /// <inheritdoc cref="ChatCompletionsOptions(IEnumerable{ChatMessage})"/>
+        public ChatCompletionsOptions()
+            : this(new ChangeTrackingList<ChatMessage>())
         {
-            Messages = messages.ToList();
-            MaxTokens = maxTokens;
-            Temperature = temperature;
-            NucleusSamplingFactor = nucleusSamplingFactor;
-            TokenSelectionBiases = tokenSelectionBiases;
-            User = user;
-            ChoicesPerPrompt = choicesPerPrompt;
-            StopSequences = stopSequences.ToList();
-            PresencePenalty = presencePenalty;
-            FrequencyPenalty = frequencyPenalty;
         }
     }
 }

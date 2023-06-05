@@ -7,17 +7,16 @@ azure-arm: true
 csharp: true
 library-name: SelfHelp
 namespace: Azure.ResourceManager.SelfHelp
-require: https://github.com/Azure/azure-rest-api-specs/blob/4f6418dca8c15697489bbe6f855558bb79ca5bf5/specification/help/resource-manager/readme.md
-tag: package-2023-01-01-preview
+require: https://github.com/Azure/azure-rest-api-specs/blob/2ced92ea3d86dbe78f1927a8c4c89767cb48e46a/specification/help/resource-manager/readme.md
+tag: package-2023-06-01
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
 skip-csproj: true
 modelerfour:
   flatten-payloads: false
-mgmt-debug:
-  show-serialized-names: true
 
-
+#mgmt-debug:
+#  show-serialized-names: true
 
 format-by-name-rules:
   'tenantId': 'uuid'
@@ -53,16 +52,26 @@ list-exception:
 - /{scope}/providers/Microsoft.Help/diagnostics/{diagnosticsResourceName}
 
 rename-mapping:
-  DiagnosticResource: SelfHelpDiagnosticResource
-  Status: DiagnosticStatus
-  Insight: DiagnosticInsight
-  Error: SelfHelpError
-  Diagnostic: SelfHelpDiagnostic
-  DiagnosticResource.properties.acceptedAt: acceptedTime
-  Insight.id: InsightId
-  Insight.title: InsightTitle
-  Insight.results: InsightResults
+  DiagnosticResource: SelfHelpDiagnostic
+  DiagnosticResource.properties.acceptedAt: acceptedOn|date-time
+  Status: SelfHelpDiagnosticStatus
+  Diagnostic: SelfHelpDiagnosticInfo
+  Insight: SelfHelpDiagnosticInsight
   Insight.importanceLevel: InsightImportanceLevel
-  Error.code: ErrorCode
+  CheckNameAvailabilityResponse: SelfHelpNameAvailabilityResult
+  CheckNameAvailabilityResponse.nameAvailable: IsNameAvailable
+  CheckNameAvailabilityRequest: SelfHelpNameAvailabilityContent
+  CheckNameAvailabilityRequest.name: ResourceName
+  CheckNameAvailabilityRequest.type: ResourceType|resource-type
+  DiscoveryResponse: SelfHelpDiscoverySolutionResult
+  SolutionMetadataResource: SelfHelpSolutionMetadata
+  Error: SelfHelpError
+  DiagnosticInvocation: SelfHelpDiagnosticInvocation
+  ImportanceLevel: SelfHelpImportanceLevel
+  ProvisioningState: SelfHelpProvisioningState
+
+override-operation-name:
+  Diagnostics_CheckNameAvailability: CheckSelfHelpNameAvailability
+  DiscoverySolution_List: GetSelfHelpDiscoverySolutions
 
 ```

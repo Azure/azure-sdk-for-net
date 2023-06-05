@@ -2,9 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Collections.Concurrent;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Diagnostics.Metrics;
 using System.Linq;
 using Azure.Monitor.OpenTelemetry.Exporter.Models;
@@ -43,7 +41,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests.E2ETelemetryItemValidation
 
             var meterProviderBulider = Sdk.CreateMeterProviderBuilder()
                 .AddMeter(meterName)
-                .AddAzureMonitorMetricExporterForTest(out ConcurrentBag<TelemetryItem> telemetryItems);
+                .AddAzureMonitorMetricExporterForTest(out List<TelemetryItem> telemetryItems);
 
             if (asView)
             {
@@ -90,7 +88,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests.E2ETelemetryItemValidation
 
             var meterProviderBulider = Sdk.CreateMeterProviderBuilder()
                 .AddMeter(meterName)
-                .AddAzureMonitorMetricExporterForTest(out ConcurrentBag<TelemetryItem> telemetryItems);
+                .AddAzureMonitorMetricExporterForTest(out List<TelemetryItem> telemetryItems);
 
             if (asView)
             {
@@ -147,7 +145,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests.E2ETelemetryItemValidation
 
             var meterProviderBulider = Sdk.CreateMeterProviderBuilder()
                 .AddMeter(meterName)
-                .AddAzureMonitorMetricExporterForTest(out ConcurrentBag<TelemetryItem> telemetryItems);
+                .AddAzureMonitorMetricExporterForTest(out List<TelemetryItem> telemetryItems);
 
             if (asView)
             {
@@ -192,7 +190,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests.E2ETelemetryItemValidation
 
             var meterProviderBulider = Sdk.CreateMeterProviderBuilder()
                 .AddMeter(meterName)
-                .AddAzureMonitorMetricExporterForTest(out ConcurrentBag<TelemetryItem> telemetryItems);
+                .AddAzureMonitorMetricExporterForTest(out List<TelemetryItem> telemetryItems);
 
             if (asView)
             {
@@ -239,7 +237,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests.E2ETelemetryItemValidation
 
             var meterProviderBulider = Sdk.CreateMeterProviderBuilder()
                 .AddMeter(meterName)
-                .AddAzureMonitorMetricExporterForTest(out ConcurrentBag<TelemetryItem> telemetryItems, out MetricReader metricReader);
+                .AddAzureMonitorMetricExporterForTest(out List<TelemetryItem> telemetryItems, out MetricReader metricReader);
 
             if (asView)
             {
@@ -269,9 +267,8 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests.E2ETelemetryItemValidation
                 expectedMetricDataPointValue: -2,
                 expectedMetricsProperties: new Dictionary<string, string> { { "tag1", "value1" }, { "tag2", "value2" } });
 
-            // Clear the telemetryItems bag.
-            while (telemetryItems.TryTake(out _))
-            { }
+            // Clear the telemetryItems.
+            telemetryItems.Clear();
 
             metricReader.Collect();
             Assert.True(telemetryItems.Count == 1);

@@ -38,6 +38,7 @@ namespace Azure.Storage.DataMovement
                   errorHandling: job._errorHandling,
                   createMode: job._createMode,
                   checkpointer: job._checkpointer,
+                  progressTracker: job._progressTracker,
                   arrayPool: job.UploadArrayPool,
                   isFinalPart: isFinalPart,
                   jobPartEventHandler: job.GetJobPartStatus(),
@@ -68,6 +69,7 @@ namespace Azure.Storage.DataMovement
                   errorHandling: job._errorHandling,
                   createMode: job._createMode,
                   checkpointer: job._checkpointer,
+                  progressTracker: job._progressTracker,
                   arrayPool: job.UploadArrayPool,
                   isFinalPart: isFinalPart,
                   jobPartEventHandler: job.GetJobPartStatus(),
@@ -260,7 +262,8 @@ namespace Azure.Storage.DataMovement
             {
                 await CreateZeroLengthDownload().ConfigureAwait(false);
             }
-            else if (_initialTransferSize <= totalLength)
+            // Download with a single GET
+            else if (_initialTransferSize >= totalLength)
             {
                 // To prevent requesting a range that is invalid when
                 // we already know the length we can just make one get blob request.
@@ -268,28 +271,29 @@ namespace Azure.Storage.DataMovement
                     ReadStreamAsync(cancellationToken: _cancellationToken)
                     .ConfigureAwait(false);
 
-                // If the initial request returned no content (i.e., a 304),
-                // we'll pass that back to the user immediately
-                long initialLength = result.Properties.ContentLength;
-                if (result == default || initialLength == 0)
+                long downloadLength = result.Properties.ContentLength;
+                // This should not occur but add a check just in case
+                if (downloadLength != totalLength)
                 {
-                    // We just need to at minimum create the file
-                    bool successfulCopy = await CopyToStreamInternal(
-                        offset: 0,
-                        sourceLength: 0,
-                        source: default,
-                        expectedLength: 0).ConfigureAwait(false);
-                    if (successfulCopy)
-                    {
-                        // Queue the work to end the download
-                        await QueueChunkToChannelAsync(
-                            async () =>
-                            await CompleteFileDownload().ConfigureAwait(false))
-                            .ConfigureAwait(false);
-                    }
-                    return;
+                    throw Errors.SingleDownloadLengthMismatch(totalLength, downloadLength);
+                }
+
+                bool successfulCopy = await CopyToStreamInternal(
+                    offset: 0,
+                    sourceLength: downloadLength,
+                    source: result.Content,
+                    expectedLength: totalLength).ConfigureAwait(false);
+                if (successfulCopy)
+                {
+                    ReportBytesWritten(downloadLength);
+                    // Queue the work to end the download
+                    await QueueChunkToChannelAsync(
+                        async () =>
+                        await CompleteFileDownload().ConfigureAwait(false))
+                        .ConfigureAwait(false);
                 }
             }
+            // Download in chunks
             else
             {
                 // Set rangeSize

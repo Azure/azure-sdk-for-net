@@ -119,7 +119,7 @@ namespace Azure.Communication.JobRouter.Models
                     {
                         continue;
                     }
-                    state = new RouterWorkerState(property.Value.GetString());
+                    state = property.Value.GetString().ToRouterWorkerState();
                     continue;
                 }
                 if (property.NameEquals("queueAssignments"u8))

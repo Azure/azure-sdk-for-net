@@ -8,7 +8,11 @@
 
 ### Bugs Fixed
 
+- Do not copy over the DeliveryAnnotations from the underlying AMQP message when using the constructor for `ServiceBusMessage` that takes a `ServiceBusReceivedMessage` instance. 
+
 ### Other Changes
+
+- Update AMQP library dependency to leverage fix for TLS issue on .NET 6.0.
 
 ## 7.14.0 (2023-05-09)
 

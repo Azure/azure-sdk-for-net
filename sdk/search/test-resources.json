@@ -57,7 +57,7 @@
         },
         "searchSku": {
             "type": "string",
-            "defaultValue": "standard",
+            "defaultValue": "basic",
             "allowedValues": [
                 "free",
                 "basic",
@@ -95,7 +95,6 @@
                 "name": "[parameters('searchSku')]"
             },
             "properties": {
-                "semanticSearch": "free",
                 "replicaCount": 1,
                 "partitionCount": 1,
                 "hostingMode": "Default",

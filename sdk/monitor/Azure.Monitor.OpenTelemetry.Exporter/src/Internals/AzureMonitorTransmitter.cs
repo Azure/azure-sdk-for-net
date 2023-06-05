@@ -50,7 +50,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
 
             if (_fileBlobProvider != null)
             {
-                _transmitFromStorageHandler = new TransmitFromStorageHandler(_applicationInsightsRestClient, _fileBlobProvider, _transmissionStateManager);
+                _transmitFromStorageHandler = new TransmitFromStorageHandler(_applicationInsightsRestClient, _fileBlobProvider, _transmissionStateManager, _connectionVars);
             }
 
             _statsbeat = InitializeStatsbeat(options, _connectionVars, platform);
@@ -176,7 +176,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
                 if (result == ExportResult.Failure && _fileBlobProvider != null)
                 {
                     _transmissionStateManager.EnableBackOff(httpMessage.Response);
-                    result = HttpPipelineHelper.HandleFailures(httpMessage, _fileBlobProvider);
+                    result = HttpPipelineHelper.HandleFailures(httpMessage, _fileBlobProvider, _connectionVars);
                 }
                 else
                 {
