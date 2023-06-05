@@ -286,6 +286,12 @@
       ]
     },
     {
+      "filename": "**/sdk/cosmosdbforpostgresql/**/*",
+      "words": [
+        "Citus"
+      ]
+    },
+    {
       "filename": "**/sdk/costmanagement/**/*",
       "words": [
         "ahub",
