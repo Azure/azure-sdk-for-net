@@ -75,7 +75,7 @@ namespace Azure.Core.Tests
         [Test]
         public void CannotGetPropertiesWithUnmatchedCasingWithPascalToCamelMapping()
         {
-            DynamicDataOptions options = new() { ExistingPropertyLookup = PropertyNameLookup.AllowPascalCase };
+            DynamicDataOptions options = new() { ExistingPropertyLookup = PropertyNameLookup.AllowConversion };
             dynamic value = new BinaryData(testJson).ToDynamicFromJson(options);
 
             Assert.IsNull(value.pascal);
@@ -137,7 +137,7 @@ namespace Azure.Core.Tests
             DynamicDataOptions options = new()
             {
                 NewPropertyConversion = PropertyNameConversion.CamelCase,
-                ExistingPropertyLookup = PropertyNameLookup.AllowPascalCase
+                ExistingPropertyLookup = PropertyNameLookup.AllowConversion
             };
             dynamic value = new BinaryData(testJson).ToDynamicFromJson(options);
 
@@ -164,7 +164,7 @@ namespace Azure.Core.Tests
             DynamicDataOptions options = new()
             {
                 NewPropertyConversion = PropertyNameConversion.CamelCase,
-                ExistingPropertyLookup = PropertyNameLookup.AllowPascalCase
+                ExistingPropertyLookup = PropertyNameLookup.AllowConversion
             };
             dynamic value = new BinaryData(testJson).ToDynamicFromJson(options);
 
@@ -209,7 +209,7 @@ namespace Azure.Core.Tests
             DynamicDataOptions options = new()
             {
                 NewPropertyConversion = PropertyNameConversion.CamelCase,
-                ExistingPropertyLookup = PropertyNameLookup.AllowPascalCase
+                ExistingPropertyLookup = PropertyNameLookup.AllowConversion
             };
             dynamic value = new BinaryData("""{}""").ToDynamicFromJson(options);
 
@@ -256,7 +256,7 @@ namespace Azure.Core.Tests
             DynamicDataOptions options = new()
             {
                 NewPropertyConversion = PropertyNameConversion.CamelCase,
-                ExistingPropertyLookup = PropertyNameLookup.AllowPascalCase
+                ExistingPropertyLookup = PropertyNameLookup.AllowConversion
             };
             dynamic dynamicJson = BinaryData.FromString(json).ToDynamicFromJson(options);
             Assert.IsTrue(dynamicJson.root.child[0].item.leaf);
@@ -303,7 +303,7 @@ namespace Azure.Core.Tests
             DynamicDataOptions options = new()
             {
                 NewPropertyConversion = PropertyNameConversion.CamelCase,
-                ExistingPropertyLookup = PropertyNameLookup.AllowPascalCase
+                ExistingPropertyLookup = PropertyNameLookup.AllowConversion
             };
             dynamic jsonData = BinaryData.FromString("""
                 {
@@ -372,7 +372,7 @@ namespace Azure.Core.Tests
             DynamicDataOptions options = new()
             {
                 NewPropertyConversion = PropertyNameConversion.CamelCase,
-                ExistingPropertyLookup = PropertyNameLookup.AllowPascalCase
+                ExistingPropertyLookup = PropertyNameLookup.AllowConversion
             };
             dynamic jsonData = BinaryData.FromString("""
                 {
@@ -407,7 +407,7 @@ namespace Azure.Core.Tests
             DynamicDataOptions options = new()
             {
                 NewPropertyConversion = PropertyNameConversion.CamelCase,
-                ExistingPropertyLookup = PropertyNameLookup.AllowPascalCase
+                ExistingPropertyLookup = PropertyNameLookup.AllowConversion
             };
             dynamic value = new BinaryData(testJson).ToDynamicFromJson(options);
 
@@ -431,7 +431,7 @@ namespace Azure.Core.Tests
             DynamicDataOptions options = new()
             {
                 NewPropertyConversion = PropertyNameConversion.CamelCase,
-                ExistingPropertyLookup = PropertyNameLookup.AllowPascalCase
+                ExistingPropertyLookup = PropertyNameLookup.AllowConversion
             };
             dynamic value = new BinaryData("""{}""").ToDynamicFromJson(options);
 
@@ -443,6 +443,22 @@ namespace Azure.Core.Tests
 
             Assert.AreEqual("categories", (string)value.piiCategories);
             Assert.AreEqual("127.0.0.1", (string)value.ipAddress);
+        }
+
+        [Test]
+        public void CanGetPropertyFromSnakeCaseLowerJson()
+        {
+            string json = """
+                {
+                    "text_offset": 20,
+                    "finish_reason": "stop"
+                }
+                """;
+
+            dynamic value = new BinaryData(json).ToDynamicFromJson(PropertyNameConversion.SnakeCaseLower);
+
+            Assert.AreEqual(20, (int)value.TextOffset);
+            Assert.AreEqual("stop", (string)value.FinishReason);
         }
     }
 }

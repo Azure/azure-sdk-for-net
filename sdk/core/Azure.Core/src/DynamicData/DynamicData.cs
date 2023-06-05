@@ -53,7 +53,7 @@ namespace Azure.Core.Dynamic
 
             // TODO: Split out serialization and deserialization options
             if ((options.NewPropertyConversion == PropertyNameConversion.CamelCase) ||
-                (options.ExistingPropertyLookup == PropertyNameLookup.AllowPascalCase))
+                (options.ExistingPropertyLookup == PropertyNameLookup.AllowConversion))
             {
                 serializerOptions.PropertyNamingPolicy = JsonNamingPolicy.CamelCase;
             }
@@ -100,11 +100,10 @@ namespace Azure.Core.Dynamic
             }
 
             // If we're using the PascalToCamel mapping and the strict name lookup
-            // failed, do a second lookup with a camelCase name as well.
-            if (_options.ExistingPropertyLookup == PropertyNameLookup.AllowPascalCase &&
-                char.IsUpper(name[0]))
+            // failed, do a second lookup with a converted name
+            if (_options.ExistingPropertyLookup == PropertyNameLookup.AllowConversion)
             {
-                if (_element.TryGetProperty(ConvertToCamelCase(name), out element))
+                if (_element.TryGetProperty(ConvertName(name), out element))
                 {
                     if (element.ValueKind == JsonValueKind.Null)
                     {
@@ -118,8 +117,6 @@ namespace Azure.Core.Dynamic
             // Mimic Azure SDK model behavior for optional properties.
             return null;
         }
-
-        private static string ConvertToCamelCase(string value) => JsonNamingPolicy.CamelCase.ConvertName(value);
 
         private object? GetViaIndexer(object index)
         {
@@ -171,11 +168,26 @@ namespace Azure.Core.Dynamic
                 value = ConvertType(value);
             }
 
-            // TODO: reimplement to look up to see if there's a PascalCase property
-            // we can use first.
-            if (_options.NewPropertyConversion == PropertyNameConversion.CamelCase)
+            if (_element.TryGetProperty(name, out MutableJsonElement _))
             {
-                name = ConvertToCamelCase(name);
+                _element = _element.SetProperty(name, value);
+                return null;
+            }
+
+            if (_options.ExistingPropertyLookup == PropertyNameLookup.AllowConversion)
+            {
+                string convertedName = ConvertName(name);
+                if (_element.TryGetProperty(convertedName, out MutableJsonElement _))
+                {
+                    _element = _element.SetProperty(convertedName, value);
+                    return null;
+                }
+            }
+
+            // The property is new
+            if (_options.NewPropertyConversion != PropertyNameConversion.None)
+            {
+                name = ConvertName(name);
             }
 
             _element = _element.SetProperty(name, value);
@@ -183,6 +195,23 @@ namespace Azure.Core.Dynamic
             // Binding machinery expects the call site signature to return an object
             return null;
         }
+
+        private string ConvertName(string name)
+        {
+            if (_options.NewPropertyConversion == PropertyNameConversion.CamelCase)
+            {
+                return JsonNamingPolicy.CamelCase.ConvertName(name);
+            }
+
+            if (_options.NewPropertyConversion == PropertyNameConversion.SnakeCaseLower)
+            {
+                return new JsonSeparatorNamingPolicy(lowercase: true, separator: '_').ConvertName(name);
+            }
+
+            return name;
+        }
+
+        private static string ConvertToCamelCase(string value) => JsonNamingPolicy.CamelCase.ConvertName(value);
 
         private static bool HasTypeConverter(object value) => value switch
         {

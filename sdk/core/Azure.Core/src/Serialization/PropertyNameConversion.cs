@@ -16,5 +16,9 @@ namespace Azure.Core.Serialization
         /// <summary>
         /// </summary>
         CamelCase = 1,
+
+        /// <summary>
+        /// </summary>
+        SnakeCaseLower = 2
     }
 }

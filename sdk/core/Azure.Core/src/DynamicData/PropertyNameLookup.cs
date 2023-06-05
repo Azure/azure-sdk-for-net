@@ -15,6 +15,6 @@ namespace Azure.Core.Dynamic
 
         /// <summary>
         /// </summary>
-        AllowPascalCase = 1,
+        AllowConversion = 1,
     }
 }

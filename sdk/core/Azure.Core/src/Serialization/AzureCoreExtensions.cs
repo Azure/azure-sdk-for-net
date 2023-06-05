@@ -70,11 +70,13 @@ namespace Azure
         /// value to JSON.</paramref>
         /// <paramref name="existingPropertyLookup">A value that specifies how to retrieve existing properties by name from the JSON content the returned
         /// dynamic object represents.  Passing <see cref="PropertyNameLookup.Strict"/> indicates that the property name used to get or set the existing property should be
-        /// used exactly when looking up the JSON value.  Passing <see cref="PropertyNameLookup.AllowPascalCase"/> indicates that a "PascalCase" property name used to
-        /// get or set an existing property may be used to retrieve a "camelCase" property name from the JSON content.</paramref>
+        /// used exactly when looking up the JSON value.  Passing <see cref="PropertyNameLookup.AllowConversion"/> indicates that a property name used to
+        /// get or set an existing property may be converted in order to retrieve the property from the JSON content.  The default conversion
+		/// is to apply the PropertyNamingPolicy.CamelCase mapping, but if a different conversion is provided in the <code>"newPropertyConversion"</code> parameter,
+		/// it will be applied instead. </paramref>
         /// <paramref name="dateTimeHandling"></paramref>
         /// </summary>
-        public static dynamic ToDynamicFromJson(this BinaryData utf8Json, PropertyNameConversion newPropertyConversion = PropertyNameConversion.None, PropertyNameLookup existingPropertyLookup = PropertyNameLookup.AllowPascalCase, DateTimeHandling dateTimeHandling = DateTimeHandling.Rfc3339)
+        public static dynamic ToDynamicFromJson(this BinaryData utf8Json, PropertyNameConversion newPropertyConversion = PropertyNameConversion.None, PropertyNameLookup existingPropertyLookup = PropertyNameLookup.AllowConversion, DateTimeHandling dateTimeHandling = DateTimeHandling.Rfc3339)
         {
             DynamicDataOptions options = new()
             {
