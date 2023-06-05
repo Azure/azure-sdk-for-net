@@ -1,6 +1,6 @@
 # Release History
 
-## 5.4.0-beta.1 (Unreleased)
+## 5.4.0 (2023-06-06)
 
 ### Features Added
 
