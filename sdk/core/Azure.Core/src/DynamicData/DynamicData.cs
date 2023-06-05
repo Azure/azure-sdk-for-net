@@ -198,7 +198,8 @@ namespace Azure.Core.Dynamic
 
         private string ConvertName(string name)
         {
-            if (_options.NewPropertyConversion == PropertyNameConversion.CamelCase)
+            if (_options.NewPropertyConversion == PropertyNameConversion.None ||
+                _options.NewPropertyConversion == PropertyNameConversion.CamelCase)
             {
                 return JsonNamingPolicy.CamelCase.ConvertName(name);
             }
