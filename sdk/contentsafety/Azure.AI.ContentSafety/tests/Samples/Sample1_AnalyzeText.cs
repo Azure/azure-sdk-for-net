@@ -15,10 +15,14 @@ namespace Azure.AI.ContentSafety.Tests.Samples
         [SyncOnly]
         public void AnalyzeText()
         {
+            #region Snippet:Azure_AI_ContentSafety_CreateClient
+
             string endpoint = TestEnvironment.Endpoint;
             string key = TestEnvironment.Key;
 
             ContentSafetyClient client = new ContentSafetyClient(new Uri(endpoint), new AzureKeyCredential(key));
+
+            #endregion Snippet:Azure_AI_ContentSafety_CreateClient
 
             #region Snippet:Azure_AI_ContentSafety_AnalyzeText
 

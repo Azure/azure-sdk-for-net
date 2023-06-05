@@ -237,9 +237,7 @@ if (addedBlockItems != null && addedBlockItems.Value != null)
     Console.WriteLine("\nBlockItems added:");
     foreach (var addedBlockItem in addedBlockItems.Value.Value)
     {
-        {
-            Console.WriteLine("BlockItemId: {0}, Text: {1}, Description: {2}", addedBlockItem.BlockItemId, addedBlockItem.Text, addedBlockItem.Description);
-        }
+        Console.WriteLine("BlockItemId: {0}, Text: {1}, Description: {2}", addedBlockItem.BlockItemId, addedBlockItem.Text, addedBlockItem.Description);
     }
 }
 ```
