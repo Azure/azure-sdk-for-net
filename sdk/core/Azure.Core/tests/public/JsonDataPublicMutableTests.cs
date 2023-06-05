@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core.Dynamic;
 using Azure.Core.GeoJson;
 using NUnit.Framework;
 
@@ -13,7 +14,7 @@ namespace Azure.Core.Tests.Public
         [Test]
         public void ArrayItemsCanBeAssigned()
         {
-            dynamic json = new BinaryData("[0, 1, 2, 3]").ToDynamicFromJson();
+            dynamic json = new BinaryData("[0, 1, 2, 3]").ToDynamicFromJson(PropertyNameLookup.AllowPascalCase);
             json[1] = 2;
             json[2] = null;
             json[3] = "string";
@@ -24,7 +25,7 @@ namespace Azure.Core.Tests.Public
         [Test]
         public void ExistingObjectPropertiesCanBeAssigned()
         {
-            dynamic json = new BinaryData("{\"a\":1}").ToDynamicFromJson();
+            dynamic json = new BinaryData("{\"a\":1}").ToDynamicFromJson(PropertyNameLookup.AllowPascalCase);
             json["a"] = "2";
 
             Assert.AreEqual(json.ToString(), "{\"a\":\"2\"}");
@@ -42,7 +43,7 @@ namespace Azure.Core.Tests.Public
         [TestCaseSource(nameof(PrimitiveValues))]
         public void PrimitiveValuesCanBeParsedDirectly<T>(T value, string expected)
         {
-            dynamic json = new BinaryData(expected).ToDynamicFromJson();
+            dynamic json = new BinaryData(expected).ToDynamicFromJson(PropertyNameLookup.AllowPascalCase);
 
             Assert.AreEqual(value, (T)json);
         }
@@ -88,13 +89,13 @@ namespace Azure.Core.Tests.Public
         [TestCaseSource(nameof(PrimitiveValues))]
         public void CanModifyNestedProperties<T>(T value, string expected)
         {
-            var json = new BinaryData("{\"a\":{\"b\":2}}").ToDynamicFromJson();
+            var json = new BinaryData("{\"a\":{\"b\":2}}").ToDynamicFromJson(PropertyNameLookup.AllowPascalCase);
             json.a.b = value;
 
             Assert.AreEqual(json.ToString(), "{\"a\":{\"b\":" + expected + "}}");
             Assert.AreEqual(value, (T)json.a.b);
 
-            dynamic reparsedJson = new BinaryData(json.ToString()).ToDynamicFromJson();
+            dynamic reparsedJson = new BinaryData(json.ToString()).ToDynamicFromJson(PropertyNameLookup.AllowPascalCase);
 
             Assert.AreEqual(value, (T)reparsedJson.a.b);
         }

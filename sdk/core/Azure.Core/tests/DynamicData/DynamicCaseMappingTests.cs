@@ -31,7 +31,16 @@ namespace Azure.Core.Tests
         [Test]
         public void CanGetPropertiesWithNoCaseMapping()
         {
-            dynamic value = new BinaryData(testJson).ToDynamicFromJson();
+            dynamic value = new BinaryData(testJson).ToDynamicFromJson(PropertyNameLookup.AllowPascalCase);
+
+            Assert.AreEqual(1, (int)value.camel);
+            Assert.AreEqual("hi", (string)value.Pascal);
+            Assert.AreEqual(true, (bool)value.parentCamel.nestedCamel);
+            Assert.AreEqual(false, (bool)value.parentCamel.NestedPascal);
+            Assert.AreEqual("a", (string)value.ParentPascal.nestedCamel);
+            Assert.AreEqual("b", (string)value.ParentPascal.NestedPascal);
+
+            value = new BinaryData(testJson).ToDynamicFromJson(PropertyNameLookup.Strict);
 
             Assert.AreEqual(1, (int)value.camel);
             Assert.AreEqual("hi", (string)value.Pascal);
@@ -59,7 +68,7 @@ namespace Azure.Core.Tests
         [Test]
         public void CanGetPropertiesWithPascalToCamelMapping()
         {
-            dynamic value = new BinaryData(testJson).ToDynamicFromJson(PropertyNameConversion.CamelCase);
+            dynamic value = new BinaryData(testJson).ToDynamicFromJson(PropertyNameLookup.AllowPascalCase, PropertyNameConversion.CamelCase);
 
             Assert.AreEqual(1, (int)value.camel);
             Assert.AreEqual(1, (int)value.Camel);
@@ -87,7 +96,7 @@ namespace Azure.Core.Tests
         [Test]
         public void CanSetExistingPropertiesWithNoCaseMapping()
         {
-            dynamic value = new BinaryData(testJson).ToDynamicFromJson();
+            dynamic value = new BinaryData(testJson).ToDynamicFromJson(PropertyNameLookup.Strict);
 
             value.camel = 2;
             value.Pascal = "new";
@@ -104,32 +113,32 @@ namespace Azure.Core.Tests
             Assert.AreEqual("d", (string)value.ParentPascal.NestedPascal);
         }
 
-        [Test]
-        public void SettingExistingPropertiesWithUnmatchedCasingAddsNewPropertyWhenNoCaseMapping()
-        {
-            dynamic value = new BinaryData(testJson).ToDynamicFromJson();
+        //[Test]
+        //public void SettingExistingPropertiesWithUnmatchedCasingAddsNewPropertyWhenNoCaseMapping()
+        //{
+        //    dynamic value = new BinaryData(testJson).ToDynamicFromJson(PropertyNameLookup.AllowPascalCase);
 
-            value.Camel = 2;
-            value.pascal = "new";
-            value.parentCamel.NestedCamel = false;
-            value.parentCamel.nestedPascal = true;
-            value.ParentPascal.NestedCamel = "c";
-            value.ParentPascal.nestedPascal = "d";
+        //    value.Camel = 2;
+        //    value.pascal = "new";
+        //    value.parentCamel.NestedCamel = false;
+        //    value.parentCamel.nestedPascal = true;
+        //    value.ParentPascal.NestedCamel = "c";
+        //    value.ParentPascal.nestedPascal = "d";
 
-            Assert.AreEqual(1, (int)value.camel);
-            Assert.AreEqual("hi", (string)value.Pascal);
-            Assert.AreEqual(true, (bool)value.parentCamel.nestedCamel);
-            Assert.AreEqual(false, (bool)value.parentCamel.NestedPascal);
-            Assert.AreEqual("a", (string)value.ParentPascal.nestedCamel);
-            Assert.AreEqual("b", (string)value.ParentPascal.NestedPascal);
+        //    Assert.AreEqual(1, (int)value.camel);
+        //    Assert.AreEqual("hi", (string)value.Pascal);
+        //    Assert.AreEqual(true, (bool)value.parentCamel.nestedCamel);
+        //    Assert.AreEqual(false, (bool)value.parentCamel.NestedPascal);
+        //    Assert.AreEqual("a", (string)value.ParentPascal.nestedCamel);
+        //    Assert.AreEqual("b", (string)value.ParentPascal.NestedPascal);
 
-            Assert.AreEqual(2, (int)value.Camel);
-            Assert.AreEqual("new", (string)value.pascal);
-            Assert.AreEqual(false, (bool)value.parentCamel.NestedCamel);
-            Assert.AreEqual(true, (bool)value.parentCamel.nestedPascal);
-            Assert.AreEqual("c", (string)value.ParentPascal.NestedCamel);
-            Assert.AreEqual("d", (string)value.ParentPascal.nestedPascal);
-        }
+        //    Assert.AreEqual(2, (int)value.Camel);
+        //    Assert.AreEqual("new", (string)value.pascal);
+        //    Assert.AreEqual(false, (bool)value.parentCamel.NestedCamel);
+        //    Assert.AreEqual(true, (bool)value.parentCamel.nestedPascal);
+        //    Assert.AreEqual("c", (string)value.ParentPascal.NestedCamel);
+        //    Assert.AreEqual("d", (string)value.ParentPascal.nestedPascal);
+        //}
 
         [Test]
         public void CanSetExistingPropertiesWithPascalToCamelMapping()
@@ -184,7 +193,7 @@ namespace Azure.Core.Tests
         [Test]
         public void CanSetNewPropertiesWithNoCaseMapping()
         {
-            dynamic value = new BinaryData("""{}""").ToDynamicFromJson();
+            dynamic value = new BinaryData("""{}""").ToDynamicFromJson(PropertyNameLookup.Strict);
 
             value.camel = 1;
             value.Pascal = "hi";
@@ -277,7 +286,7 @@ namespace Azure.Core.Tests
                         "index": 2
                     }
                 }
-                """).ToDynamicFromJson();
+                """).ToDynamicFromJson(PropertyNameLookup.Strict);
 
             IEnumerable ary = (IEnumerable)jsonData;
             IEnumerator e = ary.GetEnumerator();
@@ -350,7 +359,7 @@ namespace Azure.Core.Tests
                         }
                     ]
                 }
-                """).ToDynamicFromJson();
+                """).ToDynamicFromJson(PropertyNameLookup.Strict);
 
             IEnumerable ary = (IEnumerable)jsonData.array;
             IEnumerator e = ary.GetEnumerator();

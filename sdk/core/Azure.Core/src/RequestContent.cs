@@ -100,27 +100,14 @@ namespace Azure.Core
         /// </summary>
         /// <param name="serializable">The <see cref="object"/> to serialize.</param>
         /// <param name="propertyNameConversion">Conversion applied to property names on the object during serialization.</param>
-        /// <param name="dateTimeHandling"></param>
         /// <returns>An instance of <see cref="RequestContent"/> that wraps a serialized version of the object.</returns>
-        public static RequestContent Create(object serializable, PropertyNameConversion propertyNameConversion, DateTimeHandling dateTimeHandling = DateTimeHandling.Rfc3339)
+        public static RequestContent Create(object serializable, PropertyNameConversion propertyNameConversion)
         {
             JsonSerializerOptions options = new();
             if (propertyNameConversion == PropertyNameConversion.CamelCase)
             {
                 options.PropertyNamingPolicy = JsonNamingPolicy.CamelCase;
             };
-
-            if (dateTimeHandling == DateTimeHandling.Rfc3339)
-            {
-                options.Converters.Add(new DynamicData.Rfc3339DateTimeConverter());
-                options.Converters.Add(new DynamicData.Rfc3339DateTimeOffsetConverter());
-            }
-
-            if (dateTimeHandling == DateTimeHandling.UnixTime)
-            {
-                options.Converters.Add(new DynamicData.UnixTimeDateTimeConverter());
-                options.Converters.Add(new DynamicData.UnixTimeDateTimeOffsetConverter());
-            }
 
             ObjectSerializer serializer = new JsonObjectSerializer(options);
             return Create(serializer.Serialize(serializable));

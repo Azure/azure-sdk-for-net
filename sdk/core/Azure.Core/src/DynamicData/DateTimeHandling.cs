@@ -1,19 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Diagnostics;
-using System.IO;
-using System.Reflection;
-using System.Text.Json;
-using System.Text.Json.Serialization;
-using Azure.Core.Dynamic;
-using Azure.Core.Json;
-
-namespace Azure.Core.Serialization
+namespace Azure.Core.Dynamic
 {
     /// <summary>
     /// Determines how DynamicData handles DateTime and DateTimeOffset when serializing and deserializing.

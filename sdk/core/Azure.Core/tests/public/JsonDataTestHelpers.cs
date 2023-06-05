@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using Azure.Core.Dynamic;
 
 namespace Azure.Core.Tests.Public
 {
@@ -9,17 +10,17 @@ namespace Azure.Core.Tests.Public
     {
         public static dynamic CreateEmpty()
         {
-            return BinaryData.FromString("{}").ToDynamicFromJson();
+            return BinaryData.FromString("{}").ToDynamicFromJson(PropertyNameLookup.AllowPascalCase);
         }
 
         public static dynamic CreateFromJson(string json)
         {
-            return BinaryData.FromString(json).ToDynamicFromJson();
+            return BinaryData.FromString(json).ToDynamicFromJson(PropertyNameLookup.AllowPascalCase);
         }
 
         public static T JsonAsType<T>(string json)
         {
-            dynamic jsonData = new BinaryData(json).ToDynamicFromJson();
+            dynamic jsonData = new BinaryData(json).ToDynamicFromJson(PropertyNameLookup.AllowPascalCase);
             return (T)jsonData;
         }
     }

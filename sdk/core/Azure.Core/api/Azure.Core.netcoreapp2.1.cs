@@ -17,7 +17,7 @@ namespace Azure
     }
     public static partial class AzureCoreExtensions
     {
-        public static dynamic ToDynamicFromJson(this System.BinaryData utf8Json, Azure.Core.Serialization.PropertyNameConversion newPropertyConversion = Azure.Core.Serialization.PropertyNameConversion.None, Azure.Core.Dynamic.PropertyNameLookup existingPropertyLookup = Azure.Core.Dynamic.PropertyNameLookup.AllowPascalCase, Azure.Core.Serialization.DateTimeHandling dateTimeHandling = Azure.Core.Serialization.DateTimeHandling.Rfc3339) { throw null; }
+        public static dynamic ToDynamicFromJson(this System.BinaryData utf8Json, Azure.Core.Dynamic.PropertyNameLookup existingPropertyLookup, Azure.Core.Serialization.PropertyNameConversion newPropertyConversion = Azure.Core.Serialization.PropertyNameConversion.None, Azure.Core.Dynamic.DateTimeHandling dateTimeHandling = Azure.Core.Dynamic.DateTimeHandling.Rfc3339) { throw null; }
         public static System.Threading.Tasks.ValueTask<T?> ToObjectAsync<T>(this System.BinaryData data, Azure.Core.Serialization.ObjectSerializer serializer, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static object? ToObjectFromJson(this System.BinaryData data) { throw null; }
         public static T? ToObject<T>(this System.BinaryData data, Azure.Core.Serialization.ObjectSerializer serializer, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -544,7 +544,7 @@ namespace Azure.Core
         public static Azure.Core.RequestContent Create(System.IO.Stream stream) { throw null; }
         public static Azure.Core.RequestContent Create(object serializable) { throw null; }
         public static Azure.Core.RequestContent Create(object serializable, Azure.Core.Serialization.ObjectSerializer? serializer) { throw null; }
-        public static Azure.Core.RequestContent Create(object serializable, Azure.Core.Serialization.PropertyNameConversion propertyNameConversion, Azure.Core.Serialization.DateTimeHandling dateTimeHandling = Azure.Core.Serialization.DateTimeHandling.Rfc3339) { throw null; }
+        public static Azure.Core.RequestContent Create(object serializable, Azure.Core.Serialization.PropertyNameConversion propertyNameConversion) { throw null; }
         public static Azure.Core.RequestContent Create(System.ReadOnlyMemory<byte> bytes) { throw null; }
         public static Azure.Core.RequestContent Create(string content) { throw null; }
         public abstract void Dispose();
@@ -780,6 +780,11 @@ namespace Azure.Core.Diagnostics
 }
 namespace Azure.Core.Dynamic
 {
+    public enum DateTimeHandling
+    {
+        Rfc3339 = 0,
+        UnixTime = 1,
+    }
     [System.Diagnostics.DebuggerDisplayAttribute("{DebuggerDisplay,nq}")]
     public sealed partial class DynamicData : System.Dynamic.IDynamicMetaObjectProvider, System.IDisposable
     {
@@ -1107,11 +1112,6 @@ namespace Azure.Core.Pipeline
 }
 namespace Azure.Core.Serialization
 {
-    public enum DateTimeHandling
-    {
-        Rfc3339 = 0,
-        UnixTime = 1,
-    }
     public partial interface IMemberNameConverter
     {
         string? ConvertMemberName(System.Reflection.MemberInfo member);

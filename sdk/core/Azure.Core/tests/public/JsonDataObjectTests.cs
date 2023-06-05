@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using Azure.Core.Dynamic;
 using Azure.Core.Serialization;
 using Microsoft.CSharp.RuntimeBinder;
 using NUnit.Framework;
@@ -32,7 +33,7 @@ namespace Azure.Core.Tests.Public
                     "message": "Hi",
                     "number" : 5
                 }
-                """).ToDynamicFromJson(PropertyNameConversion.CamelCase);
+                """).ToDynamicFromJson(PropertyNameLookup.AllowPascalCase, PropertyNameConversion.CamelCase);
 
             Assert.AreEqual(new SampleModel("Hi", 5), (SampleModel)data);
         }
