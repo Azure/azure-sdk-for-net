@@ -66,7 +66,7 @@ function Get-ServiceDir([System.Object]$tspConfig, [string]$repoRoot) {
     $serviceDir = $tspConfig["parameters"]["service-dir"]["default"];
   }
   else {
-    Write-Error "Missing service-dir in parameters section of tspconfig.yaml."
+    Write-Error "Missing service-dir in parameters section of tspconfig.yaml. Please refer to https://github.com/Azure/azure-rest-api-specs/blob/main/specification/contosowidgetmanager/Contoso.WidgetManager/tspconfig.yaml for the right schema."
     exit 1
   }
 
@@ -88,7 +88,7 @@ function Get-PackageDir([System.Object]$tspConfig) {
     $packageDir = $tspConfig["options"]["$emitterName"]["package-dir"]
   }
   else {
-    Write-Error "Missing package-dir in $emitterName options of tspconfig.yaml."
+    Write-Error "Missing package-dir in $emitterName options of tspconfig.yaml. Please refer to https://github.com/Azure/azure-rest-api-specs/blob/main/specification/contosowidgetmanager/Contoso.WidgetManager/tspconfig.yaml for the right schema."
     exit 1
   }
   return $packageDir
