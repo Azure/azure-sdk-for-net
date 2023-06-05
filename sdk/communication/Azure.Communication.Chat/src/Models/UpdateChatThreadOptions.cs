@@ -2,20 +2,16 @@
 // Licensed under the MIT License.
 using System.Collections.Generic;
 
-namespace Azure.Communication.Chat
+namespace Azure.Communication.Chat.Models
 {
 #pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
-    public class CreateChatThreadOptions
+    public class UpdateChatThreadOptions
     {
-        public CreateChatThreadOptions(string topic)
+        public UpdateChatThreadOptions(string topic)
         {
             Topic = topic;
         }
         public string Topic { get; }
-
-        public IList<ChatParticipant> Participants { get; }
-
-        public string IdempotencyToken { get; set; }
 
         public IDictionary<string, string> Metadata { get; set; }
     }
