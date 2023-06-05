@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using BenchmarkDotNet.Configs;
 using BenchmarkDotNet.Running;
 
 namespace Azure.Monitor.OpenTelemetry.Exporter.Benchmarks

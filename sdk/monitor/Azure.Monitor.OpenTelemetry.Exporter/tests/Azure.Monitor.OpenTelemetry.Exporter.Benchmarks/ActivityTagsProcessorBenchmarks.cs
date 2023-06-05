@@ -20,8 +20,6 @@ Job=InProcess  Toolchain=InProcessEmitToolchain
 |                              Method    |     Mean |   Error |   StdDev |   Median |   Gen0 | Allocated |
 |--------------------------------------- |---------:|--------:|---------:|---------:|-------:|----------:|
 |     Benchmark_ActivityTagsProcessor    | 282.5 ns | 5.61 ns | 13.66 ns | 279.0 ns | 0.1335 |     560 B |
-|  Benchmark_OldActivityTagsProcessor    | 288.3 ns | 5.78 ns | 12.06 ns | 283.5 ns | 0.1335 |     560 B |
-| Benchmark_NewDictActivityTagsProcessor | 328.2 ns | 2.82 ns |  2.36 ns | 328.1 ns | 0.1335 |     560 B |
 */
 
 namespace Azure.Monitor.OpenTelemetry.Exporter.Benchmarks
@@ -61,30 +59,11 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Benchmarks
             _activity = CreateTestActivity(tagObjects!);
         }
 
-        [GlobalCleanup]
-        public void Cleanup()
-        {
-        }
-
         [Benchmark]
         public void Benchmark_ActivityTagsProcessor()
         {
             var activityTagsProcessor = new ActivityTagsProcessor();
             activityTagsProcessor.CategorizeTags(_activity!);
-        }
-
-        [Benchmark]
-        public void Benchmark_OldActivityTagsProcessor()
-        {
-            var oldActivityTagsProcessor = new OldActivityTagsProcessor();
-            oldActivityTagsProcessor.CategorizeTags(_activity!);
-        }
-
-        [Benchmark]
-        public void Benchmark_NewDictActivityTagsProcessor()
-        {
-            var newDictActivityTagsProcessor = new NewDictActivityTagsProcessor();
-            newDictActivityTagsProcessor.CategorizeTags(_activity!);
         }
 
         private static Activity? CreateTestActivity(IEnumerable<KeyValuePair<string, object>>? additionalAttributes = null)
