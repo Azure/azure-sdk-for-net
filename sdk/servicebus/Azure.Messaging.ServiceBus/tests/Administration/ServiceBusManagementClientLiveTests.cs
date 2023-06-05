@@ -27,7 +27,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Management
         private readonly ServiceBusAdministrationClientOptions.ServiceVersion _serviceVersion;
 
         public ServiceBusManagementClientLiveTests(bool isAsync, ServiceBusAdministrationClientOptions.ServiceVersion serviceVersion) :
-            base(isAsync: true, RecordedTestMode.Record)
+            base(isAsync: true)
         {
             SanitizedHeaders.Add("ServiceBusDlqSupplementaryAuthorization");
             SanitizedHeaders.Add("ServiceBusSupplementaryAuthorization");
