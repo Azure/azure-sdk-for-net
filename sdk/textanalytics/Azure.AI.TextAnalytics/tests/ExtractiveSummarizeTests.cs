@@ -85,8 +85,7 @@ namespace Azure.AI.TextAnalytics.Tests
         {
             TextAnalyticsClient client = GetClient(useTokenCredential: true);
 
-            ExtractiveSummarizeOperation operation = await client.StartExtractiveSummarizeAsync(s_batchDocuments);
-            await operation.WaitForCompletionAsync();
+            ExtractiveSummarizeOperation operation = await client.ExtractiveSummarizeAsync(WaitUntil.Completed, s_batchDocuments);
             ValidateOperationProperties(operation);
 
             List<ExtractiveSummarizeResultCollection> resultInPages = operation.Value.ToEnumerableAsync().Result;
@@ -109,8 +108,7 @@ namespace Azure.AI.TextAnalytics.Tests
                 OrderBy = ExtractiveSummarySentencesOrder.Rank
             };
 
-            ExtractiveSummarizeOperation operation = await client.StartExtractiveSummarizeAsync(s_batchDocuments, options);
-            await operation.WaitForCompletionAsync();
+            ExtractiveSummarizeOperation operation = await client.ExtractiveSummarizeAsync(WaitUntil.Completed, s_batchDocuments, options);
             ValidateOperationProperties(operation);
 
             List<ExtractiveSummarizeResultCollection> resultInPages = operation.Value.ToEnumerableAsync().Result;
@@ -133,8 +131,7 @@ namespace Azure.AI.TextAnalytics.Tests
                 "",
             };
 
-            ExtractiveSummarizeOperation operation = await client.StartExtractiveSummarizeAsync(documents, "en");
-            await operation.WaitForCompletionAsync();
+            ExtractiveSummarizeOperation operation = await client.ExtractiveSummarizeAsync(WaitUntil.Completed, documents, "en");
             ValidateOperationProperties(operation);
 
             List<ExtractiveSummarizeResultCollection> resultInPages = operation.Value.ToEnumerableAsync().Result;
@@ -153,8 +150,7 @@ namespace Azure.AI.TextAnalytics.Tests
         {
             TextAnalyticsClient client = GetClient();
 
-            ExtractiveSummarizeOperation operation = await client.StartExtractiveSummarizeAsync(s_batchConvenienceDocuments);
-            await operation.WaitForCompletionAsync();
+            ExtractiveSummarizeOperation operation = await client.ExtractiveSummarizeAsync(WaitUntil.Completed, s_batchConvenienceDocuments);
             ValidateOperationProperties(operation);
 
             List<ExtractiveSummarizeResultCollection> resultInPages = operation.Value.ToEnumerableAsync().Result;
@@ -177,8 +173,7 @@ namespace Azure.AI.TextAnalytics.Tests
                 IncludeStatistics = true,
             };
 
-            ExtractiveSummarizeOperation operation = await client.StartExtractiveSummarizeAsync(s_batchConvenienceDocuments, "en", options);
-            await operation.WaitForCompletionAsync();
+            ExtractiveSummarizeOperation operation = await client.ExtractiveSummarizeAsync(WaitUntil.Completed, s_batchConvenienceDocuments, "en", options);
             ValidateOperationProperties(operation);
 
             List<ExtractiveSummarizeResultCollection> resultInPages = operation.Value.ToEnumerableAsync().Result;
@@ -195,8 +190,7 @@ namespace Azure.AI.TextAnalytics.Tests
         {
             TextAnalyticsClient client = GetClient();
 
-            ExtractiveSummarizeOperation operation = await client.StartExtractiveSummarizeAsync(s_batchDocuments);
-            await operation.WaitForCompletionAsync();
+            ExtractiveSummarizeOperation operation = await client.ExtractiveSummarizeAsync(WaitUntil.Completed, s_batchDocuments);
             ValidateOperationProperties(operation);
 
             List<ExtractiveSummarizeResultCollection> resultInPages = operation.Value.ToEnumerableAsync().Result;
@@ -219,8 +213,7 @@ namespace Azure.AI.TextAnalytics.Tests
                 IncludeStatistics = true,
             };
 
-            ExtractiveSummarizeOperation operation = await client.StartExtractiveSummarizeAsync(s_batchDocuments, options);
-            await operation.WaitForCompletionAsync();
+            ExtractiveSummarizeOperation operation = await client.ExtractiveSummarizeAsync(WaitUntil.Completed, s_batchDocuments, options);
             ValidateOperationProperties(operation);
 
             List<ExtractiveSummarizeResultCollection> resultInPages = operation.Value.ToEnumerableAsync().Result;

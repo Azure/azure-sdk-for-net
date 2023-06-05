@@ -2083,36 +2083,36 @@ namespace Azure.AI.TextAnalytics.ServiceClients
 
         #region Extractive Summarize
 
-        public override ExtractiveSummarizeOperation StartExtractiveSummarize(IEnumerable<string> documents, string language = default, ExtractiveSummarizeOptions options = default, CancellationToken cancellationToken = default)
+        public override ExtractiveSummarizeOperation ExtractiveSummarize(WaitUntil waitUntil, IEnumerable<string> documents, string language = default, ExtractiveSummarizeOptions options = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(documents, nameof(documents));
             MultiLanguageAnalysisInput input = ConvertToMultiLanguageInputs(documents, language);
 
-            return StartExtractiveSummarize(input, options, cancellationToken);
+            return ExtractiveSummarize(waitUntil, input, options, cancellationToken);
         }
 
-        public override ExtractiveSummarizeOperation StartExtractiveSummarize(IEnumerable<TextDocumentInput> documents, ExtractiveSummarizeOptions options = default, CancellationToken cancellationToken = default)
+        public override ExtractiveSummarizeOperation ExtractiveSummarize(WaitUntil waitUntil, IEnumerable<TextDocumentInput> documents, ExtractiveSummarizeOptions options = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(documents, nameof(documents));
             MultiLanguageAnalysisInput input = ConvertToMultiLanguageInputs(documents);
 
-            return StartExtractiveSummarize(input, options, cancellationToken);
+            return ExtractiveSummarize(waitUntil, input, options, cancellationToken);
         }
 
-        public override async Task<ExtractiveSummarizeOperation> StartExtractiveSummarizeAsync(IEnumerable<string> documents, string language = default, ExtractiveSummarizeOptions options = default, CancellationToken cancellationToken = default)
+        public override async Task<ExtractiveSummarizeOperation> ExtractiveSummarizeAsync(WaitUntil waitUntil, IEnumerable<string> documents, string language = default, ExtractiveSummarizeOptions options = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(documents, nameof(documents));
             MultiLanguageAnalysisInput input = ConvertToMultiLanguageInputs(documents, language);
 
-            return await StartExtractiveSummarizeAsync(input, options, cancellationToken).ConfigureAwait(false);
+            return await ExtractiveSummarizeAsync(waitUntil, input, options, cancellationToken).ConfigureAwait(false);
         }
 
-        public override async Task<ExtractiveSummarizeOperation> StartExtractiveSummarizeAsync(IEnumerable<TextDocumentInput> documents, ExtractiveSummarizeOptions options = default, CancellationToken cancellationToken = default)
+        public override async Task<ExtractiveSummarizeOperation> ExtractiveSummarizeAsync(WaitUntil waitUntil, IEnumerable<TextDocumentInput> documents, ExtractiveSummarizeOptions options = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(documents, nameof(documents));
             MultiLanguageAnalysisInput input = ConvertToMultiLanguageInputs(documents);
 
-            return await StartExtractiveSummarizeAsync(input, options, cancellationToken).ConfigureAwait(false);
+            return await ExtractiveSummarizeAsync(waitUntil, input, options, cancellationToken).ConfigureAwait(false);
         }
 
         private static ExtractiveSummarizationLROTask CreateExtractiveSummarizationTask(ExtractiveSummarizeOptions options)
@@ -2130,11 +2130,11 @@ namespace Azure.AI.TextAnalytics.ServiceClients
             };
         }
 
-        private ExtractiveSummarizeOperation StartExtractiveSummarize(MultiLanguageAnalysisInput multiLanguageInput, ExtractiveSummarizeOptions options, CancellationToken cancellationToken)
+        private ExtractiveSummarizeOperation ExtractiveSummarize(WaitUntil waitUntil, MultiLanguageAnalysisInput multiLanguageInput, ExtractiveSummarizeOptions options, CancellationToken cancellationToken)
         {
             options ??= new ExtractiveSummarizeOptions();
 
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(TextAnalyticsClient)}.{nameof(StartExtractiveSummarize)}");
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(TextAnalyticsClient)}.{nameof(ExtractiveSummarize)}");
             scope.Start();
 
             try
@@ -2148,7 +2148,14 @@ namespace Azure.AI.TextAnalytics.ServiceClients
                 string location = response.Headers.OperationLocation;
                 IDictionary<string, int> idToIndexMap = CreateIdToIndexMap(multiLanguageInput.Documents);
 
-                return new ExtractiveSummarizeOperation(this, _clientDiagnostics, location, idToIndexMap, options.IncludeStatistics);
+                var operation = new ExtractiveSummarizeOperation(this, _clientDiagnostics, location, idToIndexMap, options.IncludeStatistics);
+
+                if (waitUntil == WaitUntil.Completed)
+                {
+                    operation.WaitForCompletion(cancellationToken);
+                }
+
+                return operation;
             }
             catch (Exception e)
             {
@@ -2157,11 +2164,11 @@ namespace Azure.AI.TextAnalytics.ServiceClients
             }
         }
 
-        private async Task<ExtractiveSummarizeOperation> StartExtractiveSummarizeAsync(MultiLanguageAnalysisInput multiLanguageInput, ExtractiveSummarizeOptions options, CancellationToken cancellationToken)
+        private async Task<ExtractiveSummarizeOperation> ExtractiveSummarizeAsync(WaitUntil waitUntil, MultiLanguageAnalysisInput multiLanguageInput, ExtractiveSummarizeOptions options, CancellationToken cancellationToken)
         {
             options ??= new ExtractiveSummarizeOptions();
 
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(TextAnalyticsClient)}.{nameof(StartExtractiveSummarize)}");
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(TextAnalyticsClient)}.{nameof(ExtractiveSummarize)}");
             scope.Start();
 
             try
@@ -2175,7 +2182,14 @@ namespace Azure.AI.TextAnalytics.ServiceClients
                 string location = response.Headers.OperationLocation;
                 IDictionary<string, int> idToIndexMap = CreateIdToIndexMap(multiLanguageInput.Documents);
 
-                return new ExtractiveSummarizeOperation(this, _clientDiagnostics, location, idToIndexMap, options.IncludeStatistics);
+                var operation = new ExtractiveSummarizeOperation(this, _clientDiagnostics, location, idToIndexMap, options.IncludeStatistics);
+
+                if (waitUntil == WaitUntil.Completed)
+                {
+                    await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                }
+
+                return operation;
             }
             catch (Exception e)
             {
