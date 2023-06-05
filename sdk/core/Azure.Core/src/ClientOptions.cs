@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using Azure.Core.Pipeline;
+using Azure.Core.Dynamic;
 
 namespace Azure.Core
 {
@@ -98,6 +99,10 @@ namespace Azure.Core
         /// it is the implementer's responsibility to update the <see cref="HttpMessage.ProcessingContext"/> values.
         /// </summary>
         public HttpPipelinePolicy? RetryPolicy { get; set; }
+
+        /// <summary>
+        /// </summary>
+        public DynamicDataOptions? DynamicData { get; set; }
 
         /// <summary>
         /// Adds an <see cref="HttpPipeline"/> policy into the client pipeline. The position of policy in the pipeline is controlled by the <paramref name="position"/> parameter.

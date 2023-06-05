@@ -136,7 +136,7 @@ namespace Azure.Core.Tests
         {
             DynamicDataOptions options = new()
             {
-                NewPropertyConversion = PropertyNameConversion.CamelCase,
+                PropertyNameConversion = PropertyNameConversion.CamelCase,
                 ExistingPropertyLookup = PropertyNameLookup.AllowConversion
             };
             dynamic value = new BinaryData(testJson).ToDynamicFromJson(options);
@@ -163,7 +163,7 @@ namespace Azure.Core.Tests
         {
             DynamicDataOptions options = new()
             {
-                NewPropertyConversion = PropertyNameConversion.CamelCase,
+                PropertyNameConversion = PropertyNameConversion.CamelCase,
                 ExistingPropertyLookup = PropertyNameLookup.AllowConversion
             };
             dynamic value = new BinaryData(testJson).ToDynamicFromJson(options);
@@ -208,7 +208,7 @@ namespace Azure.Core.Tests
         {
             DynamicDataOptions options = new()
             {
-                NewPropertyConversion = PropertyNameConversion.CamelCase,
+                PropertyNameConversion = PropertyNameConversion.CamelCase,
                 ExistingPropertyLookup = PropertyNameLookup.AllowConversion
             };
             dynamic value = new BinaryData("""{}""").ToDynamicFromJson(options);
@@ -255,7 +255,7 @@ namespace Azure.Core.Tests
 
             DynamicDataOptions options = new()
             {
-                NewPropertyConversion = PropertyNameConversion.CamelCase,
+                PropertyNameConversion = PropertyNameConversion.CamelCase,
                 ExistingPropertyLookup = PropertyNameLookup.AllowConversion
             };
             dynamic dynamicJson = BinaryData.FromString(json).ToDynamicFromJson(options);
@@ -302,7 +302,7 @@ namespace Azure.Core.Tests
         {
             DynamicDataOptions options = new()
             {
-                NewPropertyConversion = PropertyNameConversion.CamelCase,
+                PropertyNameConversion = PropertyNameConversion.CamelCase,
                 ExistingPropertyLookup = PropertyNameLookup.AllowConversion
             };
             dynamic jsonData = BinaryData.FromString("""
@@ -371,7 +371,7 @@ namespace Azure.Core.Tests
         {
             DynamicDataOptions options = new()
             {
-                NewPropertyConversion = PropertyNameConversion.CamelCase,
+                PropertyNameConversion = PropertyNameConversion.CamelCase,
                 ExistingPropertyLookup = PropertyNameLookup.AllowConversion
             };
             dynamic jsonData = BinaryData.FromString("""
@@ -406,7 +406,7 @@ namespace Azure.Core.Tests
         {
             DynamicDataOptions options = new()
             {
-                NewPropertyConversion = PropertyNameConversion.CamelCase,
+                PropertyNameConversion = PropertyNameConversion.CamelCase,
                 ExistingPropertyLookup = PropertyNameLookup.AllowConversion
             };
             dynamic value = new BinaryData(testJson).ToDynamicFromJson(options);
@@ -430,7 +430,7 @@ namespace Azure.Core.Tests
         {
             DynamicDataOptions options = new()
             {
-                NewPropertyConversion = PropertyNameConversion.CamelCase,
+                PropertyNameConversion = PropertyNameConversion.CamelCase,
                 ExistingPropertyLookup = PropertyNameLookup.AllowConversion
             };
             dynamic value = new BinaryData("""{}""").ToDynamicFromJson(options);

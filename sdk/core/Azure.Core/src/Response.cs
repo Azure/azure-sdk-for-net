@@ -88,6 +88,11 @@ namespace Azure
         /// </summary>
         public virtual bool IsError { get; internal set; }
 
+        /// <summary>
+        /// </summary>
+        /// <returns></returns>
+        public virtual dynamic GetDynamicContent() => Content.ToDynamicFromJson();
+
         internal HttpMessageSanitizer Sanitizer { get; set; } = HttpMessageSanitizer.Default;
 
         internal RequestFailedDetailsParser?  RequestFailedDetailsParser { get; set; }

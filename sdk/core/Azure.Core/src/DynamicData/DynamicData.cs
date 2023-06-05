@@ -52,7 +52,7 @@ namespace Azure.Core.Dynamic
             };
 
             // TODO: Split out serialization and deserialization options
-            if ((options.NewPropertyConversion == PropertyNameConversion.CamelCase) ||
+            if ((options.PropertyNameConversion == PropertyNameConversion.CamelCase) ||
                 (options.ExistingPropertyLookup == PropertyNameLookup.AllowConversion))
             {
                 serializerOptions.PropertyNamingPolicy = JsonNamingPolicy.CamelCase;
@@ -185,7 +185,7 @@ namespace Azure.Core.Dynamic
             }
 
             // The property is new
-            if (_options.NewPropertyConversion != PropertyNameConversion.None)
+            if (_options.PropertyNameConversion != PropertyNameConversion.None)
             {
                 name = ConvertName(name);
             }
@@ -198,13 +198,13 @@ namespace Azure.Core.Dynamic
 
         private string ConvertName(string name)
         {
-            if (_options.NewPropertyConversion == PropertyNameConversion.None ||
-                _options.NewPropertyConversion == PropertyNameConversion.CamelCase)
+            if (_options.PropertyNameConversion == PropertyNameConversion.None ||
+                _options.PropertyNameConversion == PropertyNameConversion.CamelCase)
             {
                 return JsonNamingPolicy.CamelCase.ConvertName(name);
             }
 
-            if (_options.NewPropertyConversion == PropertyNameConversion.SnakeCaseLower)
+            if (_options.PropertyNameConversion == PropertyNameConversion.SnakeCaseLower)
             {
                 return new JsonSeparatorNamingPolicy(lowercase: true, separator: '_').ConvertName(name);
             }

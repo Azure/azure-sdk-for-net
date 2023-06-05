@@ -17,7 +17,6 @@ namespace Azure
     }
     public static partial class AzureCoreExtensions
     {
-        public static dynamic ToDynamicFromJson(this System.BinaryData utf8Json, Azure.Core.Serialization.PropertyNameConversion newPropertyConversion = Azure.Core.Serialization.PropertyNameConversion.None, Azure.Core.Dynamic.PropertyNameLookup existingPropertyLookup = Azure.Core.Dynamic.PropertyNameLookup.AllowConversion, Azure.Core.Serialization.DateTimeHandling dateTimeHandling = Azure.Core.Serialization.DateTimeHandling.Rfc3339) { throw null; }
         public static System.Threading.Tasks.ValueTask<T?> ToObjectAsync<T>(this System.BinaryData data, Azure.Core.Serialization.ObjectSerializer serializer, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static object? ToObjectFromJson(this System.BinaryData data) { throw null; }
         public static T? ToObject<T>(this System.BinaryData data, Azure.Core.Serialization.ObjectSerializer serializer, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -250,6 +249,7 @@ namespace Azure
         public abstract void Dispose();
         protected internal abstract System.Collections.Generic.IEnumerable<Azure.Core.HttpHeader> EnumerateHeaders();
         public static Azure.Response<T> FromValue<T>(T value, Azure.Response response) { throw null; }
+        public virtual dynamic GetDynamicContent() { throw null; }
         public override string ToString() { throw null; }
         protected internal abstract bool TryGetHeader(string name, [System.Diagnostics.CodeAnalysis.NotNullWhenAttribute(true)] out string? value);
         protected internal abstract bool TryGetHeaderValues(string name, [System.Diagnostics.CodeAnalysis.NotNullWhenAttribute(true)] out System.Collections.Generic.IEnumerable<string>? values);
@@ -379,6 +379,7 @@ namespace Azure.Core
         protected ClientOptions(Azure.Core.DiagnosticsOptions? diagnostics) { }
         public static Azure.Core.ClientOptions Default { get { throw null; } }
         public Azure.Core.DiagnosticsOptions Diagnostics { get { throw null; } }
+        public Azure.Core.Dynamic.DynamicDataOptions? DynamicData { get { throw null; } set { } }
         public Azure.Core.RetryOptions Retry { get { throw null; } }
         public Azure.Core.Pipeline.HttpPipelinePolicy? RetryPolicy { get { throw null; } set { } }
         public Azure.Core.Pipeline.HttpPipelineTransport Transport { get { throw null; } set { } }
@@ -809,6 +810,11 @@ namespace Azure.Core.Dynamic
         public static bool operator !=(Azure.Core.Dynamic.DynamicData? left, object? right) { throw null; }
         System.Dynamic.DynamicMetaObject System.Dynamic.IDynamicMetaObjectProvider.GetMetaObject(System.Linq.Expressions.Expression parameter) { throw null; }
         public override string ToString() { throw null; }
+    }
+    public partial class DynamicDataOptions
+    {
+        public DynamicDataOptions() { }
+        public Azure.Core.Serialization.PropertyNameConversion PropertyNameConversion { get { throw null; } set { } }
     }
     public enum PropertyNameLookup
     {

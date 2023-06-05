@@ -76,11 +76,11 @@ namespace Azure
 		/// it will be applied instead. </paramref>
         /// <paramref name="dateTimeHandling"></paramref>
         /// </summary>
-        public static dynamic ToDynamicFromJson(this BinaryData utf8Json, PropertyNameConversion newPropertyConversion = PropertyNameConversion.None, PropertyNameLookup existingPropertyLookup = PropertyNameLookup.AllowConversion, DateTimeHandling dateTimeHandling = DateTimeHandling.Rfc3339)
+        internal static dynamic ToDynamicFromJson(this BinaryData utf8Json, PropertyNameConversion newPropertyConversion = PropertyNameConversion.None, PropertyNameLookup existingPropertyLookup = PropertyNameLookup.AllowConversion, DateTimeHandling dateTimeHandling = DateTimeHandling.Rfc3339)
         {
             DynamicDataOptions options = new()
             {
-                NewPropertyConversion = newPropertyConversion,
+                PropertyNameConversion = newPropertyConversion,
                 ExistingPropertyLookup = existingPropertyLookup,
                 DateTimeHandling = dateTimeHandling
             };
