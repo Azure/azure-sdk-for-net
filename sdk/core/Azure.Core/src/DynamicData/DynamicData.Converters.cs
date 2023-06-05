@@ -13,7 +13,7 @@ namespace Azure.Core.Dynamic
         // From: https://github.com/Azure/autorest.csharp/blob/d835b0b7bffae08c1037ccc5824e928eaac55b96/src/assets/Generator.Shared/TypeFormatters.cs#L14
         private const string RoundtripZFormat = "yyyy-MM-ddTHH:mm:ss.fffffffZ";
 
-        internal class Rfc3339DateTimeConverter : JsonConverter<DateTime>
+        private class Rfc3339DateTimeConverter : JsonConverter<DateTime>
         {
             public override DateTime Read(
                 ref Utf8JsonReader reader,
@@ -43,7 +43,7 @@ namespace Azure.Core.Dynamic
             }
         }
 
-        internal class Rfc3339DateTimeOffsetConverter : JsonConverter<DateTimeOffset>
+        private class Rfc3339DateTimeOffsetConverter : JsonConverter<DateTimeOffset>
         {
             public override DateTimeOffset Read(
                 ref Utf8JsonReader reader,
@@ -93,7 +93,7 @@ namespace Azure.Core.Dynamic
             }
         }
 
-        internal class UnixTimeDateTimeConverter : JsonConverter<DateTime>
+        private class UnixTimeDateTimeConverter : JsonConverter<DateTime>
         {
             public override DateTime Read(
                 ref Utf8JsonReader reader,
@@ -121,7 +121,7 @@ namespace Azure.Core.Dynamic
             }
         }
 
-        internal class UnixTimeDateTimeOffsetConverter : JsonConverter<DateTimeOffset>
+        private class UnixTimeDateTimeOffsetConverter : JsonConverter<DateTimeOffset>
         {
             public override DateTimeOffset Read(
                 ref Utf8JsonReader reader,

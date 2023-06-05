@@ -53,7 +53,7 @@ namespace Azure.Core.Tests
         [Test]
         public void CannotGetPropertiesWithUnmatchedCasingWithNoCaseMapping()
         {
-            dynamic value = new BinaryData(testJson).ToDynamicFromJson(existingPropertyLookup: PropertyNameLookup.Strict);
+            dynamic value = new BinaryData(testJson).ToDynamicFromJson(PropertyNameLookup.Strict);
 
             Assert.IsNull(value.Camel);
             Assert.IsNull(value.pascal);
