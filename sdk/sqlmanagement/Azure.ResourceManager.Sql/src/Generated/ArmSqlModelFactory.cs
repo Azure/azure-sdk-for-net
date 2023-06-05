@@ -129,15 +129,15 @@ namespace Azure.ResourceManager.Sql.Models
         /// <summary> Initializes a new instance of SqlMetricDefinition. </summary>
         /// <param name="name"> The name information for the metric. </param>
         /// <param name="primaryAggregationType"> The primary aggregation type defining how metric values are displayed. </param>
-        /// <param name="resourceUri"> The resource uri of the database. </param>
+        /// <param name="resourceUriString"> The resource uri of the database. </param>
         /// <param name="unit"> The unit of the metric. </param>
         /// <param name="metricAvailabilities"> The list of database metric availabilities for the metric. </param>
         /// <returns> A new <see cref="Models.SqlMetricDefinition"/> instance for mocking. </returns>
-        public static SqlMetricDefinition SqlMetricDefinition(SqlMetricName name = null, SqlMetricPrimaryAggregationType? primaryAggregationType = null, Uri resourceUri = null, SqlMetricDefinitionUnitType? unit = null, IEnumerable<SqlMetricAvailability> metricAvailabilities = null)
+        public static SqlMetricDefinition SqlMetricDefinition(SqlMetricName name = null, SqlMetricPrimaryAggregationType? primaryAggregationType = null, string resourceUriString = null, SqlMetricDefinitionUnitType? unit = null, IEnumerable<SqlMetricAvailability> metricAvailabilities = null)
         {
             metricAvailabilities ??= new List<SqlMetricAvailability>();
 
-            return new SqlMetricDefinition(name, primaryAggregationType, resourceUri, unit, metricAvailabilities?.ToList());
+            return new SqlMetricDefinition(name, primaryAggregationType, resourceUriString, unit, metricAvailabilities?.ToList());
         }
 
         /// <summary> Initializes a new instance of SqlMetricAvailability. </summary>
