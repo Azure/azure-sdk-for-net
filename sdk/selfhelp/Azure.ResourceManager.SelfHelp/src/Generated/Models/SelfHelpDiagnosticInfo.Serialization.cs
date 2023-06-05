@@ -11,17 +11,17 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.SelfHelp.Models
 {
-    public partial class SelfHelpDiagnostic
+    public partial class SelfHelpDiagnosticInfo
     {
-        internal static SelfHelpDiagnostic DeserializeSelfHelpDiagnostic(JsonElement element)
+        internal static SelfHelpDiagnosticInfo DeserializeSelfHelpDiagnosticInfo(JsonElement element)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<string> solutionId = default;
-            Optional<DiagnosticStatus> status = default;
-            Optional<IReadOnlyList<DiagnosticInsight>> insights = default;
+            Optional<SelfHelpDiagnosticStatus> status = default;
+            Optional<IReadOnlyList<SelfHelpDiagnosticInsight>> insights = default;
             Optional<SelfHelpError> error = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
                     {
                         continue;
                     }
-                    status = new DiagnosticStatus(property.Value.GetString());
+                    status = new SelfHelpDiagnosticStatus(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("insights"u8))
@@ -45,10 +45,10 @@ namespace Azure.ResourceManager.SelfHelp.Models
                     {
                         continue;
                     }
-                    List<DiagnosticInsight> array = new List<DiagnosticInsight>();
+                    List<SelfHelpDiagnosticInsight> array = new List<SelfHelpDiagnosticInsight>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DiagnosticInsight.DeserializeDiagnosticInsight(item));
+                        array.Add(SelfHelpDiagnosticInsight.DeserializeSelfHelpDiagnosticInsight(item));
                     }
                     insights = array;
                     continue;
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
                     continue;
                 }
             }
-            return new SelfHelpDiagnostic(solutionId.Value, Optional.ToNullable(status), Optional.ToList(insights), error.Value);
+            return new SelfHelpDiagnosticInfo(solutionId.Value, Optional.ToNullable(status), Optional.ToList(insights), error.Value);
         }
     }
 }

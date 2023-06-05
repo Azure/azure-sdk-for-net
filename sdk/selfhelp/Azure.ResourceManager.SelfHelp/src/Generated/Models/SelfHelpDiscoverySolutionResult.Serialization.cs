@@ -11,15 +11,15 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.SelfHelp.Models
 {
-    internal partial class DiscoveryResponse
+    internal partial class SelfHelpDiscoverySolutionResult
     {
-        internal static DiscoveryResponse DeserializeDiscoveryResponse(JsonElement element)
+        internal static SelfHelpDiscoverySolutionResult DeserializeSelfHelpDiscoverySolutionResult(JsonElement element)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<IReadOnlyList<SolutionMetadataResource>> value = default;
+            Optional<IReadOnlyList<SelfHelpSolutionMetadata>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -29,10 +29,10 @@ namespace Azure.ResourceManager.SelfHelp.Models
                     {
                         continue;
                     }
-                    List<SolutionMetadataResource> array = new List<SolutionMetadataResource>();
+                    List<SelfHelpSolutionMetadata> array = new List<SelfHelpSolutionMetadata>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SolutionMetadataResource.DeserializeSolutionMetadataResource(item));
+                        array.Add(SelfHelpSolutionMetadata.DeserializeSelfHelpSolutionMetadata(item));
                     }
                     value = array;
                     continue;
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
                     continue;
                 }
             }
-            return new DiscoveryResponse(Optional.ToList(value), nextLink.Value);
+            return new SelfHelpDiscoverySolutionResult(Optional.ToList(value), nextLink.Value);
         }
     }
 }

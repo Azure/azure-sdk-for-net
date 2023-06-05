@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.SelfHelp.Models
 {
-    public partial class DiagnosticInvocation : IUtf8JsonSerializable
+    public partial class SelfHelpDiagnosticInvocation : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
             writer.WriteEndObject();
         }
 
-        internal static DiagnosticInvocation DeserializeDiagnosticInvocation(JsonElement element)
+        internal static SelfHelpDiagnosticInvocation DeserializeSelfHelpDiagnosticInvocation(JsonElement element)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
                     continue;
                 }
             }
-            return new DiagnosticInvocation(solutionId.Value, Optional.ToDictionary(additionalParameters));
+            return new SelfHelpDiagnosticInvocation(solutionId.Value, Optional.ToDictionary(additionalParameters));
         }
     }
 }
