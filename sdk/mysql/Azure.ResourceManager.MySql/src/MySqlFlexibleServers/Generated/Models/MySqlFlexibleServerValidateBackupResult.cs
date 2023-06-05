@@ -8,16 +8,16 @@
 namespace Azure.ResourceManager.MySql.FlexibleServers.Models
 {
     /// <summary> Represents ValidateBackup API Response. </summary>
-    public partial class MySqlFlexibleServerValidateBackupResuilt
+    public partial class MySqlFlexibleServerValidateBackupResult
     {
-        /// <summary> Initializes a new instance of MySqlFlexibleServerValidateBackupResuilt. </summary>
-        internal MySqlFlexibleServerValidateBackupResuilt()
+        /// <summary> Initializes a new instance of MySqlFlexibleServerValidateBackupResult. </summary>
+        internal MySqlFlexibleServerValidateBackupResult()
         {
         }
 
-        /// <summary> Initializes a new instance of MySqlFlexibleServerValidateBackupResuilt. </summary>
+        /// <summary> Initializes a new instance of MySqlFlexibleServerValidateBackupResult. </summary>
         /// <param name="numberOfContainers"> Estimated no of storage containers required for resource data to be backed up. </param>
-        internal MySqlFlexibleServerValidateBackupResuilt(int? numberOfContainers)
+        internal MySqlFlexibleServerValidateBackupResult(int? numberOfContainers)
         {
             NumberOfContainers = numberOfContainers;
         }

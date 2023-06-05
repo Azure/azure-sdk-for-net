@@ -296,7 +296,7 @@ rename-mapping:
   OperationStatus: MySqlFlexibleServerBackupAndExportOperationStatus
   ResetAllToDefault: MySqlFlexibleServerConfigurationResetAllToDefault
   ServerGtidSetParameter: MySqlFlexibleServerGtidSetContent
-  ValidateBackupResponse: MySqlFlexibleServerValidateBackupResuilt
+  ValidateBackupResponse: MySqlFlexibleServerValidateBackupResult
 
 override-operation-name:
   CheckNameAvailability_Execute: CheckMySqlFlexibleServerNameAvailability

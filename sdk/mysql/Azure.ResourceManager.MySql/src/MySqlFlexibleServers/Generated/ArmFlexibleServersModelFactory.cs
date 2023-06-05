@@ -68,12 +68,12 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
             return new MySqlFlexibleServerBackupAndExportResult(id, name, resourceType, systemData, status, startOn, endOn, percentComplete, error, datasourceSizeInBytes, dataTransferredInBytes, backupMetadata);
         }
 
-        /// <summary> Initializes a new instance of MySqlFlexibleServerValidateBackupResuilt. </summary>
+        /// <summary> Initializes a new instance of MySqlFlexibleServerValidateBackupResult. </summary>
         /// <param name="numberOfContainers"> Estimated no of storage containers required for resource data to be backed up. </param>
-        /// <returns> A new <see cref="Models.MySqlFlexibleServerValidateBackupResuilt"/> instance for mocking. </returns>
-        public static MySqlFlexibleServerValidateBackupResuilt MySqlFlexibleServerValidateBackupResuilt(int? numberOfContainers = null)
+        /// <returns> A new <see cref="Models.MySqlFlexibleServerValidateBackupResult"/> instance for mocking. </returns>
+        public static MySqlFlexibleServerValidateBackupResult MySqlFlexibleServerValidateBackupResult(int? numberOfContainers = null)
         {
-            return new MySqlFlexibleServerValidateBackupResuilt(numberOfContainers);
+            return new MySqlFlexibleServerValidateBackupResult(numberOfContainers);
         }
 
         /// <summary> Initializes a new instance of MySqlFlexibleServerConfigurationData. </summary>

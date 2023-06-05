@@ -661,7 +661,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<MySqlFlexibleServerValidateBackupResuilt>> ValidateBackupAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<MySqlFlexibleServerValidateBackupResult>> ValidateBackupAsync(CancellationToken cancellationToken = default)
         {
             using var scope = _backupAndExportClientDiagnostics.CreateScope("MySqlFlexibleServerResource.ValidateBackup");
             scope.Start();
@@ -691,7 +691,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<MySqlFlexibleServerValidateBackupResuilt> ValidateBackup(CancellationToken cancellationToken = default)
+        public virtual Response<MySqlFlexibleServerValidateBackupResult> ValidateBackup(CancellationToken cancellationToken = default)
         {
             using var scope = _backupAndExportClientDiagnostics.CreateScope("MySqlFlexibleServerResource.ValidateBackup");
             scope.Start();
