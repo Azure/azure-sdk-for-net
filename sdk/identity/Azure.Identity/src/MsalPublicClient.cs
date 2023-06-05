@@ -126,11 +126,9 @@ namespace Azure.Identity
 
         public async ValueTask<AuthenticationResult> AcquireTokenInteractiveAsync(string[] scopes, string claims, Prompt prompt, string loginHint, string tenantId, bool async, CancellationToken cancellationToken)
         {
-#pragma warning disable AZC0109 // Misuse of 'async' parameter.
-            if (!async && !IdentityCompatSwitches.DisableInteractiveBrowserThreadpoolExecution)
-#pragma warning restore AZC0109 // Misuse of 'async' parameter.
+            if (Thread.CurrentThread.GetApartmentState() == ApartmentState.STA && !IdentityCompatSwitches.DisableInteractiveBrowserThreadpoolExecution)
             {
-                // In the synchronous case we need to use Task.Run to execute on the call to MSAL on the threadpool.
+                // In the case we are called in an STA apartment thread, we need to use Task.Run to execute on the call to MSAL on the threadpool.
                 // On certain platforms MSAL will use the embedded browser instead of launching the browser as a separate
                 // process. Executing with Task.Run prevents possibly deadlocking the UI thread in these cases.
                 // This workaround can be disabled by using the "Azure.Identity.DisableInteractiveBrowserThreadpoolExecution" app switch

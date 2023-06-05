@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.Search.Documents.Models
 {
-    /// <summary> This parameter is only valid if the query type is &apos;semantic&apos;. If set, the query returns answers extracted from key passages in the highest ranked documents. The number of answers returned can be configured by appending the pipe character &apos;|&apos; followed by the &apos;count-&lt;number of answers&gt;&apos; option after the answers parameter value, such as &apos;extractive|count-3&apos;. Default count is 1. </summary>
+    /// <summary> This parameter is only valid if the query type is &apos;semantic&apos;. If set, the query returns answers extracted from key passages in the highest ranked documents. The number of answers returned can be configured by appending the pipe character &apos;|&apos; followed by the &apos;count-&lt;number of answers&gt;&apos; option after the answers parameter value, such as &apos;extractive|count-3&apos;. Default count is 1. The confidence threshold can be configured by appending the pipe character &apos;|&apos; followed by the &apos;threshold-&lt;confidence threshold&gt;&apos; option after the answers parameter value, such as &apos;extractive|threshold-0.9&apos;. Default threshold is 0.7. </summary>
     public readonly partial struct QueryAnswerType : IEquatable<QueryAnswerType>
     {
         private readonly string _value;

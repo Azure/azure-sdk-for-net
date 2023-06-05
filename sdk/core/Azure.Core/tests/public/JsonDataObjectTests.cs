@@ -26,13 +26,14 @@ namespace Azure.Core.Tests.Public
         [Test]
         public void CanConvertObjectToModel()
         {
+            DynamicDataOptions options = new() { CaseMapping = DynamicCaseMapping.PascalToCamel };
             dynamic data = BinaryData.FromString(
                 """
                 {
                     "message": "Hi",
                     "number" : 5
                 }
-                """).ToDynamicFromJson();
+                """).ToDynamicFromJson(options);
 
             Assert.AreEqual(new SampleModel("Hi", 5), (SampleModel)data);
         }

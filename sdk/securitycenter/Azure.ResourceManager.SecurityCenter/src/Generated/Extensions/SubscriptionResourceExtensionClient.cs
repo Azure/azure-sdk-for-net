@@ -199,13 +199,6 @@ namespace Azure.ResourceManager.SecurityCenter
             return GetCachedClient(Client => new IngestionSettingCollection(Client, Id));
         }
 
-        /// <summary> Gets a collection of SubscriptionGovernanceRuleResources in the SubscriptionResource. </summary>
-        /// <returns> An object representing collection of SubscriptionGovernanceRuleResources and their operations over a SubscriptionGovernanceRuleResource. </returns>
-        public virtual SubscriptionGovernanceRuleCollection GetSubscriptionGovernanceRules()
-        {
-            return GetCachedClient(Client => new SubscriptionGovernanceRuleCollection(Client, Id));
-        }
-
         /// <summary> Gets a collection of SubscriptionSecurityApplicationResources in the SubscriptionResource. </summary>
         /// <returns> An object representing collection of SubscriptionSecurityApplicationResources and their operations over a SubscriptionSecurityApplicationResource. </returns>
         public virtual SubscriptionSecurityApplicationCollection GetSubscriptionSecurityApplications()

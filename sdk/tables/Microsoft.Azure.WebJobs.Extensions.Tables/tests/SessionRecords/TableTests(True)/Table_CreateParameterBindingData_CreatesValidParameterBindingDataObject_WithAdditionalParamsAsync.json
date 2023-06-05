@@ -1,0 +1,63 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://tddaf241c0b3d6d8fprim.table.cosmos.azure.com/Tables?$format=application%2Fjson%3Bodata%3Dminimalmetadata",
+      "RequestMethod": "POST",
+      "RequestHeaders": {
+        "Accept": "application/json;odata=minimalmetadata",
+        "Authorization": "Sanitized",
+        "Content-Length": "33",
+        "Content-Type": "application/json;odata=nometadata",
+        "DataServiceVersion": "3.0",
+        "traceparent": "00-8c9ab7a43172cf30972e152d466cfacf-fc43595ee7862e6c-00",
+        "User-Agent": "azsdk-net-Data.Tables/12.9.0-alpha.20230421.1 (.NET 7.0.3; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "ee3de4b3d31f981d6bba8e64607f24c5",
+        "x-ms-date": "Tue, 16 May 2023 17:32:44 GMT",
+        "x-ms-return-client-request-id": "true",
+        "x-ms-version": "2020-12-06"
+      },
+      "RequestBody": {
+        "TableName": "testtable3knl428W"
+      },
+      "StatusCode": 201,
+      "ResponseHeaders": {
+        "Content-Type": "application/json; odata=minimalmetadata",
+        "Date": "Tue, 16 May 2023 17:32:45 GMT",
+        "ETag": "W/\u0022datetime\u00272023-05-16T17%3A32%3A45.2429831Z\u0027\u0022",
+        "Location": "https://tddaf241c0b3d6d8fprim.table.cosmos.azure.com/Tables(\u0027testtable3knl428W\u0027)",
+        "Transfer-Encoding": "chunked"
+      },
+      "ResponseBody": {
+        "TableName": "testtable3knl428W",
+        "odata.metadata": "https://tddaf241c0b3d6d8fprim.table.cosmos.azure.com/$metadata#Tables/@Element"
+      }
+    },
+    {
+      "RequestUri": "https://tddaf241c0b3d6d8fprim.table.cosmos.azure.com/Tables(\u0027testtable3knl428W\u0027)",
+      "RequestMethod": "DELETE",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-4599b822637aef1073a66776c77fb0f5-b7c6afde2f97f883-00",
+        "User-Agent": "azsdk-net-Data.Tables/12.9.0-alpha.20230421.1 (.NET 7.0.3; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "7934dd85ee6d17d9f1317f1b1743bc5b",
+        "x-ms-date": "Tue, 16 May 2023 17:32:45 GMT",
+        "x-ms-return-client-request-id": "true",
+        "x-ms-version": "2020-12-06"
+      },
+      "RequestBody": null,
+      "StatusCode": 204,
+      "ResponseHeaders": {
+        "Content-Type": "application/json",
+        "Date": "Tue, 16 May 2023 17:32:45 GMT"
+      },
+      "ResponseBody": null
+    }
+  ],
+  "Variables": {
+    "COSMOS_TABLES_ENDPOINT_SUFFIX": "cosmos.azure.com",
+    "RandomSeed": "1799468865",
+    "TABLES_COSMOS_ACCOUNT_NAME": "tddaf241c0b3d6d8fprim",
+    "TABLES_PRIMARY_COSMOS_ACCOUNT_KEY": "Kg=="
+  }
+}

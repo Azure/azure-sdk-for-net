@@ -94,26 +94,11 @@ namespace Azure.Communication.CallAutomation
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
         public virtual async Task<Response> HangUpAsync(bool forEveryone, CancellationToken cancellationToken = default)
         {
-            HangUpOptions options = new HangUpOptions(forEveryone);
-
-            return await HangUpAsync(options, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary> Disconnect the current caller in a group-call or end a p2p-call.</summary>
-        /// <param name="options"> Options for the HangUp call operation. </param>
-        /// <param name="cancellationToken"> The cancellation token. </param>
-        /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
-        /// <exception cref="ArgumentNullException"><paramref name="options"/> is null.</exception>
-        public virtual async Task<Response> HangUpAsync(HangUpOptions options, CancellationToken cancellationToken = default)
-        {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallConnection)}.{nameof(HangUp)}");
             scope.Start();
             try
             {
-                if (options == null)
-                    throw new ArgumentNullException(nameof(options));
-
-                if (options.ForEveryone)
+                if (forEveryone)
                 {
                     var repeatabilityHeaders = new RepeatabilityHeaders();
                     return await RestClient.TerminateCallAsync(
@@ -144,26 +129,11 @@ namespace Azure.Communication.CallAutomation
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
         public virtual Response HangUp(bool forEveryone, CancellationToken cancellationToken = default)
         {
-            HangUpOptions options = new HangUpOptions(forEveryone);
-
-            return HangUp(options, cancellationToken);
-        }
-
-        /// <summary> Disconnect the current caller in a group-call or end a p2p-call. </summary>
-        /// <param name="options"> Options for the HangUp call operation. </param>
-        /// <param name="cancellationToken"> The cancellation token. </param>
-        /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
-        /// <exception cref="ArgumentNullException"><paramref name="options"/> is null.</exception>
-        public virtual Response HangUp(HangUpOptions options, CancellationToken cancellationToken = default)
-        {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallConnection)}.{nameof(HangUp)}");
             scope.Start();
             try
             {
-                if (options == null)
-                    throw new ArgumentNullException(nameof(options));
-
-                if (options.ForEveryone)
+                if (forEveryone)
                 {
                     var repeatabilityHeaders = new RepeatabilityHeaders();
                     return RestClient.TerminateCall(

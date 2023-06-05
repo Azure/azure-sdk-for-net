@@ -149,11 +149,11 @@ builder.Services.Configure<SqlClientInstrumentationOptions>(options =>
 
 #### Customizing Sampling Percentage
 
-When using the Azure Monitor Distro, the sampling percentage for telemetry data is set to 100% (1.0F) by default. For example, let's say you want to set the sampling percentage to 90%. You can achieve this by modifying the code as follows:
+When using the Azure Monitor Distro, the sampling percentage for telemetry data is set to 100% (1.0F) by default. For example, let's say you want to set the sampling percentage to 50%. You can achieve this by modifying the code as follows:
 
 ``` C#
 builder.Services.AddOpenTelemetry().UseAzureMonitor();
-builder.Services.ConfigureOpenTelemetryTracerProvider((sp, builder) => builder.SetSampler(new ApplicationInsightsSampler(0.9F)));
+builder.Services.Configure<ApplicationInsightsSamplerOptions>(options => { options.SamplingRatio = 0.5F; });
 ```
 
 #### Adding Custom ActivitySource to Traces

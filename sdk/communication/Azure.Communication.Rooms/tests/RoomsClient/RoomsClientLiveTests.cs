@@ -10,6 +10,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Azure.Communication.Identity;
 using Azure.Communication.Rooms;
+using Azure.Communication.Tests;
 using Azure.Core.TestFramework;
 using NUnit.Framework;
 
@@ -21,12 +22,12 @@ namespace Azure.Communication.Rooms.Tests
         {
         }
 
-        [Test]
-        public async Task AcsRoomRequestLiveWithoutParticipantsTest()
+        [TestCase(AuthMethod.ConnectionString, TestName = "AcsRoomRequestLiveWithoutParticipantsUsingConnectionString")]
+        [TestCase(AuthMethod.KeyCredential, TestName = "AcsRoomRequestLiveWithoutParticipantsUsingKeyCredential")]
+        public async Task AcsRoomRequestLiveWithoutParticipantsTest(AuthMethod authMethod)
         {
             // Arrange
-            RoomsClient roomsClient = CreateInstrumentedRoomsClient(RoomsClientOptions.ServiceVersion.V2023_03_31_Preview);
-            CommunicationIdentityClient communicationIdentityClient = CreateInstrumentedCommunicationIdentityClient();
+            RoomsClient roomsClient = CreateClient(authMethod);
 
             var validFrom = DateTimeOffset.UtcNow;
             var validUntil = validFrom.AddDays(1);
@@ -47,9 +48,6 @@ namespace Azure.Communication.Rooms.Tests
 
                 // Assert:
                 Assert.AreEqual(createdRoomId, getCommunicationRoom.Id);
-
-                // List Rooms
-                // TODO: add list rooms test
 
                 // Act: Update Room
                 Response<CommunicationRoom> updateRoomResponse = await roomsClient.UpdateRoomAsync(createdRoomId, validFrom.AddDays(1), validUntil.AddDays(2));
@@ -117,9 +115,6 @@ namespace Azure.Communication.Rooms.Tests
                 // Assert
                 Assert.AreEqual(createdRoomId, getCommunicationRoom.Id);
 
-                // List Rooms
-                // TODO: add list rooms test
-
                 // Act Update Room
                 validFrom = validFrom.AddDays(30);
                 validUntil = validUntil.AddDays(30);
@@ -153,6 +148,39 @@ namespace Azure.Communication.Rooms.Tests
         }
 
         [Test]
+        public async Task GetRoomsLiveTest_FirstRoomIsNotNull_Succeed()
+        {
+            // Arrange
+            RoomsClient roomsClient = CreateInstrumentedRoomsClient(RoomsClientOptions.ServiceVersion.V2023_03_31_Preview);
+            // First create a room to ensure that the list rooms will not be empty.
+            CommunicationRoom createdRoom = await roomsClient.CreateRoomAsync();
+            CommunicationRoom? firstActiveRoom = null;
+            try
+            {
+                AsyncPageable<CommunicationRoom> allActiveRooms = roomsClient.GetRoomsAsync();
+                await foreach (CommunicationRoom room in allActiveRooms)
+                {
+                    if (room is not null)
+                    {
+                        firstActiveRoom = room;
+                        break;
+                    }
+                }
+                Assert.IsNotNull(firstActiveRoom);
+                Assert.IsNotNull(firstActiveRoom?.Id);
+                Assert.IsNotNull(firstActiveRoom?.CreatedAt);
+                Assert.IsNotNull(firstActiveRoom?.ValidFrom);
+                Assert.IsNotNull(firstActiveRoom?.ValidUntil);
+            }
+            catch (Exception ex)
+            {
+                Assert.Fail($"Unexpected error: {ex}");
+            }
+
+            await roomsClient.DeleteRoomAsync(createdRoom.Id);
+        }
+
+            [Test]
         public async Task RoomParticipantsAddUpdateAndRemoveLiveTest()
         {
             // Arrange

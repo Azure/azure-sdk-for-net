@@ -1,5 +1,17 @@
 # Release History
 
+## 3.0.0-preview.8 (Unreleased)
+
+### Features Added
+
+- Introduced model factory `Azure.AI.AnomalyDetector.AnomalyDetectorModelFactory` for mocking.
+
+### Breaking Changes
+
+### Bugs Fixed
+
+### Other Changes
+
 ## 3.0.0-preview.7 (2023-05-08)
 
 ### New Features

@@ -3,7 +3,9 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using Azure.Core;
 
@@ -21,7 +23,6 @@ namespace Azure.AI.OpenAI
         ///
         ///     <see cref="ChoicesPerPrompt"/> is equivalent to 'n' in the REST request schema.
         /// </remarks>
-        [CodeGenMember("N")]
         public int? ChoicesPerPrompt { get; set; }
 
         /// <summary>
@@ -54,7 +55,6 @@ namespace Azure.AI.OpenAI
         ///
         ///     <see cref="GenerationSampleCount"/> is equivalent to 'best_of' in the REST request schema.
         /// </remarks>.
-        [CodeGenMember("BestOf")]
         public int? GenerationSampleCount { get; set; }
 
         /// <summary>
@@ -65,7 +65,6 @@ namespace Azure.AI.OpenAI
         /// <remarks>
         ///     <see cref="LogProbabilityCount"/> is equivalent to 'logprobs' in the REST request schema.
         /// </remarks>
-        [CodeGenMember("Logprobs")]
         public int? LogProbabilityCount { get; set; }
 
         /// <summary> Gets the maximum number of tokens to generate. Has minimum of 0. </summary>
@@ -88,7 +87,6 @@ namespace Azure.AI.OpenAI
         ///
         ///     <see cref="NucleusSamplingFactor"/> is equivalent to 'top_p' in the REST request schema.
         /// </remarks>
-        [CodeGenMember("TopP")]
         public float? NucleusSamplingFactor { get; set; }
 
         /// <summary>
@@ -109,7 +107,6 @@ namespace Azure.AI.OpenAI
         /// <remarks>
         ///     <see cref="Prompts"/> is equivalent to 'prompt' in the REST request schema.
         /// </remarks>
-        [CodeGenMember("Prompt")]
         public IList<string> Prompts { get; }
 
         /// <summary>
@@ -119,7 +116,6 @@ namespace Azure.AI.OpenAI
         /// <remarks>
         ///     <see cref="StopSequences"/> is equivalent to 'stop' in the REST request schema.
         /// </remarks>
-        [CodeGenMember("Stop")]
         public IList<string> StopSequences { get; }
 
         /// <summary>
@@ -136,6 +132,8 @@ namespace Azure.AI.OpenAI
         /// </remarks>
         public float? Temperature { get; set; }
 
+        internal IDictionary<string, int> InternalStringKeyedTokenSelectionBiases { get; }
+
         /// <summary>
         ///     Gets a dictionary of modifications to the likelihood of specified GPT tokens appearing in a completions
         ///     result. Maps token IDs to associated bias scores from -100 to 100, with minimum and maximum values
@@ -147,70 +145,27 @@ namespace Azure.AI.OpenAI
         ///
         ///     <see cref="TokenSelectionBiases"/> is equivalent to 'logit_bias' in the REST request schema.
         /// </remarks>
-        [CodeGenMember("LogitBias")]
         public IDictionary<int, int> TokenSelectionBiases { get; }
 
-        /// <summary> Gets or sets an identifier for a request for use in tracking and rate-limiting. </summary>
-        public string User { get; set; }
+        internal bool? InternalShouldStreamResponse { get; set; }
+        internal string InternalNonAzureModelName { get; set; }
 
-        [CodeGenMember("Model")]
-        internal string NonAzureModel { get; set; }
+        /// <summary> Initializes a new instance of CompletionsOptions. </summary>
+        /// <param name="prompts"> The prompts to generate completions from. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="prompts"/> is null. </exception>
+        public CompletionsOptions(IEnumerable<string> prompts)
+        {
+            Argument.AssertNotNull(prompts, nameof(prompts));
 
-        [CodeGenMember("CacheLevel")]
-        private int? _cacheLevel;
-
-        [CodeGenMember("CompletionConfig")]
-        private string _completionConfig;
+            Prompts = prompts.ToList();
+            TokenSelectionBiases = new ChangeTrackingDictionary<int, int>();
+            StopSequences = new ChangeTrackingList<string>();
+        }
 
         /// <summary> Initializes a new instance of CompletionsOptions. </summary>
         public CompletionsOptions()
+            : this(new ChangeTrackingList<string>())
         {
-            Prompts = new ChangeTrackingList<string>();
-            TokenSelectionBiases = new ChangeTrackingDictionary<int, int>();
-            StopSequences = new ChangeTrackingList<string>();
-            // Pending CodeGen update
-            _cacheLevel ??= default;
-            if (_cacheLevel != default)
-            { }
-            _completionConfig ??= default;
-            if (_completionConfig != default)
-            { }
         }
-
-        internal CompletionsOptions(
-            IList<string> prompts,
-            int? maxTokens,
-            float? temperature,
-            float? nucleusSamplingFactor,
-            IDictionary<int, int> tokenSelectionBiases,
-            string user,
-            int? choicesPerPrompt,
-            int? logProbabilityCount,
-            string nonAzureModel,
-            bool? echo,
-            IList<string> stopSequences,
-            string completionConfig,
-            int? cacheLevel,
-            float? presencePenalty,
-            float? frequencyPenalty,
-            int? generationSampleCount)
-        {
-            Prompts = prompts.ToList();
-            MaxTokens = maxTokens;
-            Temperature = temperature;
-            NucleusSamplingFactor = nucleusSamplingFactor;
-            TokenSelectionBiases = tokenSelectionBiases;
-            User = user;
-            ChoicesPerPrompt = choicesPerPrompt;
-            LogProbabilityCount = logProbabilityCount;
-            NonAzureModel = nonAzureModel;
-            Echo = echo;
-            StopSequences = stopSequences.ToList();
-            PresencePenalty = presencePenalty;
-            FrequencyPenalty = frequencyPenalty;
-            GenerationSampleCount = generationSampleCount;
-            _completionConfig = completionConfig;
-            _cacheLevel = cacheLevel;
-        }
-}
+    }
 }

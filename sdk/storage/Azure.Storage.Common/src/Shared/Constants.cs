@@ -66,6 +66,7 @@ namespace Azure.Storage
         public const int DefaultDownloadCopyBufferSize = 16384;
 
         public const int StorageCrc64SizeInBytes = 8;
+        public const int MD5SizeInBytes = 16;
 
         /// <summary>
         /// Backwards compatible default value for trimming slashes on object name.

@@ -1,6 +1,6 @@
 # Release History
 
-## 1.1.0-beta.1 (Unreleased)
+## 1.1.0-beta.2 (Unreleased)
 
 ### Features Added
 
@@ -9,6 +9,37 @@
 ### Bugs Fixed
 
 ### Other Changes
+
+## 1.1.0-beta.1 (2023-05-31)
+
+### Features Added
+
+- Enable the model factory feature for model mocking, more information can be found [here](https://azure.github.io/azure-sdk/dotnet_introduction.html#dotnet-mocking-factory-builder).
+- Added `AppCertificateData.ThumbprintString` to return the hexadecimal string representation of the SHA-1 hash of the certificate.
+  `AppCertificateData.Thumbprint` has been hidden but is still available.
+- Added `AppServiceVirtualNetworkData.CertThumbprintString` to return the hexadecimal string representation of the SHA-1 hash of the certificate.
+  `AppServiceVirtualNetworkData.CertThumbprint` has been hidden but is still available.
+- Added `HostNameBindingData.ThumbprintString` to return the hexadecimal string representation of the SHA-1 hash of the certificate.
+  `HostNameBindingData.Thumbprint` has been hidden but is still available.
+- Added `AppCertificatePatch.ThumbprintString` to return the hexadecimal string representation of the SHA-1 hash of the certificate.
+  `AppCertificatePatch.Thumbprint` has been hidden but is still available.
+- Added `AppServiceAadRegistration.ClientSecretCertificateThumbprintString` to return the hexadecimal string representation of the SHA-1 hash of the certificate.
+  `AppServiceAadRegistration.ClientSecretCertificateThumbprint` has been hidden but is still available.
+- Added `AppServiceCertificateDetails.ThumbprintString` to return the hexadecimal string representation of the SHA-1 hash of the certificate.
+  `AppServiceCertificateDetails.Thumbprint` has been hidden but is still available.
+- Added `AppServiceVirtualNetworkProperties.CertThumbprintString` to return the hexadecimal string representation of the SHA-1 hash of the certificate.
+  `AppServiceVirtualNetworkProperties.CertThumbprint` has been hidden but is still available.
+- Added `HostNameSslState.ThumbprintString` to return the hexadecimal string representation of the SHA-1 hash of the certificate.
+  `HostNameSslState.Thumbprint` has been hidden but is still available.
+- Added `SiteAuthSettings.ClientSecretCertificateThumbprintString` to return the hexadecimal string representation of the SHA-1 hash of the certificate.
+  `SiteAuthSettings.ClientSecretCertificateThumbprint` has been hidden but is still available.
+- Added `PublicCertificateData.ThumbprintString` to return the hexadecimal string representation of the SHA-1 hash of the certificate.
+  `PublicCertificateData.Thumbprint` has been hidden but is still available.
+  
+### Other Changes
+
+- Upgraded dependent Azure.Core to 1.32.0.
+- Upgraded dependent Azure.ResourceManager to 1.6.0.
 
 ## 1.0.2 (2023-04-27)
 

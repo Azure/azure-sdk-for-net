@@ -89,6 +89,16 @@ Response<CommunicationRoom> getRoomResponse = await roomsClient.GetRoomAsync(cre
 CommunicationRoom getCommunicationRoom = getRoomResponse.Value;
 ```
 
+### Get all rooms
+All valid rooms created under an ACS resource can be retrieved by calling the `GetRooms` or `GetRoomsAsync` function from `RoomsClient`.
+```C# Snippet:Azure_Communication_Rooms_Tests_Samples_GetRoomsAsync
+AsyncPageable<CommunicationRoom> allRooms = roomsClient.GetRoomsAsync();
+await foreach (CommunicationRoom room in allRooms)
+{
+    Console.WriteLine($"Room with id {room.Id} is valid from {room.ValidFrom} to {room.ValidUntil}.");
+}
+```
+
 ### Delete room
 To delete a room, call the `DeleteRoom` or `DeleteRoomAsync` function from RoomsClient.
 ```C# Snippet:Azure_Communication_Rooms_Tests_Samples_DeleteRoomAsync

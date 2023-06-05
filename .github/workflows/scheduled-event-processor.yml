@@ -64,59 +64,65 @@ jobs:
       - name: Close Stale Issues Scheduled Event
         if: github.event.schedule == '0 1 * * *'
         run: |
-          echo $GITHUB_PAYLOAD > payload.json
+          cat > payload.json << 'EOF'
+          ${{ toJson(github.event) }}
+          EOF
           github-event-processor ${{ github.event_name }} payload.json CloseStaleIssues
         shell: bash
         env:
-          GITHUB_PAYLOAD: ${{ toJson(github.event) }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Identify Stale PullRequests Scheduled Event
         if: github.event.schedule == '0 5 * * FRI'
         run: |
-          echo $GITHUB_PAYLOAD > payload.json
+          cat > payload.json << 'EOF'
+          ${{ toJson(github.event) }}
+          EOF
           github-event-processor ${{ github.event_name }} payload.json IdentifyStalePullRequests
         shell: bash
         env:
-          GITHUB_PAYLOAD: ${{ toJson(github.event) }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Close Stale PullRequests Scheduled Event
         if: github.event.schedule == '30 2,8,14,20 * * *'
         run: |
-          echo $GITHUB_PAYLOAD > payload.json
+          cat > payload.json << 'EOF'
+          ${{ toJson(github.event) }}
+          EOF
           github-event-processor ${{ github.event_name }} payload.json CloseStalePullRequests
         shell: bash
         env:
-          GITHUB_PAYLOAD: ${{ toJson(github.event) }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Identify Stale Issues Scheduled Event
         if: github.event.schedule == '30 3,9,15,21 * * *'
         run: |
-          echo $GITHUB_PAYLOAD > payload.json
+          cat > payload.json << 'EOF'
+          ${{ toJson(github.event) }}
+          EOF
           github-event-processor ${{ github.event_name }} payload.json IdentifyStaleIssues
         shell: bash
         env:
-          GITHUB_PAYLOAD: ${{ toJson(github.event) }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Close Addressed Issues Scheduled Event
         if: github.event.schedule == '30 4,10,16,22 * * *'
         run: |
-          echo $GITHUB_PAYLOAD > payload.json
+          cat > payload.json << 'EOF'
+          ${{ toJson(github.event) }}
+          EOF
           github-event-processor ${{ github.event_name }} payload.json CloseAddressedIssues
         shell: bash
         env:
-          GITHUB_PAYLOAD: ${{ toJson(github.event) }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Lock Closed Issues Scheduled Event
         if: github.event.schedule == '30 5,11,17,23 * * *'
         run: |
-          echo $GITHUB_PAYLOAD > payload.json
+          cat > payload.json << 'EOF'
+          ${{ toJson(github.event) }}
+          EOF
           github-event-processor ${{ github.event_name }} payload.json LockClosedIssues
         shell: bash
         env:
-          GITHUB_PAYLOAD: ${{ toJson(github.event) }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

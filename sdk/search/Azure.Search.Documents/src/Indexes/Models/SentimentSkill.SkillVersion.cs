@@ -24,7 +24,7 @@ namespace Azure.Search.Documents.Indexes.Models
                 _value = value ?? throw new ArgumentNullException(nameof(value));
             }
 
-            /// <summary> Version 1 of the <see cref="SkillVersion"/>. </summary>
+            /// <summary> <see cref="SkillVersion.V1"/> version of the <see cref="SentimentSkill"/> is deprecated. Use the  <see cref="SkillVersion.V3"/> version instead. </summary>
             public static SkillVersion V1 { get; } = new SkillVersion(V1Value);
 
             /// <summary> Version 3 of the <see cref="SkillVersion"/>. </summary>
