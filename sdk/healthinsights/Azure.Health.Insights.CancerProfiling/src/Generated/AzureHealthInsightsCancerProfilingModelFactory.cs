@@ -9,11 +9,12 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Azure;
+using Azure.Health.Insights.CancerProfiling;
 
-namespace Azure.Health.Insights.CancerProfiling
+namespace AzureHealthInsights
 {
     /// <summary> Model factory for models. </summary>
-    public static partial class AzureHealthInsightsModelFactory
+    public static partial class AzureHealthInsightsCancerProfilingModelFactory
     {
         /// <summary> Initializes a new instance of OncoPhenotypeResult. </summary>
         /// <param name="jobId"> A processing job identifier. </param>
@@ -23,7 +24,7 @@ namespace Azure.Health.Insights.CancerProfiling
         /// <param name="status"> The status of the processing job. </param>
         /// <param name="errors"> An array of errors, if any errors occurred during the processing job. </param>
         /// <param name="results"> The inference results for the Onco Phenotype request. </param>
-        /// <returns> A new <see cref="CancerProfiling.OncoPhenotypeResult"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Azure.Health.Insights.CancerProfiling.OncoPhenotypeResult"/> instance for mocking. </returns>
         public static OncoPhenotypeResult OncoPhenotypeResult(Guid jobId = default, DateTimeOffset createdDateTime = default, DateTimeOffset expirationDateTime = default, DateTimeOffset lastUpdateDateTime = default, JobStatus status = default, IEnumerable<ResponseError> errors = null, OncoPhenotypeResults results = null)
         {
             errors ??= new List<ResponseError>();
@@ -34,7 +35,7 @@ namespace Azure.Health.Insights.CancerProfiling
         /// <summary> Initializes a new instance of OncoPhenotypeResults. </summary>
         /// <param name="patients"> Results for the patients given in the request. </param>
         /// <param name="modelVersion"> The version of the model used for inference, expressed as the model date. </param>
-        /// <returns> A new <see cref="CancerProfiling.OncoPhenotypeResults"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Azure.Health.Insights.CancerProfiling.OncoPhenotypeResults"/> instance for mocking. </returns>
         public static OncoPhenotypeResults OncoPhenotypeResults(IEnumerable<OncoPhenotypePatientResult> patients = null, string modelVersion = null)
         {
             patients ??= new List<OncoPhenotypePatientResult>();
@@ -45,7 +46,7 @@ namespace Azure.Health.Insights.CancerProfiling
         /// <summary> Initializes a new instance of OncoPhenotypePatientResult. </summary>
         /// <param name="id"> The identifier given for the patient in the request. </param>
         /// <param name="inferences"> The model's inferences for the given patient. </param>
-        /// <returns> A new <see cref="CancerProfiling.OncoPhenotypePatientResult"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Azure.Health.Insights.CancerProfiling.OncoPhenotypePatientResult"/> instance for mocking. </returns>
         public static OncoPhenotypePatientResult OncoPhenotypePatientResult(string id = null, IEnumerable<OncoPhenotypeInference> inferences = null)
         {
             inferences ??= new List<OncoPhenotypeInference>();
@@ -60,7 +61,7 @@ namespace Azure.Health.Insights.CancerProfiling
         /// <param name="confidenceScore"> Confidence score for this inference. </param>
         /// <param name="evidence"> The evidence corresponding to the inference value. </param>
         /// <param name="caseId"> An identifier for a clinical case, if there are multiple clinical cases regarding the same patient. </param>
-        /// <returns> A new <see cref="CancerProfiling.OncoPhenotypeInference"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Azure.Health.Insights.CancerProfiling.OncoPhenotypeInference"/> instance for mocking. </returns>
         public static OncoPhenotypeInference OncoPhenotypeInference(OncoPhenotypeInferenceType type = default, string value = null, string description = null, float? confidenceScore = null, IEnumerable<InferenceEvidence> evidence = null, string caseId = null)
         {
             evidence ??= new List<InferenceEvidence>();
@@ -75,7 +76,7 @@ namespace Azure.Health.Insights.CancerProfiling
         /// system.
         /// </param>
         /// <param name="importance"> A value indicating how important this piece of evidence is for the inference. </param>
-        /// <returns> A new <see cref="CancerProfiling.InferenceEvidence"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Azure.Health.Insights.CancerProfiling.InferenceEvidence"/> instance for mocking. </returns>
         public static InferenceEvidence InferenceEvidence(ClinicalNoteEvidence patientDataEvidence = null, ClinicalCodedElement patientInfoEvidence = null, float? importance = null)
         {
             return new InferenceEvidence(patientDataEvidence, patientInfoEvidence, importance);
@@ -86,7 +87,7 @@ namespace Azure.Health.Insights.CancerProfiling
         /// <param name="text"> The actual text span which is evidence for the inference. </param>
         /// <param name="offset"> The start index of the evidence text span in the document (0 based). </param>
         /// <param name="length"> The length of the evidence text span. </param>
-        /// <returns> A new <see cref="CancerProfiling.ClinicalNoteEvidence"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Azure.Health.Insights.CancerProfiling.ClinicalNoteEvidence"/> instance for mocking. </returns>
         public static ClinicalNoteEvidence ClinicalNoteEvidence(string id = null, string text = null, int offset = default, int length = default)
         {
             return new ClinicalNoteEvidence(id, text, offset, length);
