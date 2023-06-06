@@ -2,10 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Collections.Generic;
-using System.Text;
 using Azure.Core;
-using Azure.Storage.DataMovement;
 using System.Threading.Tasks;
 using System.Threading;
 using System.Threading.Channels;
@@ -45,8 +42,7 @@ namespace Azure.Storage.DataMovement
         /// waiting to update the bytesTransferredand other required operations.
         /// </summary>
         private readonly Channel<StageChunkEventArgs> _stageChunkChannel;
-        private readonly CancellationTokenSource _cancellationTokenSource;
-        private CancellationToken _cancellationToken => _cancellationTokenSource.Token;
+        private CancellationToken _cancellationToken;
 
         private readonly SemaphoreSlim _currentBytesSemaphore;
         private long _bytesTransferred;
@@ -58,7 +54,8 @@ namespace Azure.Storage.DataMovement
             long expectedLength,
             long blockSize,
             Behaviors behaviors,
-            TransferType transferType)
+            TransferType transferType,
+            CancellationToken cancellationToken)
         {
             if (expectedLength <= 0)
             {
@@ -88,7 +85,7 @@ namespace Azure.Storage.DataMovement
                     // Single reader is required as we can only read and write to bytesTransferred value
                     SingleReader = true,
                 });
-            _cancellationTokenSource = new CancellationTokenSource();
+            _cancellationToken = cancellationToken;
             _processStageChunkEvents = Task.Run(() => NotifyOfPendingStageChunkEvents());
 
             // Set bytes transferred to block size because we transferred the initial block
@@ -109,11 +106,6 @@ namespace Azure.Storage.DataMovement
             // We no longer have to read from the channel. We are not expecting any more requests.
             _stageChunkChannel.Writer.Complete();
             await _stageChunkChannel.Reader.Completion.ConfigureAwait(false);
-            if (!_cancellationTokenSource.IsCancellationRequested)
-            {
-                _cancellationTokenSource.Cancel();
-            }
-            _cancellationTokenSource.Dispose();
 
             if (_currentBytesSemaphore != default)
             {
@@ -133,18 +125,26 @@ namespace Azure.Storage.DataMovement
 
         private async Task ConcurrentBlockEvent(StageChunkEventArgs args)
         {
-            if (args.Success)
+            try
             {
-                // Let's add to the channel, and our notifier will handle the chunks.
-                await _stageChunkChannel.Writer.WriteAsync(args, _cancellationToken).ConfigureAwait(false);
+                if (args.Success)
+                {
+                    // Let's add to the channel, and our notifier will handle the chunks.
+                    await _stageChunkChannel.Writer.WriteAsync(args, _cancellationToken).ConfigureAwait(false);
+                }
+                else
+                {
+                    // Log an unexpected error since it came back unsuccessful
+                    await _invokeFailedEventHandler(Errors.FailedChunkTransfer(
+                        offset: args.Offset,
+                        bytesTransferred: args.BytesTransferred,
+                        transferId: args.TransferId)).ConfigureAwait(false);
+                }
             }
-            else
+            catch (Exception ex)
             {
                 // Log an unexpected error since it came back unsuccessful
-                await _invokeFailedEventHandler(Errors.FailedChunkTransfer(
-                    offset: args.Offset,
-                    bytesTransferred: args.BytesTransferred,
-                    transferId: args.TransferId)).ConfigureAwait(false);
+                await _invokeFailedEventHandler(ex).ConfigureAwait(false);
             }
         }
 

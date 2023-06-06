@@ -168,18 +168,25 @@ namespace Azure.Storage.DataMovement
 
         private async Task DownloadChunkEvent(DownloadRangeEventArgs args)
         {
-            if (args.Success)
+            try
             {
-                await _downloadRangeChannel.Writer.WriteAsync(args, _cancellationToken).ConfigureAwait(false);
+                if (args.Success)
+                {
+                    await _downloadRangeChannel.Writer.WriteAsync(args, _cancellationToken).ConfigureAwait(false);
+                }
+                else
+                {
+                    // Report back failed event.
+                    await InvokeFailedEvent(
+                        Errors.FailedDownloadRange(
+                            offset: args.Offset,
+                            bytesTransferred: args.BytesTransferred,
+                            transferId: args.TransferId)).ConfigureAwait(false);
+                }
             }
-            else
+            catch (Exception ex)
             {
-                // Report back failed event.
-                await InvokeFailedEvent(
-                    Errors.FailedDownloadRange(
-                        offset: args.Offset,
-                        bytesTransferred: args.BytesTransferred,
-                        transferId: args.TransferId)).ConfigureAwait(false);
+                await InvokeFailedEvent(ex).ConfigureAwait(false);
             }
         }
 

@@ -156,7 +156,8 @@ namespace Azure.Storage.DataMovement.Tests
                     ReportProgressInBytes = mockCommitChunkBehaviors.ReportProgressInBytesTask.Object,
                     InvokeFailedHandler = mockCommitChunkBehaviors.InvokeFailedEventHandlerTask.Object,
                 },
-                TransferType.Concurrent);
+                TransferType.Concurrent,
+                CancellationToken.None);
 
             // Make one chunk that would meet the expected length
             await commitBlockHandler.InvokeEvent(new StageChunkEventArgs(
@@ -195,7 +196,8 @@ namespace Azure.Storage.DataMovement.Tests
                     ReportProgressInBytes = mockCommitChunkBehaviors.ReportProgressInBytesTask.Object,
                     InvokeFailedHandler = mockCommitChunkBehaviors.InvokeFailedEventHandlerTask.Object,
                 },
-                TransferType.Concurrent);
+                TransferType.Concurrent,
+                CancellationToken.None);
 
             // Make one chunk that would update the bytes but not cause a commit block list to occur
             await commitBlockHandler.InvokeEvent(new StageChunkEventArgs(
@@ -253,7 +255,8 @@ namespace Azure.Storage.DataMovement.Tests
                     ReportProgressInBytes = mockCommitChunkBehaviors.ReportProgressInBytesTask.Object,
                     InvokeFailedHandler = mockCommitChunkBehaviors.InvokeFailedEventHandlerTask.Object,
                 },
-                TransferType.Concurrent);
+                TransferType.Concurrent,
+                CancellationToken.None);
 
             // Make one chunk that would update the bytes that would cause the bytes to exceed the expected amount
             await commitBlockHandler.InvokeEvent(new StageChunkEventArgs(
@@ -295,7 +298,8 @@ namespace Azure.Storage.DataMovement.Tests
                     ReportProgressInBytes = mockCommitChunkBehaviors.ReportProgressInBytesTask.Object,
                     InvokeFailedHandler = mockCommitChunkBehaviors.InvokeFailedEventHandlerTask.Object,
                 },
-                TransferType.Concurrent);
+                TransferType.Concurrent,
+                CancellationToken.None);
 
             List<Task> runningTasks = new List<Task>();
 
@@ -344,7 +348,8 @@ namespace Azure.Storage.DataMovement.Tests
                     ReportProgressInBytes = mockCommitChunkBehaviors.ReportProgressInBytesTask.Object,
                     InvokeFailedHandler = mockCommitChunkBehaviors.InvokeFailedEventHandlerTask.Object,
                 },
-                TransferType.Sequential);
+                TransferType.Sequential,
+                CancellationToken.None);
 
             // Make one chunk that would update the bytes but not cause a commit block list to occur
             await commitBlockHandler.InvokeEvent(new StageChunkEventArgs(
@@ -402,7 +407,8 @@ namespace Azure.Storage.DataMovement.Tests
                     ReportProgressInBytes = mockCommitChunkBehaviors.ReportProgressInBytesTask.Object,
                     InvokeFailedHandler = mockCommitChunkBehaviors.InvokeFailedEventHandlerTask.Object,
                 },
-                TransferType.Sequential);
+                TransferType.Sequential,
+                CancellationToken.None);
 
             // Make one chunk that would update the bytes that would cause the bytes to exceed the expected amount
             await commitBlockHandler.InvokeEvent(new StageChunkEventArgs(
@@ -443,7 +449,8 @@ namespace Azure.Storage.DataMovement.Tests
                     ReportProgressInBytes = mockCommitChunkBehaviors.ReportProgressInBytesTask.Object,
                     InvokeFailedHandler = mockCommitChunkBehaviors.InvokeFailedEventHandlerTask.Object,
                 },
-                transferType: TransferType.Sequential);
+                transferType: TransferType.Sequential,
+                CancellationToken.None);
 
             // Act
             await commitBlockHandler.InvokeEvent(new StageChunkEventArgs(
@@ -482,7 +489,8 @@ namespace Azure.Storage.DataMovement.Tests
                     ReportProgressInBytes = mockCommitChunkBehaviors.ReportProgressInBytesTask.Object,
                     InvokeFailedHandler = mockCommitChunkBehaviors.InvokeFailedEventHandlerTask.Object,
                 },
-                transferType: TransferType.Concurrent);
+                transferType: TransferType.Concurrent,
+                CancellationToken.None);
 
             // Act
             await commitBlockHandler.InvokeEvent(new StageChunkEventArgs(
@@ -520,7 +528,8 @@ namespace Azure.Storage.DataMovement.Tests
                     ReportProgressInBytes = mockCommitChunkBehaviors.ReportProgressInBytesTask.Object,
                     InvokeFailedHandler = mockCommitChunkBehaviors.InvokeFailedEventHandlerTask.Object,
                 },
-                transferType: TransferType.Concurrent);
+                transferType: TransferType.Concurrent,
+                CancellationToken.None);
 
             // Act
             await commitBlockHandler.DisposeAsync();

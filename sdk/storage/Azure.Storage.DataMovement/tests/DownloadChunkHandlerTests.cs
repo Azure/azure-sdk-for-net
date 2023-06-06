@@ -3,15 +3,9 @@
 
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using Moq;
 using NUnit.Framework;
-using Azure.Storage.DataMovement;
-using Azure.Core.Pipeline;
-using System.Diagnostics;
-using Azure.Storage.Test;
 using System.IO;
 using System.Threading;
 using Azure.Core;
