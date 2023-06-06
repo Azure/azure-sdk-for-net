@@ -8,8 +8,9 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Azure.IoT.Hub.Service.Models;
 
-namespace Azure.IoT.Hub.Service.Models
+namespace IotHubGatewayServiceAPIs.Models
 {
     /// <summary> Model factory for models. </summary>
     public static partial class IotHubGatewayServiceAPIsModelFactory
@@ -17,7 +18,7 @@ namespace Azure.IoT.Hub.Service.Models
         /// <summary> Initializes a new instance of ConfigurationQueriesTestResponse. </summary>
         /// <param name="targetConditionError"> The errors from running the target condition query. </param>
         /// <param name="customMetricQueryErrors"> The errors from running the custom metric query. </param>
-        /// <returns> A new <see cref="Models.ConfigurationQueriesTestResponse"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Azure.IoT.Hub.Service.Models.ConfigurationQueriesTestResponse"/> instance for mocking. </returns>
         public static ConfigurationQueriesTestResponse ConfigurationQueriesTestResponse(string targetConditionError = null, IReadOnlyDictionary<string, string> customMetricQueryErrors = null)
         {
             customMetricQueryErrors ??= new Dictionary<string, string>();
@@ -29,7 +30,7 @@ namespace Azure.IoT.Hub.Service.Models
         /// <param name="totalDeviceCount"> The total number of devices registered for the IoT Hub. </param>
         /// <param name="enabledDeviceCount"> The number of currently enabled devices. </param>
         /// <param name="disabledDeviceCount"> The number of currently disabled devices. </param>
-        /// <returns> A new <see cref="Models.DevicesStatistics"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Azure.IoT.Hub.Service.Models.DevicesStatistics"/> instance for mocking. </returns>
         public static DevicesStatistics DevicesStatistics(long? totalDeviceCount = null, long? enabledDeviceCount = null, long? disabledDeviceCount = null)
         {
             return new DevicesStatistics(totalDeviceCount, enabledDeviceCount, disabledDeviceCount);
@@ -37,7 +38,7 @@ namespace Azure.IoT.Hub.Service.Models
 
         /// <summary> Initializes a new instance of ServiceStatistics. </summary>
         /// <param name="connectedDeviceCount"> The number of currently connected devices. </param>
-        /// <returns> A new <see cref="Models.ServiceStatistics"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Azure.IoT.Hub.Service.Models.ServiceStatistics"/> instance for mocking. </returns>
         public static ServiceStatistics ServiceStatistics(long? connectedDeviceCount = null)
         {
             return new ServiceStatistics(connectedDeviceCount);
@@ -47,7 +48,7 @@ namespace Azure.IoT.Hub.Service.Models
         /// <param name="isSuccessful"> The operation result. </param>
         /// <param name="errors"> The device registry operation errors. </param>
         /// <param name="warnings"> The device registry operation warnings. </param>
-        /// <returns> A new <see cref="Models.BulkRegistryOperationResponse"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Azure.IoT.Hub.Service.Models.BulkRegistryOperationResponse"/> instance for mocking. </returns>
         public static BulkRegistryOperationResponse BulkRegistryOperationResponse(bool? isSuccessful = null, IEnumerable<DeviceRegistryOperationError> errors = null, IEnumerable<DeviceRegistryOperationWarning> warnings = null)
         {
             errors ??= new List<DeviceRegistryOperationError>();
@@ -62,7 +63,7 @@ namespace Azure.IoT.Hub.Service.Models
         /// <param name="errorStatus"> The details of the error. </param>
         /// <param name="moduleId"> The unique identifier of the module, if applicable. </param>
         /// <param name="operation"> The type of the operation that failed. </param>
-        /// <returns> A new <see cref="Models.DeviceRegistryOperationError"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Azure.IoT.Hub.Service.Models.DeviceRegistryOperationError"/> instance for mocking. </returns>
         public static DeviceRegistryOperationError DeviceRegistryOperationError(string deviceId = null, DeviceRegistryOperationErrorCode? errorCode = null, string errorStatus = null, string moduleId = null, string operation = null)
         {
             return new DeviceRegistryOperationError(deviceId, errorCode, errorStatus, moduleId, operation);
@@ -72,7 +73,7 @@ namespace Azure.IoT.Hub.Service.Models
         /// <param name="deviceId"> The unique identifier of the device. </param>
         /// <param name="warningCode"> The warning code. </param>
         /// <param name="warningStatus"> The details of the warning. </param>
-        /// <returns> A new <see cref="Models.DeviceRegistryOperationWarning"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Azure.IoT.Hub.Service.Models.DeviceRegistryOperationWarning"/> instance for mocking. </returns>
         public static DeviceRegistryOperationWarning DeviceRegistryOperationWarning(string deviceId = null, DeviceRegistryOperationWarningCode? warningCode = null, string warningStatus = null)
         {
             return new DeviceRegistryOperationWarning(deviceId, warningCode, warningStatus);
@@ -82,7 +83,7 @@ namespace Azure.IoT.Hub.Service.Models
         /// <param name="totalMessagesPurged"> The total number of messages purged. </param>
         /// <param name="deviceId"> The unique identifier of the device. </param>
         /// <param name="moduleId"> The unique identifier of the module. </param>
-        /// <returns> A new <see cref="Models.PurgeMessageQueueResult"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Azure.IoT.Hub.Service.Models.PurgeMessageQueueResult"/> instance for mocking. </returns>
         public static PurgeMessageQueueResult PurgeMessageQueueResult(int? totalMessagesPurged = null, string deviceId = null, string moduleId = null)
         {
             return new PurgeMessageQueueResult(totalMessagesPurged, deviceId, moduleId);
@@ -102,7 +103,7 @@ namespace Azure.IoT.Hub.Service.Models
         /// <param name="failureReason"> The reason for the failure, if a failure occurred. </param>
         /// <param name="statusMessage"> The status message of the job. </param>
         /// <param name="deviceJobStatistics"> The details regarding job execution status. </param>
-        /// <returns> A new <see cref="Models.JobResponse"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Azure.IoT.Hub.Service.Models.JobResponse"/> instance for mocking. </returns>
         public static JobResponse JobResponse(string jobId = null, string queryCondition = null, DateTimeOffset? createdTime = null, DateTimeOffset? startTime = null, DateTimeOffset? endTime = null, long? maxExecutionTimeInSeconds = null, JobResponseType? type = null, CloudToDeviceMethodRequest cloudToDeviceMethod = null, TwinData updateTwin = null, JobResponseStatus? status = null, string failureReason = null, string statusMessage = null, DeviceJobStatistics deviceJobStatistics = null)
         {
             return new JobResponse(jobId, queryCondition, createdTime, startTime, endTime, maxExecutionTimeInSeconds, type, cloudToDeviceMethod, updateTwin, status, failureReason, statusMessage, deviceJobStatistics);
@@ -114,7 +115,7 @@ namespace Azure.IoT.Hub.Service.Models
         /// <param name="succeededCount"> The number of succeeded jobs. </param>
         /// <param name="runningCount"> The number of running jobs. </param>
         /// <param name="pendingCount"> The number of pending (scheduled) jobs. </param>
-        /// <returns> A new <see cref="Models.DeviceJobStatistics"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Azure.IoT.Hub.Service.Models.DeviceJobStatistics"/> instance for mocking. </returns>
         public static DeviceJobStatistics DeviceJobStatistics(int? deviceCount = null, int? failedCount = null, int? succeededCount = null, int? runningCount = null, int? pendingCount = null)
         {
             return new DeviceJobStatistics(deviceCount, failedCount, succeededCount, runningCount, pendingCount);
@@ -124,7 +125,7 @@ namespace Azure.IoT.Hub.Service.Models
         /// <param name="type"> The query result type. </param>
         /// <param name="items"> The query result items, as a collection. </param>
         /// <param name="continuationToken"> The continuation token. </param>
-        /// <returns> A new <see cref="Models.QueryResult"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Azure.IoT.Hub.Service.Models.QueryResult"/> instance for mocking. </returns>
         public static QueryResult QueryResult(QueryResultType? type = null, IEnumerable<object> items = null, string continuationToken = null)
         {
             items ??= new List<object>();
@@ -135,7 +136,7 @@ namespace Azure.IoT.Hub.Service.Models
         /// <summary> Initializes a new instance of CloudToDeviceMethodResponse. </summary>
         /// <param name="status"> Method invocation result status. </param>
         /// <param name="payload"> Method invocation result payload. </param>
-        /// <returns> A new <see cref="Models.CloudToDeviceMethodResponse"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Azure.IoT.Hub.Service.Models.CloudToDeviceMethodResponse"/> instance for mocking. </returns>
         public static CloudToDeviceMethodResponse CloudToDeviceMethodResponse(int? status = null, object payload = null)
         {
             return new CloudToDeviceMethodResponse(status, payload);
