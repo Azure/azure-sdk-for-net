@@ -1,14 +1,10 @@
 # Release History
 
-## 5.11.0-beta.1 (Unreleased)
-
-### Features Added
-
-### Breaking Changes
+## 5.10.1 (2023-06-06)
 
 ### Bugs Fixed
 
-### Other Changes
+- Fixed issue where the main entity was not queried by the scale monitor when listening to the deadletter queue.
 
 ## 5.10.0 (2023-05-10)
 
