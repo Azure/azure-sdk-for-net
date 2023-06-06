@@ -11,15 +11,18 @@ namespace Azure.Core.Serialization
     /// </summary>
     public class RawContentOptions
     {
-        internal RawContentOptions() { }
+        /// <summary>
+        /// Creates a new instance of RawContentOptions.
+        /// </summary>
+        public RawContentOptions() { }
 
         /// <summary>
         /// By default, anonymous and dynamic types used to create and access protocol method request
         /// and response content will map property names used in .NET code to exact names in the
         /// content data.  Setting this value to true has the effect of converting property names used with
         /// anonymous and dynamic types to camel case when accessing the content data.
-        /// If needed, it can be overridden per instance by passing a value for <see cref="PropertyNameConversion"/>
-        /// to [TODO: cref] RequestContent.Create() or <see cref="AzureCoreExtensions.ToDynamicFromJson(BinaryData, PropertyNameConversion, DynamicDateTimeHandling)"/>.
+        /// If needed, it can be overridden per instance by passing different options to
+        /// to <see cref="RequestContent.Create(object, RawContentOptions)"/> or <see cref="AzureCoreExtensions.ToDynamicFromJson(BinaryData, RawContentOptions)"/>.
         /// </summary>
         public bool UseCamelCaseNamingConvention { get; set; }
 

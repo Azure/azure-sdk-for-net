@@ -160,7 +160,7 @@ namespace Azure.Core.Tests
         [Test]
         public void CannotGetOrSetValuesOnAbsentArrays()
         {
-            dynamic value = BinaryData.FromString("""{"foo": [1, 2]}""").ToDynamicFromJson(PropertyNameConversion.CamelCase);
+            dynamic value = BinaryData.FromString("""{"foo": [1, 2]}""").ToDynamicFromJson(new RawContentOptions() { UseCamelCaseNamingConvention = true });
 
             Assert.Throws<InvalidOperationException>(() => { int i = value[0]; });
             Assert.Throws<InvalidOperationException>(() => { value[0] = 1; });
@@ -172,7 +172,7 @@ namespace Azure.Core.Tests
         [Test]
         public void CannotGetOrSetValuesOnAbsentProperties()
         {
-            dynamic value = BinaryData.FromString("""{"foo": 1}""").ToDynamicFromJson(PropertyNameConversion.CamelCase);
+            dynamic value = BinaryData.FromString("""{"foo": 1}""").ToDynamicFromJson(new RawContentOptions() { UseCamelCaseNamingConvention = true });
 
             Assert.Throws<InvalidOperationException>(() => { int i = value.Foo.Bar.Baz; });
             Assert.Throws<InvalidOperationException>(() => { value.Foo.Bar.Baz = "hi"; });

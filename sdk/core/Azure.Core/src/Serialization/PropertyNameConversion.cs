@@ -6,7 +6,7 @@ namespace Azure.Core.Serialization
     /// <summary>
     /// Options for getting and setting DynamicData properties.
     /// </summary>
-    public enum PropertyNameConversion
+    internal enum PropertyNameConversion
     {
         /// <summary>
         /// Properties are read from and written to the data content with the same casing as the DynamicData property name.

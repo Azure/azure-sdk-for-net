@@ -76,15 +76,9 @@ namespace Azure
         /// <summary>
         /// Return the content of the BinaryData as a dynamic type.
         /// </summary>
-        public static dynamic ToDynamicFromJson(this BinaryData utf8Json, PropertyNameConversion propertyNameConversion, DynamicDateTimeHandling dateTimeHandling = DynamicDateTimeHandling.Rfc3339)
+        public static dynamic ToDynamicFromJson(this BinaryData utf8Json, RawContentOptions options)
         {
-            DynamicDataOptions options = new()
-            {
-                PropertyNameConversion = propertyNameConversion,
-                DateTimeHandling = dateTimeHandling
-            };
-
-            return utf8Json.ToDynamicFromJson(options);
+            return utf8Json.ToDynamicFromJson(options.GetDynamicOptions());
         }
 
         /// <summary>

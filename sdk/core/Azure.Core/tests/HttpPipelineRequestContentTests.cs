@@ -190,7 +190,7 @@ namespace Azure.Core.Tests
                 }
             };
 
-            using RequestContent content = RequestContent.Create(anon, PropertyNameConversion.CamelCase);
+            using RequestContent content = RequestContent.Create(anon, new RawContentOptions() { UseCamelCaseNamingConvention = true });
             using MemoryStream destination = new();
             content.WriteTo(destination, default);
 
