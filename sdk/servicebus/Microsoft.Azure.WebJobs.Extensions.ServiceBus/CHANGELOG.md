@@ -1,10 +1,14 @@
 # Release History
 
-## 5.10.1 (2023-06-06)
+## 5.11.0 (2023-06-06)
 
 ### Bugs Fixed
 
 - Fixed issue where the main entity was not queried by the scale monitor when listening to the deadletter queue.
+
+### Other Changes
+
+- Updated dependency on `Azure.Messaging.ServiceBus` to 7.15.0.
 
 ## 5.10.0 (2023-05-10)
 
