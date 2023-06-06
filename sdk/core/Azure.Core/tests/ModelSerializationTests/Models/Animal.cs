@@ -9,12 +9,12 @@ using Azure.Core.Serialization;
 
 namespace Azure.Core.Tests.ModelSerializationTests
 {
-    public class Animal : IJsonSerializable, IUtf8JsonSerializable
+    public class Animal : IJsonSerializable, IUtf8JsonSerializable, IModelInternalSerializable
     {
         private Dictionary<string, BinaryData> RawData { get; set; } = new Dictionary<string, BinaryData>();
 
         public bool IsHungry { get; set; } = false;
-        public double Weight { get; set; } = 1.1;
+        public double Weight { get; set; } = 1.1d;
         public string LatinName { get; private set; } = "Animalia";
         public string Name { get; set; } = "Animal";
 
@@ -152,6 +152,11 @@ namespace Azure.Core.Tests.ModelSerializationTests
         {
             JsonDocument jsonDocument = JsonDocument.Parse(stream);
             var model = DeserializeAnimal(jsonDocument.RootElement, options ?? new SerializableOptions());
+            CopyModel(model);
+        }
+
+        private void CopyModel(Animal model)
+        {
             this.LatinName = model.LatinName;
             this.Weight = model.Weight;
             this.IsHungry = model.IsHungry;
@@ -177,6 +182,17 @@ namespace Azure.Core.Tests.ModelSerializationTests
         {
             JsonDocument jsonDocument = JsonDocument.Parse(stream);
             return DeserializeAnimal(jsonDocument.RootElement, options ?? new SerializableOptions());
+        }
+
+        void IModelInternalSerializable.Serialize(Utf8JsonWriter writer, SerializableOptions options)
+        {
+            ((IUtf8JsonSerializable)this).Write(writer, options ?? new SerializableOptions());
+        }
+
+        void IModelInternalSerializable.Deserialize(ref Utf8JsonReader reader, SerializableOptions options)
+        {
+            var model = DeserializeAnimal(JsonDocument.ParseValue(ref reader).RootElement, options);
+            CopyModel(model);
         }
         #endregion
     }

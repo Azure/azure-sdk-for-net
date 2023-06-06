@@ -8,7 +8,7 @@ using NUnit.Framework;
 
 namespace Azure.Core.Tests.ModelSerializationTests
 {
-    public class UsingJsonConverterTests
+    public class UsingJsonSerializerTests
     {
         [TestCase(true)]
         [TestCase(false)]
@@ -59,8 +59,7 @@ namespace Azure.Core.Tests.ModelSerializationTests
 
             var additionalProperties = typeof(Animal).GetProperty("RawData", System.Reflection.BindingFlags.Instance | System.Reflection.BindingFlags.NonPublic).GetValue(dog) as Dictionary<string, BinaryData>;
             Assert.IsNotNull(additionalProperties);
-            Assert.IsTrue(additionalProperties.ContainsKey("numberOfLegs"));
-            Assert.AreEqual("4", additionalProperties["numberOfLegs"].ToString());
+            Assert.IsFalse(additionalProperties.ContainsKey("numberOfLegs"));
 
             string expected = "{";
             if (!ignoreReadonlyProperties)
@@ -71,7 +70,7 @@ namespace Azure.Core.Tests.ModelSerializationTests
 #else
             expected += "\"weight\":1.1,";
 #endif
-            expected += "\"foodConsumed\":[\"kibble\",\"egg\",\"peanut butter\"],\"numberOfLegs\":4}";
+            expected += "\"foodConsumed\":[\"kibble\",\"egg\",\"peanut butter\"]}";
 
             var actual = JsonSerializer.Serialize(dog, options);
             Assert.AreEqual(expected, actual);

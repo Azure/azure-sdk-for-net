@@ -1088,6 +1088,15 @@ namespace Azure.Core.Serialization
         public override System.Threading.Tasks.ValueTask SerializeAsync(System.IO.Stream stream, object? value, System.Type inputType, System.Threading.CancellationToken cancellationToken) { throw null; }
         public override System.Threading.Tasks.ValueTask<System.BinaryData> SerializeAsync(object? value, System.Type? inputType = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
+    public partial class ModelJsonConverter : System.Text.Json.Serialization.JsonConverter<Azure.Core.Serialization.IJsonSerializable>
+    {
+        public ModelJsonConverter() { }
+        public ModelJsonConverter(bool ignoreAdditionalProperties) { }
+        public bool IgnoreAdditionalProperties { get { throw null; } }
+        public override bool CanConvert(System.Type typeToConvert) { throw null; }
+        public override Azure.Core.Serialization.IJsonSerializable Read(ref System.Text.Json.Utf8JsonReader reader, System.Type typeToConvert, System.Text.Json.JsonSerializerOptions options) { throw null; }
+        public override void Write(System.Text.Json.Utf8JsonWriter writer, Azure.Core.Serialization.IJsonSerializable value, System.Text.Json.JsonSerializerOptions options) { }
+    }
     public static partial class ModelSerializer
     {
         public static T Deserialize<T>(System.IO.Stream stream, Azure.Core.Serialization.SerializableOptions? options = null) where T : Azure.Core.Serialization.IJsonSerializable, new() { throw null; }
