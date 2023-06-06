@@ -7,6 +7,7 @@
 
 ### Breaking Changes
 - Removed `Traits` and `States` from `BlobStorageResourceContainerOptions`.
+- Removed `CopyMethod` from `BlobStorageResourceContainerOptions`. Use `ResouceOptions.CopyMethod` now.
 
 ### Bugs Fixed
 - Fixed bug where the extension methods `BlobContainerClient.StartUploadDirectoryAsync` and `StartDownloadToDirectoryAsync` throws an exception when attempting to lazy construct the `TransferManager`.
