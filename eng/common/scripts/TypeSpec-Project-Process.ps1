@@ -171,6 +171,8 @@ if ($generateFromLocalTypeSpec) {
   if (!(Test-Path -Path $tspLocationYamlPath)) {
     # try to create tsp-location.yaml using HEAD commit of the local spec repo
     Write-Warning "Failed to find tsp-location.yaml in '$sdkProjectFolder'. Trying to create tsp-location.yaml using HEAD commit of the local spec repo then proceed the sdk generation based upon local typespecs at $specRepoRoot. Alternatively, please make sure to provide CommitHash and RepoUrl parameters when running this script."
+    # set default repo to Azure/azure-rest-api-specs
+    $repo = "Azure/azure-rest-api-specs"
     try {
       Push-Location $specRepoRoot
       $CommitHash = $(git rev-parse HEAD)
