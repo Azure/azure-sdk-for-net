@@ -1,6 +1,6 @@
 # Release History
 
-## 7.15.0-beta.1 (2023-06-06)
+## 7.15.0 (2023-06-06)
 
 ### Bugs Fixed
 
