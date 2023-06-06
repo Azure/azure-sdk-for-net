@@ -35,6 +35,23 @@ namespace Azure.Containers.ContainerRegistry
             _url = url ?? throw new ArgumentNullException(nameof(url));
         }
 
+        internal HttpMessage CreateGetBlobRequest(string name, string digest)
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
+            message.BufferResponse = false;
+            request.Method = RequestMethod.Get;
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw(_url, false);
+            uri.AppendPath("/v2/", false);
+            uri.AppendPath(name, true);
+            uri.AppendPath("/blobs/", false);
+            uri.AppendPath(digest, true);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/octet-stream");
+            return message;
+        }
+
         /// <summary> Retrieve the blob from the registry identified by digest. </summary>
         /// <param name="name"> Name of the image (including the namespace). </param>
         /// <param name="digest"> Digest of a BLOB. </param>
@@ -99,6 +116,22 @@ namespace Azure.Containers.ContainerRegistry
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal HttpMessage CreateCheckBlobExistsRequest(string name, string digest)
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Head;
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw(_url, false);
+            uri.AppendPath("/v2/", false);
+            uri.AppendPath(name, true);
+            uri.AppendPath("/blobs/", false);
+            uri.AppendPath(digest, true);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            return message;
         }
 
         /// <summary> Same as GET, except only the headers are returned. </summary>
@@ -652,6 +685,24 @@ namespace Azure.Containers.ContainerRegistry
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal HttpMessage CreateGetChunkRequest(string name, string digest, string range)
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
+            message.BufferResponse = false;
+            request.Method = RequestMethod.Get;
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw(_url, false);
+            uri.AppendPath("/v2/", false);
+            uri.AppendPath(name, true);
+            uri.AppendPath("/blobs/", false);
+            uri.AppendPath(digest, true);
+            request.Uri = uri;
+            request.Headers.Add("Range", range);
+            request.Headers.Add("Accept", "application/octet-stream");
+            return message;
         }
 
         /// <summary> Retrieve the blob from the registry identified by `digest`. This endpoint may also support RFC7233 compliant range requests. Support can be detected by issuing a HEAD request. If the header `Accept-Range: bytes` is returned, range requests can be used to fetch partial content. </summary>
