@@ -4,6 +4,8 @@
 
 ### Features Added
 
+- Introduced model factory `Azure.Health.Insights.CancerProfiling.AzureHealthInsightsModelFactory` for mocking.
+
 ### Breaking Changes
 
 ### Bugs Fixed

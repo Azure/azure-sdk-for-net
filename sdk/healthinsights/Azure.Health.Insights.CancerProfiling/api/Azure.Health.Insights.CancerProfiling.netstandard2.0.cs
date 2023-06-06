@@ -1,5 +1,14 @@
 namespace Azure.Health.Insights.CancerProfiling
 {
+    public static partial class AzureHealthInsightsModelFactory
+    {
+        public static Azure.Health.Insights.CancerProfiling.ClinicalNoteEvidence ClinicalNoteEvidence(string id = null, string text = null, int offset = 0, int length = 0) { throw null; }
+        public static Azure.Health.Insights.CancerProfiling.InferenceEvidence InferenceEvidence(Azure.Health.Insights.CancerProfiling.ClinicalNoteEvidence patientDataEvidence = null, Azure.Health.Insights.CancerProfiling.ClinicalCodedElement patientInfoEvidence = null, float? importance = default(float?)) { throw null; }
+        public static Azure.Health.Insights.CancerProfiling.OncoPhenotypeInference OncoPhenotypeInference(Azure.Health.Insights.CancerProfiling.OncoPhenotypeInferenceType type = default(Azure.Health.Insights.CancerProfiling.OncoPhenotypeInferenceType), string value = null, string description = null, float? confidenceScore = default(float?), System.Collections.Generic.IEnumerable<Azure.Health.Insights.CancerProfiling.InferenceEvidence> evidence = null, string caseId = null) { throw null; }
+        public static Azure.Health.Insights.CancerProfiling.OncoPhenotypePatientResult OncoPhenotypePatientResult(string id = null, System.Collections.Generic.IEnumerable<Azure.Health.Insights.CancerProfiling.OncoPhenotypeInference> inferences = null) { throw null; }
+        public static Azure.Health.Insights.CancerProfiling.OncoPhenotypeResult OncoPhenotypeResult(System.Guid jobId = default(System.Guid), System.DateTimeOffset createdDateTime = default(System.DateTimeOffset), System.DateTimeOffset expirationDateTime = default(System.DateTimeOffset), System.DateTimeOffset lastUpdateDateTime = default(System.DateTimeOffset), Azure.Health.Insights.CancerProfiling.JobStatus status = default(Azure.Health.Insights.CancerProfiling.JobStatus), System.Collections.Generic.IEnumerable<Azure.ResponseError> errors = null, Azure.Health.Insights.CancerProfiling.OncoPhenotypeResults results = null) { throw null; }
+        public static Azure.Health.Insights.CancerProfiling.OncoPhenotypeResults OncoPhenotypeResults(System.Collections.Generic.IEnumerable<Azure.Health.Insights.CancerProfiling.OncoPhenotypePatientResult> patients = null, string modelVersion = null) { throw null; }
+    }
     public partial class CancerProfilingClient
     {
         protected CancerProfilingClient() { }
