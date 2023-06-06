@@ -23,7 +23,7 @@ namespace Azure.Core.Samples
             SerializableOptions options = new SerializableOptions() { IgnoreReadOnlyProperties = true, IgnoreAdditionalProperties = true };
             using Stream stream = new MemoryStream();
             Animal model = new Animal();
-            model.TrySerialize(stream, out long bytesWritten, options: options);
+            //model.TrySerialize(stream, out long bytesWritten, options: options);
             stream.Position = 0;
             string json = new StreamReader(stream).ReadToEnd();
             #endregion
@@ -37,11 +37,11 @@ namespace Azure.Core.Samples
             using Stream stream = new MemoryStream();
             bool ignoreReadOnly = false;
             bool ignoreUnknown = false;
-            string serviceResponse = "{\"latinName\":\"Canis lupus familiaris\",\"weight\":5.5,\"name\":\"Doggo\",\"numberOfLegs\":4}";
+            //string serviceResponse = "{\"latinName\":\"Canis lupus familiaris\",\"weight\":5.5,\"name\":\"Doggo\",\"numberOfLegs\":4}";
             SerializableOptions options = new SerializableOptions() { IgnoreReadOnlyProperties = ignoreReadOnly, IgnoreAdditionalProperties = ignoreUnknown };
 
             Animal model = new Animal();
-            model.TryDeserialize(new MemoryStream(Encoding.UTF8.GetBytes(serviceResponse)), out long bytesConsumed, options: options);
+            //model.TryDeserialize(new MemoryStream(Encoding.UTF8.GetBytes(serviceResponse)), out long bytesConsumed, options: options);
             #endregion
         }
 
@@ -53,7 +53,7 @@ namespace Azure.Core.Samples
             SerializableOptions options = new SerializableOptions() { IgnoreReadOnlyProperties = true, IgnoreAdditionalProperties = true };
             using Stream stream = new MemoryStream();
             Animal model = new Animal();
-            model.Serialize(stream, options: options);
+            //model.Serialize(stream, options: options);
             stream.Position = 0;
             string roundTrip = new StreamReader(stream).ReadToEnd();
             #endregion
@@ -67,11 +67,11 @@ namespace Azure.Core.Samples
             using Stream stream = new MemoryStream();
             bool ignoreReadOnly = false;
             bool ignoreUnknown = false;
-            string serviceResponse = "{\"latinName\":\"Canis lupus familiaris\",\"weight\":5.5,\"name\":\"Doggo\",\"numberOfLegs\":4}";
+            //string serviceResponse = "{\"latinName\":\"Canis lupus familiaris\",\"weight\":5.5,\"name\":\"Doggo\",\"numberOfLegs\":4}";
             SerializableOptions options = new SerializableOptions() { IgnoreReadOnlyProperties = ignoreReadOnly, IgnoreAdditionalProperties = ignoreUnknown };
 
             Animal model = new Animal();
-            model.Deserialize(new MemoryStream(Encoding.UTF8.GetBytes(serviceResponse)), options: options);
+            //model.Deserialize(new MemoryStream(Encoding.UTF8.GetBytes(serviceResponse)), options: options);
             #endregion
         }
 
@@ -134,10 +134,10 @@ namespace Azure.Core.Samples
         {
             #region Snippet:Static_Deserialize
             SerializableOptions options = new SerializableOptions() { IgnoreReadOnlyProperties = false, IgnoreAdditionalProperties = false };
-            string serviceResponse =
-                "{\"latinName\":\"Animalia\",\"weight\":2.3,\"name\":\"Rabbit\",\"isHungry\":false,\"numberOfLegs\":4}";
+            //string serviceResponse =
+                //"{\"latinName\":\"Animalia\",\"weight\":2.3,\"name\":\"Rabbit\",\"isHungry\":false,\"numberOfLegs\":4}";
 
-            Animal model = Animal.StaticDeserialize(new MemoryStream(Encoding.UTF8.GetBytes(serviceResponse)), options: options);
+            //Animal model = Animal.StaticDeserialize(new MemoryStream(Encoding.UTF8.GetBytes(serviceResponse)), options: options);
             #endregion
         }
 
@@ -156,7 +156,7 @@ namespace Azure.Core.Samples
             SerializableOptions options = new SerializableOptions();
             options.Serializer = new NewtonsoftJsonObjectSerializer();
 
-            Stream stream = ModelSerializer.Serialize(dog, options);
+            //Stream stream = ModelSerializer.Serialize(dog, options);
             #endregion
         }
 
@@ -167,9 +167,9 @@ namespace Azure.Core.Samples
             #region Snippet:NewtonSoft_Deserialize
             SerializableOptions options = new SerializableOptions();
             options.Serializer = new NewtonsoftJsonObjectSerializer();
-            string json = @"[{""LatinName"":""Animalia"",""Weight"":1.1,""Name"":""Doggo"",""IsHungry"":false,""FoodConsumed"":[""kibble"",""egg"",""peanut butter""],""NumberOfLegs"":4}]";
+            //string json = @"[{""LatinName"":""Animalia"",""Weight"":1.1,""Name"":""Doggo"",""IsHungry"":false,""FoodConsumed"":[""kibble"",""egg"",""peanut butter""],""NumberOfLegs"":4}]";
 
-            DogListProperty dog = ModelSerializer.Deserialize<DogListProperty>(json, options);
+            //DogListProperty dog = ModelSerializer.Deserialize<DogListProperty>(json, options);
             #endregion
         }
 
@@ -186,7 +186,7 @@ namespace Azure.Core.Samples
                 FoodConsumed = { "kibble", "egg", "peanut butter" },
             };
 
-            Stream stream = ModelSerializer.Serialize(dog);
+            //Stream stream = ModelSerializer.Serialize(dog);
             #endregion
         }
 
@@ -195,9 +195,9 @@ namespace Azure.Core.Samples
         public void ModelSerializerDeserialize()
         {
             #region Snippet:ModelSerializer_Deserialize
-            string json = @"[{""LatinName"":""Animalia"",""Weight"":1.1,""Name"":""Doggo"",""IsHungry"":false,""FoodConsumed"":[""kibble"",""egg"",""peanut butter""],""NumberOfLegs"":4}]";
+            //string json = @"[{""LatinName"":""Animalia"",""Weight"":1.1,""Name"":""Doggo"",""IsHungry"":false,""FoodConsumed"":[""kibble"",""egg"",""peanut butter""],""NumberOfLegs"":4}]";
 
-            DogListProperty dog = ModelSerializer.Deserialize<DogListProperty>(json);
+            //DogListProperty dog = ModelSerializer.Deserialize<DogListProperty>(json);
             #endregion
         }
 

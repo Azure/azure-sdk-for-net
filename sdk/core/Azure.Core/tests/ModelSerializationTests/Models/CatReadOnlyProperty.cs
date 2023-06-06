@@ -9,7 +9,7 @@ using Azure.Core.Serialization;
 
 namespace Azure.Core.Tests.ModelSerializationTests
 {
-    public class CatReadOnlyProperty : Animal, IJsonSerializable, IUtf8JsonSerializable
+    public class CatReadOnlyProperty : Animal, IModelSerializable, IModelInternalSerializable, IUtf8JsonSerializable
     {
         private Dictionary<string, BinaryData> RawData { get; set; } = new Dictionary<string, BinaryData>();
 
@@ -104,61 +104,6 @@ namespace Azure.Core.Tests.ModelSerializationTests
                 }
             }
             return new CatReadOnlyProperty(weight, latinName, name, isHungry, hasWhiskers, rawData);
-        }
-        #endregion
-
-        #region InterfaceImplementation
-        public new bool TryDeserialize(Stream stream, out long bytesConsumed, SerializableOptions options = default)
-        {
-            bytesConsumed = 0;
-            try
-            {
-                Deserialize(stream, options);
-                bytesConsumed = stream.Length;
-                return true;
-            }
-            catch
-            {
-                return false;
-            }
-        }
-
-        public new bool TrySerialize(Stream stream, out long bytesWritten, SerializableOptions options = default)
-        {
-            bytesWritten = 0;
-            try
-            {
-                Serialize(stream, options);
-                bytesWritten = (int)stream.Length;
-                return true;
-            }
-            catch
-            {
-                return false;
-            }
-        }
-
-        public new void Deserialize(Stream stream, SerializableOptions options = default)
-        {
-            JsonDocument jsonDocument = JsonDocument.Parse(stream);
-            var model = DeserializeCatReadOnlyProperty(jsonDocument.RootElement, options ?? new SerializableOptions());
-            this.Weight = model.Weight;
-            this.IsHungry = model.IsHungry;
-            this.HasWhiskers = model.HasWhiskers;
-            this.IsHungry = model.IsHungry;
-            this.RawData = model.RawData;
-        }
-
-        public new void Serialize(Stream stream, SerializableOptions options = default)
-        {
-            JsonWriterOptions jsonWriterOptions = new JsonWriterOptions();
-            if (options.PrettyPrint)
-            {
-                jsonWriterOptions.Indented = true;
-            }
-            Utf8JsonWriter writer = new Utf8JsonWriter(stream, jsonWriterOptions);
-            ((IUtf8JsonSerializable)this).Write(writer, options ?? new SerializableOptions());
-            writer.Flush();
         }
         #endregion
     }

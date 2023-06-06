@@ -12,7 +12,7 @@ namespace Azure.Core.Serialization
     /// .
     /// </summary>
 #pragma warning disable AZC0014 // Avoid using banned types in public API
-    public class ModelJsonConverter : JsonConverter<IJsonSerializable>
+    public class ModelJsonConverter : JsonConverter<IModelSerializable>
 #pragma warning restore AZC0014 // Avoid using banned types in public API
     {
         /// <summary>
@@ -42,7 +42,7 @@ namespace Azure.Core.Serialization
         /// <returns></returns>
         public override bool CanConvert(Type typeToConvert)
         {
-            return (typeToConvert.GetInterfaces().Any(i => i is IJsonSerializable));
+            return (typeToConvert.GetInterfaces().Any(i => i is IModelSerializable));
         }
 
         /// <summary>
@@ -54,7 +54,7 @@ namespace Azure.Core.Serialization
         /// <returns></returns>
         /// <exception cref="NotSupportedException"></exception>
 #pragma warning disable AZC0014 // Avoid using banned types in public API
-        public override IJsonSerializable Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
+        public override IModelSerializable Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
 #pragma warning restore AZC0014 // Avoid using banned types in public API
         {
             SerializableOptions serializableOptions = ConvertOptions(options);
@@ -63,7 +63,7 @@ namespace Azure.Core.Serialization
                 throw new NotSupportedException($"{typeToConvert.Name} does not have a parameterless constructor");
 
             model.Deserialize(ref reader, serializableOptions);
-            return (IJsonSerializable)model;
+            return (IModelSerializable)model;
         }
 
         /// <summary>
@@ -73,7 +73,7 @@ namespace Azure.Core.Serialization
         /// <param name="value"></param>
         /// <param name="options"></param>
 #pragma warning disable AZC0014 // Avoid using banned types in public API
-        public override void Write(Utf8JsonWriter writer, IJsonSerializable value, JsonSerializerOptions options)
+        public override void Write(Utf8JsonWriter writer, IModelSerializable value, JsonSerializerOptions options)
 #pragma warning restore AZC0014 // Avoid using banned types in public API
         {
             SerializableOptions serializableOptions = ConvertOptions(options);

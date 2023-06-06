@@ -1064,16 +1064,12 @@ namespace Azure.Core.Pipeline
 }
 namespace Azure.Core.Serialization
 {
-    public partial interface IJsonSerializable
-    {
-        void Deserialize(System.IO.Stream stream, Azure.Core.Serialization.SerializableOptions? options = null);
-        void Serialize(System.IO.Stream stream, Azure.Core.Serialization.SerializableOptions? options = null);
-        bool TryDeserialize(System.IO.Stream stream, out long bytesConsumed, Azure.Core.Serialization.SerializableOptions? options = null);
-        bool TrySerialize(System.IO.Stream stream, out long bytesWritten, Azure.Core.Serialization.SerializableOptions? options = null);
-    }
     public partial interface IMemberNameConverter
     {
         string? ConvertMemberName(System.Reflection.MemberInfo member);
+    }
+    public partial interface IModelSerializable
+    {
     }
     public partial class JsonObjectSerializer : Azure.Core.Serialization.ObjectSerializer, Azure.Core.Serialization.IMemberNameConverter
     {
@@ -1088,20 +1084,14 @@ namespace Azure.Core.Serialization
         public override System.Threading.Tasks.ValueTask SerializeAsync(System.IO.Stream stream, object? value, System.Type inputType, System.Threading.CancellationToken cancellationToken) { throw null; }
         public override System.Threading.Tasks.ValueTask<System.BinaryData> SerializeAsync(object? value, System.Type? inputType = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
-    public partial class ModelJsonConverter : System.Text.Json.Serialization.JsonConverter<Azure.Core.Serialization.IJsonSerializable>
+    public partial class ModelJsonConverter : System.Text.Json.Serialization.JsonConverter<Azure.Core.Serialization.IModelSerializable>
     {
         public ModelJsonConverter() { }
         public ModelJsonConverter(bool ignoreAdditionalProperties) { }
         public bool IgnoreAdditionalProperties { get { throw null; } }
         public override bool CanConvert(System.Type typeToConvert) { throw null; }
-        public override Azure.Core.Serialization.IJsonSerializable Read(ref System.Text.Json.Utf8JsonReader reader, System.Type typeToConvert, System.Text.Json.JsonSerializerOptions options) { throw null; }
-        public override void Write(System.Text.Json.Utf8JsonWriter writer, Azure.Core.Serialization.IJsonSerializable value, System.Text.Json.JsonSerializerOptions options) { }
-    }
-    public static partial class ModelSerializer
-    {
-        public static T Deserialize<T>(System.IO.Stream stream, Azure.Core.Serialization.SerializableOptions? options = null) where T : Azure.Core.Serialization.IJsonSerializable, new() { throw null; }
-        public static T Deserialize<T>(string json, Azure.Core.Serialization.SerializableOptions? options = null) where T : Azure.Core.Serialization.IJsonSerializable, new() { throw null; }
-        public static System.IO.Stream Serialize<T>(T model, Azure.Core.Serialization.SerializableOptions? options = null) where T : Azure.Core.Serialization.IJsonSerializable, new() { throw null; }
+        public override Azure.Core.Serialization.IModelSerializable Read(ref System.Text.Json.Utf8JsonReader reader, System.Type typeToConvert, System.Text.Json.JsonSerializerOptions options) { throw null; }
+        public override void Write(System.Text.Json.Utf8JsonWriter writer, Azure.Core.Serialization.IModelSerializable value, System.Text.Json.JsonSerializerOptions options) { }
     }
     public abstract partial class ObjectSerializer
     {
@@ -1112,14 +1102,6 @@ namespace Azure.Core.Serialization
         public virtual System.BinaryData Serialize(object? value, System.Type? inputType = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public abstract System.Threading.Tasks.ValueTask SerializeAsync(System.IO.Stream stream, object? value, System.Type inputType, System.Threading.CancellationToken cancellationToken);
         public virtual System.Threading.Tasks.ValueTask<System.BinaryData> SerializeAsync(object? value, System.Type? inputType = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-    }
-    public partial class SerializableOptions
-    {
-        public SerializableOptions() { }
-        public bool IgnoreAdditionalProperties { get { throw null; } set { } }
-        public bool IgnoreReadOnlyProperties { get { throw null; } set { } }
-        public bool PrettyPrint { get { throw null; } set { } }
-        public Azure.Core.Serialization.ObjectSerializer? Serializer { get { throw null; } set { } }
     }
 }
 namespace Azure.Messaging
