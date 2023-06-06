@@ -414,5 +414,83 @@ namespace Azure.Core.Tests
             Assert.AreEqual("categories", (string)value.piiCategories);
             Assert.AreEqual("127.0.0.1", (string)value.ipAddress);
         }
+
+        [Test]
+        public void CanMapToCamelViaResponseContentOptions()
+        {
+            DynamicDataOptions options = new() { PropertyNameConversion = PropertyNameConversion.CamelCase };
+            dynamic value = new ResponseContent("""{"foo": null}""", options).ToDynamicFromJson();
+
+            // Existing property
+            value.Foo = 1;
+
+            // New property
+            value.Bar = 2;
+
+            Assert.AreEqual(1, (int)value.Foo);
+            Assert.AreEqual(1, (int)value.foo);
+            Assert.AreEqual(2, (int)value.Bar);
+            Assert.AreEqual(2, (int)value.bar);
+
+            // Serialized model - existing property
+            value.Foo = new
+            {
+                A = 3
+            };
+
+            // Serialized model - new property
+            value.Bar = new
+            {
+                B = 4
+            };
+
+            // Show they can be accessed with PascalCase
+            Assert.AreEqual(3, (int)value.Foo.A);
+            Assert.AreEqual(4, (int)value.Bar.B);
+
+            // And that they serialized to camelCase
+            Assert.AreEqual("""{"a":3}""", value.Foo.ToString());
+            Assert.AreEqual("""{"b":4}""", value.Bar.ToString());
+        }
+
+        [Test]
+        public void CannotMapToCamelViaDefaultResponseContentOptions()
+        {
+            DynamicDataOptions options = new();
+            dynamic value = new ResponseContent("""{"foo": "orig"}""", options).ToDynamicFromJson();
+
+            // Existing property
+            value.Foo = 1;
+
+            // New property
+            value.Bar = 2;
+
+            Assert.AreEqual(1, (int)value.Foo);
+            Assert.AreEqual("orig", (string)value.foo);
+            Assert.AreEqual(2, (int)value.Bar);
+            Assert.IsNull(value.bar);
+
+            // Serialized model - existing property
+            value.Foo = new
+            {
+                A = 3
+            };
+
+            // Serialized model - new property
+            value.Bar = new
+            {
+                B = 4
+            };
+
+            // Show what happens with PascalCase
+            Assert.AreEqual(3, (int)value.Foo.A);
+            Assert.AreEqual("orig", (string)value.foo);
+            Assert.AreEqual(4, (int)value.Bar.B);
+            Assert.IsNull(value.bar);
+
+            // And that they serialized to PascalCase
+            Assert.AreEqual("""{"A":3}""", value.Foo.ToString());
+            Assert.AreEqual("""{"B":4}""", value.Bar.ToString());
+        }
     }
 }

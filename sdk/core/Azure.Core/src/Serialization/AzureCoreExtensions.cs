@@ -65,6 +65,11 @@ namespace Azure
         /// </summary>
         public static dynamic ToDynamicFromJson(this BinaryData utf8Json)
         {
+            if (utf8Json is ResponseContent content)
+            {
+                return utf8Json.ToDynamicFromJson(content.DynamicOptions);
+            }
+
             return utf8Json.ToDynamicFromJson(DynamicDataOptions.Default);
         }
 
