@@ -100,13 +100,13 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
                     switch (tag.Key)
                     {
                         case SemanticConventions.AttributeHttpMethod:
-                            activityType |= OperationType.Http;
+                            activityType = OperationType.Http;
                             break;
                         case SemanticConventions.AttributeDbSystem:
-                            activityType |= OperationType.Db;
+                            activityType = OperationType.Db;
                             break;
                         case SemanticConventions.AttributeMessagingSystem:
-                            activityType |= OperationType.Messaging;
+                            activityType = OperationType.Messaging;
                             break;
                         case SemanticConventions.AttributeAzureNameSpace:
                             AzureNamespace = tag.Value.ToString();
