@@ -1,6 +1,6 @@
 # Release History
 
-## 1.0.0 (2023-06-14)
+## 1.0.0 (2023-06-12)
 General Availability version of the Azure Communication Services Rooms .NET SDK.
 
 ## 1.0.0-beta.2 (2023-05-17)
