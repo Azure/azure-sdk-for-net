@@ -370,9 +370,6 @@ namespace Azure.Core.Dynamic
         /// This operator calls through to <see cref="DynamicData.Equals(object?)"/> when DynamicData is on the left-hand
         /// side of the operation.  <see cref="DynamicData.Equals(object?)"/> has value semantics when the DynamicData represents
         /// a JSON primitive, i.e. string, bool, number, or null, and reference semantics otherwise, i.e. for objects and arrays.
-        ///
-        /// Please note that if DynamicData is on the right-hand side of a <c>!=</c> operation, this operator will not be invoked.
-        /// Because of this the result of a <c>!=</c> comparison with <c>null</c> on the left and a DynamicData instance on the right will return <c>true</c>.
         /// </remarks>
         /// <param name="left">The <see cref="DynamicData"/> to compare.</param>
         /// <param name="right">The <see cref="object"/> to compare.</param>

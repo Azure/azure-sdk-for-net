@@ -197,6 +197,7 @@ namespace Azure.Core.Tests.Public
             Assert.AreEqual(5, (int)data[0]);
             Assert.AreEqual("valid", (string)data[1]);
             Assert.IsTrue(data[2] == null);
+            Assert.AreEqual(null, data[2]);
         }
 
         [Test]

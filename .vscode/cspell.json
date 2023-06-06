@@ -46,7 +46,9 @@
     "sdk/objectanchors/*/api/*.cs",
     "sdk/purview/*/api/*.cs",
     "sdk/remoterendering/*/api/*.cs",
-    "sdk/videoanalyzer/*/api/*.cs"
+    "sdk/videoanalyzer/*/api/*.cs",
+    "sdk/newrelicobservability/*/api/*.cs",
+    "sdk/paloaltonetworks.ngfw/*/api/*.cs"
   ],
   // cspell is not case sensitive
   // Sort words alphabetically to make this list easier to use
@@ -100,6 +102,7 @@
     "unformattable",
     "unhold",
     "uninstrumented",
+    "vcpus",
     "vmss",
     "vnet",
     "westus",
@@ -280,6 +283,19 @@
       "filename": "**/sdk/consumption/**/*",
       "words": [
         "payg"
+      ]
+    },
+    {
+      "filename": "**/sdk/cosmosdbforpostgresql/**/*",
+      "words": [
+        "Citus"
+      ]
+    },
+    {
+      "filename": "**/sdk/costmanagement/**/*",
+      "words": [
+        "ahub",
+        "kpis"
       ]
     },
     {
@@ -587,6 +603,23 @@
       ]
     },
     {
+      "filename": "**/sdk/networkcloud/**/*.cs",
+      "words": [
+        "Reimage",
+        "Uncordon",
+        "Uncordoned",
+        "Ipam",
+        "Virtio",
+        "nics",
+        "Lldp",
+        "Nics",
+        "Dpdk",
+        "Sriov",
+        "Sata",
+        "Uefi"
+      ]
+    },
+    {
       "filename": "**/sdk/keyvault/**/*.cs",
       "words": [
         "deletesas",
@@ -615,6 +648,14 @@
       "words": [
         "reimage",
         "reimaging"
+      ]
+    },
+    {
+      "filename": "**/sdk/managednetworkfabric/**/*.cs",
+      "words": [
+        "evpn",
+        "mbps",
+        "gshut"
       ]
     },
     {

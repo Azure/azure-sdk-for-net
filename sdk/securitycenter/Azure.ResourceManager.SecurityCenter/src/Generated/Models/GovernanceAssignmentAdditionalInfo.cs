@@ -7,7 +7,7 @@
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    /// <summary> Describe the additional data of GovernanceAssignment - optional. </summary>
+    /// <summary> Describe the additional data of governance assignment - optional. </summary>
     public partial class GovernanceAssignmentAdditionalInfo
     {
         /// <summary> Initializes a new instance of GovernanceAssignmentAdditionalInfo. </summary>
@@ -16,9 +16,9 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         }
 
         /// <summary> Initializes a new instance of GovernanceAssignmentAdditionalInfo. </summary>
-        /// <param name="ticketNumber"> Ticket number associated with this GovernanceAssignment. </param>
-        /// <param name="ticketLink"> Ticket link associated with this GovernanceAssignment - for example: https://snow.com. </param>
-        /// <param name="ticketStatus"> The ticket status associated with this GovernanceAssignment - for example: Active. </param>
+        /// <param name="ticketNumber"> Ticket number associated with this governance assignment. </param>
+        /// <param name="ticketLink"> Ticket link associated with this governance assignment - for example: https://snow.com. </param>
+        /// <param name="ticketStatus"> The ticket status associated with this governance assignment - for example: Active. </param>
         internal GovernanceAssignmentAdditionalInfo(int? ticketNumber, string ticketLink, string ticketStatus)
         {
             TicketNumber = ticketNumber;
@@ -26,11 +26,11 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             TicketStatus = ticketStatus;
         }
 
-        /// <summary> Ticket number associated with this GovernanceAssignment. </summary>
+        /// <summary> Ticket number associated with this governance assignment. </summary>
         public int? TicketNumber { get; set; }
-        /// <summary> Ticket link associated with this GovernanceAssignment - for example: https://snow.com. </summary>
+        /// <summary> Ticket link associated with this governance assignment - for example: https://snow.com. </summary>
         public string TicketLink { get; set; }
-        /// <summary> The ticket status associated with this GovernanceAssignment - for example: Active. </summary>
+        /// <summary> The ticket status associated with this governance assignment - for example: Active. </summary>
         public string TicketStatus { get; set; }
     }
 }

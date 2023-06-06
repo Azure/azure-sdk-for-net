@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.DevCenter.Models
             Argument.AssertNotNull(name, nameof(name));
 
             Locations = new ChangeTrackingList<string>();
-            Capabilities = new ChangeTrackingList<Capability>();
+            Capabilities = new ChangeTrackingList<DevCenterCapability>();
         }
 
         /// <summary> Initializes a new instance of DevCenterSkuDetails. </summary>
@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.DevCenter.Models
         /// <param name="resourceType"> The name of the resource type. </param>
         /// <param name="locations"> SKU supported locations. </param>
         /// <param name="capabilities"> Collection of name/value pairs to describe the SKU capabilities. </param>
-        internal DevCenterSkuDetails(string name, DevCenterSkuTier? tier, string size, string family, int? capacity, string resourceType, IReadOnlyList<string> locations, IReadOnlyList<Capability> capabilities) : base(name, tier, size, family, capacity)
+        internal DevCenterSkuDetails(string name, DevCenterSkuTier? tier, string size, string family, int? capacity, ResourceType? resourceType, IReadOnlyList<string> locations, IReadOnlyList<DevCenterCapability> capabilities) : base(name, tier, size, family, capacity)
         {
             ResourceType = resourceType;
             Locations = locations;
@@ -42,10 +42,10 @@ namespace Azure.ResourceManager.DevCenter.Models
         }
 
         /// <summary> The name of the resource type. </summary>
-        public string ResourceType { get; }
+        public ResourceType? ResourceType { get; }
         /// <summary> SKU supported locations. </summary>
         public IReadOnlyList<string> Locations { get; }
         /// <summary> Collection of name/value pairs to describe the SKU capabilities. </summary>
-        public IReadOnlyList<Capability> Capabilities { get; }
+        public IReadOnlyList<DevCenterCapability> Capabilities { get; }
     }
 }
