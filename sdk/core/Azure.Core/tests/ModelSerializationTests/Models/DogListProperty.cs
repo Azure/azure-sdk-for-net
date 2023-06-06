@@ -203,15 +203,6 @@ namespace Azure.Core.Tests.ModelSerializationTests
 
         internal class DogListPropertyConverter : JsonConverter<DogListProperty>
         {
-            public DogListPropertyConverter()
-            {
-                //I would like to have a custom property in the JsonSerializerOptions class but this doesn't seem to be there
-                //we also can't have a parameterless ctor without making this converter class public
-                //IgnoreAdditionalProperties = ignoreAdditionalProperties;
-            }
-
-            //public bool IgnoreAdditionalProperties { get; }
-
             public override DogListProperty Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
                 return DeserializeDogListProperty(JsonDocument.ParseValue(ref reader).RootElement, ConvertOptions(options));
@@ -224,11 +215,13 @@ namespace Azure.Core.Tests.ModelSerializationTests
 
             private SerializableOptions ConvertOptions(JsonSerializerOptions options)
             {
-                return new SerializableOptions()
-                {
-                    //IgnoreAdditionalProperties = IgnoreAdditionalProperties,
-                    IgnoreReadOnlyProperties = options.IgnoreReadOnlyProperties
-                };
+                var serializableOptions = new SerializableOptions();
+                //pulls the additional properties setting from the ModelJsonConverter if it exists
+                //if it does not exist it uses the default value of true for azure sdk use cases
+                var modelConverter = options.Converters.FirstOrDefault(c=>c.GetType() == typeof(ModelJsonConverter)) as ModelJsonConverter;
+                serializableOptions.IgnoreAdditionalProperties = modelConverter is not null ? modelConverter.IgnoreAdditionalProperties : true;
+                serializableOptions.IgnoreReadOnlyProperties = options.IgnoreReadOnlyProperties;
+                return serializableOptions;
             }
         }
     }
