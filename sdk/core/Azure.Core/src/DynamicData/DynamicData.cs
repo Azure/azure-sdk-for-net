@@ -104,7 +104,8 @@ namespace Azure.Core.Dynamic
 
             // If we're using the PascalToCamel mapping and the strict name lookup
             // failed, do a second lookup with a camelCase name as well.
-            if (_options.PropertyNameConversion == PropertyNameConversion.CamelCase && char.IsUpper(name[0]))
+            if (char.IsUpper(name[0]) &&
+                _options.PropertyNameConversion == PropertyNameConversion.CamelCase)
             {
                 if (_element.TryGetProperty(ConvertToCamelCase(name), out element))
                 {
