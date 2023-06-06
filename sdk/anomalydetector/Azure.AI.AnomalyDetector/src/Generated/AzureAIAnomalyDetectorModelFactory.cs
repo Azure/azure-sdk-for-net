@@ -8,11 +8,12 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Azure.AI.AnomalyDetector;
 
-namespace Azure.AI.AnomalyDetector
+namespace AnomalyDetector
 {
     /// <summary> Model factory for models. </summary>
-    public static partial class AnomalyDetectorModelFactory
+    public static partial class AzureAIAnomalyDetectorModelFactory
     {
         /// <summary> Initializes a new instance of UnivariateLastDetectionResult. </summary>
         /// <param name="period">
@@ -48,7 +49,7 @@ namespace Azure.AI.AnomalyDetector
         /// Severity score for the last input point. The larger the value is, the more
         /// severe the anomaly is. For normal points, the severity is always 0.
         /// </param>
-        /// <returns> A new <see cref="AnomalyDetector.UnivariateLastDetectionResult"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Azure.AI.AnomalyDetector.UnivariateLastDetectionResult"/> instance for mocking. </returns>
         public static UnivariateLastDetectionResult UnivariateLastDetectionResult(int period = default, int suggestedWindow = default, float expectedValue = default, float upperMargin = default, float lowerMargin = default, bool isAnomaly = default, bool isNegativeAnomaly = default, bool isPositiveAnomaly = default, float? severity = null)
         {
             return new UnivariateLastDetectionResult(period, suggestedWindow, expectedValue, upperMargin, lowerMargin, isAnomaly, isNegativeAnomaly, isPositiveAnomaly, severity);
@@ -65,7 +66,7 @@ namespace Azure.AI.AnomalyDetector
         /// array is consistent with the input series.
         /// </param>
         /// <param name="confidenceScores"> Change point confidence of each point. </param>
-        /// <returns> A new <see cref="AnomalyDetector.UnivariateChangePointDetectionResult"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Azure.AI.AnomalyDetector.UnivariateChangePointDetectionResult"/> instance for mocking. </returns>
         public static UnivariateChangePointDetectionResult UnivariateChangePointDetectionResult(int? period = null, IEnumerable<bool> isChangePoint = null, IEnumerable<float> confidenceScores = null)
         {
             isChangePoint ??= new List<bool>();
@@ -78,7 +79,7 @@ namespace Azure.AI.AnomalyDetector
         /// <param name="resultId"> Result identifier that's used to fetch the results of an inference call. </param>
         /// <param name="summary"> Multivariate anomaly detection status. </param>
         /// <param name="results"> Detection result for each time stamp. </param>
-        /// <returns> A new <see cref="AnomalyDetector.MultivariateDetectionResult"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Azure.AI.AnomalyDetector.MultivariateDetectionResult"/> instance for mocking. </returns>
         public static MultivariateDetectionResult MultivariateDetectionResult(Guid resultId = default, MultivariateBatchDetectionResultSummary summary = null, IEnumerable<AnomalyState> results = null)
         {
             results ??= new List<AnomalyState>();
@@ -94,7 +95,7 @@ namespace Azure.AI.AnomalyDetector
         /// Detection request for batch inference. This is an asynchronous inference that
         /// will need another API to get detection results.
         /// </param>
-        /// <returns> A new <see cref="AnomalyDetector.MultivariateBatchDetectionResultSummary"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Azure.AI.AnomalyDetector.MultivariateBatchDetectionResultSummary"/> instance for mocking. </returns>
         public static MultivariateBatchDetectionResultSummary MultivariateBatchDetectionResultSummary(MultivariateBatchDetectionStatus status = default, IEnumerable<ErrorResponse> errors = null, IEnumerable<VariableState> variableStates = null, MultivariateBatchDetectionOptions setupInfo = null)
         {
             errors ??= new List<ErrorResponse>();
@@ -107,7 +108,7 @@ namespace Azure.AI.AnomalyDetector
         /// <param name="timestamp"> Time stamp for this anomaly. </param>
         /// <param name="value"> Detailed value of this anomalous time stamp. </param>
         /// <param name="errors"> Error message for the current time stamp. </param>
-        /// <returns> A new <see cref="AnomalyDetector.AnomalyState"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Azure.AI.AnomalyDetector.AnomalyState"/> instance for mocking. </returns>
         public static AnomalyState AnomalyState(DateTimeOffset timestamp = default, AnomalyValue value = null, IEnumerable<ErrorResponse> errors = null)
         {
             errors ??= new List<ErrorResponse>();
@@ -123,7 +124,7 @@ namespace Azure.AI.AnomalyDetector
         /// </param>
         /// <param name="score"> Raw anomaly score of severity, to help indicate the degree of abnormality. </param>
         /// <param name="interpretation"> Interpretation of this anomalous time stamp. </param>
-        /// <returns> A new <see cref="AnomalyDetector.AnomalyValue"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Azure.AI.AnomalyDetector.AnomalyValue"/> instance for mocking. </returns>
         public static AnomalyValue AnomalyValue(bool isAnomaly = default, float severity = default, float score = default, IEnumerable<AnomalyInterpretation> interpretation = null)
         {
             interpretation ??= new List<AnomalyInterpretation>();
@@ -138,7 +139,7 @@ namespace Azure.AI.AnomalyDetector
         /// number between 0 and 1.
         /// </param>
         /// <param name="correlationChanges"> Correlation changes among the anomalous variables. </param>
-        /// <returns> A new <see cref="AnomalyDetector.AnomalyInterpretation"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Azure.AI.AnomalyDetector.AnomalyInterpretation"/> instance for mocking. </returns>
         public static AnomalyInterpretation AnomalyInterpretation(string variable = null, float? contributionScore = null, CorrelationChanges correlationChanges = null)
         {
             return new AnomalyInterpretation(variable, contributionScore, correlationChanges);
@@ -146,7 +147,7 @@ namespace Azure.AI.AnomalyDetector
 
         /// <summary> Initializes a new instance of CorrelationChanges. </summary>
         /// <param name="changedVariables"> Correlated variables that have correlation changes under an anomaly. </param>
-        /// <returns> A new <see cref="AnomalyDetector.CorrelationChanges"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Azure.AI.AnomalyDetector.CorrelationChanges"/> instance for mocking. </returns>
         public static CorrelationChanges CorrelationChanges(IEnumerable<string> changedVariables = null)
         {
             changedVariables ??= new List<string>();
@@ -184,7 +185,7 @@ namespace Azure.AI.AnomalyDetector
         /// <param name="status"> Model status. </param>
         /// <param name="errors"> Error messages after failure to create a model. </param>
         /// <param name="diagnosticsInfo"> Diagnostics information to help inspect the states of a model or variable. </param>
-        /// <returns> A new <see cref="AnomalyDetector.ModelInfo"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Azure.AI.AnomalyDetector.ModelInfo"/> instance for mocking. </returns>
         public static ModelInfo ModelInfo(Uri dataSource = null, DataSchema? dataSchema = null, DateTimeOffset startTime = default, DateTimeOffset endTime = default, string displayName = null, int? slidingWindow = null, AlignPolicy alignPolicy = null, ModelStatus? status = null, IEnumerable<ErrorResponse> errors = null, DiagnosticsInfo diagnosticsInfo = null)
         {
             errors ??= new List<ErrorResponse>();
@@ -200,7 +201,7 @@ namespace Azure.AI.AnomalyDetector
         /// Training result of a model, including its status, errors, and diagnostics
         /// information.
         /// </param>
-        /// <returns> A new <see cref="AnomalyDetector.AnomalyDetectionModel"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Azure.AI.AnomalyDetector.AnomalyDetectionModel"/> instance for mocking. </returns>
         public static AnomalyDetectionModel AnomalyDetectionModel(Guid modelId = default, DateTimeOffset createdTime = default, DateTimeOffset lastUpdatedTime = default, ModelInfo modelInfo = null)
         {
             return new AnomalyDetectionModel(modelId, createdTime, lastUpdatedTime, modelInfo);
@@ -209,7 +210,7 @@ namespace Azure.AI.AnomalyDetector
         /// <summary> Initializes a new instance of MultivariateLastDetectionResult. </summary>
         /// <param name="variableStates"> Variable status. </param>
         /// <param name="results"> Anomaly status and information. </param>
-        /// <returns> A new <see cref="AnomalyDetector.MultivariateLastDetectionResult"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Azure.AI.AnomalyDetector.MultivariateLastDetectionResult"/> instance for mocking. </returns>
         public static MultivariateLastDetectionResult MultivariateLastDetectionResult(IEnumerable<VariableState> variableStates = null, IEnumerable<AnomalyState> results = null)
         {
             variableStates ??= new List<VariableState>();
