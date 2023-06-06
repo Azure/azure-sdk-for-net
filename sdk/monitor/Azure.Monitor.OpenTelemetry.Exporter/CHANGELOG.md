@@ -11,7 +11,7 @@
  
 ### Bugs Fixed
 
-* Add separate `MeterProvider` for standard metrics.
+* Fixed an issue which resulted in standard metrics getting exported to backends other than Azure Monitor, when Azure Monitor metric exporter was used with other exporters such as otlp side by side.
   ([#36369](https://github.com/Azure/azure-sdk-for-net/pull/36369))
 
 ### Other Changes
