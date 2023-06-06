@@ -7,16 +7,17 @@
 
 using System.Collections.Generic;
 using System.Linq;
+using Azure.AI.OpenAI;
 
-namespace Azure.AI.OpenAI
+namespace Azure.OpenAI
 {
     /// <summary> Model factory for models. </summary>
-    public static partial class AzureOpenAIModelFactory
+    public static partial class AzureAIOpenAIModelFactory
     {
         /// <summary> Initializes a new instance of Embeddings. </summary>
         /// <param name="data"> Embedding values for the prompts submitted in the request. </param>
         /// <param name="usage"> Usage counts for tokens input using the embeddings API. </param>
-        /// <returns> A new <see cref="OpenAI.Embeddings"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="AI.OpenAI.Embeddings"/> instance for mocking. </returns>
         public static Embeddings Embeddings(IEnumerable<EmbeddingItem> data = null, EmbeddingsUsage usage = null)
         {
             data ??= new List<EmbeddingItem>();
@@ -30,7 +31,7 @@ namespace Azure.AI.OpenAI
         /// vector-based relatedness of the provided input.
         /// </param>
         /// <param name="index"> Index of the prompt to which the EmbeddingItem corresponds. </param>
-        /// <returns> A new <see cref="OpenAI.EmbeddingItem"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="AI.OpenAI.EmbeddingItem"/> instance for mocking. </returns>
         public static EmbeddingItem EmbeddingItem(IEnumerable<float> embedding = null, int index = default)
         {
             embedding ??= new List<float>();
@@ -41,7 +42,7 @@ namespace Azure.AI.OpenAI
         /// <summary> Initializes a new instance of EmbeddingsUsage. </summary>
         /// <param name="promptTokens"> Number of tokens sent in the original request. </param>
         /// <param name="totalTokens"> Total number of tokens transacted in this request/response. </param>
-        /// <returns> A new <see cref="OpenAI.EmbeddingsUsage"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="AI.OpenAI.EmbeddingsUsage"/> instance for mocking. </returns>
         public static EmbeddingsUsage EmbeddingsUsage(int promptTokens = default, int totalTokens = default)
         {
             return new EmbeddingsUsage(promptTokens, totalTokens);
@@ -52,7 +53,7 @@ namespace Azure.AI.OpenAI
         /// <param name="index"> The ordered index associated with this completions choice. </param>
         /// <param name="logProbabilityModel"> The log probabilities model for tokens associated with this completions choice. </param>
         /// <param name="finishReason"> Reason for finishing. </param>
-        /// <returns> A new <see cref="OpenAI.Choice"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="AI.OpenAI.Choice"/> instance for mocking. </returns>
         public static Choice Choice(string text = null, int index = default, CompletionsLogProbabilityModel logProbabilityModel = null, CompletionsFinishReason? finishReason = null)
         {
             return new Choice(text, index, logProbabilityModel, finishReason);
@@ -63,7 +64,7 @@ namespace Azure.AI.OpenAI
         /// <param name="tokenLogProbabilities"> A collection of log probability values for the tokens in this completions data. </param>
         /// <param name="topLogProbabilities"> A mapping of tokens to maximum log probability values in this completions data. </param>
         /// <param name="textOffsets"> The text offsets associated with tokens in this completions data. </param>
-        /// <returns> A new <see cref="OpenAI.CompletionsLogProbabilityModel"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="AI.OpenAI.CompletionsLogProbabilityModel"/> instance for mocking. </returns>
         public static CompletionsLogProbabilityModel CompletionsLogProbabilityModel(IEnumerable<string> tokens = null, IEnumerable<float?> tokenLogProbabilities = null, IEnumerable<IDictionary<string, float?>> topLogProbabilities = null, IEnumerable<int> textOffsets = null)
         {
             tokens ??= new List<string>();
@@ -78,7 +79,7 @@ namespace Azure.AI.OpenAI
         /// <param name="completionTokens"> The number of tokens generated across all completions emissions. </param>
         /// <param name="promptTokens"> The number of tokens in the provided prompts for the completions request. </param>
         /// <param name="totalTokens"> The total number of tokens processed for the completions request and response. </param>
-        /// <returns> A new <see cref="OpenAI.CompletionsUsage"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="AI.OpenAI.CompletionsUsage"/> instance for mocking. </returns>
         public static CompletionsUsage CompletionsUsage(int completionTokens = default, int promptTokens = default, int totalTokens = default)
         {
             return new CompletionsUsage(completionTokens, promptTokens, totalTokens);

@@ -9,11 +9,12 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Azure.AI.MetricsAdvisor.Administration;
+using Azure.AI.MetricsAdvisor.Models;
 
-namespace Azure.AI.MetricsAdvisor.Models
+namespace MicrosoftAzureMetricsAdvisorRestAPIOpenAPIV2.Models
 {
     /// <summary> Model factory for models. </summary>
-    internal static partial class MicrosoftAzureMetricsAdvisorRestAPIOpenAPIV2ModelFactory
+    public static partial class MicrosoftAzureMetricsAdvisorRestAPIOpenAPIV2ModelFactory
     {
         /// <summary> Initializes a new instance of AnomalyAlertConfiguration. </summary>
         /// <param name="id"> anomaly alerting configuration unique id. </param>
@@ -27,7 +28,7 @@ namespace Azure.AI.MetricsAdvisor.Models
         /// <param name="dimensionsToSplitAlert"> dimensions used to split alert. </param>
         /// <param name="idsOfHooksToAlert"> hook unique ids. </param>
         /// <param name="metricAlertConfigurations"> Anomaly alerting configurations. </param>
-        /// <returns> A new <see cref="Models.AnomalyAlertConfiguration"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Azure.AI.MetricsAdvisor.Models.AnomalyAlertConfiguration"/> instance for mocking. </returns>
         public static AnomalyAlertConfiguration AnomalyAlertConfiguration(string id = null, string name = null, string description = null, MetricAlertConfigurationsOperator? crossMetricsOperator = null, IEnumerable<string> dimensionsToSplitAlert = null, IEnumerable<string> idsOfHooksToAlert = null, IEnumerable<MetricAlertConfiguration> metricAlertConfigurations = null)
         {
             dimensionsToSplitAlert ??= new List<string>();
@@ -43,7 +44,7 @@ namespace Azure.AI.MetricsAdvisor.Models
         /// <param name="createdOn"> created time. </param>
         /// <param name="lastModified"> modified time. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
-        /// <returns> A new <see cref="Models.AnomalyAlert"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Azure.AI.MetricsAdvisor.Models.AnomalyAlert"/> instance for mocking. </returns>
         public static AnomalyAlert AnomalyAlert(string id = null, DateTimeOffset timestamp = default, DateTimeOffset createdOn = default, DateTimeOffset lastModified = default)
         {
             if (id == null)
@@ -62,7 +63,7 @@ namespace Azure.AI.MetricsAdvisor.Models
         /// <param name="wholeSeriesDetectionConditions"></param>
         /// <param name="seriesGroupDetectionConditions"> detection configuration for series group. </param>
         /// <param name="seriesDetectionConditions"> detection configuration for specific series. </param>
-        /// <returns> A new <see cref="Models.AnomalyDetectionConfiguration"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Azure.AI.MetricsAdvisor.Models.AnomalyDetectionConfiguration"/> instance for mocking. </returns>
         public static AnomalyDetectionConfiguration AnomalyDetectionConfiguration(string id = null, string name = null, string description = null, string metricId = null, MetricWholeSeriesDetectionCondition wholeSeriesDetectionConditions = null, IEnumerable<MetricSeriesGroupDetectionCondition> seriesGroupDetectionConditions = null, IEnumerable<MetricSingleSeriesDetectionCondition> seriesDetectionConditions = null)
         {
             seriesGroupDetectionConditions ??= new List<MetricSeriesGroupDetectionCondition>();
@@ -76,7 +77,7 @@ namespace Azure.AI.MetricsAdvisor.Models
         /// <param name="paths"> drilling down path from query anomaly to root cause. </param>
         /// <param name="contributionScore"> score of the root cause. </param>
         /// <param name="description"> description of the root cause. </param>
-        /// <returns> A new <see cref="Models.IncidentRootCause"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Azure.AI.MetricsAdvisor.Models.IncidentRootCause"/> instance for mocking. </returns>
         public static IncidentRootCause IncidentRootCause(DimensionKey seriesKey = null, IEnumerable<string> paths = null, double contributionScore = default, string description = null)
         {
             paths ??= new List<string>();
@@ -89,7 +90,7 @@ namespace Azure.AI.MetricsAdvisor.Models
         /// <param name="id"> Unique id of data source credential. </param>
         /// <param name="name"> Name of data source credential. </param>
         /// <param name="description"> Description of data source credential. </param>
-        /// <returns> A new <see cref="Administration.DataSourceCredentialEntity"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Azure.AI.MetricsAdvisor.Administration.DataSourceCredentialEntity"/> instance for mocking. </returns>
         public static DataSourceCredentialEntity DataSourceCredentialEntity(string credentialKind = "Unknown", string id = null, string name = null, string description = null)
         {
             return new UnknownDataSourceCredential(credentialKind, id, name, description);
@@ -100,7 +101,7 @@ namespace Azure.AI.MetricsAdvisor.Models
         /// <param name="name"> metric name. </param>
         /// <param name="displayName"> metric display name. </param>
         /// <param name="description"> metric description. </param>
-        /// <returns> A new <see cref="Models.DataFeedMetric"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Azure.AI.MetricsAdvisor.Models.DataFeedMetric"/> instance for mocking. </returns>
         public static DataFeedMetric DataFeedMetric(string id = null, string name = null, string displayName = null, string description = null)
         {
             return new DataFeedMetric(id, name, displayName, description);
@@ -111,7 +112,7 @@ namespace Azure.AI.MetricsAdvisor.Models
         /// <param name="status"> latest ingestion task status for this data slice. </param>
         /// <param name="message"> the trimmed message of last ingestion job. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="message"/> is null. </exception>
-        /// <returns> A new <see cref="Models.DataFeedIngestionStatus"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Azure.AI.MetricsAdvisor.Models.DataFeedIngestionStatus"/> instance for mocking. </returns>
         public static DataFeedIngestionStatus DataFeedIngestionStatus(DateTimeOffset timestamp = default, IngestionStatusType status = default, string message = null)
         {
             if (message == null)
@@ -131,7 +132,7 @@ namespace Azure.AI.MetricsAdvisor.Models
         /// the timestamp of latest ingestion job with status update.
         /// null indicates not available
         /// </param>
-        /// <returns> A new <see cref="Models.DataFeedIngestionProgress"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Azure.AI.MetricsAdvisor.Models.DataFeedIngestionProgress"/> instance for mocking. </returns>
         public static DataFeedIngestionProgress DataFeedIngestionProgress(DateTimeOffset? latestSuccessTimestamp = null, DateTimeOffset? latestActiveTimestamp = null)
         {
             return new DataFeedIngestionProgress(latestSuccessTimestamp, latestActiveTimestamp);
@@ -142,7 +143,7 @@ namespace Azure.AI.MetricsAdvisor.Models
         /// <param name="status"> latest enrichment status for this data slice. </param>
         /// <param name="message"> the trimmed message describes details of the enrichment status. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="status"/> or <paramref name="message"/> is null. </exception>
-        /// <returns> A new <see cref="Models.EnrichmentStatus"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Azure.AI.MetricsAdvisor.Models.EnrichmentStatus"/> instance for mocking. </returns>
         public static EnrichmentStatus EnrichmentStatus(DateTimeOffset timestamp = default, string status = null, string message = null)
         {
             if (status == null)
