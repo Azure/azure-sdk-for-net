@@ -1,14 +1,13 @@
 # Release History
 
-## 1.0.0-beta.4 (Unreleased)
-
-### Features Added
+## 1.0.0 (2023-06-06)
 
 ### Breaking Changes
 
-### Bugs Fixed
-
-### Other Changes
+Polishing since last public beta release:
+- Corrected the format of all `ResourceIdentifier` type properties / parameters.
+- Corrected the format of all `TimeSpan` type properties / parameters.
+- Optimized the name of some models and functions.
 
 ## 1.0.0-beta.3 (2023-05-31)
 

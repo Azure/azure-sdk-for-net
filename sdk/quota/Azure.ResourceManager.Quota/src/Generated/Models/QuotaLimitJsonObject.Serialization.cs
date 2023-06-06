@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Quota.Models
 {
-    public partial class LimitJsonObject : IUtf8JsonSerializable
+    public partial class QuotaLimitJsonObject : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.Quota.Models
             writer.WriteEndObject();
         }
 
-        internal static LimitJsonObject DeserializeLimitJsonObject(JsonElement element)
+        internal static QuotaLimitJsonObject DeserializeQuotaLimitJsonObject(JsonElement element)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.Quota.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "LimitValue": return LimitObject.DeserializeLimitObject(element);
+                    case "LimitValue": return QuotaLimitObject.DeserializeQuotaLimitObject(element);
                 }
             }
             return UnknownLimitJsonObject.DeserializeUnknownLimitJsonObject(element);

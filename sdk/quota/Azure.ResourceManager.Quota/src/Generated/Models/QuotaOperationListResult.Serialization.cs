@@ -11,15 +11,15 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Quota.Models
 {
-    internal partial class OperationList
+    internal partial class QuotaOperationListResult
     {
-        internal static OperationList DeserializeOperationList(JsonElement element)
+        internal static QuotaOperationListResult DeserializeQuotaOperationListResult(JsonElement element)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<IReadOnlyList<OperationResponse>> value = default;
+            Optional<IReadOnlyList<QuotaOperationResult>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -29,10 +29,10 @@ namespace Azure.ResourceManager.Quota.Models
                     {
                         continue;
                     }
-                    List<OperationResponse> array = new List<OperationResponse>();
+                    List<QuotaOperationResult> array = new List<QuotaOperationResult>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(OperationResponse.DeserializeOperationResponse(item));
+                        array.Add(QuotaOperationResult.DeserializeQuotaOperationResult(item));
                     }
                     value = array;
                     continue;
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.Quota.Models
                     continue;
                 }
             }
-            return new OperationList(Optional.ToList(value), nextLink.Value);
+            return new QuotaOperationListResult(Optional.ToList(value), nextLink.Value);
         }
     }
 }

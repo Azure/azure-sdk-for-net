@@ -24,16 +24,16 @@ namespace Azure.ResourceManager.Quota.Models
         /// <param name="systemData"> The systemData. </param>
         /// <param name="properties"> Usage properties for the specified resource. </param>
         /// <returns> A new <see cref="Quota.CurrentUsagesBaseData"/> instance for mocking. </returns>
-        public static CurrentUsagesBaseData CurrentUsagesBaseData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, UsagesProperties properties = null)
+        public static CurrentUsagesBaseData CurrentUsagesBaseData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, QuotaUsagesProperties properties = null)
         {
             return new CurrentUsagesBaseData(id, name, resourceType, systemData, properties);
         }
 
-        /// <summary> Initializes a new instance of UsagesProperties. </summary>
+        /// <summary> Initializes a new instance of QuotaUsagesProperties. </summary>
         /// <param name="usages"> The quota limit properties for this resource. </param>
         /// <param name="unit"> The units for the quota usage, such as Count and Bytes. When requesting quota, use the **unit** value returned in the GET response in the request body of your PUT operation. </param>
         /// <param name="name"> Resource name provided by the resource provider. Use this property name when requesting quota. </param>
-        /// <param name="resourceType"> The name of the resource type. Optional field. </param>
+        /// <param name="resourceTypeName"> The name of the resource type. Optional field. </param>
         /// <param name="quotaPeriod">
         /// The time period for the summary of the quota usage values. For example:
         /// *P1D (per one day)
@@ -43,28 +43,28 @@ namespace Azure.ResourceManager.Quota.Models
         /// </param>
         /// <param name="isQuotaApplicable"> States if quota can be requested for this resource. </param>
         /// <param name="properties"> Additional properties for the specific resource provider. </param>
-        /// <returns> A new <see cref="Models.UsagesProperties"/> instance for mocking. </returns>
-        public static UsagesProperties UsagesProperties(UsagesObject usages = null, string unit = null, ResourceName name = null, string resourceType = null, string quotaPeriod = null, bool? isQuotaApplicable = null, BinaryData properties = null)
+        /// <returns> A new <see cref="Models.QuotaUsagesProperties"/> instance for mocking. </returns>
+        public static QuotaUsagesProperties QuotaUsagesProperties(QuotaUsagesObject usages = null, string unit = null, QuotaRequestResourceName name = null, string resourceTypeName = null, TimeSpan? quotaPeriod = null, bool? isQuotaApplicable = null, BinaryData properties = null)
         {
-            return new UsagesProperties(usages, unit, name, resourceType, quotaPeriod, isQuotaApplicable, properties);
+            return new QuotaUsagesProperties(usages, unit, name, resourceTypeName, quotaPeriod, isQuotaApplicable, properties);
         }
 
-        /// <summary> Initializes a new instance of UsagesObject. </summary>
+        /// <summary> Initializes a new instance of QuotaUsagesObject. </summary>
         /// <param name="value"> The usages value. </param>
         /// <param name="usagesType"> The quota or usages limit types. </param>
-        /// <returns> A new <see cref="Models.UsagesObject"/> instance for mocking. </returns>
-        public static UsagesObject UsagesObject(int value = default, UsagesType? usagesType = null)
+        /// <returns> A new <see cref="Models.QuotaUsagesObject"/> instance for mocking. </returns>
+        public static QuotaUsagesObject QuotaUsagesObject(int value = default, QuotaUsagesType? usagesType = null)
         {
-            return new UsagesObject(value, usagesType);
+            return new QuotaUsagesObject(value, usagesType);
         }
 
-        /// <summary> Initializes a new instance of ResourceName. </summary>
+        /// <summary> Initializes a new instance of QuotaRequestResourceName. </summary>
         /// <param name="value"> Resource name. </param>
         /// <param name="localizedValue"> Resource display name. </param>
-        /// <returns> A new <see cref="Models.ResourceName"/> instance for mocking. </returns>
-        public static ResourceName ResourceName(string value = null, string localizedValue = null)
+        /// <returns> A new <see cref="Models.QuotaRequestResourceName"/> instance for mocking. </returns>
+        public static QuotaRequestResourceName QuotaRequestResourceName(string value = null, string localizedValue = null)
         {
-            return new ResourceName(value, localizedValue);
+            return new QuotaRequestResourceName(value, localizedValue);
         }
 
         /// <summary> Initializes a new instance of ServiceErrorDetail. </summary>
@@ -91,12 +91,12 @@ namespace Azure.ResourceManager.Quota.Models
         /// <summary> Initializes a new instance of QuotaProperties. </summary>
         /// <param name="limit">
         /// Resource quota limit properties.
-        /// Please note <see cref="LimitJsonObject"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="LimitObject"/>.
+        /// Please note <see cref="QuotaLimitJsonObject"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="QuotaLimitObject"/>.
         /// </param>
         /// <param name="unit"> The quota units, such as Count and Bytes. When requesting quota, use the **unit** value returned in the GET response in the request body of your PUT operation. </param>
         /// <param name="name"> Resource name provided by the resource provider. Use this property name when requesting quota. </param>
-        /// <param name="resourceType"> The name of the resource type. Optional field. </param>
+        /// <param name="resourceTypeName"> The name of the resource type. Optional field. </param>
         /// <param name="quotaPeriod">
         /// The time period over which the quota usage values are summarized. For example:
         /// *P1D (per one day)
@@ -107,9 +107,9 @@ namespace Azure.ResourceManager.Quota.Models
         /// <param name="isQuotaApplicable"> States if quota can be requested for this resource. </param>
         /// <param name="properties"> Additional properties for the specific resource provider. </param>
         /// <returns> A new <see cref="Models.QuotaProperties"/> instance for mocking. </returns>
-        public static QuotaProperties QuotaProperties(LimitJsonObject limit = null, string unit = null, ResourceName name = null, string resourceType = null, string quotaPeriod = null, bool? isQuotaApplicable = null, BinaryData properties = null)
+        public static QuotaProperties QuotaProperties(QuotaLimitJsonObject limit = null, string unit = null, QuotaRequestResourceName name = null, string resourceTypeName = null, TimeSpan? quotaPeriod = null, bool? isQuotaApplicable = null, BinaryData properties = null)
         {
-            return new QuotaProperties(limit, unit, name, resourceType, quotaPeriod, isQuotaApplicable, properties);
+            return new QuotaProperties(limit, unit, name, resourceTypeName, quotaPeriod, isQuotaApplicable, properties);
         }
 
         /// <summary> Initializes a new instance of QuotaRequestDetailData. </summary>
@@ -123,50 +123,50 @@ namespace Azure.ResourceManager.Quota.Models
         /// <param name="requestSubmitOn"> The quota request submission time. The date conforms to the following format specified by the ISO 8601 standard: yyyy-MM-ddTHH:mm:ssZ. </param>
         /// <param name="value"> Quota request details. </param>
         /// <returns> A new <see cref="Quota.QuotaRequestDetailData"/> instance for mocking. </returns>
-        public static QuotaRequestDetailData QuotaRequestDetailData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, QuotaRequestState? provisioningState = null, string message = null, ServiceErrorDetail error = null, DateTimeOffset? requestSubmitOn = null, IEnumerable<SubRequest> value = null)
+        public static QuotaRequestDetailData QuotaRequestDetailData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, QuotaRequestState? provisioningState = null, string message = null, ServiceErrorDetail error = null, DateTimeOffset? requestSubmitOn = null, IEnumerable<QuotaSubRequestDetail> value = null)
         {
-            value ??= new List<SubRequest>();
+            value ??= new List<QuotaSubRequestDetail>();
 
             return new QuotaRequestDetailData(id, name, resourceType, systemData, provisioningState, message, error, requestSubmitOn, value?.ToList());
         }
 
-        /// <summary> Initializes a new instance of SubRequest. </summary>
+        /// <summary> Initializes a new instance of QuotaSubRequestDetail. </summary>
         /// <param name="name"> Resource name. </param>
-        /// <param name="resourceType"> Resource type for which the quota properties were requested. </param>
+        /// <param name="resourceTypeName"> Resource type for which the quota properties were requested. </param>
         /// <param name="unit"> Quota limit units, such as Count and Bytes. When requesting quota, use the **unit** value returned in the GET response in the request body of your PUT operation. </param>
         /// <param name="provisioningState"> The quota request status. </param>
         /// <param name="message"> User-friendly status message. </param>
         /// <param name="subRequestId"> Quota request ID. </param>
         /// <param name="limit">
         /// Resource quota limit properties.
-        /// Please note <see cref="LimitJsonObject"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="LimitObject"/>.
+        /// Please note <see cref="QuotaLimitJsonObject"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="QuotaLimitObject"/>.
         /// </param>
-        /// <returns> A new <see cref="Models.SubRequest"/> instance for mocking. </returns>
-        public static SubRequest SubRequest(ResourceName name = null, string resourceType = null, string unit = null, QuotaRequestState? provisioningState = null, string message = null, string subRequestId = null, LimitJsonObject limit = null)
+        /// <returns> A new <see cref="Models.QuotaSubRequestDetail"/> instance for mocking. </returns>
+        public static QuotaSubRequestDetail QuotaSubRequestDetail(QuotaRequestResourceName name = null, string resourceTypeName = null, string unit = null, QuotaRequestState? provisioningState = null, string message = null, Guid? subRequestId = null, QuotaLimitJsonObject limit = null)
         {
-            return new SubRequest(name, resourceType, unit, provisioningState, message, subRequestId, limit);
+            return new QuotaSubRequestDetail(name, resourceTypeName, unit, provisioningState, message, subRequestId, limit);
         }
 
-        /// <summary> Initializes a new instance of OperationResponse. </summary>
+        /// <summary> Initializes a new instance of QuotaOperationResult. </summary>
         /// <param name="name"></param>
         /// <param name="display"></param>
         /// <param name="origin"></param>
-        /// <returns> A new <see cref="Models.OperationResponse"/> instance for mocking. </returns>
-        public static OperationResponse OperationResponse(string name = null, OperationDisplay display = null, string origin = null)
+        /// <returns> A new <see cref="Models.QuotaOperationResult"/> instance for mocking. </returns>
+        public static QuotaOperationResult QuotaOperationResult(string name = null, QuotaOperationDisplay display = null, string origin = null)
         {
-            return new OperationResponse(name, display, origin);
+            return new QuotaOperationResult(name, display, origin);
         }
 
-        /// <summary> Initializes a new instance of OperationDisplay. </summary>
+        /// <summary> Initializes a new instance of QuotaOperationDisplay. </summary>
         /// <param name="provider"> Provider name. </param>
         /// <param name="resource"> Resource name. </param>
         /// <param name="operation"> Operation name. </param>
         /// <param name="description"> Operation description. </param>
-        /// <returns> A new <see cref="Models.OperationDisplay"/> instance for mocking. </returns>
-        public static OperationDisplay OperationDisplay(string provider = null, string resource = null, string operation = null, string description = null)
+        /// <returns> A new <see cref="Models.QuotaOperationDisplay"/> instance for mocking. </returns>
+        public static QuotaOperationDisplay QuotaOperationDisplay(string provider = null, string resource = null, string operation = null, string description = null)
         {
-            return new OperationDisplay(provider, resource, operation, description);
+            return new QuotaOperationDisplay(provider, resource, operation, description);
         }
     }
 }

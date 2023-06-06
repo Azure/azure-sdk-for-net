@@ -10,9 +10,9 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Quota.Models
 {
-    public partial class OperationDisplay
+    public partial class QuotaOperationDisplay
     {
-        internal static OperationDisplay DeserializeOperationDisplay(JsonElement element)
+        internal static QuotaOperationDisplay DeserializeQuotaOperationDisplay(JsonElement element)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.Quota.Models
                     continue;
                 }
             }
-            return new OperationDisplay(provider.Value, resource.Value, operation.Value, description.Value);
+            return new QuotaOperationDisplay(provider.Value, resource.Value, operation.Value, description.Value);
         }
     }
 }

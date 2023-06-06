@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Quota.Models
 {
-    public partial class ResourceName : IUtf8JsonSerializable
+    public partial class QuotaRequestResourceName : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.Quota.Models
             writer.WriteEndObject();
         }
 
-        internal static ResourceName DeserializeResourceName(JsonElement element)
+        internal static QuotaRequestResourceName DeserializeQuotaRequestResourceName(JsonElement element)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.Quota.Models
                     continue;
                 }
             }
-            return new ResourceName(value.Value, localizedValue.Value);
+            return new QuotaRequestResourceName(value.Value, localizedValue.Value);
         }
     }
 }

@@ -10,16 +10,16 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Quota.Models
 {
-    public partial class OperationResponse
+    public partial class QuotaOperationResult
     {
-        internal static OperationResponse DeserializeOperationResponse(JsonElement element)
+        internal static QuotaOperationResult DeserializeQuotaOperationResult(JsonElement element)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<string> name = default;
-            Optional<OperationDisplay> display = default;
+            Optional<QuotaOperationDisplay> display = default;
             Optional<string> origin = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.Quota.Models
                     {
                         continue;
                     }
-                    display = OperationDisplay.DeserializeOperationDisplay(property.Value);
+                    display = QuotaOperationDisplay.DeserializeQuotaOperationDisplay(property.Value);
                     continue;
                 }
                 if (property.NameEquals("origin"u8))
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.Quota.Models
                     continue;
                 }
             }
-            return new OperationResponse(name.Value, display.Value, origin.Value);
+            return new QuotaOperationResult(name.Value, display.Value, origin.Value);
         }
     }
 }

@@ -5,32 +5,34 @@
 
 #nullable disable
 
+using System;
+
 namespace Azure.ResourceManager.Quota.Models
 {
     /// <summary> Request property. </summary>
-    public partial class SubRequest
+    public partial class QuotaSubRequestDetail
     {
-        /// <summary> Initializes a new instance of SubRequest. </summary>
-        internal SubRequest()
+        /// <summary> Initializes a new instance of QuotaSubRequestDetail. </summary>
+        internal QuotaSubRequestDetail()
         {
         }
 
-        /// <summary> Initializes a new instance of SubRequest. </summary>
+        /// <summary> Initializes a new instance of QuotaSubRequestDetail. </summary>
         /// <param name="name"> Resource name. </param>
-        /// <param name="resourceType"> Resource type for which the quota properties were requested. </param>
+        /// <param name="resourceTypeName"> Resource type for which the quota properties were requested. </param>
         /// <param name="unit"> Quota limit units, such as Count and Bytes. When requesting quota, use the **unit** value returned in the GET response in the request body of your PUT operation. </param>
         /// <param name="provisioningState"> The quota request status. </param>
         /// <param name="message"> User-friendly status message. </param>
         /// <param name="subRequestId"> Quota request ID. </param>
         /// <param name="limit">
         /// Resource quota limit properties.
-        /// Please note <see cref="LimitJsonObject"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="LimitObject"/>.
+        /// Please note <see cref="QuotaLimitJsonObject"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="QuotaLimitObject"/>.
         /// </param>
-        internal SubRequest(ResourceName name, string resourceType, string unit, QuotaRequestState? provisioningState, string message, string subRequestId, LimitJsonObject limit)
+        internal QuotaSubRequestDetail(QuotaRequestResourceName name, string resourceTypeName, string unit, QuotaRequestState? provisioningState, string message, Guid? subRequestId, QuotaLimitJsonObject limit)
         {
             Name = name;
-            ResourceType = resourceType;
+            ResourceTypeName = resourceTypeName;
             Unit = unit;
             ProvisioningState = provisioningState;
             Message = message;
@@ -39,9 +41,9 @@ namespace Azure.ResourceManager.Quota.Models
         }
 
         /// <summary> Resource name. </summary>
-        public ResourceName Name { get; }
+        public QuotaRequestResourceName Name { get; }
         /// <summary> Resource type for which the quota properties were requested. </summary>
-        public string ResourceType { get; }
+        public string ResourceTypeName { get; }
         /// <summary> Quota limit units, such as Count and Bytes. When requesting quota, use the **unit** value returned in the GET response in the request body of your PUT operation. </summary>
         public string Unit { get; }
         /// <summary> The quota request status. </summary>
@@ -49,12 +51,12 @@ namespace Azure.ResourceManager.Quota.Models
         /// <summary> User-friendly status message. </summary>
         public string Message { get; }
         /// <summary> Quota request ID. </summary>
-        public string SubRequestId { get; }
+        public Guid? SubRequestId { get; }
         /// <summary>
         /// Resource quota limit properties.
-        /// Please note <see cref="LimitJsonObject"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="LimitObject"/>.
+        /// Please note <see cref="QuotaLimitJsonObject"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="QuotaLimitObject"/>.
         /// </summary>
-        public LimitJsonObject Limit { get; }
+        public QuotaLimitJsonObject Limit { get; }
     }
 }

@@ -10,26 +10,26 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Quota.Models
 {
-    /// <summary> The OperationList. </summary>
-    internal partial class OperationList
+    /// <summary> The QuotaOperationListResult. </summary>
+    internal partial class QuotaOperationListResult
     {
-        /// <summary> Initializes a new instance of OperationList. </summary>
-        internal OperationList()
+        /// <summary> Initializes a new instance of QuotaOperationListResult. </summary>
+        internal QuotaOperationListResult()
         {
-            Value = new ChangeTrackingList<OperationResponse>();
+            Value = new ChangeTrackingList<QuotaOperationResult>();
         }
 
-        /// <summary> Initializes a new instance of OperationList. </summary>
+        /// <summary> Initializes a new instance of QuotaOperationListResult. </summary>
         /// <param name="value"></param>
         /// <param name="nextLink"> URL to get the next page of items. </param>
-        internal OperationList(IReadOnlyList<OperationResponse> value, string nextLink)
+        internal QuotaOperationListResult(IReadOnlyList<QuotaOperationResult> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
         /// <summary> Gets the value. </summary>
-        public IReadOnlyList<OperationResponse> Value { get; }
+        public IReadOnlyList<QuotaOperationResult> Value { get; }
         /// <summary> URL to get the next page of items. </summary>
         public string NextLink { get; }
     }

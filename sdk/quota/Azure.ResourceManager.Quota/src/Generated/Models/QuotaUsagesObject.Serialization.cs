@@ -10,16 +10,16 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Quota.Models
 {
-    public partial class UsagesObject
+    public partial class QuotaUsagesObject
     {
-        internal static UsagesObject DeserializeUsagesObject(JsonElement element)
+        internal static QuotaUsagesObject DeserializeQuotaUsagesObject(JsonElement element)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             int value = default;
-            Optional<UsagesType> usagesType = default;
+            Optional<QuotaUsagesType> usagesType = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
@@ -33,11 +33,11 @@ namespace Azure.ResourceManager.Quota.Models
                     {
                         continue;
                     }
-                    usagesType = new UsagesType(property.Value.GetString());
+                    usagesType = new QuotaUsagesType(property.Value.GetString());
                     continue;
                 }
             }
-            return new UsagesObject(value, Optional.ToNullable(usagesType));
+            return new QuotaUsagesObject(value, Optional.ToNullable(usagesType));
         }
     }
 }
