@@ -174,6 +174,8 @@ namespace Azure.Core.Dynamic
                 value = ConvertType(value);
             }
 
+            // TODO: implement check for existing property before writing converted
+
             if (_options.PropertyNameConversion == PropertyNameConversion.CamelCase)
             {
                 name = ConvertToCamelCase(name);
