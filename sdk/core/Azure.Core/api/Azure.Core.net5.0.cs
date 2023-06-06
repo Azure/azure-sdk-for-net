@@ -379,7 +379,7 @@ namespace Azure.Core
     {
         protected ClientOptions() { }
         protected ClientOptions(Azure.Core.DiagnosticsOptions? diagnostics) { }
-        public Azure.Core.RedirectPolicyOptions? ClientRedirects { get { throw null; } set { } }
+        public Azure.Core.ClientRedirectsOptions? ClientRedirects { get { throw null; } set { } }
         public static Azure.Core.ClientOptions Default { get { throw null; } }
         public Azure.Core.DiagnosticsOptions Diagnostics { get { throw null; } }
         public Azure.Core.RetryOptions Retry { get { throw null; } }
@@ -392,6 +392,11 @@ namespace Azure.Core
         public override int GetHashCode() { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override string? ToString() { throw null; }
+    }
+    public partial class ClientRedirectsOptions
+    {
+        public ClientRedirectsOptions() { }
+        public bool IsClientRedirectEnabled { get { throw null; } set { } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct ContentType : System.IEquatable<Azure.Core.ContentType>, System.IEquatable<string>
@@ -518,11 +523,6 @@ namespace Azure.Core
     {
         public static Azure.Response[] Parse(Azure.Response response, bool expectCrLf, System.Threading.CancellationToken cancellationToken) { throw null; }
         public static System.Threading.Tasks.Task<Azure.Response[]> ParseAsync(Azure.Response response, bool expectCrLf, System.Threading.CancellationToken cancellationToken) { throw null; }
-    }
-    public partial class RedirectPolicyOptions
-    {
-        public RedirectPolicyOptions() { }
-        public bool IsClientRedirectEnabled { get { throw null; } set { } }
     }
     public abstract partial class Request : System.IDisposable
     {

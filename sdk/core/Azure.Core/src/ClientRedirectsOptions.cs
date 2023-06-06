@@ -6,7 +6,7 @@ namespace Azure.Core
     /// <summary>
     /// Configures behaviors for the redirect policy.
     /// </summary>
-    public class RedirectPolicyOptions
+    public class ClientRedirectsOptions
     {
         /// <summary>
         /// Gets or sets a value that indicates whether the redirect policy should follow redirection responses.

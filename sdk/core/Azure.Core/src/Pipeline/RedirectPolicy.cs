@@ -15,7 +15,7 @@ namespace Azure.Core.Pipeline
     public sealed class RedirectPolicy : HttpPipelinePolicy
     {
         private readonly int _maxAutomaticRedirections;
-        internal bool AllowAutoRedirects { get; set; } = false;
+        private readonly bool _allowAutoRedirects = false;
 
         internal static RedirectPolicy Shared { get; } = new RedirectPolicy(false);
 
@@ -25,7 +25,7 @@ namespace Azure.Core.Pipeline
         /// <param name="allowAutoRedirects">Determinds whether redirects will be handled by this policy. Rather than passing false, consider using the static <see cref="Shared"/> instance instead which defaults to false.</param>
         internal RedirectPolicy(bool allowAutoRedirects)
         {
-            AllowAutoRedirects = allowAutoRedirects;
+            _allowAutoRedirects = allowAutoRedirects;
             _maxAutomaticRedirections = 50;
         }
 
@@ -277,7 +277,7 @@ namespace Azure.Core.Pipeline
                 return (bool)value!;
             }
 
-            return AllowAutoRedirects;
+            return _allowAutoRedirects;
         }
 
         private class AllowRedirectsValueKey { }
