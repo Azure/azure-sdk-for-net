@@ -132,7 +132,7 @@ namespace Azure.Identity
             }
             catch (OperationCanceledException) when (!cancellationToken.IsCancellationRequested)
             {
-                throw new AuthenticationFailedException(AzureCliTimeoutError);
+                throw new CredentialUnavailableException(AzureCliTimeoutError);
             }
             catch (InvalidOperationException exception)
             {
@@ -163,7 +163,7 @@ namespace Azure.Identity
                     throw new CredentialUnavailableException(InteractiveLoginRequired);
                 }
 
-                throw new AuthenticationFailedException($"{AzureCliFailedError} {Troubleshoot} {exception.Message}");
+                throw new CredentialUnavailableException($"{AzureCliFailedError} {Troubleshoot} {exception.Message}");
             }
 
             AccessToken token = DeserializeOutput(output);
