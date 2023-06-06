@@ -6,6 +6,8 @@ using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using Azure.Core;
+using Azure.Core.Dynamic;
+using Azure.Core.Serialization;
 
 namespace Azure
 {
@@ -44,6 +46,12 @@ namespace Azure
         // TODO(matell): The .NET Framework team plans to add BinaryData.Empty in dotnet/runtime#49670, and we can use it then.
         private static readonly BinaryData s_EmptyBinaryData = new BinaryData(Array.Empty<byte>());
 
+        private static DynamicDataOptions _dynamicOptions = new DynamicDataOptions()
+        {
+            PropertyNameConversion = PropertyNameConversion.CamelCase,
+            DateTimeHandling = DynamicDateTimeHandling.Rfc3339
+        };
+
         /// <summary>
         /// Gets the contents of HTTP response, if it is available.
         /// </summary>
@@ -68,11 +76,11 @@ namespace Azure
 
                 if (memoryContent.TryGetBuffer(out ArraySegment<byte> segment))
                 {
-                    return new BinaryData(segment.AsMemory());
+                    return new ResponseContent(segment.AsMemory(), _dynamicOptions);
                 }
                 else
                 {
-                    return new BinaryData(memoryContent.ToArray());
+                    return new ResponseContent(memoryContent.ToArray(), _dynamicOptions);
                 }
             }
         }

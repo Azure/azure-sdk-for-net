@@ -8,7 +8,7 @@ namespace Azure.Core.Dynamic
     /// <summary>
     /// Provides options to be used with <see cref="DynamicData"/>.
     /// </summary>
-    public class DynamicDataOptions
+    internal class DynamicDataOptions
     {
         private static readonly DynamicDataOptions _default = new()
         {
