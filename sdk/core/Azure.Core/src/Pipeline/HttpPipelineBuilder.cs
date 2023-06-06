@@ -200,7 +200,7 @@ namespace Azure.Core.Pipeline
                 }
             }
 
-            policies.Add(new HttpPipelineTransportPolicy(transport, sanitizer, buildOptions.ClientOptions.DynamicOptions, buildOptions.RequestFailedDetailsParser));
+            policies.Add(new HttpPipelineTransportPolicy(transport, sanitizer, buildOptions.ClientOptions.RawContent, buildOptions.RequestFailedDetailsParser));
 
             buildOptions.ResponseClassifier ??= ResponseClassifier.Shared;
 

@@ -380,6 +380,7 @@ namespace Azure.Core
         protected ClientOptions(Azure.Core.DiagnosticsOptions? diagnostics) { }
         public static Azure.Core.ClientOptions Default { get { throw null; } }
         public Azure.Core.DiagnosticsOptions Diagnostics { get { throw null; } }
+        public Azure.Core.Serialization.RawContentOptions RawContent { get { throw null; } }
         public Azure.Core.RetryOptions Retry { get { throw null; } }
         public Azure.Core.Pipeline.HttpPipelinePolicy? RetryPolicy { get { throw null; } set { } }
         public Azure.Core.Pipeline.HttpPipelineTransport Transport { get { throw null; } set { } }
@@ -390,7 +391,6 @@ namespace Azure.Core
         public override int GetHashCode() { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override string? ToString() { throw null; }
-        public void UseCamelCaseNamingConvention() { }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct ContentType : System.IEquatable<Azure.Core.ContentType>, System.IEquatable<string>
@@ -1138,6 +1138,11 @@ namespace Azure.Core.Serialization
     {
         None = 0,
         CamelCase = 1,
+    }
+    public partial class RawContentOptions
+    {
+        internal RawContentOptions() { }
+        public bool UseCamelCaseNamingConvention { get { throw null; } set { } }
     }
 }
 namespace Azure.Messaging

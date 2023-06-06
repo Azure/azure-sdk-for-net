@@ -4,7 +4,6 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using Azure.Core.Dynamic;
 using Azure.Core.Pipeline;
 using Azure.Core.Serialization;
 
@@ -17,9 +16,6 @@ namespace Azure.Core
     {
         private HttpPipelineTransport _transport;
         internal bool IsCustomTransportSet { get; private set; }
-
-        private DynamicDataOptions _dynamicOptions;
-        internal DynamicDataOptions DynamicOptions { get => _dynamicOptions; }
 
         /// <summary>
         /// Gets the default set of <see cref="ClientOptions"/>. Changes to the <see cref="Default"/> options would be reflected
@@ -57,7 +53,7 @@ namespace Azure.Core
                 RetryPolicy = clientOptions.RetryPolicy;
                 Diagnostics = diagnostics ?? new DiagnosticsOptions(clientOptions.Diagnostics);
                 _transport = clientOptions.Transport;
-                _dynamicOptions = clientOptions._dynamicOptions;
+                RawContent = clientOptions.RawContent;
                 if (clientOptions.Policies != null)
                 {
                     Policies = new(clientOptions.Policies);
@@ -71,7 +67,7 @@ namespace Azure.Core
                 _transport = HttpPipelineTransport.Create();
                 Diagnostics = new DiagnosticsOptions(null);
                 Retry = new RetryOptions(null);
-                _dynamicOptions = new DynamicDataOptions() { DateTimeHandling = DynamicDateTimeHandling.Rfc3339 };
+                RawContent = new RawContentOptions();
             }
         }
 
@@ -107,6 +103,11 @@ namespace Azure.Core
         public HttpPipelinePolicy? RetryPolicy { get; set; }
 
         /// <summary>
+        /// Gets the client raw content options.
+        /// </summary>
+        public RawContentOptions RawContent { get; }
+
+        /// <summary>
         /// Adds an <see cref="HttpPipeline"/> policy into the client pipeline. The position of policy in the pipeline is controlled by the <paramref name="position"/> parameter.
         /// If you want the policy to execute once per client request use <see cref="HttpPipelinePosition.PerCall"/> otherwise use <see cref="HttpPipelinePosition.PerRetry"/>
         /// to run the policy for every retry. Note that the same instance of <paramref name="policy"/> would be added to all pipelines of client constructed using this <see cref="ClientOptions"/> object.
@@ -124,19 +125,6 @@ namespace Azure.Core
 
             Policies ??= new();
             Policies.Add((position, policy));
-        }
-
-        /// <summary>
-        /// By default, anonymous and dynamic types used to create and access protocol method request
-        /// and response content will map property names used in .NET code to exact names in the
-        /// content data.  Calling this method has the effect of converting property names used with
-        /// anonymous and dynamic types to camel case when accessing the content data.
-        /// If needed, it can be overridden per instance by passing a value for <see cref="PropertyNameConversion"/>
-        /// to [TODO: cref] RequestContent.Create() or <see cref="AzureCoreExtensions.ToDynamicFromJson(BinaryData, PropertyNameConversion, DynamicDateTimeHandling)"/>.
-        /// </summary>
-        public void UseCamelCaseNamingConvention()
-        {
-            _dynamicOptions.PropertyNameConversion = PropertyNameConversion.CamelCase;
         }
 
         internal List<(HttpPipelinePosition Position, HttpPipelinePolicy Policy)>? Policies { get; private set; }

@@ -5,6 +5,7 @@ using System;
 using System.Diagnostics;
 using System.Threading.Tasks;
 using Azure.Core.Dynamic;
+using Azure.Core.Serialization;
 
 namespace Azure.Core.Pipeline
 {
@@ -15,11 +16,11 @@ namespace Azure.Core.Pipeline
         private readonly RequestFailedDetailsParser? _errorParser;
         private readonly DynamicDataOptions _dynamicOptions;
 
-        public HttpPipelineTransportPolicy(HttpPipelineTransport transport, HttpMessageSanitizer sanitizer, DynamicDataOptions dynamicOptions, RequestFailedDetailsParser? failureContentExtractor = null)
+        public HttpPipelineTransportPolicy(HttpPipelineTransport transport, HttpMessageSanitizer sanitizer, RawContentOptions contentOptions, RequestFailedDetailsParser? failureContentExtractor = null)
         {
             _transport = transport;
             _sanitizer = sanitizer;
-            _dynamicOptions = dynamicOptions;
+            _dynamicOptions = contentOptions.GetDynamicOptions();
             _errorParser = failureContentExtractor;
         }
 
