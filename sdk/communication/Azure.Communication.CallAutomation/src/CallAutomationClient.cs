@@ -169,7 +169,7 @@ namespace Azure.Communication.CallAutomation
 
                 var answerResponse = await AzureCommunicationServicesRestClient.AnswerCallAsync(request,
                     repeatabilityHeaders.RepeatabilityRequestId,
-                    repeatabilityHeaders.GetRepeatabilityFirstSentString(),
+                    repeatabilityHeaders.RepeatabilityFirstSent,
                     cancellationToken)
                     .ConfigureAwait(false);
 
@@ -222,7 +222,7 @@ namespace Azure.Communication.CallAutomation
 
                 var answerResponse = AzureCommunicationServicesRestClient.AnswerCall(request,
                     repeatabilityHeaders.RepeatabilityRequestId,
-                    repeatabilityHeaders.GetRepeatabilityFirstSentString(),
+                    repeatabilityHeaders.RepeatabilityFirstSent,
                     cancellationToken);
 
                 var result = new AnswerCallResult(GetCallConnection(answerResponse.Value.CallConnectionId), new CallConnectionProperties(answerResponse.Value));
@@ -301,7 +301,7 @@ namespace Azure.Communication.CallAutomation
                 return await AzureCommunicationServicesRestClient.RedirectCallAsync(
                     request,
                     repeatabilityHeaders.RepeatabilityRequestId,
-                    repeatabilityHeaders.GetRepeatabilityFirstSentString(),
+                    repeatabilityHeaders.RepeatabilityFirstSent,
                     cancellationToken
                     ).ConfigureAwait(false);
             }
@@ -350,7 +350,7 @@ namespace Azure.Communication.CallAutomation
                 return AzureCommunicationServicesRestClient.RedirectCall(
                     request,
                     repeatabilityHeaders.RepeatabilityRequestId,
-                    repeatabilityHeaders.GetRepeatabilityFirstSentString(),
+                    repeatabilityHeaders.RepeatabilityFirstSent,
                     cancellationToken);
             }
             catch (Exception ex)
@@ -393,7 +393,7 @@ namespace Azure.Communication.CallAutomation
                 return await AzureCommunicationServicesRestClient.RejectCallAsync(
                     request,
                     repeatabilityHeaders.RepeatabilityRequestId,
-                    repeatabilityHeaders.GetRepeatabilityFirstSentString(),
+                    repeatabilityHeaders.RepeatabilityFirstSent,
                     cancellationToken
                     ).ConfigureAwait(false);
             }
@@ -437,7 +437,7 @@ namespace Azure.Communication.CallAutomation
                 return AzureCommunicationServicesRestClient.RejectCall(
                     request,
                     repeatabilityHeaders.RepeatabilityRequestId,
-                    repeatabilityHeaders.GetRepeatabilityFirstSentString(),
+                    repeatabilityHeaders.RepeatabilityFirstSent,
                     cancellationToken
                     );
             }
@@ -489,7 +489,7 @@ namespace Azure.Communication.CallAutomation
                 var createCallResponse = await AzureCommunicationServicesRestClient.CreateCallAsync(
                     request,
                     repeatabilityHeaders.RepeatabilityRequestId,
-                    repeatabilityHeaders.GetRepeatabilityFirstSentString(),
+                    repeatabilityHeaders.RepeatabilityFirstSent,
                     cancellationToken
                     ).ConfigureAwait(false);
 
@@ -549,7 +549,7 @@ namespace Azure.Communication.CallAutomation
                 var createCallResponse = AzureCommunicationServicesRestClient.CreateCall(
                     request,
                     repeatabilityHeaders.RepeatabilityRequestId,
-                    repeatabilityHeaders.GetRepeatabilityFirstSentString(),
+                    repeatabilityHeaders.RepeatabilityFirstSent,
                     cancellationToken
                     );
 
@@ -594,7 +594,7 @@ namespace Azure.Communication.CallAutomation
                 var createCallResponse = await AzureCommunicationServicesRestClient.CreateCallAsync(
                     request,
                     repeatabilityHeaders.RepeatabilityRequestId,
-                    repeatabilityHeaders.GetRepeatabilityFirstSentString(),
+                    repeatabilityHeaders.RepeatabilityFirstSent,
                     cancellationToken
                     ).ConfigureAwait(false);
 
@@ -639,7 +639,7 @@ namespace Azure.Communication.CallAutomation
                 var createCallResponse = AzureCommunicationServicesRestClient.CreateCall(
                     request,
                     repeatabilityHeaders.RepeatabilityRequestId,
-                    repeatabilityHeaders.GetRepeatabilityFirstSentString(),
+                    repeatabilityHeaders.RepeatabilityFirstSent,
                     cancellationToken
                     );
 
