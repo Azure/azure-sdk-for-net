@@ -133,5 +133,33 @@ namespace Azure.Core.Tests
 
             Assert.AreEqual(expected, reader.ReadToEnd());
         }
+
+        [Test]
+        public void DynamicDataContent()
+        {
+            ReadOnlySpan<byte> utf8Json = """
+                {
+                    "foo" : {
+                       "bar" : 1
+                    }
+                }
+                """u8;
+            ReadOnlyMemory<byte> json = new ReadOnlyMemory<byte>(utf8Json.ToArray());
+
+            using JsonDocument doc = JsonDocument.Parse(json);
+            using MemoryStream expected = new();
+            using Utf8JsonWriter writer = new(expected);
+            doc.WriteTo(writer);
+            writer.Flush();
+            expected.Position = 0;
+
+            using dynamic source = new BinaryData(json).ToDynamicFromJson();
+            using RequestContent content = RequestContent.Create(source);
+            using MemoryStream destination = new();
+
+            content.WriteTo(destination, default);
+
+            CollectionAssert.AreEqual(expected.ToArray(), destination.ToArray());
+        }
     }
 }

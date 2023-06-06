@@ -19,11 +19,13 @@ namespace Azure.ResourceManager.Automation.Tests
         protected AutomationManagementTestBase(bool isAsync, RecordedTestMode mode)
         : base(isAsync, mode)
         {
+            JsonPathSanitizers.Add("$..uri");
         }
 
         protected AutomationManagementTestBase(bool isAsync)
             : base(isAsync)
         {
+            JsonPathSanitizers.Add("$..uri");
         }
 
         [SetUp]

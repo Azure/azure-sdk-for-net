@@ -5,13 +5,12 @@ using System.Buffers;
 using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Storage.DataMovement.Models;
-using System.Linq;
 using Azure.Storage.DataMovement.Models.JobPlan;
-using System.Runtime.CompilerServices;
 
 namespace Azure.Storage.DataMovement
 {
@@ -43,6 +42,8 @@ namespace Azure.Storage.DataMovement
         /// Plan file writer for the respective job.
         /// </summary>
         internal TransferCheckpointer _checkpointer { get; set; }
+
+        private TransferProgressTracker _progressTracker;
 
         /// <summary>
         /// Specifies the source resource.
@@ -130,7 +131,7 @@ namespace Azure.Storage.DataMovement
         public SyncAsyncEventHandler<TransferFailedEventArgs> TransferFailedEventHandler { get; internal set; }
 
         /// <summary>
-        /// If a single transfer within the resource contianer gets transferred successfully the event
+        /// If a single transfer within the resource container gets transferred successfully the event
         /// will get added to this handler
         /// </summary>
         public SyncAsyncEventHandler<SingleTransferCompletedEventArgs> SingleTransferCompletedEventHandler { get; internal set; }
@@ -156,6 +157,7 @@ namespace Azure.Storage.DataMovement
             ErrorHandlingOptions errorHandling,
             StorageResourceCreateMode createMode,
             TransferCheckpointer checkpointer,
+            TransferProgressTracker progressTracker,
             ArrayPool<byte> arrayPool,
             bool isFinalPart,
             SyncAsyncEventHandler<TransferStatusEventArgs> jobPartEventHandler,
@@ -176,6 +178,7 @@ namespace Azure.Storage.DataMovement
             _createMode = createMode;
             _failureType = JobPartFailureType.None;
             _checkpointer = checkpointer;
+            _progressTracker = progressTracker;
             _cancellationToken = cancellationToken;
             _arrayPool = arrayPool;
             IsFinalPart = isFinalPart;
@@ -254,16 +257,6 @@ namespace Azure.Storage.DataMovement
         /// <returns>The task to wait until the cancellation has been triggered.</returns>
         internal async Task TriggerCancellationAsync()
         {
-            // If stop on failure specified, cancel entire job.
-            if (_errorHandling == ErrorHandlingOptions.StopOnAllFailures)
-            {
-                if (!_cancellationToken.IsCancellationRequested)
-                {
-                    _dataTransfer._state.TriggerCancellation();
-                }
-                _dataTransfer._state.ResetTransferredBytes();
-            }
-
             // Set the status to Pause/CancellationInProgress
             if (StorageTransferStatus.PauseInProgress == _dataTransfer.TransferStatus)
             {
@@ -276,6 +269,7 @@ namespace Azure.Storage.DataMovement
                 // It's a cancellation if a pause wasn't called.
                 await OnTransferStatusChanged(StorageTransferStatus.CancellationInProgress).ConfigureAwait(false);
             }
+            await CleanupAbortedJobPartAsync().ConfigureAwait(false);
         }
 
         /// <summary>
@@ -296,15 +290,29 @@ namespace Azure.Storage.DataMovement
             }
             if (statusChanged)
             {
+                // Progress tracking, do before invoking the event below
+                if (transferStatus == StorageTransferStatus.InProgress)
+                {
+                    _progressTracker.IncrementInProgressFiles();
+                }
+                else if (transferStatus == StorageTransferStatus.Completed)
+                {
+                    _progressTracker.IncrementCompletedFiles();
+                }
+                else if (transferStatus == StorageTransferStatus.CompletedWithSkippedTransfers)
+                {
+                    _progressTracker.IncrementSkippedFiles();
+                }
+                else if (transferStatus == StorageTransferStatus.CompletedWithFailedTransfers)
+                {
+                    _progressTracker.IncrementFailedFiles();
+                }
+
                 if (JobPartStatus == StorageTransferStatus.Completed)
                 {
                     await InvokeSingleCompletedArg().ConfigureAwait(false);
                 }
-                if (JobPartStatus == StorageTransferStatus.Paused ||
-                    JobPartStatus == StorageTransferStatus.CompletedWithFailedTransfers)
-                {
-                    await CleanupAbortedJobPartAsync().ConfigureAwait(false);
-                }
+
                 // Set the status in the checkpointer
                 await SetCheckpointerStatus(transferStatus).ConfigureAwait(false);
 
@@ -323,7 +331,7 @@ namespace Azure.Storage.DataMovement
         /// <param name="bytesTransferred"></param>
         internal void ReportBytesWritten(long bytesTransferred)
         {
-            _dataTransfer._state.UpdateTransferBytes(bytesTransferred);
+            _progressTracker.IncrementBytesTransferred(bytesTransferred);
         }
 
         public async virtual Task InvokeSingleCompletedArg()
@@ -510,7 +518,7 @@ namespace Azure.Storage.DataMovement
             long absolutePosition = blockSize;
             long blockLength = acceptableBlockSize;
 
-            // TODO: divide up paritions based on how much array pool is left
+            // TODO: divide up partitions based on how much array pool is left
             while (absolutePosition < streamLength)
             {
                 // Return based on the size of the stream divided up by the acceptable blocksize.
@@ -526,11 +534,11 @@ namespace Azure.Storage.DataMovement
         {
             if (_chunkTasks.All((Task task) => (task.IsCompleted)))
             {
-                if (_dataTransfer.TransferStatus == StorageTransferStatus.PauseInProgress)
+                if (JobPartStatus == StorageTransferStatus.PauseInProgress)
                 {
                     await OnTransferStatusChanged(StorageTransferStatus.Paused).ConfigureAwait(false);
                 }
-                else if (_dataTransfer.TransferStatus == StorageTransferStatus.CancellationInProgress)
+                else if (JobPartStatus == StorageTransferStatus.CancellationInProgress)
                 {
                     await OnTransferStatusChanged(StorageTransferStatus.CompletedWithFailedTransfers).ConfigureAwait(false);
                 }

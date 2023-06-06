@@ -1,14 +1,14 @@
 # Release History
 
-## 7.15.0-beta.1 (Unreleased)
-
-### Features Added
-
-### Breaking Changes
+## 7.15.0 (2023-06-06)
 
 ### Bugs Fixed
 
+- Do not copy over `DeliveryAnnotations` when constructing a new `ServiceBusMessage` from a `ServiceBusReceivedMessage`.
+
 ### Other Changes
+
+- The reference for the AMQP transport library, Microsoft.Azure.Amqp, has been bumped to 2.6.2. This resolves a potential issue opening TLS connections on .NET 6+.
 
 ## 7.14.0 (2023-05-09)
 
