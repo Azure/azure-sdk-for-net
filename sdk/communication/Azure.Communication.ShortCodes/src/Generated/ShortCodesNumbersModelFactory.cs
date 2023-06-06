@@ -8,8 +8,9 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Azure.Communication.ShortCodes.Models;
 
-namespace Azure.Communication.ShortCodes.Models
+namespace ShortCodesNumbersClient.Models
 {
     /// <summary> Model factory for models. </summary>
     public static partial class ShortCodesNumbersModelFactory
@@ -20,7 +21,7 @@ namespace Azure.Communication.ShortCodes.Models
         /// <param name="countryCode"> ISO 3166 2-char code representing the country e.g. &apos;US&apos;. </param>
         /// <param name="programBriefIds"> Program Brief Name. </param>
         /// <param name="purchaseDate"> Date in which number was purchased. </param>
-        /// <returns> A new <see cref="Models.ShortCode"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Azure.Communication.ShortCodes.Models.ShortCode"/> instance for mocking. </returns>
         public static ShortCode ShortCode(string number = null, NumberType? numberType = null, string countryCode = null, IEnumerable<string> programBriefIds = null, DateTimeOffset? purchaseDate = null)
         {
             programBriefIds ??= new List<string>();

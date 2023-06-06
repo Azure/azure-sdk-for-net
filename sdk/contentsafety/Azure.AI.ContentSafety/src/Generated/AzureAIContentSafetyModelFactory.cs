@@ -8,11 +8,12 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Azure.AI.ContentSafety;
 
-namespace Azure.AI.ContentSafety
+namespace ContentSafety
 {
     /// <summary> Model factory for models. </summary>
-    public static partial class ContentSafetyModelFactory
+    public static partial class AzureAIContentSafetyModelFactory
     {
         /// <summary> Initializes a new instance of AnalyzeTextResult. </summary>
         /// <param name="blocklistsMatchResults"> The details of blocklist match. </param>
@@ -20,7 +21,7 @@ namespace Azure.AI.ContentSafety
         /// <param name="selfHarmResult"> Analysis result for SelfHarm category. </param>
         /// <param name="sexualResult"> Analysis result for Sexual category. </param>
         /// <param name="violenceResult"> Analysis result for Violence category. </param>
-        /// <returns> A new <see cref="ContentSafety.AnalyzeTextResult"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Azure.AI.ContentSafety.AnalyzeTextResult"/> instance for mocking. </returns>
         public static AnalyzeTextResult AnalyzeTextResult(IEnumerable<TextBlocklistMatchResult> blocklistsMatchResults = null, TextAnalyzeSeverityResult hateResult = null, TextAnalyzeSeverityResult selfHarmResult = null, TextAnalyzeSeverityResult sexualResult = null, TextAnalyzeSeverityResult violenceResult = null)
         {
             blocklistsMatchResults ??= new List<TextBlocklistMatchResult>();
@@ -35,7 +36,7 @@ namespace Azure.AI.ContentSafety
         /// <param name="offset"> The character offset of matched text in original input. </param>
         /// <param name="length"> The length of matched text in original input. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="blocklistName"/>, <paramref name="blockItemId"/> or <paramref name="blockItemText"/> is null. </exception>
-        /// <returns> A new <see cref="ContentSafety.TextBlocklistMatchResult"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Azure.AI.ContentSafety.TextBlocklistMatchResult"/> instance for mocking. </returns>
         public static TextBlocklistMatchResult TextBlocklistMatchResult(string blocklistName = null, string blockItemId = null, string blockItemText = null, int offset = default, int length = default)
         {
             if (blocklistName == null)
@@ -57,7 +58,7 @@ namespace Azure.AI.ContentSafety
         /// <summary> Initializes a new instance of TextAnalyzeSeverityResult. </summary>
         /// <param name="category"> The text category. </param>
         /// <param name="severity"> The higher the severity of input content, the larger this value is. The values could be: 0,2,4,6. </param>
-        /// <returns> A new <see cref="ContentSafety.TextAnalyzeSeverityResult"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Azure.AI.ContentSafety.TextAnalyzeSeverityResult"/> instance for mocking. </returns>
         public static TextAnalyzeSeverityResult TextAnalyzeSeverityResult(TextCategory category = default, int severity = default)
         {
             return new TextAnalyzeSeverityResult(category, severity);
@@ -68,7 +69,7 @@ namespace Azure.AI.ContentSafety
         /// <param name="selfHarmResult"> Analysis result for SelfHarm category. </param>
         /// <param name="sexualResult"> Analysis result for Sexual category. </param>
         /// <param name="violenceResult"> Analysis result for Violence category. </param>
-        /// <returns> A new <see cref="ContentSafety.AnalyzeImageResult"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Azure.AI.ContentSafety.AnalyzeImageResult"/> instance for mocking. </returns>
         public static AnalyzeImageResult AnalyzeImageResult(ImageAnalyzeSeverityResult hateResult = null, ImageAnalyzeSeverityResult selfHarmResult = null, ImageAnalyzeSeverityResult sexualResult = null, ImageAnalyzeSeverityResult violenceResult = null)
         {
             return new AnalyzeImageResult(hateResult, selfHarmResult, sexualResult, violenceResult);
@@ -77,7 +78,7 @@ namespace Azure.AI.ContentSafety
         /// <summary> Initializes a new instance of ImageAnalyzeSeverityResult. </summary>
         /// <param name="category"> The image category. </param>
         /// <param name="severity"> The higher the severity of input content, the larger this value, currently its value could be: 0,2,4,6. </param>
-        /// <returns> A new <see cref="ContentSafety.ImageAnalyzeSeverityResult"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Azure.AI.ContentSafety.ImageAnalyzeSeverityResult"/> instance for mocking. </returns>
         public static ImageAnalyzeSeverityResult ImageAnalyzeSeverityResult(ImageCategory category = default, int severity = default)
         {
             return new ImageAnalyzeSeverityResult(category, severity);
@@ -86,7 +87,7 @@ namespace Azure.AI.ContentSafety
         /// <summary> Initializes a new instance of TextBlocklist. </summary>
         /// <param name="blocklistName"> Text blocklist name. </param>
         /// <param name="description"> Text blocklist description. </param>
-        /// <returns> A new <see cref="ContentSafety.TextBlocklist"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Azure.AI.ContentSafety.TextBlocklist"/> instance for mocking. </returns>
         public static TextBlocklist TextBlocklist(string blocklistName = null, string description = null)
         {
             return new TextBlocklist(blocklistName, description);
@@ -94,7 +95,7 @@ namespace Azure.AI.ContentSafety
 
         /// <summary> Initializes a new instance of AddBlockItemsResult. </summary>
         /// <param name="value"> Array of blockItems added. </param>
-        /// <returns> A new <see cref="ContentSafety.AddBlockItemsResult"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Azure.AI.ContentSafety.AddBlockItemsResult"/> instance for mocking. </returns>
         public static AddBlockItemsResult AddBlockItemsResult(IEnumerable<TextBlockItem> value = null)
         {
             value ??= new List<TextBlockItem>();
@@ -106,7 +107,7 @@ namespace Azure.AI.ContentSafety
         /// <param name="blockItemId"> Block Item Id. It will be uuid. </param>
         /// <param name="description"> Block item description. </param>
         /// <param name="text"> Block item content. </param>
-        /// <returns> A new <see cref="ContentSafety.TextBlockItem"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Azure.AI.ContentSafety.TextBlockItem"/> instance for mocking. </returns>
         public static TextBlockItem TextBlockItem(string blockItemId = null, string description = null, string text = null)
         {
             return new TextBlockItem(blockItemId, description, text);
