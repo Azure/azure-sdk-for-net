@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.NewRelicObservability.Samples
         // Accounts_List_MaximumSet_Gen
         [NUnit.Framework.Test]
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task GetNewrelicAccounts_AccountsListMaximumSetGen()
+        public async Task GetNewRelicAccounts_AccountsListMaximumSetGen()
         {
             // Generated from example definition: specification/newrelic/resource-manager/NewRelic.Observability/stable/2022-07-01/examples/Accounts_List_MaximumSet_Gen.json
             // this example is just showing the usage of "Accounts_List" operation, for the dependent resources, they will have to be created separately.
@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.NewRelicObservability.Samples
             // invoke the operation and iterate over the result
             string userEmail = "ruxvg@xqkmdhrnoo.hlmbpm";
             AzureLocation location = new AzureLocation("egh");
-            await foreach (NewRelicAccountResourceData item in subscriptionResource.GetNewrelicAccountsAsync(userEmail, location))
+            await foreach (NewRelicAccountResourceData item in subscriptionResource.GetNewRelicAccountsAsync(userEmail, location))
             {
                 Console.WriteLine($"Succeeded: {item}");
             }
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.NewRelicObservability.Samples
         // Accounts_List_MinimumSet_Gen
         [NUnit.Framework.Test]
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task GetNewrelicAccounts_AccountsListMinimumSetGen()
+        public async Task GetNewRelicAccounts_AccountsListMinimumSetGen()
         {
             // Generated from example definition: specification/newrelic/resource-manager/NewRelic.Observability/stable/2022-07-01/examples/Accounts_List_MinimumSet_Gen.json
             // this example is just showing the usage of "Accounts_List" operation, for the dependent resources, they will have to be created separately.
@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.NewRelicObservability.Samples
             // invoke the operation and iterate over the result
             string userEmail = "ruxvg@xqkmdhrnoo.hlmbpm";
             AzureLocation location = new AzureLocation("egh");
-            await foreach (NewRelicAccountResourceData item in subscriptionResource.GetNewrelicAccountsAsync(userEmail, location))
+            await foreach (NewRelicAccountResourceData item in subscriptionResource.GetNewRelicAccountsAsync(userEmail, location))
             {
                 Console.WriteLine($"Succeeded: {item}");
             }
@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.NewRelicObservability.Samples
         // Organizations_List_MaximumSet_Gen
         [NUnit.Framework.Test]
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task GetNewrelicOrganizations_OrganizationsListMaximumSetGen()
+        public async Task GetNewRelicOrganizations_OrganizationsListMaximumSetGen()
         {
             // Generated from example definition: specification/newrelic/resource-manager/NewRelic.Observability/stable/2022-07-01/examples/Organizations_List_MaximumSet_Gen.json
             // this example is just showing the usage of "Organizations_List" operation, for the dependent resources, they will have to be created separately.
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.NewRelicObservability.Samples
             // invoke the operation and iterate over the result
             string userEmail = "ruxvg@xqkmdhrnoo.hlmbpm";
             AzureLocation location = new AzureLocation("egh");
-            await foreach (NewRelicOrganizationResourceData item in subscriptionResource.GetNewrelicOrganizationsAsync(userEmail, location))
+            await foreach (NewRelicOrganizationResourceData item in subscriptionResource.GetNewRelicOrganizationsAsync(userEmail, location))
             {
                 Console.WriteLine($"Succeeded: {item}");
             }
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.NewRelicObservability.Samples
         // Organizations_List_MinimumSet_Gen
         [NUnit.Framework.Test]
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task GetNewrelicOrganizations_OrganizationsListMinimumSetGen()
+        public async Task GetNewRelicOrganizations_OrganizationsListMinimumSetGen()
         {
             // Generated from example definition: specification/newrelic/resource-manager/NewRelic.Observability/stable/2022-07-01/examples/Organizations_List_MinimumSet_Gen.json
             // this example is just showing the usage of "Organizations_List" operation, for the dependent resources, they will have to be created separately.
@@ -130,7 +130,7 @@ namespace Azure.ResourceManager.NewRelicObservability.Samples
             // invoke the operation and iterate over the result
             string userEmail = "ruxvg@xqkmdhrnoo.hlmbpm";
             AzureLocation location = new AzureLocation("egh");
-            await foreach (NewRelicOrganizationResourceData item in subscriptionResource.GetNewrelicOrganizationsAsync(userEmail, location))
+            await foreach (NewRelicOrganizationResourceData item in subscriptionResource.GetNewRelicOrganizationsAsync(userEmail, location))
             {
                 Console.WriteLine($"Succeeded: {item}");
             }
@@ -141,7 +141,7 @@ namespace Azure.ResourceManager.NewRelicObservability.Samples
         // Plans_List_MaximumSet_Gen
         [NUnit.Framework.Test]
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task GetNewrelicPlans_PlansListMaximumSetGen()
+        public async Task GetNewRelicPlans_PlansListMaximumSetGen()
         {
             // Generated from example definition: specification/newrelic/resource-manager/NewRelic.Observability/stable/2022-07-01/examples/Plans_List_MaximumSet_Gen.json
             // this example is just showing the usage of "Plans_List" operation, for the dependent resources, they will have to be created separately.
@@ -160,7 +160,7 @@ namespace Azure.ResourceManager.NewRelicObservability.Samples
             // invoke the operation and iterate over the result
             string accountId = "pwuxgvrmkk";
             string organizationId = "hilawwjz";
-            await foreach (NewRelicPlanData item in subscriptionResource.GetNewrelicPlansAsync(accountId: accountId, organizationId: organizationId))
+            await foreach (NewRelicPlanData item in subscriptionResource.GetNewRelicPlansAsync(accountId: accountId, organizationId: organizationId))
             {
                 Console.WriteLine($"Succeeded: {item}");
             }
@@ -171,7 +171,7 @@ namespace Azure.ResourceManager.NewRelicObservability.Samples
         // Plans_List_MinimumSet_Gen
         [NUnit.Framework.Test]
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task GetNewrelicPlans_PlansListMinimumSetGen()
+        public async Task GetNewRelicPlans_PlansListMinimumSetGen()
         {
             // Generated from example definition: specification/newrelic/resource-manager/NewRelic.Observability/stable/2022-07-01/examples/Plans_List_MinimumSet_Gen.json
             // this example is just showing the usage of "Plans_List" operation, for the dependent resources, they will have to be created separately.
@@ -188,7 +188,7 @@ namespace Azure.ResourceManager.NewRelicObservability.Samples
             SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
 
             // invoke the operation and iterate over the result
-            await foreach (NewRelicPlanData item in subscriptionResource.GetNewrelicPlansAsync())
+            await foreach (NewRelicPlanData item in subscriptionResource.GetNewRelicPlansAsync())
             {
                 Console.WriteLine($"Succeeded: {item}");
             }

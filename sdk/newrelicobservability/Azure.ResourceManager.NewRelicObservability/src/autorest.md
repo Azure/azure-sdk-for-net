@@ -143,8 +143,8 @@ rename-mapping:
   VMInfo.vmId: -|arm-id
 
 override-operation-name:
-  Accounts_List: GetNewrelicAccounts
-  Organizations_List: GetNewrelicOrganizations
-  Plans_List: GetNewrelicPlans
+  Accounts_List: GetNewRelicAccounts
+  Organizations_List: GetNewRelicOrganizations
+  Plans_List: GetNewRelicPlans
 
 ```
