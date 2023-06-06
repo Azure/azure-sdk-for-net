@@ -240,7 +240,8 @@ namespace Azure.Storage.DataMovement
             {
                 if (singleCall)
                 {
-                    ReadStreamStorageResourceResult result = await _sourceResource.ReadStreamAsync().ConfigureAwait(false);
+                    ReadStreamStorageResourceResult result = await _sourceResource.ReadStreamAsync(
+                        cancellationToken: _cancellationToken).ConfigureAwait(false);
 
                     using Stream stream = result.Content;
                     await _destinationResource.WriteFromStreamAsync(
