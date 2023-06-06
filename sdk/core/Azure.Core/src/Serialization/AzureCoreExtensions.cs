@@ -65,18 +65,18 @@ namespace Azure
         /// </summary>
         public static dynamic ToDynamicFromJson(this BinaryData utf8Json)
         {
-            return utf8Json.ToDynamicFromJson(DynamicDataOptions.Default);
+            return utf8Json.ToDynamicFromJson(DynamicCaseMapping.None);
         }
 
         /// <summary>
         /// Return the content of the BinaryData as a dynamic type.
         /// </summary>
-        public static dynamic ToDynamicFromJson(this BinaryData utf8Json, DynamicCaseMapping caseMapping, DynamicDateTimeHandling dateTimeHandling = DynamicDateTimeHandling.Rfc3339)
+        public static dynamic ToDynamicFromJson(this BinaryData utf8Json, DynamicCaseMapping caseMapping, string dateTimeFormat = "o")
         {
             DynamicDataOptions options = new()
             {
                 CaseMapping = caseMapping,
-                DateTimeHandling = dateTimeHandling
+                DateTimeFormat = dateTimeFormat
             };
 
             return utf8Json.ToDynamicFromJson(options);
@@ -85,9 +85,9 @@ namespace Azure
         /// <summary>
         /// Return the content of the BinaryData as a dynamic type.
         /// </summary>
-        public static dynamic ToDynamicFromJson(this BinaryData utf8Json, DynamicDataOptions options)
+        internal static dynamic ToDynamicFromJson(this BinaryData utf8Json, DynamicDataOptions options)
         {
-            MutableJsonDocument mdoc = MutableJsonDocument.Parse(utf8Json, DynamicData.GetSerializerOptions(options));
+            MutableJsonDocument mdoc = MutableJsonDocument.Parse(utf8Json, DynamicDataOptions.ToSerializerOptions(options));
             return new DynamicData(mdoc.RootElement, options);
         }
 

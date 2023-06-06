@@ -831,7 +831,7 @@ namespace Azure.Core.Tests
         {
             DynamicDataOptions options = new DynamicDataOptions()
             {
-                DateTimeHandling = DynamicDateTimeHandling.UnixTime
+                DateTimeFormat = "unix"
             };
 
             dynamic value = BinaryData.FromString("""{ "foo": 0 }""").ToDynamicFromJson(options);
