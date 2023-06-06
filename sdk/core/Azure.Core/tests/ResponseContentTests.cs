@@ -20,7 +20,7 @@ namespace Azure.Core.Tests
             ResponseContent content = response.Content as ResponseContent;
 
             Assert.IsNotNull(content);
-            Assert.AreEqual(content.DynamicOptions.PropertyNameConversion, PropertyNameConversion.None);
+            Assert.AreEqual(content.DynamicOptions.PropertyNamingConvention, PropertyNamingConvention.None);
         }
 
         [Test]

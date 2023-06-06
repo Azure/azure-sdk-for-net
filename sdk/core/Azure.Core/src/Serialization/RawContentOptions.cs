@@ -35,7 +35,7 @@ namespace Azure.Core.Serialization
 
             if (UseCamelCaseNamingConvention)
             {
-                options.PropertyNameConversion = PropertyNameConversion.CamelCase;
+                options.PropertyNamingConvention = PropertyNamingConvention.CamelCase;
             }
 
             return options;
