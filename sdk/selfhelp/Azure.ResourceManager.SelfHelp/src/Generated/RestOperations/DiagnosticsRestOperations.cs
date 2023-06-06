@@ -33,11 +33,11 @@ namespace Azure.ResourceManager.SelfHelp
         {
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _apiVersion = apiVersion ?? "2023-01-01-preview";
+            _apiVersion = apiVersion ?? "2023-06-01";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
-        internal HttpMessage CreateCheckNameAvailabilityRequest(string scope, CheckNameAvailabilityContent content)
+        internal HttpMessage CreateCheckNameAvailabilityRequest(string scope, SelfHelpNameAvailabilityContent content)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.SelfHelp
         /// <param name="content"> The required parameters for availability check. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="scope"/> is null. </exception>
-        public async Task<Response<CheckNameAvailabilityResponse>> CheckNameAvailabilityAsync(string scope, CheckNameAvailabilityContent content = null, CancellationToken cancellationToken = default)
+        public async Task<Response<SelfHelpNameAvailabilityResult>> CheckNameAvailabilityAsync(string scope, SelfHelpNameAvailabilityContent content = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(scope, nameof(scope));
 
@@ -76,9 +76,9 @@ namespace Azure.ResourceManager.SelfHelp
             {
                 case 200:
                     {
-                        CheckNameAvailabilityResponse value = default;
+                        SelfHelpNameAvailabilityResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = CheckNameAvailabilityResponse.DeserializeCheckNameAvailabilityResponse(document.RootElement);
+                        value = SelfHelpNameAvailabilityResult.DeserializeSelfHelpNameAvailabilityResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.SelfHelp
         /// <param name="content"> The required parameters for availability check. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="scope"/> is null. </exception>
-        public Response<CheckNameAvailabilityResponse> CheckNameAvailability(string scope, CheckNameAvailabilityContent content = null, CancellationToken cancellationToken = default)
+        public Response<SelfHelpNameAvailabilityResult> CheckNameAvailability(string scope, SelfHelpNameAvailabilityContent content = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(scope, nameof(scope));
 
@@ -101,9 +101,9 @@ namespace Azure.ResourceManager.SelfHelp
             {
                 case 200:
                     {
-                        CheckNameAvailabilityResponse value = default;
+                        SelfHelpNameAvailabilityResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = CheckNameAvailabilityResponse.DeserializeCheckNameAvailabilityResponse(document.RootElement);
+                        value = SelfHelpNameAvailabilityResult.DeserializeSelfHelpNameAvailabilityResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.SelfHelp
             }
         }
 
-        internal HttpMessage CreateCreateRequest(string scope, string diagnosticsResourceName, SelfHelpDiagnosticResourceData data)
+        internal HttpMessage CreateCreateRequest(string scope, string diagnosticsResourceName, SelfHelpDiagnosticData data)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -140,7 +140,7 @@ namespace Azure.ResourceManager.SelfHelp
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="scope"/>, <paramref name="diagnosticsResourceName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="diagnosticsResourceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> CreateAsync(string scope, string diagnosticsResourceName, SelfHelpDiagnosticResourceData data, CancellationToken cancellationToken = default)
+        public async Task<Response> CreateAsync(string scope, string diagnosticsResourceName, SelfHelpDiagnosticData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(scope, nameof(scope));
             Argument.AssertNotNullOrEmpty(diagnosticsResourceName, nameof(diagnosticsResourceName));
@@ -150,6 +150,7 @@ namespace Azure.ResourceManager.SelfHelp
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
+                case 200:
                 case 201:
                     return message.Response;
                 default:
@@ -164,7 +165,7 @@ namespace Azure.ResourceManager.SelfHelp
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="scope"/>, <paramref name="diagnosticsResourceName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="diagnosticsResourceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response Create(string scope, string diagnosticsResourceName, SelfHelpDiagnosticResourceData data, CancellationToken cancellationToken = default)
+        public Response Create(string scope, string diagnosticsResourceName, SelfHelpDiagnosticData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(scope, nameof(scope));
             Argument.AssertNotNullOrEmpty(diagnosticsResourceName, nameof(diagnosticsResourceName));
@@ -174,6 +175,7 @@ namespace Azure.ResourceManager.SelfHelp
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
+                case 200:
                 case 201:
                     return message.Response;
                 default:
@@ -205,7 +207,7 @@ namespace Azure.ResourceManager.SelfHelp
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="scope"/> or <paramref name="diagnosticsResourceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="diagnosticsResourceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<SelfHelpDiagnosticResourceData>> GetAsync(string scope, string diagnosticsResourceName, CancellationToken cancellationToken = default)
+        public async Task<Response<SelfHelpDiagnosticData>> GetAsync(string scope, string diagnosticsResourceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(scope, nameof(scope));
             Argument.AssertNotNullOrEmpty(diagnosticsResourceName, nameof(diagnosticsResourceName));
@@ -216,13 +218,13 @@ namespace Azure.ResourceManager.SelfHelp
             {
                 case 200:
                     {
-                        SelfHelpDiagnosticResourceData value = default;
+                        SelfHelpDiagnosticData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = SelfHelpDiagnosticResourceData.DeserializeSelfHelpDiagnosticResourceData(document.RootElement);
+                        value = SelfHelpDiagnosticData.DeserializeSelfHelpDiagnosticData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((SelfHelpDiagnosticResourceData)null, message.Response);
+                    return Response.FromValue((SelfHelpDiagnosticData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -234,7 +236,7 @@ namespace Azure.ResourceManager.SelfHelp
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="scope"/> or <paramref name="diagnosticsResourceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="diagnosticsResourceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<SelfHelpDiagnosticResourceData> Get(string scope, string diagnosticsResourceName, CancellationToken cancellationToken = default)
+        public Response<SelfHelpDiagnosticData> Get(string scope, string diagnosticsResourceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(scope, nameof(scope));
             Argument.AssertNotNullOrEmpty(diagnosticsResourceName, nameof(diagnosticsResourceName));
@@ -245,13 +247,13 @@ namespace Azure.ResourceManager.SelfHelp
             {
                 case 200:
                     {
-                        SelfHelpDiagnosticResourceData value = default;
+                        SelfHelpDiagnosticData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = SelfHelpDiagnosticResourceData.DeserializeSelfHelpDiagnosticResourceData(document.RootElement);
+                        value = SelfHelpDiagnosticData.DeserializeSelfHelpDiagnosticData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((SelfHelpDiagnosticResourceData)null, message.Response);
+                    return Response.FromValue((SelfHelpDiagnosticData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }

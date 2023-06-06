@@ -1,16 +1,16 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://content-safety-canary-test.cognitiveservices.azure.com/contentsafety/image:analyze?api-version=2023-04-30-preview",
+      "RequestUri": "https://sdktest-contentsafety.cognitiveservices.azure.com/contentsafety/image:analyze?api-version=2023-04-30-preview",
       "RequestMethod": "POST",
       "RequestHeaders": {
         "Accept": "application/json",
         "Content-Length": "33592",
         "Content-Type": "application/json",
         "Ocp-Apim-Subscription-Key": "Sanitized",
-        "traceparent": "00-20f25e54496c5f79cf89bae440d68558-ded6163a5666075c-00",
-        "User-Agent": "azsdk-net-AI.ContentSafety/1.0.0-alpha.20230504.1 (.NET 7.0.5; Microsoft Windows 10.0.22621)",
-        "x-ms-client-request-id": "d4a1d4d60b970e17f64f12839b1b2332",
+        "traceparent": "00-2dae702325cc76c447f9f1831849ff73-f91d1077e8376d24-00",
+        "User-Agent": "azsdk-net-AI.ContentSafety/1.0.0-alpha.20230601.1 (.NET 7.0.5; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "ccc222cdb0b00129745099d06a78a0e9",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
@@ -21,15 +21,15 @@
       "StatusCode": 200,
       "ResponseHeaders": {
         "api-supported-versions": "2022-12-30-preview,2023-04-30-preview",
-        "apim-request-id": "d83c93e8-5812-400c-8a81-0765d45292bf",
-        "apim-subscription-id": "973fda3f71b6448db2933f4e72c9d160",
+        "apim-request-id": "2e278a82-7b5a-4efd-89fd-72fa66986631",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Thu, 04 May 2023 13:03:06 GMT",
+        "csp-billing-usage": "CognitiveServices.ContentSafety.Image:Analyze=1",
+        "Date": "Thu, 01 Jun 2023 15:08:24 GMT",
         "Server": "istio-envoy",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
         "Transfer-Encoding": "chunked",
         "X-Content-Type-Options": "nosniff",
-        "x-envoy-upstream-service-time": "78",
+        "x-envoy-upstream-service-time": "165",
         "x-ms-region": "Central US EUAP"
       },
       "ResponseBody": {
@@ -53,8 +53,8 @@
     }
   ],
   "Variables": {
-    "CONTENT_SAFETY_ENDPOINT": "https://content-safety-canary-test.cognitiveservices.azure.com/",
+    "CONTENT_SAFETY_ENDPOINT": "https://sdktest-contentsafety.cognitiveservices.azure.com/",
     "CONTENT_SAFETY_KEY": "Sanitized",
-    "RandomSeed": "1110282065"
+    "RandomSeed": "1713768945"
   }
 }

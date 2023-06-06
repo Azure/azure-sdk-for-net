@@ -38,7 +38,7 @@ function NpmInstallForProject([string]$workingDirectory) {
 
         #default to root/eng/emitter-package.json but you can override by writing
         #Get-${Language}-EmitterPackageJsonPath in your Language-Settings.ps1
-        $replacementPackageJson = "$PSScriptRoot/../../emitter-package.json"
+        $replacementPackageJson = Join-Path $PSScriptRoot "../../emitter-package.json"
         if (Test-Path "Function:$GetEmitterPackageJsonPathFn") {
             $replacementPackageJson = &$GetEmitterPackageJsonPathFn
         }
@@ -52,7 +52,7 @@ function NpmInstallForProject([string]$workingDirectory) {
             Write-Host "Package.json contains '-alpha.' in the version, Creating .npmrc using public/azure-sdk-for-js-test-autorest feed."
             "registry=https://pkgs.dev.azure.com/azure-sdk/public/_packaging/azure-sdk-for-js-test-autorest/npm/registry/ `n`nalways-auth=true" | Out-File '.npmrc'
         }
-        
+
         npm install --no-lock-file
         if ($LASTEXITCODE) { exit $LASTEXITCODE }
     }
@@ -112,3 +112,4 @@ $shouldCleanUp = !$SaveInputs
 if ($shouldCleanUp) {
     Remove-Item $tempFolder -Recurse -Force
 }
+exit 0

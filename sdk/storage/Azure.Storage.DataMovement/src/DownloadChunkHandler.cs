@@ -354,8 +354,8 @@ namespace Azure.Storage.DataMovement
         private void UpdateBytesAndRange(long bytesDownloaded)
         {
             Interlocked.Add(ref _bytesTransferred, bytesDownloaded);
-            _reportProgressInBytes(_bytesTransferred);
             Interlocked.Increment(ref _currentRangeIndex);
+            _reportProgressInBytes(bytesDownloaded);
         }
     }
 }
