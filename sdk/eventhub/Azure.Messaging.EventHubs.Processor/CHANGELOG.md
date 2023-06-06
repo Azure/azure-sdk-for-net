@@ -2,12 +2,6 @@
 
 ## 5.9.2 (2023-06-06)
 
-### Features Added
-
-### Breaking Changes
-
-### Bugs Fixed
-
 ### Other Changes
 
 - The reference for the AMQP transport library, `Microsoft.Azure.Amqp`, has been bumped to 2.6.2.  This resolves a potential issue opening TLS connections on .NET 6+.
