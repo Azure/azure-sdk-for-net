@@ -33,17 +33,18 @@ namespace Azure.Core.TestFramework
             _recordedTestBase = recordedTestBase;
         }
 
-        public static async Task<TestRecording> CreateAsync(RecordedTestMode mode, string sessionFile, TestProxy proxy, RecordedTestBase recordedTestBase)
+        public static async Task<TestRecording> CreateAsync(RecordedTestMode mode, string sessionFile, TestProxy proxy, RecordedTestBase recordedTestBase, string assetsJson)
         {
             var recording = new TestRecording(mode, sessionFile, proxy, recordedTestBase);
-            await recording.InitializeProxySettingsAsync();
+            await recording.InitializeProxySettingsAsync(assetsJson);
             return recording;
         }
 
-        internal async Task InitializeProxySettingsAsync()
-        {
-            var assetsJson = _recordedTestBase.AssetsJsonPath;
+        public static async Task<TestRecording> CreateAsync(RecordedTestMode mode, string sessionFile, TestProxy proxy, RecordedTestBase recordedTestBase) =>
+            await CreateAsync(mode, sessionFile, proxy, recordedTestBase, recordedTestBase.AssetsJsonPath);
 
+        internal async Task InitializeProxySettingsAsync(string assetsJson)
+        {
             switch (Mode)
             {
                 case RecordedTestMode.Record:

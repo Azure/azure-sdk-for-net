@@ -123,7 +123,7 @@ namespace Azure.Core.TestFramework.Tests
             var tempFile = Path.GetTempFileName();
             var env = new MockTestEnvironment();
             var proxy = TestProxy.Start();
-            var testRecording = await TestRecording.CreateAsync(RecordedTestMode.Record, tempFile, proxy, new RecordedTestBaseTests(true));
+            var testRecording = await TestRecording.CreateAsync(RecordedTestMode.Record, tempFile, proxy, new RecordedTestBaseTests(true), assetsJson: null);
             env.Mode = RecordedTestMode.Record;
             env.SetRecording(testRecording);
 
@@ -134,7 +134,7 @@ namespace Azure.Core.TestFramework.Tests
 
             await testRecording.DisposeAsync();
 
-            testRecording = await TestRecording.CreateAsync(RecordedTestMode.Playback, tempFile, proxy, new RecordedTestBaseTests(true));
+            testRecording = await TestRecording.CreateAsync(RecordedTestMode.Playback, tempFile, proxy, new RecordedTestBaseTests(true), assetsJson: null);
 
             Assert.AreEqual("Kg==", testRecording.GetVariable("Base64Secret", ""));
             Assert.AreEqual("Custom", testRecording.GetVariable("CustomSecret", ""));
@@ -148,14 +148,14 @@ namespace Azure.Core.TestFramework.Tests
             var tempFile = Path.GetTempFileName();
             var env = new MockTestEnvironment();
             var proxy = TestProxy.Start();
-            var testRecording = await TestRecording.CreateAsync(RecordedTestMode.Record, tempFile, proxy, new RecordedTestBaseTests(true));
+            var testRecording = await TestRecording.CreateAsync(RecordedTestMode.Record, tempFile, proxy, new RecordedTestBaseTests(true), assetsJson: null);
             env.Mode = RecordedTestMode.Record;
             env.SetRecording(testRecording);
 
             Assert.IsNull(env.MissingOptionalSecret);
 
             await testRecording.DisposeAsync();
-            testRecording = await TestRecording.CreateAsync(RecordedTestMode.Playback, tempFile, proxy, new RecordedTestBaseTests(true));
+            testRecording = await TestRecording.CreateAsync(RecordedTestMode.Playback, tempFile, proxy, new RecordedTestBaseTests(true), assetsJson: null);
 
             Assert.IsNull(testRecording.GetVariable(nameof(env.MissingOptionalSecret), null));
         }
