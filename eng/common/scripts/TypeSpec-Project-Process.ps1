@@ -165,7 +165,7 @@ if (Test-Path $tmpTspConfigPath) {
 
 $sdkProjectFolder = ""
 if ($generateFromLocalTypeSpec) {
-  Write-Host "Generating sdk code based on local type specs at $specRepoRoot."
+  Write-Host "Generating sdk code based on local type specs at specRepoRoot: $specRepoRoot."
   $sdkProjectFolder = Get-TspLocationFolder $tspConfigYaml $sdkRepoRootPath
   $tspLocationYamlPath = Join-Path $sdkProjectFolder "tsp-location.yaml"
   if (!(Test-Path -Path $tspLocationYamlPath)) {
