@@ -51,9 +51,9 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Benchmarks
                 [SemanticConventions.AttributeHttpScheme] = "https",
                 [SemanticConventions.AttributeHttpMethod] = "GET",
                 [SemanticConventions.AttributeHttpHost] = "localhost",
-                [SemanticConventions.AttributeHttpHostPort] = "8888",
                 ["somekey"] = "value",
-                [SemanticConventions.AttributeAzureNameSpace] = "DemoAzureResource"
+                [SemanticConventions.AttributeAzureNameSpace] = "DemoAzureResource",
+                [SemanticConventions.AttributeEnduserId] = "test"
             };
 
             _activity = CreateTestActivity(tagObjects!);

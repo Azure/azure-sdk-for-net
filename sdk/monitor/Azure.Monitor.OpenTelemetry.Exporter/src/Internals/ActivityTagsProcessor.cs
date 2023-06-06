@@ -57,12 +57,16 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
             SemanticConventions.AttributeFaasCron,
             SemanticConventions.AttributeFaasTime,
 
-            [SemanticConventions.AttributeEndpointAddress] = OperationType.Messaging,
-            [SemanticConventions.AttributeMessagingSystem] = OperationType.Messaging,
-            [SemanticConventions.AttributeMessagingDestination] = OperationType.Messaging,
-            [SemanticConventions.AttributeMessagingDestinationKind] = OperationType.Messaging,
-            [SemanticConventions.AttributeMessagingTempDestination] = OperationType.Messaging,
-            [SemanticConventions.AttributeMessagingUrl] = OperationType.Messaging
+            SemanticConventions.AttributeEndpointAddress,
+            // required
+            SemanticConventions.AttributeMessagingSystem,
+            SemanticConventions.AttributeMessagingDestination,
+            SemanticConventions.AttributeMessagingDestinationKind,
+            SemanticConventions.AttributeMessagingTempDestination,
+            SemanticConventions.AttributeMessagingUrl,
+
+            // Others
+            SemanticConventions.AttributeEnduserId
         };
 
         private static readonly HashSet<string> s_semanticsSet = new(s_semantics);
@@ -73,6 +77,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
         public OperationType activityType { get; private set; }
 
         public bool HasAzureNamespace { get; private set; } = false;
+
         public string? EndUserId { get; private set; } = null;
 
         public ActivityTagsProcessor()
@@ -92,14 +97,6 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
 
                 if (s_semanticsSet.Contains(tag.Key))
                 {
-                    if (tag.Key == SemanticConventions.AttributeEnduserId)
-                    {
-                        this.EndUserId = tag.Value.ToString();
-                        continue;
-                    }
-
-                    AzMonList.Add(ref MappedTags, tag);
-
                     switch (tag.Key)
                     {
                         case SemanticConventions.AttributeHttpMethod:
@@ -114,7 +111,12 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
                         case SemanticConventions.AttributeAzureNameSpace:
                             activityType |= OperationType.Azure;
                             break;
+                        case SemanticConventions.AttributeEnduserId:
+                            EndUserId = tag.Value.ToString();
+                            continue;
                     }
+
+                    AzMonList.Add(ref MappedTags, tag);
                 }
                 else
                 {
