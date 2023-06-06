@@ -8,22 +8,21 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text.Json;
 using Azure.AI.TextAnalytics;
 using Azure.Core;
 
 namespace Azure.AI.TextAnalytics.Models
 {
     /// <summary> The HealthcareEntitiesDocumentResult. </summary>
-    internal partial class HealthcareEntitiesDocumentResultInternal : DocumentResult
+    internal partial class HealthcareEntitiesDocumentResult : DocumentResult
     {
-        /// <summary> Initializes a new instance of HealthcareEntitiesDocumentResultInternal. </summary>
+        /// <summary> Initializes a new instance of HealthcareEntitiesDocumentResult. </summary>
         /// <param name="id"> Unique, non-empty document identifier. </param>
         /// <param name="warnings"> Warnings encountered while processing document. </param>
         /// <param name="entities"> Healthcare entities. </param>
         /// <param name="relations"> Healthcare entity relations. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="id"/>, <paramref name="warnings"/>, <paramref name="entities"/> or <paramref name="relations"/> is null. </exception>
-        public HealthcareEntitiesDocumentResultInternal(string id, IEnumerable<DocumentWarning> warnings, IEnumerable<HealthcareEntityInternal> entities, IEnumerable<HealthcareRelationInternal> relations) : base(id, warnings)
+        public HealthcareEntitiesDocumentResult(string id, IEnumerable<DocumentWarning> warnings, IEnumerable<HealthcareEntityInternal> entities, IEnumerable<HealthcareRelationInternal> relations) : base(id, warnings)
         {
             Argument.AssertNotNull(id, nameof(id));
             Argument.AssertNotNull(warnings, nameof(warnings));
@@ -34,18 +33,16 @@ namespace Azure.AI.TextAnalytics.Models
             Relations = relations.ToList();
         }
 
-        /// <summary> Initializes a new instance of HealthcareEntitiesDocumentResultInternal. </summary>
+        /// <summary> Initializes a new instance of HealthcareEntitiesDocumentResult. </summary>
         /// <param name="id"> Unique, non-empty document identifier. </param>
         /// <param name="warnings"> Warnings encountered while processing document. </param>
         /// <param name="statistics"> if showStats=true was specified in the request this field will contain information about the document payload. </param>
         /// <param name="entities"> Healthcare entities. </param>
         /// <param name="relations"> Healthcare entity relations. </param>
-        /// <param name="fhirBundle"> JSON bundle containing a FHIR compatible object for consumption in other Healthcare tools. For additional information see https://www.hl7.org/fhir/overview.html. </param>
-        internal HealthcareEntitiesDocumentResultInternal(string id, IList<DocumentWarning> warnings, TextDocumentStatistics? statistics, IList<HealthcareEntityInternal> entities, IList<HealthcareRelationInternal> relations, JsonElement fhirBundle) : base(id, warnings, statistics)
+        internal HealthcareEntitiesDocumentResult(string id, IList<DocumentWarning> warnings, TextDocumentStatistics? statistics, IList<HealthcareEntityInternal> entities, IList<HealthcareRelationInternal> relations) : base(id, warnings, statistics)
         {
             Entities = entities;
             Relations = relations;
-            FhirBundle = fhirBundle;
         }
 
         /// <summary> Healthcare entities. </summary>

@@ -42,6 +42,8 @@
 
 ### Other Changes
 
+The client now defaults to targeting service API version `2023-04-01`.
+
 ## 5.3.0-beta.3 (2023-03-11)
 
 ### Other Changes
