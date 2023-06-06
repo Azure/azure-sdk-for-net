@@ -12,21 +12,21 @@ using Azure.Core;
 namespace Azure.ResourceManager.NewRelicObservability.Models
 {
     /// <summary> Request of a Hosts get Operation. </summary>
-    public partial class NewrelicHostsGetContent
+    public partial class NewRelicHostsGetContent
     {
-        /// <summary> Initializes a new instance of NewrelicHostsGetContent. </summary>
+        /// <summary> Initializes a new instance of NewRelicHostsGetContent. </summary>
         /// <param name="userEmail"> User Email. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="userEmail"/> is null. </exception>
-        public NewrelicHostsGetContent(string userEmail)
+        public NewRelicHostsGetContent(string userEmail)
         {
             Argument.AssertNotNull(userEmail, nameof(userEmail));
 
-            VmIds = new ChangeTrackingList<string>();
+            VmIds = new ChangeTrackingList<ResourceIdentifier>();
             UserEmail = userEmail;
         }
 
         /// <summary> VM resource IDs. </summary>
-        public IList<string> VmIds { get; }
+        public IList<ResourceIdentifier> VmIds { get; }
         /// <summary> User Email. </summary>
         public string UserEmail { get; }
     }

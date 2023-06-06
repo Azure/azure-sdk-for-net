@@ -20,16 +20,16 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
             {
                 return null;
             }
-            IReadOnlyList<ResourceMonitoredByNewRelic> value = default;
+            IReadOnlyList<NewRelicResourceMonitorResult> value = default;
             Optional<Uri> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
                 {
-                    List<ResourceMonitoredByNewRelic> array = new List<ResourceMonitoredByNewRelic>();
+                    List<NewRelicResourceMonitorResult> array = new List<NewRelicResourceMonitorResult>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ResourceMonitoredByNewRelic.DeserializeResourceMonitoredByNewRelic(item));
+                        array.Add(NewRelicResourceMonitorResult.DeserializeNewRelicResourceMonitorResult(item));
                     }
                     value = array;
                     continue;

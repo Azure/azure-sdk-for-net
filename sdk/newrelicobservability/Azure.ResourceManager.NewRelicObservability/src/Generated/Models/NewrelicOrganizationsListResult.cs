@@ -13,22 +13,22 @@ using Azure.Core;
 namespace Azure.ResourceManager.NewRelicObservability.Models
 {
     /// <summary> Response of get all organizations Operation. </summary>
-    internal partial class NewrelicOrganizationsListResult
+    internal partial class NewRelicOrganizationsListResult
     {
-        /// <summary> Initializes a new instance of NewrelicOrganizationsListResult. </summary>
+        /// <summary> Initializes a new instance of NewRelicOrganizationsListResult. </summary>
         /// <param name="value"> The OrganizationResource items on this page. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        internal NewrelicOrganizationsListResult(IEnumerable<NewRelicOrganizationResourceData> value)
+        internal NewRelicOrganizationsListResult(IEnumerable<NewRelicOrganizationResourceData> value)
         {
             Argument.AssertNotNull(value, nameof(value));
 
             Value = value.ToList();
         }
 
-        /// <summary> Initializes a new instance of NewrelicOrganizationsListResult. </summary>
+        /// <summary> Initializes a new instance of NewRelicOrganizationsListResult. </summary>
         /// <param name="value"> The OrganizationResource items on this page. </param>
         /// <param name="nextLink"> The link to the next page of items. </param>
-        internal NewrelicOrganizationsListResult(IReadOnlyList<NewRelicOrganizationResourceData> value, Uri nextLink)
+        internal NewRelicOrganizationsListResult(IReadOnlyList<NewRelicOrganizationResourceData> value, Uri nextLink)
         {
             Value = value;
             NextLink = nextLink;

@@ -11,7 +11,7 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.NewRelicObservability.Models
 {
-    public partial class NewRelicPlanResourceData : IUtf8JsonSerializable
+    public partial class NewRelicPlanData : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
             writer.WriteEndObject();
         }
 
-        internal static NewRelicPlanResourceData DeserializeNewRelicPlanResourceData(JsonElement element)
+        internal static NewRelicPlanData DeserializeNewRelicPlanData(JsonElement element)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
             string name = default;
             ResourceType type = default;
             Optional<SystemData> systemData = default;
-            Optional<NewRelicPlan> planData = default;
+            Optional<NewRelicPlanDetails> planData = default;
             Optional<NewRelicObservabilityOrgCreationSource> orgCreationSource = default;
             Optional<NewRelicObservabilityAccountCreationSource> accountCreationSource = default;
             foreach (var property in element.EnumerateObject())
@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
                             {
                                 continue;
                             }
-                            planData = NewRelicPlan.DeserializeNewRelicPlan(property0.Value);
+                            planData = NewRelicPlanDetails.DeserializeNewRelicPlanDetails(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("orgCreationSource"u8))
@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
                     continue;
                 }
             }
-            return new NewRelicPlanResourceData(id, name, type, systemData.Value, planData.Value, Optional.ToNullable(orgCreationSource), Optional.ToNullable(accountCreationSource));
+            return new NewRelicPlanData(id, name, type, systemData.Value, planData.Value, Optional.ToNullable(orgCreationSource), Optional.ToNullable(accountCreationSource));
         }
     }
 }

@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
         /// <param name="accountId"> account id. </param>
         /// <param name="accountName"> account name. </param>
         /// <param name="region"> region. </param>
-        internal NewRelicAccountResourceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string organizationId, string accountId, string accountName, string region) : base(id, name, resourceType, systemData)
+        internal NewRelicAccountResourceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string organizationId, string accountId, string accountName, AzureLocation? region) : base(id, name, resourceType, systemData)
         {
             OrganizationId = organizationId;
             AccountId = accountId;
@@ -42,6 +42,6 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
         /// <summary> account name. </summary>
         public string AccountName { get; set; }
         /// <summary> region. </summary>
-        public string Region { get; set; }
+        public AzureLocation? Region { get; set; }
     }
 }

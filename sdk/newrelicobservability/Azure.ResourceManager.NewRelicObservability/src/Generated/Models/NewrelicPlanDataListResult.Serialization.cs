@@ -12,24 +12,24 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.NewRelicObservability.Models
 {
-    internal partial class NewrelicPlanDataListResult
+    internal partial class NewRelicPlanDataListResult
     {
-        internal static NewrelicPlanDataListResult DeserializeNewrelicPlanDataListResult(JsonElement element)
+        internal static NewRelicPlanDataListResult DeserializeNewRelicPlanDataListResult(JsonElement element)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            IReadOnlyList<NewRelicPlanResourceData> value = default;
+            IReadOnlyList<NewRelicPlanData> value = default;
             Optional<Uri> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
                 {
-                    List<NewRelicPlanResourceData> array = new List<NewRelicPlanResourceData>();
+                    List<NewRelicPlanData> array = new List<NewRelicPlanData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(NewRelicPlanResourceData.DeserializeNewRelicPlanResourceData(item));
+                        array.Add(NewRelicPlanData.DeserializeNewRelicPlanData(item));
                     }
                     value = array;
                     continue;
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
                     continue;
                 }
             }
-            return new NewrelicPlanDataListResult(value, nextLink.Value);
+            return new NewRelicPlanDataListResult(value, nextLink.Value);
         }
     }
 }

@@ -13,22 +13,22 @@ using Azure.Core;
 namespace Azure.ResourceManager.NewRelicObservability.Models
 {
     /// <summary> Response of a list app services Operation. </summary>
-    internal partial class NewrelicAppServicesListResult
+    internal partial class NewRelicAppServicesListResult
     {
-        /// <summary> Initializes a new instance of NewrelicAppServicesListResult. </summary>
+        /// <summary> Initializes a new instance of NewRelicAppServicesListResult. </summary>
         /// <param name="value"> The AppServiceInfo items on this page. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        internal NewrelicAppServicesListResult(IEnumerable<NewRelicObservabilityAppServiceInfo> value)
+        internal NewRelicAppServicesListResult(IEnumerable<NewRelicObservabilityAppServiceInfo> value)
         {
             Argument.AssertNotNull(value, nameof(value));
 
             Value = value.ToList();
         }
 
-        /// <summary> Initializes a new instance of NewrelicAppServicesListResult. </summary>
+        /// <summary> Initializes a new instance of NewRelicAppServicesListResult. </summary>
         /// <param name="value"> The AppServiceInfo items on this page. </param>
         /// <param name="nextLink"> The link to the next page of items. </param>
-        internal NewrelicAppServicesListResult(IReadOnlyList<NewRelicObservabilityAppServiceInfo> value, Uri nextLink)
+        internal NewRelicAppServicesListResult(IReadOnlyList<NewRelicObservabilityAppServiceInfo> value, Uri nextLink)
         {
             Value = value;
             NextLink = nextLink;

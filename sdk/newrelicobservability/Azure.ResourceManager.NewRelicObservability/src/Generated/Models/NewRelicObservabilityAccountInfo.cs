@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using Azure.Core;
+
 namespace Azure.ResourceManager.NewRelicObservability.Models
 {
     /// <summary> Account Info of the NewRelic account. </summary>
@@ -19,7 +21,7 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
         /// <param name="accountId"> Account id. </param>
         /// <param name="ingestionKey"> ingestion key of account. </param>
         /// <param name="region"> NewRelic account region. </param>
-        internal NewRelicObservabilityAccountInfo(string accountId, string ingestionKey, string region)
+        internal NewRelicObservabilityAccountInfo(string accountId, string ingestionKey, AzureLocation? region)
         {
             AccountId = accountId;
             IngestionKey = ingestionKey;
@@ -31,6 +33,6 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
         /// <summary> ingestion key of account. </summary>
         public string IngestionKey { get; set; }
         /// <summary> NewRelic account region. </summary>
-        public string Region { get; set; }
+        public AzureLocation? Region { get; set; }
     }
 }

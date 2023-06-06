@@ -366,7 +366,7 @@ namespace Azure.ResourceManager.NewRelicObservability
         /// <param name="content"> The details of the get metrics status request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual async Task<Response<NewRelicObservabilityMetricRules>> GetMetricRulesAsync(NewrelicMetricsContent content, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<NewRelicObservabilityMetricRules>> GetMetricRulesAsync(NewRelicMetricsContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -400,7 +400,7 @@ namespace Azure.ResourceManager.NewRelicObservability
         /// <param name="content"> The details of the get metrics status request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual Response<NewRelicObservabilityMetricRules> GetMetricRules(NewrelicMetricsContent content, CancellationToken cancellationToken = default)
+        public virtual Response<NewRelicObservabilityMetricRules> GetMetricRules(NewRelicMetricsContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -434,7 +434,7 @@ namespace Azure.ResourceManager.NewRelicObservability
         /// <param name="content"> The details of the get metrics status request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual async Task<Response<NewrelicMetricsStatusResult>> GetMetricStatusAsync(NewrelicMetricsStatusContent content, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<NewRelicMetricsStatusResult>> GetMetricStatusAsync(NewRelicMetricsStatusContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -468,7 +468,7 @@ namespace Azure.ResourceManager.NewRelicObservability
         /// <param name="content"> The details of the get metrics status request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual Response<NewrelicMetricsStatusResult> GetMetricStatus(NewrelicMetricsStatusContent content, CancellationToken cancellationToken = default)
+        public virtual Response<NewRelicMetricsStatusResult> GetMetricStatus(NewRelicMetricsStatusContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -503,7 +503,7 @@ namespace Azure.ResourceManager.NewRelicObservability
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <returns> An async collection of <see cref="NewRelicObservabilityAppServiceInfo" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<NewRelicObservabilityAppServiceInfo> GetAppServicesAsync(NewrelicAppServicesGetContent content, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<NewRelicObservabilityAppServiceInfo> GetAppServicesAsync(NewRelicAppServicesGetContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -529,7 +529,7 @@ namespace Azure.ResourceManager.NewRelicObservability
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <returns> A collection of <see cref="NewRelicObservabilityAppServiceInfo" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<NewRelicObservabilityAppServiceInfo> GetAppServices(NewrelicAppServicesGetContent content, CancellationToken cancellationToken = default)
+        public virtual Pageable<NewRelicObservabilityAppServiceInfo> GetAppServices(NewRelicAppServicesGetContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -554,7 +554,7 @@ namespace Azure.ResourceManager.NewRelicObservability
         /// <param name="content"> The details of the switch billing request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual async Task<Response<NewRelicMonitorResource>> SwitchBillingAsync(NewrelicSwitchBillingContent content, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<NewRelicMonitorResource>> SwitchBillingAsync(NewRelicSwitchBillingContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -588,7 +588,7 @@ namespace Azure.ResourceManager.NewRelicObservability
         /// <param name="content"> The details of the switch billing request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual Response<NewRelicMonitorResource> SwitchBilling(NewrelicSwitchBillingContent content, CancellationToken cancellationToken = default)
+        public virtual Response<NewRelicMonitorResource> SwitchBilling(NewRelicSwitchBillingContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -623,7 +623,7 @@ namespace Azure.ResourceManager.NewRelicObservability
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <returns> An async collection of <see cref="NewRelicObservabilityVmInfo" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<NewRelicObservabilityVmInfo> GetHostsAsync(NewrelicHostsGetContent content, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<NewRelicObservabilityVmInfo> GetHostsAsync(NewRelicHostsGetContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -649,7 +649,7 @@ namespace Azure.ResourceManager.NewRelicObservability
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <returns> A collection of <see cref="NewRelicObservabilityVmInfo" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<NewRelicObservabilityVmInfo> GetHosts(NewrelicHostsGetContent content, CancellationToken cancellationToken = default)
+        public virtual Pageable<NewRelicObservabilityVmInfo> GetHosts(NewRelicHostsGetContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -672,12 +672,12 @@ namespace Azure.ResourceManager.NewRelicObservability
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ResourceMonitoredByNewRelic" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<ResourceMonitoredByNewRelic> GetMonitoredResourcesAsync(CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="NewRelicResourceMonitorResult" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<NewRelicResourceMonitorResult> GetMonitoredResourcesAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _newRelicMonitorResourceMonitorsRestClient.CreateListMonitoredResourcesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _newRelicMonitorResourceMonitorsRestClient.CreateListMonitoredResourcesNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, ResourceMonitoredByNewRelic.DeserializeResourceMonitoredByNewRelic, _newRelicMonitorResourceMonitorsClientDiagnostics, Pipeline, "NewRelicMonitorResource.GetMonitoredResources", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, NewRelicResourceMonitorResult.DeserializeNewRelicResourceMonitorResult, _newRelicMonitorResourceMonitorsClientDiagnostics, Pipeline, "NewRelicMonitorResource.GetMonitoredResources", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -694,12 +694,12 @@ namespace Azure.ResourceManager.NewRelicObservability
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ResourceMonitoredByNewRelic" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<ResourceMonitoredByNewRelic> GetMonitoredResources(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="NewRelicResourceMonitorResult" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<NewRelicResourceMonitorResult> GetMonitoredResources(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _newRelicMonitorResourceMonitorsRestClient.CreateListMonitoredResourcesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _newRelicMonitorResourceMonitorsRestClient.CreateListMonitoredResourcesNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, ResourceMonitoredByNewRelic.DeserializeResourceMonitoredByNewRelic, _newRelicMonitorResourceMonitorsClientDiagnostics, Pipeline, "NewRelicMonitorResource.GetMonitoredResources", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, NewRelicResourceMonitorResult.DeserializeNewRelicResourceMonitorResult, _newRelicMonitorResourceMonitorsClientDiagnostics, Pipeline, "NewRelicMonitorResource.GetMonitoredResources", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

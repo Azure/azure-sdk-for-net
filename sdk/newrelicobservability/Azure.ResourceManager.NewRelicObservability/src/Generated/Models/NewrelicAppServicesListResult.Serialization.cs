@@ -12,9 +12,9 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.NewRelicObservability.Models
 {
-    internal partial class NewrelicAppServicesListResult
+    internal partial class NewRelicAppServicesListResult
     {
-        internal static NewrelicAppServicesListResult DeserializeNewrelicAppServicesListResult(JsonElement element)
+        internal static NewRelicAppServicesListResult DeserializeNewRelicAppServicesListResult(JsonElement element)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
                     continue;
                 }
             }
-            return new NewrelicAppServicesListResult(value, nextLink.Value);
+            return new NewRelicAppServicesListResult(value, nextLink.Value);
         }
     }
 }

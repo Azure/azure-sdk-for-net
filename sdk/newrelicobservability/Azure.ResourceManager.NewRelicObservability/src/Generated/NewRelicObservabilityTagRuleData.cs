@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.NewRelicObservability
         /// <param name="provisioningState"> Provisioning State of the resource. </param>
         /// <param name="logRules"> Set of rules for sending logs for the Monitor resource. </param>
         /// <param name="metricRules"> Set of rules for sending metrics for the Monitor resource. </param>
-        internal NewRelicObservabilityTagRuleData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, NewrelicProvisioningState? provisioningState, NewRelicObservabilityLogRules logRules, NewRelicObservabilityMetricRules metricRules) : base(id, name, resourceType, systemData)
+        internal NewRelicObservabilityTagRuleData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, NewRelicProvisioningState? provisioningState, NewRelicObservabilityLogRules logRules, NewRelicObservabilityMetricRules metricRules) : base(id, name, resourceType, systemData)
         {
             ProvisioningState = provisioningState;
             LogRules = logRules;
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.NewRelicObservability
         }
 
         /// <summary> Provisioning State of the resource. </summary>
-        public NewrelicProvisioningState? ProvisioningState { get; }
+        public NewRelicProvisioningState? ProvisioningState { get; }
         /// <summary> Set of rules for sending logs for the Monitor resource. </summary>
         public NewRelicObservabilityLogRules LogRules { get; set; }
         /// <summary> Set of rules for sending metrics for the Monitor resource. </summary>

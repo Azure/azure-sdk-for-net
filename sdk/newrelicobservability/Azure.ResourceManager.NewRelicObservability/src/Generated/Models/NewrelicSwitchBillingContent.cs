@@ -11,12 +11,12 @@ using Azure.Core;
 namespace Azure.ResourceManager.NewRelicObservability.Models
 {
     /// <summary> Request of a switch billing Operation. </summary>
-    public partial class NewrelicSwitchBillingContent
+    public partial class NewRelicSwitchBillingContent
     {
-        /// <summary> Initializes a new instance of NewrelicSwitchBillingContent. </summary>
+        /// <summary> Initializes a new instance of NewRelicSwitchBillingContent. </summary>
         /// <param name="userEmail"> User Email. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="userEmail"/> is null. </exception>
-        public NewrelicSwitchBillingContent(string userEmail)
+        public NewRelicSwitchBillingContent(string userEmail)
         {
             Argument.AssertNotNull(userEmail, nameof(userEmail));
 
@@ -24,11 +24,11 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
         }
 
         /// <summary> Azure resource Id. </summary>
-        public string AzureResourceId { get; set; }
+        public ResourceIdentifier AzureResourceId { get; set; }
         /// <summary> Organization id. </summary>
         public string OrganizationId { get; set; }
         /// <summary> Plan details. </summary>
-        public NewRelicPlan PlanData { get; set; }
+        public NewRelicPlanDetails PlanData { get; set; }
         /// <summary> User Email. </summary>
         public string UserEmail { get; }
     }

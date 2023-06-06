@@ -11,13 +11,13 @@ using System.ComponentModel;
 namespace Azure.ResourceManager.NewRelicObservability.Models
 {
     /// <summary> Provisioning State of the Monitor resource. </summary>
-    public readonly partial struct NewrelicProvisioningState : IEquatable<NewrelicProvisioningState>
+    public readonly partial struct NewRelicProvisioningState : IEquatable<NewRelicProvisioningState>
     {
         private readonly string _value;
 
-        /// <summary> Initializes a new instance of <see cref="NewrelicProvisioningState"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="NewRelicProvisioningState"/>. </summary>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public NewrelicProvisioningState(string value)
+        public NewRelicProvisioningState(string value)
         {
             _value = value ?? throw new ArgumentNullException(nameof(value));
         }
@@ -33,35 +33,35 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
         private const string NotSpecifiedValue = "NotSpecified";
 
         /// <summary> Monitor resource creation request accepted. </summary>
-        public static NewrelicProvisioningState Accepted { get; } = new NewrelicProvisioningState(AcceptedValue);
+        public static NewRelicProvisioningState Accepted { get; } = new NewRelicProvisioningState(AcceptedValue);
         /// <summary> Monitor resource creation started. </summary>
-        public static NewrelicProvisioningState Creating { get; } = new NewrelicProvisioningState(CreatingValue);
+        public static NewRelicProvisioningState Creating { get; } = new NewRelicProvisioningState(CreatingValue);
         /// <summary> Monitor resource is being updated. </summary>
-        public static NewrelicProvisioningState Updating { get; } = new NewrelicProvisioningState(UpdatingValue);
+        public static NewRelicProvisioningState Updating { get; } = new NewRelicProvisioningState(UpdatingValue);
         /// <summary> Monitor resource deletion started. </summary>
-        public static NewrelicProvisioningState Deleting { get; } = new NewrelicProvisioningState(DeletingValue);
+        public static NewRelicProvisioningState Deleting { get; } = new NewRelicProvisioningState(DeletingValue);
         /// <summary> Monitor resource creation successful. </summary>
-        public static NewrelicProvisioningState Succeeded { get; } = new NewrelicProvisioningState(SucceededValue);
+        public static NewRelicProvisioningState Succeeded { get; } = new NewRelicProvisioningState(SucceededValue);
         /// <summary> Monitor resource creation failed. </summary>
-        public static NewrelicProvisioningState Failed { get; } = new NewrelicProvisioningState(FailedValue);
+        public static NewRelicProvisioningState Failed { get; } = new NewRelicProvisioningState(FailedValue);
         /// <summary> Monitor resource creation canceled. </summary>
-        public static NewrelicProvisioningState Canceled { get; } = new NewrelicProvisioningState(CanceledValue);
+        public static NewRelicProvisioningState Canceled { get; } = new NewRelicProvisioningState(CanceledValue);
         /// <summary> Monitor resource is deleted. </summary>
-        public static NewrelicProvisioningState Deleted { get; } = new NewrelicProvisioningState(DeletedValue);
+        public static NewRelicProvisioningState Deleted { get; } = new NewRelicProvisioningState(DeletedValue);
         /// <summary> Monitor resource state is unknown. </summary>
-        public static NewrelicProvisioningState NotSpecified { get; } = new NewrelicProvisioningState(NotSpecifiedValue);
-        /// <summary> Determines if two <see cref="NewrelicProvisioningState"/> values are the same. </summary>
-        public static bool operator ==(NewrelicProvisioningState left, NewrelicProvisioningState right) => left.Equals(right);
-        /// <summary> Determines if two <see cref="NewrelicProvisioningState"/> values are not the same. </summary>
-        public static bool operator !=(NewrelicProvisioningState left, NewrelicProvisioningState right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="NewrelicProvisioningState"/>. </summary>
-        public static implicit operator NewrelicProvisioningState(string value) => new NewrelicProvisioningState(value);
+        public static NewRelicProvisioningState NotSpecified { get; } = new NewRelicProvisioningState(NotSpecifiedValue);
+        /// <summary> Determines if two <see cref="NewRelicProvisioningState"/> values are the same. </summary>
+        public static bool operator ==(NewRelicProvisioningState left, NewRelicProvisioningState right) => left.Equals(right);
+        /// <summary> Determines if two <see cref="NewRelicProvisioningState"/> values are not the same. </summary>
+        public static bool operator !=(NewRelicProvisioningState left, NewRelicProvisioningState right) => !left.Equals(right);
+        /// <summary> Converts a string to a <see cref="NewRelicProvisioningState"/>. </summary>
+        public static implicit operator NewRelicProvisioningState(string value) => new NewRelicProvisioningState(value);
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is NewrelicProvisioningState other && Equals(other);
+        public override bool Equals(object obj) => obj is NewRelicProvisioningState other && Equals(other);
         /// <inheritdoc />
-        public bool Equals(NewrelicProvisioningState other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(NewRelicProvisioningState other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]

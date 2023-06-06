@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.NewRelicObservability
             string name = default;
             ResourceType type = default;
             Optional<SystemData> systemData = default;
-            Optional<NewrelicProvisioningState> provisioningState = default;
+            Optional<NewRelicProvisioningState> provisioningState = default;
             Optional<NewRelicObservabilityLogRules> logRules = default;
             Optional<NewRelicObservabilityMetricRules> metricRules = default;
             foreach (var property in element.EnumerateObject())
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.NewRelicObservability
                             {
                                 continue;
                             }
-                            provisioningState = new NewrelicProvisioningState(property0.Value.GetString());
+                            provisioningState = new NewRelicProvisioningState(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("logRules"u8))

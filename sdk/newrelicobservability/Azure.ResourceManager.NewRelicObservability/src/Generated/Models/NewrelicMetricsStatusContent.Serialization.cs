@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.NewRelicObservability.Models
 {
-    public partial class NewrelicMetricsStatusContent : IUtf8JsonSerializable
+    public partial class NewRelicMetricsStatusContent : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {

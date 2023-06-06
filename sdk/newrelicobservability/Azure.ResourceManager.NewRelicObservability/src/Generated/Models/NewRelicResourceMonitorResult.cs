@@ -10,20 +10,20 @@ using Azure.Core;
 namespace Azure.ResourceManager.NewRelicObservability.Models
 {
     /// <summary> Details of resource being monitored by NewRelic monitor resource. </summary>
-    public partial class ResourceMonitoredByNewRelic
+    public partial class NewRelicResourceMonitorResult
     {
-        /// <summary> Initializes a new instance of ResourceMonitoredByNewRelic. </summary>
-        internal ResourceMonitoredByNewRelic()
+        /// <summary> Initializes a new instance of NewRelicResourceMonitorResult. </summary>
+        internal NewRelicResourceMonitorResult()
         {
         }
 
-        /// <summary> Initializes a new instance of ResourceMonitoredByNewRelic. </summary>
+        /// <summary> Initializes a new instance of NewRelicResourceMonitorResult. </summary>
         /// <param name="id"> The ARM id of the resource. </param>
         /// <param name="sendingMetrics"> Flag indicating if resource is sending metrics to NewRelic. </param>
         /// <param name="reasonForMetricsStatus"> Reason for why the resource is sending metrics (or why it is not sending). </param>
         /// <param name="sendingLogs"> Flag indicating if resource is sending logs to NewRelic. </param>
         /// <param name="reasonForLogsStatus"> Reason for why the resource is sending logs (or why it is not sending). </param>
-        internal ResourceMonitoredByNewRelic(ResourceIdentifier id, NewRelicObservabilitySendingMetricsStatus? sendingMetrics, string reasonForMetricsStatus, NewRelicObservabilitySendingLogsStatus? sendingLogs, string reasonForLogsStatus)
+        internal NewRelicResourceMonitorResult(ResourceIdentifier id, NewRelicObservabilitySendingMetricsStatus? sendingMetrics, string reasonForMetricsStatus, NewRelicObservabilitySendingLogsStatus? sendingLogs, string reasonForLogsStatus)
         {
             Id = id;
             SendingMetrics = sendingMetrics;

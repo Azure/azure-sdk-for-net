@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
             Optional<NewRelicSingleSignOnState> singleSignOnState = default;
             Optional<string> enterpriseAppId = default;
             Optional<Uri> singleSignOnUrl = default;
-            Optional<NewrelicProvisioningState> provisioningState = default;
+            Optional<NewRelicProvisioningState> provisioningState = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("singleSignOnState"u8))
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
                     {
                         continue;
                     }
-                    provisioningState = new NewrelicProvisioningState(property.Value.GetString());
+                    provisioningState = new NewRelicProvisioningState(property.Value.GetString());
                     continue;
                 }
             }

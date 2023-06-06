@@ -160,7 +160,7 @@ namespace Azure.ResourceManager.NewRelicObservability.Samples
             // invoke the operation and iterate over the result
             string accountId = "pwuxgvrmkk";
             string organizationId = "hilawwjz";
-            await foreach (NewRelicPlanResourceData item in subscriptionResource.GetNewrelicPlansAsync(accountId: accountId, organizationId: organizationId))
+            await foreach (NewRelicPlanData item in subscriptionResource.GetNewrelicPlansAsync(accountId: accountId, organizationId: organizationId))
             {
                 Console.WriteLine($"Succeeded: {item}");
             }
@@ -188,7 +188,7 @@ namespace Azure.ResourceManager.NewRelicObservability.Samples
             SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
 
             // invoke the operation and iterate over the result
-            await foreach (NewRelicPlanResourceData item in subscriptionResource.GetNewrelicPlansAsync())
+            await foreach (NewRelicPlanData item in subscriptionResource.GetNewrelicPlansAsync())
             {
                 Console.WriteLine($"Succeeded: {item}");
             }

@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
         /// <summary> User Info. </summary>
         public NewRelicObservabilityUserInfo UserInfo { get; set; }
         /// <summary> Plan details. </summary>
-        public NewRelicPlan PlanData { get; set; }
+        public NewRelicPlanDetails PlanData { get; set; }
         /// <summary> Source of org creation. </summary>
         public NewRelicObservabilityOrgCreationSource? OrgCreationSource { get; set; }
         /// <summary> Source of account creation. </summary>

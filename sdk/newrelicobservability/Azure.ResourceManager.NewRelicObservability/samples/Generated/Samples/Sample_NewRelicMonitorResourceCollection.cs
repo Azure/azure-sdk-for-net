@@ -161,7 +161,7 @@ namespace Azure.ResourceManager.NewRelicObservability.Samples
                     {
                         AccountId = "xhqmg",
                         IngestionKey = "wltnimmhqt",
-                        Region = "ljcf",
+                        Region = new AzureLocation("ljcf"),
                     },
                     OrganizationId = "k",
                     SingleSignOnProperties = new NewRelicSingleSignOnProperties()
@@ -169,7 +169,7 @@ namespace Azure.ResourceManager.NewRelicObservability.Samples
                         SingleSignOnState = NewRelicSingleSignOnState.Initial,
                         EnterpriseAppId = "kwiwfz",
                         SingleSignOnUri = new Uri("kvseueuljsxmfwpqctz"),
-                        ProvisioningState = NewrelicProvisioningState.Accepted,
+                        ProvisioningState = NewRelicProvisioningState.Accepted,
                     },
                 },
                 UserInfo = new NewRelicObservabilityUserInfo()
@@ -180,7 +180,7 @@ namespace Azure.ResourceManager.NewRelicObservability.Samples
                     PhoneNumber = "krf",
                     Country = "hslqnwdanrconqyekwbnttaetv",
                 },
-                PlanData = new NewRelicPlan()
+                PlanData = new NewRelicPlanDetails()
                 {
                     UsageType = NewRelicObservabilityUsageType.Payg,
                     BillingCycle = NewRelicObservabilityBillingCycle.Yearly,

@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using Azure.Core;
+
 namespace Azure.ResourceManager.NewRelicObservability.Models
 {
     /// <summary> Details of VM Resource having NewRelic OneAgent installed. </summary>
@@ -19,7 +21,7 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
         /// <param name="azureResourceId"> Azure App service resource ID. </param>
         /// <param name="agentVersion"> Version of the NewRelic agent installed on the App service. </param>
         /// <param name="agentStatus"> Status of the NewRelic agent installed on the App service. </param>
-        internal NewRelicObservabilityAppServiceInfo(string azureResourceId, string agentVersion, string agentStatus)
+        internal NewRelicObservabilityAppServiceInfo(ResourceIdentifier azureResourceId, string agentVersion, string agentStatus)
         {
             AzureResourceId = azureResourceId;
             AgentVersion = agentVersion;
@@ -27,7 +29,7 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
         }
 
         /// <summary> Azure App service resource ID. </summary>
-        public string AzureResourceId { get; }
+        public ResourceIdentifier AzureResourceId { get; }
         /// <summary> Version of the NewRelic agent installed on the App service. </summary>
         public string AgentVersion { get; }
         /// <summary> Status of the NewRelic agent installed on the App service. </summary>

@@ -80,14 +80,14 @@ namespace Azure.ResourceManager.NewRelicObservability
             string name = default;
             ResourceType type = default;
             Optional<SystemData> systemData = default;
-            Optional<NewrelicProvisioningState> provisioningState = default;
+            Optional<NewRelicProvisioningState> provisioningState = default;
             Optional<NewRelicObservabilityMonitoringStatus> monitoringStatus = default;
             Optional<NewRelicObservabilityMarketplaceSubscriptionStatus> marketplaceSubscriptionStatus = default;
-            Optional<ResourceIdentifier> marketplaceSubscriptionId = default;
+            Optional<string> marketplaceSubscriptionId = default;
             Optional<NewRelicAccountProperties> newRelicAccountProperties = default;
             Optional<NewRelicObservabilityUserInfo> userInfo = default;
-            Optional<NewRelicPlan> planData = default;
-            Optional<LiftrResourceCategory> liftrResourceCategory = default;
+            Optional<NewRelicPlanDetails> planData = default;
+            Optional<NewRelicLiftrResourceCategory> liftrResourceCategory = default;
             Optional<int> liftrResourcePreference = default;
             Optional<NewRelicObservabilityOrgCreationSource> orgCreationSource = default;
             Optional<NewRelicObservabilityAccountCreationSource> accountCreationSource = default;
@@ -160,7 +160,7 @@ namespace Azure.ResourceManager.NewRelicObservability
                             {
                                 continue;
                             }
-                            provisioningState = new NewrelicProvisioningState(property0.Value.GetString());
+                            provisioningState = new NewRelicProvisioningState(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("monitoringStatus"u8))
@@ -183,11 +183,7 @@ namespace Azure.ResourceManager.NewRelicObservability
                         }
                         if (property0.NameEquals("marketplaceSubscriptionId"u8))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            marketplaceSubscriptionId = new ResourceIdentifier(property0.Value.GetString());
+                            marketplaceSubscriptionId = property0.Value.GetString();
                             continue;
                         }
                         if (property0.NameEquals("newRelicAccountProperties"u8))
@@ -214,7 +210,7 @@ namespace Azure.ResourceManager.NewRelicObservability
                             {
                                 continue;
                             }
-                            planData = NewRelicPlan.DeserializeNewRelicPlan(property0.Value);
+                            planData = NewRelicPlanDetails.DeserializeNewRelicPlanDetails(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("liftrResourceCategory"u8))
@@ -223,7 +219,7 @@ namespace Azure.ResourceManager.NewRelicObservability
                             {
                                 continue;
                             }
-                            liftrResourceCategory = new LiftrResourceCategory(property0.Value.GetString());
+                            liftrResourceCategory = new NewRelicLiftrResourceCategory(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("liftrResourcePreference"u8))

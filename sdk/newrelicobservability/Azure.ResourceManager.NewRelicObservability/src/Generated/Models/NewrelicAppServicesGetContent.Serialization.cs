@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.NewRelicObservability.Models
 {
-    public partial class NewrelicAppServicesGetContent : IUtf8JsonSerializable
+    public partial class NewRelicAppServicesGetContent : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -21,6 +21,11 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
                 writer.WriteStartArray();
                 foreach (var item in AzureResourceIds)
                 {
+                    if (item == null)
+                    {
+                        writer.WriteNullValue();
+                        continue;
+                    }
                     writer.WriteStringValue(item);
                 }
                 writer.WriteEndArray();

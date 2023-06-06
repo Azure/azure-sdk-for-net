@@ -10,9 +10,9 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.NewRelicObservability.Models
 {
-    public partial class ResourceMonitoredByNewRelic
+    public partial class NewRelicResourceMonitorResult
     {
-        internal static ResourceMonitoredByNewRelic DeserializeResourceMonitoredByNewRelic(JsonElement element)
+        internal static NewRelicResourceMonitorResult DeserializeNewRelicResourceMonitorResult(JsonElement element)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
                     continue;
                 }
             }
-            return new ResourceMonitoredByNewRelic(id.Value, Optional.ToNullable(sendingMetrics), reasonForMetricsStatus.Value, Optional.ToNullable(sendingLogs), reasonForLogsStatus.Value);
+            return new NewRelicResourceMonitorResult(id.Value, Optional.ToNullable(sendingMetrics), reasonForMetricsStatus.Value, Optional.ToNullable(sendingLogs), reasonForLogsStatus.Value);
         }
     }
 }

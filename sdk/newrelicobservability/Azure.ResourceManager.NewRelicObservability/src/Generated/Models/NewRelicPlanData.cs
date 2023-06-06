@@ -11,14 +11,14 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.NewRelicObservability.Models
 {
     /// <summary> The details of a PlanData resource. </summary>
-    public partial class NewRelicPlanResourceData : ResourceData
+    public partial class NewRelicPlanData : ResourceData
     {
-        /// <summary> Initializes a new instance of NewRelicPlanResourceData. </summary>
-        public NewRelicPlanResourceData()
+        /// <summary> Initializes a new instance of NewRelicPlanData. </summary>
+        public NewRelicPlanData()
         {
         }
 
-        /// <summary> Initializes a new instance of NewRelicPlanResourceData. </summary>
+        /// <summary> Initializes a new instance of NewRelicPlanData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
         /// <param name="planData"> Plan details. </param>
         /// <param name="orgCreationSource"> Source of org creation. </param>
         /// <param name="accountCreationSource"> Source of account creation. </param>
-        internal NewRelicPlanResourceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, NewRelicPlan planData, NewRelicObservabilityOrgCreationSource? orgCreationSource, NewRelicObservabilityAccountCreationSource? accountCreationSource) : base(id, name, resourceType, systemData)
+        internal NewRelicPlanData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, NewRelicPlanDetails planData, NewRelicObservabilityOrgCreationSource? orgCreationSource, NewRelicObservabilityAccountCreationSource? accountCreationSource) : base(id, name, resourceType, systemData)
         {
             PlanData = planData;
             OrgCreationSource = orgCreationSource;
@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
         }
 
         /// <summary> Plan details. </summary>
-        public NewRelicPlan PlanData { get; set; }
+        public NewRelicPlanDetails PlanData { get; set; }
         /// <summary> Source of org creation. </summary>
         public NewRelicObservabilityOrgCreationSource? OrgCreationSource { get; set; }
         /// <summary> Source of account creation. </summary>

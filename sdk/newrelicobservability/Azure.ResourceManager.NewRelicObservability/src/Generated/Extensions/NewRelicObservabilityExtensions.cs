@@ -307,8 +307,8 @@ namespace Azure.ResourceManager.NewRelicObservability
         /// <param name="accountId"> Account Id. </param>
         /// <param name="organizationId"> Organization Id. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="NewRelicPlanResourceData" /> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<NewRelicPlanResourceData> GetNewrelicPlansAsync(this SubscriptionResource subscriptionResource, string accountId = null, string organizationId = null, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="NewRelicPlanData" /> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<NewRelicPlanData> GetNewrelicPlansAsync(this SubscriptionResource subscriptionResource, string accountId = null, string organizationId = null, CancellationToken cancellationToken = default)
         {
             return GetSubscriptionResourceExtensionClient(subscriptionResource).GetNewrelicPlansAsync(accountId, organizationId, cancellationToken);
         }
@@ -330,8 +330,8 @@ namespace Azure.ResourceManager.NewRelicObservability
         /// <param name="accountId"> Account Id. </param>
         /// <param name="organizationId"> Organization Id. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="NewRelicPlanResourceData" /> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<NewRelicPlanResourceData> GetNewrelicPlans(this SubscriptionResource subscriptionResource, string accountId = null, string organizationId = null, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="NewRelicPlanData" /> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<NewRelicPlanData> GetNewrelicPlans(this SubscriptionResource subscriptionResource, string accountId = null, string organizationId = null, CancellationToken cancellationToken = default)
         {
             return GetSubscriptionResourceExtensionClient(subscriptionResource).GetNewrelicPlans(accountId, organizationId, cancellationToken);
         }

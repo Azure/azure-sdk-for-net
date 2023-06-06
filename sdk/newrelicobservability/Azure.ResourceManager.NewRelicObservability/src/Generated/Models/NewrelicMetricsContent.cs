@@ -11,12 +11,12 @@ using Azure.Core;
 namespace Azure.ResourceManager.NewRelicObservability.Models
 {
     /// <summary> Request of get metrics Operation. </summary>
-    public partial class NewrelicMetricsContent
+    public partial class NewRelicMetricsContent
     {
-        /// <summary> Initializes a new instance of NewrelicMetricsContent. </summary>
+        /// <summary> Initializes a new instance of NewRelicMetricsContent. </summary>
         /// <param name="userEmail"> User Email. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="userEmail"/> is null. </exception>
-        public NewrelicMetricsContent(string userEmail)
+        public NewRelicMetricsContent(string userEmail)
         {
             Argument.AssertNotNull(userEmail, nameof(userEmail));
 

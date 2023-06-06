@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.NewRelicObservability.Tests
                     Country = "IN",
                     EmailAddress = "viprayjain@microsoft.com"
                 },
-                PlanData = new NewRelicPlan
+                PlanData = new NewRelicPlanDetails
                 {
                     UsageType = "PAYG",
                     BillingCycle = "MONTHLY",
@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.NewRelicObservability.Tests
                     Country = "IN",
                     EmailAddress = "viprayjain@microsoft.com"
                 },
-                PlanData = new NewRelicPlan
+                PlanData = new NewRelicPlanDetails
                 {
                     UsageType = "PAYG",
                     BillingCycle = "MONTHLY",

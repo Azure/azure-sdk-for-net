@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
             if (Optional.IsDefined(Region))
             {
                 writer.WritePropertyName("region"u8);
-                writer.WriteStringValue(Region);
+                writer.WriteStringValue(Region.Value);
             }
             writer.WriteEndObject();
         }
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
             }
             Optional<string> accountId = default;
             Optional<string> ingestionKey = default;
-            Optional<string> region = default;
+            Optional<AzureLocation> region = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("accountId"u8))
@@ -56,11 +56,15 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
                 }
                 if (property.NameEquals("region"u8))
                 {
-                    region = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    region = new AzureLocation(property.Value.GetString());
                     continue;
                 }
             }
-            return new NewRelicObservabilityAccountInfo(accountId.Value, ingestionKey.Value, region.Value);
+            return new NewRelicObservabilityAccountInfo(accountId.Value, ingestionKey.Value, Optional.ToNullable(region));
         }
     }
 }

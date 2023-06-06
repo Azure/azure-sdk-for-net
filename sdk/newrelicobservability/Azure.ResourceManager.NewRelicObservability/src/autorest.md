@@ -87,39 +87,44 @@ rename-rules:
   Etag: ETag|etag
 
 rename-mapping:
+  AccountInfo.region: -|azure-location
   AccountResource: NewRelicAccountResourceData
+  AccountResource.properties.region: -|azure-location
   AccountsListResponse: NewRelicAccountsListResult
   AgentData.ArcResourceId: -|arm-id
   AgentData.ArcVmUuid: -|uuid
-  AppServicesGetRequest: NewrelicAppServicesGetContent
-  AppServicesListResponse: NewrelicAppServicesListResult
+  AppServicesGetRequest: NewRelicAppServicesGetContent
+  AppServicesGetRequest.azureResourceIds: -|arm-id
+  AppServiceInfo.azureResourceId: -|arm-id
+  AppServicesListResponse: NewRelicAppServicesListResult
   AzureStorageBlobContainerEndpointProperties: StorageBlobContainerEndpointProperties
   AzureStorageBlobContainerNewrelicEndpointProperties.StorageAccountResourceId: -|arm-id
-  HostsGetRequest: NewrelicHostsGetContent
-  JobDefinitionData: NewrelicJobDefinitionData
-  JobRun: NewrelicJobRun
+  HostsGetRequest: NewRelicHostsGetContent
+  HostsGetRequest.vmIds: -|arm-id
+  JobDefinitionData: NewRelicJobDefinitionData
+  JobRun: NewRelicJobRun
   JobDefinitionData.AgentResourceId: -|arm-id
   JobDefinitionData.LatestJobRunResourceId: -|arm-id
   JobDefinitionData.SourceResourceId: -|arm-id
   JobDefinitionData.TargetResourceId: -|arm-id
   JobRunData.AgentResourceId: -|arm-id
   JobRunData.SourceResourceId: -|arm-id
-  NewRelicMonitorResource.properties.marketplaceSubscriptionId: -|arm-id
-  MetricsRequest: NewrelicMetricsContent
-  MetricsStatusRequest: NewrelicMetricsStatusContent
-  MetricsStatusResponse: NewrelicMetricsStatusResult
-  MonitoredResource: ResourceMonitoredByNewRelic
+  LiftrResourceCategories: NewRelicLiftrResourceCategory
+  MetricsRequest: NewRelicMetricsContent
+  MetricsStatusRequest: NewRelicMetricsStatusContent
+  MetricsStatusResponse: NewRelicMetricsStatusResult
+  MonitoredResource: NewRelicResourceMonitorResult
   MonitoredResource.id: -|arm-id
   MonitoredResourceListResponse: MonitoredResourceListResult
   MonitoringStatus.Disabled: IsDisabled
   MonitoringStatus.Enabled: IsEnabled
   NewrelicAgentData.LocalIPAddress: -|ip-address
-  OrganizationsListResponse: NewrelicOrganizationsListResult
-  ProvisioningState: NewrelicProvisioningState
-  Project: NewrelicProject
-  PlanDataListResponse: NewrelicPlanDataListResult
-  PlanData: NewRelicPlan
-  PlanDataResource: NewRelicPlanResourceData
+  OrganizationsListResponse: NewRelicOrganizationsListResult
+  ProvisioningState: NewRelicProvisioningState
+  Project: NewRelicProject
+  PlanDataListResponse: NewRelicPlanDataListResult
+  PlanData: NewRelicPlanDetails
+  PlanDataResource: NewRelicPlanData
   OrganizationResource: NewRelicOrganizationResourceData
   SendAadLogsStatus.Disabled: IsDisabled
   SendAadLogsStatus.Enabled: IsEnabled
@@ -132,8 +137,9 @@ rename-mapping:
   SendSubscriptionLogsStatus.Disabled: IsDisabled
   SendSubscriptionLogsStatus.Enabled: IsEnabled
   SingleSignOnStates: NewRelicSingleSignOnState
-  StorageMover: NewrelicStorageMover
-  SwitchBillingRequest: NewrelicSwitchBillingContent
+  StorageMover: NewRelicStorageMover
+  SwitchBillingRequest: NewRelicSwitchBillingContent
+  SwitchBillingRequest.azureResourceId: -|arm-id
   VMInfo.vmId: -|arm-id
 
 override-operation-name:
