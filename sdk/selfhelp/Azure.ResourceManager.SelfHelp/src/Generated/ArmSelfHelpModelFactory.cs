@@ -17,160 +17,88 @@ namespace Azure.ResourceManager.SelfHelp.Models
     /// <summary> Model factory for models. </summary>
     public static partial class ArmSelfHelpModelFactory
     {
-        /// <summary> Initializes a new instance of CheckNameAvailabilityResponse. </summary>
-        /// <param name="nameAvailable">
-        /// Returns true or false depending on the availability of the name
-        /// Serialized Name: CheckNameAvailabilityResponse.nameAvailable
-        /// </param>
-        /// <param name="reason">
-        /// Reason for why value is not available. This field is returned if nameAvailable is false.
-        /// Serialized Name: CheckNameAvailabilityResponse.reason
-        /// </param>
-        /// <param name="message">
-        /// Gets an error message explaining the &apos;reason&apos; value with more details. This field is returned iif nameAvailable is false.
-        /// Serialized Name: CheckNameAvailabilityResponse.message
-        /// </param>
-        /// <returns> A new <see cref="Models.CheckNameAvailabilityResponse"/> instance for mocking. </returns>
-        public static CheckNameAvailabilityResponse CheckNameAvailabilityResponse(bool? nameAvailable = null, string reason = null, string message = null)
+        /// <summary> Initializes a new instance of SelfHelpNameAvailabilityResult. </summary>
+        /// <param name="isNameAvailable"> Returns true or false depending on the availability of the name. </param>
+        /// <param name="reason"> Reason for why value is not available. This field is returned if nameAvailable is false. </param>
+        /// <param name="message"> Gets an error message explaining the &apos;reason&apos; value with more details. This field is returned iif nameAvailable is false. </param>
+        /// <returns> A new <see cref="Models.SelfHelpNameAvailabilityResult"/> instance for mocking. </returns>
+        public static SelfHelpNameAvailabilityResult SelfHelpNameAvailabilityResult(bool? isNameAvailable = null, string reason = null, string message = null)
         {
-            return new CheckNameAvailabilityResponse(nameAvailable, reason, message);
+            return new SelfHelpNameAvailabilityResult(isNameAvailable, reason, message);
         }
 
-        /// <summary> Initializes a new instance of SelfHelpDiagnosticResourceData. </summary>
+        /// <summary> Initializes a new instance of SelfHelpDiagnosticData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="globalParameters">
-        /// Global parameters that can be passed to all solutionIds.
-        /// Serialized Name: DiagnosticResource.properties.globalParameters
-        /// </param>
-        /// <param name="insights">
-        /// SolutionIds that are needed to be invoked.
-        /// Serialized Name: DiagnosticResource.properties.insights
-        /// </param>
-        /// <param name="acceptedTime">
-        /// Diagnostic Request Accepted time.
-        /// Serialized Name: DiagnosticResource.properties.acceptedAt
-        /// </param>
-        /// <param name="provisioningState">
-        /// Status of diagnostic provisioning.
-        /// Serialized Name: DiagnosticResource.properties.provisioningState
-        /// </param>
-        /// <param name="diagnostics">
-        /// Array of Diagnostics.
-        /// Serialized Name: DiagnosticResource.properties.diagnostics
-        /// </param>
-        /// <returns> A new <see cref="SelfHelp.SelfHelpDiagnosticResourceData"/> instance for mocking. </returns>
-        public static SelfHelpDiagnosticResourceData SelfHelpDiagnosticResourceData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> globalParameters = null, IEnumerable<DiagnosticInvocation> insights = null, string acceptedTime = null, ProvisioningState? provisioningState = null, IEnumerable<SelfHelpDiagnostic> diagnostics = null)
+        /// <param name="globalParameters"> Global parameters that can be passed to all solutionIds. </param>
+        /// <param name="insights"> SolutionIds that are needed to be invoked. </param>
+        /// <param name="acceptedOn"> Diagnostic Request Accepted time. </param>
+        /// <param name="provisioningState"> Status of diagnostic provisioning. </param>
+        /// <param name="diagnostics"> Array of Diagnostics. </param>
+        /// <returns> A new <see cref="SelfHelp.SelfHelpDiagnosticData"/> instance for mocking. </returns>
+        public static SelfHelpDiagnosticData SelfHelpDiagnosticData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> globalParameters = null, IEnumerable<SelfHelpDiagnosticInvocation> insights = null, DateTimeOffset? acceptedOn = null, SelfHelpProvisioningState? provisioningState = null, IEnumerable<SelfHelpDiagnosticInfo> diagnostics = null)
         {
             globalParameters ??= new Dictionary<string, string>();
-            insights ??= new List<DiagnosticInvocation>();
-            diagnostics ??= new List<SelfHelpDiagnostic>();
+            insights ??= new List<SelfHelpDiagnosticInvocation>();
+            diagnostics ??= new List<SelfHelpDiagnosticInfo>();
 
-            return new SelfHelpDiagnosticResourceData(id, name, resourceType, systemData, globalParameters, insights?.ToList(), acceptedTime, provisioningState, diagnostics?.ToList());
+            return new SelfHelpDiagnosticData(id, name, resourceType, systemData, globalParameters, insights?.ToList(), acceptedOn, provisioningState, diagnostics?.ToList());
         }
 
-        /// <summary> Initializes a new instance of SelfHelpDiagnostic. </summary>
-        /// <param name="solutionId">
-        /// Solution Id
-        /// Serialized Name: Diagnostic.solutionId
-        /// </param>
-        /// <param name="status">
-        /// Denotes the status of the diagnostic resource.
-        /// Serialized Name: Diagnostic.status
-        /// </param>
-        /// <param name="insights">
-        /// The problems (if any) detected by this insight.
-        /// Serialized Name: Diagnostic.insights
-        /// </param>
-        /// <param name="error">
-        /// Error definition.
-        /// Serialized Name: Diagnostic.error
-        /// </param>
-        /// <returns> A new <see cref="Models.SelfHelpDiagnostic"/> instance for mocking. </returns>
-        public static SelfHelpDiagnostic SelfHelpDiagnostic(string solutionId = null, DiagnosticStatus? status = null, IEnumerable<DiagnosticInsight> insights = null, SelfHelpError error = null)
+        /// <summary> Initializes a new instance of SelfHelpDiagnosticInfo. </summary>
+        /// <param name="solutionId"> Solution Id. </param>
+        /// <param name="status"> Denotes the status of the diagnostic resource. </param>
+        /// <param name="insights"> The problems (if any) detected by this insight. </param>
+        /// <param name="error"> Error definition. </param>
+        /// <returns> A new <see cref="Models.SelfHelpDiagnosticInfo"/> instance for mocking. </returns>
+        public static SelfHelpDiagnosticInfo SelfHelpDiagnosticInfo(string solutionId = null, SelfHelpDiagnosticStatus? status = null, IEnumerable<SelfHelpDiagnosticInsight> insights = null, SelfHelpError error = null)
         {
-            insights ??= new List<DiagnosticInsight>();
+            insights ??= new List<SelfHelpDiagnosticInsight>();
 
-            return new SelfHelpDiagnostic(solutionId, status, insights?.ToList(), error);
+            return new SelfHelpDiagnosticInfo(solutionId, status, insights?.ToList(), error);
         }
 
-        /// <summary> Initializes a new instance of DiagnosticInsight. </summary>
-        /// <param name="insightId">
-        /// Article id.
-        /// Serialized Name: Insight.id
-        /// </param>
-        /// <param name="insightTitle">
-        /// This insight&apos;s title.
-        /// Serialized Name: Insight.title
-        /// </param>
-        /// <param name="insightResults">
-        /// Detailed result content.
-        /// Serialized Name: Insight.results
-        /// </param>
-        /// <param name="insightImportanceLevel">
-        /// Importance level of the insight.
-        /// Serialized Name: Insight.importanceLevel
-        /// </param>
-        /// <returns> A new <see cref="Models.DiagnosticInsight"/> instance for mocking. </returns>
-        public static DiagnosticInsight DiagnosticInsight(string insightId = null, string insightTitle = null, string insightResults = null, ImportanceLevel? insightImportanceLevel = null)
+        /// <summary> Initializes a new instance of SelfHelpDiagnosticInsight. </summary>
+        /// <param name="id"> Article id. </param>
+        /// <param name="title"> This insight&apos;s title. </param>
+        /// <param name="results"> Detailed result content. </param>
+        /// <param name="insightImportanceLevel"> Importance level of the insight. </param>
+        /// <returns> A new <see cref="Models.SelfHelpDiagnosticInsight"/> instance for mocking. </returns>
+        public static SelfHelpDiagnosticInsight SelfHelpDiagnosticInsight(string id = null, string title = null, string results = null, SelfHelpImportanceLevel? insightImportanceLevel = null)
         {
-            return new DiagnosticInsight(insightId, insightTitle, insightResults, insightImportanceLevel);
+            return new SelfHelpDiagnosticInsight(id, title, results, insightImportanceLevel);
         }
 
         /// <summary> Initializes a new instance of SelfHelpError. </summary>
-        /// <param name="errorCode">
-        /// Service specific error code which serves as the substatus for the HTTP error code.
-        /// Serialized Name: Error.code
-        /// </param>
-        /// <param name="errorType">
-        /// Service specific error type which serves as additional context for the error herein.
-        /// Serialized Name: Error.type
-        /// </param>
-        /// <param name="message">
-        /// Description of the error.
-        /// Serialized Name: Error.message
-        /// </param>
-        /// <param name="details">
-        /// An array of additional nested error response info objects, as described by this contract.
-        /// Serialized Name: Error.details
-        /// </param>
+        /// <param name="code"> Service specific error code which serves as the substatus for the HTTP error code. </param>
+        /// <param name="errorType"> Service specific error type which serves as additional context for the error herein. </param>
+        /// <param name="message"> Description of the error. </param>
+        /// <param name="details"> An array of additional nested error response info objects, as described by this contract. </param>
         /// <returns> A new <see cref="Models.SelfHelpError"/> instance for mocking. </returns>
-        public static SelfHelpError SelfHelpError(string errorCode = null, string errorType = null, string message = null, IEnumerable<SelfHelpError> details = null)
+        public static SelfHelpError SelfHelpError(string code = null, string errorType = null, string message = null, IEnumerable<SelfHelpError> details = null)
         {
             details ??= new List<SelfHelpError>();
 
-            return new SelfHelpError(errorCode, errorType, message, details?.ToList());
+            return new SelfHelpError(code, errorType, message, details?.ToList());
         }
 
-        /// <summary> Initializes a new instance of SolutionMetadataResource. </summary>
+        /// <summary> Initializes a new instance of SelfHelpSolutionMetadata. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="solutionId">
-        /// Solution Id.
-        /// Serialized Name: SolutionMetadataResource.properties.solutionId
-        /// </param>
-        /// <param name="solutionType">
-        /// Solution Type.
-        /// Serialized Name: SolutionMetadataResource.properties.solutionType
-        /// </param>
-        /// <param name="description">
-        /// A detailed description of solution.
-        /// Serialized Name: SolutionMetadataResource.properties.description
-        /// </param>
-        /// <param name="requiredParameterSets">
-        /// Required parameters for invoking this particular solution.
-        /// Serialized Name: SolutionMetadataResource.properties.requiredParameterSets
-        /// </param>
-        /// <returns> A new <see cref="Models.SolutionMetadataResource"/> instance for mocking. </returns>
-        public static SolutionMetadataResource SolutionMetadataResource(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string solutionId = null, string solutionType = null, string description = null, IEnumerable<IList<string>> requiredParameterSets = null)
+        /// <param name="solutionId"> Solution Id. </param>
+        /// <param name="solutionType"> Solution Type. </param>
+        /// <param name="description"> A detailed description of solution. </param>
+        /// <param name="requiredParameterSets"> Required parameters for invoking this particular solution. </param>
+        /// <returns> A new <see cref="Models.SelfHelpSolutionMetadata"/> instance for mocking. </returns>
+        public static SelfHelpSolutionMetadata SelfHelpSolutionMetadata(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string solutionId = null, string solutionType = null, string description = null, IEnumerable<IList<string>> requiredParameterSets = null)
         {
             requiredParameterSets ??= new List<IList<string>>();
 
-            return new SolutionMetadataResource(id, name, resourceType, systemData, solutionId, solutionType, description, requiredParameterSets?.ToList());
+            return new SelfHelpSolutionMetadata(id, name, resourceType, systemData, solutionId, solutionType, description, requiredParameterSets?.ToList());
         }
     }
 }
