@@ -21,6 +21,12 @@ namespace Azure.Messaging.ServiceBus
         public CancellationToken CancellationToken { get; }
 
         /// <summary>
+        /// The <see cref="System.Threading.CancellationToken"/> instance is cancelled when the lock renewal failed to
+        /// renew the lock or the <see cref="ServiceBusSessionProcessorOptions.MaxAutoLockRenewalDuration"/> has elapsed.
+        /// </summary>
+        public CancellationToken SessionLockCancellationToken { get; }
+
+        /// <summary>
         /// The <see cref="ServiceBusSessionReceiver"/> that will be used for setting and getting session state.
         /// </summary>
         private readonly ServiceBusSessionReceiver _sessionReceiver;

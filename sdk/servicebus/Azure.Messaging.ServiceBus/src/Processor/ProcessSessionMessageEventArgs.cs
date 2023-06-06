@@ -34,9 +34,7 @@ namespace Azure.Messaging.ServiceBus
         /// The <see cref="System.Threading.CancellationToken"/> instance is cancelled when the lock renewal failed to
         /// renew the lock or the <see cref="ServiceBusSessionProcessorOptions.MaxAutoLockRenewalDuration"/> has elapsed.
         /// </summary>
-        /// <remarks>The cancellation token is triggered by comparing <see cref="ServiceBusReceivedMessage.LockedUntil"/>
-        /// against <see cref="DateTimeOffset.UtcNow"/> and might be subjected to clock drift.</remarks>
-        public CancellationToken LockExpiryCancellationToken { get; }
+        public CancellationToken SessionLockCancellationToken { get; }
 
         internal ConcurrentDictionary<ServiceBusReceivedMessage, CancellationTokenSource> Messages => _receiveActions.Messages;
 
@@ -127,7 +125,7 @@ namespace Azure.Messaging.ServiceBus
             _sessionReceiver = (ServiceBusSessionReceiver) _manager?.Receiver;
             _receiveActions = new ProcessorReceiveActions(message, manager, false);
             CancellationToken = cancellationToken;
-            LockExpiryCancellationToken = _receiveActions.GetLockExpiryCancellationToken(message);
+            SessionLockCancellationToken = _receiveActions.GetMessageLockCancellationToken(message);
         }
 
         private void SessionLockLost(object sender, EventArgs e)
@@ -143,7 +141,6 @@ namespace Azure.Messaging.ServiceBus
             var utcNow = DateTimeOffset.UtcNow;
             foreach (var messageAndTokenSource in Messages)
             {
-                messageAndTokenSource.Key.LockedUntil = _sessionReceiver.SessionLockedUntil;
                 messageAndTokenSource.Value.CancelAfterSessionLockExpired(_sessionReceiver, utcNow);
             }
         }
@@ -283,7 +280,7 @@ namespace Azure.Messaging.ServiceBus
         internal async ValueTask ReleaseAsync()
         {
             _manager.SessionLockRenewed -= SessionLockRenewed;
-            _manager.SessionLockLost -= this.SessionLockLost;
+            _manager.SessionLockLost -= SessionLockLost;
 
             await _receiveActions.ReleaseAsync().ConfigureAwait(false);
         }

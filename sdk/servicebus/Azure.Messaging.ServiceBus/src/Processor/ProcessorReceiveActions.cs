@@ -123,7 +123,7 @@ namespace Azure.Messaging.ServiceBus
         /// on the current receive action.</returns>
         /// <remarks>The cancellation token is triggered by comparing <see cref="ServiceBusReceivedMessage.LockedUntil"/>
         /// against <see cref="DateTimeOffset.UtcNow"/> and might be subjected to clock drift.</remarks>
-        public virtual CancellationToken GetLockExpiryCancellationToken(ServiceBusReceivedMessage receivedMessage)
+        public virtual CancellationToken GetMessageLockCancellationToken(ServiceBusReceivedMessage receivedMessage)
         {
             return Messages.TryGetValue(receivedMessage, out var cancellationTokenSource) ? cancellationTokenSource.Token : default;
         }
