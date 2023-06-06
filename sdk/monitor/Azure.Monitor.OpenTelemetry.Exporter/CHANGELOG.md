@@ -16,7 +16,7 @@
 
 ### Other Changes
 
-* Removed `_OTELRESOURCE_` from Logs and Metrics.
+* Removed `_OTELRESOURCE_` export from Logs and Metrics.
   ([#36430](https://github.com/Azure/azure-sdk-for-net/pull/36430))
 
 ## 1.0.0-beta.11 (2023-05-09)
