@@ -46,5 +46,6 @@ namespace Azure.Communication.CallAutomation
         public PlayToAllOptions(PlaySource playSource)
         {
             PlaySources = new List<PlaySource> { playSource };
+        }
     }
 }
