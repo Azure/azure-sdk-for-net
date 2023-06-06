@@ -118,7 +118,9 @@ namespace Azure.Storage.DataMovement
             _ranges = ranges;
 
             if (expectedLength <= 0)
-                throw new ArgumentException("Cannot initiate Commit Block List function with File that has a negative or zero length");
+            {
+                throw Errors.InvalidExpectedLength(expectedLength);
+            }
             Argument.AssertNotNullOrEmpty(ranges, nameof(ranges));
             Argument.AssertNotNull(behaviors, nameof(behaviors));
 
@@ -159,7 +161,7 @@ namespace Azure.Storage.DataMovement
             DisposeHandlers();
         }
 
-        public void DisposeHandlers()
+        private void DisposeHandlers()
         {
             _downloadChunkEventHandler -= DownloadChunkEvent;
         }
@@ -173,8 +175,11 @@ namespace Azure.Storage.DataMovement
             else
             {
                 // Report back failed event.
-                await InvokeFailedEvent(new Exception("Unexpected error: Experienced failed download range argument. " +
-                    $"Range: {args.Offset} - {args.BytesTransferred} with Transfer ID: {args.TransferId}")).ConfigureAwait(false);
+                await InvokeFailedEvent(
+                    Errors.FailedDownloadRange(
+                        offset: args.Offset,
+                        bytesTransferred: args.BytesTransferred,
+                        transferId: args.TransferId)).ConfigureAwait(false);
             }
         }
 
@@ -211,8 +216,7 @@ namespace Azure.Storage.DataMovement
                             // Throw an error here that we were unable to idenity the
                             // the range that has come back to us. We should never see this error
                             // since we were the ones who calculated the range.
-                            throw new ArgumentException($"Cannot find offset returned by Successful Download Range" +
-                                    $"in the expected Ranges: \"{args.Offset}\"");
+                            throw Errors.InvalidDownloadOffset(args.Offset, args.BytesTransferred);
                         }
                     }
                     else if (currentRangeOffset == args.Offset)
@@ -243,8 +247,7 @@ namespace Azure.Storage.DataMovement
                         // We should never reach this point because that means
                         // the range that came back was less than the next range that is supposed
                         // to be copied to the file
-                        throw new ArgumentException($"Offset returned by Successful Download Range" +
-                                $"was not in the expected Ranges: \"{args.Offset}\"");
+                        throw Errors.InvalidDownloadOffset(args.Offset, args.BytesTransferred);
                     }
                     _currentBytesSemaphore.Release();
                 }
@@ -263,7 +266,13 @@ namespace Azure.Storage.DataMovement
 
         public async Task InvokeEvent(DownloadRangeEventArgs args)
         {
-            await _downloadChunkEventHandler.Invoke(args).ConfigureAwait(false);
+            // There's a race condition where the event handler was disposed and an event
+            // was already invoked, we should skip over this as the download chunk handler
+            // was already disposed, and we should just ignore any more incoming events.
+            if (_downloadChunkEventHandler != null)
+            {
+                await _downloadChunkEventHandler.Invoke(args).ConfigureAwait(false);
+            }
         }
 
         private async Task AppendEarlyChunksToFile()
@@ -277,42 +286,30 @@ namespace Azure.Storage.DataMovement
                 HttpRange currentRange = _ranges[_currentRangeIndex];
                 if (_rangesCompleted.TryRemove(currentRange.Offset, out string chunkFilePath))
                 {
-                    try
+                    if (File.Exists(chunkFilePath))
                     {
-                        if (File.Exists(chunkFilePath))
+                        using (Stream content = File.OpenRead(chunkFilePath))
                         {
-                            using (Stream content = File.OpenRead(chunkFilePath))
-                            {
-                                await _copyToDestinationFile(
-                                    currentRange.Offset,
-                                    (long) currentRange.Length,
-                                    content,
-                                    _expectedLength).ConfigureAwait(false);
-                            }
-                            // Delete the temporary chunk file that's no longer needed
-                            File.Delete(chunkFilePath);
+                            await _copyToDestinationFile(
+                                currentRange.Offset,
+                                currentRange.Length.Value,
+                                content,
+                                _expectedLength).ConfigureAwait(false);
                         }
-                        else
-                        {
-                            throw new FileNotFoundException($"Could not append chunk to destination file at Offset: " +
-                                $"\"{currentRange.Offset}\" and Length: \"{currentRange.Length}\"," +
-                                $"due to the chunk file missing: \"{chunkFilePath}\"");
-                        }
+                        // Delete the temporary chunk file that's no longer needed
+                        File.Delete(chunkFilePath);
                     }
-                    catch
+                    else
                     {
-                        throw new Exception(
-                            $"Could not append chunk to destination file at Offset: " +
-                            $"\"{currentRange.Offset}\" and Length: \"{currentRange.Length}\"");
+                        throw Errors.TempChunkFileNotFound(
+                            offset: currentRange.Offset,
+                            length: currentRange.Length.Value,
+                            filePath: chunkFilePath);
                     }
                 }
                 else
                 {
-                    throw new ArgumentOutOfRangeException(
-                        "Offset",
-                        currentRange,
-                        $"Cannot find offset returned by Successful Download Range at Offset: " +
-                        $"\"{currentRange.Offset}\" and Length: \"{currentRange.Length}\"");
+                    throw Errors.InvalidDownloadOffset(currentRange.Offset, currentRange.Length.Value);
                 }
 
                 // Increment the current range we are expect, if it's null then
