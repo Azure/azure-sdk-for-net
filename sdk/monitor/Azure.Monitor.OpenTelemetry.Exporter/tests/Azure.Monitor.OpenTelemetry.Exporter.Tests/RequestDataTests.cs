@@ -109,6 +109,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             var httpResponseCode = httpStatusCode ?? "0";
             activity.SetTag(SemanticConventions.AttributeHttpUrl, "https://www.foo.bar/search");
             activity.SetTag(SemanticConventions.AttributeHttpStatusCode, httpStatusCode);
+            activity.SetTag(SemanticConventions.AttributeHttpMethod, "GET");
 
             var activityTagsProcessor = TraceHelper.EnumerateActivityTags(activity);
 
@@ -130,8 +131,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
 
             var requestData = new RequestData(2, activity, ref activityTagsProcessor);
 
-            Assert.True(activityTagsProcessor.HasAzureNamespace);
-            Assert.Equal("DemoAzureResource", requestData.Properties["az.namespace"]);
+            Assert.Equal("DemoAzureResource", activityTagsProcessor.AzureNamespace);
         }
 
         [Fact]
