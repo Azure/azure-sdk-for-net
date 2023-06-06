@@ -19,7 +19,7 @@ namespace Azure.Core.Dynamic
         /// <summary>
         /// Gets or sets an object that specifies how dynamic property names will be mapped to member names in the data buffer.
         /// </summary>
-        public DynamicCaseMapping CaseMapping { get; set; }
+        public PropertyNameConversion PropertyNameConversion { get; set; }
 
         /// <summary>
         /// Gets or sets an object that specifies how DateTime and DateTimeOffset should be handled when serializing and deserializing.

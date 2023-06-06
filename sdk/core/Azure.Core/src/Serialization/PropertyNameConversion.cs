@@ -6,7 +6,7 @@ namespace Azure.Core.Serialization
     /// <summary>
     /// Options for getting and setting DynamicData properties.
     /// </summary>
-    public enum DynamicCaseMapping
+    public enum PropertyNameConversion
     {
         /// <summary>
         /// Properties are read from and written to the data content with the same casing as the DynamicData property name.
@@ -14,10 +14,9 @@ namespace Azure.Core.Serialization
         None = 0,
 
         /// <summary>
-        /// A "PascalCase" DynamicData property name can be used to get "camelCase" members in the data content.
-        /// Values assigned to DynamicData properties are written to the data content with a "camelCase" name mapping
-        /// applied to the property name.  This mapping is not applied when using indexer syntax.
+        /// Indicates that property names will be converted to camel-casing format.
+        /// See <see cref="System.Text.Json.JsonNamingPolicy.CamelCase"/> for details of the conversion.
         /// </summary>
-        PascalToCamel = 1
+        CamelCase = 1
     }
 }
