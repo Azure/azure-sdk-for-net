@@ -176,7 +176,7 @@ if ($generateFromLocalTypeSpec) {
     try {
       Push-Location $specRepoRoot
       $CommitHash = $(git rev-parse HEAD)
-      $gitRemotes = (git remote -v)
+      $gitOriginUrl = (git remote get-url origin)
       foreach ($remote in $gitRemotes) {
         Write-Host "Checking remote $remote"
         if ($remote.StartsWith("origin")) {
