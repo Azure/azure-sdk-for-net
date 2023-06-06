@@ -220,7 +220,7 @@ Console.WriteLine(result.GetProperty("nextLink").ToString());
 <remarks>
 
 Additional information can be found in the service REST API documentation:
-https://learn.microsoft.com/rest/api/language/2023-04-01/conversation-analysis-runtime/job-status
+https://review.learn.microsoft.com/rest/api/language/2023-04-01/analyze-conversation/job-status
 
 </remarks>
     </member>
@@ -275,7 +275,7 @@ Console.WriteLine(result.GetProperty("nextLink").ToString());
 <remarks>
 
 Additional information can be found in the service REST API documentation:
-https://learn.microsoft.com/rest/api/language/2023-04-01/conversation-analysis-runtime/job-status
+https://learn.microsoft.com/rest/api/language/2023-04-01/analyze-conversation/job-status
 
 </remarks>
     </member>
@@ -393,7 +393,7 @@ Console.WriteLine(result.GetProperty("nextLink").ToString());
 <remarks>
 
 Additional information can be found in the service REST API documentation:
-https://learn.microsoft.com/rest/api/language/2023-04-01/conversation-analysis-runtime/submit-job
+https://learn.microsoft.com/rest/api/language/2023-04-01/analyze-conversation/submit-job
 
 </remarks>
     </member>
@@ -511,7 +511,7 @@ Console.WriteLine(result.GetProperty("nextLink").ToString());
 <remarks>
 
 Additional information can be found in the service REST API documentation:
-https://learn.microsoft.com/rest/api/language/2023-04-01/conversation-analysis-runtime/submit-job
+https://learn.microsoft.com/rest/api/language/2023-04-01/analyze-conversation/submit-job
 
 </remarks>
     </member>
@@ -531,7 +531,7 @@ Console.WriteLine(operation.GetRawResponse().Status);
 <remarks>
 
 Additional information can be found in the service REST API documentation:
-https://learn.microsoft.com/rest/api/language/2023-04-01/conversation-analysis-runtime/cancel-job
+https://learn.microsoft.com/rest/api/language/2023-04-01/analyze-conversation/cancel-job
 
 </remarks>
     </member>
@@ -551,7 +551,7 @@ Console.WriteLine(operation.GetRawResponse().Status);
 <remarks>
 
 Additional information can be found in the service REST API documentation:
-https://learn.microsoft.com/rest/api/language/2023-04-01/conversation-analysis-runtime/cancel-job
+https://learn.microsoft.com/rest/api/language/2023-04-01/analyze-conversation/cancel-job
 
 </remarks>
     </member>
