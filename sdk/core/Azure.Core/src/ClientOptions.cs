@@ -4,7 +4,9 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using Azure.Core.Dynamic;
 using Azure.Core.Pipeline;
+using Azure.Core.Serialization;
 
 namespace Azure.Core
 {
@@ -15,6 +17,9 @@ namespace Azure.Core
     {
         private HttpPipelineTransport _transport;
         internal bool IsCustomTransportSet { get; private set; }
+
+        private DynamicDataOptions _dynamicOptions;
+        internal DynamicDataOptions DynamicOptions { get => _dynamicOptions; }
 
         /// <summary>
         /// Gets the default set of <see cref="ClientOptions"/>. Changes to the <see cref="Default"/> options would be reflected
@@ -52,6 +57,7 @@ namespace Azure.Core
                 RetryPolicy = clientOptions.RetryPolicy;
                 Diagnostics = diagnostics ?? new DiagnosticsOptions(clientOptions.Diagnostics);
                 _transport = clientOptions.Transport;
+                _dynamicOptions = clientOptions._dynamicOptions;
                 if (clientOptions.Policies != null)
                 {
                     Policies = new(clientOptions.Policies);
@@ -65,6 +71,7 @@ namespace Azure.Core
                 _transport = HttpPipelineTransport.Create();
                 Diagnostics = new DiagnosticsOptions(null);
                 Retry = new RetryOptions(null);
+                _dynamicOptions = new DynamicDataOptions() { DateTimeHandling = DynamicDateTimeHandling.Rfc3339 };
             }
         }
 
@@ -117,6 +124,19 @@ namespace Azure.Core
 
             Policies ??= new();
             Policies.Add((position, policy));
+        }
+
+        /// <summary>
+        /// By default, anonymous and dynamic types used to create and access protocol method request
+        /// and response content will map property names used in .NET code to exact names in the
+        /// content data.  Calling this method has the effect of converting property names used with
+        /// anonymous and dynamic types to camel case when accessing the content data.
+        /// If needed, it can be overridden per instance by passing a value for <see cref="PropertyNameConversion"/>
+        /// to [TODO: cref] RequestContent.Create() or <see cref="AzureCoreExtensions.ToDynamicFromJson(BinaryData, PropertyNameConversion, DynamicDateTimeHandling)"/>.
+        /// </summary>
+        public void UseCamelCaseNamingConvention()
+        {
+            _dynamicOptions.PropertyNameConversion = PropertyNameConversion.CamelCase;
         }
 
         internal List<(HttpPipelinePosition Position, HttpPipelinePolicy Policy)>? Policies { get; private set; }

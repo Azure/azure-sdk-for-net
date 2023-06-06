@@ -4,6 +4,7 @@
 using System;
 using System.Diagnostics;
 using System.Threading.Tasks;
+using Azure.Core.Dynamic;
 
 namespace Azure.Core.Pipeline
 {
@@ -12,11 +13,13 @@ namespace Azure.Core.Pipeline
         private readonly HttpPipelineTransport _transport;
         private readonly HttpMessageSanitizer _sanitizer;
         private readonly RequestFailedDetailsParser? _errorParser;
+        private readonly DynamicDataOptions _dynamicOptions;
 
-        public HttpPipelineTransportPolicy(HttpPipelineTransport transport, HttpMessageSanitizer sanitizer, RequestFailedDetailsParser? failureContentExtractor = null)
+        public HttpPipelineTransportPolicy(HttpPipelineTransport transport, HttpMessageSanitizer sanitizer, DynamicDataOptions dynamicOptions, RequestFailedDetailsParser? failureContentExtractor = null)
         {
             _transport = transport;
             _sanitizer = sanitizer;
+            _dynamicOptions = dynamicOptions;
             _errorParser = failureContentExtractor;
         }
 
@@ -29,6 +32,7 @@ namespace Azure.Core.Pipeline
             message.Response.RequestFailedDetailsParser = _errorParser;
             message.Response.Sanitizer = _sanitizer;
             message.Response.IsError = message.ResponseClassifier.IsErrorResponse(message);
+            message.Response.DynamicOptions = _dynamicOptions;
         }
 
         public override void Process(HttpMessage message, ReadOnlyMemory<HttpPipelinePolicy> pipeline)
@@ -40,6 +44,7 @@ namespace Azure.Core.Pipeline
             message.Response.RequestFailedDetailsParser = _errorParser;
             message.Response.Sanitizer = _sanitizer;
             message.Response.IsError = message.ResponseClassifier.IsErrorResponse(message);
+            message.Response.DynamicOptions = _dynamicOptions;
         }
     }
 }

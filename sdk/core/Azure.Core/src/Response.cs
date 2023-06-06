@@ -46,11 +46,12 @@ namespace Azure
         // TODO(matell): The .NET Framework team plans to add BinaryData.Empty in dotnet/runtime#49670, and we can use it then.
         private static readonly BinaryData s_EmptyBinaryData = new BinaryData(Array.Empty<byte>());
 
-        private static DynamicDataOptions _dynamicOptions = new DynamicDataOptions()
+        private DynamicDataOptions _dynamicOptions = DynamicDataOptions.Default;
+        internal DynamicDataOptions DynamicOptions
         {
-            PropertyNameConversion = PropertyNameConversion.CamelCase,
-            DateTimeHandling = DynamicDateTimeHandling.Rfc3339
-        };
+            get => _dynamicOptions;
+            set => _dynamicOptions = value;
+        }
 
         /// <summary>
         /// Gets the contents of HTTP response, if it is available.
@@ -98,7 +99,7 @@ namespace Azure
 
         internal HttpMessageSanitizer Sanitizer { get; set; } = HttpMessageSanitizer.Default;
 
-        internal RequestFailedDetailsParser?  RequestFailedDetailsParser { get; set; }
+        internal RequestFailedDetailsParser? RequestFailedDetailsParser { get; set; }
 
         /// <summary>
         /// Returns header value if the header is stored in the collection. If header has multiple values they are going to be joined with a comma.

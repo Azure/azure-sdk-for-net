@@ -48,7 +48,7 @@ namespace Azure.Core.Tests
 
         private class MockPolicy : HttpPipelineTransportPolicy
         {
-            public MockPolicy(HttpPipelineTransport transport, HttpMessageSanitizer sanitizer) : base(transport, sanitizer) { }
+            public MockPolicy(HttpPipelineTransport transport, HttpMessageSanitizer sanitizer) : base(transport, sanitizer, Dynamic.DynamicDataOptions.Default) { }
         }
     }
 }

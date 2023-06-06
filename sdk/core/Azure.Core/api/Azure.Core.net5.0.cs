@@ -390,6 +390,7 @@ namespace Azure.Core
         public override int GetHashCode() { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override string? ToString() { throw null; }
+        public void UseCamelCaseNamingConvention() { }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct ContentType : System.IEquatable<Azure.Core.ContentType>, System.IEquatable<string>
@@ -808,12 +809,6 @@ namespace Azure.Core.Dynamic
         public static bool operator !=(Azure.Core.Dynamic.DynamicData? left, object? right) { throw null; }
         System.Dynamic.DynamicMetaObject System.Dynamic.IDynamicMetaObjectProvider.GetMetaObject(System.Linq.Expressions.Expression parameter) { throw null; }
         public override string ToString() { throw null; }
-    }
-    public partial class DynamicDataOptions
-    {
-        public DynamicDataOptions() { }
-        public Azure.Core.Dynamic.DynamicDateTimeHandling DateTimeHandling { get { throw null; } set { } }
-        public Azure.Core.Serialization.PropertyNameConversion PropertyNameConversion { get { throw null; } set { } }
     }
     public enum DynamicDateTimeHandling
     {
