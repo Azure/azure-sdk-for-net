@@ -7,8 +7,9 @@
 
 using System.Collections.Generic;
 using System.Linq;
+using Azure.Analytics.Synapse.ManagedPrivateEndpoints.Models;
 
-namespace Azure.Analytics.Synapse.ManagedPrivateEndpoints.Models
+namespace ManagedPrivateEndpoints.Models
 {
     /// <summary> Model factory for models. </summary>
     public static partial class ManagedPrivateEndpointsModelFactory
@@ -18,7 +19,7 @@ namespace Azure.Analytics.Synapse.ManagedPrivateEndpoints.Models
         /// <param name="name"> The name of the resource. </param>
         /// <param name="type"> The type of the resource. Ex- Microsoft.Compute/virtualMachines or Microsoft.Storage/storageAccounts. </param>
         /// <param name="properties"> Managed private endpoint properties. </param>
-        /// <returns> A new <see cref="Models.ManagedPrivateEndpoint"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Azure.Analytics.Synapse.ManagedPrivateEndpoints.Models.ManagedPrivateEndpoint"/> instance for mocking. </returns>
         public static ManagedPrivateEndpoint ManagedPrivateEndpoint(string id = null, string name = null, string type = null, ManagedPrivateEndpointProperties properties = null)
         {
             return new ManagedPrivateEndpoint(id, name, type, properties);
@@ -33,7 +34,7 @@ namespace Azure.Analytics.Synapse.ManagedPrivateEndpoints.Models
         /// <param name="isReserved"> Denotes whether the managed private endpoint is reserved. </param>
         /// <param name="fqdns"> List of fully qualified domain names. </param>
         /// <param name="isCompliant"> Denotes whether the managed private endpoint is compliant. </param>
-        /// <returns> A new <see cref="Models.ManagedPrivateEndpointProperties"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Azure.Analytics.Synapse.ManagedPrivateEndpoints.Models.ManagedPrivateEndpointProperties"/> instance for mocking. </returns>
         public static ManagedPrivateEndpointProperties ManagedPrivateEndpointProperties(string name = null, string privateLinkResourceId = null, string groupId = null, string provisioningState = null, ManagedPrivateEndpointConnectionState connectionState = null, bool? isReserved = null, IEnumerable<string> fqdns = null, bool? isCompliant = null)
         {
             fqdns ??= new List<string>();
@@ -45,7 +46,7 @@ namespace Azure.Analytics.Synapse.ManagedPrivateEndpoints.Models
         /// <param name="status"> The approval status. </param>
         /// <param name="description"> The managed private endpoint description. </param>
         /// <param name="actionsRequired"> The actions required on the managed private endpoint. </param>
-        /// <returns> A new <see cref="Models.ManagedPrivateEndpointConnectionState"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Azure.Analytics.Synapse.ManagedPrivateEndpoints.Models.ManagedPrivateEndpointConnectionState"/> instance for mocking. </returns>
         public static ManagedPrivateEndpointConnectionState ManagedPrivateEndpointConnectionState(string status = null, string description = null, string actionsRequired = null)
         {
             return new ManagedPrivateEndpointConnectionState(status, description, actionsRequired);
