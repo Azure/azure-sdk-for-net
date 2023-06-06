@@ -5,6 +5,7 @@ using System;
 using System.Buffers;
 using System.IO;
 using System.Text;
+using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core.Buffers;
@@ -79,7 +80,12 @@ namespace Azure.Core
         /// <returns>An instance of <see cref="RequestContent"/> that wraps a <see cref="DynamicData"/>.</returns>
         public static RequestContent Create(DynamicData content) => new DynamicDataContent(content);
 
-        // TODO: Honor UseCamelCaseNamingConvention
+        /// <summary>
+        /// Creates an instance of <see cref="RequestContent"/> that wraps a serialized version of an object.
+        /// </summary>
+        /// <param name="serializable">The <see cref="object"/> to serialize.</param>
+        /// <returns>An instance of <see cref="RequestContent"/> that wraps a serialized version of the object.</returns>
+        public static RequestContent Create(object serializable) => Create(serializable, JsonObjectSerializer.Default);
 
         /// <summary>
         /// Creates an instance of <see cref="RequestContent"/> that wraps a serialized version of an object.
@@ -87,7 +93,25 @@ namespace Azure.Core
         /// <param name="serializable">The <see cref="object"/> to serialize.</param>
         /// <param name="serializer">The <see cref="ObjectSerializer"/> to use to convert the object to bytes. If not provided, <see cref="JsonObjectSerializer"/> is used.</param>
         /// <returns>An instance of <see cref="RequestContent"/> that wraps a serialized version of the object.</returns>
-        public static RequestContent Create(object serializable, ObjectSerializer? serializer = null) => Create((serializer ?? JsonObjectSerializer.Default).Serialize(serializable));
+        public static RequestContent Create(object serializable, ObjectSerializer? serializer) => Create((serializer ?? JsonObjectSerializer.Default).Serialize(serializable));
+
+        /// <summary>
+        /// Creates an instance of <see cref="RequestContent"/> that wraps a serialized version of an object.
+        /// </summary>
+        /// <param name="serializable">The <see cref="object"/> to serialize.</param>
+        /// <param name="propertyNameConversion">Conversion applied to property names on the object during serialization.</param>
+        /// <returns>An instance of <see cref="RequestContent"/> that wraps a serialized version of the object.</returns>
+        public static RequestContent Create(object serializable, PropertyNameConversion propertyNameConversion)
+        {
+            JsonSerializerOptions options = new();
+            if (propertyNameConversion == PropertyNameConversion.CamelCase)
+            {
+                options.PropertyNamingPolicy = JsonNamingPolicy.CamelCase;
+            };
+
+            ObjectSerializer serializer = new JsonObjectSerializer(options);
+            return Create(serializer.Serialize(serializable));
+        }
 
         /// <summary>
         /// Creates a RequestContent representing the UTF-8 Encoding of the given <see cref="string"/>.
