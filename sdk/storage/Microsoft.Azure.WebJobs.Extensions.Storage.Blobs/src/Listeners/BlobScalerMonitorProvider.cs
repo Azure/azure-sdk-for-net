@@ -63,6 +63,11 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs.Listeners
                 _logger = loggerFactory.CreateLogger<ZeroToOneScaleMonitor>();
             }
 
+            #pragma warning disable 0649
+            // For tests, in PROD the value is always null
+            private BlobWithContainer<BlobBaseClient> _recentWrite;
+            #pragma warning restore 0649
+
             public ScaleMonitorDescriptor Descriptor => _scaleMonitorDescriptor;
 
             public async Task<ScaleMetrics> GetMetricsAsync()
@@ -75,7 +80,8 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs.Listeners
                 }
 
                 var blobLogListener = await _blobLogListener.Value.ConfigureAwait(false);
-                BlobWithContainer<BlobBaseClient>[] recentWrites = (await blobLogListener.GetRecentBlobWritesAsync(CancellationToken.None).ConfigureAwait(false)).ToArray();
+                BlobWithContainer<BlobBaseClient>[] recentWrites = _recentWrite == null ? (await blobLogListener.GetRecentBlobWritesAsync(CancellationToken.None).ConfigureAwait(false)).ToArray()
+                    : new BlobWithContainer<BlobBaseClient>[] { _recentWrite };
                 if (recentWrites.Length > 0)
                 {
                     StringBuilder stringBuilder = new StringBuilder();

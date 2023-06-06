@@ -4,10 +4,13 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
 using Azure.Storage.Blobs;
+using Azure.Storage.Blobs.Specialized;
 using Microsoft.Azure.WebJobs.Extensions.Storage.Common.Tests;
 using Microsoft.Azure.WebJobs.Extensions.Storage.ScenarioTests;
 using Microsoft.Azure.WebJobs.Host.Scale;
@@ -42,16 +45,14 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Scenario.Tests
         }
 
         [Test]
-        [Ignore("These tests take forever")]
-        // We do not want to run the test in the DevOps pipeline due:
-        // It can take up to an hour for log data to appear in the blobs in the $logs container - https://learn.microsoft.com/en-us/azure/storage/common/storage-analytics-logging#how-logs-are-stored
-        // But the test is still usefull for local runs to ensure everything works as expected
-        public async Task BlobScaleHostEndToEndTest()
+        [TestCase(true, Ignore = "true", IgnoreReason = "The test can take long time.")]
+        [TestCase(false)]
+        public async Task BlobScaleHostEndToEndTest(bool writeBlob)
         {
             RandomNameResolver randomNameResolver = new RandomNameResolver();
-            string containerName1 = randomNameResolver.ResolveInString(ContainerNameTemaplte1);
-            BlobContainerClient client1 = _blobServiceClient.GetBlobContainerClient(containerName1);
-            await client1.CreateIfNotExistsAsync();
+            string containerName = randomNameResolver.ResolveInString(ContainerNameTemaplte1);
+            BlobContainerClient blobContainerClient = _blobServiceClient.GetBlobContainerClient(containerName);
+            await blobContainerClient.CreateIfNotExistsAsync();
 
             string hostJson =
             @"{
@@ -130,12 +131,18 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Scenario.Tests
             IHost scaleHost = hostBuilder.Build();
             await scaleHost.StartAsync();
 
-            // Add new blobs
-            await client1.UploadBlobAsync("test1.txt", new BinaryData("test1"));
-            await client1.UploadBlobAsync("test2.txt", new BinaryData("test2"));
-
-            // It can take up to an hour for log data to appear in the blobs in the $logs container - https://learn.microsoft.com/en-us/azure/storage/common/storage-analytics-logging#how-logs-are-stored
-            int timeout = (60 * 1000) * 60; // 1 hour
+            int timeout = (60 * 1000); // 1 minute
+            if (writeBlob)
+            {
+                // Add new blobs
+                await blobContainerClient.UploadBlobAsync("test1.txt", new BinaryData("test1"));
+                await blobContainerClient.UploadBlobAsync("test2.txt", new BinaryData("test2"));
+                timeout = (60 * 1000) * 60; // 20 minutes
+            }
+            else
+            {
+                SetRecentWrite(scaleHost, blobContainerClient, true);
+            }
 
             // Wait until logs are populated and there is the "scale out" vote
             await TestHelpers.Await(async () =>
@@ -145,6 +152,11 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Scenario.Tests
                 var scaleStatus = await scaleStatusProvider.GetScaleStatusAsync(new ScaleStatusContext() { WorkerCount = 0 });
                 return scaleStatus.Vote == ScaleVote.ScaleOut && scaleStatus.FunctionScaleStatuses[Function1Name].Vote == ScaleVote.ScaleOut;
             }, timeout);
+
+            if (!writeBlob)
+            {
+                SetRecentWrite(scaleHost, blobContainerClient, false);
+            }
 
             // Emulate adding a worker, after adding the worker
             await TestHelpers.Await(async () =>
@@ -163,6 +175,17 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Scenario.Tests
                 var scaleStatus = await scaleStatusProvider.GetScaleStatusAsync(new ScaleStatusContext() { WorkerCount = 0 });
                 return scaleStatus.Vote == ScaleVote.None && scaleStatus.FunctionScaleStatuses[Function1Name].Vote == ScaleVote.None;
             }, timeout);
+        }
+
+        private void SetRecentWrite(IHost scaleHost, BlobContainerClient blobContainerClient, bool setValue)
+        {
+            IScaleMonitor<ScaleMetrics> zeroToOneScaleMonitor = scaleHost.Services.GetService<IScaleMonitor<ScaleMetrics>>();
+            var monitorProvider = scaleHost.Services.GetService<IScaleMonitorProvider>();
+            IScaleMonitor scaleMonitor = monitorProvider.GetMonitor();
+            FieldInfo field = scaleMonitor.GetType().GetField("_recentWrite", BindingFlags.NonPublic | BindingFlags.Instance);
+            var ctor = field.FieldType.GetTypeInfo().GetConstructors(BindingFlags.Public | BindingFlags.Instance).First();
+            var instance = setValue ? ctor.Invoke(new object[] { blobContainerClient, blobContainerClient.GetBlobBaseClient("test") }) : null;
+            field.SetValue(scaleMonitor, instance);
         }
     }
 }
