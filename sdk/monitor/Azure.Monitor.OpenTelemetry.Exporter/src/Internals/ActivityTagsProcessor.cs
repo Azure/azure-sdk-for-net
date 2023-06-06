@@ -76,7 +76,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
 
         public OperationType activityType { get; private set; }
 
-        public bool HasAzureNamespace { get; private set; } = false;
+        public string? AzureNamespace { get; private set; } = null;
 
         public string? EndUserId { get; private set; } = null;
 
@@ -109,7 +109,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
                             activityType |= OperationType.Messaging;
                             break;
                         case SemanticConventions.AttributeAzureNameSpace:
-                            activityType |= OperationType.Azure;
+                            AzureNamespace = tag.Value.ToString();
                             break;
                         case SemanticConventions.AttributeEnduserId:
                             EndUserId = tag.Value.ToString();
@@ -130,12 +130,6 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
 
                     AzMonList.Add(ref UnMappedTags, tag);
                 }
-            }
-
-            if ((activityType & OperationType.Azure) == OperationType.Azure)
-            {
-                HasAzureNamespace = true;
-                activityType ^= OperationType.Azure;
             }
         }
 

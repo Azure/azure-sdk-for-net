@@ -131,7 +131,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
 
             var requestData = new RequestData(2, activity, ref activityTagsProcessor);
 
-            Assert.True(activityTagsProcessor.HasAzureNamespace);
+            Assert.Equal("DemoAzureResource", activityTagsProcessor.AzureNamespace);
         }
 
         [Fact]
