@@ -4,6 +4,8 @@
 
 ### Features Added
 
+* Add support for Authenticated User Id. ([#36509](https://github.com/Azure/azure-sdk-for-net/pull/36509))
+ 
 ### Breaking Changes
 
 ### Bugs Fixed
