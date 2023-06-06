@@ -138,6 +138,11 @@ namespace Azure.Messaging.ServiceBus
 
         private void SessionLockRenewed(object sender, EventArgs e)
         {
+            ProlongTrackedCancellationTokenSourcesBasedOnSessionExpiry();
+        }
+
+        private void ProlongTrackedCancellationTokenSourcesBasedOnSessionExpiry()
+        {
             var utcNow = DateTimeOffset.UtcNow;
             foreach (var messageAndTokenSource in Messages)
             {
@@ -268,6 +273,7 @@ namespace Azure.Messaging.ServiceBus
         public virtual async Task RenewSessionLockAsync(CancellationToken cancellationToken = default)
         {
             await _sessionReceiver.RenewSessionLockAsync(cancellationToken).ConfigureAwait(false);
+            ProlongTrackedCancellationTokenSourcesBasedOnSessionExpiry();
         }
 
         /// <summary>

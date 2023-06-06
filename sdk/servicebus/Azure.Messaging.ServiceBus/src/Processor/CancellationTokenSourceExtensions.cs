@@ -30,7 +30,7 @@ namespace Azure.Messaging.ServiceBus
         public static void CancelAfterSessionLockExpired(this CancellationTokenSource cancellationTokenSource,
             ServiceBusSessionReceiver sessionReceiver, DateTimeOffset utcNow)
         {
-            if (cancellationTokenSource == null || sessionReceiver.SessionLockedUntil == default)
+            if (cancellationTokenSource == null || sessionReceiver?.SessionLockedUntil == default)
             {
                 return;
             }

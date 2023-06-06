@@ -32,6 +32,7 @@ namespace Azure.Messaging.ServiceBus
         private readonly ServiceBusSessionReceiver _sessionReceiver;
 
         private readonly SessionReceiverManager _manager;
+        private readonly CancellationTokenSource _sessionLockCancellationTokenSource;
 
         /// <summary>
         /// The Session Id associated with the session being processed.
@@ -98,8 +99,18 @@ namespace Azure.Messaging.ServiceBus
         {
             _manager = manager;
 
+            // for mocking
+            if (_manager != null)
+            {
+                _manager.SessionLockRenewed += SessionLockRenewed;
+                _manager.SessionLockLost += SessionLockLost;
+            }
+
             // manager would be null in scenarios where customers are using the public constructor for testing purposes.
             _sessionReceiver = (ServiceBusSessionReceiver) _manager?.Receiver;
+            _sessionLockCancellationTokenSource = new CancellationTokenSource();
+            _sessionLockCancellationTokenSource.CancelAfterSessionLockExpired(_sessionReceiver, DateTimeOffset.UtcNow);
+            SessionLockCancellationToken = _sessionLockCancellationTokenSource.Token;
             CancellationToken = cancellationToken;
         }
 
@@ -109,6 +120,16 @@ namespace Azure.Messaging.ServiceBus
             CancellationToken cancellationToken) : this(manager, cancellationToken)
         {
             Identifier = identifier;
+        }
+
+        private void SessionLockLost(object sender, EventArgs e)
+        {
+            _sessionLockCancellationTokenSource.Cancel();
+        }
+
+        private void SessionLockRenewed(object sender, EventArgs e)
+        {
+            _sessionLockCancellationTokenSource.CancelAfterSessionLockExpired(_sessionReceiver, DateTimeOffset.UtcNow);
         }
 
         /// <summary>
@@ -152,6 +173,15 @@ namespace Azure.Messaging.ServiceBus
         public virtual async Task RenewSessionLockAsync(CancellationToken cancellationToken = default)
         {
             await _sessionReceiver.RenewSessionLockAsync(cancellationToken).ConfigureAwait(false);
+            _sessionLockCancellationTokenSource.CancelAfterSessionLockExpired(_sessionReceiver, DateTimeOffset.UtcNow);
+        }
+
+        internal void Release()
+        {
+            _manager.SessionLockRenewed -= SessionLockRenewed;
+            _manager.SessionLockLost -= SessionLockLost;
+
+            _sessionLockCancellationTokenSource.Dispose();
         }
     }
 }

@@ -562,12 +562,26 @@ namespace Azure.Messaging.ServiceBus
 
         internal async Task OnSessionInitializingAsync(ProcessSessionEventArgs args)
         {
-            await _sessionInitializingAsync(args).ConfigureAwait(false);
+            try
+            {
+                await _sessionInitializingAsync(args).ConfigureAwait(false);
+            }
+            finally
+            {
+                args.Release();
+            }
         }
 
         internal async Task OnSessionClosingAsync(ProcessSessionEventArgs args)
         {
-            await _sessionClosingAsync(args).ConfigureAwait(false);
+            try
+            {
+                await _sessionClosingAsync(args).ConfigureAwait(false);
+            }
+            finally
+            {
+                args.Release();
+            }
         }
 
         /// <summary>

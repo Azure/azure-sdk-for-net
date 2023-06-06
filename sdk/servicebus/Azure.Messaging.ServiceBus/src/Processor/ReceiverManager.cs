@@ -263,12 +263,15 @@ namespace Azure.Messaging.ServiceBus
 
         private static async ValueTask ReleaseAsync(EventArgs args)
         {
-            if (args is ProcessMessageEventArgs processMessageEventArgs)
+            switch (args)
             {
-                await processMessageEventArgs.ReleaseAsync().ConfigureAwait(false);
-                return;
+                case ProcessMessageEventArgs processMessageEventArgs:
+                    await processMessageEventArgs.ReleaseAsync().ConfigureAwait(false);
+                    return;
+                case ProcessSessionMessageEventArgs processSessionMessageEventArgs:
+                    await processSessionMessageEventArgs.ReleaseAsync().ConfigureAwait(false);
+                    return;
             }
-            await ((ProcessSessionMessageEventArgs)args).ReleaseAsync().ConfigureAwait(false);
         }
 
         internal bool ShouldAutoRenewMessageLock()
