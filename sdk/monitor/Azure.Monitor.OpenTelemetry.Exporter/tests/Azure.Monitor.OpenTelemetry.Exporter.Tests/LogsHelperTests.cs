@@ -24,6 +24,9 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
         [InlineData(false)]
         public void MessageIsSetToExceptionMessage(bool parseStateValues)
         {
+            // ParseStateValues will be ignored unless the log contains an unknown objects.
+            // https://github.com/open-telemetry/opentelemetry-dotnet/pull/4334
+
             var logRecords = new List<LogRecord>();
             using var loggerFactory = LoggerFactory.Create(builder =>
             {
@@ -52,20 +55,13 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
 
             Assert.Equal("Test Exception", message);
 
-            if (parseStateValues)
-            {
-                Assert.True(properties.TryGetValue("OriginalFormat", out string value));
-                Assert.Equal(log, value);
-                Assert.True(properties.TryGetValue("name", out string name));
-                Assert.Equal("tomato", name);
-                Assert.True(properties.TryGetValue("price", out string price));
-                Assert.Equal("2.99", price);
-                Assert.Equal(3, properties.Count);
-            }
-            else
-            {
-                Assert.Empty(properties);
-            }
+            Assert.True(properties.TryGetValue("OriginalFormat", out string value));
+            Assert.Equal(log, value);
+            Assert.True(properties.TryGetValue("name", out string name));
+            Assert.Equal("tomato", name);
+            Assert.True(properties.TryGetValue("price", out string price));
+            Assert.Equal("2.99", price);
+            Assert.Equal(3, properties.Count);
         }
 
         [Fact]
