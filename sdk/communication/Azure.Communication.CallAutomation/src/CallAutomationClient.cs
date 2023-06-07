@@ -95,9 +95,9 @@ namespace Azure.Communication.CallAutomation
 
         private CallAutomationClient(Uri endpoint, CallAutomationClientOptions options, ConnectionString connectionString)
         : this(
-            endpoint: endpoint,
-            httpPipeline: options.CustomBuildHttpPipeline(connectionString),
-            options: options)
+        endpoint: endpoint,
+        httpPipeline: options.CustomBuildHttpPipeline(connectionString),
+        options: options)
         { }
 
         private CallAutomationClient(Uri endpoint, HttpPipeline httpPipeline, CallAutomationClientOptions options)
@@ -162,8 +162,7 @@ namespace Azure.Communication.CallAutomation
             scope.Start();
             try
             {
-                if (options == null)
-                    throw new ArgumentNullException(nameof(options));
+                if (options == null) throw new ArgumentNullException(nameof(options));
 
                 AnswerCallRequestInternal request = CreateAnswerCallRequest(options);
                 var repeatabilityHeaders = new RepeatabilityHeaders();
@@ -216,8 +215,7 @@ namespace Azure.Communication.CallAutomation
             scope.Start();
             try
             {
-                if (options == null)
-                    throw new ArgumentNullException(nameof(options));
+                if (options == null) throw new ArgumentNullException(nameof(options));
 
                 AnswerCallRequestInternal request = CreateAnswerCallRequest(options);
                 var repeatabilityHeaders = new RepeatabilityHeaders();
@@ -543,8 +541,7 @@ namespace Azure.Communication.CallAutomation
             scope.Start();
             try
             {
-                if (options == null)
-                    throw new ArgumentNullException(nameof(options));
+                if (options == null) throw new ArgumentNullException(nameof(options));
 
                 CreateCallRequestInternal request = CreateCallRequest(options);
                 var repeatabilityHeaders = new RepeatabilityHeaders();
@@ -730,8 +727,7 @@ namespace Azure.Communication.CallAutomation
         /// </summary>
         /// <param name="uri"></param>
         /// <returns></returns>
-        private static bool IsValidHttpsUri(Uri uri)
-        {
+        private static bool IsValidHttpsUri(Uri uri) {
             if (uri == null)
                 return false;
             var uriString = uri.AbsoluteUri;
