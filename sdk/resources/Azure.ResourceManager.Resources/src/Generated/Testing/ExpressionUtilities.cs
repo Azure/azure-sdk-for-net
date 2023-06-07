@@ -11,13 +11,14 @@ namespace Azure.ResourceManager.Resources.Testing
 {
     internal static class ExpressionUtilities
     {
-        internal static bool IsExtensionMethod<T, R>(Expression<Func<T, R>> expression)
+        internal static bool IsExtensionMethod<T, R>(Expression<Func<T, R>> expression, out MethodInfo methodInfo)
         {
-            var parameter = expression.Parameters.Single(); // since the expression is strong-typed, this is guaranteed
+            methodInfo = null;
             if (expression.Body is not MethodCallExpression methodCallExpression)
             {
                 throw new InvalidOperationException("We only support methodCallExpression as the body of lambda expression for now");
             }
+            methodInfo = methodCallExpression.Method;
             return methodCallExpression.Method.IsDefined(typeof(ExtensionAttribute), false);
         }
 

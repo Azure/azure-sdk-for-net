@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.Resources.Testing
             var newExpression = ChangeType(expression, extensionClientType);
             var intermediateSetup = methodInfo.Invoke(null, new object[] { mock, newExpression });
 
-            return new AzureSetupAdapter<T, R>(intermediateSetup, extensionClientType);
+            return new AzureSetupAdapter<T, R>(intermediateSetup);
         }
 
         private static Expression ChangeType<T, R>(Expression<Func<T, R>> expression, Type newType) where T : ArmResource
@@ -73,6 +73,29 @@ namespace Azure.ResourceManager.Resources.Testing
             var newMethodCallExpression = Expression.Call(instanceExpression, methodInfo, originalArguments.Skip(1));
 
             return Expression.Lambda(newMethodCallExpression, instanceExpression);
+        }
+
+        /// <summary>
+        /// This method calls the method on _intermediateSetup with the same signature using the given arguments
+        /// This implementation now has some issues, the GetCurrentMethod calling inside a method that belongs to a generic type always gives us a methodInfo with open generic parameters
+        /// And since the generic parameters come from the type instead of the method, MethodInfo.MakeGenericType does not help
+        /// </summary>
+        /// <param name="intermediate"></param>
+        /// <param name="currentMethod"></param>
+        /// <param name="arguments"></param>
+        /// <returns></returns>
+        internal static object RedirectMethodInvocation(object intermediate, MethodBase currentMethod, params object[] arguments)
+        {
+            var parameterTypes = currentMethod.GetParameters().Select(parameter => parameter.ParameterType).ToArray();
+            // get the method with the same signature on _intermediateSetup
+            var method = intermediate.GetType().GetMethod(currentMethod.Name, parameterTypes);
+            return method.Invoke(intermediate, arguments);
+        }
+
+        internal static object RedirectMethodInvocation(object intermediate, string methodName, Type[] parameterTypes, object[] arguments)
+        {
+            var method = intermediate.GetType().GetMethod(methodName, parameterTypes);
+            return method.Invoke(intermediate, arguments);
         }
     }
 }

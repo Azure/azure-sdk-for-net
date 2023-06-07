@@ -2,361 +2,389 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Linq;
 using System.Reflection;
 using Moq;
-using Moq.Language;
 using Moq.Language.Flow;
 
 namespace Azure.ResourceManager.Resources.Testing
 {
     internal class AzureSetupAdapter<T, R> : ISetup<T, R> where T : ArmResource
     {
-        private readonly object _intermediateSetup; // runtime type: ISetup<intermediateType, R>
-        private readonly Type _intermediateType;
+        private readonly object _intermediateSetup; // runtime type: ISetup<TExtensionClient, R>
 
-        public AzureSetupAdapter(object intermediateSetup, Type intermediateType)
+        public AzureSetupAdapter(object intermediateSetup)
         {
             _intermediateSetup = intermediateSetup;
-            _intermediateType = intermediateType;
         }
 
-        IReturnsThrows<T, R> ICallback<T, R>.Callback(InvocationAction action)
+        public IReturnsThrows<T, R> Callback(InvocationAction action)
         {
-            throw new NotImplementedException();
+            var result = MockingExtensions.RedirectMethodInvocation(_intermediateSetup, MethodBase.GetCurrentMethod().Name, new[] {typeof(InvocationAction)}, new object[] {action});
+            return new AzureSetupAdapter<T, R>(result);
         }
 
-        IReturnsThrows<T, R> ICallback<T, R>.Callback(Delegate callback)
+        public IReturnsThrows<T, R> Callback(Delegate callback)
         {
-            throw new NotImplementedException();
+            var result = MockingExtensions.RedirectMethodInvocation(_intermediateSetup, MethodBase.GetCurrentMethod().Name, new[] {typeof(Delegate)}, new object[] {callback});
+            return new AzureSetupAdapter<T, R>(result);
         }
 
-        IReturnsThrows<T, R> ICallback<T, R>.Callback(Action action)
+        public IReturnsThrows<T, R> Callback(Action action)
         {
-            throw new NotImplementedException();
+            var result = MockingExtensions.RedirectMethodInvocation(_intermediateSetup, MethodBase.GetCurrentMethod().Name, new[] {typeof(Action)}, new object[] {action});
+            return new AzureSetupAdapter<T, R>(result);
         }
 
-        IReturnsThrows<T, R> ICallback<T, R>.Callback<T1>(Action<T1> action)
+        public IReturnsThrows<T, R> Callback<T1>(Action<T1> action)
         {
-            throw new NotImplementedException();
+            var result = MockingExtensions.RedirectMethodInvocation(_intermediateSetup, MethodBase.GetCurrentMethod().Name, new[] {typeof(Action<T1>)}, new object[] {action});
+            return new AzureSetupAdapter<T, R>(result);
         }
 
-        IReturnsThrows<T, R> ICallback<T, R>.Callback<T1, T2>(Action<T1, T2> action)
+        public IReturnsThrows<T, R> Callback<T1, T2>(Action<T1, T2> action)
         {
-            throw new NotImplementedException();
+            var result = MockingExtensions.RedirectMethodInvocation(_intermediateSetup, MethodBase.GetCurrentMethod().Name, new[] {typeof(Action<T1, T2>)}, new object[] {action});
+            return new AzureSetupAdapter<T, R>(result);
         }
 
-        IReturnsThrows<T, R> ICallback<T, R>.Callback<T1, T2, T3>(Action<T1, T2, T3> action)
+        public IReturnsThrows<T, R> Callback<T1, T2, T3>(Action<T1, T2, T3> action)
         {
-            throw new NotImplementedException();
+            var result = MockingExtensions.RedirectMethodInvocation(_intermediateSetup, MethodBase.GetCurrentMethod().Name, new[] {typeof(Action<T1, T2, T3>)}, new object[] {action});
+            return new AzureSetupAdapter<T, R>(result);
         }
 
-        IReturnsThrows<T, R> ICallback<T, R>.Callback<T1, T2, T3, T4>(Action<T1, T2, T3, T4> action)
+        public IReturnsThrows<T, R> Callback<T1, T2, T3, T4>(Action<T1, T2, T3, T4> action)
         {
-            throw new NotImplementedException();
+            var result = MockingExtensions.RedirectMethodInvocation(_intermediateSetup, MethodBase.GetCurrentMethod().Name, new[] {typeof(Action<T1, T2, T3, T4>)}, new object[] {action});
+            return new AzureSetupAdapter<T, R>(result);
         }
 
-        IReturnsThrows<T, R> ICallback<T, R>.Callback<T1, T2, T3, T4, T5>(Action<T1, T2, T3, T4, T5> action)
+        public IReturnsThrows<T, R> Callback<T1, T2, T3, T4, T5>(Action<T1, T2, T3, T4, T5> action)
         {
-            throw new NotImplementedException();
+            var result = MockingExtensions.RedirectMethodInvocation(_intermediateSetup, MethodBase.GetCurrentMethod().Name, new[] {typeof(Action<T1, T2, T3, T4, T5>)}, new object[] {action});
+            return new AzureSetupAdapter<T, R>(result);
         }
 
-        IReturnsThrows<T, R> ICallback<T, R>.Callback<T1, T2, T3, T4, T5, T6>(Action<T1, T2, T3, T4, T5, T6> action)
+        public IReturnsThrows<T, R> Callback<T1, T2, T3, T4, T5, T6>(Action<T1, T2, T3, T4, T5, T6> action)
         {
-            throw new NotImplementedException();
+            var result = MockingExtensions.RedirectMethodInvocation(_intermediateSetup, MethodBase.GetCurrentMethod().Name, new[] {typeof(Action<T1, T2, T3, T4, T5, T6>)}, new object[] {action});
+            return new AzureSetupAdapter<T, R>(result);
         }
 
-        IReturnsThrows<T, R> ICallback<T, R>.Callback<T1, T2, T3, T4, T5, T6, T7>(Action<T1, T2, T3, T4, T5, T6, T7> action)
+        public IReturnsThrows<T, R> Callback<T1, T2, T3, T4, T5, T6, T7>(Action<T1, T2, T3, T4, T5, T6, T7> action)
         {
-            throw new NotImplementedException();
+            var result = MockingExtensions.RedirectMethodInvocation(_intermediateSetup, MethodBase.GetCurrentMethod().Name, new[] {typeof(Action<T1, T2, T3, T4, T5, T6, T7>)}, new object[] {action});
+            return new AzureSetupAdapter<T, R>(result);
         }
 
-        IReturnsThrows<T, R> ICallback<T, R>.Callback<T1, T2, T3, T4, T5, T6, T7, T8>(Action<T1, T2, T3, T4, T5, T6, T7, T8> action)
+        public IReturnsThrows<T, R> Callback<T1, T2, T3, T4, T5, T6, T7, T8>(Action<T1, T2, T3, T4, T5, T6, T7, T8> action)
         {
-            throw new NotImplementedException();
+            var result = MockingExtensions.RedirectMethodInvocation(_intermediateSetup, MethodBase.GetCurrentMethod().Name, new[] {typeof(Action<T1, T2, T3, T4, T5, T6, T7, T8>)}, new object[] {action});
+            return new AzureSetupAdapter<T, R>(result);
         }
 
-        IReturnsThrows<T, R> ICallback<T, R>.Callback<T1, T2, T3, T4, T5, T6, T7, T8, T9>(Action<T1, T2, T3, T4, T5, T6, T7, T8, T9> action)
+        public IReturnsThrows<T, R> Callback<T1, T2, T3, T4, T5, T6, T7, T8, T9>(Action<T1, T2, T3, T4, T5, T6, T7, T8, T9> action)
         {
-            throw new NotImplementedException();
+            var result = MockingExtensions.RedirectMethodInvocation(_intermediateSetup, MethodBase.GetCurrentMethod().Name, new[] {typeof(Action<T1, T2, T3, T4, T5, T6, T7, T8, T9>)}, new object[] {action});
+            return new AzureSetupAdapter<T, R>(result);
         }
 
-        IReturnsThrows<T, R> ICallback<T, R>.Callback<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10>(Action<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10> action)
+        public IReturnsThrows<T, R> Callback<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10>(Action<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10> action)
         {
-            throw new NotImplementedException();
+            var result = MockingExtensions.RedirectMethodInvocation(_intermediateSetup, MethodBase.GetCurrentMethod().Name, new[] {typeof(Action<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10>)}, new object[] {action});
+            return new AzureSetupAdapter<T, R>(result);
         }
 
-        IReturnsThrows<T, R> ICallback<T, R>.Callback<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11>(Action<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11> action)
+        public IReturnsThrows<T, R> Callback<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11>(Action<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11> action)
         {
-            throw new NotImplementedException();
+            var result = MockingExtensions.RedirectMethodInvocation(_intermediateSetup, MethodBase.GetCurrentMethod().Name, new[] {typeof(Action<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11>)}, new object[] {action});
+            return new AzureSetupAdapter<T, R>(result);
         }
 
-        IReturnsThrows<T, R> ICallback<T, R>.Callback<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12>(Action<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12> action)
+        public IReturnsThrows<T, R> Callback<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12>(Action<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12> action)
         {
-            throw new NotImplementedException();
+            var result = MockingExtensions.RedirectMethodInvocation(_intermediateSetup, MethodBase.GetCurrentMethod().Name, new[] {typeof(Action<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12>)}, new object[] {action});
+            return new AzureSetupAdapter<T, R>(result);
         }
 
-        IReturnsThrows<T, R> ICallback<T, R>.Callback<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13>(Action<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13> action)
+        public IReturnsThrows<T, R> Callback<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13>(Action<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13> action)
         {
-            throw new NotImplementedException();
+            var result = MockingExtensions.RedirectMethodInvocation(_intermediateSetup, MethodBase.GetCurrentMethod().Name, new[] { typeof(Action<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13>) }, new object[] { action });
+            return new AzureSetupAdapter<T, R>(result);
         }
 
-        IReturnsThrows<T, R> ICallback<T, R>.Callback<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14>(Action<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14> action)
+        public IReturnsThrows<T, R> Callback<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14>(Action<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14> action)
         {
-            throw new NotImplementedException();
+            var result = MockingExtensions.RedirectMethodInvocation(_intermediateSetup, MethodBase.GetCurrentMethod().Name, new[] { typeof(Action<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14>) }, new object[] { action });
+            return new AzureSetupAdapter<T, R>(result);
         }
 
-        IReturnsThrows<T, R> ICallback<T, R>.Callback<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15>(Action<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15> action)
+        public IReturnsThrows<T, R> Callback<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15>(Action<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15> action)
         {
-            throw new NotImplementedException();
+            var result = MockingExtensions.RedirectMethodInvocation(_intermediateSetup, MethodBase.GetCurrentMethod().Name, new[] { typeof(Action<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15>) }, new object[] { action });
+            return new AzureSetupAdapter<T, R>(result);
         }
 
-        IReturnsThrows<T, R> ICallback<T, R>.Callback<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16>(Action<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16> action)
+        public IReturnsThrows<T, R> Callback<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16>(Action<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16> action)
         {
-            throw new NotImplementedException();
+            var result = MockingExtensions.RedirectMethodInvocation(_intermediateSetup, MethodBase.GetCurrentMethod().Name, new[] { typeof(Action<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16>) }, new object[] { action });
+            return new AzureSetupAdapter<T, R>(result);
         }
 
-        IReturnsResult<T> IReturns<T, R>.CallBase()
+        public IReturnsResult<T> CallBase()
         {
-            throw new NotImplementedException();
+            var result = MockingExtensions.RedirectMethodInvocation(_intermediateSetup, MethodBase.GetCurrentMethod().Name, Array.Empty<Type>(), Array.Empty<object>());
+            return new AzureReturns<T>(result);
         }
 
-        bool IFluentInterface.Equals(object obj)
+        public IReturnsResult<T> Returns(R value)
         {
-            return base.Equals(obj);
+            var result = MockingExtensions.RedirectMethodInvocation(_intermediateSetup, MethodBase.GetCurrentMethod().Name, new[] { typeof(R) }, new object[] { value });
+            return new AzureReturns<T>(result);
         }
 
-        int IFluentInterface.GetHashCode()
+        public IReturnsResult<T> Returns(InvocationFunc valueFunction)
         {
-            return base.GetHashCode();
+            var result = MockingExtensions.RedirectMethodInvocation(_intermediateSetup, MethodBase.GetCurrentMethod().Name, new[] { typeof(InvocationFunc) }, new object[] { valueFunction });
+            return new AzureReturns<T>(result);
         }
 
-        Type IFluentInterface.GetType()
+        public IReturnsResult<T> Returns(Delegate valueFunction)
         {
-            return GetType();
+            var result = MockingExtensions.RedirectMethodInvocation(_intermediateSetup, MethodBase.GetCurrentMethod().Name, new[] { typeof(Delegate) }, new object[] { valueFunction });
+            return new AzureReturns<T>(result);
         }
 
-        private object RedirectMethodInvocation(string methodName, Type[] parameterTypes, object[] arguments)
+        public IReturnsResult<T> Returns(Func<R> valueFunction)
         {
-            var method = _intermediateSetup.GetType().GetMethod(methodName, parameterTypes);
-            return method.Invoke(_intermediateSetup, arguments);
+            var result = MockingExtensions.RedirectMethodInvocation(_intermediateSetup, MethodBase.GetCurrentMethod().Name, new[] { typeof(Func<R>) }, new object[] { valueFunction });
+            return new AzureReturns<T>(result);
         }
 
-        IReturnsResult<T> IReturns<T, R>.Returns(R value)
+        public IReturnsResult<T> Returns<T1>(Func<T1, R> valueFunction)
         {
-            var result = RedirectMethodInvocation("Returns", new[] { typeof(R) }, new object[] { value });
-            return new AzureReturns<T>(result, _intermediateType);
+            var result = MockingExtensions.RedirectMethodInvocation(_intermediateSetup, MethodBase.GetCurrentMethod().Name, new[] { typeof(Func<T1, R>) }, new object[] { valueFunction });
+            return new AzureReturns<T>(result);
         }
 
-        IReturnsResult<T> IReturns<T, R>.Returns(InvocationFunc valueFunction)
+        public IReturnsResult<T> Returns<T1, T2>(Func<T1, T2, R> valueFunction)
         {
-            var result = RedirectMethodInvocation("Returns", new[] { typeof(InvocationFunc) }, new object[] { valueFunction });
-            return new AzureReturns<T>(result, _intermediateType);
+            var result = MockingExtensions.RedirectMethodInvocation(_intermediateSetup, MethodBase.GetCurrentMethod().Name, new[] { typeof(Func<T1, T2, R>) }, new object[] { valueFunction });
+            return new AzureReturns<T>(result);
         }
 
-        IReturnsResult<T> IReturns<T, R>.Returns(Delegate valueFunction)
+        public IReturnsResult<T> Returns<T1, T2, T3>(Func<T1, T2, T3, R> valueFunction)
         {
-            throw new NotImplementedException();
+            var result = MockingExtensions.RedirectMethodInvocation(_intermediateSetup, MethodBase.GetCurrentMethod().Name, new[] { typeof(Func<T1, T2, T3, R>) }, new object[] { valueFunction });
+            return new AzureReturns<T>(result);
         }
 
-        IReturnsResult<T> IReturns<T, R>.Returns(Func<R> valueFunction)
+        public IReturnsResult<T> Returns<T1, T2, T3, T4>(Func<T1, T2, T3, T4, R> valueFunction)
         {
-            throw new NotImplementedException();
+            var result = MockingExtensions.RedirectMethodInvocation(_intermediateSetup, MethodBase.GetCurrentMethod().Name, new[] { typeof(Func<T1, T2, T3, T4, R>) }, new object[] { valueFunction });
+            return new AzureReturns<T>(result);
         }
 
-        IReturnsResult<T> IReturns<T, R>.Returns<T1>(Func<T1, R> valueFunction)
+        public IReturnsResult<T> Returns<T1, T2, T3, T4, T5>(Func<T1, T2, T3, T4, T5, R> valueFunction)
         {
-            throw new NotImplementedException();
+            var result = MockingExtensions.RedirectMethodInvocation(_intermediateSetup, MethodBase.GetCurrentMethod().Name, new[] { typeof(Func<T1, T2, T3, T4, T5, R>) }, new object[] { valueFunction });
+            return new AzureReturns<T>(result);
         }
 
-        IReturnsResult<T> IReturns<T, R>.Returns<T1, T2>(Func<T1, T2, R> valueFunction)
+        public IReturnsResult<T> Returns<T1, T2, T3, T4, T5, T6>(Func<T1, T2, T3, T4, T5, T6, R> valueFunction)
         {
-            throw new NotImplementedException();
+            var result = MockingExtensions.RedirectMethodInvocation(_intermediateSetup, MethodBase.GetCurrentMethod().Name, new[] { typeof(Func<T1, T2, T3, T4, T5, T6, R>) }, new object[] { valueFunction });
+            return new AzureReturns<T>(result);
         }
 
-        IReturnsResult<T> IReturns<T, R>.Returns<T1, T2, T3>(Func<T1, T2, T3, R> valueFunction)
+        public IReturnsResult<T> Returns<T1, T2, T3, T4, T5, T6, T7>(Func<T1, T2, T3, T4, T5, T6, T7, R> valueFunction)
         {
-            throw new NotImplementedException();
+            var result = MockingExtensions.RedirectMethodInvocation(_intermediateSetup, MethodBase.GetCurrentMethod().Name, new[] { typeof(Func<T1, T2, T3, T4, T5, T6, T7, R>) }, new object[] { valueFunction });
+            return new AzureReturns<T>(result);
         }
 
-        IReturnsResult<T> IReturns<T, R>.Returns<T1, T2, T3, T4>(Func<T1, T2, T3, T4, R> valueFunction)
+        public IReturnsResult<T> Returns<T1, T2, T3, T4, T5, T6, T7, T8>(Func<T1, T2, T3, T4, T5, T6, T7, T8, R> valueFunction)
         {
-            throw new NotImplementedException();
+            var result = MockingExtensions.RedirectMethodInvocation(_intermediateSetup, MethodBase.GetCurrentMethod().Name, new[] { typeof(Func<T1, T2, T3, T4, T5, T6, T7, T8, R>) }, new object[] { valueFunction });
+            return new AzureReturns<T>(result);
         }
 
-        IReturnsResult<T> IReturns<T, R>.Returns<T1, T2, T3, T4, T5>(Func<T1, T2, T3, T4, T5, R> valueFunction)
+        public IReturnsResult<T> Returns<T1, T2, T3, T4, T5, T6, T7, T8, T9>(Func<T1, T2, T3, T4, T5, T6, T7, T8, T9, R> valueFunction)
         {
-            throw new NotImplementedException();
+            var result = MockingExtensions.RedirectMethodInvocation(_intermediateSetup, MethodBase.GetCurrentMethod().Name, new[] { typeof(Func<T1, T2, T3, T4, T5, T6, T7, T8, T9, R>) }, new object[] { valueFunction });
+            return new AzureReturns<T>(result);
         }
 
-        IReturnsResult<T> IReturns<T, R>.Returns<T1, T2, T3, T4, T5, T6>(Func<T1, T2, T3, T4, T5, T6, R> valueFunction)
+        public IReturnsResult<T> Returns<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10>(Func<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, R> valueFunction)
         {
-            throw new NotImplementedException();
+            var result = MockingExtensions.RedirectMethodInvocation(_intermediateSetup, MethodBase.GetCurrentMethod().Name, new[] { typeof(Func<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, R>) }, new object[] { valueFunction });
+            return new AzureReturns<T>(result);
         }
 
-        IReturnsResult<T> IReturns<T, R>.Returns<T1, T2, T3, T4, T5, T6, T7>(Func<T1, T2, T3, T4, T5, T6, T7, R> valueFunction)
+        public IReturnsResult<T> Returns<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11>(Func<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, R> valueFunction)
         {
-            throw new NotImplementedException();
+            var result = MockingExtensions.RedirectMethodInvocation(_intermediateSetup, MethodBase.GetCurrentMethod().Name, new[] { typeof(Func<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, R>) }, new object[] { valueFunction });
+            return new AzureReturns<T>(result);
         }
 
-        IReturnsResult<T> IReturns<T, R>.Returns<T1, T2, T3, T4, T5, T6, T7, T8>(Func<T1, T2, T3, T4, T5, T6, T7, T8, R> valueFunction)
+        public IReturnsResult<T> Returns<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12>(Func<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, R> valueFunction)
         {
-            throw new NotImplementedException();
+            var result = MockingExtensions.RedirectMethodInvocation(_intermediateSetup, MethodBase.GetCurrentMethod().Name, new[] { typeof(Func<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, R>) }, new object[] { valueFunction });
+            return new AzureReturns<T>(result);
         }
 
-        IReturnsResult<T> IReturns<T, R>.Returns<T1, T2, T3, T4, T5, T6, T7, T8, T9>(Func<T1, T2, T3, T4, T5, T6, T7, T8, T9, R> valueFunction)
+        public IReturnsResult<T> Returns<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13>(Func<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, R> valueFunction)
         {
-            throw new NotImplementedException();
+            var result = MockingExtensions.RedirectMethodInvocation(_intermediateSetup, MethodBase.GetCurrentMethod().Name, new[] { typeof(Func<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, R>) }, new object[] { valueFunction });
+            return new AzureReturns<T>(result);
         }
 
-        IReturnsResult<T> IReturns<T, R>.Returns<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10>(Func<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, R> valueFunction)
+        public IReturnsResult<T> Returns<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14>(Func<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, R> valueFunction)
         {
-            throw new NotImplementedException();
+            var result = MockingExtensions.RedirectMethodInvocation(_intermediateSetup, MethodBase.GetCurrentMethod().Name, new[] { typeof(Func<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, R>) }, new object[] { valueFunction });
+            return new AzureReturns<T>(result);
         }
 
-        IReturnsResult<T> IReturns<T, R>.Returns<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11>(Func<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, R> valueFunction)
+        public IReturnsResult<T> Returns<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15>(Func<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, R> valueFunction)
         {
-            throw new NotImplementedException();
+            var result = MockingExtensions.RedirectMethodInvocation(_intermediateSetup, MethodBase.GetCurrentMethod().Name, new[] { typeof(Func<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, R>) }, new object[] { valueFunction });
+            return new AzureReturns<T>(result);
         }
 
-        IReturnsResult<T> IReturns<T, R>.Returns<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12>(Func<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, R> valueFunction)
+        public IReturnsResult<T> Returns<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16>(Func<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, R> valueFunction)
         {
-            throw new NotImplementedException();
+            var result = MockingExtensions.RedirectMethodInvocation(_intermediateSetup, MethodBase.GetCurrentMethod().Name, new[] { typeof(Func<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, R>) }, new object[] { valueFunction });
+            return new AzureReturns<T>(result);
         }
 
-        IReturnsResult<T> IReturns<T, R>.Returns<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13>(Func<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, R> valueFunction)
+        public IThrowsResult Throws(Exception exception)
         {
-            throw new NotImplementedException();
+            var result = MockingExtensions.RedirectMethodInvocation(_intermediateSetup, MethodBase.GetCurrentMethod().Name, new[] { typeof(Exception) }, new object[] { exception });
+            return (IThrowsResult)result;
         }
 
-        IReturnsResult<T> IReturns<T, R>.Returns<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14>(Func<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, R> valueFunction)
+        public IThrowsResult Throws<TException>() where TException : Exception, new()
         {
-            throw new NotImplementedException();
+            var result = MockingExtensions.RedirectMethodInvocation(_intermediateSetup, MethodBase.GetCurrentMethod().Name, Array.Empty<Type>(), Array.Empty<object>());
+            return (IThrowsResult)result;
         }
 
-        IReturnsResult<T> IReturns<T, R>.Returns<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15>(Func<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, R> valueFunction)
+        public IThrowsResult Throws(Delegate exceptionFunction)
         {
-            throw new NotImplementedException();
+            var result = MockingExtensions.RedirectMethodInvocation(_intermediateSetup, MethodBase.GetCurrentMethod().Name, new[] { typeof(Delegate) }, new object[] { exceptionFunction });
+            return (IThrowsResult)result;
         }
 
-        IReturnsResult<T> IReturns<T, R>.Returns<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16>(Func<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, R> valueFunction)
+        public IThrowsResult Throws<TException>(Func<TException> exceptionFunction) where TException : Exception
         {
-            throw new NotImplementedException();
+            var result = MockingExtensions.RedirectMethodInvocation(_intermediateSetup, MethodBase.GetCurrentMethod().Name, new[] { typeof(Func<TException>) }, new object[] { exceptionFunction });
+            return (IThrowsResult)result;
         }
 
-        IThrowsResult IThrows.Throws(Exception exception)
+        public IThrowsResult Throws<T1, TException>(Func<T1, TException> exceptionFunction) where TException : Exception
         {
-            throw new NotImplementedException();
+            var result = MockingExtensions.RedirectMethodInvocation(_intermediateSetup, MethodBase.GetCurrentMethod().Name, new[] { typeof(Func<T1, TException>) }, new object[] { exceptionFunction });
+            return (IThrowsResult)result;
         }
 
-        IThrowsResult IThrows.Throws<TException>()
+        public IThrowsResult Throws<T1, T2, TException>(Func<T1, T2, TException> exceptionFunction) where TException : Exception
         {
-            throw new NotImplementedException();
+            var result = MockingExtensions.RedirectMethodInvocation(_intermediateSetup, MethodBase.GetCurrentMethod().Name, new[] { typeof(Func<T1, T2, TException>) }, new object[] { exceptionFunction });
+            return (IThrowsResult)result;
         }
 
-        IThrowsResult IThrows.Throws(Delegate exceptionFunction)
+        public IThrowsResult Throws<T1, T2, T3, TException>(Func<T1, T2, T3, TException> exceptionFunction) where TException : Exception
         {
-            throw new NotImplementedException();
+            var result = MockingExtensions.RedirectMethodInvocation(_intermediateSetup, MethodBase.GetCurrentMethod().Name, new[] { typeof(Func<T1, T2, T3, TException>) }, new object[] { exceptionFunction });
+            return (IThrowsResult)result;
         }
 
-        IThrowsResult IThrows.Throws<TException>(Func<TException> exceptionFunction)
+        public IThrowsResult Throws<T1, T2, T3, T4, TException>(Func<T1, T2, T3, T4, TException> exceptionFunction) where TException : Exception
         {
-            throw new NotImplementedException();
+            var result = MockingExtensions.RedirectMethodInvocation(_intermediateSetup, MethodBase.GetCurrentMethod().Name, new[] { typeof(Func<T1, T2, T3, T4, TException>) }, new object[] { exceptionFunction });
+            return (IThrowsResult)result;
         }
 
-        IThrowsResult IThrows.Throws<T1, TException>(Func<T1, TException> exceptionFunction)
+        public IThrowsResult Throws<T1, T2, T3, T4, T5, TException>(Func<T1, T2, T3, T4, T5, TException> exceptionFunction) where TException : Exception
         {
-            throw new NotImplementedException();
+            var result = MockingExtensions.RedirectMethodInvocation(_intermediateSetup, MethodBase.GetCurrentMethod().Name, new[] { typeof(Func<T1, T2, T3, T4, T5, TException>) }, new object[] { exceptionFunction });
+            return (IThrowsResult)result;
         }
 
-        IThrowsResult IThrows.Throws<T1, T2, TException>(Func<T1, T2, TException> exceptionFunction)
+        public IThrowsResult Throws<T1, T2, T3, T4, T5, T6, TException>(Func<T1, T2, T3, T4, T5, T6, TException> exceptionFunction) where TException : Exception
         {
-            throw new NotImplementedException();
+            var result = MockingExtensions.RedirectMethodInvocation(_intermediateSetup, MethodBase.GetCurrentMethod().Name, new[] { typeof(Func<T1, T2, T3, T4, T5, T6, TException>) }, new object[] { exceptionFunction });
+            return (IThrowsResult)result;
         }
 
-        IThrowsResult IThrows.Throws<T1, T2, T3, TException>(Func<T1, T2, T3, TException> exceptionFunction)
+        public IThrowsResult Throws<T1, T2, T3, T4, T5, T6, T7, TException>(Func<T1, T2, T3, T4, T5, T6, T7, TException> exceptionFunction) where TException : Exception
         {
-            throw new NotImplementedException();
+            var result = MockingExtensions.RedirectMethodInvocation(_intermediateSetup, MethodBase.GetCurrentMethod().Name, new[] { typeof(Func<T1, T2, T3, T4, T5, T6, T7, TException>) }, new object[] { exceptionFunction });
+            return (IThrowsResult)result;
         }
 
-        IThrowsResult IThrows.Throws<T1, T2, T3, T4, TException>(Func<T1, T2, T3, T4, TException> exceptionFunction)
+        public IThrowsResult Throws<T1, T2, T3, T4, T5, T6, T7, T8, TException>(Func<T1, T2, T3, T4, T5, T6, T7, T8, TException> exceptionFunction) where TException : Exception
         {
-            throw new NotImplementedException();
+            var result = MockingExtensions.RedirectMethodInvocation(_intermediateSetup, MethodBase.GetCurrentMethod().Name, new[] { typeof(Func<T1, T2, T3, T4, T5, T6, T7, T8, TException>) }, new object[] { exceptionFunction });
+            return (IThrowsResult)result;
         }
 
-        IThrowsResult IThrows.Throws<T1, T2, T3, T4, T5, TException>(Func<T1, T2, T3, T4, T5, TException> exceptionFunction)
+        public IThrowsResult Throws<T1, T2, T3, T4, T5, T6, T7, T8, T9, TException>(Func<T1, T2, T3, T4, T5, T6, T7, T8, T9, TException> exceptionFunction) where TException : Exception
         {
-            throw new NotImplementedException();
+            var result = MockingExtensions.RedirectMethodInvocation(_intermediateSetup, MethodBase.GetCurrentMethod().Name, new[] { typeof(Func<T1, T2, T3, T4, T5, T6, T7, T8, T9, TException>) }, new object[] { exceptionFunction });
+            return (IThrowsResult)result;
         }
 
-        IThrowsResult IThrows.Throws<T1, T2, T3, T4, T5, T6, TException>(Func<T1, T2, T3, T4, T5, T6, TException> exceptionFunction)
+        public IThrowsResult Throws<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, TException>(Func<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, TException> exceptionFunction) where TException : Exception
         {
-            throw new NotImplementedException();
+            var result = MockingExtensions.RedirectMethodInvocation(_intermediateSetup, MethodBase.GetCurrentMethod().Name, new[] { typeof(Func<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, TException>) }, new object[] { exceptionFunction });
+            return (IThrowsResult)result;
         }
 
-        IThrowsResult IThrows.Throws<T1, T2, T3, T4, T5, T6, T7, TException>(Func<T1, T2, T3, T4, T5, T6, T7, TException> exceptionFunction)
+        public IThrowsResult Throws<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, TException>(Func<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, TException> exceptionFunction) where TException : Exception
         {
-            throw new NotImplementedException();
+            var result = MockingExtensions.RedirectMethodInvocation(_intermediateSetup, MethodBase.GetCurrentMethod().Name, new[] { typeof(Func<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, TException>) }, new object[] { exceptionFunction });
+            return (IThrowsResult)result;
         }
 
-        IThrowsResult IThrows.Throws<T1, T2, T3, T4, T5, T6, T7, T8, TException>(Func<T1, T2, T3, T4, T5, T6, T7, T8, TException> exceptionFunction)
+        public IThrowsResult Throws<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, TException>(Func<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, TException> exceptionFunction) where TException : Exception
         {
-            throw new NotImplementedException();
+            var result = MockingExtensions.RedirectMethodInvocation(_intermediateSetup, MethodBase.GetCurrentMethod().Name, new[] { typeof(Func<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, TException>) }, new object[] { exceptionFunction });
+            return (IThrowsResult)result;
         }
 
-        IThrowsResult IThrows.Throws<T1, T2, T3, T4, T5, T6, T7, T8, T9, TException>(Func<T1, T2, T3, T4, T5, T6, T7, T8, T9, TException> exceptionFunction)
+        public IThrowsResult Throws<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, TException>(Func<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, TException> exceptionFunction) where TException : Exception
         {
-            throw new NotImplementedException();
+            var result = MockingExtensions.RedirectMethodInvocation(_intermediateSetup, MethodBase.GetCurrentMethod().Name, new[] { typeof(Func<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, TException>) }, new object[] { exceptionFunction });
+            return (IThrowsResult)result;
         }
 
-        IThrowsResult IThrows.Throws<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, TException>(Func<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, TException> exceptionFunction)
+        public IThrowsResult Throws<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, TException>(Func<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, TException> exceptionFunction) where TException : Exception
         {
-            throw new NotImplementedException();
+            var result = MockingExtensions.RedirectMethodInvocation(_intermediateSetup, MethodBase.GetCurrentMethod().Name, new[] { typeof(Func<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, TException>) }, new object[] { exceptionFunction });
+            return (IThrowsResult)result;
         }
 
-        IThrowsResult IThrows.Throws<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, TException>(Func<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, TException> exceptionFunction)
+        public IThrowsResult Throws<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, TException>(Func<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, TException> exceptionFunction) where TException : Exception
         {
-            throw new NotImplementedException();
+            var result = MockingExtensions.RedirectMethodInvocation(_intermediateSetup, MethodBase.GetCurrentMethod().Name, new[] { typeof(Func<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, TException>) }, new object[] { exceptionFunction });
+            return (IThrowsResult)result;
         }
 
-        IThrowsResult IThrows.Throws<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, TException>(Func<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, TException> exceptionFunction)
+        public IThrowsResult Throws<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, TException>(Func<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, TException> exceptionFunction) where TException : Exception
         {
-            throw new NotImplementedException();
+            var result = MockingExtensions.RedirectMethodInvocation(_intermediateSetup, MethodBase.GetCurrentMethod().Name, new[] { typeof(Func<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, TException>) }, new object[] { exceptionFunction });
+            return (IThrowsResult)result;
         }
 
-        IThrowsResult IThrows.Throws<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, TException>(Func<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, TException> exceptionFunction)
+        public void Verifiable()
         {
-            throw new NotImplementedException();
+            MockingExtensions.RedirectMethodInvocation(_intermediateSetup, MethodBase.GetCurrentMethod().Name, Array.Empty<Type>(), Array.Empty<object>());
         }
 
-        IThrowsResult IThrows.Throws<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, TException>(Func<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, TException> exceptionFunction)
+        public void Verifiable(string failMessage)
         {
-            throw new NotImplementedException();
-        }
-
-        IThrowsResult IThrows.Throws<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, TException>(Func<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, TException> exceptionFunction)
-        {
-            throw new NotImplementedException();
-        }
-
-        IThrowsResult IThrows.Throws<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, TException>(Func<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, TException> exceptionFunction)
-        {
-            throw new NotImplementedException();
-        }
-
-        string IFluentInterface.ToString()
-        {
-            throw new NotImplementedException();
-        }
-
-        void IVerifies.Verifiable()
-        {
-            throw new NotImplementedException();
-        }
-
-        void IVerifies.Verifiable(string failMessage)
-        {
-            throw new NotImplementedException();
+            MockingExtensions.RedirectMethodInvocation(_intermediateSetup, MethodBase.GetCurrentMethod().Name, new[] { typeof(string) }, new object[] { failMessage });
         }
     }
 }
