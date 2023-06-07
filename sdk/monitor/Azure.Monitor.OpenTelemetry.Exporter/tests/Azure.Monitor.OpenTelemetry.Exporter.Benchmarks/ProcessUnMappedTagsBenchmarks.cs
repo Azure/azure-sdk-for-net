@@ -25,13 +25,13 @@ Intel Core i7-8850H CPU 2.60GHz (Coffee Lake), 1 CPU, 12 logical and 6 physical 
 namespace Azure.Monitor.OpenTelemetry.Exporter.Benchmarks
 {
     [MemoryDiagnoser]
-    public class UnMappedTagsProcessingBenchmarks
+    public class ProcessUnMappedTagsBenchmarks
     {
         private Activity? _activity;
         private ChangeTrackingDictionary<string, string>? _properties;
         private ActivityTagsProcessor _tagsProcessor;
 
-        static UnMappedTagsProcessingBenchmarks()
+        static ProcessUnMappedTagsBenchmarks()
         {
             Activity.DefaultIdFormat = ActivityIdFormat.W3C;
             Activity.ForceDefaultIdFormat = true;
