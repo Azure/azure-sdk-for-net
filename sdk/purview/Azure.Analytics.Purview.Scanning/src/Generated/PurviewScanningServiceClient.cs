@@ -1124,11 +1124,11 @@ namespace Azure.Analytics.Purview.Scanning
             uri.Reset(_endpoint);
             uri.AppendPath("/systemScanRulesets/versions/", false);
             uri.AppendPath(version, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
             if (dataSourceType != null)
             {
                 uri.AppendQuery("dataSourceType", dataSourceType, true);
             }
-            uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;
@@ -1142,11 +1142,11 @@ namespace Azure.Analytics.Purview.Scanning
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/systemScanRulesets/versions/latest", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
             if (dataSourceType != null)
             {
                 uri.AppendQuery("dataSourceType", dataSourceType, true);
             }
-            uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;
@@ -1160,11 +1160,11 @@ namespace Azure.Analytics.Purview.Scanning
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/systemScanRulesets/versions", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
             if (dataSourceType != null)
             {
                 uri.AppendQuery("dataSourceType", dataSourceType, true);
             }
-            uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;

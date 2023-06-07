@@ -349,6 +349,7 @@ namespace Azure.Analytics.Purview.Catalog
             uri.AppendPath(guid, true);
             uri.AppendPath("/next/", false);
             uri.AppendQuery("direction", direction, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
             if (getDerivedLineage != null)
             {
                 uri.AppendQuery("getDerivedLineage", getDerivedLineage.Value, true);
@@ -361,7 +362,6 @@ namespace Azure.Analytics.Purview.Catalog
             {
                 uri.AppendQuery("limit", limit.Value, true);
             }
-            uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;

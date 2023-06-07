@@ -26,11 +26,11 @@ namespace Azure.ResourceManager.EnergyServices
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
         /// <param name="applicationId"> The application id to use for user agent. </param>
         /// <param name="endpoint"> server parameter. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="pipeline"/> is null. </exception>
-        public LocationsRestOperations(HttpPipeline pipeline, string applicationId, Uri endpoint = null)
+        /// <exception cref="ArgumentNullException"> <paramref name="pipeline"/> or <paramref name="endpoint"/> is null. </exception>
+        public LocationsRestOperations(HttpPipeline pipeline, string applicationId, Uri endpoint)
         {
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
-            _endpoint = endpoint ?? new Uri("https://management.azure.com");
+            _endpoint = endpoint ?? throw new ArgumentNullException(nameof(endpoint));
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
