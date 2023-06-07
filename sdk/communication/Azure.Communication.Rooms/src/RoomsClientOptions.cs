@@ -11,7 +11,7 @@ namespace Azure.Communication.Rooms
     /// </summary>
     public class RoomsClientOptions : ClientOptions
     {
-        internal const ServiceVersion LatestVersion = ServiceVersion.V2023_03_31_Preview;
+        internal const ServiceVersion LatestVersion = ServiceVersion.V2023_06_14;
 
         internal string ApiVersion { get; }
 
@@ -23,7 +23,7 @@ namespace Azure.Communication.Rooms
         {
             ApiVersion = version switch
             {
-                ServiceVersion.V2023_03_31_Preview => "2023-03-31-preview",
+                ServiceVersion.V2023_06_14 => "2023-06-14",
                 _ => throw new ArgumentOutOfRangeException(nameof(version)),
             };
         }
@@ -34,9 +34,9 @@ namespace Azure.Communication.Rooms
         {
 #pragma warning disable CA1707 // Identifiers should not contain underscores
             /// <summary>
-            /// Rooms service preview version 2023-03-31-preview
+            /// Rooms service preview version 2023-06-14
             /// </summary>
-            V2023_03_31_Preview = 1,
+            V2023_06_14 = 1,
 #pragma warning restore CA1707 // Identifiers should not contain underscores
         }
     }
