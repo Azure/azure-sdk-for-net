@@ -6,8 +6,6 @@ using Azure.Core.TestFramework;
 using Azure.Data.SchemaRegistry;
 using Azure.Identity;
 using NUnit.Framework;
-using System.IO;
-using System.Threading;
 using Azure.Messaging.EventHubs;
 using TestSchema;
 using System.Threading.Tasks;
@@ -15,11 +13,12 @@ using Azure.Messaging.EventHubs.Producer;
 using System.Collections.Generic;
 using Azure.Messaging.EventHubs.Consumer;
 using Azure.Messaging;
-using Newtonsoft.Json.Schema;
 using Azure.Core.Serialization;
 using System.Text.Json;
 using Azure.Data.SchemaRegistry.Tests.Serialization;
 using Azure.Data.SchemaRegistry.Serialization;
+using System.IO;
+using System.Threading;
 
 namespace Azure.Data.SchemaRegistry.Tests.Samples
 {
@@ -34,13 +33,10 @@ namespace Azure.Data.SchemaRegistry.Tests.Samples
         public void CreateSchemaRegistryClient()
         {
             string fullyQualifiedNamespace = TestEnvironment.SchemaRegistryEndpoint;
-
-            #region Snippet:SchemaRegistryJsonCreateSchemaRegistryClient
             // Create a new SchemaRegistry client using the default credential from Azure.Identity using environment variables previously set,
             // including AZURE_CLIENT_ID, AZURE_CLIENT_SECRET, and AZURE_TENANT_ID.
             // For more information on Azure.Identity usage, see: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/identity/Azure.Identity/README.md
             var schemaRegistryClient = new SchemaRegistryClient(fullyQualifiedNamespace: fullyQualifiedNamespace, credential: new DefaultAzureCredential());
-            #endregion
             this.schemaRegistryClient = schemaRegistryClient;
         }
 
@@ -51,8 +47,8 @@ namespace Azure.Data.SchemaRegistry.Tests.Samples
             var groupName = TestEnvironment.SchemaRegistryGroup;
 
             #region Snippet:SchemaRegistryJsonSerializeEventData
-
-            var serializer = new SchemaRegistrySerializer(client, groupName, new SampleJsonGenerator());
+            // The serializer serializes into JSON by default
+            var serializer = new SchemaRegistrySerializer(client, groupName, new SampleJsonValidator());
 
             var employee = new Employee { Age = 42, Name = "Caketown" };
             EventData eventData = (EventData)await serializer.SerializeAsync(employee, messageType: typeof(EventData));
@@ -108,11 +104,12 @@ namespace Azure.Data.SchemaRegistry.Tests.Samples
         [Test]
         public async Task SerializeDeserializeGenerics()
         {
-            var client = this.schemaRegistryClient;
+            var client = schemaRegistryClient;
             var groupName = TestEnvironment.SchemaRegistryGroup;
 
             #region Snippet:SchemaRegistryJsonSerializeEventDataGenerics
-            var serializer = new SchemaRegistrySerializer(client, groupName, new SampleJsonGenerator());
+            // The serializer serializes into JSON by default
+            var serializer = new SchemaRegistrySerializer(client, groupName, new SampleJsonValidator());
 
             var employee = new Employee { Age = 42, Name = "Caketown" };
             EventData eventData = await serializer.SerializeAsync<EventData, Employee>(employee);
@@ -144,13 +141,13 @@ namespace Azure.Data.SchemaRegistry.Tests.Samples
         [Test]
         public async Task SerializeDeserializeMessageContent()
         {
-            var client = this.schemaRegistryClient;
+            var client = schemaRegistryClient;
             var groupName = TestEnvironment.SchemaRegistryGroup;
             var employee = new Employee { Age = 42, Name = "Caketown" };
 
             #region Snippet:SchemaRegistryJsonSerializeDeserializeMessageContent
-
-            var serializer = new SchemaRegistrySerializer(client, groupName, new SampleJsonGenerator());
+            // The serializer serializes into JSON by default
+            var serializer = new SchemaRegistrySerializer(client, groupName, new SampleJsonValidator());
             MessageContent content = await serializer.SerializeAsync<MessageContent, Employee>(employee);
 
             Employee deserializedEmployee = await serializer.DeserializeAsync<Employee>(content);
@@ -160,7 +157,7 @@ namespace Azure.Data.SchemaRegistry.Tests.Samples
         [Test]
         public void SerializeDeserializeWithOptions()
         {
-            var client = this.schemaRegistryClient;
+            var client = schemaRegistryClient;
             var groupName = TestEnvironment.SchemaRegistryGroup;
             var employee = new Employee { Age = 42, Name = "Caketown" };
 
@@ -169,7 +166,7 @@ namespace Azure.Data.SchemaRegistry.Tests.Samples
             {
                 Serializer = new NewtonsoftJsonObjectSerializer()
             };
-            var newtonsoftSerializer = new SchemaRegistrySerializer(client, groupName, new SampleJsonGenerator(), newtonsoftSerializerOptions);
+            var newtonsoftSerializer = new SchemaRegistrySerializer(client, groupName, new SampleJsonValidator(), newtonsoftSerializerOptions);
             #endregion
 
             #region Snippet:SchemaRegistryJsonSerializeDeserializeWithOptions
@@ -182,22 +179,36 @@ namespace Azure.Data.SchemaRegistry.Tests.Samples
             {
                 Serializer = new JsonObjectSerializer(jsonSerializerOptions)
             };
-            var serializer = new SchemaRegistrySerializer(client, groupName, new SampleJsonGenerator(), serializerOptions);
+            var serializer = new SchemaRegistrySerializer(client, groupName, new SampleJsonValidator(), serializerOptions);
             #endregion
         }
 
         #region Snippet:SampleSchemaRegistryJsonSchemaGeneratorImplementation
-        internal class SampleJsonGenerator : SchemaValidator
+        internal class SampleJsonValidator : SchemaValidator
         {
             public override void Validate(Object data, Type dataType, string schemaDefinition)
             {
                 // Your implementation using the third-party library of your choice goes here. This method throws
                 // an exception if the data argument is not valid according to the schemaDefinition.
 
-                // If you do not wish to validate, you can simply return.
+                List<Exception> validationErrors = SampleValidationMethod(schemaDefinition, data, dataType);
+
+                if (validationErrors.Count  > 0)
+                {
+                    throw new AggregateException(validationErrors);
+                }
 
                 return;
             }
+
+#if SNIPPET
+#else
+            private List<Exception> SampleValidationMethod(string schemaDefinition, object data, Type dataType)
+            {
+                return new List<Exception>();
+            }
+#endif
+
             public override string GenerateSchema(Type dataType)
             {
 #if SNIPPET
@@ -209,6 +220,7 @@ namespace Azure.Data.SchemaRegistry.Tests.Samples
 #endif
             }
         }
-        #endregion
+#endregion
+
     }
 }

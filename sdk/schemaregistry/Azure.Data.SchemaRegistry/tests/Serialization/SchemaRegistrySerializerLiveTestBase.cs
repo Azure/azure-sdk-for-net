@@ -8,7 +8,7 @@ namespace Azure.Data.SchemaRegistry.Tests.Serialization
 {
     public class SchemaRegistrySerializerLiveTestBase : RecordedTestBase<SchemaRegistrySerializerTestEnvironment>
     {
-        public SchemaRegistrySerializerLiveTestBase(bool isAsync) : base(isAsync, RecordedTestMode.Playback)
+        public SchemaRegistrySerializerLiveTestBase(bool isAsync) : base(isAsync)
         {
             TestDiagnostics = false;
         }
