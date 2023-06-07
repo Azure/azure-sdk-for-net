@@ -94,6 +94,11 @@ Console.WriteLine(eventData.EventBody);
 var fullyQualifiedNamespace = "<< FULLY-QUALIFIED EVENT HUBS NAMESPACE (like something.servicebus.windows.net) >>";
 var eventHubName = "<< NAME OF THE EVENT HUB >>";
 var credential = new DefaultAzureCredential();
+
+// It is recommended that you cache the Event Hubs clients for the lifetime of your
+// application, closing or disposing when application ends.  This example disposes
+// after the immediate scope for simplicity.
+
 await using var producer = new EventHubProducerClient(fullyQualifiedNamespace, eventHubName, credential);
 await producer.SendAsync(new EventData[] { eventData });
 ```
@@ -101,6 +106,11 @@ await producer.SendAsync(new EventData[] { eventData });
 To deserialize an `EventData` event that you are consuming:
 ```C# Snippet:SchemaRegistryAvroDecodeEventData
 // construct a consumer and consume the event from our event hub
+
+// It is recommended that you cache the Event Hubs clients for the lifetime of your
+// application, closing or disposing when application ends.  This example disposes
+// after the immediate scope for simplicity.
+
 await using var consumer = new EventHubConsumerClient(EventHubConsumerClient.DefaultConsumerGroupName, fullyQualifiedNamespace, eventHubName, credential);
 await foreach (PartitionEvent receivedEvent in consumer.ReadEventsAsync())
 {
