@@ -8,15 +8,16 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Azure.Communication.CallingServer;
 
-namespace Azure.Communication.CallingServer
+namespace CallAutomation
 {
     /// <summary> Model factory for models. </summary>
     public static partial class CallAutomationModelFactory
     {
         /// <summary> Initializes a new instance of TransferCallToParticipantResult. </summary>
         /// <param name="operationContext"> The operation context provided by client. </param>
-        /// <returns> A new <see cref="CallingServer.TransferCallToParticipantResult"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Azure.Communication.CallingServer.TransferCallToParticipantResult"/> instance for mocking. </returns>
         public static TransferCallToParticipantResult TransferCallToParticipantResult(string operationContext = null)
         {
             return new TransferCallToParticipantResult(operationContext);
@@ -24,7 +25,7 @@ namespace Azure.Communication.CallingServer
 
         /// <summary> Initializes a new instance of RemoveParticipantsResult. </summary>
         /// <param name="operationContext"> The operation context provided by client. </param>
-        /// <returns> A new <see cref="CallingServer.RemoveParticipantsResult"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Azure.Communication.CallingServer.RemoveParticipantsResult"/> instance for mocking. </returns>
         public static RemoveParticipantsResult RemoveParticipantsResult(string operationContext = null)
         {
             return new RemoveParticipantsResult(operationContext);
@@ -33,7 +34,7 @@ namespace Azure.Communication.CallingServer
         /// <summary> Initializes a new instance of RecordingStateResult. </summary>
         /// <param name="recordingId"></param>
         /// <param name="recordingState"></param>
-        /// <returns> A new <see cref="CallingServer.RecordingStateResult"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Azure.Communication.CallingServer.RecordingStateResult"/> instance for mocking. </returns>
         public static RecordingStateResult RecordingStateResult(string recordingId = null, RecordingState? recordingState = null)
         {
             return new RecordingStateResult(recordingId, recordingState);
@@ -43,7 +44,7 @@ namespace Azure.Communication.CallingServer
         /// <param name="code"></param>
         /// <param name="subCode"></param>
         /// <param name="message"></param>
-        /// <returns> A new <see cref="CallingServer.ResultInformation"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Azure.Communication.CallingServer.ResultInformation"/> instance for mocking. </returns>
         public static ResultInformation ResultInformation(int? code = null, int? subCode = null, string message = null)
         {
             return new ResultInformation(code, subCode, message);
@@ -58,7 +59,7 @@ namespace Azure.Communication.CallingServer
         /// <param name="serverCallId"> Server call ID. </param>
         /// <param name="correlationId"> Correlation ID for event to call correlation. Also called ChainId for skype chain ID. </param>
         /// <param name="publicEventType"> The public event namespace used as the &quot;type&quot; property in the CloudEvent. </param>
-        /// <returns> A new <see cref="CallingServer.CallConnected"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Azure.Communication.CallingServer.CallConnected"/> instance for mocking. </returns>
         public static CallConnected CallConnected(string eventSource = null, string version = null, string operationContext = null, ResultInformation resultInformation = null, string callConnectionId = null, string serverCallId = null, string correlationId = null, string publicEventType = null)
         {
             return new CallConnected(eventSource, version, operationContext, resultInformation, callConnectionId, serverCallId, correlationId, publicEventType);
@@ -73,7 +74,7 @@ namespace Azure.Communication.CallingServer
         /// <param name="serverCallId"> Server call ID. </param>
         /// <param name="correlationId"> Correlation ID for event to call correlation. Also called ChainId for skype chain ID. </param>
         /// <param name="publicEventType"> The public event namespace used as the &quot;type&quot; property in the CloudEvent. </param>
-        /// <returns> A new <see cref="CallingServer.CallDisconnected"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Azure.Communication.CallingServer.CallDisconnected"/> instance for mocking. </returns>
         public static CallDisconnected CallDisconnected(string eventSource = null, string version = null, string operationContext = null, ResultInformation resultInformation = null, string callConnectionId = null, string serverCallId = null, string correlationId = null, string publicEventType = null)
         {
             return new CallDisconnected(eventSource, version, operationContext, resultInformation, callConnectionId, serverCallId, correlationId, publicEventType);
@@ -88,7 +89,7 @@ namespace Azure.Communication.CallingServer
         /// <param name="serverCallId"> Server call ID. </param>
         /// <param name="correlationId"> Correlation ID for event to call correlation. Also called ChainId for skype chain ID. </param>
         /// <param name="publicEventType"> The public event namespace used as the &quot;type&quot; property in the CloudEvent. </param>
-        /// <returns> A new <see cref="CallingServer.CallTransferAccepted"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Azure.Communication.CallingServer.CallTransferAccepted"/> instance for mocking. </returns>
         public static CallTransferAccepted CallTransferAccepted(string eventSource = null, string operationContext = null, ResultInformation resultInformation = null, string version = null, string callConnectionId = null, string serverCallId = null, string correlationId = null, string publicEventType = null)
         {
             return new CallTransferAccepted(eventSource, operationContext, resultInformation, version, callConnectionId, serverCallId, correlationId, publicEventType);
@@ -103,7 +104,7 @@ namespace Azure.Communication.CallingServer
         /// <param name="serverCallId"> Server call ID. </param>
         /// <param name="correlationId"> Correlation ID for event to call correlation. Also called ChainId for skype chain ID. </param>
         /// <param name="publicEventType"> The public event namespace used as the &quot;type&quot; property in the CloudEvent. </param>
-        /// <returns> A new <see cref="CallingServer.CallTransferFailed"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Azure.Communication.CallingServer.CallTransferFailed"/> instance for mocking. </returns>
         public static CallTransferFailed CallTransferFailed(string eventSource = null, string operationContext = null, ResultInformation resultInformation = null, string version = null, string callConnectionId = null, string serverCallId = null, string correlationId = null, string publicEventType = null)
         {
             return new CallTransferFailed(eventSource, operationContext, resultInformation, version, callConnectionId, serverCallId, correlationId, publicEventType);
@@ -121,7 +122,7 @@ namespace Azure.Communication.CallingServer
         /// <param name="serverCallId"> Server call ID. </param>
         /// <param name="correlationId"> Correlation ID for event to call correlation. Also called ChainId for skype chain ID. </param>
         /// <param name="publicEventType"> The public event namespace used as the &quot;type&quot; property in the CloudEvent. </param>
-        /// <returns> A new <see cref="CallingServer.CallRecordingStateChanged"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Azure.Communication.CallingServer.CallRecordingStateChanged"/> instance for mocking. </returns>
         public static CallRecordingStateChanged CallRecordingStateChanged(string eventSource = null, string recordingId = null, RecordingState state = default, DateTimeOffset? startDateTime = null, string version = null, string operationContext = null, ResultInformation resultInformation = null, string callConnectionId = null, string serverCallId = null, string correlationId = null, string publicEventType = null)
         {
             return new CallRecordingStateChanged(eventSource, recordingId, state, startDateTime, version, operationContext, resultInformation, callConnectionId, serverCallId, correlationId, publicEventType);
@@ -135,7 +136,7 @@ namespace Azure.Communication.CallingServer
         /// <param name="serverCallId"> Server call ID. </param>
         /// <param name="correlationId"> Correlation ID for event to call correlation. Also called ChainId for skype chain ID. </param>
         /// <param name="publicEventType"> The public event namespace used as the &quot;type&quot; property in the CloudEvent. </param>
-        /// <returns> A new <see cref="CallingServer.PlayCompleted"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Azure.Communication.CallingServer.PlayCompleted"/> instance for mocking. </returns>
         public static PlayCompleted PlayCompleted(string operationContext = null, ResultInformation resultInformation = null, string version = null, string callConnectionId = null, string serverCallId = null, string correlationId = null, string publicEventType = null)
         {
             return new PlayCompleted(operationContext, resultInformation, version, callConnectionId, serverCallId, correlationId, publicEventType);
@@ -150,7 +151,7 @@ namespace Azure.Communication.CallingServer
         /// <param name="serverCallId"> Server call ID. </param>
         /// <param name="correlationId"> Correlation ID for event to call correlation. Also called ChainId for skype chain ID. </param>
         /// <param name="publicEventType"> The public event namespace used as the &quot;type&quot; property in the CloudEvent. </param>
-        /// <returns> A new <see cref="CallingServer.PlayFailed"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Azure.Communication.CallingServer.PlayFailed"/> instance for mocking. </returns>
         public static PlayFailed PlayFailed(string eventSource = null, string operationContext = null, ResultInformation resultInformation = null, string version = null, string callConnectionId = null, string serverCallId = null, string correlationId = null, string publicEventType = null)
         {
             return new PlayFailed(eventSource, operationContext, resultInformation, version, callConnectionId, serverCallId, correlationId, publicEventType);
@@ -169,7 +170,7 @@ namespace Azure.Communication.CallingServer
         /// <param name="serverCallId"> Server call ID. </param>
         /// <param name="correlationId"> Correlation ID for event to call correlation. Also called ChainId for skype chain ID. </param>
         /// <param name="publicEventType"> The public event namespace used as the &quot;type&quot; property in the CloudEvent. </param>
-        /// <returns> A new <see cref="CallingServer.RecognizeCompleted"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Azure.Communication.CallingServer.RecognizeCompleted"/> instance for mocking. </returns>
         public static RecognizeCompleted RecognizeCompleted(string operationContext = null, ResultInformation resultInformation = null, CallMediaRecognitionType recognitionType = default, CollectTonesResult collectTonesResult = null, string version = null, string callConnectionId = null, string serverCallId = null, string correlationId = null, string publicEventType = null)
         {
             return new RecognizeCompleted(operationContext, resultInformation, recognitionType, collectTonesResult, version, callConnectionId, serverCallId, correlationId, publicEventType);
@@ -177,7 +178,7 @@ namespace Azure.Communication.CallingServer
 
         /// <summary> Initializes a new instance of CollectTonesResult. </summary>
         /// <param name="tones"></param>
-        /// <returns> A new <see cref="CallingServer.CollectTonesResult"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Azure.Communication.CallingServer.CollectTonesResult"/> instance for mocking. </returns>
         public static CollectTonesResult CollectTonesResult(IEnumerable<DtmfTone> tones = null)
         {
             tones ??= new List<DtmfTone>();
@@ -193,7 +194,7 @@ namespace Azure.Communication.CallingServer
         /// <param name="serverCallId"> Server call ID. </param>
         /// <param name="correlationId"> Correlation ID for event to call correlation. Also called ChainId for skype chain ID. </param>
         /// <param name="publicEventType"> The public event namespace used as the &quot;type&quot; property in the CloudEvent. </param>
-        /// <returns> A new <see cref="CallingServer.RecognizeFailed"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Azure.Communication.CallingServer.RecognizeFailed"/> instance for mocking. </returns>
         public static RecognizeFailed RecognizeFailed(string operationContext = null, ResultInformation resultInformation = null, string version = null, string callConnectionId = null, string serverCallId = null, string correlationId = null, string publicEventType = null)
         {
             return new RecognizeFailed(operationContext, resultInformation, version, callConnectionId, serverCallId, correlationId, publicEventType);
