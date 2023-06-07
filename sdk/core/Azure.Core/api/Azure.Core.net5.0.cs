@@ -1144,7 +1144,7 @@ namespace Azure.Core.Serialization
     public partial class RawContentOptions
     {
         public RawContentOptions() { }
-        public bool UseCamelCaseNamingConvention { get { throw null; } set { } }
+        public Azure.Core.Serialization.PropertyNamingConvention PropertyNamingConvention { get { throw null; } set { } }
     }
 }
 namespace Azure.Messaging

@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System.Threading.Tasks;
+using Azure.Core.Serialization;
 using Azure.Core.TestFramework;
 
 namespace Azure.AI.Language.Conversations.Tests
@@ -44,7 +45,7 @@ namespace Azure.AI.Language.Conversations.Tests
             await base.StartTestRecordingAsync();
 
             ConversationsClientOptions options = new ConversationsClientOptions(ServiceVersion);
-            options.RawContent.UseCamelCaseNamingConvention = true;
+            options.RawContent.PropertyNamingConvention = PropertyNamingConvention.CamelCase;
 
             Client = CreateClient<TClient>(
                 TestEnvironment.Endpoint,

@@ -24,7 +24,7 @@ namespace Azure.Core.Serialization
         /// If needed, it can be overridden per instance by passing different options to
         /// to <see cref="RequestContent.Create(object, PropertyNamingConvention)"/> or <see cref="AzureCoreExtensions.ToDynamicFromJson(BinaryData, PropertyNamingConvention)"/>.
         /// </summary>
-        public bool UseCamelCaseNamingConvention { get; set; }
+        public PropertyNamingConvention PropertyNamingConvention { get; set; }
 
         internal DynamicDataOptions GetDynamicOptions()
         {
@@ -33,10 +33,7 @@ namespace Azure.Core.Serialization
                 DateTimeHandling = DynamicDateTimeHandling.Rfc3339
             };
 
-            if (UseCamelCaseNamingConvention)
-            {
-                options.PropertyNamingConvention = PropertyNamingConvention.CamelCase;
-            }
+            options.PropertyNamingConvention = PropertyNamingConvention;
 
             return options;
         }
