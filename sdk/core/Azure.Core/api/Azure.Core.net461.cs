@@ -1143,7 +1143,7 @@ namespace Azure.Core.Serialization
     }
     public partial class RawContentOptions
     {
-        public RawContentOptions() { }
+        internal RawContentOptions() { }
         public Azure.Core.Serialization.PropertyNamingConvention PropertyNamingConvention { get { throw null; } set { } }
     }
 }
