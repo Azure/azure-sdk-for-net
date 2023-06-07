@@ -511,7 +511,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
 
         /// <summary> Initializes a new instance of AppPlatformAppProperties. </summary>
         /// <param name="isPublic"> Indicates whether the App exposes public endpoint. </param>
-        /// <param name="uri"> URL of the App. </param>
+        /// <param name="uriString"> URL of the App. </param>
         /// <param name="addonConfigs"> Collection of addons. </param>
         /// <param name="provisioningState"> Provisioning state of the App. </param>
         /// <param name="fqdn"> Fully qualified dns Name. </param>
@@ -524,13 +524,13 @@ namespace Azure.ResourceManager.AppPlatform.Models
         /// <param name="vnetAddons"> Additional App settings in vnet injection instance. </param>
         /// <param name="ingressSettings"> App ingress settings payload. </param>
         /// <returns> A new <see cref="Models.AppPlatformAppProperties"/> instance for mocking. </returns>
-        public static AppPlatformAppProperties AppPlatformAppProperties(bool? isPublic = null, Uri uri = null, IDictionary<string, IDictionary<string, BinaryData>> addonConfigs = null, AppPlatformAppProvisioningState? provisioningState = null, string fqdn = null, bool? isHttpsOnly = null, AppTemporaryDisk temporaryDisk = null, AppPersistentDisk persistentDisk = null, IEnumerable<AppCustomPersistentDisk> customPersistentDisks = null, bool? isEndToEndTlsEnabled = null, IEnumerable<AppLoadedCertificate> loadedCertificates = null, AppVnetAddons vnetAddons = null, AppIngressSettings ingressSettings = null)
+        public static AppPlatformAppProperties AppPlatformAppProperties(bool? isPublic = null, string uriString = null, IDictionary<string, IDictionary<string, BinaryData>> addonConfigs = null, AppPlatformAppProvisioningState? provisioningState = null, string fqdn = null, bool? isHttpsOnly = null, AppTemporaryDisk temporaryDisk = null, AppPersistentDisk persistentDisk = null, IEnumerable<AppCustomPersistentDisk> customPersistentDisks = null, bool? isEndToEndTlsEnabled = null, IEnumerable<AppLoadedCertificate> loadedCertificates = null, AppVnetAddons vnetAddons = null, AppIngressSettings ingressSettings = null)
         {
             addonConfigs ??= new Dictionary<string, IDictionary<string, BinaryData>>();
             customPersistentDisks ??= new List<AppCustomPersistentDisk>();
             loadedCertificates ??= new List<AppLoadedCertificate>();
 
-            return new AppPlatformAppProperties(isPublic, uri, addonConfigs, provisioningState, fqdn, isHttpsOnly, temporaryDisk, persistentDisk, customPersistentDisks?.ToList(), isEndToEndTlsEnabled, loadedCertificates?.ToList(), vnetAddons, ingressSettings);
+            return new AppPlatformAppProperties(isPublic, uriString, addonConfigs, provisioningState, fqdn, isHttpsOnly, temporaryDisk, persistentDisk, customPersistentDisks?.ToList(), isEndToEndTlsEnabled, loadedCertificates?.ToList(), vnetAddons, ingressSettings);
         }
 
         /// <summary> Initializes a new instance of AppPersistentDisk. </summary>
