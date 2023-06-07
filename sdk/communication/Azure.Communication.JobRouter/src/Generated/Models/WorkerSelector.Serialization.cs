@@ -20,7 +20,7 @@ namespace Azure.Communication.JobRouter
             writer.WritePropertyName("key"u8);
             writer.WriteStringValue(Key);
             writer.WritePropertyName("labelOperator"u8);
-            writer.WriteStringValue(LabelOperator.ToSerialString());
+            writer.WriteStringValue(LabelOperator.ToString());
             if (Optional.IsDefined(_value))
             {
                 writer.WritePropertyName("value"u8);
@@ -61,7 +61,7 @@ namespace Azure.Communication.JobRouter
                 }
                 if (property.NameEquals("labelOperator"u8))
                 {
-                    labelOperator = property.Value.GetString().ToLabelOperator();
+                    labelOperator = new LabelOperator(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("value"u8))
