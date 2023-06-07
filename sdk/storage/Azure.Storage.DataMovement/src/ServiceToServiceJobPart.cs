@@ -160,54 +160,46 @@ namespace Azure.Storage.DataMovement
             }
             long length = fileLength.Value;
 
-            if (_destinationResource.ServiceCopyMethod == TransferCopyMethod.AsyncCopy)
+            // Perform a single copy operation
+            if (_initialTransferSize >= length)
             {
-                // Perform a one call method to copy the resource.
                 await QueueChunkToChannelAsync(
                     async () =>
-                    await StartSingleCallCopy(length, true).ConfigureAwait(false))
+                    await StartSingleCallCopy(length, false).ConfigureAwait(false))
                     .ConfigureAwait(false);
+                return;
             }
-            else // For now we default to sync copy
+
+            // Perform a series of chunk copies followed by a commit
+            long blockSize = CalculateBlockSize(length);
+
+            _commitBlockHandler = GetCommitController(
+                expectedLength: length,
+                blockSize: blockSize,
+                this,
+                _destinationResource.TransferType);
+            // If we cannot upload in one shot, initiate the parallel block uploader
+            if (await CreateDestinationResource(length, blockSize).ConfigureAwait(false))
             {
-                if (_initialTransferSize >= length)
+                List<(long Offset, long Length)> commitBlockList = GetRangeList(blockSize, length);
+                if (_destinationResource.TransferType == TransferType.Concurrent)
                 {
+                    await QueueStageBlockRequests(commitBlockList, length).ConfigureAwait(false);
+                }
+                else // Sequential
+                {
+                    // Queue paritioned block task
                     await QueueChunkToChannelAsync(
                         async () =>
-                        await StartSingleCallCopy(length, false).ConfigureAwait(false))
-                        .ConfigureAwait(false);
-                    return;
+                        await PutBlockFromUri(
+                            offset: commitBlockList[0].Offset,
+                            blockLength: commitBlockList[0].Length,
+                            expectedLength: length).ConfigureAwait(false)).ConfigureAwait(false);
                 }
-                long blockSize = CalculateBlockSize(length);
-
-                _commitBlockHandler = GetCommitController(
-                    expectedLength: length,
-                    blockSize: blockSize,
-                    this,
-                    _destinationResource.TransferType);
-                // If we cannot upload in one shot, initiate the parallel block uploader
-                if (await CreateDestinationResource(length, blockSize).ConfigureAwait(false))
-                {
-                    List<(long Offset, long Length)> commitBlockList = GetRangeList(blockSize, length);
-                    if (_destinationResource.TransferType == TransferType.Concurrent)
-                    {
-                        await QueueStageBlockRequests(commitBlockList, length).ConfigureAwait(false);
-                    }
-                    else // Sequential
-                    {
-                        // Queue paritioned block task
-                        await QueueChunkToChannelAsync(
-                            async () =>
-                            await PutBlockFromUri(
-                                offset: commitBlockList[0].Offset,
-                                blockLength: commitBlockList[0].Length,
-                                expectedLength: length).ConfigureAwait(false)).ConfigureAwait(false);
-                    }
-                }
-                else
-                {
-                    await CheckAndUpdateCancellationStatusAsync().ConfigureAwait(false);
-                }
+            }
+            else
+            {
+                await CheckAndUpdateCancellationStatusAsync().ConfigureAwait(false);
             }
         }
 

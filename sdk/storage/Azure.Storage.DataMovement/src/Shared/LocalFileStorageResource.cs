@@ -2,10 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -34,11 +31,6 @@ namespace Azure.Storage.DataMovement
         /// Cannot return a Url because this is a local path.
         /// </summary>
         public override ProduceUriType CanProduceUri => ProduceUriType.NoUri;
-
-        /// <summary>
-        /// Cannot perform service to service copies. This respective resource is a local resource.
-        /// </summary>
-        public override TransferCopyMethod ServiceCopyMethod => TransferCopyMethod.None;
 
         /// <summary>
         /// Defines the recommended Transfer Type of the resource
