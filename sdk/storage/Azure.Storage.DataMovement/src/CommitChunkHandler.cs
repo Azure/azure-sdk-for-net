@@ -2,10 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Collections.Generic;
-using System.Text;
 using Azure.Core;
-using Azure.Storage.DataMovement;
 using System.Threading.Tasks;
 using System.Threading;
 using System.Threading.Channels;
@@ -163,8 +160,9 @@ namespace Azure.Storage.DataMovement
                     }
 
                     Interlocked.Add(ref _bytesTransferred, args.BytesTransferred);
-                    // Use progress tracker to get the amount of bytes transferred
-                    _reportProgressInBytes(_bytesTransferred);
+                    // Report the incremental bytes transferred
+                    _reportProgressInBytes(args.BytesTransferred);
+
                     if (_bytesTransferred == _expectedLength)
                     {
                         // Add CommitBlockList task to the channel

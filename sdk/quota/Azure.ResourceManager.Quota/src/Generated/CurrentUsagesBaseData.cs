@@ -28,12 +28,12 @@ namespace Azure.ResourceManager.Quota
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="properties"> Usage properties for the specified resource. </param>
-        internal CurrentUsagesBaseData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, UsagesProperties properties) : base(id, name, resourceType, systemData)
+        internal CurrentUsagesBaseData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, QuotaUsagesProperties properties) : base(id, name, resourceType, systemData)
         {
             Properties = properties;
         }
 
         /// <summary> Usage properties for the specified resource. </summary>
-        public UsagesProperties Properties { get; }
+        public QuotaUsagesProperties Properties { get; }
     }
 }

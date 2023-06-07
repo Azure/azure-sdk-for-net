@@ -346,6 +346,59 @@ using Azure.Core.Pipeline;
             }
         }
 
+        /// <summary> Protocol method to use to remove properties from job. </summary>
+        /// <param name="jobId"> Id of the job. </param>
+        /// <param name="content"> Request content payload. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
+        public virtual async Task<Response> UpdateJobAsync(
+            string jobId,
+            RequestContent content,
+            RequestContext context = null)
+        {
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(RouterClient)}.{nameof(UpdateJob)}");
+            scope.Start();
+            try
+            {
+                return await RestClient.UpsertJobAsync(
+                        id: jobId,
+                        content: content,
+                        context: context)
+                    .ConfigureAwait(false);
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+        }
+
+        /// <summary> Protocol method to use to remove properties from job. </summary>
+        /// <param name="jobId"> Id of the job. </param>
+        /// <param name="content"> Request content payload. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
+        public virtual Response UpdateJob(
+            string jobId,
+            RequestContent content,
+            RequestContext context = null)
+        {
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(RouterClient)}.{nameof(UpdateJob)}");
+            scope.Start();
+            try
+            {
+                return RestClient.UpsertJob(
+                    id: jobId,
+                    content: content,
+                    context: context);
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+        }
+
         /// <summary> Retrieves an existing job by Id. </summary>
         /// <param name="jobId"> The id of the job. </param>
         /// <param name="cancellationToken"> (Optional) The cancellation token to use. </param>
@@ -633,7 +686,7 @@ using Azure.Core.Pipeline;
                             classificationPolicyId: options?.ClassificationPolicyId,
                             scheduledBefore: options?.ScheduledBefore,
                             scheduledAfter: options?.ScheduledAfter,
-                            maxPageSize: maxPageSize,
+                            maxpagesize: maxPageSize,
                             cancellationToken: cancellationToken)
                         .ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
@@ -662,7 +715,7 @@ using Azure.Core.Pipeline;
                             classificationPolicyId: options?.ClassificationPolicyId,
                             scheduledBefore: options?.ScheduledBefore,
                             scheduledAfter: options?.ScheduledAfter,
-                            maxPageSize: maxPageSize,
+                            maxpagesize: maxPageSize,
                             cancellationToken: cancellationToken)
                         .ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
@@ -699,7 +752,7 @@ using Azure.Core.Pipeline;
                         classificationPolicyId: options?.ClassificationPolicyId,
                         scheduledBefore: options?.ScheduledBefore,
                         scheduledAfter: options?.ScheduledAfter,
-                        maxPageSize: maxPageSize,
+                        maxpagesize: maxPageSize,
                         cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
@@ -727,7 +780,7 @@ using Azure.Core.Pipeline;
                             classificationPolicyId: options?.ClassificationPolicyId,
                             scheduledBefore: options?.ScheduledBefore,
                             scheduledAfter: options?.ScheduledAfter,
-                            maxPageSize: maxPageSize,
+                            maxpagesize: maxPageSize,
                             cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
@@ -911,7 +964,7 @@ using Azure.Core.Pipeline;
                 var response = await RestClient.DeclineJobActionAsync(
                         workerId: options.WorkerId,
                         offerId: options.OfferId,
-                        declineOfferRequest: new DeclineOfferRequest { ReofferTimeUtc = options.ReofferTimeUtc },
+                        declineJobOfferRequest: new DeclineJobOfferRequest { ReofferTimeUtc = options.ReofferTimeUtc },
                         cancellationToken: cancellationToken)
                     .ConfigureAwait(false);
 
@@ -937,7 +990,7 @@ using Azure.Core.Pipeline;
                 var response = RestClient.DeclineJobAction(
                     workerId: options.WorkerId,
                     offerId: options.OfferId,
-                    declineOfferRequest: new DeclineOfferRequest { ReofferTimeUtc = options.ReofferTimeUtc },
+                    declineJobOfferRequest: new DeclineJobOfferRequest { ReofferTimeUtc = options.ReofferTimeUtc },
                     cancellationToken: cancellationToken);
 
                 return Response.FromValue(new DeclineJobOfferResult(), response.GetRawResponse());
@@ -1144,6 +1197,59 @@ using Azure.Core.Pipeline;
             }
         }
 
+        /// <summary> Protocol method to use to remove properties from worker. </summary>
+        /// <param name="workerId"> Id of the worker. </param>
+        /// <param name="content"> Request content payload. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
+        public virtual async Task<Response> UpdateWorkerAsync(
+            string workerId,
+            RequestContent content,
+            RequestContext context = null)
+        {
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(RouterClient)}.{nameof(UpdateWorker)}");
+            scope.Start();
+            try
+            {
+                return await RestClient.UpsertWorkerAsync(
+                        workerId: workerId,
+                        content: content,
+                        context: context)
+                    .ConfigureAwait(false);
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+        }
+
+        /// <summary> Protocol method to use to remove properties from worker. </summary>
+        /// <param name="workerId"> Id of the worker. </param>
+        /// <param name="content"> Request content payload. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
+        public virtual Response UpdateWorker(
+            string workerId,
+            RequestContent content,
+            RequestContext context = null)
+        {
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(RouterClient)}.{nameof(UpdateWorker)}");
+            scope.Start();
+            try
+            {
+                return RestClient.UpsertWorker(
+                    workerId: workerId,
+                    content: content,
+                    context: context);
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+        }
+
         /// <summary> Unassign a job from a worker. </summary>
         /// <param name="options"> Options for unassigning a job from a worker. </param>
         /// <param name="cancellationToken"> (Optional) The cancellation token to use. </param>
@@ -1213,7 +1319,7 @@ using Azure.Core.Pipeline;
                         channelId: options?.ChannelId,
                         queueId: options?.QueueId,
                         hasCapacity: options?.HasCapacity,
-                        maxPageSize: maxPageSize,
+                        maxpagesize: maxPageSize,
                         cancellationToken:  cancellationToken)
                         .ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
@@ -1240,7 +1346,7 @@ using Azure.Core.Pipeline;
                             channelId: options?.ChannelId,
                             queueId: options?.QueueId,
                             hasCapacity: options?.HasCapacity,
-                            maxPageSize: maxPageSize,
+                            maxpagesize: maxPageSize,
                             cancellationToken: cancellationToken)
                         .ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
@@ -1275,7 +1381,7 @@ using Azure.Core.Pipeline;
                         channelId: options?.ChannelId,
                         queueId: options?.QueueId,
                         hasCapacity: options?.HasCapacity,
-                        maxPageSize: maxPageSize,
+                        maxpagesize: maxPageSize,
                         cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
@@ -1301,7 +1407,7 @@ using Azure.Core.Pipeline;
                             channelId: options?.ChannelId,
                             queueId: options?.QueueId,
                             hasCapacity: options?.HasCapacity,
-                            maxPageSize: maxPageSize,
+                            maxpagesize: maxPageSize,
                             cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }

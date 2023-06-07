@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.NewRelicObservability
         {
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _apiVersion = apiVersion ?? "2022-07-01-preview";
+            _apiVersion = apiVersion ?? "2022-07-01";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
@@ -500,7 +500,7 @@ namespace Azure.ResourceManager.NewRelicObservability
             }
         }
 
-        internal HttpMessage CreateGetMetricRulesRequest(string subscriptionId, string resourceGroupName, string monitorName, MetricsContent content)
+        internal HttpMessage CreateGetMetricRulesRequest(string subscriptionId, string resourceGroupName, string monitorName, NewRelicMetricsContent content)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -533,7 +533,7 @@ namespace Azure.ResourceManager.NewRelicObservability
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="monitorName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="monitorName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<MetricRules>> GetMetricRulesAsync(string subscriptionId, string resourceGroupName, string monitorName, MetricsContent content, CancellationToken cancellationToken = default)
+        public async Task<Response<NewRelicObservabilityMetricRules>> GetMetricRulesAsync(string subscriptionId, string resourceGroupName, string monitorName, NewRelicMetricsContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -546,9 +546,9 @@ namespace Azure.ResourceManager.NewRelicObservability
             {
                 case 200:
                     {
-                        MetricRules value = default;
+                        NewRelicObservabilityMetricRules value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = MetricRules.DeserializeMetricRules(document.RootElement);
+                        value = NewRelicObservabilityMetricRules.DeserializeNewRelicObservabilityMetricRules(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -564,7 +564,7 @@ namespace Azure.ResourceManager.NewRelicObservability
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="monitorName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="monitorName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<MetricRules> GetMetricRules(string subscriptionId, string resourceGroupName, string monitorName, MetricsContent content, CancellationToken cancellationToken = default)
+        public Response<NewRelicObservabilityMetricRules> GetMetricRules(string subscriptionId, string resourceGroupName, string monitorName, NewRelicMetricsContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -577,9 +577,9 @@ namespace Azure.ResourceManager.NewRelicObservability
             {
                 case 200:
                     {
-                        MetricRules value = default;
+                        NewRelicObservabilityMetricRules value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = MetricRules.DeserializeMetricRules(document.RootElement);
+                        value = NewRelicObservabilityMetricRules.DeserializeNewRelicObservabilityMetricRules(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -587,7 +587,7 @@ namespace Azure.ResourceManager.NewRelicObservability
             }
         }
 
-        internal HttpMessage CreateGetMetricStatusRequest(string subscriptionId, string resourceGroupName, string monitorName, MetricsStatusContent content)
+        internal HttpMessage CreateGetMetricStatusRequest(string subscriptionId, string resourceGroupName, string monitorName, NewRelicMetricsStatusContent content)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -620,7 +620,7 @@ namespace Azure.ResourceManager.NewRelicObservability
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="monitorName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="monitorName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<MetricsStatusResponse>> GetMetricStatusAsync(string subscriptionId, string resourceGroupName, string monitorName, MetricsStatusContent content, CancellationToken cancellationToken = default)
+        public async Task<Response<NewRelicMetricsStatusResult>> GetMetricStatusAsync(string subscriptionId, string resourceGroupName, string monitorName, NewRelicMetricsStatusContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -633,9 +633,9 @@ namespace Azure.ResourceManager.NewRelicObservability
             {
                 case 200:
                     {
-                        MetricsStatusResponse value = default;
+                        NewRelicMetricsStatusResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = MetricsStatusResponse.DeserializeMetricsStatusResponse(document.RootElement);
+                        value = NewRelicMetricsStatusResult.DeserializeNewRelicMetricsStatusResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -651,7 +651,7 @@ namespace Azure.ResourceManager.NewRelicObservability
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="monitorName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="monitorName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<MetricsStatusResponse> GetMetricStatus(string subscriptionId, string resourceGroupName, string monitorName, MetricsStatusContent content, CancellationToken cancellationToken = default)
+        public Response<NewRelicMetricsStatusResult> GetMetricStatus(string subscriptionId, string resourceGroupName, string monitorName, NewRelicMetricsStatusContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -664,9 +664,9 @@ namespace Azure.ResourceManager.NewRelicObservability
             {
                 case 200:
                     {
-                        MetricsStatusResponse value = default;
+                        NewRelicMetricsStatusResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = MetricsStatusResponse.DeserializeMetricsStatusResponse(document.RootElement);
+                        value = NewRelicMetricsStatusResult.DeserializeNewRelicMetricsStatusResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -674,7 +674,7 @@ namespace Azure.ResourceManager.NewRelicObservability
             }
         }
 
-        internal HttpMessage CreateListAppServicesRequest(string subscriptionId, string resourceGroupName, string monitorName, AppServicesGetContent content)
+        internal HttpMessage CreateListAppServicesRequest(string subscriptionId, string resourceGroupName, string monitorName, NewRelicAppServicesGetContent content)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -707,7 +707,7 @@ namespace Azure.ResourceManager.NewRelicObservability
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="monitorName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="monitorName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<AppServicesListResponse>> ListAppServicesAsync(string subscriptionId, string resourceGroupName, string monitorName, AppServicesGetContent content, CancellationToken cancellationToken = default)
+        public async Task<Response<NewRelicAppServicesListResult>> ListAppServicesAsync(string subscriptionId, string resourceGroupName, string monitorName, NewRelicAppServicesGetContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -720,9 +720,9 @@ namespace Azure.ResourceManager.NewRelicObservability
             {
                 case 200:
                     {
-                        AppServicesListResponse value = default;
+                        NewRelicAppServicesListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = AppServicesListResponse.DeserializeAppServicesListResponse(document.RootElement);
+                        value = NewRelicAppServicesListResult.DeserializeNewRelicAppServicesListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -738,7 +738,7 @@ namespace Azure.ResourceManager.NewRelicObservability
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="monitorName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="monitorName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<AppServicesListResponse> ListAppServices(string subscriptionId, string resourceGroupName, string monitorName, AppServicesGetContent content, CancellationToken cancellationToken = default)
+        public Response<NewRelicAppServicesListResult> ListAppServices(string subscriptionId, string resourceGroupName, string monitorName, NewRelicAppServicesGetContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -751,9 +751,9 @@ namespace Azure.ResourceManager.NewRelicObservability
             {
                 case 200:
                     {
-                        AppServicesListResponse value = default;
+                        NewRelicAppServicesListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = AppServicesListResponse.DeserializeAppServicesListResponse(document.RootElement);
+                        value = NewRelicAppServicesListResult.DeserializeNewRelicAppServicesListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -761,7 +761,7 @@ namespace Azure.ResourceManager.NewRelicObservability
             }
         }
 
-        internal HttpMessage CreateSwitchBillingRequest(string subscriptionId, string resourceGroupName, string monitorName, SwitchBillingContent content)
+        internal HttpMessage CreateSwitchBillingRequest(string subscriptionId, string resourceGroupName, string monitorName, NewRelicSwitchBillingContent content)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -794,7 +794,7 @@ namespace Azure.ResourceManager.NewRelicObservability
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="monitorName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="monitorName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<NewRelicMonitorResourceData>> SwitchBillingAsync(string subscriptionId, string resourceGroupName, string monitorName, SwitchBillingContent content, CancellationToken cancellationToken = default)
+        public async Task<Response<NewRelicMonitorResourceData>> SwitchBillingAsync(string subscriptionId, string resourceGroupName, string monitorName, NewRelicSwitchBillingContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -828,7 +828,7 @@ namespace Azure.ResourceManager.NewRelicObservability
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="monitorName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="monitorName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<NewRelicMonitorResourceData> SwitchBilling(string subscriptionId, string resourceGroupName, string monitorName, SwitchBillingContent content, CancellationToken cancellationToken = default)
+        public Response<NewRelicMonitorResourceData> SwitchBilling(string subscriptionId, string resourceGroupName, string monitorName, NewRelicSwitchBillingContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -854,7 +854,7 @@ namespace Azure.ResourceManager.NewRelicObservability
             }
         }
 
-        internal HttpMessage CreateListHostsRequest(string subscriptionId, string resourceGroupName, string monitorName, HostsGetContent content)
+        internal HttpMessage CreateListHostsRequest(string subscriptionId, string resourceGroupName, string monitorName, NewRelicHostsGetContent content)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -887,7 +887,7 @@ namespace Azure.ResourceManager.NewRelicObservability
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="monitorName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="monitorName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<VmHostsListResponse>> ListHostsAsync(string subscriptionId, string resourceGroupName, string monitorName, HostsGetContent content, CancellationToken cancellationToken = default)
+        public async Task<Response<NewRelicObservabilityVmHostsListResponse>> ListHostsAsync(string subscriptionId, string resourceGroupName, string monitorName, NewRelicHostsGetContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -900,9 +900,9 @@ namespace Azure.ResourceManager.NewRelicObservability
             {
                 case 200:
                     {
-                        VmHostsListResponse value = default;
+                        NewRelicObservabilityVmHostsListResponse value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = VmHostsListResponse.DeserializeVmHostsListResponse(document.RootElement);
+                        value = NewRelicObservabilityVmHostsListResponse.DeserializeNewRelicObservabilityVmHostsListResponse(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -918,7 +918,7 @@ namespace Azure.ResourceManager.NewRelicObservability
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="monitorName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="monitorName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<VmHostsListResponse> ListHosts(string subscriptionId, string resourceGroupName, string monitorName, HostsGetContent content, CancellationToken cancellationToken = default)
+        public Response<NewRelicObservabilityVmHostsListResponse> ListHosts(string subscriptionId, string resourceGroupName, string monitorName, NewRelicHostsGetContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -931,9 +931,9 @@ namespace Azure.ResourceManager.NewRelicObservability
             {
                 case 200:
                     {
-                        VmHostsListResponse value = default;
+                        NewRelicObservabilityVmHostsListResponse value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = VmHostsListResponse.DeserializeVmHostsListResponse(document.RootElement);
+                        value = NewRelicObservabilityVmHostsListResponse.DeserializeNewRelicObservabilityVmHostsListResponse(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -969,7 +969,7 @@ namespace Azure.ResourceManager.NewRelicObservability
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="monitorName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="monitorName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<MonitoredResourceListResponse>> ListMonitoredResourcesAsync(string subscriptionId, string resourceGroupName, string monitorName, CancellationToken cancellationToken = default)
+        public async Task<Response<NewRelicObservabilityMonitoredResourceListResult>> ListMonitoredResourcesAsync(string subscriptionId, string resourceGroupName, string monitorName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -981,9 +981,9 @@ namespace Azure.ResourceManager.NewRelicObservability
             {
                 case 200:
                     {
-                        MonitoredResourceListResponse value = default;
+                        NewRelicObservabilityMonitoredResourceListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = MonitoredResourceListResponse.DeserializeMonitoredResourceListResponse(document.RootElement);
+                        value = NewRelicObservabilityMonitoredResourceListResult.DeserializeNewRelicObservabilityMonitoredResourceListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -998,7 +998,7 @@ namespace Azure.ResourceManager.NewRelicObservability
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="monitorName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="monitorName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<MonitoredResourceListResponse> ListMonitoredResources(string subscriptionId, string resourceGroupName, string monitorName, CancellationToken cancellationToken = default)
+        public Response<NewRelicObservabilityMonitoredResourceListResult> ListMonitoredResources(string subscriptionId, string resourceGroupName, string monitorName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -1010,9 +1010,9 @@ namespace Azure.ResourceManager.NewRelicObservability
             {
                 case 200:
                     {
-                        MonitoredResourceListResponse value = default;
+                        NewRelicObservabilityMonitoredResourceListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = MonitoredResourceListResponse.DeserializeMonitoredResourceListResponse(document.RootElement);
+                        value = NewRelicObservabilityMonitoredResourceListResult.DeserializeNewRelicObservabilityMonitoredResourceListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -1048,7 +1048,7 @@ namespace Azure.ResourceManager.NewRelicObservability
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="monitorName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="monitorName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<VmExtensionPayload>> VmHostPayloadAsync(string subscriptionId, string resourceGroupName, string monitorName, CancellationToken cancellationToken = default)
+        public async Task<Response<NewRelicObservabilityVmExtensionPayload>> VmHostPayloadAsync(string subscriptionId, string resourceGroupName, string monitorName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -1060,9 +1060,9 @@ namespace Azure.ResourceManager.NewRelicObservability
             {
                 case 200:
                     {
-                        VmExtensionPayload value = default;
+                        NewRelicObservabilityVmExtensionPayload value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = VmExtensionPayload.DeserializeVmExtensionPayload(document.RootElement);
+                        value = NewRelicObservabilityVmExtensionPayload.DeserializeNewRelicObservabilityVmExtensionPayload(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -1077,7 +1077,7 @@ namespace Azure.ResourceManager.NewRelicObservability
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="monitorName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="monitorName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<VmExtensionPayload> VmHostPayload(string subscriptionId, string resourceGroupName, string monitorName, CancellationToken cancellationToken = default)
+        public Response<NewRelicObservabilityVmExtensionPayload> VmHostPayload(string subscriptionId, string resourceGroupName, string monitorName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -1089,9 +1089,9 @@ namespace Azure.ResourceManager.NewRelicObservability
             {
                 case 200:
                     {
-                        VmExtensionPayload value = default;
+                        NewRelicObservabilityVmExtensionPayload value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = VmExtensionPayload.DeserializeVmExtensionPayload(document.RootElement);
+                        value = NewRelicObservabilityVmExtensionPayload.DeserializeNewRelicObservabilityVmExtensionPayload(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -1239,7 +1239,7 @@ namespace Azure.ResourceManager.NewRelicObservability
             }
         }
 
-        internal HttpMessage CreateListAppServicesNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName, string monitorName, AppServicesGetContent content)
+        internal HttpMessage CreateListAppServicesNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName, string monitorName, NewRelicAppServicesGetContent content)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -1262,7 +1262,7 @@ namespace Azure.ResourceManager.NewRelicObservability
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="monitorName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="monitorName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<AppServicesListResponse>> ListAppServicesNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string monitorName, AppServicesGetContent content, CancellationToken cancellationToken = default)
+        public async Task<Response<NewRelicAppServicesListResult>> ListAppServicesNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string monitorName, NewRelicAppServicesGetContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -1276,9 +1276,9 @@ namespace Azure.ResourceManager.NewRelicObservability
             {
                 case 200:
                     {
-                        AppServicesListResponse value = default;
+                        NewRelicAppServicesListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = AppServicesListResponse.DeserializeAppServicesListResponse(document.RootElement);
+                        value = NewRelicAppServicesListResult.DeserializeNewRelicAppServicesListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -1295,7 +1295,7 @@ namespace Azure.ResourceManager.NewRelicObservability
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="monitorName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="monitorName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<AppServicesListResponse> ListAppServicesNextPage(string nextLink, string subscriptionId, string resourceGroupName, string monitorName, AppServicesGetContent content, CancellationToken cancellationToken = default)
+        public Response<NewRelicAppServicesListResult> ListAppServicesNextPage(string nextLink, string subscriptionId, string resourceGroupName, string monitorName, NewRelicAppServicesGetContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -1309,9 +1309,9 @@ namespace Azure.ResourceManager.NewRelicObservability
             {
                 case 200:
                     {
-                        AppServicesListResponse value = default;
+                        NewRelicAppServicesListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = AppServicesListResponse.DeserializeAppServicesListResponse(document.RootElement);
+                        value = NewRelicAppServicesListResult.DeserializeNewRelicAppServicesListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -1319,7 +1319,7 @@ namespace Azure.ResourceManager.NewRelicObservability
             }
         }
 
-        internal HttpMessage CreateListHostsNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName, string monitorName, HostsGetContent content)
+        internal HttpMessage CreateListHostsNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName, string monitorName, NewRelicHostsGetContent content)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -1342,7 +1342,7 @@ namespace Azure.ResourceManager.NewRelicObservability
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="monitorName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="monitorName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<VmHostsListResponse>> ListHostsNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string monitorName, HostsGetContent content, CancellationToken cancellationToken = default)
+        public async Task<Response<NewRelicObservabilityVmHostsListResponse>> ListHostsNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string monitorName, NewRelicHostsGetContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -1356,9 +1356,9 @@ namespace Azure.ResourceManager.NewRelicObservability
             {
                 case 200:
                     {
-                        VmHostsListResponse value = default;
+                        NewRelicObservabilityVmHostsListResponse value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = VmHostsListResponse.DeserializeVmHostsListResponse(document.RootElement);
+                        value = NewRelicObservabilityVmHostsListResponse.DeserializeNewRelicObservabilityVmHostsListResponse(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -1375,7 +1375,7 @@ namespace Azure.ResourceManager.NewRelicObservability
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="monitorName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="monitorName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<VmHostsListResponse> ListHostsNextPage(string nextLink, string subscriptionId, string resourceGroupName, string monitorName, HostsGetContent content, CancellationToken cancellationToken = default)
+        public Response<NewRelicObservabilityVmHostsListResponse> ListHostsNextPage(string nextLink, string subscriptionId, string resourceGroupName, string monitorName, NewRelicHostsGetContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -1389,9 +1389,9 @@ namespace Azure.ResourceManager.NewRelicObservability
             {
                 case 200:
                     {
-                        VmHostsListResponse value = default;
+                        NewRelicObservabilityVmHostsListResponse value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = VmHostsListResponse.DeserializeVmHostsListResponse(document.RootElement);
+                        value = NewRelicObservabilityVmHostsListResponse.DeserializeNewRelicObservabilityVmHostsListResponse(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -1421,7 +1421,7 @@ namespace Azure.ResourceManager.NewRelicObservability
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="monitorName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="monitorName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<MonitoredResourceListResponse>> ListMonitoredResourcesNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string monitorName, CancellationToken cancellationToken = default)
+        public async Task<Response<NewRelicObservabilityMonitoredResourceListResult>> ListMonitoredResourcesNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string monitorName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -1434,9 +1434,9 @@ namespace Azure.ResourceManager.NewRelicObservability
             {
                 case 200:
                     {
-                        MonitoredResourceListResponse value = default;
+                        NewRelicObservabilityMonitoredResourceListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = MonitoredResourceListResponse.DeserializeMonitoredResourceListResponse(document.RootElement);
+                        value = NewRelicObservabilityMonitoredResourceListResult.DeserializeNewRelicObservabilityMonitoredResourceListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -1452,7 +1452,7 @@ namespace Azure.ResourceManager.NewRelicObservability
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="monitorName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="monitorName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<MonitoredResourceListResponse> ListMonitoredResourcesNextPage(string nextLink, string subscriptionId, string resourceGroupName, string monitorName, CancellationToken cancellationToken = default)
+        public Response<NewRelicObservabilityMonitoredResourceListResult> ListMonitoredResourcesNextPage(string nextLink, string subscriptionId, string resourceGroupName, string monitorName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -1465,9 +1465,9 @@ namespace Azure.ResourceManager.NewRelicObservability
             {
                 case 200:
                     {
-                        MonitoredResourceListResponse value = default;
+                        NewRelicObservabilityMonitoredResourceListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = MonitoredResourceListResponse.DeserializeMonitoredResourceListResponse(document.RootElement);
+                        value = NewRelicObservabilityMonitoredResourceListResult.DeserializeNewRelicObservabilityMonitoredResourceListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

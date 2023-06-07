@@ -2,7 +2,6 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
@@ -55,6 +54,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests.E2ETelemetryItemValidation
                 traceId = activity.TraceId.ToHexString();
                 spanId = activity.SpanId.ToHexString();
 
+                activity.SetTag("enduser.id", "TestUser"); //authenticated user
                 activity.SetTag("integer", 1);
                 activity.SetTag("message", "Hello World!");
                 activity.SetTag("intArray", new int[] { 1, 2, 3 });
@@ -74,6 +74,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests.E2ETelemetryItemValidation
                 expectedName: "SayHello",
                 expectedTraceId: traceId,
                 expectedSpanId: spanId,
+                expectedAuthUserId: "TestUser",
                 expectedProperties: new Dictionary<string, string> { { "integer", "1" }, { "message", "Hello World!" }, { "intArray", "1,2,3" } });
         }
 
@@ -101,6 +102,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests.E2ETelemetryItemValidation
                 traceId = activity.TraceId.ToHexString();
                 spanId = activity.SpanId.ToHexString();
 
+                activity.SetTag("enduser.id", "TestUser"); //authenticated user
                 activity.SetTag("integer", 1);
                 activity.SetTag("message", "Hello World!");
                 activity.SetTag("intArray", new int[] { 1, 2, 3 });
@@ -121,6 +123,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests.E2ETelemetryItemValidation
                 expectedName: "SayHello",
                 expectedTraceId: traceId,
                 expectedSpanId: spanId,
+                expectedAuthUserId: "TestUser",
                 expectedProperties: new Dictionary<string, string> { { "integer", "1" }, { "message", "Hello World!" }, { "intArray", "1,2,3" } });
         }
 
@@ -147,6 +150,8 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests.E2ETelemetryItemValidation
                 traceId = activity.TraceId.ToHexString();
                 spanId = activity.SpanId.ToHexString();
 
+                activity.SetTag("enduser.id", "TestUser"); //authenticated user
+
                 try
                 {
                     throw new Exception("Test exception");
@@ -171,6 +176,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests.E2ETelemetryItemValidation
                 expectedName: "ActivityWithException",
                 expectedTraceId: traceId,
                 expectedSpanId: spanId,
+                expectedAuthUserId: "TestUser",
                 expectedProperties: null,
                 expectedSuccess: false);
 
@@ -229,6 +235,8 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests.E2ETelemetryItemValidation
                 spanId = activity.SpanId.ToHexString();
                 traceId = activity.TraceId.ToHexString();
 
+                activity.SetTag("enduser.id", "TestUser"); //authenticated user
+
                 var logger = loggerFactory.CreateLogger(logCategoryName);
 
                 logger.Log(
@@ -253,6 +261,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests.E2ETelemetryItemValidation
                 expectedName: activityName,
                 expectedTraceId: traceId,
                 expectedSpanId: spanId,
+                expectedAuthUserId: "TestUser",
                 expectedProperties: null);
 
             Assert.True(logTelemetryItems?.Any(), "Unit test failed to collect telemetry.");
