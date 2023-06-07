@@ -708,7 +708,8 @@ namespace Azure.Storage.Files.Shares
                 Protocols =  ToShareEnabledProtocols(response.Headers.EnabledProtocols),
                 RootSquash = response.Headers.RootSquash,
                 QuotaInGB = response.Headers.Quota,
-                Metadata = response.Headers.Metadata
+                Metadata = response.Headers.Metadata,
+                EnableSnapshotVirtualDirectoryAccess = response.Headers.EnabledSnapshotVirtualDirectoryAccess
             };
         }
 
@@ -821,7 +822,8 @@ namespace Azure.Storage.Files.Shares
                 Protocols = ToShareEnabledProtocols(sharePropertiesInternal.EnabledProtocols),
                 RootSquash = sharePropertiesInternal.RootSquash,
                 QuotaInGB = sharePropertiesInternal.Quota,
-                Metadata = metadata
+                Metadata = metadata,
+                EnableSnapshotVirtualDirectoryAccess = sharePropertiesInternal.EnableSnapshotVirtualDirectoryAccess,
             };
         }
 
