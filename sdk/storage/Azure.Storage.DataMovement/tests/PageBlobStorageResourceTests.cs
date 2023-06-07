@@ -25,8 +25,7 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
            : base(async, serviceVersion, null /* RecordedTestMode.Record /* to re-record */)
         { }
 
-        [RecordedTest]
-        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/32858")]
+        [Test]
         public void Ctor_PublicUri()
         {
             // Arrange
