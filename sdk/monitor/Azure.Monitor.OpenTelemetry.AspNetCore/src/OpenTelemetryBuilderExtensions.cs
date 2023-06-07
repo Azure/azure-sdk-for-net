@@ -111,7 +111,6 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore
                 logging.AddOpenTelemetry(builderOptions =>
                 {
                     builderOptions.IncludeFormattedMessage = true;
-                    builderOptions.ParseStateValues = true;
                     builderOptions.IncludeScopes = false;
                 });
             });
