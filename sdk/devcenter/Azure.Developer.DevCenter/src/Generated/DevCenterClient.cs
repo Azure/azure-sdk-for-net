@@ -241,7 +241,7 @@ namespace Azure.Developer.DevCenter
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="AsyncPageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
         /// <include file="Docs/DevCenterClient.xml" path="doc/members/member[@name='GetAllDevBoxesByUserAsync(string,string,int?,RequestContext)']/*" />
-        public virtual AsyncPageable<BinaryData> GetAllDevBoxesByUserAsync(string userId = "me", string filter = null, int? maxCount = null, RequestContext context = null)
+        public virtual AsyncPageable<BinaryData> GetAllDevBoxesByUserAsync(string userId, string filter = null, int? maxCount = null, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(userId, nameof(userId));
 
@@ -269,7 +269,7 @@ namespace Azure.Developer.DevCenter
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Pageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
         /// <include file="Docs/DevCenterClient.xml" path="doc/members/member[@name='GetAllDevBoxesByUser(string,string,int?,RequestContext)']/*" />
-        public virtual Pageable<BinaryData> GetAllDevBoxesByUser(string userId = "me", string filter = null, int? maxCount = null, RequestContext context = null)
+        public virtual Pageable<BinaryData> GetAllDevBoxesByUser(string userId, string filter = null, int? maxCount = null, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(userId, nameof(userId));
 
