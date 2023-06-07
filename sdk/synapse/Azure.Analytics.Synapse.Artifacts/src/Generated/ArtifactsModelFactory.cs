@@ -8,8 +8,9 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Azure.Analytics.Synapse.Artifacts.Models;
 
-namespace Azure.Analytics.Synapse.Artifacts.Models
+namespace ArtifactsClient.Models
 {
     /// <summary> Model factory for models. </summary>
     public static partial class ArtifactsModelFactory
@@ -19,7 +20,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <param name="message"> Error message. </param>
         /// <param name="target"> Property name/path in request associated with error. </param>
         /// <param name="details"> Array with additional error details. </param>
-        /// <returns> A new <see cref="Models.CloudError"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Azure.Analytics.Synapse.Artifacts.Models.CloudError"/> instance for mocking. </returns>
         public static CloudError CloudError(string code = null, string message = null, string target = null, IEnumerable<CloudError> details = null)
         {
             details ??= new List<CloudError>();
@@ -39,7 +40,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <param name="error"> Link connection error. </param>
         /// <param name="refreshStatus"> Link connection refresh status. </param>
         /// <param name="landingZoneCredentialExpireTime"> Link connection landing zone credential expire time. </param>
-        /// <returns> A new <see cref="Models.LinkConnectionDetailedStatus"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Azure.Analytics.Synapse.Artifacts.Models.LinkConnectionDetailedStatus"/> instance for mocking. </returns>
         public static LinkConnectionDetailedStatus LinkConnectionDetailedStatus(string id = null, string name = null, bool? isApplyingChanges = null, bool? isPartiallyFailed = null, object startTime = null, object stopTime = null, string status = null, string continuousRunId = null, object error = null, LinkConnectionRefreshStatus refreshStatus = null, DateTimeOffset? landingZoneCredentialExpireTime = null)
         {
             return new LinkConnectionDetailedStatus(id, name, isApplyingChanges, isPartiallyFailed, startTime, stopTime, status, continuousRunId, error, refreshStatus, landingZoneCredentialExpireTime);
@@ -48,7 +49,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <summary> Initializes a new instance of LinkConnectionRefreshStatus. </summary>
         /// <param name="refreshStatus"> Link connection refresh status. </param>
         /// <param name="errorMessage"> Link connection refresh error message. </param>
-        /// <returns> A new <see cref="Models.LinkConnectionRefreshStatus"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Azure.Analytics.Synapse.Artifacts.Models.LinkConnectionRefreshStatus"/> instance for mocking. </returns>
         public static LinkConnectionRefreshStatus LinkConnectionRefreshStatus(string refreshStatus = null, string errorMessage = null)
         {
             return new LinkConnectionRefreshStatus(refreshStatus, errorMessage);
@@ -56,7 +57,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
 
         /// <summary> Initializes a new instance of LinkTableListResponse. </summary>
         /// <param name="value"> List link table value. </param>
-        /// <returns> A new <see cref="Models.LinkTableListResponse"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Azure.Analytics.Synapse.Artifacts.Models.LinkTableListResponse"/> instance for mocking. </returns>
         public static LinkTableListResponse LinkTableListResponse(IEnumerable<LinkTableResource> value = null)
         {
             value ??= new List<LinkTableResource>();
@@ -69,7 +70,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <param name="name"> Link table name. </param>
         /// <param name="source"> Source table properties for link table request. </param>
         /// <param name="target"> Target table properties for link table request. </param>
-        /// <returns> A new <see cref="Models.LinkTableResource"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Azure.Analytics.Synapse.Artifacts.Models.LinkTableResource"/> instance for mocking. </returns>
         public static LinkTableResource LinkTableResource(string id = null, string name = null, LinkTableRequestSource source = null, LinkTableRequestTarget target = null)
         {
             return new LinkTableResource(id, name, source, target);
@@ -78,7 +79,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <summary> Initializes a new instance of LinkConnectionQueryTableStatus. </summary>
         /// <param name="value"> Link tables&apos; status. </param>
         /// <param name="continuationToken"> Continuation token to query table status. </param>
-        /// <returns> A new <see cref="Models.LinkConnectionQueryTableStatus"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Azure.Analytics.Synapse.Artifacts.Models.LinkConnectionQueryTableStatus"/> instance for mocking. </returns>
         public static LinkConnectionQueryTableStatus LinkConnectionQueryTableStatus(IEnumerable<LinkTableStatus> value = null, object continuationToken = null)
         {
             value ??= new List<LinkTableStatus>();
@@ -96,7 +97,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <param name="errorCode"> Link table error code. </param>
         /// <param name="lastProcessedData"> Link table last processed data time. </param>
         /// <param name="lastTransactionCommitTime"> Link table last transaction commit time. </param>
-        /// <returns> A new <see cref="Models.LinkTableStatus"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Azure.Analytics.Synapse.Artifacts.Models.LinkTableStatus"/> instance for mocking. </returns>
         public static LinkTableStatus LinkTableStatus(string id = null, string status = null, string errorMessage = null, object startTime = null, object stopTime = null, string linkTableId = null, string errorCode = null, DateTimeOffset? lastProcessedData = null, DateTimeOffset? lastTransactionCommitTime = null)
         {
             return new LinkTableStatus(id, status, errorMessage, startTime, stopTime, linkTableId, errorCode, lastProcessedData, lastTransactionCommitTime);
@@ -104,7 +105,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
 
         /// <summary> Initializes a new instance of MetastoreRegistrationResponse. </summary>
         /// <param name="status"> Enumerates possible request statuses. </param>
-        /// <returns> A new <see cref="Models.MetastoreRegistrationResponse"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Azure.Analytics.Synapse.Artifacts.Models.MetastoreRegistrationResponse"/> instance for mocking. </returns>
         public static MetastoreRegistrationResponse MetastoreRegistrationResponse(RequestStatus? status = null)
         {
             return new MetastoreRegistrationResponse(status);
@@ -112,7 +113,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
 
         /// <summary> Initializes a new instance of MetastoreRequestSuccessResponse. </summary>
         /// <param name="status"> Enumerates possible Status of the resource. </param>
-        /// <returns> A new <see cref="Models.MetastoreRequestSuccessResponse"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Azure.Analytics.Synapse.Artifacts.Models.MetastoreRequestSuccessResponse"/> instance for mocking. </returns>
         public static MetastoreRequestSuccessResponse MetastoreRequestSuccessResponse(ResourceStatus? status = null)
         {
             return new MetastoreRequestSuccessResponse(status);
@@ -120,7 +121,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
 
         /// <summary> Initializes a new instance of MetastoreUpdationResponse. </summary>
         /// <param name="status"> Enumerates possible request statuses. </param>
-        /// <returns> A new <see cref="Models.MetastoreUpdationResponse"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Azure.Analytics.Synapse.Artifacts.Models.MetastoreUpdationResponse"/> instance for mocking. </returns>
         public static MetastoreUpdationResponse MetastoreUpdationResponse(RequestStatus? status = null)
         {
             return new MetastoreUpdationResponse(status);
@@ -132,7 +133,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <param name="type"> The type of the resource. E.g. &quot;Microsoft.Compute/virtualMachines&quot; or &quot;Microsoft.Storage/storageAccounts&quot;. </param>
         /// <param name="etag"> Resource Etag. </param>
         /// <param name="properties"> Properties of Spark Configuration. </param>
-        /// <returns> A new <see cref="Models.SparkConfigurationResource"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Azure.Analytics.Synapse.Artifacts.Models.SparkConfigurationResource"/> instance for mocking. </returns>
         public static SparkConfigurationResource SparkConfigurationResource(string id = null, string name = null, string type = null, string etag = null, SparkConfiguration properties = null)
         {
             return new SparkConfigurationResource(id, name, type, etag, properties);
@@ -143,7 +144,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <param name="name"> The name of the resource. </param>
         /// <param name="type"> The type of the resource. E.g. &quot;Microsoft.Compute/virtualMachines&quot; or &quot;Microsoft.Storage/storageAccounts&quot;. </param>
         /// <param name="etag"> Resource Etag. </param>
-        /// <returns> A new <see cref="Models.SubResource"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Azure.Analytics.Synapse.Artifacts.Models.SubResource"/> instance for mocking. </returns>
         public static SubResource SubResource(string id = null, string name = null, string type = null, string etag = null)
         {
             return new SubResource(id, name, type, etag);
@@ -154,7 +155,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <param name="name"> The name of the resource. </param>
         /// <param name="type"> The type of the resource. E.g. &quot;Microsoft.Compute/virtualMachines&quot; or &quot;Microsoft.Storage/storageAccounts&quot;. </param>
         /// <param name="etag"> Resource Etag. </param>
-        /// <returns> A new <see cref="Models.AzureEntityResource"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Azure.Analytics.Synapse.Artifacts.Models.AzureEntityResource"/> instance for mocking. </returns>
         public static AzureEntityResource AzureEntityResource(string id = null, string name = null, string type = null, string etag = null)
         {
             return new AzureEntityResource(id, name, type, etag);
@@ -164,7 +165,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="type"> The type of the resource. E.g. &quot;Microsoft.Compute/virtualMachines&quot; or &quot;Microsoft.Storage/storageAccounts&quot;. </param>
-        /// <returns> A new <see cref="Models.Resource"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Azure.Analytics.Synapse.Artifacts.Models.Resource"/> instance for mocking. </returns>
         public static Resource Resource(string id = null, string name = null, string type = null)
         {
             return new Resource(id, name, type);
@@ -173,7 +174,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <summary> Initializes a new instance of BigDataPoolResourceInfoListResult. </summary>
         /// <param name="nextLink"> Link to the next page of results. </param>
         /// <param name="value"> List of Big Data pools. </param>
-        /// <returns> A new <see cref="Models.BigDataPoolResourceInfoListResult"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Azure.Analytics.Synapse.Artifacts.Models.BigDataPoolResourceInfoListResult"/> instance for mocking. </returns>
         public static BigDataPoolResourceInfoListResult BigDataPoolResourceInfoListResult(string nextLink = null, IEnumerable<BigDataPoolResourceInfo> value = null)
         {
             value ??= new List<BigDataPoolResourceInfo>();
@@ -205,7 +206,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <param name="nodeSize"> The level of compute power that each node in the Big Data pool has. </param>
         /// <param name="nodeSizeFamily"> The kind of nodes that the Big Data pool provides. </param>
         /// <param name="lastSucceededTimestamp"> The time when the Big Data pool was updated successfully. </param>
-        /// <returns> A new <see cref="Models.BigDataPoolResourceInfo"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Azure.Analytics.Synapse.Artifacts.Models.BigDataPoolResourceInfo"/> instance for mocking. </returns>
         public static BigDataPoolResourceInfo BigDataPoolResourceInfo(string id = null, string name = null, string type = null, IDictionary<string, string> tags = null, string location = null, string provisioningState = null, AutoScaleProperties autoScale = null, DateTimeOffset? creationDate = null, AutoPauseProperties autoPause = null, bool? isComputeIsolationEnabled = null, bool? sessionLevelPackagesEnabled = null, int? cacheSize = null, DynamicExecutorAllocation dynamicExecutorAllocation = null, string sparkEventsFolder = null, int? nodeCount = null, LibraryRequirements libraryRequirements = null, IEnumerable<LibraryInfo> customLibraries = null, LibraryRequirements sparkConfigProperties = null, string sparkVersion = null, string defaultSparkLogFolder = null, NodeSize? nodeSize = null, NodeSizeFamily? nodeSizeFamily = null, DateTimeOffset? lastSucceededTimestamp = null)
         {
             tags ??= new Dictionary<string, string>();
@@ -218,7 +219,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <param name="time"> The last update time of the library requirements file. </param>
         /// <param name="content"> The library requirements. </param>
         /// <param name="filename"> The filename of the library requirements file. </param>
-        /// <returns> A new <see cref="Models.LibraryRequirements"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Azure.Analytics.Synapse.Artifacts.Models.LibraryRequirements"/> instance for mocking. </returns>
         public static LibraryRequirements LibraryRequirements(DateTimeOffset? time = null, string content = null, string filename = null)
         {
             return new LibraryRequirements(time, content, filename);
@@ -232,7 +233,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <param name="type"> Type of the library. </param>
         /// <param name="provisioningStatus"> Provisioning status of the library/package. </param>
         /// <param name="creatorId"> Creator Id of the library/package. </param>
-        /// <returns> A new <see cref="Models.LibraryInfo"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Azure.Analytics.Synapse.Artifacts.Models.LibraryInfo"/> instance for mocking. </returns>
         public static LibraryInfo LibraryInfo(string name = null, string path = null, string containerName = null, DateTimeOffset? uploadedTimestamp = null, string type = null, string provisioningStatus = null, string creatorId = null)
         {
             return new LibraryInfo(name, path, containerName, uploadedTimestamp, type, provisioningStatus, creatorId);
@@ -244,7 +245,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <param name="type"> The type of the resource. E.g. &quot;Microsoft.Compute/virtualMachines&quot; or &quot;Microsoft.Storage/storageAccounts&quot;. </param>
         /// <param name="tags"> Resource tags. </param>
         /// <param name="location"> The geo-location where the resource lives. </param>
-        /// <returns> A new <see cref="Models.TrackedResource"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Azure.Analytics.Synapse.Artifacts.Models.TrackedResource"/> instance for mocking. </returns>
         public static TrackedResource TrackedResource(string id = null, string name = null, string type = null, IDictionary<string, string> tags = null, string location = null)
         {
             tags ??= new Dictionary<string, string>();
@@ -262,7 +263,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// Please note <see cref="DataFlow"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="Flowlet"/> and <see cref="MappingDataFlow"/>.
         /// </param>
-        /// <returns> A new <see cref="Models.DataFlowResource"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Azure.Analytics.Synapse.Artifacts.Models.DataFlowResource"/> instance for mocking. </returns>
         public static DataFlowResource DataFlowResource(string id = null, string name = null, string type = null, string etag = null, DataFlow properties = null)
         {
             return new DataFlowResource(id, name, type, etag, properties);
@@ -270,7 +271,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
 
         /// <summary> Initializes a new instance of CreateDataFlowDebugSessionResponse. </summary>
         /// <param name="sessionId"> The ID of data flow debug session. </param>
-        /// <returns> A new <see cref="Models.CreateDataFlowDebugSessionResponse"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Azure.Analytics.Synapse.Artifacts.Models.CreateDataFlowDebugSessionResponse"/> instance for mocking. </returns>
         public static CreateDataFlowDebugSessionResponse CreateDataFlowDebugSessionResponse(string sessionId = null)
         {
             return new CreateDataFlowDebugSessionResponse(sessionId);
@@ -287,7 +288,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <param name="timeToLiveInMinutes"> Compute type of the cluster. </param>
         /// <param name="lastActivityTime"> Last activity time of data flow debug session. </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
-        /// <returns> A new <see cref="Models.DataFlowDebugSessionInfo"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Azure.Analytics.Synapse.Artifacts.Models.DataFlowDebugSessionInfo"/> instance for mocking. </returns>
         public static DataFlowDebugSessionInfo DataFlowDebugSessionInfo(string dataFlowName = null, string computeType = null, int? coreCount = null, int? nodeCount = null, string integrationRuntimeName = null, string sessionId = null, string startTime = null, int? timeToLiveInMinutes = null, string lastActivityTime = null, IReadOnlyDictionary<string, object> additionalProperties = null)
         {
             additionalProperties ??= new Dictionary<string, object>();
@@ -297,7 +298,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
 
         /// <summary> Initializes a new instance of AddDataFlowToDebugSessionResponse. </summary>
         /// <param name="jobVersion"> The ID of data flow debug job version. </param>
-        /// <returns> A new <see cref="Models.AddDataFlowToDebugSessionResponse"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Azure.Analytics.Synapse.Artifacts.Models.AddDataFlowToDebugSessionResponse"/> instance for mocking. </returns>
         public static AddDataFlowToDebugSessionResponse AddDataFlowToDebugSessionResponse(string jobVersion = null)
         {
             return new AddDataFlowToDebugSessionResponse(jobVersion);
@@ -306,7 +307,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <summary> Initializes a new instance of DataFlowDebugCommandResponse. </summary>
         /// <param name="status"> The run status of data preview, statistics or expression preview. </param>
         /// <param name="data"> The result data of data preview, statistics or expression preview. </param>
-        /// <returns> A new <see cref="Models.DataFlowDebugCommandResponse"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Azure.Analytics.Synapse.Artifacts.Models.DataFlowDebugCommandResponse"/> instance for mocking. </returns>
         public static DataFlowDebugCommandResponse DataFlowDebugCommandResponse(string status = null, string data = null)
         {
             return new DataFlowDebugCommandResponse(status, data);
@@ -322,7 +323,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// Please note <see cref="Dataset"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="AmazonMWSObjectDataset"/>, <see cref="AmazonRdsForOracleTableDataset"/>, <see cref="AmazonRdsForSqlServerTableDataset"/>, <see cref="AmazonRedshiftTableDataset"/>, <see cref="AmazonS3Dataset"/>, <see cref="AvroDataset"/>, <see cref="AzureBlobDataset"/>, <see cref="AzureBlobFSDataset"/>, <see cref="AzureDataExplorerTableDataset"/>, <see cref="AzureDataLakeStoreDataset"/>, <see cref="AzureDatabricksDeltaLakeDataset"/>, <see cref="AzureMariaDBTableDataset"/>, <see cref="AzureMySqlTableDataset"/>, <see cref="AzurePostgreSqlTableDataset"/>, <see cref="AzureSearchIndexDataset"/>, <see cref="AzureSqlDWTableDataset"/>, <see cref="AzureSqlMITableDataset"/>, <see cref="AzureSqlTableDataset"/>, <see cref="AzureTableDataset"/>, <see cref="BinaryDataset"/>, <see cref="CassandraTableDataset"/>, <see cref="CommonDataServiceForAppsEntityDataset"/>, <see cref="ConcurObjectDataset"/>, <see cref="CosmosDbMongoDbApiCollectionDataset"/>, <see cref="CosmosDbSqlApiCollectionDataset"/>, <see cref="CouchbaseTableDataset"/>, <see cref="CustomDataset"/>, <see cref="Db2TableDataset"/>, <see cref="DelimitedTextDataset"/>, <see cref="DocumentDbCollectionDataset"/>, <see cref="DrillTableDataset"/>, <see cref="DynamicsAXResourceDataset"/>, <see cref="DynamicsCrmEntityDataset"/>, <see cref="DynamicsEntityDataset"/>, <see cref="EloquaObjectDataset"/>, <see cref="ExcelDataset"/>, <see cref="FileShareDataset"/>, <see cref="GoogleAdWordsObjectDataset"/>, <see cref="GoogleBigQueryObjectDataset"/>, <see cref="GreenplumTableDataset"/>, <see cref="HBaseObjectDataset"/>, <see cref="HiveObjectDataset"/>, <see cref="HttpDataset"/>, <see cref="HubspotObjectDataset"/>, <see cref="ImpalaObjectDataset"/>, <see cref="InformixTableDataset"/>, <see cref="JiraObjectDataset"/>, <see cref="JsonDataset"/>, <see cref="MagentoObjectDataset"/>, <see cref="MariaDBTableDataset"/>, <see cref="MarketoObjectDataset"/>, <see cref="MicrosoftAccessTableDataset"/>, <see cref="MongoDbAtlasCollectionDataset"/>, <see cref="MongoDbCollectionDataset"/>, <see cref="MongoDbV2CollectionDataset"/>, <see cref="MySqlTableDataset"/>, <see cref="NetezzaTableDataset"/>, <see cref="ODataResourceDataset"/>, <see cref="OdbcTableDataset"/>, <see cref="Office365Dataset"/>, <see cref="OracleServiceCloudObjectDataset"/>, <see cref="OracleTableDataset"/>, <see cref="OrcDataset"/>, <see cref="ParquetDataset"/>, <see cref="PaypalObjectDataset"/>, <see cref="PhoenixObjectDataset"/>, <see cref="PostgreSqlTableDataset"/>, <see cref="PrestoObjectDataset"/>, <see cref="QuickBooksObjectDataset"/>, <see cref="RelationalTableDataset"/>, <see cref="ResponsysObjectDataset"/>, <see cref="RestResourceDataset"/>, <see cref="SalesforceMarketingCloudObjectDataset"/>, <see cref="SalesforceObjectDataset"/>, <see cref="SalesforceServiceCloudObjectDataset"/>, <see cref="SapBwCubeDataset"/>, <see cref="SapCloudForCustomerResourceDataset"/>, <see cref="SapEccResourceDataset"/>, <see cref="SapHanaTableDataset"/>, <see cref="SapOdpResourceDataset"/>, <see cref="SapOpenHubTableDataset"/>, <see cref="SapTableResourceDataset"/>, <see cref="ServiceNowObjectDataset"/>, <see cref="SharePointOnlineListResourceDataset"/>, <see cref="ShopifyObjectDataset"/>, <see cref="SnowflakeDataset"/>, <see cref="SparkObjectDataset"/>, <see cref="SqlServerTableDataset"/>, <see cref="SquareObjectDataset"/>, <see cref="SybaseTableDataset"/>, <see cref="TeradataTableDataset"/>, <see cref="VerticaTableDataset"/>, <see cref="WebTableDataset"/>, <see cref="XeroObjectDataset"/>, <see cref="XmlDataset"/> and <see cref="ZohoObjectDataset"/>.
         /// </param>
-        /// <returns> A new <see cref="Models.DatasetResource"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Azure.Analytics.Synapse.Artifacts.Models.DatasetResource"/> instance for mocking. </returns>
         public static DatasetResource DatasetResource(string id = null, string name = null, string type = null, string etag = null, Dataset properties = null)
         {
             return new DatasetResource(id, name, type, etag, properties);
@@ -330,7 +331,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
 
         /// <summary> Initializes a new instance of GitHubAccessTokenResponse. </summary>
         /// <param name="gitHubAccessToken"></param>
-        /// <returns> A new <see cref="Models.GitHubAccessTokenResponse"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Azure.Analytics.Synapse.Artifacts.Models.GitHubAccessTokenResponse"/> instance for mocking. </returns>
         public static GitHubAccessTokenResponse GitHubAccessTokenResponse(string gitHubAccessToken = null)
         {
             return new GitHubAccessTokenResponse(gitHubAccessToken);
@@ -339,7 +340,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <summary> Initializes a new instance of IntegrationRuntimeListResponse. </summary>
         /// <param name="value"> List of integration runtimes. </param>
         /// <param name="nextLink"> The link to the next page of results, if any remaining results exist. </param>
-        /// <returns> A new <see cref="Models.IntegrationRuntimeListResponse"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Azure.Analytics.Synapse.Artifacts.Models.IntegrationRuntimeListResponse"/> instance for mocking. </returns>
         public static IntegrationRuntimeListResponse IntegrationRuntimeListResponse(IEnumerable<IntegrationRuntimeResource> value = null, string nextLink = null)
         {
             value ??= new List<IntegrationRuntimeResource>();
@@ -357,7 +358,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// Please note <see cref="IntegrationRuntime"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="ManagedIntegrationRuntime"/> and <see cref="SelfHostedIntegrationRuntime"/>.
         /// </param>
-        /// <returns> A new <see cref="Models.IntegrationRuntimeResource"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Azure.Analytics.Synapse.Artifacts.Models.IntegrationRuntimeResource"/> instance for mocking. </returns>
         public static IntegrationRuntimeResource IntegrationRuntimeResource(string id = null, string name = null, string type = null, string etag = null, IntegrationRuntime properties = null)
         {
             return new IntegrationRuntimeResource(id, name, type, etag, properties);
@@ -369,7 +370,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <param name="type"> The type of the resource. E.g. &quot;Microsoft.Compute/virtualMachines&quot; or &quot;Microsoft.Storage/storageAccounts&quot;. </param>
         /// <param name="etag"> Resource Etag. </param>
         /// <param name="properties"> Library/package properties. </param>
-        /// <returns> A new <see cref="Models.LibraryResource"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Azure.Analytics.Synapse.Artifacts.Models.LibraryResource"/> instance for mocking. </returns>
         public static LibraryResource LibraryResource(string id = null, string name = null, string type = null, string etag = null, LibraryResourceProperties properties = null)
         {
             return new LibraryResource(id, name, type, etag, properties);
@@ -383,7 +384,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <param name="type"> Type of the library/package. </param>
         /// <param name="provisioningStatus"> Provisioning status of the library/package. </param>
         /// <param name="creatorId"> Creator Id of the library/package. </param>
-        /// <returns> A new <see cref="Models.LibraryResourceProperties"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Azure.Analytics.Synapse.Artifacts.Models.LibraryResourceProperties"/> instance for mocking. </returns>
         public static LibraryResourceProperties LibraryResourceProperties(string name = null, string path = null, string containerName = null, string uploadedTimestamp = null, string type = null, string provisioningStatus = null, string creatorId = null)
         {
             return new LibraryResourceProperties(name, path, containerName, uploadedTimestamp, type, provisioningStatus, creatorId);
@@ -399,7 +400,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <param name="name"> Name of the library/package. </param>
         /// <param name="operationId"> Operation Id of the operation performed on library/package. </param>
         /// <param name="artifactId"> artifact Id of the library/package. </param>
-        /// <returns> A new <see cref="Models.LibraryResourceInfo"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Azure.Analytics.Synapse.Artifacts.Models.LibraryResourceInfo"/> instance for mocking. </returns>
         public static LibraryResourceInfo LibraryResourceInfo(string id = null, int? recordId = null, string state = null, string created = null, string changed = null, string type = null, string name = null, string operationId = null, string artifactId = null)
         {
             return new LibraryResourceInfo(id, recordId, state, created, changed, type, name, operationId, artifactId);
@@ -411,7 +412,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <param name="message"> Error message. </param>
         /// <param name="target"> Property name/path in request associated with error. </param>
         /// <param name="details"> Array with additional error details. </param>
-        /// <returns> A new <see cref="Models.OperationResult"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Azure.Analytics.Synapse.Artifacts.Models.OperationResult"/> instance for mocking. </returns>
         public static OperationResult OperationResult(string status = null, string code = null, string message = null, string target = null, IEnumerable<CloudError> details = null)
         {
             details ??= new List<CloudError>();
@@ -429,7 +430,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// Please note <see cref="LinkedService"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="AmazonMWSLinkedService"/>, <see cref="AmazonRdsForOracleLinkedService"/>, <see cref="AmazonRdsForSqlServerLinkedService"/>, <see cref="AmazonRedshiftLinkedService"/>, <see cref="AmazonS3LinkedService"/>, <see cref="AppFiguresLinkedService"/>, <see cref="AsanaLinkedService"/>, <see cref="AzureBatchLinkedService"/>, <see cref="AzureBlobFSLinkedService"/>, <see cref="AzureBlobStorageLinkedService"/>, <see cref="AzureDataExplorerLinkedService"/>, <see cref="AzureDataLakeAnalyticsLinkedService"/>, <see cref="AzureDataLakeStoreLinkedService"/>, <see cref="AzureDatabricksLinkedService"/>, <see cref="AzureDatabricksDeltaLakeLinkedService"/>, <see cref="AzureFileStorageLinkedService"/>, <see cref="AzureFunctionLinkedService"/>, <see cref="AzureKeyVaultLinkedService"/>, <see cref="AzureMLLinkedService"/>, <see cref="AzureMLServiceLinkedService"/>, <see cref="AzureMariaDBLinkedService"/>, <see cref="AzureMySqlLinkedService"/>, <see cref="AzurePostgreSqlLinkedService"/>, <see cref="AzureSearchLinkedService"/>, <see cref="AzureSqlDWLinkedService"/>, <see cref="AzureSqlDatabaseLinkedService"/>, <see cref="AzureSqlMILinkedService"/>, <see cref="AzureStorageLinkedService"/>, <see cref="AzureSynapseArtifactsLinkedService"/>, <see cref="AzureTableStorageLinkedService"/>, <see cref="CassandraLinkedService"/>, <see cref="CommonDataServiceForAppsLinkedService"/>, <see cref="ConcurLinkedService"/>, <see cref="CosmosDbLinkedService"/>, <see cref="CosmosDbMongoDbApiLinkedService"/>, <see cref="CouchbaseLinkedService"/>, <see cref="CustomDataSourceLinkedService"/>, <see cref="DataworldLinkedService"/>, <see cref="Db2LinkedService"/>, <see cref="DrillLinkedService"/>, <see cref="DynamicsLinkedService"/>, <see cref="DynamicsAXLinkedService"/>, <see cref="DynamicsCrmLinkedService"/>, <see cref="EloquaLinkedService"/>, <see cref="FileServerLinkedService"/>, <see cref="FtpServerLinkedService"/>, <see cref="GoogleAdWordsLinkedService"/>, <see cref="GoogleBigQueryLinkedService"/>, <see cref="GoogleCloudStorageLinkedService"/>, <see cref="GoogleSheetsLinkedService"/>, <see cref="GreenplumLinkedService"/>, <see cref="HBaseLinkedService"/>, <see cref="HDInsightLinkedService"/>, <see cref="HDInsightOnDemandLinkedService"/>, <see cref="HdfsLinkedService"/>, <see cref="HiveLinkedService"/>, <see cref="HttpLinkedService"/>, <see cref="HubspotLinkedService"/>, <see cref="ImpalaLinkedService"/>, <see cref="InformixLinkedService"/>, <see cref="JiraLinkedService"/>, <see cref="MagentoLinkedService"/>, <see cref="MariaDBLinkedService"/>, <see cref="MarketoLinkedService"/>, <see cref="MicrosoftAccessLinkedService"/>, <see cref="MongoDbLinkedService"/>, <see cref="MongoDbAtlasLinkedService"/>, <see cref="MongoDbV2LinkedService"/>, <see cref="MySqlLinkedService"/>, <see cref="NetezzaLinkedService"/>, <see cref="ODataLinkedService"/>, <see cref="OdbcLinkedService"/>, <see cref="Office365LinkedService"/>, <see cref="OracleLinkedService"/>, <see cref="OracleServiceCloudLinkedService"/>, <see cref="PaypalLinkedService"/>, <see cref="PhoenixLinkedService"/>, <see cref="PostgreSqlLinkedService"/>, <see cref="PowerBIWorkspaceLinkedService"/>, <see cref="PrestoLinkedService"/>, <see cref="QuickBooksLinkedService"/>, <see cref="QuickbaseLinkedService"/>, <see cref="ResponsysLinkedService"/>, <see cref="RestServiceLinkedService"/>, <see cref="SalesforceLinkedService"/>, <see cref="SalesforceMarketingCloudLinkedService"/>, <see cref="SalesforceServiceCloudLinkedService"/>, <see cref="SapBWLinkedService"/>, <see cref="SapCloudForCustomerLinkedService"/>, <see cref="SapEccLinkedService"/>, <see cref="SapHanaLinkedService"/>, <see cref="SapOdpLinkedService"/>, <see cref="SapOpenHubLinkedService"/>, <see cref="SapTableLinkedService"/>, <see cref="ServiceNowLinkedService"/>, <see cref="SftpServerLinkedService"/>, <see cref="SharePointOnlineListLinkedService"/>, <see cref="ShopifyLinkedService"/>, <see cref="SmartsheetLinkedService"/>, <see cref="SnowflakeLinkedService"/>, <see cref="SparkLinkedService"/>, <see cref="SqlServerLinkedService"/>, <see cref="SquareLinkedService"/>, <see cref="SybaseLinkedService"/>, <see cref="TeamDeskLinkedService"/>, <see cref="TeradataLinkedService"/>, <see cref="TwilioLinkedService"/>, <see cref="VerticaLinkedService"/>, <see cref="WebLinkedService"/>, <see cref="XeroLinkedService"/>, <see cref="ZendeskLinkedService"/> and <see cref="ZohoLinkedService"/>.
         /// </param>
-        /// <returns> A new <see cref="Models.LinkedServiceResource"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Azure.Analytics.Synapse.Artifacts.Models.LinkedServiceResource"/> instance for mocking. </returns>
         public static LinkedServiceResource LinkedServiceResource(string id = null, string name = null, string type = null, string etag = null, LinkedService properties = null)
         {
             return new LinkedServiceResource(id, name, type, etag, properties);
@@ -441,7 +442,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <param name="type"> The type of the resource. Ex- Microsoft.Compute/virtualMachines or Microsoft.Storage/storageAccounts. </param>
         /// <param name="etag"> Resource Etag. </param>
         /// <param name="properties"> Properties of Notebook. </param>
-        /// <returns> A new <see cref="Models.NotebookResource"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Azure.Analytics.Synapse.Artifacts.Models.NotebookResource"/> instance for mocking. </returns>
         public static NotebookResource NotebookResource(string id = null, string name = null, string type = null, string etag = null, Notebook properties = null)
         {
             return new NotebookResource(id, name, type, etag, properties);
@@ -465,7 +466,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <param name="runDimensions"> Dimensions emitted by Pipeline. </param>
         /// <param name="folder"> The folder that this Pipeline is in. If not specified, Pipeline will appear at the root level. </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
-        /// <returns> A new <see cref="Models.PipelineResource"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Azure.Analytics.Synapse.Artifacts.Models.PipelineResource"/> instance for mocking. </returns>
         public static PipelineResource PipelineResource(string id = null, string name = null, string type = null, string etag = null, string description = null, IEnumerable<Activity> activities = null, IDictionary<string, ParameterSpecification> parameters = null, IDictionary<string, VariableSpecification> variables = null, int? concurrency = null, IEnumerable<object> annotations = null, IDictionary<string, object> runDimensions = null, PipelineFolder folder = null, IDictionary<string, object> additionalProperties = null)
         {
             activities ??= new List<Activity>();
@@ -481,7 +482,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <summary> Initializes a new instance of CreateRunResponse. </summary>
         /// <param name="runId"> Identifier of a run. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="runId"/> is null. </exception>
-        /// <returns> A new <see cref="Models.CreateRunResponse"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Azure.Analytics.Synapse.Artifacts.Models.CreateRunResponse"/> instance for mocking. </returns>
         public static CreateRunResponse CreateRunResponse(string runId = null)
         {
             if (runId == null)
@@ -495,7 +496,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <summary> Initializes a new instance of PipelineRunsQueryResponse. </summary>
         /// <param name="value"> List of pipeline runs. </param>
         /// <param name="continuationToken"> The continuation token for getting the next page of results, if any remaining results exist, null otherwise. </param>
-        /// <returns> A new <see cref="Models.PipelineRunsQueryResponse"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Azure.Analytics.Synapse.Artifacts.Models.PipelineRunsQueryResponse"/> instance for mocking. </returns>
         public static PipelineRunsQueryResponse PipelineRunsQueryResponse(IEnumerable<PipelineRun> value = null, string continuationToken = null)
         {
             value ??= new List<PipelineRun>();
@@ -517,7 +518,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <param name="status"> The status of a pipeline run. </param>
         /// <param name="message"> The message from a pipeline run. </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
-        /// <returns> A new <see cref="Models.PipelineRun"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Azure.Analytics.Synapse.Artifacts.Models.PipelineRun"/> instance for mocking. </returns>
         public static PipelineRun PipelineRun(string runId = null, string runGroupId = null, bool? isLatest = null, string pipelineName = null, IReadOnlyDictionary<string, string> parameters = null, PipelineRunInvokedBy invokedBy = null, DateTimeOffset? lastUpdated = null, DateTimeOffset? runStart = null, DateTimeOffset? runEnd = null, int? durationInMs = null, string status = null, string message = null, IReadOnlyDictionary<string, object> additionalProperties = null)
         {
             parameters ??= new Dictionary<string, string>();
@@ -530,7 +531,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <param name="name"> Name of the entity that started the pipeline run. </param>
         /// <param name="id"> The ID of the entity that started the run. </param>
         /// <param name="invokedByType"> The type of the entity that started the run. </param>
-        /// <returns> A new <see cref="Models.PipelineRunInvokedBy"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Azure.Analytics.Synapse.Artifacts.Models.PipelineRunInvokedBy"/> instance for mocking. </returns>
         public static PipelineRunInvokedBy PipelineRunInvokedBy(string name = null, string id = null, string invokedByType = null)
         {
             return new PipelineRunInvokedBy(name, id, invokedByType);
@@ -539,7 +540,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <summary> Initializes a new instance of ActivityRunsQueryResponse. </summary>
         /// <param name="value"> List of activity runs. </param>
         /// <param name="continuationToken"> The continuation token for getting the next page of results, if any remaining results exist, null otherwise. </param>
-        /// <returns> A new <see cref="Models.ActivityRunsQueryResponse"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Azure.Analytics.Synapse.Artifacts.Models.ActivityRunsQueryResponse"/> instance for mocking. </returns>
         public static ActivityRunsQueryResponse ActivityRunsQueryResponse(IEnumerable<ActivityRun> value = null, string continuationToken = null)
         {
             value ??= new List<ActivityRun>();
@@ -562,7 +563,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <param name="output"> The output for the activity. </param>
         /// <param name="error"> The error if any from the activity run. </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
-        /// <returns> A new <see cref="Models.ActivityRun"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Azure.Analytics.Synapse.Artifacts.Models.ActivityRun"/> instance for mocking. </returns>
         public static ActivityRun ActivityRun(string pipelineName = null, string pipelineRunId = null, string activityName = null, string activityType = null, string activityRunId = null, string linkedServiceName = null, string status = null, DateTimeOffset? activityRunStart = null, DateTimeOffset? activityRunEnd = null, int? durationInMs = null, object input = null, object output = null, object error = null, IReadOnlyDictionary<string, object> additionalProperties = null)
         {
             additionalProperties ??= new Dictionary<string, object>();
@@ -576,7 +577,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <param name="type"> The type of the resource. E.g. &quot;Microsoft.Compute/virtualMachines&quot; or &quot;Microsoft.Storage/storageAccounts&quot;. </param>
         /// <param name="etag"> Resource Etag. </param>
         /// <param name="properties"> Properties of spark job definition. </param>
-        /// <returns> A new <see cref="Models.SparkJobDefinitionResource"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Azure.Analytics.Synapse.Artifacts.Models.SparkJobDefinitionResource"/> instance for mocking. </returns>
         public static SparkJobDefinitionResource SparkJobDefinitionResource(string id = null, string name = null, string type = null, string etag = null, SparkJobDefinition properties = null)
         {
             return new SparkJobDefinitionResource(id, name, type, etag, properties);
@@ -601,7 +602,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <param name="appInfo"> The detailed application info. </param>
         /// <param name="state"> The batch state. </param>
         /// <param name="logLines"> The log lines. </param>
-        /// <returns> A new <see cref="Models.SparkBatchJob"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Azure.Analytics.Synapse.Artifacts.Models.SparkBatchJob"/> instance for mocking. </returns>
         public static SparkBatchJob SparkBatchJob(SparkBatchJobState livyInfo = null, string name = null, string workspaceName = null, string sparkPoolName = null, string submitterName = null, string submitterId = null, string artifactId = null, SparkJobType? jobType = null, SparkBatchJobResultType? result = null, SparkScheduler scheduler = null, SparkServicePlugin plugin = null, IEnumerable<SparkServiceError> errors = null, IReadOnlyDictionary<string, string> tags = null, int id = default, string appId = null, IReadOnlyDictionary<string, string> appInfo = null, LivyStates? state = null, IEnumerable<string> logLines = null)
         {
             errors ??= new List<SparkServiceError>();
@@ -622,7 +623,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <param name="recoveringAt"> the time that at which &quot;recovering&quot; livy state was first seen. </param>
         /// <param name="currentState"> the Spark job state. </param>
         /// <param name="jobCreationRequest"></param>
-        /// <returns> A new <see cref="Models.SparkBatchJobState"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Azure.Analytics.Synapse.Artifacts.Models.SparkBatchJobState"/> instance for mocking. </returns>
         public static SparkBatchJobState SparkBatchJobState(DateTimeOffset? notStartedAt = null, DateTimeOffset? startingAt = null, DateTimeOffset? runningAt = null, DateTimeOffset? deadAt = null, DateTimeOffset? successAt = null, DateTimeOffset? terminatedAt = null, DateTimeOffset? recoveringAt = null, string currentState = null, SparkRequest jobCreationRequest = null)
         {
             return new SparkBatchJobState(notStartedAt, startingAt, runningAt, deadAt, successAt, terminatedAt, recoveringAt, currentState, jobCreationRequest);
@@ -643,7 +644,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <param name="executorMemory"></param>
         /// <param name="executorCores"></param>
         /// <param name="executorCount"></param>
-        /// <returns> A new <see cref="Models.SparkRequest"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Azure.Analytics.Synapse.Artifacts.Models.SparkRequest"/> instance for mocking. </returns>
         public static SparkRequest SparkRequest(string name = null, string file = null, string className = null, IEnumerable<string> arguments = null, IEnumerable<string> jars = null, IEnumerable<string> pythonFiles = null, IEnumerable<string> files = null, IEnumerable<string> archives = null, IReadOnlyDictionary<string, string> configuration = null, string driverMemory = null, int? driverCores = null, string executorMemory = null, int? executorCores = null, int? executorCount = null)
         {
             arguments ??= new List<string>();
@@ -662,7 +663,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <param name="endedAt"></param>
         /// <param name="cancellationRequestedAt"></param>
         /// <param name="currentState"></param>
-        /// <returns> A new <see cref="Models.SparkScheduler"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Azure.Analytics.Synapse.Artifacts.Models.SparkScheduler"/> instance for mocking. </returns>
         public static SparkScheduler SparkScheduler(DateTimeOffset? submittedAt = null, DateTimeOffset? scheduledAt = null, DateTimeOffset? endedAt = null, DateTimeOffset? cancellationRequestedAt = null, SchedulerCurrentState? currentState = null)
         {
             return new SparkScheduler(submittedAt, scheduledAt, endedAt, cancellationRequestedAt, currentState);
@@ -675,7 +676,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <param name="monitoringStartedAt"></param>
         /// <param name="cleanupStartedAt"></param>
         /// <param name="currentState"></param>
-        /// <returns> A new <see cref="Models.SparkServicePlugin"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Azure.Analytics.Synapse.Artifacts.Models.SparkServicePlugin"/> instance for mocking. </returns>
         public static SparkServicePlugin SparkServicePlugin(DateTimeOffset? preparationStartedAt = null, DateTimeOffset? resourceAcquisitionStartedAt = null, DateTimeOffset? submissionStartedAt = null, DateTimeOffset? monitoringStartedAt = null, DateTimeOffset? cleanupStartedAt = null, PluginCurrentState? currentState = null)
         {
             return new SparkServicePlugin(preparationStartedAt, resourceAcquisitionStartedAt, submissionStartedAt, monitoringStartedAt, cleanupStartedAt, currentState);
@@ -685,7 +686,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <param name="message"></param>
         /// <param name="errorCode"></param>
         /// <param name="source"></param>
-        /// <returns> A new <see cref="Models.SparkServiceError"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Azure.Analytics.Synapse.Artifacts.Models.SparkServiceError"/> instance for mocking. </returns>
         public static SparkServiceError SparkServiceError(string message = null, string errorCode = null, SparkErrorSource? source = null)
         {
             return new SparkServiceError(message, errorCode, source);
@@ -694,7 +695,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <summary> Initializes a new instance of SqlPoolInfoListResult. </summary>
         /// <param name="nextLink"> Link to the next page of results. </param>
         /// <param name="value"> List of SQL pools. </param>
-        /// <returns> A new <see cref="Models.SqlPoolInfoListResult"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Azure.Analytics.Synapse.Artifacts.Models.SqlPoolInfoListResult"/> instance for mocking. </returns>
         public static SqlPoolInfoListResult SqlPoolInfoListResult(string nextLink = null, IEnumerable<SqlPool> value = null)
         {
             value ??= new List<SqlPool>();
@@ -728,7 +729,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// Restore: Creates a sql pool by restoring a backup of a deleted sql  pool. SourceDatabaseId should be the sql pool&apos;s original resource ID. SourceDatabaseId and sourceDatabaseDeletionDate must be specified.
         /// </param>
         /// <param name="creationDate"> Date the SQL pool was created. </param>
-        /// <returns> A new <see cref="Models.SqlPool"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Azure.Analytics.Synapse.Artifacts.Models.SqlPool"/> instance for mocking. </returns>
         public static SqlPool SqlPool(string id = null, string name = null, string type = null, IDictionary<string, string> tags = null, string location = null, Sku sku = null, long? maxSizeBytes = null, string collation = null, string sourceDatabaseId = null, string recoverableDatabaseId = null, string provisioningState = null, string status = null, string restorePointInTime = null, CreateMode? createMode = null, DateTimeOffset? creationDate = null)
         {
             tags ??= new Dictionary<string, string>();
@@ -742,7 +743,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <param name="type"> The type of the resource. Ex- Microsoft.Compute/virtualMachines or Microsoft.Storage/storageAccounts. </param>
         /// <param name="etag"> Resource Etag. </param>
         /// <param name="properties"> Properties of sql script. </param>
-        /// <returns> A new <see cref="Models.SqlScriptResource"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Azure.Analytics.Synapse.Artifacts.Models.SqlScriptResource"/> instance for mocking. </returns>
         public static SqlScriptResource SqlScriptResource(string id = null, string name = null, string type = null, string etag = null, SqlScript properties = null)
         {
             return new SqlScriptResource(id, name, type, etag, properties);
@@ -758,7 +759,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// Please note <see cref="Trigger"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="BlobEventsTrigger"/>, <see cref="BlobTrigger"/>, <see cref="ChainingTrigger"/>, <see cref="CustomEventsTrigger"/>, <see cref="MultiplePipelineTrigger"/>, <see cref="RerunTumblingWindowTrigger"/>, <see cref="ScheduleTrigger"/> and <see cref="TumblingWindowTrigger"/>.
         /// </param>
-        /// <returns> A new <see cref="Models.TriggerResource"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Azure.Analytics.Synapse.Artifacts.Models.TriggerResource"/> instance for mocking. </returns>
         public static TriggerResource TriggerResource(string id = null, string name = null, string type = null, string etag = null, Trigger properties = null)
         {
             return new TriggerResource(id, name, type, etag, properties);
@@ -770,7 +771,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <param name="runtimeState"> Indicates if trigger is running or not. Updated when Start/Stop APIs are called on the Trigger. </param>
         /// <param name="annotations"> List of tags that can be used for describing the trigger. </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
-        /// <returns> A new <see cref="Models.Trigger"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Azure.Analytics.Synapse.Artifacts.Models.Trigger"/> instance for mocking. </returns>
         public static Trigger Trigger(string type = null, string description = null, TriggerRuntimeState? runtimeState = null, IEnumerable<object> annotations = null, IDictionary<string, object> additionalProperties = null)
         {
             annotations ??= new List<object>();
@@ -782,7 +783,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <summary> Initializes a new instance of TriggerSubscriptionOperationStatus. </summary>
         /// <param name="triggerName"> Trigger name. </param>
         /// <param name="status"> Event Subscription Status. </param>
-        /// <returns> A new <see cref="Models.TriggerSubscriptionOperationStatus"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Azure.Analytics.Synapse.Artifacts.Models.TriggerSubscriptionOperationStatus"/> instance for mocking. </returns>
         public static TriggerSubscriptionOperationStatus TriggerSubscriptionOperationStatus(string triggerName = null, EventSubscriptionStatus? status = null)
         {
             return new TriggerSubscriptionOperationStatus(triggerName, status);
@@ -791,7 +792,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <summary> Initializes a new instance of TriggerRunsQueryResponse. </summary>
         /// <param name="value"> List of trigger runs. </param>
         /// <param name="continuationToken"> The continuation token for getting the next page of results, if any remaining results exist, null otherwise. </param>
-        /// <returns> A new <see cref="Models.TriggerRunsQueryResponse"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Azure.Analytics.Synapse.Artifacts.Models.TriggerRunsQueryResponse"/> instance for mocking. </returns>
         public static TriggerRunsQueryResponse TriggerRunsQueryResponse(IEnumerable<TriggerRun> value = null, string continuationToken = null)
         {
             value ??= new List<TriggerRun>();
@@ -809,7 +810,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <param name="properties"> List of property name and value related to trigger run. Name, value pair depends on type of trigger. </param>
         /// <param name="triggeredPipelines"> List of pipeline name and run Id triggered by the trigger run. </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
-        /// <returns> A new <see cref="Models.TriggerRun"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Azure.Analytics.Synapse.Artifacts.Models.TriggerRun"/> instance for mocking. </returns>
         public static TriggerRun TriggerRun(string triggerRunId = null, string triggerName = null, string triggerType = null, DateTimeOffset? triggerRunTimestamp = null, TriggerRunStatus? status = null, string message = null, IReadOnlyDictionary<string, string> properties = null, IReadOnlyDictionary<string, string> triggeredPipelines = null, IReadOnlyDictionary<string, object> additionalProperties = null)
         {
             properties ??= new Dictionary<string, string>();
@@ -842,7 +843,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <param name="workspaceRepositoryConfiguration"> Git integration settings. </param>
         /// <param name="purviewConfiguration"> Purview Configuration. </param>
         /// <param name="adlaResourceId"> The ADLA resource ID. </param>
-        /// <returns> A new <see cref="Models.Workspace"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Azure.Analytics.Synapse.Artifacts.Models.Workspace"/> instance for mocking. </returns>
         public static Workspace Workspace(string id = null, string name = null, string type = null, IDictionary<string, string> tags = null, string location = null, ManagedIdentity identity = null, DataLakeStorageAccountDetails defaultDataLakeStorage = null, string sqlAdministratorLoginPassword = null, string managedResourceGroupName = null, string provisioningState = null, string sqlAdministratorLogin = null, VirtualNetworkProfile virtualNetworkProfile = null, IDictionary<string, string> connectivityEndpoints = null, string managedVirtualNetwork = null, IEnumerable<PrivateEndpointConnection> privateEndpointConnections = null, EncryptionDetails encryption = null, Guid? workspaceUID = null, IReadOnlyDictionary<string, object> extraProperties = null, ManagedVirtualNetworkSettings managedVirtualNetworkSettings = null, WorkspaceRepositoryConfiguration workspaceRepositoryConfiguration = null, PurviewConfiguration purviewConfiguration = null, string adlaResourceId = null)
         {
             tags ??= new Dictionary<string, string>();
@@ -860,7 +861,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <param name="privateEndpoint"> The private endpoint which the connection belongs to. </param>
         /// <param name="connectionState"> Connection state of the private endpoint connection. </param>
         /// <param name="provisioningState"> Provisioning state of the private endpoint connection. </param>
-        /// <returns> A new <see cref="Models.PrivateEndpointConnection"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Azure.Analytics.Synapse.Artifacts.Models.PrivateEndpointConnection"/> instance for mocking. </returns>
         public static PrivateEndpointConnection PrivateEndpointConnection(string id = null, string name = null, string type = null, PrivateEndpoint privateEndpoint = null, PrivateLinkServiceConnectionState connectionState = null, string provisioningState = null)
         {
             return new PrivateEndpointConnection(id, name, type, privateEndpoint, connectionState, provisioningState);
@@ -868,7 +869,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
 
         /// <summary> Initializes a new instance of PrivateEndpoint. </summary>
         /// <param name="id"> Resource id of the private endpoint. </param>
-        /// <returns> A new <see cref="Models.PrivateEndpoint"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Azure.Analytics.Synapse.Artifacts.Models.PrivateEndpoint"/> instance for mocking. </returns>
         public static PrivateEndpoint PrivateEndpoint(string id = null)
         {
             return new PrivateEndpoint(id);
@@ -878,7 +879,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <param name="status"> The private link service connection status. </param>
         /// <param name="description"> The private link service connection description. </param>
         /// <param name="actionsRequired"> The actions required for private link service connection. </param>
-        /// <returns> A new <see cref="Models.PrivateLinkServiceConnectionState"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Azure.Analytics.Synapse.Artifacts.Models.PrivateLinkServiceConnectionState"/> instance for mocking. </returns>
         public static PrivateLinkServiceConnectionState PrivateLinkServiceConnectionState(string status = null, string description = null, string actionsRequired = null)
         {
             return new PrivateLinkServiceConnectionState(status, description, actionsRequired);
@@ -888,7 +889,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="type"> The type of the resource. E.g. &quot;Microsoft.Compute/virtualMachines&quot; or &quot;Microsoft.Storage/storageAccounts&quot;. </param>
-        /// <returns> A new <see cref="Models.ProxyResource"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Azure.Analytics.Synapse.Artifacts.Models.ProxyResource"/> instance for mocking. </returns>
         public static ProxyResource ProxyResource(string id = null, string name = null, string type = null)
         {
             return new ProxyResource(id, name, type);
@@ -897,7 +898,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <summary> Initializes a new instance of EncryptionDetails. </summary>
         /// <param name="doubleEncryptionEnabled"> Double Encryption enabled. </param>
         /// <param name="cmk"> Customer Managed Key Details. </param>
-        /// <returns> A new <see cref="Models.EncryptionDetails"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Azure.Analytics.Synapse.Artifacts.Models.EncryptionDetails"/> instance for mocking. </returns>
         public static EncryptionDetails EncryptionDetails(bool? doubleEncryptionEnabled = null, CustomerManagedKeyDetails cmk = null)
         {
             return new EncryptionDetails(doubleEncryptionEnabled, cmk);
@@ -906,7 +907,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <summary> Initializes a new instance of CustomerManagedKeyDetails. </summary>
         /// <param name="status"> The customer managed key status on the workspace. </param>
         /// <param name="key"> The key object of the workspace. </param>
-        /// <returns> A new <see cref="Models.CustomerManagedKeyDetails"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Azure.Analytics.Synapse.Artifacts.Models.CustomerManagedKeyDetails"/> instance for mocking. </returns>
         public static CustomerManagedKeyDetails CustomerManagedKeyDetails(string status = null, WorkspaceKeyDetails key = null)
         {
             return new CustomerManagedKeyDetails(status, key);
@@ -916,7 +917,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <param name="principalId"> The principal ID of the workspace managed identity. </param>
         /// <param name="tenantId"> The tenant ID of the workspace managed identity. </param>
         /// <param name="type"> The type of managed identity for the workspace. </param>
-        /// <returns> A new <see cref="Models.ManagedIdentity"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Azure.Analytics.Synapse.Artifacts.Models.ManagedIdentity"/> instance for mocking. </returns>
         public static ManagedIdentity ManagedIdentity(string principalId = null, Guid? tenantId = null, ResourceIdentityType? type = null)
         {
             return new ManagedIdentity(principalId, tenantId, type);
@@ -926,7 +927,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <param name="type"> The identity type. Currently the only supported type is &apos;SystemAssigned&apos;. </param>
         /// <param name="principalId"> The principal id of the identity. </param>
         /// <param name="tenantId"> The client tenant id of the identity. </param>
-        /// <returns> A new <see cref="Models.WorkspaceIdentity"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Azure.Analytics.Synapse.Artifacts.Models.WorkspaceIdentity"/> instance for mocking. </returns>
         public static WorkspaceIdentity WorkspaceIdentity(WorkspaceIdentityType type = default, string principalId = null, string tenantId = null)
         {
             return new WorkspaceIdentity(type, principalId, tenantId);
@@ -935,7 +936,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <summary> Initializes a new instance of ExposureControlResponse. </summary>
         /// <param name="featureName"> The feature name. </param>
         /// <param name="value"> The feature value. </param>
-        /// <returns> A new <see cref="Models.ExposureControlResponse"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Azure.Analytics.Synapse.Artifacts.Models.ExposureControlResponse"/> instance for mocking. </returns>
         public static ExposureControlResponse ExposureControlResponse(string featureName = null, string value = null)
         {
             return new ExposureControlResponse(featureName, value);
@@ -944,7 +945,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <summary> Initializes a new instance of RerunTriggerListResponse. </summary>
         /// <param name="value"> List of rerun triggers. </param>
         /// <param name="nextLink"> The continuation token for getting the next page of results, if any remaining results exist, null otherwise. </param>
-        /// <returns> A new <see cref="Models.RerunTriggerListResponse"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Azure.Analytics.Synapse.Artifacts.Models.RerunTriggerListResponse"/> instance for mocking. </returns>
         public static RerunTriggerListResponse RerunTriggerListResponse(IEnumerable<RerunTriggerResource> value = null, string nextLink = null)
         {
             value ??= new List<RerunTriggerResource>();
@@ -958,7 +959,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <param name="type"> The type of the resource. E.g. &quot;Microsoft.Compute/virtualMachines&quot; or &quot;Microsoft.Storage/storageAccounts&quot;. </param>
         /// <param name="etag"> Resource Etag. </param>
         /// <param name="properties"> Properties of the rerun trigger. </param>
-        /// <returns> A new <see cref="Models.RerunTriggerResource"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Azure.Analytics.Synapse.Artifacts.Models.RerunTriggerResource"/> instance for mocking. </returns>
         public static RerunTriggerResource RerunTriggerResource(string id = null, string name = null, string type = null, string etag = null, RerunTumblingWindowTrigger properties = null)
         {
             return new RerunTriggerResource(id, name, type, etag, properties);
@@ -973,7 +974,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <param name="requestedStartTime"> The start time for the time period for which restatement is initiated. Only UTC time is currently supported. </param>
         /// <param name="requestedEndTime"> The end time for the time period for which restatement is initiated. Only UTC time is currently supported. </param>
         /// <param name="rerunConcurrency"> The max number of parallel time windows (ready for execution) for which a rerun is triggered. </param>
-        /// <returns> A new <see cref="Models.RerunTumblingWindowTrigger"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Azure.Analytics.Synapse.Artifacts.Models.RerunTumblingWindowTrigger"/> instance for mocking. </returns>
         public static RerunTumblingWindowTrigger RerunTumblingWindowTrigger(string description = null, TriggerRuntimeState? runtimeState = null, IEnumerable<object> annotations = null, IDictionary<string, object> additionalProperties = null, object parentTrigger = null, DateTimeOffset requestedStartTime = default, DateTimeOffset requestedEndTime = default, int rerunConcurrency = default)
         {
             annotations ??= new List<object>();
@@ -988,7 +989,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <param name="annotations"> List of tags that can be used for describing the trigger. </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
         /// <param name="pipelines"> Pipelines that need to be started. </param>
-        /// <returns> A new <see cref="Models.MultiplePipelineTrigger"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Azure.Analytics.Synapse.Artifacts.Models.MultiplePipelineTrigger"/> instance for mocking. </returns>
         public static MultiplePipelineTrigger MultiplePipelineTrigger(string description = null, TriggerRuntimeState? runtimeState = null, IEnumerable<object> annotations = null, IDictionary<string, object> additionalProperties = null, IEnumerable<TriggerPipelineReference> pipelines = null)
         {
             annotations ??= new List<object>();
@@ -1005,7 +1006,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <param name="additionalProperties"> Additional Properties. </param>
         /// <param name="pipelines"> Pipelines that need to be started. </param>
         /// <param name="recurrence"> Recurrence schedule configuration. </param>
-        /// <returns> A new <see cref="Models.ScheduleTrigger"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Azure.Analytics.Synapse.Artifacts.Models.ScheduleTrigger"/> instance for mocking. </returns>
         public static ScheduleTrigger ScheduleTrigger(string description = null, TriggerRuntimeState? runtimeState = null, IEnumerable<object> annotations = null, IDictionary<string, object> additionalProperties = null, IEnumerable<TriggerPipelineReference> pipelines = null, ScheduleTriggerRecurrence recurrence = null)
         {
             annotations ??= new List<object>();
@@ -1024,7 +1025,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <param name="folderPath"> The path of the container/folder that will trigger the pipeline. </param>
         /// <param name="maxConcurrency"> The max number of parallel files to handle when it is triggered. </param>
         /// <param name="linkedService"> The Azure Storage linked service reference. </param>
-        /// <returns> A new <see cref="Models.BlobTrigger"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Azure.Analytics.Synapse.Artifacts.Models.BlobTrigger"/> instance for mocking. </returns>
         public static BlobTrigger BlobTrigger(string description = null, TriggerRuntimeState? runtimeState = null, IEnumerable<object> annotations = null, IDictionary<string, object> additionalProperties = null, IEnumerable<TriggerPipelineReference> pipelines = null, string folderPath = null, int maxConcurrency = default, LinkedServiceReference linkedService = null)
         {
             annotations ??= new List<object>();
@@ -1045,7 +1046,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <param name="ignoreEmptyBlobs"> If set to true, blobs with zero bytes will be ignored. </param>
         /// <param name="events"> The type of events that cause this trigger to fire. </param>
         /// <param name="scope"> The ARM resource ID of the Storage Account. </param>
-        /// <returns> A new <see cref="Models.BlobEventsTrigger"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Azure.Analytics.Synapse.Artifacts.Models.BlobEventsTrigger"/> instance for mocking. </returns>
         public static BlobEventsTrigger BlobEventsTrigger(string description = null, TriggerRuntimeState? runtimeState = null, IEnumerable<object> annotations = null, IDictionary<string, object> additionalProperties = null, IEnumerable<TriggerPipelineReference> pipelines = null, string blobPathBeginsWith = null, string blobPathEndsWith = null, bool? ignoreEmptyBlobs = null, IEnumerable<BlobEventType> events = null, string scope = null)
         {
             annotations ??= new List<object>();
@@ -1066,7 +1067,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <param name="subjectEndsWith"> The event subject must end with the pattern provided for trigger to fire. At least one of these must be provided: subjectBeginsWith, subjectEndsWith. </param>
         /// <param name="events"> The list of event types that cause this trigger to fire. </param>
         /// <param name="scope"> The ARM resource ID of the Azure Event Grid Topic. </param>
-        /// <returns> A new <see cref="Models.CustomEventsTrigger"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Azure.Analytics.Synapse.Artifacts.Models.CustomEventsTrigger"/> instance for mocking. </returns>
         public static CustomEventsTrigger CustomEventsTrigger(string description = null, TriggerRuntimeState? runtimeState = null, IEnumerable<object> annotations = null, IDictionary<string, object> additionalProperties = null, IEnumerable<TriggerPipelineReference> pipelines = null, string subjectBeginsWith = null, string subjectEndsWith = null, IEnumerable<object> events = null, string scope = null)
         {
             annotations ??= new List<object>();
@@ -1095,7 +1096,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// Please note <see cref="DependencyReference"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="SelfDependencyTumblingWindowTriggerReference"/>, <see cref="TriggerDependencyReference"/> and <see cref="TumblingWindowTriggerDependencyReference"/>.
         /// </param>
-        /// <returns> A new <see cref="Models.TumblingWindowTrigger"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Azure.Analytics.Synapse.Artifacts.Models.TumblingWindowTrigger"/> instance for mocking. </returns>
         public static TumblingWindowTrigger TumblingWindowTrigger(string description = null, TriggerRuntimeState? runtimeState = null, IEnumerable<object> annotations = null, IDictionary<string, object> additionalProperties = null, TriggerPipelineReference pipeline = null, TumblingWindowFrequency frequency = default, int interval = default, DateTimeOffset startTime = default, DateTimeOffset? endTime = null, object delay = null, int maxConcurrency = default, RetryPolicy retryPolicy = null, IEnumerable<DependencyReference> dependsOn = null)
         {
             annotations ??= new List<object>();
@@ -1113,7 +1114,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <param name="pipeline"> Pipeline for which runs are created when all upstream pipelines complete successfully. </param>
         /// <param name="dependsOn"> Upstream Pipelines. </param>
         /// <param name="runDimension"> Run Dimension property that needs to be emitted by upstream pipelines. </param>
-        /// <returns> A new <see cref="Models.ChainingTrigger"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Azure.Analytics.Synapse.Artifacts.Models.ChainingTrigger"/> instance for mocking. </returns>
         public static ChainingTrigger ChainingTrigger(string description = null, TriggerRuntimeState? runtimeState = null, IEnumerable<object> annotations = null, IDictionary<string, object> additionalProperties = null, TriggerPipelineReference pipeline = null, IEnumerable<PipelineReference> dependsOn = null, string runDimension = null)
         {
             annotations ??= new List<object>();
@@ -1131,7 +1132,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <param name="managedVirtualNetwork"> Managed Virtual Network reference. </param>
         /// <param name="computeProperties"> The compute resource for managed integration runtime. </param>
         /// <param name="ssisProperties"> SSIS properties for managed integration runtime. </param>
-        /// <returns> A new <see cref="Models.ManagedIntegrationRuntime"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Azure.Analytics.Synapse.Artifacts.Models.ManagedIntegrationRuntime"/> instance for mocking. </returns>
         public static ManagedIntegrationRuntime ManagedIntegrationRuntime(IntegrationRuntimeType type = default, string description = null, IDictionary<string, object> additionalProperties = null, IntegrationRuntimeState? state = null, ManagedVirtualNetworkReference managedVirtualNetwork = null, IntegrationRuntimeComputeProperties computeProperties = null, IntegrationRuntimeSsisProperties ssisProperties = null)
         {
             additionalProperties ??= new Dictionary<string, object>();
@@ -1142,7 +1143,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <summary> Initializes a new instance of ManagedVirtualNetworkReference. </summary>
         /// <param name="type"> Managed Virtual Network reference type. </param>
         /// <param name="referenceName"> Reference ManagedVirtualNetwork name. </param>
-        /// <returns> A new <see cref="Models.ManagedVirtualNetworkReference"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Azure.Analytics.Synapse.Artifacts.Models.ManagedVirtualNetworkReference"/> instance for mocking. </returns>
         public static ManagedVirtualNetworkReference ManagedVirtualNetworkReference(ManagedVirtualNetworkReferenceType type = default, string referenceName = null)
         {
             return new ManagedVirtualNetworkReference(type, referenceName);

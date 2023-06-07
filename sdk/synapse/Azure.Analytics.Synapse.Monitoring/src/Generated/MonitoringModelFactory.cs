@@ -8,8 +8,9 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Azure.Analytics.Synapse.Monitoring.Models;
 
-namespace Azure.Analytics.Synapse.Monitoring.Models
+namespace MonitoringClient.Models
 {
     /// <summary> Model factory for models. </summary>
     public static partial class MonitoringModelFactory
@@ -17,7 +18,7 @@ namespace Azure.Analytics.Synapse.Monitoring.Models
         /// <summary> Initializes a new instance of SparkJobListViewResponse. </summary>
         /// <param name="nJobs"></param>
         /// <param name="sparkJobs"></param>
-        /// <returns> A new <see cref="Models.SparkJobListViewResponse"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Azure.Analytics.Synapse.Monitoring.Models.SparkJobListViewResponse"/> instance for mocking. </returns>
         public static SparkJobListViewResponse SparkJobListViewResponse(int? nJobs = null, IEnumerable<SparkJob> sparkJobs = null)
         {
             sparkJobs ??= new List<SparkJob>();
@@ -41,7 +42,7 @@ namespace Azure.Analytics.Synapse.Monitoring.Models
         /// <param name="queuedDuration"></param>
         /// <param name="runningDuration"></param>
         /// <param name="totalDuration"></param>
-        /// <returns> A new <see cref="Models.SparkJob"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Azure.Analytics.Synapse.Monitoring.Models.SparkJob"/> instance for mocking. </returns>
         public static SparkJob SparkJob(string state = null, string name = null, string submitter = null, string compute = null, string sparkApplicationId = null, string livyId = null, IEnumerable<string> timing = null, string sparkJobDefinition = null, IEnumerable<SparkJob> pipeline = null, string jobType = null, DateTimeOffset? submitTime = null, DateTimeOffset? endTime = null, string queuedDuration = null, string runningDuration = null, string totalDuration = null)
         {
             timing ??= new List<string>();
@@ -52,7 +53,7 @@ namespace Azure.Analytics.Synapse.Monitoring.Models
 
         /// <summary> Initializes a new instance of SqlQueryStringDataModel. </summary>
         /// <param name="query"></param>
-        /// <returns> A new <see cref="Models.SqlQueryStringDataModel"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Azure.Analytics.Synapse.Monitoring.Models.SqlQueryStringDataModel"/> instance for mocking. </returns>
         public static SqlQueryStringDataModel SqlQueryStringDataModel(string query = null)
         {
             return new SqlQueryStringDataModel(query);

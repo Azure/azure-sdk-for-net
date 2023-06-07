@@ -7,8 +7,9 @@
 
 using System.Collections.Generic;
 using System.Linq;
+using Azure.IoT.TimeSeriesInsights;
 
-namespace Azure.IoT.TimeSeriesInsights
+namespace TimeSeriesInsightsClient
 {
     /// <summary> Model factory for models. </summary>
     public static partial class TimeSeriesInsightsModelFactory
@@ -20,7 +21,7 @@ namespace Azure.IoT.TimeSeriesInsights
         /// <param name="innerError"> Contains more specific error that narrows down the cause. May be null. </param>
         /// <param name="details"> Contains additional error information. May be null. </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
-        /// <returns> A new <see cref="TimeSeriesInsights.TimeSeriesOperationError"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Azure.IoT.TimeSeriesInsights.TimeSeriesOperationError"/> instance for mocking. </returns>
         public static TimeSeriesOperationError TimeSeriesOperationError(string code = null, string message = null, string target = null, TimeSeriesOperationError innerError = null, IEnumerable<TimeSeriesOperationErrorDetails> details = null, IReadOnlyDictionary<string, object> additionalProperties = null)
         {
             details ??= new List<TimeSeriesOperationErrorDetails>();
@@ -33,7 +34,7 @@ namespace Azure.IoT.TimeSeriesInsights
         /// <param name="code"> Language-independent, human-readable string that defines a service-specific error code. This code serves as a more specific indicator for the HTTP error code specified in the response. Can be used to programmatically handle specific error cases. </param>
         /// <param name="message"> Human-readable, language-independent representation of the error. It is intended as an aid to developers and is not suitable for exposure to end users. </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
-        /// <returns> A new <see cref="TimeSeriesInsights.TimeSeriesOperationErrorDetails"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Azure.IoT.TimeSeriesInsights.TimeSeriesOperationErrorDetails"/> instance for mocking. </returns>
         public static TimeSeriesOperationErrorDetails TimeSeriesOperationErrorDetails(string code = null, string message = null, IReadOnlyDictionary<string, object> additionalProperties = null)
         {
             additionalProperties ??= new Dictionary<string, object>();
@@ -45,7 +46,7 @@ namespace Azure.IoT.TimeSeriesInsights
         /// <param name="name"> Time series model display name which is shown in the UX. Examples: &quot;Temperature Sensors&quot;, &quot;MyDevices&quot;. </param>
         /// <param name="timeSeriesIdProperties"> Time series ID properties defined during environment creation. </param>
         /// <param name="defaultTypeId"> Default type ID of the model that new time series instances will automatically belong to. </param>
-        /// <returns> A new <see cref="TimeSeriesInsights.TimeSeriesModelSettings"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Azure.IoT.TimeSeriesInsights.TimeSeriesModelSettings"/> instance for mocking. </returns>
         public static TimeSeriesModelSettings TimeSeriesModelSettings(string name = null, IEnumerable<TimeSeriesIdProperty> timeSeriesIdProperties = null, string defaultTypeId = null)
         {
             timeSeriesIdProperties ??= new List<TimeSeriesIdProperty>();
@@ -56,7 +57,7 @@ namespace Azure.IoT.TimeSeriesInsights
         /// <summary> Initializes a new instance of TimeSeriesIdProperty. </summary>
         /// <param name="name"> The name of the property. </param>
         /// <param name="type"> The type of the property. Currently, only &quot;String&quot; is supported. </param>
-        /// <returns> A new <see cref="TimeSeriesInsights.TimeSeriesIdProperty"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Azure.IoT.TimeSeriesInsights.TimeSeriesIdProperty"/> instance for mocking. </returns>
         public static TimeSeriesIdProperty TimeSeriesIdProperty(string name = null, TimeSeriesIdPropertyType? type = null)
         {
             return new TimeSeriesIdProperty(name, type);
@@ -65,7 +66,7 @@ namespace Azure.IoT.TimeSeriesInsights
         /// <summary> Initializes a new instance of InstancesOperationResult. </summary>
         /// <param name="instance"> Time series instance object - set when the operation is successful (except put operation). </param>
         /// <param name="error"> Error object - set when the operation is unsuccessful. </param>
-        /// <returns> A new <see cref="TimeSeriesInsights.InstancesOperationResult"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Azure.IoT.TimeSeriesInsights.InstancesOperationResult"/> instance for mocking. </returns>
         public static InstancesOperationResult InstancesOperationResult(TimeSeriesInstance instance = null, TimeSeriesOperationError error = null)
         {
             return new InstancesOperationResult(instance, error);
@@ -74,7 +75,7 @@ namespace Azure.IoT.TimeSeriesInsights
         /// <summary> Initializes a new instance of TimeSeriesTypeOperationResult. </summary>
         /// <param name="timeSeriesType"> Time series type object - set when the operation is successful. </param>
         /// <param name="error"> Error object - set when the operation is unsuccessful. </param>
-        /// <returns> A new <see cref="TimeSeriesInsights.TimeSeriesTypeOperationResult"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Azure.IoT.TimeSeriesInsights.TimeSeriesTypeOperationResult"/> instance for mocking. </returns>
         public static TimeSeriesTypeOperationResult TimeSeriesTypeOperationResult(TimeSeriesType timeSeriesType = null, TimeSeriesOperationError error = null)
         {
             return new TimeSeriesTypeOperationResult(timeSeriesType, error);
@@ -83,7 +84,7 @@ namespace Azure.IoT.TimeSeriesInsights
         /// <summary> Initializes a new instance of TimeSeriesHierarchyOperationResult. </summary>
         /// <param name="hierarchy"> Time series hierarchy object - set when the operation is successful. </param>
         /// <param name="error"> Error object - set when the operation is unsuccessful. </param>
-        /// <returns> A new <see cref="TimeSeriesInsights.TimeSeriesHierarchyOperationResult"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Azure.IoT.TimeSeriesInsights.TimeSeriesHierarchyOperationResult"/> instance for mocking. </returns>
         public static TimeSeriesHierarchyOperationResult TimeSeriesHierarchyOperationResult(TimeSeriesHierarchy hierarchy = null, TimeSeriesOperationError error = null)
         {
             return new TimeSeriesHierarchyOperationResult(hierarchy, error);
