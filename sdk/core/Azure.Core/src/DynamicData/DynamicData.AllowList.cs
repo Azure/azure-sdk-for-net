@@ -55,6 +55,12 @@ namespace Azure.Core.Dynamic
                 }
 
                 return IsAllowedPrimitive(type) ||
+                    type == typeof(JsonElement) ||
+                    type == typeof(JsonDocument) ||
+                    // We assume these were pre-validated
+                    type == typeof(MutableJsonDocument) ||
+                    type == typeof(MutableJsonElement) ||
+                    type == typeof(DynamicData) ||
                     IsAllowedArrayType(type, out needsValueCheck) ||
                     IsAllowedCollectionType(type, out needsValueCheck) ||
                     IsAllowedEnumerableType(type, out needsValueCheck);
@@ -71,12 +77,7 @@ namespace Azure.Core.Dynamic
                     type == typeof(TimeSpan) ||
                     type == typeof(Uri) ||
                     type == typeof(Guid) ||
-                    type == typeof(ETag) ||
-                    type == typeof(JsonElement) ||
-                    type == typeof(JsonDocument) ||
-                    type == typeof(MutableJsonDocument) ||
-                    type == typeof(MutableJsonElement) ||
-                    type == typeof(DynamicData);
+                    type == typeof(ETag);
             }
 
             private static bool IsAllowedArrayType(Type type, out bool needsValueCheck)
@@ -110,16 +111,13 @@ namespace Azure.Core.Dynamic
                     return false;
                 }
 
-                if (type.GetGenericTypeDefinition() == typeof(List<>))
+                if (type.GetGenericTypeDefinition() != typeof(List<>))
                 {
-                    Type[] types = type.GetGenericArguments();
-                    if (IsAllowedType(types[0], out needsValueCheck))
-                    {
-                        return true;
-                    }
+                    return false;
                 }
 
-                return false;
+                Type[] types = type.GetGenericArguments();
+                return IsAllowedType(types[0], out needsValueCheck);
             }
 
             private static bool IsAllowedDictionaryType(Type type, out bool needsValueCheck)
@@ -230,14 +228,15 @@ namespace Azure.Core.Dynamic
 
             private static bool IsAllowedValue<T>(T value)
             {
-                // T must have a generic type holding an object somewhere in
+                // If we got here, T must have a generic type holding an object somewhere in
                 // the type graph, or a POCO with a property of that description.
+
                 if (value == null)
                 {
                     return true;
                 }
 
-                // Value should have a non-object type now.
+                // GetType() should not return object.
                 // This is the base case for recursion.
                 Type type = value.GetType();
                 if (IsAllowedPrimitive(type))
