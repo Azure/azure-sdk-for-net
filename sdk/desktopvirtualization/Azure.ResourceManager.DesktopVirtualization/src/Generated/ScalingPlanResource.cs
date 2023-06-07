@@ -89,6 +89,59 @@ namespace Azure.ResourceManager.DesktopVirtualization
                 throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
         }
 
+        /// <summary> Gets a collection of ScalingPlanPooledScheduleResources in the ScalingPlan. </summary>
+        /// <returns> An object representing collection of ScalingPlanPooledScheduleResources and their operations over a ScalingPlanPooledScheduleResource. </returns>
+        public virtual ScalingPlanPooledScheduleCollection GetScalingPlanPooledSchedules()
+        {
+            return GetCachedClient(Client => new ScalingPlanPooledScheduleCollection(Client, Id));
+        }
+
+        /// <summary>
+        /// Get a ScalingPlanPooledSchedule.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DesktopVirtualization/scalingPlans/{scalingPlanName}/pooledSchedules/{scalingPlanScheduleName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ScalingPlanPooledSchedules_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="scalingPlanScheduleName"> The name of the ScalingPlanSchedule. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="scalingPlanScheduleName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="scalingPlanScheduleName"/> is null. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<ScalingPlanPooledScheduleResource>> GetScalingPlanPooledScheduleAsync(string scalingPlanScheduleName, CancellationToken cancellationToken = default)
+        {
+            return await GetScalingPlanPooledSchedules().GetAsync(scalingPlanScheduleName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Get a ScalingPlanPooledSchedule.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DesktopVirtualization/scalingPlans/{scalingPlanName}/pooledSchedules/{scalingPlanScheduleName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ScalingPlanPooledSchedules_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="scalingPlanScheduleName"> The name of the ScalingPlanSchedule. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="scalingPlanScheduleName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="scalingPlanScheduleName"/> is null. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<ScalingPlanPooledScheduleResource> GetScalingPlanPooledSchedule(string scalingPlanScheduleName, CancellationToken cancellationToken = default)
+        {
+            return GetScalingPlanPooledSchedules().Get(scalingPlanScheduleName, cancellationToken);
+        }
+
         /// <summary>
         /// Get a scaling plan.
         /// <list type="bullet">

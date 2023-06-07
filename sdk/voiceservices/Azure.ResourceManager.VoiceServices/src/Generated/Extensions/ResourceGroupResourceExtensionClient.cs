@@ -31,11 +31,11 @@ namespace Azure.ResourceManager.VoiceServices
             return apiVersion;
         }
 
-        /// <summary> Gets a collection of CommunicationsGatewayResources in the ResourceGroupResource. </summary>
-        /// <returns> An object representing collection of CommunicationsGatewayResources and their operations over a CommunicationsGatewayResource. </returns>
-        public virtual CommunicationsGatewayCollection GetCommunicationsGateways()
+        /// <summary> Gets a collection of VoiceServicesCommunicationsGatewayResources in the ResourceGroupResource. </summary>
+        /// <returns> An object representing collection of VoiceServicesCommunicationsGatewayResources and their operations over a VoiceServicesCommunicationsGatewayResource. </returns>
+        public virtual VoiceServicesCommunicationsGatewayCollection GetVoiceServicesCommunicationsGateways()
         {
-            return GetCachedClient(Client => new CommunicationsGatewayCollection(Client, Id));
+            return GetCachedClient(Client => new VoiceServicesCommunicationsGatewayCollection(Client, Id));
         }
     }
 }

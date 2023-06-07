@@ -42,6 +42,15 @@ namespace Azure.Storage
             public byte[] StorageCrc64AsArray => StorageCrc64.IsEmpty ? null : StorageCrc64.ToArray();
         }
 
+        internal static int GetHashSizeInBytes(StorageChecksumAlgorithm algorithm)
+            => algorithm.ResolveAuto() switch
+            {
+                StorageChecksumAlgorithm.None => 0,
+                StorageChecksumAlgorithm.MD5 => Constants.MD5SizeInBytes,
+                StorageChecksumAlgorithm.StorageCrc64 => Constants.StorageCrc64SizeInBytes,
+                _ => throw Errors.InvalidArgument(nameof(algorithm))
+            };
+
         internal static UploadTransferValidationOptions ToUploadTransferValidationOptions(this GetHashResult hashResult)
         {
             if (hashResult == null)

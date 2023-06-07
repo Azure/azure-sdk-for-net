@@ -35,8 +35,8 @@ namespace Azure.ResourceManager.ServiceNetworking.Samples
             // for more information of creating FrontendResource, please refer to the document of FrontendResource
             string subscriptionId = "subid";
             string resourceGroupName = "rg1";
-            string trafficControllerName = "TC1";
-            string frontendName = "publicIp1";
+            string trafficControllerName = "tc1";
+            string frontendName = "fe1";
             ResourceIdentifier frontendResourceId = FrontendResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, trafficControllerName, frontendName);
             FrontendResource frontend = client.GetFrontendResource(frontendResourceId);
 
@@ -67,21 +67,13 @@ namespace Azure.ResourceManager.ServiceNetworking.Samples
             // for more information of creating FrontendResource, please refer to the document of FrontendResource
             string subscriptionId = "subid";
             string resourceGroupName = "rg1";
-            string trafficControllerName = "TC1";
-            string frontendName = "publicIp1";
+            string trafficControllerName = "tc1";
+            string frontendName = "fe1";
             ResourceIdentifier frontendResourceId = FrontendResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, trafficControllerName, frontendName);
             FrontendResource frontend = client.GetFrontendResource(frontendResourceId);
 
             // invoke the operation
-            FrontendPatch patch = new FrontendPatch()
-            {
-                Properties = new FrontendUpdateProperties()
-                {
-                    Mode = FrontendMode.Public,
-                    IPAddressVersion = FrontendIPAddressVersion.IPv4,
-                    PublicIPAddressId = new ResourceIdentifier("resourceUriAsString"),
-                },
-            };
+            FrontendPatch patch = new FrontendPatch();
             FrontendResource result = await frontend.UpdateAsync(patch);
 
             // the variable result is a resource, you could call other operations on this instance as well
@@ -108,8 +100,8 @@ namespace Azure.ResourceManager.ServiceNetworking.Samples
             // for more information of creating FrontendResource, please refer to the document of FrontendResource
             string subscriptionId = "subid";
             string resourceGroupName = "rg1";
-            string trafficControllerName = "TC1";
-            string frontendName = "publicIp1";
+            string trafficControllerName = "tc1";
+            string frontendName = "fe1";
             ResourceIdentifier frontendResourceId = FrontendResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, trafficControllerName, frontendName);
             FrontendResource frontend = client.GetFrontendResource(frontendResourceId);
 

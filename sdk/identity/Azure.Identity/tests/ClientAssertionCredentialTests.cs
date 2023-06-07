@@ -31,7 +31,7 @@ namespace Azure.Identity.Tests
             var options = new ClientAssertionCredentialOptions
             {
                 Transport = config.Transport,
-                DisableAuthorityValidationAndInstanceDiscovery = config.DisableAuthorityValidationAndInstanceDiscovery,
+                DisableInstanceDiscovery = config.DisableInstanceDiscovery,
                 AdditionallyAllowedTenants = config.AdditionallyAllowedTenants
             };
             var pipeline = CredentialPipeline.GetInstance(options);

@@ -151,6 +151,40 @@ namespace Azure.Communication.Rooms.Tests
         }
 
         [Test]
+        public void GetRoomsAsyncShouldSucceed()
+        {
+            Mock<RoomsClient> mockRoomsClient = new Mock<RoomsClient>();
+            AsyncPageable<CommunicationRoom> expectedRoomResult = new Mock<AsyncPageable<CommunicationRoom>>().Object;
+            CancellationToken cancellationToken = new CancellationTokenSource().Token;
+
+            mockRoomsClient
+              .Setup(roomsClient => roomsClient.GetRoomsAsync(cancellationToken))
+              .Returns(expectedRoomResult);
+
+            AsyncPageable<CommunicationRoom> actualResponse = mockRoomsClient.Object.GetRoomsAsync(cancellationToken);
+
+            mockRoomsClient.Verify(roomsClient => roomsClient.GetRoomsAsync(cancellationToken), Times.Once());
+            Assert.AreEqual(expectedRoomResult, actualResponse);
+        }
+
+        [Test]
+        public void GetRoomsShouldSucceed()
+        {
+            Pageable<CommunicationRoom> expectedRoomResult = new Mock<Pageable<CommunicationRoom>>().Object;
+            CancellationToken cancellationToken = new CancellationTokenSource().Token;
+
+            Mock<RoomsClient> mockRoomsClient = new Mock<RoomsClient>();
+            mockRoomsClient
+            .Setup(roomsClient => roomsClient.GetRooms(cancellationToken))
+            .Returns(expectedRoomResult);
+
+            Pageable<CommunicationRoom> actualResponse = mockRoomsClient.Object.GetRooms(cancellationToken);
+
+            mockRoomsClient.Verify(roomsClient => roomsClient.GetRooms(cancellationToken), Times.Once());
+            Assert.AreEqual(expectedRoomResult, actualResponse);
+        }
+
+        [Test]
         public async Task DeleteRoomAsyncShouldSucceed()
         {
             var roomId = "123";

@@ -62,7 +62,7 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// current community gallery image.</param>
         /// <param name="eula">End-user license agreement for the current
         /// community gallery image.</param>
-        public CommunityGalleryImage(OperatingSystemTypes osType, OperatingSystemStateTypes osState, GalleryImageIdentifier identifier, string name = default(string), string location = default(string), string type = default(string), string uniqueId = default(string), System.DateTime? endOfLifeDate = default(System.DateTime?), RecommendedMachineConfiguration recommended = default(RecommendedMachineConfiguration), Disallowed disallowed = default(Disallowed), string hyperVGeneration = default(string), IList<GalleryImageFeature> features = default(IList<GalleryImageFeature>), ImagePurchasePlan purchasePlan = default(ImagePurchasePlan), string architecture = default(string), string privacyStatementUri = default(string), string eula = default(string))
+        public CommunityGalleryImage(OperatingSystemTypes osType, OperatingSystemStateTypes osState, CommunityGalleryImageIdentifier identifier, string name = default(string), string location = default(string), string type = default(string), string uniqueId = default(string), System.DateTime? endOfLifeDate = default(System.DateTime?), RecommendedMachineConfiguration recommended = default(RecommendedMachineConfiguration), Disallowed disallowed = default(Disallowed), string hyperVGeneration = default(string), IList<GalleryImageFeature> features = default(IList<GalleryImageFeature>), ImagePurchasePlan purchasePlan = default(ImagePurchasePlan), string architecture = default(string), string privacyStatementUri = default(string), string eula = default(string))
             : base(name, location, type, uniqueId)
         {
             OsType = osType;
@@ -116,7 +116,7 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// <summary>
         /// </summary>
         [JsonProperty(PropertyName = "properties.identifier")]
-        public GalleryImageIdentifier Identifier { get; set; }
+        public CommunityGalleryImageIdentifier Identifier { get; set; }
 
         /// <summary>
         /// </summary>
@@ -177,10 +177,6 @@ namespace Microsoft.Azure.Management.Compute.Models
             if (Identifier == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "Identifier");
-            }
-            if (Identifier != null)
-            {
-                Identifier.Validate();
             }
         }
     }

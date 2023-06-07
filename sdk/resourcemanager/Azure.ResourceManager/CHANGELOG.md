@@ -1,6 +1,6 @@
 # Release History
 
-## 1.6.0-beta.1 (Unreleased)
+## 1.7.0-beta.1 (Unreleased)
 
 ### Features Added
 
@@ -9,6 +9,16 @@
 ### Bugs Fixed
 
 ### Other Changes
+
+## 1.6.0 (2023-05-16)
+
+### Features Added
+
+- Add more model factory entries in class `Azure.ResourceManager.Models.ResourceManagerModelFactory` to support more generated models.
+
+### Bugs Fixed
+
+- Fixed [the issue](https://github.com/Azure/azure-sdk-for-net/issues/34796) that tag operations are not properly working.
 
 ## 1.5.0 (2023-04-27)
 

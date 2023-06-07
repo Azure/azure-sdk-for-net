@@ -14,9 +14,6 @@
 
   <ItemGroup>
     <PackageReference Include="Azure.Core" />
-    <!--Temp until Azure.Core 1.32.0 ships-->
-    <ProjectReference Include="..\..\..\core\Azure.Core\src\Azure.Core.csproj" />
-    <!--End Temp-->
     <PackageReference Include="Microsoft.Bcl.AsyncInterfaces" />
     <PackageReference Include="System.Text.Json" />
   </ItemGroup>

@@ -16,6 +16,7 @@ using Azure.Core;
 using FluentAssertions;
 using Polly.Contrib.WaitAndRetry;
 using Polly;
+using System.Net;
 
 namespace Azure.ResourceManager.NetApp.Tests
 {
@@ -565,7 +566,8 @@ namespace Azure.ResourceManager.NetApp.Tests
             //Call break file locks
             NetAppVolumeBreakFileLocksContent parameters = new()
             {
-                ConfirmRunningDisruptiveOperation = true
+                ConfirmRunningDisruptiveOperation = true,
+                ClientIP = IPAddress.Parse("101.102.103.104")
             };
 
             await volumeResource1.BreakFileLocksAsync(WaitUntil.Completed, parameters);

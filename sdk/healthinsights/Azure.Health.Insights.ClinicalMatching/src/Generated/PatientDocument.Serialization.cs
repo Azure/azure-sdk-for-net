@@ -19,15 +19,8 @@ namespace Azure.Health.Insights.ClinicalMatching
             writer.WriteStringValue(Type.ToString());
             if (Optional.IsDefined(ClinicalType))
             {
-                if (ClinicalType != null)
-                {
-                    writer.WritePropertyName("clinicalType"u8);
-                    writer.WriteStringValue(ClinicalType.Value.ToString());
-                }
-                else
-                {
-                    writer.WriteNull("clinicalType");
-                }
+                writer.WritePropertyName("clinicalType"u8);
+                writer.WriteStringValue(ClinicalType.Value.ToString());
             }
             writer.WritePropertyName("id"u8);
             writer.WriteStringValue(Id);
@@ -38,15 +31,8 @@ namespace Azure.Health.Insights.ClinicalMatching
             }
             if (Optional.IsDefined(CreatedDateTime))
             {
-                if (CreatedDateTime != null)
-                {
-                    writer.WritePropertyName("createdDateTime"u8);
-                    writer.WriteStringValue(CreatedDateTime.Value, "O");
-                }
-                else
-                {
-                    writer.WriteNull("createdDateTime");
-                }
+                writer.WritePropertyName("createdDateTime"u8);
+                writer.WriteStringValue(CreatedDateTime.Value, "O");
             }
             writer.WritePropertyName("content"u8);
             writer.WriteObjectValue(Content);

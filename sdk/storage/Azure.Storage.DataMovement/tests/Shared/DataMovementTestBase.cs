@@ -18,6 +18,14 @@ namespace Azure.Storage.DataMovement.Tests
     /// </summary>
     public abstract class DataMovementTestBase : StorageTestBase<StorageTestEnvironment>
     {
+        public enum TransferType
+        {
+            Upload,
+            Download,
+            AsyncCopy,
+            SyncCopy
+        }
+
         public DataMovementTestBase(bool async, RecordedTestMode? mode = null)
             : base(async, mode /* RecordedTestMode.Record /* to re-record */)
         {

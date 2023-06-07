@@ -119,7 +119,7 @@ namespace Azure.Identity.Tests
 
             var config = new CommonCredentialTestConfig()
             {
-                DisableAuthorityValidationAndInstanceDiscovery = disable,
+                DisableInstanceDiscovery = disable,
                 Transport = mockTransport,
                 TenantId = TenantId,
             };
@@ -386,7 +386,7 @@ namespace Azure.Identity.Tests
 
         public class CommonCredentialTestConfig : TokenCredentialOptions, ISupportsAdditionallyAllowedTenants, ISupportsDisableInstanceDiscovery
         {
-            public bool DisableAuthorityValidationAndInstanceDiscovery { get; set; }
+            public bool DisableInstanceDiscovery { get; set; }
             public TokenRequestContext RequestContext { get; set; }
             public string TenantId { get; set; }
             public IList<string> AdditionallyAllowedTenants { get; set; } = new List<string>();

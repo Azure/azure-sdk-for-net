@@ -390,6 +390,64 @@ namespace Azure.Security.KeyVault.Keys.Tests
             Assert.AreEqual(key.Id.ToString(), encrypted.KeyId);
         }
 
+        [RecordedTest]
+        public async Task CreateRSAEncryptDecrypt()
+        {
+            EncryptionAlgorithm algorithm = EncryptionAlgorithm.RsaOaep256;
+            KeyVaultKey key = await CreateTestKey(algorithm);
+            RegisterForCleanup(key.Name);
+
+            CryptographyClient client = GetCryptoClient(key.Id);
+            using RSA rsa = await client.CreateRSAAsync();
+
+            byte[] plaintext = Encoding.UTF8.GetBytes("A single block of plaintext");
+            byte[] ciphertext = rsa.Encrypt(plaintext, RSAEncryptionPadding.OaepSHA256);
+            Assert.AreEqual(plaintext, rsa.Decrypt(ciphertext, RSAEncryptionPadding.OaepSHA256));
+        }
+
+        [RecordedTest]
+        public async Task CreateRSAEncryptDecryptRemote()
+        {
+            EncryptionAlgorithm algorithm = EncryptionAlgorithm.RsaOaep256;
+            KeyVaultKey key = await CreateTestKey(algorithm);
+            RegisterForCleanup(key.Name);
+
+            CryptographyClient client = GetCryptoClient(key.Id, forceRemote: true);
+            using RSA rsa = await client.CreateRSAAsync();
+
+            byte[] plaintext = Encoding.UTF8.GetBytes("A single block of plaintext");
+            byte[] ciphertext = rsa.Encrypt(plaintext, RSAEncryptionPadding.OaepSHA256);
+            Assert.AreEqual(plaintext, rsa.Decrypt(ciphertext, RSAEncryptionPadding.OaepSHA256));
+        }
+
+        [RecordedTest]
+        public async Task CreateRSASignVerify()
+        {
+            KeyVaultKey key = await CreateTestKey(EncryptionAlgorithm.RsaOaep256);
+            RegisterForCleanup(key.Name);
+
+            CryptographyClient client = GetCryptoClient(key.Id);
+            using RSA rsa = await client.CreateRSAAsync();
+
+            byte[] plaintext = Encoding.UTF8.GetBytes("A single block of plaintext");
+            byte[] hash = rsa.SignData(plaintext, 0, plaintext.Length, HashAlgorithmName.SHA256, RSASignaturePadding.Pss);
+            Assert.IsTrue(rsa.VerifyData(plaintext, hash, HashAlgorithmName.SHA256, RSASignaturePadding.Pss));
+        }
+
+        [RecordedTest]
+        public async Task CreateRSASignVerifyRemote()
+        {
+            KeyVaultKey key = await CreateTestKey(EncryptionAlgorithm.RsaOaep256);
+            RegisterForCleanup(key.Name);
+
+            CryptographyClient client = GetCryptoClient(key.Id, forceRemote: true);
+            using RSA rsa = await client.CreateRSAAsync();
+
+            byte[] plaintext = Encoding.UTF8.GetBytes("A single block of plaintext");
+            byte[] hash = rsa.SignData(plaintext, 0, plaintext.Length, HashAlgorithmName.SHA256, RSASignaturePadding.Pss);
+            Assert.IsTrue(rsa.VerifyData(plaintext, hash, HashAlgorithmName.SHA256, RSASignaturePadding.Pss));
+        }
+
         private async Task<KeyVaultKey> CreateTestKey(EncryptionAlgorithm algorithm)
         {
             string keyName = Recording.GenerateId();

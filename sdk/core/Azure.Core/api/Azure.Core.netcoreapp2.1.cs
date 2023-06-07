@@ -18,6 +18,8 @@ namespace Azure
     public static partial class AzureCoreExtensions
     {
         public static dynamic ToDynamicFromJson(this System.BinaryData utf8Json) { throw null; }
+        public static dynamic ToDynamicFromJson(this System.BinaryData utf8Json, Azure.Core.Dynamic.DynamicCaseMapping caseMapping, Azure.Core.Dynamic.DynamicDateTimeHandling dateTimeHandling = Azure.Core.Dynamic.DynamicDateTimeHandling.Rfc3339) { throw null; }
+        public static dynamic ToDynamicFromJson(this System.BinaryData utf8Json, Azure.Core.Dynamic.DynamicDataOptions options) { throw null; }
         public static System.Threading.Tasks.ValueTask<T?> ToObjectAsync<T>(this System.BinaryData data, Azure.Core.Serialization.ObjectSerializer serializer, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static object? ToObjectFromJson(this System.BinaryData data) { throw null; }
         public static T? ToObject<T>(this System.BinaryData data, Azure.Core.Serialization.ObjectSerializer serializer, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -778,6 +780,11 @@ namespace Azure.Core.Diagnostics
 }
 namespace Azure.Core.Dynamic
 {
+    public enum DynamicCaseMapping
+    {
+        None = 0,
+        PascalToCamel = 1,
+    }
     [System.Diagnostics.DebuggerDisplayAttribute("{DebuggerDisplay,nq}")]
     public sealed partial class DynamicData : System.Dynamic.IDynamicMetaObjectProvider, System.IDisposable
     {
@@ -807,6 +814,17 @@ namespace Azure.Core.Dynamic
         public static bool operator !=(Azure.Core.Dynamic.DynamicData? left, object? right) { throw null; }
         System.Dynamic.DynamicMetaObject System.Dynamic.IDynamicMetaObjectProvider.GetMetaObject(System.Linq.Expressions.Expression parameter) { throw null; }
         public override string ToString() { throw null; }
+    }
+    public partial class DynamicDataOptions
+    {
+        public DynamicDataOptions() { }
+        public Azure.Core.Dynamic.DynamicCaseMapping CaseMapping { get { throw null; } set { } }
+        public Azure.Core.Dynamic.DynamicDateTimeHandling DateTimeHandling { get { throw null; } set { } }
+    }
+    public enum DynamicDateTimeHandling
+    {
+        Rfc3339 = 0,
+        UnixTime = 1,
     }
 }
 namespace Azure.Core.Extensions

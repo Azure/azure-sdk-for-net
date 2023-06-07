@@ -8,12 +8,11 @@ using Azure.Core.TestFramework;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Resources;
 using Azure.ResourceManager.Storage.Models;
-using Azure.ResourceManager.Storage.Tests.Helpers;
 using NUnit.Framework;
 
 namespace Azure.ResourceManager.Storage.Tests
 {
-    public class StorageAccountManagedIdentityTests : StorageTestBase
+    public class StorageAccountManagedIdentityTests : StorageManagementTestBase
     {
         private ResourceGroupResource _resourceGroup;
         private const string namePrefix = "teststoragemgmt";

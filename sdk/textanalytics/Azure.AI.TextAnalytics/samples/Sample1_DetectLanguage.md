@@ -194,8 +194,6 @@ foreach (DetectLanguageResult documentLanguage in documentsLanguage)
 
     Console.WriteLine($"  Detected language: {documentLanguage.PrimaryLanguage.Name}");
     Console.WriteLine($"  Confidence score: {documentLanguage.PrimaryLanguage.ConfidenceScore}");
-    if (documentLanguage.PrimaryLanguage.Script is not null)
-        Console.WriteLine($"  Script: {documentLanguage.PrimaryLanguage.Script}");
 
     Console.WriteLine($"  Document statistics:");
     Console.WriteLine($"    Character count: {documentLanguage.Statistics.CharacterCount}");
