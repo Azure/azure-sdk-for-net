@@ -28,6 +28,14 @@ namespace Azure.Messaging.ServiceBus
         public CancellationToken CancellationToken { get; }
 
         /// <summary>
+        /// The <see cref="System.Threading.CancellationToken"/> instance is cancelled when the lock renewal failed to
+        /// renew the lock or the <see cref="ServiceBusProcessorOptions.MaxAutoLockRenewalDuration"/> has elapsed.
+        /// </summary>
+        /// <remarks>The cancellation token is triggered by comparing <see cref="ServiceBusReceivedMessage.LockedUntil"/>
+        /// against <see cref="DateTimeOffset.UtcNow"/> and might be subjected to clock drift.</remarks>
+        public CancellationToken MessageLockCancellationToken { get; }
+
+        /// <summary>
         /// The path of the Service Bus entity that the message was received from.
         /// </summary>
         public string EntityPath => _receiver.EntityPath;
@@ -46,6 +54,7 @@ namespace Azure.Messaging.ServiceBus
 
         private readonly ServiceBusReceiver _receiver;
         private readonly ProcessorReceiveActions _receiveActions;
+        private readonly CancellationTokenSource messageLockLostCancellationSource;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ProcessMessageEventArgs"/> class.
@@ -100,8 +109,12 @@ namespace Azure.Messaging.ServiceBus
             _receiver = manager?.Receiver;
             CancellationToken = cancellationToken;
 
+            messageLockLostCancellationSource = new CancellationTokenSource();
+            MessageLockCancellationToken = messageLockLostCancellationSource.Token;
+            messageLockLostCancellationSource.CancelAfterLockExpired(Message);
+
             bool autoRenew = manager?.ShouldAutoRenewMessageLock() == true;
-            _receiveActions = new ProcessorReceiveActions(message, manager, autoRenew);
+            _receiveActions = new ProcessorReceiveActions(message, messageLockLostCancellationSource, manager, autoRenew);
         }
 
         /// <summary>
@@ -214,6 +227,12 @@ namespace Azure.Messaging.ServiceBus
             CancellationToken cancellationToken = default)
         {
             await _receiver.RenewMessageLockAsync(message, cancellationToken).ConfigureAwait(false);
+
+            // Currently only the trigger message supports cancellation token for LockedUntil.
+            if (message == Message)
+            {
+                messageLockLostCancellationSource.CancelAfterLockExpired(Message);
+            }
         }
 
         /// <summary>
@@ -223,6 +242,16 @@ namespace Azure.Messaging.ServiceBus
 
         internal void EndExecutionScope() => _receiveActions.EndExecutionScope();
 
-        internal async Task CancelMessageLockRenewalAsync() => await _receiveActions.CancelMessageLockRenewalAsync().ConfigureAwait(false);
+        internal async Task CancelMessageLockRenewalAsync()
+        {
+            try
+            {
+                await _receiveActions.CancelMessageLockRenewalAsync().ConfigureAwait(false);
+            }
+            finally
+            {
+                messageLockLostCancellationSource.Dispose();
+            }
+        }
     }
 }
