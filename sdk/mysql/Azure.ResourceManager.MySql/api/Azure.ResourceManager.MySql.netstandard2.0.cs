@@ -1325,6 +1325,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
         public Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerHighAvailability HighAvailability { get { throw null; } set { } }
         public Azure.ResourceManager.Models.ManagedServiceIdentity Identity { get { throw null; } set { } }
         public Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerMaintenanceWindow MaintenanceWindow { get { throw null; } set { } }
+        public Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerNetwork Network { get { throw null; } set { } }
         public Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerReplicationRole? ReplicationRole { get { throw null; } set { } }
         public Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerSku Sku { get { throw null; } set { } }
         public Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerStorage Storage { get { throw null; } set { } }

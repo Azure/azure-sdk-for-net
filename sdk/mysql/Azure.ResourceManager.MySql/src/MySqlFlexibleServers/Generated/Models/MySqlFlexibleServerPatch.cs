@@ -42,5 +42,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
         public MySqlFlexibleServerReplicationRole? ReplicationRole { get; set; }
         /// <summary> The Data Encryption for CMK. </summary>
         public MySqlFlexibleServerDataEncryption DataEncryption { get; set; }
+        /// <summary> Network related properties of a server. </summary>
+        public MySqlFlexibleServerNetwork Network { get; set; }
     }
 }

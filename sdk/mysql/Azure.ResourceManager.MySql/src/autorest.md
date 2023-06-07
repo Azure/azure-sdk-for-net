@@ -183,7 +183,7 @@ directive:
 
 ``` yaml $(tag) == 'package-flexibleserver-2022-09-30-preview'
 namespace: Azure.ResourceManager.MySql.FlexibleServers
-require: https://github.com/Azure/azure-rest-api-specs/blob/4f6418dca8c15697489bbe6f855558bb79ca5bf5/specification/mysql/resource-manager/readme.md
+require: https://github.com/Azure/azure-rest-api-specs/blob/6c6b16dc98d720304633b76c8e82c282ffa9cc08/specification/mysql/resource-manager/readme.md
 output-folder: $(this-folder)/MySqlFlexibleServers/Generated
 modelerfour:
   flatten-payloads: false

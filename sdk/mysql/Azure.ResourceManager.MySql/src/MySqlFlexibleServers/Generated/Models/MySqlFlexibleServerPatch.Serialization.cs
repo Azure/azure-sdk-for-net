@@ -78,6 +78,11 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
                 writer.WritePropertyName("dataEncryption"u8);
                 writer.WriteObjectValue(DataEncryption);
             }
+            if (Optional.IsDefined(Network))
+            {
+                writer.WritePropertyName("network"u8);
+                writer.WriteObjectValue(Network);
+            }
             writer.WriteEndObject();
             writer.WriteEndObject();
         }
