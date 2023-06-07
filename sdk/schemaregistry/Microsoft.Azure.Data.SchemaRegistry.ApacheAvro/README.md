@@ -31,11 +31,11 @@ In order to interact with the Azure Schema Registry service, you'll need to crea
 
 #### Get credentials
 
-To acquire authenicated credentials and start interacting with Azure resources, please see the [quickstart guide here][quickstart_guide].
+To acquire authenticated credentials and start interacting with Azure resources, please see the [quickstart guide here][quickstart_guide].
 
 #### Get Event Hubs namespace hostname
 
-The simpliest way is to use the [Azure portal][azure_portal] and navigate to your Event Hubs namespace. From the Overview tab, you'll see `Host name`. Copy the value from this field.
+The simplest way is to use the [Azure portal][azure_portal] and navigate to your Event Hubs namespace. From the Overview tab, you'll see `Host name`. Copy the value from this field.
 
 #### Create SchemaRegistryClient
 
