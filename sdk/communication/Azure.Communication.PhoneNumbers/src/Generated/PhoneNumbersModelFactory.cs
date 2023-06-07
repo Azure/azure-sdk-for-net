@@ -8,15 +8,16 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Azure.Communication.PhoneNumbers;
 
-namespace Azure.Communication.PhoneNumbers
+namespace PhoneNumbers
 {
     /// <summary> Model factory for models. </summary>
     public static partial class PhoneNumbersModelFactory
     {
         /// <summary> Initializes a new instance of PhoneNumberAreaCode. </summary>
         /// <param name="areaCode"> An area code. </param>
-        /// <returns> A new <see cref="PhoneNumbers.PhoneNumberAreaCode"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Azure.Communication.PhoneNumbers.PhoneNumberAreaCode"/> instance for mocking. </returns>
         public static PhoneNumberAreaCode PhoneNumberAreaCode(string areaCode = null)
         {
             return new PhoneNumberAreaCode(areaCode);
@@ -26,7 +27,7 @@ namespace Azure.Communication.PhoneNumbers
         /// <param name="localizedName"> Represents the name of the country. </param>
         /// <param name="countryCode"> Represents the abbreviated name of the country. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="localizedName"/> or <paramref name="countryCode"/> is null. </exception>
-        /// <returns> A new <see cref="PhoneNumbers.PhoneNumberCountry"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Azure.Communication.PhoneNumbers.PhoneNumberCountry"/> instance for mocking. </returns>
         public static PhoneNumberCountry PhoneNumberCountry(string localizedName = null, string countryCode = null)
         {
             if (localizedName == null)
@@ -44,7 +45,7 @@ namespace Azure.Communication.PhoneNumbers
         /// <summary> Initializes a new instance of PhoneNumberLocality. </summary>
         /// <param name="localizedName"> Represents the localized name of the locality. </param>
         /// <param name="administrativeDivision"> Represents an administrative division. e.g. state or province. </param>
-        /// <returns> A new <see cref="PhoneNumbers.PhoneNumberLocality"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Azure.Communication.PhoneNumbers.PhoneNumberLocality"/> instance for mocking. </returns>
         public static PhoneNumberLocality PhoneNumberLocality(string localizedName = null, PhoneNumberAdministrativeDivision administrativeDivision = null)
         {
             return new PhoneNumberLocality(localizedName, administrativeDivision);
@@ -54,7 +55,7 @@ namespace Azure.Communication.PhoneNumbers
         /// <param name="localizedName"> Represents the localized name of the administrative division of the locality. e.g. state or province localized name. </param>
         /// <param name="abbreviatedName"> Represents the abbreviated name of the administrative division of the locality. e.g. state or province abbreviation such as WA (Washington). </param>
         /// <exception cref="ArgumentNullException"> <paramref name="localizedName"/> or <paramref name="abbreviatedName"/> is null. </exception>
-        /// <returns> A new <see cref="PhoneNumbers.PhoneNumberAdministrativeDivision"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Azure.Communication.PhoneNumbers.PhoneNumberAdministrativeDivision"/> instance for mocking. </returns>
         public static PhoneNumberAdministrativeDivision PhoneNumberAdministrativeDivision(string localizedName = null, string abbreviatedName = null)
         {
             if (localizedName == null)
@@ -74,7 +75,7 @@ namespace Azure.Communication.PhoneNumbers
         /// <param name="assignmentType"> Represents the assignment type of the offering. </param>
         /// <param name="availableCapabilities"> Capabilities of a phone number. </param>
         /// <param name="cost"> The incurred cost for a single phone number. </param>
-        /// <returns> A new <see cref="PhoneNumbers.PhoneNumberOffering"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Azure.Communication.PhoneNumbers.PhoneNumberOffering"/> instance for mocking. </returns>
         public static PhoneNumberOffering PhoneNumberOffering(PhoneNumberType? phoneNumberType = null, PhoneNumberAssignmentType? assignmentType = null, PhoneNumberCapabilities availableCapabilities = null, PhoneNumberCost cost = null)
         {
             return new PhoneNumberOffering(phoneNumberType, assignmentType, availableCapabilities, cost);
@@ -85,7 +86,7 @@ namespace Azure.Communication.PhoneNumbers
         /// <param name="isoCurrencySymbol"> The ISO 4217 currency code for the cost amount, e.g. USD. </param>
         /// <param name="billingFrequency"> The frequency with which the cost gets billed. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="isoCurrencySymbol"/> is null. </exception>
-        /// <returns> A new <see cref="PhoneNumbers.PhoneNumberCost"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Azure.Communication.PhoneNumbers.PhoneNumberCost"/> instance for mocking. </returns>
         public static PhoneNumberCost PhoneNumberCost(double amount = default, string isoCurrencySymbol = null, BillingFrequency billingFrequency = default)
         {
             if (isoCurrencySymbol == null)
@@ -106,12 +107,49 @@ namespace Azure.Communication.PhoneNumbers
         /// <param name="searchExpiresOn"> The date that this search result expires and phone numbers are no longer on hold. A search result expires in less than 15min, e.g. 2020-11-19T16:31:49.048Z. </param>
         /// <param name="errorCode"> The error code of the search. </param>
         /// <param name="error"> Mapping Error Messages to Codes. </param>
-        /// <returns> A new <see cref="PhoneNumbers.PhoneNumberSearchResult"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Azure.Communication.PhoneNumbers.PhoneNumberSearchResult"/> instance for mocking. </returns>
         public static PhoneNumberSearchResult PhoneNumberSearchResult(string searchId = null, IEnumerable<string> phoneNumbers = null, PhoneNumberType phoneNumberType = default, PhoneNumberAssignmentType assignmentType = default, PhoneNumberCapabilities capabilities = null, PhoneNumberCost cost = null, DateTimeOffset searchExpiresOn = default, int? errorCode = null, PhoneNumberSearchResultError? error = null)
         {
             phoneNumbers ??= new List<string>();
 
             return new PhoneNumberSearchResult(searchId, phoneNumbers?.ToList(), phoneNumberType, assignmentType, capabilities, cost, searchExpiresOn, errorCode, error);
+        }
+
+        /// <summary> Initializes a new instance of PurchasedPhoneNumber. </summary>
+        /// <param name="id"> The id of the phone number, e.g. 11234567890. </param>
+        /// <param name="phoneNumber"> String of the E.164 format of the phone number, e.g. +11234567890. </param>
+        /// <param name="countryCode"> The ISO 3166-2 code of the phone number&apos;s country, e.g. US. </param>
+        /// <param name="phoneNumberType"> The phone number&apos;s type, e.g. geographic, tollFree. </param>
+        /// <param name="capabilities"> Capabilities of a phone number. </param>
+        /// <param name="assignmentType"> The assignment type of the phone number. A phone number can be assigned to a person, or to an application. </param>
+        /// <param name="purchaseDate"> The date and time that the phone number was purchased. </param>
+        /// <param name="cost"> The incurred cost for a single phone number. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="id"/>, <paramref name="phoneNumber"/>, <paramref name="countryCode"/>, <paramref name="capabilities"/> or <paramref name="cost"/> is null. </exception>
+        /// <returns> A new <see cref="Azure.Communication.PhoneNumbers.PurchasedPhoneNumber"/> instance for mocking. </returns>
+        public static PurchasedPhoneNumber PurchasedPhoneNumber(string id = null, string phoneNumber = null, string countryCode = null, PhoneNumberType phoneNumberType = default, PhoneNumberCapabilities capabilities = null, PhoneNumberAssignmentType assignmentType = default, DateTimeOffset purchaseDate = default, PhoneNumberCost cost = null)
+        {
+            if (id == null)
+            {
+                throw new ArgumentNullException(nameof(id));
+            }
+            if (phoneNumber == null)
+            {
+                throw new ArgumentNullException(nameof(phoneNumber));
+            }
+            if (countryCode == null)
+            {
+                throw new ArgumentNullException(nameof(countryCode));
+            }
+            if (capabilities == null)
+            {
+                throw new ArgumentNullException(nameof(capabilities));
+            }
+            if (cost == null)
+            {
+                throw new ArgumentNullException(nameof(cost));
+            }
+
+            return new PurchasedPhoneNumber(id, phoneNumber, countryCode, phoneNumberType, capabilities, assignmentType, purchaseDate, cost);
         }
     }
 }

@@ -8,8 +8,9 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Azure.Communication.Chat;
 
-namespace Azure.Communication.Chat
+namespace Chat
 {
     /// <summary> Model factory for models. </summary>
     public static partial class ChatModelFactory
@@ -20,7 +21,7 @@ namespace Azure.Communication.Chat
         /// <param name="target"> The error target. </param>
         /// <param name="details"> Further details about specific errors that led to this error. </param>
         /// <param name="innerError"> The inner error if any. </param>
-        /// <returns> A new <see cref="Chat.ChatError"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Azure.Communication.Chat.ChatError"/> instance for mocking. </returns>
         public static ChatError ChatError(string code = null, string message = null, string target = null, IEnumerable<ChatError> details = null, ChatError innerError = null)
         {
             details ??= new List<ChatError>();
@@ -30,12 +31,23 @@ namespace Azure.Communication.Chat
 
         /// <summary> Initializes a new instance of AddChatParticipantsResult. </summary>
         /// <param name="invalidParticipants"> The participants that failed to be added to the chat thread. </param>
-        /// <returns> A new <see cref="Chat.AddChatParticipantsResult"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Azure.Communication.Chat.AddChatParticipantsResult"/> instance for mocking. </returns>
         public static AddChatParticipantsResult AddChatParticipantsResult(IEnumerable<ChatError> invalidParticipants = null)
         {
             invalidParticipants ??= new List<ChatError>();
 
             return new AddChatParticipantsResult(invalidParticipants?.ToList());
+        }
+
+        /// <summary> Initializes a new instance of ChatThreadItem. </summary>
+        /// <param name="id"> Chat thread id. </param>
+        /// <param name="topic"> Chat thread topic. </param>
+        /// <param name="deletedOn"> The timestamp when the chat thread was deleted. The timestamp is in RFC3339 format: `yyyy-MM-ddTHH:mm:ssZ`. </param>
+        /// <param name="lastMessageReceivedOn"> The timestamp when the last message arrived at the server. The timestamp is in RFC3339 format: `yyyy-MM-ddTHH:mm:ssZ`. </param>
+        /// <returns> A new <see cref="Azure.Communication.Chat.ChatThreadItem"/> instance for mocking. </returns>
+        public static ChatThreadItem ChatThreadItem(string id = null, string topic = null, DateTimeOffset? deletedOn = null, DateTimeOffset? lastMessageReceivedOn = null)
+        {
+            return new ChatThreadItem(id, topic, deletedOn, lastMessageReceivedOn);
         }
     }
 }
