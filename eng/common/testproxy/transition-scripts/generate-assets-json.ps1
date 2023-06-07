@@ -138,11 +138,18 @@ class Version {
 }
 
 Function Test-Exe-In-Path {
-  Param([string] $ExeToLookFor)
+  Param([string] $ExeToLookFor, [bool]$ExitOnError = $true)
   if ($null -eq (Get-Command $ExeToLookFor -ErrorAction SilentlyContinue)) {
-    Write-Error "Unable to find $ExeToLookFor in your PATH"
-    exit 1
+    if ($ExitOnError) {
+      Write-Error "Unable to find $ExeToLookFor in your PATH"
+      exit 1
+    }
+    else {
+      return $false
+    }
   }
+
+  return $true
 }
 
 Function Test-TestProxyVersion {
@@ -348,9 +355,29 @@ $language = Get-Repo-Language
 # in the path and that we're able to map the language's recording
 # directories
 if ($InitialPush) {
-  Test-Exe-In-Path -ExeToLookFor $TestProxyExe
+  $proxyPresent = Test-Exe-In-Path -ExeToLookFor $TestProxyExe -ExitOnError $false
 
-  if ($TestProxyExe -eq "test-proxy") {
+  # try to fall back 
+  if (-not $proxyPresent) {
+    $StandaloneProxyExe = "Azure.Sdk.Tools.TestProxy"
+
+    if ($IsWindows) {
+      $StandaloneProxyExe += ".exe"
+    }
+
+    $standalonePresent = Test-Exe-In-Path -ExeToLookFor $StandaloneProxyExe -ExitOnError $false
+
+    if ($standalonePresent) {
+      Write-Host "Default proxy exe $TestProxyExe is not present, but standalone tool $StandaloneProxyExe is. Updating proxy exe to standalone version."
+      $TestProxyExe = $StandaloneProxyExe
+    }
+    else {
+      Write-Error "The user has selected option InitialPush to push their assets, neither $TestProxyExe nor StandaloneProxyExe are installed on this machine."
+      exit 1
+    }
+  }
+
+  if ($TestProxyExe -eq "test-proxy" -or $TestProxyExe.StartsWith("Azure.Sdk.Tools.TestProxy")) {
     Test-TestProxyVersion -TestProxyExe $TestProxyExe
   }
 
