@@ -77,7 +77,6 @@ namespace Azure.Messaging.EventGrid.Namespaces
         /// <exception cref="ArgumentException"> <paramref name="topicName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/EventGridClient.xml" path="doc/members/member[@name='PublishCloudEventAsync(string,RequestContent,RequestContext)']/*" />
         internal virtual async Task<Response> PublishCloudEventAsync(string topicName, RequestContent content, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(topicName, nameof(topicName));
@@ -114,7 +113,6 @@ namespace Azure.Messaging.EventGrid.Namespaces
         /// <exception cref="ArgumentException"> <paramref name="topicName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/EventGridClient.xml" path="doc/members/member[@name='PublishCloudEvent(string,RequestContent,RequestContext)']/*" />
         internal virtual Response PublishCloudEvent(string topicName, RequestContent content, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(topicName, nameof(topicName));
@@ -151,7 +149,6 @@ namespace Azure.Messaging.EventGrid.Namespaces
         /// <exception cref="ArgumentException"> <paramref name="topicName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/EventGridClient.xml" path="doc/members/member[@name='PublishCloudEventsAsync(string,RequestContent,RequestContext)']/*" />
         public virtual async Task<Response> PublishCloudEventsAsync(string topicName, RequestContent content, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(topicName, nameof(topicName));
@@ -188,7 +185,6 @@ namespace Azure.Messaging.EventGrid.Namespaces
         /// <exception cref="ArgumentException"> <paramref name="topicName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/EventGridClient.xml" path="doc/members/member[@name='PublishCloudEvents(string,RequestContent,RequestContext)']/*" />
         public virtual Response PublishCloudEvents(string topicName, RequestContent content, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(topicName, nameof(topicName));
@@ -227,7 +223,6 @@ namespace Azure.Messaging.EventGrid.Namespaces
         /// <exception cref="ArgumentException"> <paramref name="topicName"/> or <paramref name="eventSubscriptionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/EventGridClient.xml" path="doc/members/member[@name='ReceiveCloudEventsAsync(string,string,int?,int?,RequestContext)']/*" />
         public virtual async Task<Response> ReceiveCloudEventsAsync(string topicName, string eventSubscriptionName, int? maxEvents, int? maxWaitTime, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(topicName, nameof(topicName));
@@ -266,7 +261,6 @@ namespace Azure.Messaging.EventGrid.Namespaces
         /// <exception cref="ArgumentException"> <paramref name="topicName"/> or <paramref name="eventSubscriptionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/EventGridClient.xml" path="doc/members/member[@name='ReceiveCloudEvents(string,string,int?,int?,RequestContext)']/*" />
         public virtual Response ReceiveCloudEvents(string topicName, string eventSubscriptionName, int? maxEvents, int? maxWaitTime, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(topicName, nameof(topicName));
@@ -304,7 +298,6 @@ namespace Azure.Messaging.EventGrid.Namespaces
         /// <exception cref="ArgumentException"> <paramref name="topicName"/> or <paramref name="eventSubscriptionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/EventGridClient.xml" path="doc/members/member[@name='AcknowledgeCloudEventsAsync(string,string,RequestContent,RequestContext)']/*" />
         public virtual async Task<Response> AcknowledgeCloudEventsAsync(string topicName, string eventSubscriptionName, RequestContent content, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(topicName, nameof(topicName));
@@ -343,7 +336,6 @@ namespace Azure.Messaging.EventGrid.Namespaces
         /// <exception cref="ArgumentException"> <paramref name="topicName"/> or <paramref name="eventSubscriptionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/EventGridClient.xml" path="doc/members/member[@name='AcknowledgeCloudEvents(string,string,RequestContent,RequestContext)']/*" />
         public virtual Response AcknowledgeCloudEvents(string topicName, string eventSubscriptionName, RequestContent content, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(topicName, nameof(topicName));
@@ -382,7 +374,6 @@ namespace Azure.Messaging.EventGrid.Namespaces
         /// <exception cref="ArgumentException"> <paramref name="topicName"/> or <paramref name="eventSubscriptionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/EventGridClient.xml" path="doc/members/member[@name='ReleaseCloudEventsAsync(string,string,RequestContent,RequestContext)']/*" />
         public virtual async Task<Response> ReleaseCloudEventsAsync(string topicName, string eventSubscriptionName, RequestContent content, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(topicName, nameof(topicName));
@@ -421,7 +412,6 @@ namespace Azure.Messaging.EventGrid.Namespaces
         /// <exception cref="ArgumentException"> <paramref name="topicName"/> or <paramref name="eventSubscriptionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/EventGridClient.xml" path="doc/members/member[@name='ReleaseCloudEvents(string,string,RequestContent,RequestContext)']/*" />
         public virtual Response ReleaseCloudEvents(string topicName, string eventSubscriptionName, RequestContent content, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(topicName, nameof(topicName));
@@ -460,7 +450,6 @@ namespace Azure.Messaging.EventGrid.Namespaces
         /// <exception cref="ArgumentException"> <paramref name="topicName"/> or <paramref name="eventSubscriptionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/EventGridClient.xml" path="doc/members/member[@name='RejectCloudEventsAsync(string,string,RequestContent,RequestContext)']/*" />
         public virtual async Task<Response> RejectCloudEventsAsync(string topicName, string eventSubscriptionName, RequestContent content, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(topicName, nameof(topicName));
@@ -499,7 +488,6 @@ namespace Azure.Messaging.EventGrid.Namespaces
         /// <exception cref="ArgumentException"> <paramref name="topicName"/> or <paramref name="eventSubscriptionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/EventGridClient.xml" path="doc/members/member[@name='RejectCloudEvents(string,string,RequestContent,RequestContext)']/*" />
         public virtual Response RejectCloudEvents(string topicName, string eventSubscriptionName, RequestContent content, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(topicName, nameof(topicName));
