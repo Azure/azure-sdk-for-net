@@ -13,7 +13,7 @@ using Azure.Core.Extensions;
 namespace Microsoft.Extensions.Azure
 {
     /// <summary> Extension methods to add <see cref="AnomalyDetectorClient"/> to client builder. </summary>
-    public static partial class AnomalyDetectorClientBuilderExtensions
+    public static partial class AzureAIAnomalyDetectorClientBuilderExtensions
     {
         /// <summary> Registers a <see cref="AnomalyDetectorClient"/> instance. </summary>
         /// <param name="builder"> The builder to register with. </param>
