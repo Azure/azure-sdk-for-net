@@ -892,7 +892,7 @@ namespace Azure.Communication.CallAutomation
     public partial class PlayOptions
     {
         public PlayOptions(Azure.Communication.CallAutomation.PlaySource playSource, System.Collections.Generic.IEnumerable<Azure.Communication.CommunicationIdentifier> playTo) { }
-        public System.Uri CallbackUri { get { throw null; } set { } }
+        public PlayOptions(System.Collections.Generic.IEnumerable<Azure.Communication.CallAutomation.PlaySource> playSources, System.Collections.Generic.IEnumerable<Azure.Communication.CommunicationIdentifier> playTo) { }
         public bool Loop { get { throw null; } set { } }
         public string OperationContext { get { throw null; } set { } }
         public Azure.Communication.CallAutomation.PlaySource PlaySource { get { throw null; } }
@@ -912,7 +912,7 @@ namespace Azure.Communication.CallAutomation
     public partial class PlayToAllOptions
     {
         public PlayToAllOptions(Azure.Communication.CallAutomation.PlaySource playSource) { }
-        public System.Uri CallbackUri { get { throw null; } set { } }
+        public PlayToAllOptions(System.Collections.Generic.IEnumerable<Azure.Communication.CallAutomation.PlaySource> playSources) { }
         public bool Loop { get { throw null; } set { } }
         public string OperationContext { get { throw null; } set { } }
         public Azure.Communication.CallAutomation.PlaySource PlaySource { get { throw null; } }
