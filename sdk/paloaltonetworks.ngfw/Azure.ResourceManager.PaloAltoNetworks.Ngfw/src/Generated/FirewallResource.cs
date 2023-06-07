@@ -89,6 +89,13 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
                 throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
         }
 
+        /// <summary> Gets an object representing a FirewallStatusResource along with the instance operations that can be performed on it in the FirewallResource. </summary>
+        /// <returns> Returns a <see cref="FirewallStatusResource" /> object. </returns>
+        public virtual FirewallStatusResource GetFirewallStatusResource()
+        {
+            return new FirewallStatusResource(Client, Id.AppendChildResource("statuses", "default"));
+        }
+
         /// <summary>
         /// Get a FirewallResource
         /// <list type="bullet">

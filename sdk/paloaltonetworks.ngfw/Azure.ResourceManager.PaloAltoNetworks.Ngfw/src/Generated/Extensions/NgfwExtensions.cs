@@ -217,6 +217,25 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         }
         #endregion
 
+        #region FirewallStatusResource
+        /// <summary>
+        /// Gets an object representing a <see cref="FirewallStatusResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="FirewallStatusResource.CreateResourceIdentifier" /> to create a <see cref="FirewallStatusResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="FirewallStatusResource" /> object. </returns>
+        public static FirewallStatusResource GetFirewallStatusResource(this ArmClient client, ResourceIdentifier id)
+        {
+            return client.GetResourceClient(() =>
+            {
+                FirewallStatusResource.ValidateResourceId(id);
+                return new FirewallStatusResource(client, id);
+            }
+            );
+        }
+        #endregion
+
         #region CertificateObjectLocalRulestackResource
         /// <summary>
         /// Gets an object representing a <see cref="CertificateObjectLocalRulestackResource" /> along with the instance operations that can be performed on it but with no data.
