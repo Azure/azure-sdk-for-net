@@ -33,7 +33,7 @@ namespace Azure.Communication.Identity
         /// <param name="endpoint"> The communication resource, for example https://my-resource.communication.azure.com. </param>
         /// <param name="apiVersion"> Api Version. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="clientDiagnostics"/>, <paramref name="pipeline"/>, <paramref name="endpoint"/> or <paramref name="apiVersion"/> is null. </exception>
-        public CommunicationIdentityRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string endpoint, string apiVersion = "2022-10-01")
+        public CommunicationIdentityRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string endpoint, string apiVersion = "2023-08-01")
         {
             ClientDiagnostics = clientDiagnostics ?? throw new ArgumentNullException(nameof(clientDiagnostics));
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
@@ -41,7 +41,7 @@ namespace Azure.Communication.Identity
             _apiVersion = apiVersion ?? throw new ArgumentNullException(nameof(apiVersion));
         }
 
-        internal HttpMessage CreateCreateRequest(IEnumerable<CommunicationTokenScope> createTokenWithScopes, int? expiresInMinutes)
+        internal HttpMessage CreateCreateRequest(Guid? repeatabilityRequestID, DateTimeOffset? repeatabilityFirstSent, IEnumerable<CommunicationTokenScope> createTokenWithScopes, int? expiresInMinutes)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -51,6 +51,14 @@ namespace Azure.Communication.Identity
             uri.AppendPath("/identities", false);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
+            if (repeatabilityRequestID != null)
+            {
+                request.Headers.Add("Repeatability-Request-ID", repeatabilityRequestID.Value);
+            }
+            if (repeatabilityFirstSent != null)
+            {
+                request.Headers.Add("Repeatability-First-Sent", repeatabilityFirstSent.Value, "R");
+            }
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             CommunicationIdentityCreateRequest communicationIdentityCreateRequest = new CommunicationIdentityCreateRequest()
@@ -72,13 +80,16 @@ namespace Azure.Communication.Identity
         }
 
         /// <summary> Create a new identity, and optionally, an access token. </summary>
+        /// <param name="repeatabilityRequestID"> If specified, the client directs that the request is repeatable; that is, that the client can make the request multiple times with the same Repeatability-Request-Id and get back an appropriate response without the server executing the request multiple times. The value of the Repeatability-Request-Id is an opaque string representing a client-generated, globally unique for all time, identifier for the request. It is recommended to use version 4 (random) UUIDs. Internal identifiers shouldn&apos;t be used. The value should be an opaque meaningless string in UUID format. </param>
+        /// <param name="repeatabilityFirstSent"> If Repeatability-Request-ID header is specified, then Repeatability-First-Sent header must also be specified. The value should be the date and time at which the request was first created, expressed using the IMF-fixdate form of HTTP-date. </param>
         /// <param name="createTokenWithScopes"> Also create access token for the created identity. </param>
         /// <param name="expiresInMinutes"> Optional custom validity period of the token within [60,1440] minutes range. If not provided, the default value of 1440 minutes (24 hours) will be used. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async Task<Response<CommunicationUserIdentifierAndToken>> CreateAsync(IEnumerable<CommunicationTokenScope> createTokenWithScopes = null, int? expiresInMinutes = null, CancellationToken cancellationToken = default)
+        public async Task<ResponseWithHeaders<CommunicationUserIdentifierAndToken, CommunicationIdentityCreateHeaders>> CreateAsync(Guid? repeatabilityRequestID = null, DateTimeOffset? repeatabilityFirstSent = null, IEnumerable<CommunicationTokenScope> createTokenWithScopes = null, int? expiresInMinutes = null, CancellationToken cancellationToken = default)
         {
-            using var message = CreateCreateRequest(createTokenWithScopes, expiresInMinutes);
+            using var message = CreateCreateRequest(repeatabilityRequestID, repeatabilityFirstSent, createTokenWithScopes, expiresInMinutes);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+            var headers = new CommunicationIdentityCreateHeaders(message.Response);
             switch (message.Response.Status)
             {
                 case 201:
@@ -86,7 +97,7 @@ namespace Azure.Communication.Identity
                         CommunicationUserIdentifierAndToken value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
                         value = CommunicationUserIdentifierAndToken.DeserializeCommunicationUserIdentifierAndToken(document.RootElement);
-                        return Response.FromValue(value, message.Response);
+                        return ResponseWithHeaders.FromValue(value, headers, message.Response);
                     }
                 default:
                     throw new RequestFailedException(message.Response);
@@ -94,13 +105,16 @@ namespace Azure.Communication.Identity
         }
 
         /// <summary> Create a new identity, and optionally, an access token. </summary>
+        /// <param name="repeatabilityRequestID"> If specified, the client directs that the request is repeatable; that is, that the client can make the request multiple times with the same Repeatability-Request-Id and get back an appropriate response without the server executing the request multiple times. The value of the Repeatability-Request-Id is an opaque string representing a client-generated, globally unique for all time, identifier for the request. It is recommended to use version 4 (random) UUIDs. Internal identifiers shouldn&apos;t be used. The value should be an opaque meaningless string in UUID format. </param>
+        /// <param name="repeatabilityFirstSent"> If Repeatability-Request-ID header is specified, then Repeatability-First-Sent header must also be specified. The value should be the date and time at which the request was first created, expressed using the IMF-fixdate form of HTTP-date. </param>
         /// <param name="createTokenWithScopes"> Also create access token for the created identity. </param>
         /// <param name="expiresInMinutes"> Optional custom validity period of the token within [60,1440] minutes range. If not provided, the default value of 1440 minutes (24 hours) will be used. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public Response<CommunicationUserIdentifierAndToken> Create(IEnumerable<CommunicationTokenScope> createTokenWithScopes = null, int? expiresInMinutes = null, CancellationToken cancellationToken = default)
+        public ResponseWithHeaders<CommunicationUserIdentifierAndToken, CommunicationIdentityCreateHeaders> Create(Guid? repeatabilityRequestID = null, DateTimeOffset? repeatabilityFirstSent = null, IEnumerable<CommunicationTokenScope> createTokenWithScopes = null, int? expiresInMinutes = null, CancellationToken cancellationToken = default)
         {
-            using var message = CreateCreateRequest(createTokenWithScopes, expiresInMinutes);
+            using var message = CreateCreateRequest(repeatabilityRequestID, repeatabilityFirstSent, createTokenWithScopes, expiresInMinutes);
             _pipeline.Send(message, cancellationToken);
+            var headers = new CommunicationIdentityCreateHeaders(message.Response);
             switch (message.Response.Status)
             {
                 case 201:
@@ -108,7 +122,7 @@ namespace Azure.Communication.Identity
                         CommunicationUserIdentifierAndToken value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
                         value = CommunicationUserIdentifierAndToken.DeserializeCommunicationUserIdentifierAndToken(document.RootElement);
-                        return Response.FromValue(value, message.Response);
+                        return ResponseWithHeaders.FromValue(value, headers, message.Response);
                     }
                 default:
                     throw new RequestFailedException(message.Response);
@@ -174,7 +188,7 @@ namespace Azure.Communication.Identity
             }
         }
 
-        internal HttpMessage CreateRevokeAccessTokensRequest(string id)
+        internal HttpMessage CreateRevokeAccessTokensRequest(string id, Guid? repeatabilityRequestID, DateTimeOffset? repeatabilityFirstSent)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -186,27 +200,38 @@ namespace Azure.Communication.Identity
             uri.AppendPath("/:revokeAccessTokens", false);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
+            if (repeatabilityRequestID != null)
+            {
+                request.Headers.Add("Repeatability-Request-ID", repeatabilityRequestID.Value);
+            }
+            if (repeatabilityFirstSent != null)
+            {
+                request.Headers.Add("Repeatability-First-Sent", repeatabilityFirstSent.Value, "R");
+            }
             request.Headers.Add("Accept", "application/json");
             return message;
         }
 
         /// <summary> Revoke all access tokens for the specific identity. </summary>
         /// <param name="id"> Identifier of the identity. </param>
+        /// <param name="repeatabilityRequestID"> If specified, the client directs that the request is repeatable; that is, that the client can make the request multiple times with the same Repeatability-Request-Id and get back an appropriate response without the server executing the request multiple times. The value of the Repeatability-Request-Id is an opaque string representing a client-generated, globally unique for all time, identifier for the request. It is recommended to use version 4 (random) UUIDs. Internal identifiers shouldn&apos;t be used. The value should be an opaque meaningless string in UUID format. </param>
+        /// <param name="repeatabilityFirstSent"> If Repeatability-Request-ID header is specified, then Repeatability-First-Sent header must also be specified. The value should be the date and time at which the request was first created, expressed using the IMF-fixdate form of HTTP-date. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
-        public async Task<Response> RevokeAccessTokensAsync(string id, CancellationToken cancellationToken = default)
+        public async Task<ResponseWithHeaders<CommunicationIdentityRevokeAccessTokensHeaders>> RevokeAccessTokensAsync(string id, Guid? repeatabilityRequestID = null, DateTimeOffset? repeatabilityFirstSent = null, CancellationToken cancellationToken = default)
         {
             if (id == null)
             {
                 throw new ArgumentNullException(nameof(id));
             }
 
-            using var message = CreateRevokeAccessTokensRequest(id);
+            using var message = CreateRevokeAccessTokensRequest(id, repeatabilityRequestID, repeatabilityFirstSent);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+            var headers = new CommunicationIdentityRevokeAccessTokensHeaders(message.Response);
             switch (message.Response.Status)
             {
                 case 204:
-                    return message.Response;
+                    return ResponseWithHeaders.FromValue(headers, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -214,21 +239,24 @@ namespace Azure.Communication.Identity
 
         /// <summary> Revoke all access tokens for the specific identity. </summary>
         /// <param name="id"> Identifier of the identity. </param>
+        /// <param name="repeatabilityRequestID"> If specified, the client directs that the request is repeatable; that is, that the client can make the request multiple times with the same Repeatability-Request-Id and get back an appropriate response without the server executing the request multiple times. The value of the Repeatability-Request-Id is an opaque string representing a client-generated, globally unique for all time, identifier for the request. It is recommended to use version 4 (random) UUIDs. Internal identifiers shouldn&apos;t be used. The value should be an opaque meaningless string in UUID format. </param>
+        /// <param name="repeatabilityFirstSent"> If Repeatability-Request-ID header is specified, then Repeatability-First-Sent header must also be specified. The value should be the date and time at which the request was first created, expressed using the IMF-fixdate form of HTTP-date. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
-        public Response RevokeAccessTokens(string id, CancellationToken cancellationToken = default)
+        public ResponseWithHeaders<CommunicationIdentityRevokeAccessTokensHeaders> RevokeAccessTokens(string id, Guid? repeatabilityRequestID = null, DateTimeOffset? repeatabilityFirstSent = null, CancellationToken cancellationToken = default)
         {
             if (id == null)
             {
                 throw new ArgumentNullException(nameof(id));
             }
 
-            using var message = CreateRevokeAccessTokensRequest(id);
+            using var message = CreateRevokeAccessTokensRequest(id, repeatabilityRequestID, repeatabilityFirstSent);
             _pipeline.Send(message, cancellationToken);
+            var headers = new CommunicationIdentityRevokeAccessTokensHeaders(message.Response);
             switch (message.Response.Status)
             {
                 case 204:
-                    return message.Response;
+                    return ResponseWithHeaders.FromValue(headers, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
