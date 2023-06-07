@@ -125,8 +125,6 @@ namespace Azure.Storage
 
         public const string DefaultScope = "/.default";
 
-        public const string EnUsCulture = "en-US";
-
         /// <summary>
         /// Storage Connection String constant values.
         /// </summary>
