@@ -141,6 +141,8 @@ namespace Azure.Messaging.ServiceBus
         /// </summary>
         public string Identifier { get; set; }
 
+        public int BatchSize { get; set; } = 1; // Should be an integer > 1 and less than some limit.
+
         /// <summary>
         /// Determines whether the specified <see cref="System.Object" /> is equal to this instance.
         /// </summary>
@@ -185,7 +187,8 @@ namespace Azure.Messaging.ServiceBus
                 MaxReceiveWaitTime = MaxReceiveWaitTime,
                 MaxConcurrentCalls = MaxConcurrentCalls,
                 SubQueue = SubQueue,
-                Identifier = Identifier
+                Identifier = Identifier,
+                BatchSize = BatchSize
             };
         }
     }

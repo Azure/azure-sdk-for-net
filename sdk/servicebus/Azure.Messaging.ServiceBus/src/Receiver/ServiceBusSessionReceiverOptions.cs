@@ -43,6 +43,8 @@ namespace Azure.Messaging.ServiceBus
         /// <inheritdoc cref="ServiceBusReceiverOptions.Identifier"/>
         public string Identifier { get; set; }
 
+        public int BatchSize { get; set; } = 1;
+
         /// <summary>
         /// Determines whether the specified <see cref="System.Object" /> is equal to this instance.
         /// </summary>
@@ -76,7 +78,8 @@ namespace Azure.Messaging.ServiceBus
             {
                 ReceiveMode = ReceiveMode,
                 PrefetchCount = PrefetchCount,
-                Identifier = Identifier
+                Identifier = Identifier,
+                BatchSize = BatchSize
             };
     }
 }

@@ -51,6 +51,7 @@ namespace Azure.Messaging.ServiceBus
             _concurrentAcceptSessionsSemaphore = concurrentAcceptSessionsSemaphore;
             _sessionReceiverOptions = new ServiceBusSessionReceiverOptions
             {
+                BatchSize = sessionProcessor.InnerProcessor.Options.BatchSize,
                 ReceiveMode = sessionProcessor.InnerProcessor.Options.ReceiveMode,
                 PrefetchCount = sessionProcessor.InnerProcessor.Options.PrefetchCount
             };

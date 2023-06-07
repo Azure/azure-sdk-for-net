@@ -51,6 +51,8 @@ namespace Azure.Messaging.ServiceBus
         /// </summary>
         public SubQueue SubQueue { get; set; } = SubQueue.None;
 
+        public int BatchSize { get; set; } = 1;
+
         /// <summary>
         /// Determines whether the specified <see cref="System.Object" /> is equal to this instance.
         /// </summary>
@@ -90,7 +92,8 @@ namespace Azure.Messaging.ServiceBus
                 ReceiveMode = ReceiveMode,
                 PrefetchCount = PrefetchCount,
                 SubQueue = SubQueue,
-                Identifier = Identifier
+                Identifier = Identifier,
+                BatchSize = BatchSize
             };
     }
 }

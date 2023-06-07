@@ -153,6 +153,8 @@ namespace Azure.Messaging.ServiceBus
         /// </summary>
         public IList<string> SessionIds { get; } = new List<string>();
 
+        public int BatchSize { get; set; } = 1;
+
         /// <summary>
         /// Determines whether the specified <see cref="System.Object" /> is equal to this instance.
         /// </summary>
@@ -188,6 +190,7 @@ namespace Azure.Messaging.ServiceBus
                 MaxAutoLockRenewalDuration = MaxAutoLockRenewalDuration,
                 MaxReceiveWaitTime = SessionIdleTimeout,
                 Identifier = Identifier,
+                BatchSize = BatchSize
             };
     }
 }
