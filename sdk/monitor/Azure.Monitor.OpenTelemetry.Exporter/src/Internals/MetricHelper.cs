@@ -3,7 +3,7 @@
 
 using System;
 using System.Collections.Generic;
-
+using Azure.Monitor.OpenTelemetry.Exporter.Internals.Diagnostics;
 using Azure.Monitor.OpenTelemetry.Exporter.Models;
 
 using OpenTelemetry;
