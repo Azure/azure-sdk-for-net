@@ -177,10 +177,10 @@ if ($generateFromLocalTypeSpec) {
       Push-Location $specRepoRoot
       $CommitHash = $(git rev-parse HEAD)
       $gitOriginUrl = (git remote get-url origin)
-      foreach ($remote in $gitRemotes) {
+      foreach ($remote in $gitOriginUrl) {
         Write-Host "Checking remote $remote"
         if ($remote.StartsWith("origin")) {
-          if ($remote -match '(.*)?github.com:(?<repo>[^/]*/azure-rest-api-specs).git') {
+          if ($remote -match '(.*)?github.com:(?<repo>[^/]*/azure-rest-api-specs(-pr)?)(.git)?') {
             $repo = $Matches["repo"]
             Write-Host "Found remote origin: $repo"
             break
@@ -189,7 +189,7 @@ if ($generateFromLocalTypeSpec) {
       }
     }
     catch {
-      Write-Error "Failed to get HEAD commit or remote origin of the local spec repo at $specRepoRoot."
+      Write-Error "Failed to get HEAD commit or remote origin of the local spec repo at specRepoRoot: $specRepoRoot."
       exit 1
     }
     finally {
