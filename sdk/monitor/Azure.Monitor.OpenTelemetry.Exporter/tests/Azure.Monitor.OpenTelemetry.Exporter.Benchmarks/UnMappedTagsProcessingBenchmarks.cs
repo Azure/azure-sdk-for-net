@@ -4,31 +4,21 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using Azure.Core;
 using Azure.Monitor.OpenTelemetry.Exporter.Internals;
 
 using BenchmarkDotNet.Attributes;
 
-/*
-BenchmarkDotNet=v0.13.4, OS=Windows 11 (10.0.22621.1778)
-Intel Core i7-8650U CPU 1.90GHz (Kaby Lake R), 1 CPU, 8 logical and 4 physical cores
-.NET SDK=7.0.105
-  [Host] : .NET 7.0.5 (7.0.523.17405), X64 RyuJIT AVX2
-
-Job=InProcess  Toolchain=InProcessEmitToolchain
-
-|                              Method    |     Mean |   Error |   StdDev |   Median |   Gen0 | Allocated |
-|--------------------------------------- |---------:|--------:|---------:|---------:|-------:|----------:|
-|     Benchmark_ActivityTagsProcessor    | 282.5 ns | 5.61 ns | 13.66 ns | 279.0 ns | 0.1335 |     560 B |
-*/
-
 namespace Azure.Monitor.OpenTelemetry.Exporter.Benchmarks
 {
     [MemoryDiagnoser]
-    public class ActivityTagsProcessorBenchmarks
+    public class UnMappedTagsProcessingBenchmarks
     {
         private Activity? _activity;
+        private ChangeTrackingDictionary<string, string>? _properties;
+        private ActivityTagsProcessor _tagsProcessor;
 
-        static ActivityTagsProcessorBenchmarks()
+        static UnMappedTagsProcessingBenchmarks()
         {
             Activity.DefaultIdFormat = ActivityIdFormat.W3C;
             Activity.ForceDefaultIdFormat = true;
@@ -42,38 +32,79 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Benchmarks
             ActivitySource.AddActivityListener(listener);
         }
 
-        [GlobalSetup]
-        public void Setup()
+        [GlobalSetup(Target = nameof(ProcessUnMappedTagsWithActivityTagProcessor))]
+        public void SetupWithActivityTagProcessor()
         {
             IEnumerable<KeyValuePair<string, object?>> tagObjects = new Dictionary<string, object?>
             {
                 [SemanticConventions.AttributeHttpScheme] = "https",
                 [SemanticConventions.AttributeHttpMethod] = "GET",
                 [SemanticConventions.AttributeHttpHost] = "localhost",
+                [SemanticConventions.AttributeAzureNameSpace] = "DemoAzureResource",
+                [SemanticConventions.AttributeEnduserId] = "test",
                 ["key1"] = "value1",
                 ["key2"] = "value2",
                 ["key3"] = "value3",
                 ["key4"] = "value4",
                 ["key5"] = "value5",
-                [SemanticConventions.AttributeAzureNameSpace] = "DemoAzureResource",
-                [SemanticConventions.AttributeEnduserId] = "test"
             };
 
             _activity = CreateTestActivity(tagObjects!);
+
+            _properties = new ChangeTrackingDictionary<string, string>();
+
+            _tagsProcessor = new ActivityTagsProcessor();
+            _tagsProcessor.CategorizeTags(_activity!);
+        }
+
+        [GlobalSetup(Target = nameof(ProcessUnMappedTagsWithoutActivityTagProcessor))]
+        public void SetupWithoutActivityTagProcessor()
+        {
+            IEnumerable<KeyValuePair<string, object?>> tagObjects = new Dictionary<string, object?>
+            {
+                [SemanticConventions.AttributeHttpScheme] = "https",
+                [SemanticConventions.AttributeHttpMethod] = "GET",
+                [SemanticConventions.AttributeHttpHost] = "localhost",
+                [SemanticConventions.AttributeAzureNameSpace] = "DemoAzureResource",
+                [SemanticConventions.AttributeEnduserId] = "test",
+                ["key1"] = "value1",
+                ["key2"] = "value2",
+                ["key3"] = "value3",
+                ["key4"] = "value4",
+                ["key5"] = "value5",
+            };
+
+            _activity = CreateTestActivity(tagObjects!);
+
+            _properties = new ChangeTrackingDictionary<string, string>();
         }
 
         [Benchmark]
-        public void Benchmark_ActivityTagsProcessor()
+        public void ProcessUnMappedTagsWithActivityTagProcessor()
         {
-            var activityTagsProcessor = new ActivityTagsProcessor();
-            activityTagsProcessor.CategorizeTags(_activity!);
+            _properties?.Clear();
+            for (int i = 0; i < _tagsProcessor.UnMappedTags.Length; i++)
+            {
+                var tag = _tagsProcessor.UnMappedTags[i];
+                _properties?.Add(tag.Key, tag.Value?.ToString() ?? "null");
+            }
         }
 
         [Benchmark]
-        public void Benchmark_ActivityTagsProcessorNew()
+        public void ProcessUnMappedTagsWithoutActivityTagProcessor()
         {
-            var activityTagsProcessor = new ActivityTagsProcessorNew();
-            activityTagsProcessor.CategorizeTags(_activity!);
+            _properties?.Clear();
+            foreach (ref readonly var tag in _activity!.EnumerateTagObjects())
+            {
+                if (ActivityTagsProcessorNew.s_semantics.Contains(tag.Key))
+                {
+                    continue;
+                }
+                else
+                {
+                    _properties?.Add(new KeyValuePair<string, string>(tag.Key, tag.Value?.ToString() ?? "null"));
+                }
+            }
         }
 
         private static Activity? CreateTestActivity(IEnumerable<KeyValuePair<string, object>>? additionalAttributes = null)
