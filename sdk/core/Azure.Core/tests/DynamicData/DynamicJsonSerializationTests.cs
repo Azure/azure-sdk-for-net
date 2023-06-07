@@ -51,7 +51,7 @@ namespace Azure.Core.Tests
         }
 
         [Test]
-        public void CanAssignAnonymousType()
+        public void CanAssignAnonymousType_ExistingProperty()
         {
             dynamic json = BinaryData.FromString("""{"foo":1}""").ToDynamicFromJson(DynamicCaseMapping.PascalToCamel);
 
@@ -63,6 +63,20 @@ namespace Azure.Core.Tests
 
             // Existing property
             json.Foo = anon;
+
+            // TODO: Validate
+        }
+
+        [Test]
+        public void CanAssignAnonymousType_NewProperty()
+        {
+            dynamic json = BinaryData.FromString("""{"foo":1}""").ToDynamicFromJson(DynamicCaseMapping.PascalToCamel);
+
+            var anon = new
+            {
+                StringProperty = "foo",
+                IntProperty = 1,
+            };
 
             // New property
             json.Bar = anon;
@@ -89,7 +103,7 @@ namespace Azure.Core.Tests
         }
 
         [Test]
-        public void CanAssignAllowedModelsWithCyclesOneDeep()
+        public void CanAssignAllowedModelsWithCyclesOneDeep_ExistingProperty()
         {
             dynamic json = BinaryData.FromString("""{"foo":1}""").ToDynamicFromJson(DynamicCaseMapping.PascalToCamel);
             NestedModel model = new()
@@ -108,12 +122,30 @@ namespace Azure.Core.Tests
             // Existing property
             json.Foo = model;
 
-            // New property
-            json.Bar = model;
-
             Assert.AreEqual("a", (string)json.Foo.StringProperty);
             Assert.AreEqual("b", (string)json.Foo.NestedProperty.StringProperty);
             Assert.AreEqual("c", (string)json.Foo.NestedProperty.NestedProperty.StringProperty);
+        }
+
+        [Test]
+        public void CanAssignAllowedModelsWithCyclesOneDeep_NewProperty()
+        {
+            dynamic json = BinaryData.FromString("""{"foo":1}""").ToDynamicFromJson(DynamicCaseMapping.PascalToCamel);
+            NestedModel model = new()
+            {
+                StringProperty = "a",
+                NestedProperty = new()
+                {
+                    StringProperty = "b",
+                    NestedProperty = new()
+                    {
+                        StringProperty = "c",
+                    }
+                }
+            };
+
+            // New property
+            json.Bar = model;
 
             Assert.AreEqual("a", (string)json.Bar.StringProperty);
             Assert.AreEqual("b", (string)json.Bar.NestedProperty.StringProperty);
@@ -121,7 +153,7 @@ namespace Azure.Core.Tests
         }
 
         [Test]
-        public void CanAssignAllowedModelsWithCyclesTwoDeep()
+        public void CanAssignAllowedModelsWithCyclesTwoDeep_ExistingProperty()
         {
             dynamic json = BinaryData.FromString("""{"foo":1}""").ToDynamicFromJson(DynamicCaseMapping.PascalToCamel);
             SkipNestedModel model = new()
@@ -140,12 +172,30 @@ namespace Azure.Core.Tests
             // Existing property
             json.Foo = model;
 
-            // New property
-            json.Bar = model;
-
             Assert.AreEqual("a", (string)json.Foo.StringProperty);
             Assert.AreEqual(1, (int)json.Foo.NestedProperty.IntProperty);
             Assert.AreEqual("b", (string)json.Foo.NestedProperty.NestedProperty.StringProperty);
+        }
+
+        [Test]
+        public void CanAssignAllowedModelsWithCyclesTwoDeep_NewProperty()
+        {
+            dynamic json = BinaryData.FromString("""{"foo":1}""").ToDynamicFromJson(DynamicCaseMapping.PascalToCamel);
+            SkipNestedModel model = new()
+            {
+                StringProperty = "a",
+                NestedProperty = new ChildNestedModel()
+                {
+                    IntProperty = 1,
+                    NestedProperty = new SkipNestedModel()
+                    {
+                        StringProperty = "b",
+                    }
+                }
+            };
+
+            // New property
+            json.Bar = model;
 
             Assert.AreEqual("a", (string)json.Bar.StringProperty);
             Assert.AreEqual(1, (int)json.Bar.NestedProperty.IntProperty);
@@ -178,7 +228,7 @@ namespace Azure.Core.Tests
         }
 
         [Test]
-        public void CanAssignDictionaryContainingAllowedTypes()
+        public void CanAssignDictionaryContainingAllowedTypes_ExistingProperty()
         {
             dynamic json = BinaryData.FromString("""{"foo":1}""").ToDynamicFromJson(DynamicCaseMapping.PascalToCamel);
 
@@ -188,6 +238,16 @@ namespace Azure.Core.Tests
 
             // Existing property
             json.Foo = values;
+        }
+
+        [Test]
+        public void CanAssignDictionaryContainingAllowedTypes_NewProperty()
+        {
+            dynamic json = BinaryData.FromString("""{"foo":1}""").ToDynamicFromJson(DynamicCaseMapping.PascalToCamel);
+
+            Dictionary<string, object> values = new();
+            values["stringValue"] = "a";
+            values["intValue"] = "b";
 
             // New property
             json.Bar = values;

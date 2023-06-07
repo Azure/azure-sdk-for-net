@@ -22,7 +22,7 @@ namespace Azure.Core.Dynamic
                     return;
                 }
 
-                if (!IsAllowedType(value.GetType(), value))
+                if (!IsAllowedType(value.GetType()))
                 {
                     throw new NotSupportedException($"Type is not currently supported: '{value.GetType()}'.");
                 }
@@ -30,21 +30,21 @@ namespace Azure.Core.Dynamic
                 // TODO: validate types in collections
             }
 
-            public static bool IsAllowedType<T>(Type type, T value)
+            public static bool IsAllowedType(Type type)
             {
-                if (IsAllowedKnownType(type, value))
+                if (IsAllowedKnownType(type))
                 {
                     return true;
                 }
 
-                return IsAllowedPoco(type, value, new HashSet<Type>());
+                return IsAllowedPocoType(type, new HashSet<Type>());
             }
 
-            private static bool IsAllowedKnownType<T>(Type type, T value)
+            private static bool IsAllowedKnownType(Type type)
             {
                 return IsAllowedPrimitive(type) ||
-                    IsAllowedArray(type, value) ||
-                    IsAllowedCollection(type, value) ||
+                    IsAllowedArrayType(type) ||
+                    IsAllowedCollectionType(type) ||
                     IsAllowedInterface(type) ||
 
                     // TODO: separate out non-primitive values?
@@ -69,42 +69,42 @@ namespace Azure.Core.Dynamic
                     type == typeof(ETag);
             }
 
-            private static bool IsAllowedArray<T>(Type type, T value)
+            private static bool IsAllowedArrayType(Type type)
             {
                 if (!type.IsArray)
                 {
                     return false;
                 }
 
-                if (type == typeof(object[]))
-                {
-                    object[] objects = GetAs<object[]>(value!);
-                    foreach (object obj in objects)
-                    {
-                        if (obj is null)
-                        {
-                            continue;
-                        }
+                //if (type == typeof(object[]))
+                //{
+                //    object[] objects = GetAs<object[]>(value!);
+                //    foreach (object obj in objects)
+                //    {
+                //        if (obj is null)
+                //        {
+                //            continue;
+                //        }
 
-                        if (!IsAllowedType(obj.GetType(), obj))
-                        {
-                            return false;
-                        }
-                    }
-                }
+                //        if (!IsAllowedType(obj.GetType(), obj))
+                //        {
+                //            return false;
+                //        }
+                //    }
+                //}
 
                 Type? elementType = type.GetElementType();
-                return elementType != null && IsAllowedType(elementType, value);
+                return elementType != null && IsAllowedType(elementType);
             }
 
             // TODO: Test case: list of lists of object
 
-            private static bool IsAllowedCollection<T>(Type type, T value)
+            private static bool IsAllowedCollectionType(Type type)
             {
-                return IsAllowedList(type, value) || IsAllowedDictionary(type, value);
+                return IsAllowedListType(type) || IsAllowedDictionaryType(type);
             }
 
-            private static bool IsAllowedList<T>(Type type, T value)
+            private static bool IsAllowedListType(Type type)
             {
                 if (!type.IsGenericType)
                 {
@@ -114,7 +114,7 @@ namespace Azure.Core.Dynamic
                 if (type.GetGenericTypeDefinition() == typeof(List<>))
                 {
                     Type[] types = type.GetGenericArguments();
-                    if (IsAllowedPrimitive(types[0]))
+                    if (IsAllowedType(types[0]))
                     {
                         return true;
                     }
@@ -122,17 +122,17 @@ namespace Azure.Core.Dynamic
                     // TODO: want to separate out test for allowed POCOs
                     // independent of value check
 
-                    if (types[0] == typeof(object))
-                    {
-                        List<object> objects = GetAs<List<object>>(value!);
-                        return AreAllowedTypes(objects);
-                    }
+                    //if (types[0] == typeof(object))
+                    //{
+                    //    List<object> objects = GetAs<List<object>>(value!);
+                    //    return AreAllowedTypes(objects);
+                    //}
                 }
 
                 return false;
             }
 
-            private static bool IsAllowedDictionary<T>(Type type, T value)
+            private static bool IsAllowedDictionaryType(Type type)
             {
                 if (!type.IsGenericType)
                 {
@@ -147,68 +147,79 @@ namespace Azure.Core.Dynamic
                         return true;
                     }
 
-                    if (types[0] == typeof(object))
-                    {
-                        IDictionary dict = (IDictionary)value!;
-                        if (!AreAllowedTypes(GetAs<IEnumerable<object>>(dict.Keys)))
-                        {
-                            return false;
-                        }
-                    }
+                    //if (types[0] == typeof(object))
+                    //{
+                    //    IDictionary dict = (IDictionary)value!;
+                    //    if (!AreAllowedTypes(GetAs<IEnumerable<object>>(dict.Keys)))
+                    //    {
+                    //        return false;
+                    //    }
+                    //}
 
-                    if (types[1] == typeof(object))
-                    {
-                        IDictionary dict = (IDictionary)value!;
-                        if (!AreAllowedTypes(GetAs<IEnumerable<object>>(dict.Keys)))
-                        {
-                            return false;
-                        }
-                    }
+                    //if (types[1] == typeof(object))
+                    //{
+                    //    IDictionary dict = (IDictionary)value!;
+                    //    if (!AreAllowedTypes(GetAs<IEnumerable<object>>(dict.Keys)))
+                    //    {
+                    //        return false;
+                    //    }
+                    //}
 
-                    return true;
+                    //return true;
                 }
 
                 return false;
             }
 
-            private static T GetAs<T>(object value) where T : notnull
-            {
-                return (T)value;
-            }
+            //private static T GetAs<T>(object value) where T : notnull
+            //{
+            //    return (T)value;
+            //}
 
-            private static bool AreAllowedTypes<T>(IEnumerable<T> values)
-            {
-                foreach (T value in values)
-                {
-                    if (value == null)
-                    {
-                        continue;
-                    }
+            //private static bool AreAllowedTypes<T>(IEnumerable<T> values)
+            //{
+            //    foreach (T value in values)
+            //    {
+            //        if (value == null)
+            //        {
+            //            continue;
+            //        }
 
-                    if (!IsAllowedType(value.GetType(), value))
-                    {
-                        return false;
-                    }
-                }
+            //        if (!IsAllowedType(value.GetType(), value))
+            //        {
+            //            return false;
+            //        }
+            //    }
 
-                return true;
-            }
+            //    return true;
+            //}
 
             private static bool IsAllowedInterface(Type type)
             {
-                // TODO: Interface support
-                return
-                    type == typeof(IEnumerable<bool>) ||
-                    type == typeof(IEnumerable<int>);
-            }
-
-            private static bool IsAllowedPoco<T>(Type type, T value, HashSet<Type> ancestorTypes)
-            {
-                if (value == null)
+                if (!type.IsGenericType)
                 {
-                    return true;
+                    return false;
                 }
 
+                if (!type.IsInterface)
+                {
+                    return false;
+                }
+
+                if (type.GetGenericTypeDefinition() == typeof(IEnumerable<>))
+                {
+                    Type[] types = type.GetGenericArguments();
+                    if (IsAllowedType(types[0]))
+                    {
+                        return true;
+                    }
+                }
+
+                return false;
+            }
+
+            private static bool IsAllowedPocoType(Type type, HashSet<Type> ancestorTypes)
+            {
                 if (!HasPublicParameterlessConstructor(type) && !IsAnonymousType(type))
                 {
                     return false;
@@ -226,10 +237,7 @@ namespace Azure.Core.Dynamic
                         return false;
                     }
 
-                    // Get the value
-                    object propertyValue = property.GetValue(value);
-
-                    if (IsAllowedKnownType(property.PropertyType, propertyValue))
+                    if (IsAllowedKnownType(property.PropertyType))
                     {
                         continue;
                     }
@@ -242,7 +250,7 @@ namespace Azure.Core.Dynamic
 
                     // Recurse
                     ancestorTypes.Add(type);
-                    if (!IsAllowedPoco(property.PropertyType, propertyValue, ancestorTypes))
+                    if (!IsAllowedPocoType(property.PropertyType, ancestorTypes))
                     {
                         return false;
                     }

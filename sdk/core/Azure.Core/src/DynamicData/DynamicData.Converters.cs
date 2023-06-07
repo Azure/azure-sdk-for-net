@@ -150,6 +150,9 @@ namespace Azure.Core.Dynamic
 
             public override bool CanConvert(Type typeToConvert)
             {
+                // TODO: We'll need to separate out a cursory type check
+                // and then do collection interrogation in the converter itself when we have the value.
+
                 return !AllowList.IsAllowedType(typeToConvert);
             }
 
