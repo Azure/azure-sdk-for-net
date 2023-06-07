@@ -1,14 +1,10 @@
 # Release History
 
-## 4.17.0-beta.2 (Unreleased)
-
-### Features Added
-
-### Breaking Changes
-
-### Bugs Fixed
+## 4.17.0-beta.2 (2023-06-06)
 
 ### Other Changes
+
+- Docs updated to remove example that was causing the doc build to fail.
 
 ## 4.17.0-beta.1 (2023-05-22)
 
