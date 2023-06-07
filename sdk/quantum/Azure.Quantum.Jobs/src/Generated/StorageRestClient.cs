@@ -19,10 +19,10 @@ namespace Azure.Quantum.Jobs
     internal partial class StorageRestClient
     {
         private readonly HttpPipeline _pipeline;
+        private readonly Uri _endpoint;
         private readonly string _subscriptionId;
         private readonly string _resourceGroupName;
         private readonly string _workspaceName;
-        private readonly Uri _endpoint;
 
         /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
         internal ClientDiagnostics ClientDiagnostics { get; }
@@ -30,20 +30,20 @@ namespace Azure.Quantum.Jobs
         /// <summary> Initializes a new instance of StorageRestClient. </summary>
         /// <param name="clientDiagnostics"> The handler for diagnostic messaging in the client. </param>
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
+        /// <param name="endpoint"> server parameter. </param>
         /// <param name="subscriptionId"> The Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of an Azure resource group. </param>
         /// <param name="workspaceName"> Name of the workspace. </param>
-        /// <param name="endpoint"> server parameter. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="clientDiagnostics"/>, <paramref name="pipeline"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="workspaceName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="clientDiagnostics"/>, <paramref name="pipeline"/>, <paramref name="endpoint"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="workspaceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="workspaceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public StorageRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string subscriptionId, string resourceGroupName, string workspaceName, Uri endpoint = null)
+        public StorageRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint, string subscriptionId, string resourceGroupName, string workspaceName)
         {
             ClientDiagnostics = clientDiagnostics ?? throw new ArgumentNullException(nameof(clientDiagnostics));
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
+            _endpoint = endpoint ?? throw new ArgumentNullException(nameof(endpoint));
             _subscriptionId = subscriptionId ?? throw new ArgumentNullException(nameof(subscriptionId));
             _resourceGroupName = resourceGroupName ?? throw new ArgumentNullException(nameof(resourceGroupName));
             _workspaceName = workspaceName ?? throw new ArgumentNullException(nameof(workspaceName));
-            _endpoint = endpoint ?? new Uri("https://quantum.azure.com");
         }
 
         internal HttpMessage CreateSasUriRequest(BlobDetails blobDetails)
