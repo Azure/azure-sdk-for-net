@@ -8,6 +8,9 @@ namespace Azure.Core
     /// </summary>
     public class ClientRedirectsOptions
     {
+        internal ClientRedirectsOptions()
+        { }
+
         /// <summary>
         /// Gets or sets a value that indicates whether the redirect policy should follow redirection responses.
         /// </summary>

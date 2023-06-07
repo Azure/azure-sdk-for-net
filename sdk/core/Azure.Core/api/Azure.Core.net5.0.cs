@@ -379,7 +379,7 @@ namespace Azure.Core
     {
         protected ClientOptions() { }
         protected ClientOptions(Azure.Core.DiagnosticsOptions? diagnostics) { }
-        public Azure.Core.ClientRedirectsOptions? ClientRedirects { get { throw null; } set { } }
+        public Azure.Core.ClientRedirectsOptions ClientRedirects { get { throw null; } set { } }
         public static Azure.Core.ClientOptions Default { get { throw null; } }
         public Azure.Core.DiagnosticsOptions Diagnostics { get { throw null; } }
         public Azure.Core.RetryOptions Retry { get { throw null; } }
@@ -395,7 +395,7 @@ namespace Azure.Core
     }
     public partial class ClientRedirectsOptions
     {
-        public ClientRedirectsOptions() { }
+        internal ClientRedirectsOptions() { }
         public bool IsClientRedirectEnabled { get { throw null; } set { } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]

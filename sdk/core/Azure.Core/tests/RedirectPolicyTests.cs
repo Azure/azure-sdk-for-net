@@ -192,6 +192,37 @@ namespace Azure.Core.Tests
             }
         }
 
+        [Test]
+        public async Task SetAllowAutoRedirectTakesPrecedenceWhenSet(
+            [Values(true, false)] bool isClientRedirectEnabled,
+            [Values(true, false, null)] bool? setAllowAutoRedirect)
+        {
+            var mockTransport = new MockTransport(
+                new MockResponse(300)
+                    .AddHeader("Location", "https://new.host/"),
+                new MockResponse(200));
+
+            var response = await SendRequestAsync(mockTransport, messageAction: message =>
+            {
+                message.Request.Uri.Reset(new Uri("https://example.com/"));
+                if (setAllowAutoRedirect.HasValue)
+                {
+                    RedirectPolicy.SetAllowAutoRedirect(message, setAllowAutoRedirect.Value);
+                }
+            }, new RedirectPolicy(isClientRedirectEnabled));
+
+            if (setAllowAutoRedirect ?? false || (!setAllowAutoRedirect.HasValue && isClientRedirectEnabled))
+            {
+                Assert.AreEqual(200, response.Status);
+                Assert.AreEqual(2, mockTransport.Requests.Count);
+            }
+            else
+            {
+                Assert.AreEqual(300, response.Status);
+                Assert.AreEqual(1, mockTransport.Requests.Count);
+            }
+        }
+
         public static readonly object[][] RedirectStatusCodes = {
             new object[] { 300 },
             new object[] { 301 },
