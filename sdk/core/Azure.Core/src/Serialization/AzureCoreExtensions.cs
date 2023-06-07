@@ -65,20 +65,26 @@ namespace Azure
         /// </summary>
         public static dynamic ToDynamicFromJson(this BinaryData utf8Json)
         {
-            if (utf8Json is ResponseContent content)
-            {
-                return utf8Json.ToDynamicFromJson(content.DynamicOptions);
-            }
+            DynamicDataOptions options = utf8Json is ResponseContent content ?
+                content.DynamicOptions :
+                DynamicDataOptions.Default;
 
-            return utf8Json.ToDynamicFromJson(DynamicDataOptions.Default);
+            return utf8Json.ToDynamicFromJson(options);
         }
 
         /// <summary>
         /// Return the content of the BinaryData as a dynamic type.
+        /// <paramref name="propertyNamingConvention">The naming convention to use for property names in the JSON content.</paramref>
         /// </summary>
-        public static dynamic ToDynamicFromJson(this BinaryData utf8Json, RawContentOptions options)
+        public static dynamic ToDynamicFromJson(this BinaryData utf8Json, PropertyNamingConvention propertyNamingConvention)
         {
-            return utf8Json.ToDynamicFromJson(options.GetDynamicOptions());
+            DynamicDataOptions options = utf8Json is ResponseContent content ?
+                new DynamicDataOptions(content.DynamicOptions) :
+                new DynamicDataOptions(DynamicDataOptions.Default);
+
+            options.PropertyNamingConvention = propertyNamingConvention;
+
+            return utf8Json.ToDynamicFromJson(options);
         }
 
         /// <summary>

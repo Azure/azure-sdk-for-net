@@ -16,6 +16,18 @@ namespace Azure.Core.Dynamic
         };
         internal static DynamicDataOptions Default { get => _default; }
 
+        public DynamicDataOptions() { }
+
+        /// <summary>
+        /// Copy constructor
+        /// </summary>
+        /// <param name="options"></param>
+        public DynamicDataOptions(DynamicDataOptions options)
+        {
+            PropertyNamingConvention = options.PropertyNamingConvention;
+            DateTimeHandling = options.DateTimeHandling;
+        }
+
         /// <summary>
         /// Gets or sets an object that specifies how dynamic property names will be mapped to member names in the data buffer.
         /// </summary>

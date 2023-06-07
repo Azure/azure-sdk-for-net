@@ -99,17 +99,17 @@ namespace Azure.Core
         /// Creates an instance of <see cref="RequestContent"/> that wraps a serialized version of an object.
         /// </summary>
         /// <param name="serializable">The <see cref="object"/> to serialize.</param>
-        /// <param name="options">Options to use when serializing the object.</param>
+        /// <param name="propertyNamingConvention">The naming convention to use for property names in the serialized content.</param>
         /// <returns>An instance of <see cref="RequestContent"/> that wraps a serialized version of the object.</returns>
-        public static RequestContent Create(object serializable, RawContentOptions options)
+        public static RequestContent Create(object serializable, PropertyNamingConvention propertyNamingConvention)
         {
-            JsonSerializerOptions serializerOptions = new();
-            if (options.UseCamelCaseNamingConvention)
+            JsonSerializerOptions options = new();
+            if (propertyNamingConvention == PropertyNamingConvention.CamelCase)
             {
-                serializerOptions.PropertyNamingPolicy = JsonNamingPolicy.CamelCase;
+                options.PropertyNamingPolicy = JsonNamingPolicy.CamelCase;
             };
 
-            ObjectSerializer serializer = new JsonObjectSerializer(serializerOptions);
+            ObjectSerializer serializer = new JsonObjectSerializer(options);
             return Create(serializer.Serialize(serializable));
         }
 

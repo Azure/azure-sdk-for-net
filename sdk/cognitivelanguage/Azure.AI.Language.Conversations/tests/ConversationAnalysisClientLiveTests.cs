@@ -23,24 +23,24 @@ namespace Azure.AI.Language.Conversations.Tests
         {
             var data = new
             {
-                analysisInput = new
+                AnalysisInput = new
                 {
-                    conversationItem = new
+                    ConversationItem = new
                     {
-                        id = "1",
-                        text = "Send an email to Carol about the tomorrow's demo",
-                        participantId = "1",
+                        Text = "Send an email to Carol about the tomorrow's demo",
+                        Id = "1",
+                        ParticipantId = "1",
                     }
                 },
-                parameters = new
+                Parameters = new
                 {
-                    projectName = TestEnvironment.ProjectName,
-                    deploymentName = TestEnvironment.DeploymentName,
+                    ProjectName = TestEnvironment.ProjectName,
+                    DeploymentName = TestEnvironment.DeploymentName,
                 },
-                kind = "Conversation",
+                Kind = "Conversation",
             };
 
-            Response response = await Client.AnalyzeConversationAsync(RequestContent.Create(data, new RawContentOptions() { UseCamelCaseNamingConvention = true }));
+            Response response = await Client.AnalyzeConversationAsync(RequestContent.Create(data, PropertyNamingConvention.CamelCase));
 
             // assert - main object
             Assert.IsNotNull(response);

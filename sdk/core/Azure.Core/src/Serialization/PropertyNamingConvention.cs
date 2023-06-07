@@ -4,17 +4,19 @@
 namespace Azure.Core.Serialization
 {
     /// <summary>
-    /// Options for getting and setting DynamicData properties.
+    /// Options for using a specified naming convention with dynamic and serialized content.
     /// </summary>
-    internal enum PropertyNamingConvention
+    public enum PropertyNamingConvention
     {
         /// <summary>
-        /// Properties are read from and written to the data content with the same casing as the DynamicData property name.
+        /// Properties in the target content will use the same names as those used in the C# code.
         /// </summary>
         None = 0,
 
         /// <summary>
-        /// Indicates that property names will be converted to camel-casing format.
+        /// Indicates that a camel-case naming convention will be used in the target content.
+		///
+		/// With this option, names used in C# code will be converted to a camel-case format when working with the target content.
         /// See <see cref="System.Text.Json.JsonNamingPolicy.CamelCase"/> for details of the conversion.
         /// </summary>
         CamelCase = 1

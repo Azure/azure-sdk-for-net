@@ -22,7 +22,7 @@ namespace Azure.Core.Serialization
         /// content data.  Setting this value to true has the effect of converting property names used with
         /// anonymous and dynamic types to camel case when accessing the content data.
         /// If needed, it can be overridden per instance by passing different options to
-        /// to <see cref="RequestContent.Create(object, RawContentOptions)"/> or <see cref="AzureCoreExtensions.ToDynamicFromJson(BinaryData, RawContentOptions)"/>.
+        /// to <see cref="RequestContent.Create(object, PropertyNamingConvention)"/> or <see cref="AzureCoreExtensions.ToDynamicFromJson(BinaryData, PropertyNamingConvention)"/>.
         /// </summary>
         public bool UseCamelCaseNamingConvention { get; set; }
 

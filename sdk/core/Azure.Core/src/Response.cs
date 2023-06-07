@@ -7,7 +7,6 @@ using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using Azure.Core;
 using Azure.Core.Dynamic;
-using Azure.Core.Serialization;
 
 namespace Azure
 {
