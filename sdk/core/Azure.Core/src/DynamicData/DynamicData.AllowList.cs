@@ -33,12 +33,7 @@ namespace Azure.Core.Dynamic
                 }
             }
 
-            private static bool IsAllowedValue<T>(T value)
-            {
-                // TODO: implement
-                return false;
-            }
-
+            #region Allowed types
             public static bool IsAllowedType(Type type, out bool needsValueCheck)
             {
                 if (IsAllowedKnownType(type, out needsValueCheck))
@@ -62,14 +57,7 @@ namespace Azure.Core.Dynamic
                 return IsAllowedPrimitive(type) ||
                     IsAllowedArrayType(type, out needsValueCheck) ||
                     IsAllowedCollectionType(type, out needsValueCheck) ||
-                    IsAllowedInterfaceType(type, out needsValueCheck) ||
-
-                    // TODO: separate out non-primitive values?
-                    type == typeof(JsonElement) ||
-                    type == typeof(JsonDocument) ||
-                    type == typeof(MutableJsonDocument) ||
-                    type == typeof(MutableJsonElement) ||
-                    type == typeof(DynamicData);
+                    IsAllowedEnumerableType(type, out needsValueCheck);
             }
 
             private static bool IsAllowedPrimitive(Type type)
@@ -83,7 +71,12 @@ namespace Azure.Core.Dynamic
                     type == typeof(TimeSpan) ||
                     type == typeof(Uri) ||
                     type == typeof(Guid) ||
-                    type == typeof(ETag);
+                    type == typeof(ETag) ||
+                    type == typeof(JsonElement) ||
+                    type == typeof(JsonDocument) ||
+                    type == typeof(MutableJsonDocument) ||
+                    type == typeof(MutableJsonElement) ||
+                    type == typeof(DynamicData);
             }
 
             private static bool IsAllowedArrayType(Type type, out bool needsValueCheck)
@@ -95,23 +88,6 @@ namespace Azure.Core.Dynamic
                     return false;
                 }
 
-                //if (type == typeof(object[]))
-                //{
-                //    object[] objects = GetAs<object[]>(value!);
-                //    foreach (object obj in objects)
-                //    {
-                //        if (obj is null)
-                //        {
-                //            continue;
-                //        }
-
-                //        if (!IsAllowedType(obj.GetType(), obj))
-                //        {
-                //            return false;
-                //        }
-                //    }
-                //}
-
                 Type? elementType = type.GetElementType();
                 return elementType != null && IsAllowedType(elementType, out needsValueCheck);
             }
@@ -120,8 +96,6 @@ namespace Azure.Core.Dynamic
 
             private static bool IsAllowedCollectionType(Type type, out bool needsValueCheck)
             {
-                needsValueCheck = false;
-
                 return
                     IsAllowedListType(type, out needsValueCheck) ||
                     IsAllowedDictionaryType(type, out needsValueCheck);
@@ -160,59 +134,19 @@ namespace Azure.Core.Dynamic
                 if (type.GetGenericTypeDefinition() == typeof(Dictionary<,>))
                 {
                     Type[] types = type.GetGenericArguments();
-                    if (IsAllowedPrimitive(types[0]) && IsAllowedPrimitive(types[1]))
+                    bool firstArgNeedsCheck, secondArgNeedsCheck;
+                    if (IsAllowedType(types[0], out firstArgNeedsCheck) &&
+                        IsAllowedType(types[1], out secondArgNeedsCheck))
                     {
+                        needsValueCheck = firstArgNeedsCheck || secondArgNeedsCheck;
                         return true;
                     }
-
-                    //if (types[0] == typeof(object))
-                    //{
-                    //    IDictionary dict = (IDictionary)value!;
-                    //    if (!AreAllowedTypes(GetAs<IEnumerable<object>>(dict.Keys)))
-                    //    {
-                    //        return false;
-                    //    }
-                    //}
-
-                    //if (types[1] == typeof(object))
-                    //{
-                    //    IDictionary dict = (IDictionary)value!;
-                    //    if (!AreAllowedTypes(GetAs<IEnumerable<object>>(dict.Keys)))
-                    //    {
-                    //        return false;
-                    //    }
-                    //}
-
-                    //return true;
                 }
 
                 return false;
             }
 
-            //private static T GetAs<T>(object value) where T : notnull
-            //{
-            //    return (T)value;
-            //}
-
-            //private static bool AreAllowedTypes<T>(IEnumerable<T> values)
-            //{
-            //    foreach (T value in values)
-            //    {
-            //        if (value == null)
-            //        {
-            //            continue;
-            //        }
-
-            //        if (!IsAllowedType(value.GetType(), value))
-            //        {
-            //            return false;
-            //        }
-            //    }
-
-            //    return true;
-            //}
-
-            private static bool IsAllowedInterfaceType(Type type, out bool needsValueCheck)
+            private static bool IsAllowedEnumerableType(Type type, out bool needsValueCheck)
             {
                 needsValueCheck = false;
 
@@ -226,16 +160,13 @@ namespace Azure.Core.Dynamic
                     return false;
                 }
 
-                if (type.GetGenericTypeDefinition() == typeof(IEnumerable<>))
+                if (type.GetGenericTypeDefinition() != typeof(IEnumerable<>))
                 {
-                    Type[] types = type.GetGenericArguments();
-                    if (IsAllowedType(types[0], out needsValueCheck))
-                    {
-                        return true;
-                    }
+                    return false;
                 }
 
-                return false;
+                Type[] types = type.GetGenericArguments();
+                return IsAllowedType(types[0], out needsValueCheck);
             }
 
             private static bool IsAllowedPocoType(Type type, HashSet<Type> ancestorTypes, out bool needsValueCheck)
@@ -292,6 +223,131 @@ namespace Azure.Core.Dynamic
                     type.Namespace == null &&
                     Attribute.IsDefined(type, typeof(CompilerGeneratedAttribute), false);
             }
+
+            #endregion
+
+            #region Allowed values
+
+            private static bool IsAllowedValue<T>(T value)
+            {
+                // T must have a generic type holding an object somewhere in
+                // the type graph, or a POCO with a property of that description.
+                if (value == null)
+                {
+                    return true;
+                }
+
+                // Value should have a non-object type now.
+                // This is the base case for recursion.
+                Type type = value.GetType();
+                if (IsAllowedPrimitive(type))
+                {
+                    return true;
+                }
+
+                return
+                    IsAllowedKnownValue(value) ||
+                    IsAllowedPocoValue(value);
+            }
+
+            // TODO: test case, POCO with multiple object properties
+            // Make sure throws if either is invalid to verify order
+
+            private static bool IsAllowedKnownValue<T>(T value)
+            {
+                return
+                    IsAllowedArrayValue(value) ||
+                    IsAllowedCollectionValue(value) ||
+                    IsAllowedEnumerableValue(value);
+            }
+
+            private static bool IsAllowedArrayValue<T>(T value)
+            {
+                Type type = typeof(T);
+
+                if (!type.IsArray)
+                {
+                    return false;
+                }
+
+                throw new NotImplementedException();
+            }
+
+            private static bool IsAllowedCollectionValue<T>(T value)
+            {
+                return IsAllowedListValue(value) || IsAllowedDictionaryValue(value);
+            }
+
+            private static bool IsAllowedListValue<T>(T value)
+            {
+                if (value == null)
+                {
+                    return true;
+                }
+
+                if (value is not IList list)
+                {
+                    return false;
+                }
+
+                return IsAllowedEnumerableValue(list);
+            }
+
+            private static bool IsAllowedDictionaryValue<T>(T value)
+            {
+                if (value == null)
+                {
+                    return true;
+                }
+
+                if (value is not IDictionary dictionary)
+                {
+                    return false;
+                }
+
+                if (!IsAllowedEnumerableValue(dictionary.Keys))
+                {
+                    return false;
+                }
+
+                if (!IsAllowedEnumerableValue(dictionary.Values))
+                {
+                    return false;
+                }
+
+                return true;
+            }
+
+            private static bool IsAllowedEnumerableValue<T>(T value)
+            {
+                if (value == null)
+                {
+                    return true;
+                }
+
+                if (value is not IEnumerable enumerable)
+                {
+                    return false;
+                }
+
+                foreach (var item in enumerable)
+                {
+                    if (!IsAllowedValue(item))
+                    {
+                        return false;
+                    }
+                }
+
+                return true;
+            }
+
+            private static bool IsAllowedPocoValue<T>(T value)
+            {
+                return false;
+                //throw new NotImplementedException();
+            }
+
+            #endregion
         }
     }
 }
