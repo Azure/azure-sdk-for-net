@@ -150,10 +150,7 @@ namespace Azure.Core.Dynamic
 
             public override bool CanConvert(Type typeToConvert)
             {
-                // TODO: We'll need to separate out a cursory type check
-                // and then do collection interrogation in the converter itself when we have the value.
-
-                return !AllowList.IsAllowedType(typeToConvert);
+                return !AllowList.IsAllowedType(typeToConvert, out _);
             }
 
             public override JsonConverter CreateConverter(Type typeToConvert, JsonSerializerOptions options)
@@ -179,7 +176,7 @@ namespace Azure.Core.Dynamic
 
                 public override void Write(Utf8JsonWriter writer, T value, JsonSerializerOptions options)
                 {
-                    throw new NotSupportedException($"Type is not currently supported: '{typeof(T)}'.");
+                    AllowList.AssertAllowedType(value);
                 }
             }
         }

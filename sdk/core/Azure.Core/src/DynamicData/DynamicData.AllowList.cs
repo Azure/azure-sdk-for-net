@@ -22,30 +22,47 @@ namespace Azure.Core.Dynamic
                     return;
                 }
 
-                if (!IsAllowedType(value.GetType()))
+                if (!IsAllowedType(value.GetType(), out bool needsValueCheck))
                 {
                     throw new NotSupportedException($"Type is not currently supported: '{value.GetType()}'.");
                 }
 
-                // TODO: validate types in collections
+                if (needsValueCheck && !IsAllowedValue(value))
+                {
+                    throw new NotSupportedException($"Type contains unsupported object types: '{value.GetType()}'.");
+                }
             }
 
-            public static bool IsAllowedType(Type type)
+            private static bool IsAllowedValue<T>(T value)
             {
-                if (IsAllowedKnownType(type))
+                // TODO: implement
+                return false;
+            }
+
+            public static bool IsAllowedType(Type type, out bool needsValueCheck)
+            {
+                if (IsAllowedKnownType(type, out needsValueCheck))
                 {
                     return true;
                 }
 
-                return IsAllowedPocoType(type, new HashSet<Type>());
+                return IsAllowedPocoType(type, new HashSet<Type>(), out needsValueCheck);
             }
 
-            private static bool IsAllowedKnownType(Type type)
+            private static bool IsAllowedKnownType(Type type, out bool needsValueCheck)
             {
+                needsValueCheck = false;
+
+                if (type == typeof(object))
+                {
+                    needsValueCheck = true;
+                    return true;
+                }
+
                 return IsAllowedPrimitive(type) ||
-                    IsAllowedArrayType(type) ||
-                    IsAllowedCollectionType(type) ||
-                    IsAllowedInterface(type) ||
+                    IsAllowedArrayType(type, out needsValueCheck) ||
+                    IsAllowedCollectionType(type, out needsValueCheck) ||
+                    IsAllowedInterfaceType(type, out needsValueCheck) ||
 
                     // TODO: separate out non-primitive values?
                     type == typeof(JsonElement) ||
@@ -69,8 +86,10 @@ namespace Azure.Core.Dynamic
                     type == typeof(ETag);
             }
 
-            private static bool IsAllowedArrayType(Type type)
+            private static bool IsAllowedArrayType(Type type, out bool needsValueCheck)
             {
+                needsValueCheck = false;
+
                 if (!type.IsArray)
                 {
                     return false;
@@ -94,18 +113,24 @@ namespace Azure.Core.Dynamic
                 //}
 
                 Type? elementType = type.GetElementType();
-                return elementType != null && IsAllowedType(elementType);
+                return elementType != null && IsAllowedType(elementType, out needsValueCheck);
             }
 
             // TODO: Test case: list of lists of object
 
-            private static bool IsAllowedCollectionType(Type type)
+            private static bool IsAllowedCollectionType(Type type, out bool needsValueCheck)
             {
-                return IsAllowedListType(type) || IsAllowedDictionaryType(type);
+                needsValueCheck = false;
+
+                return
+                    IsAllowedListType(type, out needsValueCheck) ||
+                    IsAllowedDictionaryType(type, out needsValueCheck);
             }
 
-            private static bool IsAllowedListType(Type type)
+            private static bool IsAllowedListType(Type type, out bool needsValueCheck)
             {
+                needsValueCheck = false;
+
                 if (!type.IsGenericType)
                 {
                     return false;
@@ -114,26 +139,19 @@ namespace Azure.Core.Dynamic
                 if (type.GetGenericTypeDefinition() == typeof(List<>))
                 {
                     Type[] types = type.GetGenericArguments();
-                    if (IsAllowedType(types[0]))
+                    if (IsAllowedType(types[0], out needsValueCheck))
                     {
                         return true;
                     }
-
-                    // TODO: want to separate out test for allowed POCOs
-                    // independent of value check
-
-                    //if (types[0] == typeof(object))
-                    //{
-                    //    List<object> objects = GetAs<List<object>>(value!);
-                    //    return AreAllowedTypes(objects);
-                    //}
                 }
 
                 return false;
             }
 
-            private static bool IsAllowedDictionaryType(Type type)
+            private static bool IsAllowedDictionaryType(Type type, out bool needsValueCheck)
             {
+                needsValueCheck = false;
+
                 if (!type.IsGenericType)
                 {
                     return false;
@@ -194,8 +212,10 @@ namespace Azure.Core.Dynamic
             //    return true;
             //}
 
-            private static bool IsAllowedInterface(Type type)
+            private static bool IsAllowedInterfaceType(Type type, out bool needsValueCheck)
             {
+                needsValueCheck = false;
+
                 if (!type.IsGenericType)
                 {
                     return false;
@@ -209,7 +229,7 @@ namespace Azure.Core.Dynamic
                 if (type.GetGenericTypeDefinition() == typeof(IEnumerable<>))
                 {
                     Type[] types = type.GetGenericArguments();
-                    if (IsAllowedType(types[0]))
+                    if (IsAllowedType(types[0], out needsValueCheck))
                     {
                         return true;
                     }
@@ -218,8 +238,10 @@ namespace Azure.Core.Dynamic
                 return false;
             }
 
-            private static bool IsAllowedPocoType(Type type, HashSet<Type> ancestorTypes)
+            private static bool IsAllowedPocoType(Type type, HashSet<Type> ancestorTypes, out bool needsValueCheck)
             {
+                needsValueCheck = false;
+
                 if (!HasPublicParameterlessConstructor(type) && !IsAnonymousType(type))
                 {
                     return false;
@@ -237,7 +259,7 @@ namespace Azure.Core.Dynamic
                         return false;
                     }
 
-                    if (IsAllowedKnownType(property.PropertyType))
+                    if (IsAllowedKnownType(property.PropertyType, out needsValueCheck))
                     {
                         continue;
                     }
@@ -250,7 +272,7 @@ namespace Azure.Core.Dynamic
 
                     // Recurse
                     ancestorTypes.Add(type);
-                    if (!IsAllowedPocoType(property.PropertyType, ancestorTypes))
+                    if (!IsAllowedPocoType(property.PropertyType, ancestorTypes, out needsValueCheck))
                     {
                         return false;
                     }
