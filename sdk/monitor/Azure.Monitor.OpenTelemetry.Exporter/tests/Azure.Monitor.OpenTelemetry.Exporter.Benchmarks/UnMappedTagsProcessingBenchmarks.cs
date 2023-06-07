@@ -9,6 +9,19 @@ using Azure.Monitor.OpenTelemetry.Exporter.Internals;
 
 using BenchmarkDotNet.Attributes;
 
+/*
+BenchmarkDotNet=v0.13.4, OS=Windows 11 (10.0.22621.1702)
+Intel Core i7-8850H CPU 2.60GHz (Coffee Lake), 1 CPU, 12 logical and 6 physical cores
+.NET SDK=7.0.203
+  [Host]     : .NET 7.0.5 (7.0.523.17405), X64 RyuJIT AVX2
+  DefaultJob : .NET 7.0.5 (7.0.523.17405), X64 RyuJIT AVX2
+
+
+|                                         Method |     Mean |   Error |  StdDev | Allocated |
+|----------------------------------------------- |---------:|--------:|--------:|----------:|
+|    ProcessUnMappedTagsWithActivityTagProcessor | 101.4 ns | 0.69 ns | 0.65 ns |         - |
+| ProcessUnMappedTagsWithoutActivityTagProcessor | 211.2 ns | 3.18 ns | 2.65 ns |         - |
+*/
 namespace Azure.Monitor.OpenTelemetry.Exporter.Benchmarks
 {
     [MemoryDiagnoser]

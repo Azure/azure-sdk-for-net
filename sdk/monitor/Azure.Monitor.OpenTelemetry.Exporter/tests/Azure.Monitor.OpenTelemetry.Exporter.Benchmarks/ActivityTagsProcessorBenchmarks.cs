@@ -9,16 +9,17 @@ using Azure.Monitor.OpenTelemetry.Exporter.Internals;
 using BenchmarkDotNet.Attributes;
 
 /*
-BenchmarkDotNet=v0.13.4, OS=Windows 11 (10.0.22621.1778)
-Intel Core i7-8650U CPU 1.90GHz (Kaby Lake R), 1 CPU, 8 logical and 4 physical cores
-.NET SDK=7.0.105
-  [Host] : .NET 7.0.5 (7.0.523.17405), X64 RyuJIT AVX2
+BenchmarkDotNet=v0.13.4, OS=Windows 11 (10.0.22621.1702)
+Intel Core i7-8850H CPU 2.60GHz (Coffee Lake), 1 CPU, 12 logical and 6 physical cores
+.NET SDK=7.0.203
+  [Host]     : .NET 7.0.5 (7.0.523.17405), X64 RyuJIT AVX2
+  DefaultJob : .NET 7.0.5 (7.0.523.17405), X64 RyuJIT AVX2
 
-Job=InProcess  Toolchain=InProcessEmitToolchain
 
-|                              Method    |     Mean |   Error |   StdDev |   Median |   Gen0 | Allocated |
-|--------------------------------------- |---------:|--------:|---------:|---------:|-------:|----------:|
-|     Benchmark_ActivityTagsProcessor    | 282.5 ns | 5.61 ns | 13.66 ns | 279.0 ns | 0.1335 |     560 B |
+|                             Method |     Mean |   Error |  StdDev |   Gen0 | Allocated |
+|----------------------------------- |---------:|--------:|--------:|-------:|----------:|
+|    Benchmark_ActivityTagsProcessor | 274.7 ns | 5.29 ns | 6.09 ns | 0.1187 |     560 B |
+| Benchmark_ActivityTagsProcessorNew | 189.9 ns | 3.25 ns | 2.88 ns | 0.0594 |     280 B |
 */
 
 namespace Azure.Monitor.OpenTelemetry.Exporter.Benchmarks
