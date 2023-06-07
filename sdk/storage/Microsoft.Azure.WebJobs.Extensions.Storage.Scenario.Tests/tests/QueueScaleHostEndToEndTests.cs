@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -20,6 +21,7 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json.Linq;
 using NUnit.Framework;
+using NUnit.Framework.Internal;
 
 namespace Microsoft.Azure.WebJobs.Extensions.Storage.Scenario.Tests
 {
@@ -164,8 +166,19 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Scenario.Tests
             await client2.SendMessageAsync("test");
             await client2.SendMessageAsync("test");
 
+            Stopwatch stopwatch = Stopwatch.StartNew();
             await TestHelpers.Await(async () =>
             {
+                if (stopwatch.Elapsed > TimeSpan.FromMinutes(1))
+                {
+                    var logMessages = loggerProvider.GetAllLogMessages().Where(x => x.Category.Contains("Scale")).Select(p => p.FormattedMessage).ToArray();
+                    foreach (var logMessage in logMessages)
+                    {
+                        TestContext.WriteLine(logMessage);
+                    }
+                    throw new Exception(string.Join(",", logMessages));
+                }
+
                 IScaleStatusProvider scaleStatusProvider = scaleHost.Services.GetService<IScaleStatusProvider>();
 
                 var scaleStatus = await scaleStatusProvider.GetScaleStatusAsync(new ScaleStatusContext());
@@ -207,7 +220,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Scenario.Tests
                 }
 
                 return scaledOut;
-            });
+            }, pollingInterval: 2000, timeout: 120000);
         }
     }
 }
