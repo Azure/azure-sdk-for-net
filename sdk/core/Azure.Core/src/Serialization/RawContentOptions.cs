@@ -33,7 +33,7 @@ namespace Azure.Core.Serialization
                 DateTimeHandling = DynamicDateTimeHandling.Rfc3339
             };
 
-            if (UseCamelCaseNamingConvention)
+            if (UseCamelCaseNamingConvention )
             {
                 options.PropertyNamingConvention = PropertyNamingConvention.CamelCase;
             }
