@@ -24,7 +24,8 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
         public void Example_GetSensorEvents()
         {
             var credential = new DefaultAzureCredential();
-            var client = new FarmBeatsClient(credential).GetSensorEventsClient("2022-11-01-preview");
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new FarmBeatsClient(endpoint, credential).GetSensorEventsClient("2022-11-01-preview");
 
             Response response = client.GetSensorEvents("<sensorId>", "<sensorPartnerId>");
 
@@ -37,9 +38,10 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
         public void Example_GetSensorEvents_AllParameters()
         {
             var credential = new DefaultAzureCredential();
-            var client = new FarmBeatsClient(credential).GetSensorEventsClient("2022-11-01-preview");
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new FarmBeatsClient(endpoint, credential).GetSensorEventsClient("2022-11-01-preview");
 
-            Response response = client.GetSensorEvents("<sensorId>", "<sensorPartnerId>", DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, true, new RequestContext());
+            Response response = client.GetSensorEvents("<sensorId>", "<sensorPartnerId>", DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, true);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("value")[0].GetProperty("sensorId").ToString());
@@ -58,7 +60,8 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
         public async Task Example_GetSensorEvents_Async()
         {
             var credential = new DefaultAzureCredential();
-            var client = new FarmBeatsClient(credential).GetSensorEventsClient("2022-11-01-preview");
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new FarmBeatsClient(endpoint, credential).GetSensorEventsClient("2022-11-01-preview");
 
             Response response = await client.GetSensorEventsAsync("<sensorId>", "<sensorPartnerId>");
 
@@ -71,9 +74,10 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
         public async Task Example_GetSensorEvents_AllParameters_Async()
         {
             var credential = new DefaultAzureCredential();
-            var client = new FarmBeatsClient(credential).GetSensorEventsClient("2022-11-01-preview");
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new FarmBeatsClient(endpoint, credential).GetSensorEventsClient("2022-11-01-preview");
 
-            Response response = await client.GetSensorEventsAsync("<sensorId>", "<sensorPartnerId>", DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, true, new RequestContext());
+            Response response = await client.GetSensorEventsAsync("<sensorId>", "<sensorPartnerId>", DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, true);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("value")[0].GetProperty("sensorId").ToString());

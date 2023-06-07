@@ -24,7 +24,8 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
         public void Example_GetWeatherData()
         {
             var credential = new DefaultAzureCredential();
-            var client = new FarmBeatsClient(credential).GetWeatherDataClient("2022-11-01-preview");
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new FarmBeatsClient(endpoint, credential).GetWeatherDataClient("2022-11-01-preview");
 
             var data = new
             {
@@ -49,7 +50,8 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
         public void Example_GetWeatherData_AllParameters()
         {
             var credential = new DefaultAzureCredential();
-            var client = new FarmBeatsClient(credential).GetWeatherDataClient("2022-11-01-preview");
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new FarmBeatsClient(endpoint, credential).GetWeatherDataClient("2022-11-01-preview");
 
             var data = new
             {
@@ -75,7 +77,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
                 },
             };
 
-            Response response = client.GetWeatherData(RequestContent.Create(data), new RequestContext());
+            Response response = client.GetWeatherData(RequestContent.Create(data));
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("weatherMetadata").GetProperty("extensionVersion").ToString());
@@ -145,7 +147,8 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
         public async Task Example_GetWeatherData_Async()
         {
             var credential = new DefaultAzureCredential();
-            var client = new FarmBeatsClient(credential).GetWeatherDataClient("2022-11-01-preview");
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new FarmBeatsClient(endpoint, credential).GetWeatherDataClient("2022-11-01-preview");
 
             var data = new
             {
@@ -170,7 +173,8 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
         public async Task Example_GetWeatherData_AllParameters_Async()
         {
             var credential = new DefaultAzureCredential();
-            var client = new FarmBeatsClient(credential).GetWeatherDataClient("2022-11-01-preview");
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new FarmBeatsClient(endpoint, credential).GetWeatherDataClient("2022-11-01-preview");
 
             var data = new
             {
@@ -196,7 +200,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
                 },
             };
 
-            Response response = await client.GetWeatherDataAsync(RequestContent.Create(data), new RequestContext());
+            Response response = await client.GetWeatherDataAsync(RequestContent.Create(data));
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("weatherMetadata").GetProperty("extensionVersion").ToString());

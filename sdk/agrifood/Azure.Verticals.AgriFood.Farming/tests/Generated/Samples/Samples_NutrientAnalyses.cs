@@ -24,7 +24,8 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
         public void Example_GetNutrientAnalysis()
         {
             var credential = new DefaultAzureCredential();
-            var client = new FarmBeatsClient(credential).GetNutrientAnalysesClient("2022-11-01-preview");
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new FarmBeatsClient(endpoint, credential).GetNutrientAnalysesClient("2022-11-01-preview");
 
             Response response = client.GetNutrientAnalysis("<partyId>", "<nutrientAnalysisId>");
 
@@ -37,9 +38,10 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
         public void Example_GetNutrientAnalysis_AllParameters()
         {
             var credential = new DefaultAzureCredential();
-            var client = new FarmBeatsClient(credential).GetNutrientAnalysesClient("2022-11-01-preview");
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new FarmBeatsClient(endpoint, credential).GetNutrientAnalysesClient("2022-11-01-preview");
 
-            Response response = client.GetNutrientAnalysis("<partyId>", "<nutrientAnalysisId>", new RequestContext());
+            Response response = client.GetNutrientAnalysis("<partyId>", "<nutrientAnalysisId>");
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("partyId").ToString());
@@ -72,7 +74,8 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
         public async Task Example_GetNutrientAnalysis_Async()
         {
             var credential = new DefaultAzureCredential();
-            var client = new FarmBeatsClient(credential).GetNutrientAnalysesClient("2022-11-01-preview");
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new FarmBeatsClient(endpoint, credential).GetNutrientAnalysesClient("2022-11-01-preview");
 
             Response response = await client.GetNutrientAnalysisAsync("<partyId>", "<nutrientAnalysisId>");
 
@@ -85,9 +88,10 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
         public async Task Example_GetNutrientAnalysis_AllParameters_Async()
         {
             var credential = new DefaultAzureCredential();
-            var client = new FarmBeatsClient(credential).GetNutrientAnalysesClient("2022-11-01-preview");
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new FarmBeatsClient(endpoint, credential).GetNutrientAnalysesClient("2022-11-01-preview");
 
-            Response response = await client.GetNutrientAnalysisAsync("<partyId>", "<nutrientAnalysisId>", new RequestContext());
+            Response response = await client.GetNutrientAnalysisAsync("<partyId>", "<nutrientAnalysisId>");
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("partyId").ToString());
@@ -120,7 +124,8 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
         public void Example_CreateOrUpdate()
         {
             var credential = new DefaultAzureCredential();
-            var client = new FarmBeatsClient(credential).GetNutrientAnalysesClient("2022-11-01-preview");
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new FarmBeatsClient(endpoint, credential).GetNutrientAnalysesClient("2022-11-01-preview");
 
             var data = new { };
 
@@ -135,7 +140,8 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
         public void Example_CreateOrUpdate_AllParameters()
         {
             var credential = new DefaultAzureCredential();
-            var client = new FarmBeatsClient(credential).GetNutrientAnalysesClient("2022-11-01-preview");
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new FarmBeatsClient(endpoint, credential).GetNutrientAnalysesClient("2022-11-01-preview");
 
             var data = new
             {
@@ -164,7 +170,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
                 },
             };
 
-            Response response = client.CreateOrUpdate("<partyId>", "<nutrientAnalysisId>", RequestContent.Create(data), new RequestContext());
+            Response response = client.CreateOrUpdate("<partyId>", "<nutrientAnalysisId>", RequestContent.Create(data));
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("partyId").ToString());
@@ -197,7 +203,8 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
         public async Task Example_CreateOrUpdate_Async()
         {
             var credential = new DefaultAzureCredential();
-            var client = new FarmBeatsClient(credential).GetNutrientAnalysesClient("2022-11-01-preview");
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new FarmBeatsClient(endpoint, credential).GetNutrientAnalysesClient("2022-11-01-preview");
 
             var data = new { };
 
@@ -212,7 +219,8 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
         public async Task Example_CreateOrUpdate_AllParameters_Async()
         {
             var credential = new DefaultAzureCredential();
-            var client = new FarmBeatsClient(credential).GetNutrientAnalysesClient("2022-11-01-preview");
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new FarmBeatsClient(endpoint, credential).GetNutrientAnalysesClient("2022-11-01-preview");
 
             var data = new
             {
@@ -241,7 +249,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
                 },
             };
 
-            Response response = await client.CreateOrUpdateAsync("<partyId>", "<nutrientAnalysisId>", RequestContent.Create(data), new RequestContext());
+            Response response = await client.CreateOrUpdateAsync("<partyId>", "<nutrientAnalysisId>", RequestContent.Create(data));
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("partyId").ToString());
@@ -274,7 +282,8 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
         public void Example_Delete()
         {
             var credential = new DefaultAzureCredential();
-            var client = new FarmBeatsClient(credential).GetNutrientAnalysesClient("2022-11-01-preview");
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new FarmBeatsClient(endpoint, credential).GetNutrientAnalysesClient("2022-11-01-preview");
 
             Response response = client.Delete("<partyId>", "<nutrientAnalysisId>");
             Console.WriteLine(response.Status);
@@ -285,9 +294,10 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
         public void Example_Delete_AllParameters()
         {
             var credential = new DefaultAzureCredential();
-            var client = new FarmBeatsClient(credential).GetNutrientAnalysesClient("2022-11-01-preview");
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new FarmBeatsClient(endpoint, credential).GetNutrientAnalysesClient("2022-11-01-preview");
 
-            Response response = client.Delete("<partyId>", "<nutrientAnalysisId>", new RequestContext());
+            Response response = client.Delete("<partyId>", "<nutrientAnalysisId>");
             Console.WriteLine(response.Status);
         }
 
@@ -296,7 +306,8 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
         public async Task Example_Delete_Async()
         {
             var credential = new DefaultAzureCredential();
-            var client = new FarmBeatsClient(credential).GetNutrientAnalysesClient("2022-11-01-preview");
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new FarmBeatsClient(endpoint, credential).GetNutrientAnalysesClient("2022-11-01-preview");
 
             Response response = await client.DeleteAsync("<partyId>", "<nutrientAnalysisId>");
             Console.WriteLine(response.Status);
@@ -307,9 +318,10 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
         public async Task Example_Delete_AllParameters_Async()
         {
             var credential = new DefaultAzureCredential();
-            var client = new FarmBeatsClient(credential).GetNutrientAnalysesClient("2022-11-01-preview");
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new FarmBeatsClient(endpoint, credential).GetNutrientAnalysesClient("2022-11-01-preview");
 
-            Response response = await client.DeleteAsync("<partyId>", "<nutrientAnalysisId>", new RequestContext());
+            Response response = await client.DeleteAsync("<partyId>", "<nutrientAnalysisId>");
             Console.WriteLine(response.Status);
         }
 
@@ -318,7 +330,8 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
         public void Example_GetNutrientAnalyses()
         {
             var credential = new DefaultAzureCredential();
-            var client = new FarmBeatsClient(credential).GetNutrientAnalysesClient("2022-11-01-preview");
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new FarmBeatsClient(endpoint, credential).GetNutrientAnalysesClient("2022-11-01-preview");
 
             foreach (var item in client.GetNutrientAnalyses())
             {
@@ -332,9 +345,10 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
         public void Example_GetNutrientAnalyses_AllParameters()
         {
             var credential = new DefaultAzureCredential();
-            var client = new FarmBeatsClient(credential).GetNutrientAnalysesClient("2022-11-01-preview");
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new FarmBeatsClient(endpoint, credential).GetNutrientAnalysesClient("2022-11-01-preview");
 
-            foreach (var item in client.GetNutrientAnalyses("<parentType>", new string[] { "<parentIds>" }, new string[] { "<classifications>" }, new string[] { "<ids>" }, new string[] { "<names>" }, new string[] { "<propertyFilters>" }, new string[] { "<statuses>" }, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, 1234, "<skipToken>", new RequestContext()))
+            foreach (var item in client.GetNutrientAnalyses("<parentType>", new string[] { "<parentIds>" }, new string[] { "<classifications>" }, new string[] { "<ids>" }, new string[] { "<names>" }, new string[] { "<propertyFilters>" }, new string[] { "<statuses>" }, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, 1234, "<skipToken>"))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
                 Console.WriteLine(result.GetProperty("partyId").ToString());
@@ -368,7 +382,8 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
         public async Task Example_GetNutrientAnalyses_Async()
         {
             var credential = new DefaultAzureCredential();
-            var client = new FarmBeatsClient(credential).GetNutrientAnalysesClient("2022-11-01-preview");
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new FarmBeatsClient(endpoint, credential).GetNutrientAnalysesClient("2022-11-01-preview");
 
             await foreach (var item in client.GetNutrientAnalysesAsync())
             {
@@ -382,9 +397,10 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
         public async Task Example_GetNutrientAnalyses_AllParameters_Async()
         {
             var credential = new DefaultAzureCredential();
-            var client = new FarmBeatsClient(credential).GetNutrientAnalysesClient("2022-11-01-preview");
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new FarmBeatsClient(endpoint, credential).GetNutrientAnalysesClient("2022-11-01-preview");
 
-            await foreach (var item in client.GetNutrientAnalysesAsync("<parentType>", new string[] { "<parentIds>" }, new string[] { "<classifications>" }, new string[] { "<ids>" }, new string[] { "<names>" }, new string[] { "<propertyFilters>" }, new string[] { "<statuses>" }, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, 1234, "<skipToken>", new RequestContext()))
+            await foreach (var item in client.GetNutrientAnalysesAsync("<parentType>", new string[] { "<parentIds>" }, new string[] { "<classifications>" }, new string[] { "<ids>" }, new string[] { "<names>" }, new string[] { "<propertyFilters>" }, new string[] { "<statuses>" }, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, 1234, "<skipToken>"))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
                 Console.WriteLine(result.GetProperty("partyId").ToString());
@@ -418,7 +434,8 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
         public void Example_GetNutrientAnalysesByPartyId()
         {
             var credential = new DefaultAzureCredential();
-            var client = new FarmBeatsClient(credential).GetNutrientAnalysesClient("2022-11-01-preview");
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new FarmBeatsClient(endpoint, credential).GetNutrientAnalysesClient("2022-11-01-preview");
 
             foreach (var item in client.GetNutrientAnalysesByPartyId("<partyId>"))
             {
@@ -432,9 +449,10 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
         public void Example_GetNutrientAnalysesByPartyId_AllParameters()
         {
             var credential = new DefaultAzureCredential();
-            var client = new FarmBeatsClient(credential).GetNutrientAnalysesClient("2022-11-01-preview");
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new FarmBeatsClient(endpoint, credential).GetNutrientAnalysesClient("2022-11-01-preview");
 
-            foreach (var item in client.GetNutrientAnalysesByPartyId("<partyId>", "<parentType>", new string[] { "<parentIds>" }, new string[] { "<classifications>" }, new string[] { "<ids>" }, new string[] { "<names>" }, new string[] { "<propertyFilters>" }, new string[] { "<statuses>" }, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, 1234, "<skipToken>", new RequestContext()))
+            foreach (var item in client.GetNutrientAnalysesByPartyId("<partyId>", "<parentType>", new string[] { "<parentIds>" }, new string[] { "<classifications>" }, new string[] { "<ids>" }, new string[] { "<names>" }, new string[] { "<propertyFilters>" }, new string[] { "<statuses>" }, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, 1234, "<skipToken>"))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
                 Console.WriteLine(result.GetProperty("partyId").ToString());
@@ -468,7 +486,8 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
         public async Task Example_GetNutrientAnalysesByPartyId_Async()
         {
             var credential = new DefaultAzureCredential();
-            var client = new FarmBeatsClient(credential).GetNutrientAnalysesClient("2022-11-01-preview");
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new FarmBeatsClient(endpoint, credential).GetNutrientAnalysesClient("2022-11-01-preview");
 
             await foreach (var item in client.GetNutrientAnalysesByPartyIdAsync("<partyId>"))
             {
@@ -482,9 +501,10 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
         public async Task Example_GetNutrientAnalysesByPartyId_AllParameters_Async()
         {
             var credential = new DefaultAzureCredential();
-            var client = new FarmBeatsClient(credential).GetNutrientAnalysesClient("2022-11-01-preview");
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new FarmBeatsClient(endpoint, credential).GetNutrientAnalysesClient("2022-11-01-preview");
 
-            await foreach (var item in client.GetNutrientAnalysesByPartyIdAsync("<partyId>", "<parentType>", new string[] { "<parentIds>" }, new string[] { "<classifications>" }, new string[] { "<ids>" }, new string[] { "<names>" }, new string[] { "<propertyFilters>" }, new string[] { "<statuses>" }, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, 1234, "<skipToken>", new RequestContext()))
+            await foreach (var item in client.GetNutrientAnalysesByPartyIdAsync("<partyId>", "<parentType>", new string[] { "<parentIds>" }, new string[] { "<classifications>" }, new string[] { "<ids>" }, new string[] { "<names>" }, new string[] { "<propertyFilters>" }, new string[] { "<statuses>" }, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, 1234, "<skipToken>"))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
                 Console.WriteLine(result.GetProperty("partyId").ToString());

@@ -24,7 +24,8 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
         public void Example_GetCrop()
         {
             var credential = new DefaultAzureCredential();
-            var client = new FarmBeatsClient(credential).GetCropsClient("2022-11-01-preview");
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new FarmBeatsClient(endpoint, credential).GetCropsClient("2022-11-01-preview");
 
             Response response = client.GetCrop("<cropId>");
 
@@ -37,9 +38,10 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
         public void Example_GetCrop_AllParameters()
         {
             var credential = new DefaultAzureCredential();
-            var client = new FarmBeatsClient(credential).GetCropsClient("2022-11-01-preview");
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new FarmBeatsClient(endpoint, credential).GetCropsClient("2022-11-01-preview");
 
-            Response response = client.GetCrop("<cropId>", new RequestContext());
+            Response response = client.GetCrop("<cropId>");
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("phenotype").ToString());
@@ -64,7 +66,8 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
         public async Task Example_GetCrop_Async()
         {
             var credential = new DefaultAzureCredential();
-            var client = new FarmBeatsClient(credential).GetCropsClient("2022-11-01-preview");
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new FarmBeatsClient(endpoint, credential).GetCropsClient("2022-11-01-preview");
 
             Response response = await client.GetCropAsync("<cropId>");
 
@@ -77,9 +80,10 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
         public async Task Example_GetCrop_AllParameters_Async()
         {
             var credential = new DefaultAzureCredential();
-            var client = new FarmBeatsClient(credential).GetCropsClient("2022-11-01-preview");
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new FarmBeatsClient(endpoint, credential).GetCropsClient("2022-11-01-preview");
 
-            Response response = await client.GetCropAsync("<cropId>", new RequestContext());
+            Response response = await client.GetCropAsync("<cropId>");
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("phenotype").ToString());
@@ -104,7 +108,8 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
         public void Example_CreateOrUpdate()
         {
             var credential = new DefaultAzureCredential();
-            var client = new FarmBeatsClient(credential).GetCropsClient("2022-11-01-preview");
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new FarmBeatsClient(endpoint, credential).GetCropsClient("2022-11-01-preview");
 
             var data = new { };
 
@@ -119,7 +124,8 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
         public void Example_CreateOrUpdate_AllParameters()
         {
             var credential = new DefaultAzureCredential();
-            var client = new FarmBeatsClient(credential).GetCropsClient("2022-11-01-preview");
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new FarmBeatsClient(endpoint, credential).GetCropsClient("2022-11-01-preview");
 
             var data = new
             {
@@ -143,7 +149,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
                 },
             };
 
-            Response response = client.CreateOrUpdate("<cropId>", RequestContent.Create(data), new RequestContext());
+            Response response = client.CreateOrUpdate("<cropId>", RequestContent.Create(data));
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("phenotype").ToString());
@@ -168,7 +174,8 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
         public async Task Example_CreateOrUpdate_Async()
         {
             var credential = new DefaultAzureCredential();
-            var client = new FarmBeatsClient(credential).GetCropsClient("2022-11-01-preview");
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new FarmBeatsClient(endpoint, credential).GetCropsClient("2022-11-01-preview");
 
             var data = new { };
 
@@ -183,7 +190,8 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
         public async Task Example_CreateOrUpdate_AllParameters_Async()
         {
             var credential = new DefaultAzureCredential();
-            var client = new FarmBeatsClient(credential).GetCropsClient("2022-11-01-preview");
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new FarmBeatsClient(endpoint, credential).GetCropsClient("2022-11-01-preview");
 
             var data = new
             {
@@ -207,7 +215,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
                 },
             };
 
-            Response response = await client.CreateOrUpdateAsync("<cropId>", RequestContent.Create(data), new RequestContext());
+            Response response = await client.CreateOrUpdateAsync("<cropId>", RequestContent.Create(data));
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("phenotype").ToString());
@@ -232,7 +240,8 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
         public void Example_Delete()
         {
             var credential = new DefaultAzureCredential();
-            var client = new FarmBeatsClient(credential).GetCropsClient("2022-11-01-preview");
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new FarmBeatsClient(endpoint, credential).GetCropsClient("2022-11-01-preview");
 
             Response response = client.Delete("<cropId>");
             Console.WriteLine(response.Status);
@@ -243,9 +252,10 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
         public void Example_Delete_AllParameters()
         {
             var credential = new DefaultAzureCredential();
-            var client = new FarmBeatsClient(credential).GetCropsClient("2022-11-01-preview");
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new FarmBeatsClient(endpoint, credential).GetCropsClient("2022-11-01-preview");
 
-            Response response = client.Delete("<cropId>", new RequestContext());
+            Response response = client.Delete("<cropId>");
             Console.WriteLine(response.Status);
         }
 
@@ -254,7 +264,8 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
         public async Task Example_Delete_Async()
         {
             var credential = new DefaultAzureCredential();
-            var client = new FarmBeatsClient(credential).GetCropsClient("2022-11-01-preview");
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new FarmBeatsClient(endpoint, credential).GetCropsClient("2022-11-01-preview");
 
             Response response = await client.DeleteAsync("<cropId>");
             Console.WriteLine(response.Status);
@@ -265,9 +276,10 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
         public async Task Example_Delete_AllParameters_Async()
         {
             var credential = new DefaultAzureCredential();
-            var client = new FarmBeatsClient(credential).GetCropsClient("2022-11-01-preview");
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new FarmBeatsClient(endpoint, credential).GetCropsClient("2022-11-01-preview");
 
-            Response response = await client.DeleteAsync("<cropId>", new RequestContext());
+            Response response = await client.DeleteAsync("<cropId>");
             Console.WriteLine(response.Status);
         }
 
@@ -276,7 +288,8 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
         public void Example_GetCrops()
         {
             var credential = new DefaultAzureCredential();
-            var client = new FarmBeatsClient(credential).GetCropsClient("2022-11-01-preview");
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new FarmBeatsClient(endpoint, credential).GetCropsClient("2022-11-01-preview");
 
             foreach (var item in client.GetCrops())
             {
@@ -290,9 +303,10 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
         public void Example_GetCrops_AllParameters()
         {
             var credential = new DefaultAzureCredential();
-            var client = new FarmBeatsClient(credential).GetCropsClient("2022-11-01-preview");
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new FarmBeatsClient(endpoint, credential).GetCropsClient("2022-11-01-preview");
 
-            foreach (var item in client.GetCrops(new string[] { "<phenotypes>" }, new string[] { "<breedingMethods>" }, new string[] { "<cropIds>" }, new string[] { "<names>" }, new string[] { "<propertyFilters>" }, new string[] { "<statuses>" }, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, 1234, "<skipToken>", new RequestContext()))
+            foreach (var item in client.GetCrops(new string[] { "<phenotypes>" }, new string[] { "<breedingMethods>" }, new string[] { "<cropIds>" }, new string[] { "<names>" }, new string[] { "<propertyFilters>" }, new string[] { "<statuses>" }, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, 1234, "<skipToken>"))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
                 Console.WriteLine(result.GetProperty("phenotype").ToString());
@@ -318,7 +332,8 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
         public async Task Example_GetCrops_Async()
         {
             var credential = new DefaultAzureCredential();
-            var client = new FarmBeatsClient(credential).GetCropsClient("2022-11-01-preview");
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new FarmBeatsClient(endpoint, credential).GetCropsClient("2022-11-01-preview");
 
             await foreach (var item in client.GetCropsAsync())
             {
@@ -332,9 +347,10 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
         public async Task Example_GetCrops_AllParameters_Async()
         {
             var credential = new DefaultAzureCredential();
-            var client = new FarmBeatsClient(credential).GetCropsClient("2022-11-01-preview");
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new FarmBeatsClient(endpoint, credential).GetCropsClient("2022-11-01-preview");
 
-            await foreach (var item in client.GetCropsAsync(new string[] { "<phenotypes>" }, new string[] { "<breedingMethods>" }, new string[] { "<cropIds>" }, new string[] { "<names>" }, new string[] { "<propertyFilters>" }, new string[] { "<statuses>" }, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, 1234, "<skipToken>", new RequestContext()))
+            await foreach (var item in client.GetCropsAsync(new string[] { "<phenotypes>" }, new string[] { "<breedingMethods>" }, new string[] { "<cropIds>" }, new string[] { "<names>" }, new string[] { "<propertyFilters>" }, new string[] { "<statuses>" }, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, 1234, "<skipToken>"))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
                 Console.WriteLine(result.GetProperty("phenotype").ToString());

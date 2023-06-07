@@ -24,7 +24,8 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
         public void Example_Cancel()
         {
             var credential = new DefaultAzureCredential();
-            var client = new FarmBeatsClient(credential).GetSolutionInferenceClient("2022-11-01-preview");
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new FarmBeatsClient(endpoint, credential).GetSolutionInferenceClient("2022-11-01-preview");
 
             var data = new
             {
@@ -42,7 +43,8 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
         public void Example_Cancel_AllParameters()
         {
             var credential = new DefaultAzureCredential();
-            var client = new FarmBeatsClient(credential).GetSolutionInferenceClient("2022-11-01-preview");
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new FarmBeatsClient(endpoint, credential).GetSolutionInferenceClient("2022-11-01-preview");
 
             var data = new
             {
@@ -53,7 +55,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
                 },
             };
 
-            Response response = client.Cancel("<solutionId>", RequestContent.Create(data), new RequestContext());
+            Response response = client.Cancel("<solutionId>", RequestContent.Create(data));
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("<test>").ToString());
@@ -64,7 +66,8 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
         public async Task Example_Cancel_Async()
         {
             var credential = new DefaultAzureCredential();
-            var client = new FarmBeatsClient(credential).GetSolutionInferenceClient("2022-11-01-preview");
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new FarmBeatsClient(endpoint, credential).GetSolutionInferenceClient("2022-11-01-preview");
 
             var data = new
             {
@@ -82,7 +85,8 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
         public async Task Example_Cancel_AllParameters_Async()
         {
             var credential = new DefaultAzureCredential();
-            var client = new FarmBeatsClient(credential).GetSolutionInferenceClient("2022-11-01-preview");
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new FarmBeatsClient(endpoint, credential).GetSolutionInferenceClient("2022-11-01-preview");
 
             var data = new
             {
@@ -93,7 +97,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
                 },
             };
 
-            Response response = await client.CancelAsync("<solutionId>", RequestContent.Create(data), new RequestContext());
+            Response response = await client.CancelAsync("<solutionId>", RequestContent.Create(data));
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("<test>").ToString());
@@ -104,7 +108,8 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
         public void Example_Fetch()
         {
             var credential = new DefaultAzureCredential();
-            var client = new FarmBeatsClient(credential).GetSolutionInferenceClient("2022-11-01-preview");
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new FarmBeatsClient(endpoint, credential).GetSolutionInferenceClient("2022-11-01-preview");
 
             var data = new
             {
@@ -122,7 +127,8 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
         public void Example_Fetch_AllParameters()
         {
             var credential = new DefaultAzureCredential();
-            var client = new FarmBeatsClient(credential).GetSolutionInferenceClient("2022-11-01-preview");
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new FarmBeatsClient(endpoint, credential).GetSolutionInferenceClient("2022-11-01-preview");
 
             var data = new
             {
@@ -133,7 +139,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
                 },
             };
 
-            Response response = client.Fetch("<solutionId>", RequestContent.Create(data), new RequestContext());
+            Response response = client.Fetch("<solutionId>", RequestContent.Create(data));
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("<test>").ToString());
@@ -144,7 +150,8 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
         public async Task Example_Fetch_Async()
         {
             var credential = new DefaultAzureCredential();
-            var client = new FarmBeatsClient(credential).GetSolutionInferenceClient("2022-11-01-preview");
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new FarmBeatsClient(endpoint, credential).GetSolutionInferenceClient("2022-11-01-preview");
 
             var data = new
             {
@@ -162,7 +169,8 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
         public async Task Example_Fetch_AllParameters_Async()
         {
             var credential = new DefaultAzureCredential();
-            var client = new FarmBeatsClient(credential).GetSolutionInferenceClient("2022-11-01-preview");
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new FarmBeatsClient(endpoint, credential).GetSolutionInferenceClient("2022-11-01-preview");
 
             var data = new
             {
@@ -173,7 +181,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
                 },
             };
 
-            Response response = await client.FetchAsync("<solutionId>", RequestContent.Create(data), new RequestContext());
+            Response response = await client.FetchAsync("<solutionId>", RequestContent.Create(data));
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("<test>").ToString());
@@ -184,7 +192,8 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
         public void Example_CreateOrUpdate()
         {
             var credential = new DefaultAzureCredential();
-            var client = new FarmBeatsClient(credential).GetSolutionInferenceClient("2022-11-01-preview");
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new FarmBeatsClient(endpoint, credential).GetSolutionInferenceClient("2022-11-01-preview");
 
             var data = new
             {
@@ -203,7 +212,8 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
         public void Example_CreateOrUpdate_AllParameters()
         {
             var credential = new DefaultAzureCredential();
-            var client = new FarmBeatsClient(credential).GetSolutionInferenceClient("2022-11-01-preview");
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new FarmBeatsClient(endpoint, credential).GetSolutionInferenceClient("2022-11-01-preview");
 
             var data = new
             {
@@ -214,7 +224,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
                 },
             };
 
-            var operation = client.CreateOrUpdate(WaitUntil.Completed, "<solutionId>", RequestContent.Create(data), new RequestContext());
+            var operation = client.CreateOrUpdate(WaitUntil.Completed, "<solutionId>", RequestContent.Create(data));
 
             BinaryData responseData = operation.Value;
             JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
@@ -226,7 +236,8 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
         public async Task Example_CreateOrUpdate_Async()
         {
             var credential = new DefaultAzureCredential();
-            var client = new FarmBeatsClient(credential).GetSolutionInferenceClient("2022-11-01-preview");
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new FarmBeatsClient(endpoint, credential).GetSolutionInferenceClient("2022-11-01-preview");
 
             var data = new
             {
@@ -245,7 +256,8 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
         public async Task Example_CreateOrUpdate_AllParameters_Async()
         {
             var credential = new DefaultAzureCredential();
-            var client = new FarmBeatsClient(credential).GetSolutionInferenceClient("2022-11-01-preview");
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new FarmBeatsClient(endpoint, credential).GetSolutionInferenceClient("2022-11-01-preview");
 
             var data = new
             {
@@ -256,7 +268,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
                 },
             };
 
-            var operation = await client.CreateOrUpdateAsync(WaitUntil.Completed, "<solutionId>", RequestContent.Create(data), new RequestContext());
+            var operation = await client.CreateOrUpdateAsync(WaitUntil.Completed, "<solutionId>", RequestContent.Create(data));
 
             BinaryData responseData = operation.Value;
             JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;

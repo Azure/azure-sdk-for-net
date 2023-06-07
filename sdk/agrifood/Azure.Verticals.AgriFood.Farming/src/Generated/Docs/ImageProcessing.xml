@@ -6,9 +6,10 @@
 This sample shows how to call GetRasterizeJobAsync with required parameters and parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var client = new FarmBeatsClient(credential).GetImageProcessingClient("2022-11-01-preview");
+var endpoint = new Uri("<https://my-service.azure.com>");
+var client = new FarmBeatsClient(endpoint, credential).GetImageProcessingClient("2022-11-01-preview");
 
-Response response = await client.GetRasterizeJobAsync("<jobId>", new RequestContext());
+Response response = await client.GetRasterizeJobAsync("<jobId>");
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("partyId").ToString());
@@ -36,9 +37,10 @@ Console.WriteLine(result.GetProperty("properties").GetProperty("<test>").ToStrin
 This sample shows how to call GetRasterizeJob with required parameters and parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var client = new FarmBeatsClient(credential).GetImageProcessingClient("2022-11-01-preview");
+var endpoint = new Uri("<https://my-service.azure.com>");
+var client = new FarmBeatsClient(endpoint, credential).GetImageProcessingClient("2022-11-01-preview");
 
-Response response = client.GetRasterizeJob("<jobId>", new RequestContext());
+Response response = client.GetRasterizeJob("<jobId>");
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("partyId").ToString());
@@ -66,7 +68,8 @@ Console.WriteLine(result.GetProperty("properties").GetProperty("<test>").ToStrin
 This sample shows how to call CreateRasterizeJobAsync with required parameters and request content, and how to parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var client = new FarmBeatsClient(credential).GetImageProcessingClient("2022-11-01-preview");
+var endpoint = new Uri("<https://my-service.azure.com>");
+var client = new FarmBeatsClient(endpoint, credential).GetImageProcessingClient("2022-11-01-preview");
 
 var data = new {
     partyId = "<partyId>",
@@ -87,7 +90,8 @@ Console.WriteLine(result.GetProperty("shapefileColumnNames")[0].ToString());
 This sample shows how to call CreateRasterizeJobAsync with all parameters and request content, and how to parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var client = new FarmBeatsClient(credential).GetImageProcessingClient("2022-11-01-preview");
+var endpoint = new Uri("<https://my-service.azure.com>");
+var client = new FarmBeatsClient(endpoint, credential).GetImageProcessingClient("2022-11-01-preview");
 
 var data = new {
     partyId = "<partyId>",
@@ -102,7 +106,7 @@ var data = new {
     },
 };
 
-var operation = await client.CreateRasterizeJobAsync(WaitUntil.Completed, "<jobId>", RequestContent.Create(data), new RequestContext());
+var operation = await client.CreateRasterizeJobAsync(WaitUntil.Completed, "<jobId>", RequestContent.Create(data));
 
 BinaryData responseData = operation.Value;
 JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
@@ -131,7 +135,8 @@ Console.WriteLine(result.GetProperty("properties").GetProperty("<test>").ToStrin
 This sample shows how to call CreateRasterizeJob with required parameters and request content, and how to parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var client = new FarmBeatsClient(credential).GetImageProcessingClient("2022-11-01-preview");
+var endpoint = new Uri("<https://my-service.azure.com>");
+var client = new FarmBeatsClient(endpoint, credential).GetImageProcessingClient("2022-11-01-preview");
 
 var data = new {
     partyId = "<partyId>",
@@ -152,7 +157,8 @@ Console.WriteLine(result.GetProperty("shapefileColumnNames")[0].ToString());
 This sample shows how to call CreateRasterizeJob with all parameters and request content, and how to parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var client = new FarmBeatsClient(credential).GetImageProcessingClient("2022-11-01-preview");
+var endpoint = new Uri("<https://my-service.azure.com>");
+var client = new FarmBeatsClient(endpoint, credential).GetImageProcessingClient("2022-11-01-preview");
 
 var data = new {
     partyId = "<partyId>",
@@ -167,7 +173,7 @@ var data = new {
     },
 };
 
-var operation = client.CreateRasterizeJob(WaitUntil.Completed, "<jobId>", RequestContent.Create(data), new RequestContext());
+var operation = client.CreateRasterizeJob(WaitUntil.Completed, "<jobId>", RequestContent.Create(data));
 
 BinaryData responseData = operation.Value;
 JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;

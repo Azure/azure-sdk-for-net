@@ -6,7 +6,8 @@
 This sample shows how to call GetWeatherDataAsync with required request content, and how to parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var client = new FarmBeatsClient(credential).GetWeatherDataClient("2022-11-01-preview");
+var endpoint = new Uri("<https://my-service.azure.com>");
+var client = new FarmBeatsClient(endpoint, credential).GetWeatherDataClient("2022-11-01-preview");
 
 var data = new {
     providerApiKey = "<providerApiKey>",
@@ -27,7 +28,8 @@ Console.WriteLine(result.GetProperty("weatherMetadata").GetProperty("units").ToS
 This sample shows how to call GetWeatherDataAsync with all request content, and how to parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var client = new FarmBeatsClient(credential).GetWeatherDataClient("2022-11-01-preview");
+var endpoint = new Uri("<https://my-service.azure.com>");
+var client = new FarmBeatsClient(endpoint, credential).GetWeatherDataClient("2022-11-01-preview");
 
 var data = new {
     locations = new[] {
@@ -51,7 +53,7 @@ var data = new {
     },
 };
 
-Response response = await client.GetWeatherDataAsync(RequestContent.Create(data), new RequestContext());
+Response response = await client.GetWeatherDataAsync(RequestContent.Create(data));
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("weatherMetadata").GetProperty("extensionVersion").ToString());
@@ -122,7 +124,8 @@ Console.WriteLine(result.GetProperty("errors").GetProperty("locations")[0].GetPr
 This sample shows how to call GetWeatherData with required request content, and how to parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var client = new FarmBeatsClient(credential).GetWeatherDataClient("2022-11-01-preview");
+var endpoint = new Uri("<https://my-service.azure.com>");
+var client = new FarmBeatsClient(endpoint, credential).GetWeatherDataClient("2022-11-01-preview");
 
 var data = new {
     providerApiKey = "<providerApiKey>",
@@ -143,7 +146,8 @@ Console.WriteLine(result.GetProperty("weatherMetadata").GetProperty("units").ToS
 This sample shows how to call GetWeatherData with all request content, and how to parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var client = new FarmBeatsClient(credential).GetWeatherDataClient("2022-11-01-preview");
+var endpoint = new Uri("<https://my-service.azure.com>");
+var client = new FarmBeatsClient(endpoint, credential).GetWeatherDataClient("2022-11-01-preview");
 
 var data = new {
     locations = new[] {
@@ -167,7 +171,7 @@ var data = new {
     },
 };
 
-Response response = client.GetWeatherData(RequestContent.Create(data), new RequestContext());
+Response response = client.GetWeatherData(RequestContent.Create(data));
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("weatherMetadata").GetProperty("extensionVersion").ToString());

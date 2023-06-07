@@ -534,6 +534,7 @@ namespace Azure.Verticals.AgriFood.Farming
             uri.AppendPath("/resources/", false);
             uri.AppendPath(resourceId, true);
             uri.AppendPath("/insight-attachments", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
             if (insightIds != null && Optional.IsCollectionDefined(insightIds))
             {
                 foreach (var param in insightIds)
@@ -593,7 +594,6 @@ namespace Azure.Verticals.AgriFood.Farming
             {
                 uri.AppendQuery("skipToken", skipToken, true);
             }
-            uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;
