@@ -208,7 +208,6 @@ namespace Azure.Data.SchemaRegistry.Tests.Samples
                 return new List<Exception>();
             }
 #endif
-
             public override string GenerateSchema(Type dataType)
             {
 #if SNIPPET

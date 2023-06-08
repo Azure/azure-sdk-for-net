@@ -89,6 +89,7 @@ namespace Azure.Data.SchemaRegistry.Serialization
     public partial class SchemaRegistrySerializerOptions
     {
         public SchemaRegistrySerializerOptions() { }
+        public Azure.Data.SchemaRegistry.SchemaFormat Format { get { throw null; } set { } }
         public Azure.Core.Serialization.ObjectSerializer Serializer { get { throw null; } set { } }
     }
 }
