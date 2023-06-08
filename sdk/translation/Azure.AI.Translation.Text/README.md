@@ -61,7 +61,7 @@ With the value of the endpoint, `AzureKeyCredential` and a `Region`, you can cre
 ```C# Snippet:CreateTextTranslationClient
 string endpoint = "<Text Translator Resource Endpoint>";
 string apiKey = "<Text Translator Resource API Key>";
-string region = <Text Translator Azure Region>";
+string region = "<Text Translator Azure Region>";
 var client = new TextTranslationClient(new AzureKeyCredential(apiKey), new Uri(endpoint), region);
 ```
 

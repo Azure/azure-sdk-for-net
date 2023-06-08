@@ -25,7 +25,7 @@ namespace Azure.AI.Translation.Text.Samples
 #if SNIPPET
             string endpoint = "<Text Translator Resource Endpoint>";
             string apiKey = "<Text Translator Resource API Key>";
-            string region = <Text Translator Azure Region>";
+            string region = "<Text Translator Azure Region>";
 #else
             string endpoint = TestEnvironment.Endpoint;
             string apiKey = TestEnvironment.ApiKey;
