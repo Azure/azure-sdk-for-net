@@ -8,7 +8,7 @@
 
 ### Breaking Changes
 
-- `EventGridClient` is removed from the beta releases. It will be included in a subsequent release.
+- `EventGridClient` has been removed for the stable release. It will be included in a subsequent release.
 
 ## 4.17.0-beta.2 (2023-06-06)
 
