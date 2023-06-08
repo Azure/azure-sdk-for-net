@@ -102,12 +102,11 @@ namespace Azure.Core.Dynamic
                 return new DynamicData(element, _options);
             }
 
-            // If we're using the PascalToCamel mapping and the strict name lookup
-            // failed, do a second lookup with a camelCase name as well.
-            if (char.IsUpper(name[0]) &&
-                _options.PropertyNamingConvention == PropertyNamingConvention.CamelCase)
+            // If the caller has opted-in to using a naming convention with the dynamic content
+            // apply that mapping in a second look-up.
+            if (_options.PropertyNamingConvention != PropertyNamingConvention.None)
             {
-                if (_element.TryGetProperty(ConvertToCamelCase(name), out element))
+                if (_element.TryGetProperty(ConvertName(name), out element))
                 {
                     if (element.ValueKind == JsonValueKind.Null)
                     {
@@ -122,7 +121,15 @@ namespace Azure.Core.Dynamic
             return null;
         }
 
-        private static string ConvertToCamelCase(string value) => JsonNamingPolicy.CamelCase.ConvertName(value);
+        private string ConvertName(string value)
+        {
+            return _options.PropertyNamingConvention switch
+            {
+                PropertyNamingConvention.None => value,
+                PropertyNamingConvention.CamelCase => JsonNamingPolicy.CamelCase.ConvertName(value),
+                _ => throw new NotSupportedException($"Unknown value for DynamicDataOptions.PropertyNamingConvention: '{_options.PropertyNamingConvention}'."),
+            };
+        }
 
         private object? GetViaIndexer(object index)
         {
@@ -174,14 +181,14 @@ namespace Azure.Core.Dynamic
                 value = ConvertType(value);
             }
 
-            // TODO: implement check for existing property before writing converted
-
-            if (_options.PropertyNamingConvention == PropertyNamingConvention.CamelCase)
+            if (_element.TryGetProperty(name, out MutableJsonElement _) ||
+                _options.PropertyNamingConvention == PropertyNamingConvention.None)
             {
-                name = ConvertToCamelCase(name);
+                _element = _element.SetProperty(name, value);
+                return null;
             }
 
-            _element = _element.SetProperty(name, value);
+            _element = _element.SetProperty(ConvertName(name), value);
 
             // Binding machinery expects the call site signature to return an object
             return null;

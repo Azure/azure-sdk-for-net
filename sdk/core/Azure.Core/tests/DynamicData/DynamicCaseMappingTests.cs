@@ -3,7 +3,6 @@
 
 using System;
 using System.Collections;
-using System.Collections.Generic;
 using Azure.Core.Dynamic;
 using Azure.Core.Serialization;
 using NUnit.Framework;
@@ -157,22 +156,21 @@ namespace Azure.Core.Tests
         }
 
         [Test]
-        public void SettingExistingPropertiesWithUnmatchedCasingAddsNewPropertyWhenPascalToCamelMapping()
+        public void SetGivesPrecedenceToCasingOfExistingProperties()
         {
-            DynamicDataOptions options = new() { PropertyNamingConvention = PropertyNamingConvention.CamelCase };
-            dynamic value = new BinaryData(testJson).ToDynamicFromJson(options);
+            dynamic value = new BinaryData(testJson).ToDynamicFromJson(PropertyNamingConvention.CamelCase);
 
             value.Pascal = "new";
             value.parentCamel.NestedPascal = true;
             value.ParentPascal.NestedPascal = "c";
 
-            Assert.AreEqual("hi", (string)value.Pascal);
-            Assert.AreEqual(false, (bool)value.parentCamel.NestedPascal);
-            Assert.AreEqual("b", (string)value.ParentPascal.NestedPascal);
+            Assert.AreEqual("new", (string)value.Pascal);
+            Assert.AreEqual(true, (bool)value.parentCamel.NestedPascal);
+            Assert.AreEqual("c", (string)value.ParentPascal.NestedPascal);
 
-            Assert.AreEqual("new", (string)value.pascal);
-            Assert.AreEqual(true, (bool)value.parentCamel.nestedPascal);
-            Assert.AreEqual("c", (string)value.ParentPascal.nestedPascal);
+            Assert.IsNull((string)value.pascal);
+            Assert.IsNull((bool?)value.parentCamel.nestedPascal);
+            Assert.IsNull((string)value.ParentPascal.nestedPascal);
         }
 
         [Test]
