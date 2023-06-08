@@ -12,7 +12,7 @@ using Azure.Core;
 namespace Azure.ResourceManager.Models
 {
     /// <summary> Model factory for models. </summary>
-    public static partial class ResourceManagerModelFactory
+    public static partial class ArmResourceManagerModelFactory
     {
     }
 }

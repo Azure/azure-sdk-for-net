@@ -15,7 +15,7 @@ using Azure.ResourceManager.ManagementGroups.Models;
 namespace Azure.ResourceManager.Models
 {
     /// <summary> Model factory for models. </summary>
-    public static partial class ResourceManagerModelFactory
+    public static partial class ArmResourceManagerModelFactory
     {
         /// <summary> Initializes a new instance of ManagementGroupData. </summary>
         /// <param name="id"> The id. </param>
