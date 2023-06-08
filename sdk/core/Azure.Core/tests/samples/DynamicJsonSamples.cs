@@ -44,7 +44,7 @@ namespace Azure.Core.Samples
         {
             #region Snippet:AzureCoreGetDynamicJsonPropertyPascalCase
             WidgetsClientOptions options = new WidgetsClientOptions();
-            options.RawContent.PropertyNamingConvention = PropertyNamingConvention.CamelCase;
+            options.Protocol.PropertyNamingConvention = PropertyNamingConvention.CamelCase;
 
             WidgetsClient client = new WidgetsClient(new Uri("https://example.azure.com"), new DefaultAzureCredential(), options);
 #if !SNIPPET
@@ -315,7 +315,7 @@ namespace Azure.Core.Samples
                     new MockResponse(200).SetContent(initial),
                     new MockResponse(200).SetContent(updated))
             };
-            options.RawContent.PropertyNamingConvention = PropertyNamingConvention.CamelCase;
+            options.Protocol.PropertyNamingConvention = PropertyNamingConvention.CamelCase;
             return new WidgetsClient(new Uri("https://example.azure.com"), new MockCredential(), options);
         }
     }

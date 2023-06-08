@@ -380,7 +380,7 @@ namespace Azure.Core
         protected ClientOptions(Azure.Core.DiagnosticsOptions? diagnostics) { }
         public static Azure.Core.ClientOptions Default { get { throw null; } }
         public Azure.Core.DiagnosticsOptions Diagnostics { get { throw null; } }
-        public Azure.Core.Serialization.RawContentOptions RawContent { get { throw null; } }
+        public Azure.Core.Serialization.ProtocolOptions Protocol { get { throw null; } }
         public Azure.Core.RetryOptions Retry { get { throw null; } }
         public Azure.Core.Pipeline.HttpPipelinePolicy? RetryPolicy { get { throw null; } set { } }
         public Azure.Core.Pipeline.HttpPipelineTransport Transport { get { throw null; } set { } }
@@ -1141,9 +1141,9 @@ namespace Azure.Core.Serialization
         None = 0,
         CamelCase = 1,
     }
-    public partial class RawContentOptions
+    public partial class ProtocolOptions
     {
-        internal RawContentOptions() { }
+        internal ProtocolOptions() { }
         public Azure.Core.Serialization.PropertyNamingConvention PropertyNamingConvention { get { throw null; } set { } }
     }
 }

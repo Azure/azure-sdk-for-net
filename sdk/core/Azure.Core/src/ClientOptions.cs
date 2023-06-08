@@ -53,7 +53,7 @@ namespace Azure.Core
                 RetryPolicy = clientOptions.RetryPolicy;
                 Diagnostics = diagnostics ?? new DiagnosticsOptions(clientOptions.Diagnostics);
                 _transport = clientOptions.Transport;
-                RawContent = clientOptions.RawContent;
+                Protocol = clientOptions.Protocol;
                 if (clientOptions.Policies != null)
                 {
                     Policies = new(clientOptions.Policies);
@@ -67,7 +67,7 @@ namespace Azure.Core
                 _transport = HttpPipelineTransport.Create();
                 Diagnostics = new DiagnosticsOptions(null);
                 Retry = new RetryOptions(null);
-                RawContent = new RawContentOptions();
+                Protocol = new ProtocolOptions();
             }
         }
 
@@ -105,7 +105,7 @@ namespace Azure.Core
         /// <summary>
         /// Gets the client raw content options.
         /// </summary>
-        public RawContentOptions RawContent { get; }
+        public ProtocolOptions Protocol { get; }
 
         /// <summary>
         /// Adds an <see cref="HttpPipeline"/> policy into the client pipeline. The position of policy in the pipeline is controlled by the <paramref name="position"/> parameter.

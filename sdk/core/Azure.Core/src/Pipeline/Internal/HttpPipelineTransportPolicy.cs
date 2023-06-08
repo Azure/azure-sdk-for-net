@@ -16,7 +16,7 @@ namespace Azure.Core.Pipeline
         private readonly RequestFailedDetailsParser? _errorParser;
         private readonly DynamicDataOptions _dynamicOptions;
 
-        public HttpPipelineTransportPolicy(HttpPipelineTransport transport, HttpMessageSanitizer sanitizer, RawContentOptions contentOptions, RequestFailedDetailsParser? failureContentExtractor = null)
+        public HttpPipelineTransportPolicy(HttpPipelineTransport transport, HttpMessageSanitizer sanitizer, ProtocolOptions contentOptions, RequestFailedDetailsParser? failureContentExtractor = null)
         {
             _transport = transport;
             _sanitizer = sanitizer;

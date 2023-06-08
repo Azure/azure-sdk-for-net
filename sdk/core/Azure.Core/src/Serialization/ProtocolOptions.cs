@@ -9,12 +9,12 @@ namespace Azure.Core.Serialization
     /// <summary>
     /// Enables configuration of options for raw request and response content.
     /// </summary>
-    public class RawContentOptions
+    public class ProtocolOptions
     {
         /// <summary>
-        /// Creates a new instance of RawContentOptions.
+        /// Creates a new instance of ProtocolOptions.
         /// </summary>
-        internal RawContentOptions() { }
+        internal ProtocolOptions() { }
 
         /// <summary>
         /// By default, anonymous and dynamic types used to create and access protocol method request

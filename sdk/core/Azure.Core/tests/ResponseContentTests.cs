@@ -24,7 +24,7 @@ namespace Azure.Core.Tests
         }
 
         [Test]
-        public async Task DefaultRawContentOptionsUseStrictCasing()
+        public async Task DefaultProtocolOptionsUseStrictCasing()
         {
             MockClientOptions options = new MockClientOptions();
             MockClient client = new MockClient(options);
@@ -38,7 +38,7 @@ namespace Azure.Core.Tests
         public async Task UseCamelCaseOptionEnablesPropertyNameConversion()
         {
             MockClientOptions options = new MockClientOptions();
-            options.RawContent.PropertyNamingConvention = PropertyNamingConvention.CamelCase;
+            options.Protocol.PropertyNamingConvention = PropertyNamingConvention.CamelCase;
 
             MockClient client = new MockClient(options);
             Response response = await client.GetValueAsync();
