@@ -34,6 +34,6 @@ namespace Azure.Core.Serialization
         /// <summary>
         /// TODO
         /// </summary>
-        public Dictionary<Type, ObjectSerializer>? Serializers { get; set; }
+        public Dictionary<Type, ObjectSerializer> Serializers = new Dictionary<Type, ObjectSerializer>();
     }
 }
