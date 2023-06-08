@@ -62,6 +62,7 @@ namespace Azure.AI.TextAnalytics.Tests
 
         [RecordedTest]
         [RetryOnInternalServerError]
+        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/36799")]
         public async Task AnalyzeHealthcareEntitiesWithAADTest()
         {
             TextAnalyticsClient client = GetClient(useTokenCredential: true);
@@ -140,13 +141,11 @@ namespace Azure.AI.TextAnalytics.Tests
                     Assert.AreEqual(5, role.Entity.Length);
                 }
             }
-
-            Assert.IsNull(result1.FhirBundle);
         }
 
         [RecordedTest]
         [RetryOnInternalServerError]
-        [ServiceVersion(Min = TextAnalyticsClientOptions.ServiceVersion.V2022_10_01_Preview)]
+        [ServiceVersion(Min = TextAnalyticsClientOptions.ServiceVersion.V2023_04_01)]
         public async Task AnalyzeHealthcareEntitiesWithConfidenceScoreTest()
         {
             TextAnalyticsClient client = GetClient();
@@ -467,111 +466,6 @@ namespace Azure.AI.TextAnalytics.Tests
             Assert.AreEqual(2, pages[0].Count);
         }
 
-        [RecordedTest]
-        [RetryOnInternalServerError]
-        [ServiceVersion(Min = TextAnalyticsClientOptions.ServiceVersion.V2022_10_01_Preview)]
-        public async Task AnalyzeHealthcareEntitiesBatchWithFhirVersionTest()
-        {
-            TextAnalyticsClient client = GetClient();
-
-            AnalyzeHealthcareEntitiesOperation operation = await client.StartAnalyzeHealthcareEntitiesAsync(s_batchDocuments, new AnalyzeHealthcareEntitiesOptions
-            {
-                FhirVersion = FhirVersion.V4_0_1,
-                DocumentType = HealthcareDocumentType.DischargeSummary
-            });
-
-            await operation.WaitForCompletionAsync();
-
-            ValidateOperationProperties(operation);
-
-            List<AnalyzeHealthcareEntitiesResultCollection> resultInPages = operation.Value.ToEnumerableAsync().Result;
-            Assert.AreEqual(1, resultInPages.Count);
-
-            // Take the first page.
-            var resultCollection = resultInPages.FirstOrDefault();
-            Assert.AreEqual(s_batchDocuments.Count, resultCollection.Count);
-
-            // Check the FHIR bundle.
-            Assert.IsNotNull(resultCollection[0].FhirBundle);
-        }
-
-        [RecordedTest]
-        [RetryOnInternalServerError]
-        [ServiceVersion(Max = TextAnalyticsClientOptions.ServiceVersion.V2022_05_01)]
-        public void AnalyzeHealthcareEntitiesBatchWithFhirVersionThrows()
-        {
-            TestDiagnostics = false;
-
-            TextAnalyticsClient client = GetClient();
-
-            NotSupportedException ex = Assert.ThrowsAsync<NotSupportedException>(async () => await client.StartAnalyzeHealthcareEntitiesAsync(s_batchDocuments, new AnalyzeHealthcareEntitiesOptions
-            {
-                FhirVersion = FhirVersion.V4_0_1,
-            }));
-
-            Assert.That(ex.Message.EndsWith("Use service API version 2022-10-01-preview or newer."));
-        }
-
-        [RecordedTest]
-        [RetryOnInternalServerError]
-        [ServiceVersion(Max = TextAnalyticsClientOptions.ServiceVersion.V2022_05_01)]
-        public void AnalyzeHealthcareEntitiesBatchWithDocumentTypeThrows()
-        {
-            TestDiagnostics = false;
-
-            TextAnalyticsClient client = GetClient();
-
-            NotSupportedException ex = Assert.ThrowsAsync<NotSupportedException>(async () => await client.StartAnalyzeHealthcareEntitiesAsync(s_batchDocuments, new AnalyzeHealthcareEntitiesOptions
-            {
-                DocumentType = HealthcareDocumentType.DischargeSummary
-            }));
-
-            Assert.That(ex.Message.EndsWith("Use service API version 2022-10-01-preview or newer."));
-        }
-
-        [RecordedTest]
-        [RetryOnInternalServerError]
-        [ServiceVersion(Min = TextAnalyticsClientOptions.ServiceVersion.V2022_10_01_Preview)]
-        public async Task AnalyzeHealthcareEntitiesBatchConvenienceWithAutoDetectedLanguageTest()
-        {
-            TextAnalyticsClient client = GetClient();
-
-            AnalyzeHealthcareEntitiesOperation operation = await client.StartAnalyzeHealthcareEntitiesAsync(s_batchConvenienceDocuments, "auto");
-            await operation.WaitForCompletionAsync();
-
-            ValidateOperationProperties(operation);
-
-            // Take the first page.
-            AnalyzeHealthcareEntitiesResultCollection resultCollection = operation.Value.ToEnumerableAsync().Result.FirstOrDefault();
-            ValidateBatchDocumentsResult(resultCollection, s_expectedBatchOutput, isLanguageAutoDetected: true);
-        }
-
-        [RecordedTest]
-        [RetryOnInternalServerError]
-        [ServiceVersion(Min = TextAnalyticsClientOptions.ServiceVersion.V2022_10_01_Preview)]
-        public async Task AnalyzeOperationAnalyzeHealthcareEntitiesWithAutoDetectedLanguageTest()
-        {
-            TextAnalyticsClient client = GetClient();
-            List<string> documents = s_batchConvenienceDocuments;
-            Dictionary<string, List<string>> expectedOutput = s_expectedBatchOutput;
-            TextAnalyticsActions actions = new()
-            {
-                AnalyzeHealthcareEntitiesActions = new List<AnalyzeHealthcareEntitiesAction>() { new AnalyzeHealthcareEntitiesAction() },
-                DisplayName = "AnalyzeHealthcareEntitiesWithAutoDetectedLanguage",
-            };
-
-            AnalyzeActionsOperation operation = await client.StartAnalyzeActionsAsync(documents, actions, "auto");
-            await operation.WaitForCompletionAsync();
-
-            // Take the first page.
-            AnalyzeActionsResult resultCollection = operation.Value.ToEnumerableAsync().Result.FirstOrDefault();
-            IReadOnlyCollection<AnalyzeHealthcareEntitiesActionResult> actionResults = resultCollection.AnalyzeHealthcareEntitiesResults;
-            Assert.IsNotNull(actionResults);
-
-            AnalyzeHealthcareEntitiesResultCollection results = actionResults.FirstOrDefault().DocumentsResults;
-            ValidateBatchDocumentsResult(results, expectedOutput, isLanguageAutoDetected: true);
-        }
-
         private void ValidateInDocumenResult(IReadOnlyCollection<HealthcareEntity> entities, List<string> minimumExpectedOutput)
         {
             Assert.GreaterOrEqual(entities.Count, minimumExpectedOutput.Count);
@@ -593,8 +487,7 @@ namespace Azure.AI.TextAnalytics.Tests
         private void ValidateBatchDocumentsResult(
             AnalyzeHealthcareEntitiesResultCollection results,
             Dictionary<string, List<string>> minimumExpectedOutput,
-            bool includeStatistics = default,
-            bool isLanguageAutoDetected = default)
+            bool includeStatistics = default)
         {
             Assert.That(results.ModelVersion, Is.Not.Null.And.Not.Empty);
 
@@ -635,15 +528,6 @@ namespace Azure.AI.TextAnalytics.Tests
                         Assert.AreEqual(0, result.Statistics.CharacterCount);
                         Assert.AreEqual(0, result.Statistics.TransactionCount);
                     }
-                }
-
-                if (isLanguageAutoDetected)
-                {
-                    Assert.That(result.DetectedLanguage, Is.Not.Null.And.Not.Empty);
-                }
-                else
-                {
-                    Assert.IsNull(result.DetectedLanguage);
                 }
 
                 Assert.IsNotNull(result.Warnings);

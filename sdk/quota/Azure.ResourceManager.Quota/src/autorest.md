@@ -46,4 +46,30 @@ rename-rules:
   URI: Uri
   Etag: ETag|etag
 
+rename-mapping:
+  LimitJsonObject: QuotaLimitJsonObject
+  LimitObject: QuotaLimitObject
+  OperationList: QuotaOperationListResult
+  OperationResponse: QuotaOperationResult
+  OperationDisplay: QuotaOperationDisplay
+  ResourceName: QuotaRequestResourceName
+  SubRequest: QuotaSubRequestDetail
+  SubRequest.subRequestId: -|uuid
+  UsagesObject: QuotaUsagesObject
+  UsagesProperties: QuotaUsagesProperties
+  UsagesTypes: QuotaUsagesType
+  UsagesProperties.resourceType: ResourceTypeName
+  QuotaProperties.resourceType: ResourceTypeName
+  SubRequest.resourceType: ResourceTypeName
+  # QuotaRequestStatusDetails.resourceType: ResourceTypeName
+  # quotaRequestOneResourceProperties.resourceType: ResourceTypeName
+
+directive:
+# Correct the type of properties
+  - from: quota.json
+    where: $.definitions
+    transform: >
+      $.QuotaProperties.properties.quotaPeriod['format'] = 'duration';
+      $.UsagesProperties.properties.quotaPeriod['format'] = 'duration';
+
 ```

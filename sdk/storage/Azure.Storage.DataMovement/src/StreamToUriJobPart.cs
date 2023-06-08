@@ -37,6 +37,7 @@ namespace Azure.Storage.DataMovement
                   errorHandling: job._errorHandling,
                   createMode: job._createMode,
                   checkpointer: job._checkpointer,
+                  progressTracker: job._progressTracker,
                   arrayPool: job.UploadArrayPool,
                   isFinalPart: isFinalPart,
                   jobPartEventHandler: job.GetJobPartStatus(),
@@ -68,6 +69,7 @@ namespace Azure.Storage.DataMovement
                   errorHandling: job._errorHandling,
                   createMode: job._createMode,
                   checkpointer: job._checkpointer,
+                  progressTracker: job._progressTracker,
                   arrayPool: job.UploadArrayPool,
                   isFinalPart: isFinalPart,
                   jobPartEventHandler: job.GetJobPartStatus(),
@@ -232,13 +234,14 @@ namespace Azure.Storage.DataMovement
         /// Made to do the initial creation of the blob (if needed). And also
         /// to make an write if necessary.
         /// </summary>
-        internal async Task InitialUploadCall(long blockSize, long expectedlength, bool singleCall)
+        internal async Task InitialUploadCall(long blockSize, long expectedLength, bool singleCall)
         {
             try
             {
                 if (singleCall)
                 {
-                    ReadStreamStorageResourceResult result = await _sourceResource.ReadStreamAsync().ConfigureAwait(false);
+                    ReadStreamStorageResourceResult result = await _sourceResource.ReadStreamAsync(
+                        cancellationToken: _cancellationToken).ConfigureAwait(false);
 
                     using Stream stream = result.Content;
                     await _destinationResource.WriteFromStreamAsync(
@@ -246,9 +249,12 @@ namespace Azure.Storage.DataMovement
                             overwrite: _createMode == StorageResourceCreateMode.Overwrite,
                             position: 0,
                             streamLength: blockSize,
-                            completeLength: expectedlength,
+                            completeLength: expectedLength,
                             options: default,
                             cancellationToken: _cancellationToken).ConfigureAwait(false);
+
+                    // Report bytes written before completion
+                    ReportBytesWritten(blockSize);
 
                     // Set completion status to completed
                     await OnTransferStatusChanged(StorageTransferStatus.Completed).ConfigureAwait(false);
@@ -273,12 +279,13 @@ namespace Azure.Storage.DataMovement
                             streamLength: blockSize,
                             overwrite: _createMode == StorageResourceCreateMode.Overwrite,
                             position: 0,
-                            completeLength: expectedlength,
+                            completeLength: expectedLength,
                             default,
                             _cancellationToken).ConfigureAwait(false);
                     }
+
+                    ReportBytesWritten(blockSize);
                 }
-                ReportBytesWritten(blockSize);
             }
             catch (RequestFailedException ex)
             when (ex.ErrorCode == "BlobAlreadyExists" && _createMode == StorageResourceCreateMode.Skip)
