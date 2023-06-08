@@ -3,14 +3,11 @@
 
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Azure.Core;
 using Azure.Core.TestFramework;
-using Azure.Identity;
 using Azure.Storage.Queues;
 using Microsoft.Azure.WebJobs.Extensions.Storage.Common.Tests;
 using Microsoft.Azure.WebJobs.Extensions.Storage.ScenarioTests;
@@ -213,7 +210,6 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Scenario.Tests
                         }
                     }
 
-                    scaledOut = false;
                     return scaledOut;
                 }, pollingInterval: 2000, timeout: 120000, throwWhenDebugging: true);
             }
