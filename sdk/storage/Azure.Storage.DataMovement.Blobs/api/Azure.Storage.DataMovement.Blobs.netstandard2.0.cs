@@ -37,23 +37,12 @@ namespace Azure.Storage.DataMovement.Blobs
         public override System.Threading.Tasks.Task<Azure.Storage.DataMovement.Models.ReadStreamStorageResourceResult> ReadStreamAsync(long position = (long)0, long? length = default(long?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public override System.Threading.Tasks.Task WriteFromStreamAsync(System.IO.Stream stream, long streamLength, bool overwrite, long position = (long)0, long completeLength = (long)0, Azure.Storage.DataMovement.Models.StorageResourceWriteToOffsetOptions options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
-    public partial class AppendBlobStorageResourceOptions
+    public partial class AppendBlobStorageResourceOptions : Azure.Storage.DataMovement.Blobs.BlobStorageResourceOptions
     {
         public AppendBlobStorageResourceOptions() { }
-        public Azure.Storage.Blobs.Models.AccessTier? AccessTier { get { throw null; } set { } }
-        public Azure.Storage.DataMovement.Models.TransferCopyMethod CopyMethod { get { throw null; } set { } }
-        public Azure.Storage.Blobs.Models.BlobCopySourceTagsMode? CopySourceTagsMode { get { throw null; } set { } }
         public Azure.Storage.Blobs.Models.AppendBlobRequestConditions DestinationConditions { get { throw null; } set { } }
-        public Azure.Storage.Blobs.Models.BlobImmutabilityPolicy DestinationImmutabilityPolicy { get { throw null; } set { } }
-        public Azure.Storage.DownloadTransferValidationOptions DownloadTransferValidationOptions { get { throw null; } set { } }
-        public Azure.Storage.Blobs.Models.BlobHttpHeaders HttpHeaders { get { throw null; } set { } }
-        public bool? LegalHold { get { throw null; } set { } }
-        public System.Collections.Generic.IDictionary<string, string> Metadata { get { throw null; } set { } }
-        public Azure.Storage.Blobs.Models.RehydratePriority? RehydratePriority { get { throw null; } set { } }
         public bool? ShouldSealDestination { get { throw null; } set { } }
         public Azure.Storage.Blobs.Models.AppendBlobRequestConditions SourceConditions { get { throw null; } set { } }
-        public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } set { } }
-        public Azure.Storage.UploadTransferValidationOptions UploadTransferValidationOptions { get { throw null; } set { } }
     }
     public partial class BlobStorageResourceContainer : Azure.Storage.DataMovement.StorageResourceContainer
     {
@@ -69,10 +58,24 @@ namespace Azure.Storage.DataMovement.Blobs
     {
         public BlobStorageResourceContainerOptions() { }
         public Azure.Storage.Blobs.Models.BlobType BlobType { get { throw null; } set { } }
-        public Azure.Storage.DataMovement.Models.TransferCopyMethod CopyMethod { get { throw null; } set { } }
         public string DirectoryPrefix { get { throw null; } set { } }
-        public Azure.Storage.Blobs.Models.BlobStates States { get { throw null; } set { } }
-        public Azure.Storage.Blobs.Models.BlobTraits Traits { get { throw null; } set { } }
+        public Azure.Storage.DataMovement.Blobs.BlobStorageResourceOptions ResourceOptions { get { throw null; } set { } }
+    }
+    public partial class BlobStorageResourceOptions
+    {
+        public BlobStorageResourceOptions() { }
+        public Azure.Storage.Blobs.Models.AccessTier? AccessTier { get { throw null; } set { } }
+        public Azure.Storage.DataMovement.Models.TransferCopyMethod CopyMethod { get { throw null; } set { } }
+        public bool? CopySourceBlobProperties { get { throw null; } set { } }
+        public Azure.Storage.Blobs.Models.BlobCopySourceTagsMode? CopySourceTagsMode { get { throw null; } set { } }
+        public Azure.Storage.Blobs.Models.BlobImmutabilityPolicy DestinationImmutabilityPolicy { get { throw null; } set { } }
+        public Azure.Storage.DownloadTransferValidationOptions DownloadTransferValidationOptions { get { throw null; } set { } }
+        public Azure.Storage.Blobs.Models.BlobHttpHeaders HttpHeaders { get { throw null; } set { } }
+        public bool? LegalHold { get { throw null; } set { } }
+        public System.Collections.Generic.IDictionary<string, string> Metadata { get { throw null; } set { } }
+        public Azure.Storage.Blobs.Models.RehydratePriority? RehydratePriority { get { throw null; } set { } }
+        public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } set { } }
+        public Azure.Storage.UploadTransferValidationOptions UploadTransferValidationOptions { get { throw null; } set { } }
     }
     public partial class BlockBlobStorageResource : Azure.Storage.DataMovement.StorageResource
     {
@@ -92,23 +95,11 @@ namespace Azure.Storage.DataMovement.Blobs
         public override System.Threading.Tasks.Task<Azure.Storage.DataMovement.Models.ReadStreamStorageResourceResult> ReadStreamAsync(long position = (long)0, long? length = default(long?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public override System.Threading.Tasks.Task WriteFromStreamAsync(System.IO.Stream stream, long streamLength, bool overwrite, long position = (long)0, long completeLength = (long)0, Azure.Storage.DataMovement.Models.StorageResourceWriteToOffsetOptions options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
-    public partial class BlockBlobStorageResourceOptions
+    public partial class BlockBlobStorageResourceOptions : Azure.Storage.DataMovement.Blobs.BlobStorageResourceOptions
     {
         public BlockBlobStorageResourceOptions() { }
-        public Azure.Storage.Blobs.Models.AccessTier? AccessTier { get { throw null; } set { } }
-        public Azure.Storage.DataMovement.Models.TransferCopyMethod CopyMethod { get { throw null; } set { } }
-        public bool? CopySourceBlobProperties { get { throw null; } set { } }
-        public Azure.Storage.Blobs.Models.BlobCopySourceTagsMode? CopySourceTagsMode { get { throw null; } set { } }
         public Azure.Storage.Blobs.Models.BlobRequestConditions DestinationConditions { get { throw null; } set { } }
-        public Azure.Storage.Blobs.Models.BlobImmutabilityPolicy DestinationImmutabilityPolicy { get { throw null; } set { } }
-        public Azure.Storage.DownloadTransferValidationOptions DownloadTransferValidationOptions { get { throw null; } set { } }
-        public Azure.Storage.Blobs.Models.BlobHttpHeaders HttpHeaders { get { throw null; } set { } }
-        public bool? LegalHold { get { throw null; } set { } }
-        public System.Collections.Generic.IDictionary<string, string> Metadata { get { throw null; } set { } }
-        public Azure.Storage.Blobs.Models.RehydratePriority? RehydratePriority { get { throw null; } set { } }
         public Azure.Storage.Blobs.Models.BlobRequestConditions SourceConditions { get { throw null; } set { } }
-        public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } set { } }
-        public Azure.Storage.UploadTransferValidationOptions UploadTransferValidationOptions { get { throw null; } set { } }
     }
     public partial class PageBlobStorageResource : Azure.Storage.DataMovement.StorageResource
     {
@@ -128,22 +119,11 @@ namespace Azure.Storage.DataMovement.Blobs
         public override System.Threading.Tasks.Task<Azure.Storage.DataMovement.Models.ReadStreamStorageResourceResult> ReadStreamAsync(long position = (long)0, long? length = default(long?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public override System.Threading.Tasks.Task WriteFromStreamAsync(System.IO.Stream stream, long streamLength, bool overwrite, long position = (long)0, long completeLength = (long)0, Azure.Storage.DataMovement.Models.StorageResourceWriteToOffsetOptions options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
-    public partial class PageBlobStorageResourceOptions
+    public partial class PageBlobStorageResourceOptions : Azure.Storage.DataMovement.Blobs.BlobStorageResourceOptions
     {
         public PageBlobStorageResourceOptions() { }
-        public Azure.Storage.Blobs.Models.AccessTier? AccessTier { get { throw null; } set { } }
-        public Azure.Storage.DataMovement.Models.TransferCopyMethod CopyMethod { get { throw null; } set { } }
-        public Azure.Storage.Blobs.Models.BlobCopySourceTagsMode? CopySourceTagsMode { get { throw null; } set { } }
         public Azure.Storage.Blobs.Models.PageBlobRequestConditions DestinationConditions { get { throw null; } set { } }
-        public Azure.Storage.Blobs.Models.BlobImmutabilityPolicy DestinationImmutabilityPolicy { get { throw null; } set { } }
-        public Azure.Storage.DownloadTransferValidationOptions DownloadTransferValidationOptions { get { throw null; } set { } }
-        public Azure.Storage.Blobs.Models.BlobHttpHeaders HttpHeaders { get { throw null; } set { } }
-        public bool? LegalHold { get { throw null; } set { } }
-        public System.Collections.Generic.IDictionary<string, string> Metadata { get { throw null; } set { } }
-        public Azure.Storage.Blobs.Models.RehydratePriority? RehydratePriority { get { throw null; } set { } }
         public long? SequenceNumber { get { throw null; } set { } }
         public Azure.Storage.Blobs.Models.PageBlobRequestConditions SourceConditions { get { throw null; } set { } }
-        public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } set { } }
-        public Azure.Storage.UploadTransferValidationOptions UploadTransferValidationOptions { get { throw null; } set { } }
     }
 }

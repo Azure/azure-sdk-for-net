@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <Description>Microsoft Azure Schema Registry Apache Avro SDK</Description>
     <AssemblyTitle>Microsoft Azure Schema Registry Apache Avro SDK</AssemblyTitle>
