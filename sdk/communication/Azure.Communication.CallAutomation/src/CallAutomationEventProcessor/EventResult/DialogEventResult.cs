@@ -40,6 +40,16 @@ namespace Azure.Communication.CallAutomation
         /// </summary>
         public DialogTransfer DialogTransferSuccessEvent { get; }
 
+        /// <summary>
+        /// <see cref="DialogSensitivityUpdate"/> event will be returned once the dialog has its sensitivity updated.
+        /// </summary>
+        public DialogSensitivityUpdate DialogSensitivityUpdateEvent { get; }
+
+        /// <summary>
+        /// <see cref="DialogLanguageChange"/> event will be returned once the dialog has its language changed.
+        /// </summary>
+        public DialogLanguageChange DialogLanguageChange { get; }
+
         internal DialogEventResult(
             bool isSuccessEvent,
             DialogCompleted successEvent,
@@ -47,7 +57,9 @@ namespace Azure.Communication.CallAutomation
             DialogFailed failureEvent,
             DialogHangup dialogHangupSuccessEvent,
             DialogStarted dialogStartedSuccessEvent,
-            DialogTransfer dialogTransferSuccessEvent)
+            DialogTransfer dialogTransferSuccessEvent,
+            DialogSensitivityUpdate dialogSensitivityUpdateEvent,
+            DialogLanguageChange dialogLanguageChange)
         {
             IsSuccessEvent = isSuccessEvent;
             DialogCompletedSuccessEvent = successEvent;
@@ -56,6 +68,8 @@ namespace Azure.Communication.CallAutomation
             DialogHangupSuccessEvent = dialogHangupSuccessEvent;
             DialogStartedSuccessEvent = dialogStartedSuccessEvent;
             DialogTransferSuccessEvent = dialogTransferSuccessEvent;
+            DialogSensitivityUpdateEvent = dialogSensitivityUpdateEvent;
+            DialogLanguageChange = dialogLanguageChange;
         }
     }
 }

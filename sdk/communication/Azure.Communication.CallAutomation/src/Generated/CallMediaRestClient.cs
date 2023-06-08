@@ -57,8 +57,9 @@ namespace Azure.Communication.CallAutomation
             return message;
         }
 
-        /// <param name="callConnectionId"> The String to use. </param>
-        /// <param name="playRequest"> The PlayRequest to use. </param>
+        /// <summary> Plays audio to participants in the call. </summary>
+        /// <param name="callConnectionId"> The call connection id. </param>
+        /// <param name="playRequest"> play request payload. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="callConnectionId"/> or <paramref name="playRequest"/> is null. </exception>
         public async Task<Response> PlayAsync(string callConnectionId, PlayRequestInternal playRequest, CancellationToken cancellationToken = default)
@@ -83,8 +84,9 @@ namespace Azure.Communication.CallAutomation
             }
         }
 
-        /// <param name="callConnectionId"> The String to use. </param>
-        /// <param name="playRequest"> The PlayRequest to use. </param>
+        /// <summary> Plays audio to participants in the call. </summary>
+        /// <param name="callConnectionId"> The call connection id. </param>
+        /// <param name="playRequest"> play request payload. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="callConnectionId"/> or <paramref name="playRequest"/> is null. </exception>
         public Response Play(string callConnectionId, PlayRequestInternal playRequest, CancellationToken cancellationToken = default)
@@ -125,7 +127,8 @@ namespace Azure.Communication.CallAutomation
             return message;
         }
 
-        /// <param name="callConnectionId"> The String to use. </param>
+        /// <summary> Cancel all media operations in a call. </summary>
+        /// <param name="callConnectionId"> The call connection id. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="callConnectionId"/> is null. </exception>
         public async Task<Response> CancelAllMediaOperationsAsync(string callConnectionId, CancellationToken cancellationToken = default)
@@ -146,7 +149,8 @@ namespace Azure.Communication.CallAutomation
             }
         }
 
-        /// <param name="callConnectionId"> The String to use. </param>
+        /// <summary> Cancel all media operations in a call. </summary>
+        /// <param name="callConnectionId"> The call connection id. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="callConnectionId"/> is null. </exception>
         public Response CancelAllMediaOperations(string callConnectionId, CancellationToken cancellationToken = default)
@@ -187,8 +191,9 @@ namespace Azure.Communication.CallAutomation
             return message;
         }
 
-        /// <param name="callConnectionId"> The String to use. </param>
-        /// <param name="recognizeRequest"> The RecognizeRequest to use. </param>
+        /// <summary> Recognize media from call. </summary>
+        /// <param name="callConnectionId"> The call connection id. </param>
+        /// <param name="recognizeRequest"> The media recognize request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="callConnectionId"/> or <paramref name="recognizeRequest"/> is null. </exception>
         public async Task<Response> RecognizeAsync(string callConnectionId, RecognizeRequestInternal recognizeRequest, CancellationToken cancellationToken = default)
@@ -213,8 +218,9 @@ namespace Azure.Communication.CallAutomation
             }
         }
 
-        /// <param name="callConnectionId"> The String to use. </param>
-        /// <param name="recognizeRequest"> The RecognizeRequest to use. </param>
+        /// <summary> Recognize media from call. </summary>
+        /// <param name="callConnectionId"> The call connection id. </param>
+        /// <param name="recognizeRequest"> The media recognize request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="callConnectionId"/> or <paramref name="recognizeRequest"/> is null. </exception>
         public Response Recognize(string callConnectionId, RecognizeRequestInternal recognizeRequest, CancellationToken cancellationToken = default)
@@ -259,8 +265,9 @@ namespace Azure.Communication.CallAutomation
             return message;
         }
 
-        /// <param name="callConnectionId"> The String to use. </param>
-        /// <param name="continuousDtmfRecognitionRequest"> The ContinuousDtmfRecognitionRequest to use. </param>
+        /// <summary> Start continuous Dtmf recognition by subscribing to tones. </summary>
+        /// <param name="callConnectionId"> The call connection id. </param>
+        /// <param name="continuousDtmfRecognitionRequest"> The continuous recognize request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="callConnectionId"/> or <paramref name="continuousDtmfRecognitionRequest"/> is null. </exception>
         public async Task<Response> StartContinuousDtmfRecognitionAsync(string callConnectionId, ContinuousDtmfRecognitionRequestInternal continuousDtmfRecognitionRequest, CancellationToken cancellationToken = default)
@@ -285,8 +292,9 @@ namespace Azure.Communication.CallAutomation
             }
         }
 
-        /// <param name="callConnectionId"> The String to use. </param>
-        /// <param name="continuousDtmfRecognitionRequest"> The ContinuousDtmfRecognitionRequest to use. </param>
+        /// <summary> Start continuous Dtmf recognition by subscribing to tones. </summary>
+        /// <param name="callConnectionId"> The call connection id. </param>
+        /// <param name="continuousDtmfRecognitionRequest"> The continuous recognize request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="callConnectionId"/> or <paramref name="continuousDtmfRecognitionRequest"/> is null. </exception>
         public Response StartContinuousDtmfRecognition(string callConnectionId, ContinuousDtmfRecognitionRequestInternal continuousDtmfRecognitionRequest, CancellationToken cancellationToken = default)
@@ -331,8 +339,9 @@ namespace Azure.Communication.CallAutomation
             return message;
         }
 
-        /// <param name="callConnectionId"> The String to use. </param>
-        /// <param name="continuousDtmfRecognitionRequest"> The ContinuousDtmfRecognitionRequest to use. </param>
+        /// <summary> Stop continuous Dtmf recognition by unsubscribing to tones. </summary>
+        /// <param name="callConnectionId"> The call connection id. </param>
+        /// <param name="continuousDtmfRecognitionRequest"> The continuous recognize request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="callConnectionId"/> or <paramref name="continuousDtmfRecognitionRequest"/> is null. </exception>
         public async Task<Response> StopContinuousDtmfRecognitionAsync(string callConnectionId, ContinuousDtmfRecognitionRequestInternal continuousDtmfRecognitionRequest, CancellationToken cancellationToken = default)
@@ -357,8 +366,9 @@ namespace Azure.Communication.CallAutomation
             }
         }
 
-        /// <param name="callConnectionId"> The String to use. </param>
-        /// <param name="continuousDtmfRecognitionRequest"> The ContinuousDtmfRecognitionRequest to use. </param>
+        /// <summary> Stop continuous Dtmf recognition by unsubscribing to tones. </summary>
+        /// <param name="callConnectionId"> The call connection id. </param>
+        /// <param name="continuousDtmfRecognitionRequest"> The continuous recognize request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="callConnectionId"/> or <paramref name="continuousDtmfRecognitionRequest"/> is null. </exception>
         public Response StopContinuousDtmfRecognition(string callConnectionId, ContinuousDtmfRecognitionRequestInternal continuousDtmfRecognitionRequest, CancellationToken cancellationToken = default)
@@ -403,8 +413,9 @@ namespace Azure.Communication.CallAutomation
             return message;
         }
 
-        /// <param name="callConnectionId"> The String to use. </param>
-        /// <param name="sendDtmfRequest"> The SendDtmfRequest to use. </param>
+        /// <summary> Send dtmf tones. </summary>
+        /// <param name="callConnectionId"> The call connection id. </param>
+        /// <param name="sendDtmfRequest"> The send dtmf request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="callConnectionId"/> or <paramref name="sendDtmfRequest"/> is null. </exception>
         public async Task<Response> SendDtmfAsync(string callConnectionId, SendDtmfRequestInternal sendDtmfRequest, CancellationToken cancellationToken = default)
@@ -429,8 +440,9 @@ namespace Azure.Communication.CallAutomation
             }
         }
 
-        /// <param name="callConnectionId"> The String to use. </param>
-        /// <param name="sendDtmfRequest"> The SendDtmfRequest to use. </param>
+        /// <summary> Send dtmf tones. </summary>
+        /// <param name="callConnectionId"> The call connection id. </param>
+        /// <param name="sendDtmfRequest"> The send dtmf request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="callConnectionId"/> or <paramref name="sendDtmfRequest"/> is null. </exception>
         public Response SendDtmf(string callConnectionId, SendDtmfRequestInternal sendDtmfRequest, CancellationToken cancellationToken = default)

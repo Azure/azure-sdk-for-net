@@ -44,26 +44,24 @@ namespace Azure.Communication.CallAutomation
         /// <summary>
         /// Start Dialog.
         /// </summary>
-        /// <param name="dialogId"></param>
         /// <param name="startDialogOptions">Configuration attributes for starting dialog.</param>
         /// <param name="cancellationToken"></param>
         /// <returns>Returns <see cref="DialogResult"/>, which can be used to wait for Dialog's related events.</returns>
-        public virtual async Task<Response<DialogResult>> StartDialogAsync(StartDialogOptions startDialogOptions, string dialogId = "", CancellationToken cancellationToken = default)
+        public virtual async Task<Response<DialogResult>> StartDialogAsync(StartDialogOptions startDialogOptions, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallDialog)}.{nameof(StartDialog)}");
             scope.Start();
             try
             {
                 StartDialogRequestInternal request = CreateStartDialogRequest(startDialogOptions);
-                string internalDialogId = dialogId == "" ? Guid.NewGuid().ToString() : dialogId;
 
                 var response = await CallDialogRestClient.StartDialogAsync
                     (CallConnectionId,
-                    internalDialogId,
+                    startDialogOptions.DialogId,
                     request,
                     cancellationToken).ConfigureAwait(false);
 
-                var result = new DialogResult(internalDialogId);
+                var result = new DialogResult(startDialogOptions.DialogId);
                 result.SetEventProcessor(EventProcessor, CallConnectionId, request.OperationContext);
 
                 return Response.FromValue(result, response.GetRawResponse());
@@ -80,24 +78,22 @@ namespace Azure.Communication.CallAutomation
         /// </summary>
         /// <param name="startDialogOptions">Configuration attributes for starting dialog.</param>
         /// <param name="cancellationToken"></param>
-        /// <param name="dialogId">The dialog id.</param>
         /// <returns>Returns <see cref="DialogResult"/>, which can be used to wait for Dialog's related events.</returns>
-        public virtual Response<DialogResult> StartDialog(StartDialogOptions startDialogOptions, string dialogId = "", CancellationToken cancellationToken = default)
+        public virtual Response<DialogResult> StartDialog(StartDialogOptions startDialogOptions, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallDialog)}.{nameof(StartDialog)}");
             scope.Start();
             try
             {
                 StartDialogRequestInternal request = CreateStartDialogRequest(startDialogOptions);
-                string internalDialogId = dialogId == "" ? Guid.NewGuid().ToString() : dialogId;
 
                 var response = CallDialogRestClient.StartDialog
                     (CallConnectionId,
-                    internalDialogId,
+                    startDialogOptions.DialogId,
                     request,
                     cancellationToken);
 
-                var result = new DialogResult(internalDialogId);
+                var result = new DialogResult(startDialogOptions.DialogId);
                 result.SetEventProcessor(EventProcessor, CallConnectionId, request.OperationContext);
 
                 return Response.FromValue(result, response.GetRawResponse());

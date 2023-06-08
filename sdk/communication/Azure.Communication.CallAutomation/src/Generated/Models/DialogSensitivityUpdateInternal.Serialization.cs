@@ -11,9 +11,9 @@ using Azure.Core;
 
 namespace Azure.Communication.CallAutomation.Models.Events
 {
-    internal partial class DialogTransferInternal
+    internal partial class DialogSensitivityUpdateInternal
     {
-        internal static DialogTransferInternal DeserializeDialogTransferInternal(JsonElement element)
+        internal static DialogSensitivityUpdateInternal DeserializeDialogSensitivityUpdateInternal(JsonElement element)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -26,9 +26,7 @@ namespace Azure.Communication.CallAutomation.Models.Events
             Optional<ResultInformation> resultInformation = default;
             Optional<DialogInputType> dialogInputType = default;
             Optional<string> dialogId = default;
-            Optional<string> transferType = default;
-            Optional<string> transferDestination = default;
-            Optional<object> ivrContext = default;
+            Optional<SensitiveFlag> sensitiveFlag = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("callConnectionId"u8))
@@ -74,27 +72,17 @@ namespace Azure.Communication.CallAutomation.Models.Events
                     dialogId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("transferType"u8))
-                {
-                    transferType = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("transferDestination"u8))
-                {
-                    transferDestination = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("ivrContext"u8))
+                if (property.NameEquals("sensitiveFlag"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    ivrContext = property.Value.GetObject();
+                    sensitiveFlag = SensitiveFlag.DeserializeSensitiveFlag(property.Value);
                     continue;
                 }
             }
-            return new DialogTransferInternal(callConnectionId.Value, serverCallId.Value, correlationId.Value, operationContext.Value, resultInformation.Value, Optional.ToNullable(dialogInputType), dialogId.Value, transferType.Value, transferDestination.Value, ivrContext.Value);
+            return new DialogSensitivityUpdateInternal(callConnectionId.Value, serverCallId.Value, correlationId.Value, operationContext.Value, resultInformation.Value, Optional.ToNullable(dialogInputType), dialogId.Value, sensitiveFlag.Value);
         }
     }
 }

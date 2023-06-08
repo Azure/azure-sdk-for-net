@@ -49,7 +49,9 @@ namespace Azure.Communication.CallAutomation
                 || filter.GetType() == typeof(DialogFailed)
                 || filter.GetType() == typeof(DialogHangup)
                 || filter.GetType() == typeof(DialogStarted)
-                || filter.GetType() == typeof(DialogTransfer)),
+                || filter.GetType() == typeof(DialogTransfer)
+                || filter.GetType() == typeof(DialogSensitivityUpdate)
+                || filter.GetType() == typeof(DialogLanguageChange)),
                 cancellationToken);
 
             return SetReturnedEvent(returnedEvent);
@@ -74,7 +76,9 @@ namespace Azure.Communication.CallAutomation
                 || filter.GetType() == typeof(DialogFailed)
                 || filter.GetType() == typeof(DialogHangup)
                 || filter.GetType() == typeof(DialogStarted)
-                || filter.GetType() == typeof(DialogTransfer)),
+                || filter.GetType() == typeof(DialogTransfer)
+                || filter.GetType() == typeof(DialogSensitivityUpdate)
+                || filter.GetType() == typeof(DialogLanguageChange)),
                 cancellationToken).ConfigureAwait(false);
 
             return SetReturnedEvent(returnedEvent);
@@ -86,22 +90,28 @@ namespace Azure.Communication.CallAutomation
             switch (returnedEvent)
             {
                 case DialogCompleted:
-                    result = new DialogEventResult(true, (DialogCompleted)returnedEvent, null, null, null, null, null);
+                    result = new DialogEventResult(true, (DialogCompleted)returnedEvent, null, null, null, null, null, null, null);
                     break;
                 case DialogConsent:
-                    result = new DialogEventResult(true, null, (DialogConsent)returnedEvent, null, null, null, null);
+                    result = new DialogEventResult(true, null, (DialogConsent)returnedEvent, null, null, null, null, null, null);
                     break;
                 case DialogFailed:
-                    result = new DialogEventResult(false, null, null, (DialogFailed)returnedEvent, null, null, null);
+                    result = new DialogEventResult(false, null, null, (DialogFailed)returnedEvent, null, null, null, null, null);
                     break;
                 case DialogHangup:
-                    result = new DialogEventResult(true, null, null, null, (DialogHangup)returnedEvent, null, null);
+                    result = new DialogEventResult(true, null, null, null, (DialogHangup)returnedEvent, null, null, null, null);
                     break;
                 case DialogStarted:
-                    result = new DialogEventResult(true, null, null, null, null, (DialogStarted)returnedEvent, null);
+                    result = new DialogEventResult(true, null, null, null, null, (DialogStarted)returnedEvent, null, null, null);
                     break;
                 case DialogTransfer:
-                    result = new DialogEventResult(true, null, null, null, null, null, (DialogTransfer)returnedEvent);
+                    result = new DialogEventResult(true, null, null, null, null, null, (DialogTransfer)returnedEvent, null, null);
+                    break;
+                case DialogSensitivityUpdate:
+                    result = new DialogEventResult(true, null, null, null, null, null, null, (DialogSensitivityUpdate)returnedEvent, null);
+                    break;
+                case DialogLanguageChange:
+                    result = new DialogEventResult(true, null, null, null, null, null, null, null, (DialogLanguageChange)returnedEvent);
                     break;
                 default:
                     throw new NotSupportedException(returnedEvent.GetType().Name);

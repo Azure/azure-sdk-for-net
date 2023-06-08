@@ -26,7 +26,9 @@ namespace Azure.Communication.CallAutomation
             CorrelationId = internalEvent.CorrelationId;
             OperationContext = internalEvent.OperationContext;
             ResultInformation = internalEvent.ResultInformation;
-            TransferToExternalNumber = internalEvent.TransferToExternalNumber;
+            TransferType = internalEvent.TransferType;
+            TransferDestination = internalEvent.TransferDestination;
+            IvrContext = internalEvent.IvrContext;
             DialogId = internalEvent.DialogId;
         }
 
@@ -34,10 +36,12 @@ namespace Azure.Communication.CallAutomation
         public DialogInputType? DialogInputType { get; }
         /// <summary> Dialog Id</summary>
         public string DialogId { get; }
-        /// <summary>
-        /// TransferToExternalNumber
-        /// </summary>
-        public TransferToExternalNumber TransferToExternalNumber { get; }
+        /// <summary> Transfer Type </summary>
+        public string TransferType { get; }
+        /// <summary> Transfer Destination </summary>
+        public string TransferDestination { get; }
+        /// <summary> IVR Context </summary>
+        public object IvrContext { get; }
 
         /// <summary>
         /// Deserialize <see cref="DialogTransfer"/> event.

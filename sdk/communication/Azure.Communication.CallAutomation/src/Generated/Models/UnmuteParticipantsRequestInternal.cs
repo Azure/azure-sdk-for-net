@@ -13,11 +13,14 @@ using Azure.Core;
 
 namespace Azure.Communication.CallAutomation
 {
-    /// <summary> The UnmuteParticipantsRequest. </summary>
+    /// <summary> The request payload for unmuting participant from the call. </summary>
     internal partial class UnmuteParticipantsRequestInternal
     {
         /// <summary> Initializes a new instance of UnmuteParticipantsRequestInternal. </summary>
-        /// <param name="targetParticipants"></param>
+        /// <param name="targetParticipants">
+        /// Participants to be unmuted from the call.
+        /// Only ACS Users are supported.
+        /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="targetParticipants"/> is null. </exception>
         public UnmuteParticipantsRequestInternal(IEnumerable<CommunicationIdentifierModel> targetParticipants)
         {
@@ -26,9 +29,12 @@ namespace Azure.Communication.CallAutomation
             TargetParticipants = targetParticipants.ToList();
         }
 
-        /// <summary> Gets the target participants. </summary>
+        /// <summary>
+        /// Participants to be unmuted from the call.
+        /// Only ACS Users are supported.
+        /// </summary>
         public IList<CommunicationIdentifierModel> TargetParticipants { get; }
-        /// <summary> Gets or sets the operation context. </summary>
+        /// <summary> Used by customers when calling mid-call actions to correlate the request to the response event. </summary>
         public string OperationContext { get; set; }
     }
 }

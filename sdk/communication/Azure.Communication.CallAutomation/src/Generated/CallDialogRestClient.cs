@@ -59,11 +59,13 @@ namespace Azure.Communication.CallAutomation
             return message;
         }
 
-        /// <param name="callConnectionId"> The String to use. </param>
-        /// <param name="dialogId"> The String to use. </param>
-        /// <param name="startDialogRequest"> The StartDialogRequest to use. </param>
+        /// <summary> Start a dialog targeting a particular participant on the call. </summary>
+        /// <param name="callConnectionId"> The call connection id. </param>
+        /// <param name="dialogId"> The dialog id. </param>
+        /// <param name="startDialogRequest"> The start dialog request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="callConnectionId"/>, <paramref name="dialogId"/> or <paramref name="startDialogRequest"/> is null. </exception>
+        /// <remarks> Start a dialog. </remarks>
         public async Task<Response<DialogStateResponse>> StartDialogAsync(string callConnectionId, string dialogId, StartDialogRequestInternal startDialogRequest, CancellationToken cancellationToken = default)
         {
             if (callConnectionId == null)
@@ -95,11 +97,13 @@ namespace Azure.Communication.CallAutomation
             }
         }
 
-        /// <param name="callConnectionId"> The String to use. </param>
-        /// <param name="dialogId"> The String to use. </param>
-        /// <param name="startDialogRequest"> The StartDialogRequest to use. </param>
+        /// <summary> Start a dialog targeting a particular participant on the call. </summary>
+        /// <param name="callConnectionId"> The call connection id. </param>
+        /// <param name="dialogId"> The dialog id. </param>
+        /// <param name="startDialogRequest"> The start dialog request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="callConnectionId"/>, <paramref name="dialogId"/> or <paramref name="startDialogRequest"/> is null. </exception>
+        /// <remarks> Start a dialog. </remarks>
         public Response<DialogStateResponse> StartDialog(string callConnectionId, string dialogId, StartDialogRequestInternal startDialogRequest, CancellationToken cancellationToken = default)
         {
             if (callConnectionId == null)
@@ -148,8 +152,9 @@ namespace Azure.Communication.CallAutomation
             return message;
         }
 
-        /// <param name="callConnectionId"> The String to use. </param>
-        /// <param name="dialogId"> The String to use. </param>
+        /// <summary> Stop a dialog. </summary>
+        /// <param name="callConnectionId"> The call connection id. </param>
+        /// <param name="dialogId"> The dialog id. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="callConnectionId"/> or <paramref name="dialogId"/> is null. </exception>
         public async Task<Response> StopDialogAsync(string callConnectionId, string dialogId, CancellationToken cancellationToken = default)
@@ -174,8 +179,9 @@ namespace Azure.Communication.CallAutomation
             }
         }
 
-        /// <param name="callConnectionId"> The String to use. </param>
-        /// <param name="dialogId"> The String to use. </param>
+        /// <summary> Stop a dialog. </summary>
+        /// <param name="callConnectionId"> The call connection id. </param>
+        /// <param name="dialogId"> The dialog id. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="callConnectionId"/> or <paramref name="dialogId"/> is null. </exception>
         public Response StopDialog(string callConnectionId, string dialogId, CancellationToken cancellationToken = default)
