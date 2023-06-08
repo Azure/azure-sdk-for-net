@@ -220,7 +220,7 @@ Console.WriteLine(result.GetProperty("nextLink").ToString());
 <remarks>
 
 Additional information can be found in the service REST API documentation:
-https://review.learn.microsoft.com/rest/api/language/2023-04-01/analyze-conversation/job-status
+https://learn.microsoft.com/rest/api/language/2023-04-01/analyze-conversation/job-status
 
 </remarks>
     </member>
