@@ -527,8 +527,11 @@ namespace Azure.Storage.DataMovement.Tests
                 Argument.AssertNotNull(destinationContainer, nameof(destinationContainer));
                 BlobStorageResourceContainerOptions options = new BlobStorageResourceContainerOptions()
                 {
-                    CopyMethod = transferType == TransferType.SyncCopy ? TransferCopyMethod.SyncCopy : TransferCopyMethod.AsyncCopy,
-                    DirectoryPrefix = GetNewBlobDirectoryName()
+                    DirectoryPrefix = GetNewBlobDirectoryName(),
+                    ResourceOptions = new BlobStorageResourceOptions()
+                    {
+                        CopyMethod = transferType == TransferType.SyncCopy ? TransferCopyMethod.SyncCopy : TransferCopyMethod.AsyncCopy,
+                    }
                 };
                 SourceResource ??= await CreateBlobDirectorySourceResourceAsync(
                     size: size,
