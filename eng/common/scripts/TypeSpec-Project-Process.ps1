@@ -8,7 +8,8 @@ param (
   [Parameter(Position = 1)]
   [string] $CommitHash,
   [Parameter(Position = 2)]
-  [string] $RepoUrl
+  [string] $RepoUrl,
+  [switch] $SkipSyncAndGenerate
 )
 
 . $PSScriptRoot/common.ps1
@@ -199,14 +200,17 @@ if ($generateFromLocalTypeSpec) {
   $sdkProjectFolder = CreateUpdate-TspLocation $tspConfigYaml $TypeSpecProjectDirectory $CommitHash $repo $sdkRepoRootPath
 }
 
-# call TypeSpec-Project-Sync.ps1
-$syncScript = Join-Path $PSScriptRoot TypeSpec-Project-Sync.ps1
-& $syncScript $sdkProjectFolder $specRepoRoot
-if ($LASTEXITCODE) { exit $LASTEXITCODE }
+# checking skip switch
+if (!$SkipSyncAndGenerate) {
+  # call TypeSpec-Project-Sync.ps1
+  $syncScript = Join-Path $PSScriptRoot TypeSpec-Project-Sync.ps1
+  & $syncScript $sdkProjectFolder $specRepoRoot
+  if ($LASTEXITCODE) { exit $LASTEXITCODE }
 
-# call TypeSpec-Project-Generate.ps1
-$generateScript = Join-Path $PSScriptRoot TypeSpec-Project-Generate.ps1
-& $generateScript $sdkProjectFolder
-if ($LASTEXITCODE) { exit $LASTEXITCODE }
+  # call TypeSpec-Project-Generate.ps1
+  $generateScript = Join-Path $PSScriptRoot TypeSpec-Project-Generate.ps1
+  & $generateScript $sdkProjectFolder
+  if ($LASTEXITCODE) { exit $LASTEXITCODE }
+}
 
 return $sdkProjectFolder
