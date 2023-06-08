@@ -121,12 +121,13 @@ namespace Azure.AI.Translation.Text
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/languages", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
             if (scope != null)
             {
                 uri.AppendQuery("scope", scope, true);
             }
-            uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             if (clientTraceId != null)
             {
                 request.Headers.Add("X-ClientTraceId", clientTraceId);
@@ -135,7 +136,6 @@ namespace Azure.AI.Translation.Text
             {
                 request.Headers.Add("Accept-Language", acceptLanguage);
             }
-            request.Headers.Add("Accept", "application/json");
             if (ifNoneMatch != null)
             {
                 request.Headers.Add("If-None-Match", ifNoneMatch.Value);
@@ -158,6 +158,7 @@ namespace Azure.AI.Translation.Text
                     uri.AppendQuery("to", param, true);
                 }
             }
+            uri.AppendQuery("api-version", _apiVersion, true);
             if (@from != null)
             {
                 uri.AppendQuery("from", @from, true);
@@ -202,13 +203,12 @@ namespace Azure.AI.Translation.Text
             {
                 uri.AppendQuery("allowFallback", allowFallback.Value, true);
             }
-            uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             if (clientTraceId != null)
             {
                 request.Headers.Add("X-ClientTraceId", clientTraceId);
             }
-            request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             request.Content = content;
             return message;
@@ -227,11 +227,11 @@ namespace Azure.AI.Translation.Text
             uri.AppendQuery("toScript", toScript, true);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             if (clientTraceId != null)
             {
                 request.Headers.Add("X-ClientTraceId", clientTraceId);
             }
-            request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             request.Content = content;
             return message;
@@ -245,6 +245,7 @@ namespace Azure.AI.Translation.Text
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/breaksentence", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
             if (language != null)
             {
                 uri.AppendQuery("language", language, true);
@@ -253,13 +254,12 @@ namespace Azure.AI.Translation.Text
             {
                 uri.AppendQuery("script", script, true);
             }
-            uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             if (clientTraceId != null)
             {
                 request.Headers.Add("X-ClientTraceId", clientTraceId);
             }
-            request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             request.Content = content;
             return message;
@@ -277,11 +277,11 @@ namespace Azure.AI.Translation.Text
             uri.AppendQuery("to", to, true);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             if (clientTraceId != null)
             {
                 request.Headers.Add("X-ClientTraceId", clientTraceId);
             }
-            request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             request.Content = content;
             return message;
@@ -299,11 +299,11 @@ namespace Azure.AI.Translation.Text
             uri.AppendQuery("to", to, true);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             if (clientTraceId != null)
             {
                 request.Headers.Add("X-ClientTraceId", clientTraceId);
             }
-            request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             request.Content = content;
             return message;

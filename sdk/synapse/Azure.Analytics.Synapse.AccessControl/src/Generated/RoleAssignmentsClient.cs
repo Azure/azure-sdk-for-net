@@ -454,11 +454,11 @@ namespace Azure.Analytics.Synapse.AccessControl
                 uri.AppendQuery("scope", scope, true);
             }
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json, text/json");
             if (continuationToken != null)
             {
                 request.Headers.Add("x-ms-continuation", continuationToken);
             }
-            request.Headers.Add("Accept", "application/json, text/json");
             return message;
         }
 
