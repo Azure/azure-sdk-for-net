@@ -93,8 +93,6 @@ namespace Azure.Core.Dynamic
                 return elementType != null && IsAllowedType(elementType, out needsValueCheck);
             }
 
-            // TODO: Test case: list of lists of object
-
             private static bool IsAllowedCollectionType(Type type, out bool needsValueCheck)
             {
                 return
@@ -249,9 +247,6 @@ namespace Azure.Core.Dynamic
                     IsAllowedPocoValue(value);
             }
 
-            // TODO: test case, POCO with multiple object properties
-            // Make sure throws if either is invalid to verify order
-
             private static bool IsAllowedKnownValue<T>(T value)
             {
                 return
@@ -342,8 +337,22 @@ namespace Azure.Core.Dynamic
 
             private static bool IsAllowedPocoValue<T>(T value)
             {
-                return false;
-                //throw new NotImplementedException();
+                if (value is null)
+                {
+                    return true;
+                }
+
+                Type type = value.GetType();
+                foreach (PropertyInfo property in type.GetProperties())
+                {
+                    object? propertyValue = property.GetValue(value);
+                    if (!IsAllowedValue(propertyValue))
+                    {
+                        return false;
+                    }
+                }
+
+                return true;
             }
 
             #endregion

@@ -4,7 +4,8 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
-using Azure.Core.Dynamic;
+using System.Text.Json;
+using Azure.Core.Serialization;
 using NUnit.Framework;
 
 namespace Azure.Core.Tests
@@ -14,7 +15,7 @@ namespace Azure.Core.Tests
         [Test]
         public void CannotAssignModelWithBinaryDataProperty()
         {
-            dynamic json = BinaryData.FromString("""{"foo":1}""").ToDynamicFromJson(DynamicCaseMapping.PascalToCamel);
+            dynamic json = BinaryData.FromString("""{"foo":1}""").ToDynamicFromJson(PropertyNamingConvention.CamelCase);
             BinaryDataModel model = new BinaryDataModel();
 
             // Existing property
@@ -27,7 +28,7 @@ namespace Azure.Core.Tests
         [Test]
         public void CannotAssignModelWithStreamProperty()
         {
-            dynamic json = BinaryData.FromString("""{"foo":1}""").ToDynamicFromJson(DynamicCaseMapping.PascalToCamel);
+            dynamic json = BinaryData.FromString("""{"foo":1}""").ToDynamicFromJson(PropertyNamingConvention.CamelCase);
             StreamModel model = new StreamModel();
 
             // Existing property
@@ -40,7 +41,7 @@ namespace Azure.Core.Tests
         [Test]
         public void CannotAssignBinaryData()
         {
-            dynamic json = BinaryData.FromString("""{"foo":1}""").ToDynamicFromJson(DynamicCaseMapping.PascalToCamel);
+            dynamic json = BinaryData.FromString("""{"foo":1}""").ToDynamicFromJson(PropertyNamingConvention.CamelCase);
             BinaryData data = BinaryData.FromString("no");
 
             // Existing property
@@ -53,7 +54,7 @@ namespace Azure.Core.Tests
         [Test]
         public void CanAssignAnonymousType_ExistingProperty()
         {
-            dynamic json = BinaryData.FromString("""{"foo":1}""").ToDynamicFromJson(DynamicCaseMapping.PascalToCamel);
+            dynamic json = BinaryData.FromString("""{"foo":1}""").ToDynamicFromJson(PropertyNamingConvention.CamelCase);
 
             var anon = new
             {
@@ -62,15 +63,13 @@ namespace Azure.Core.Tests
             };
 
             // Existing property
-            json.Foo = anon;
-
-            // TODO: Validate
+            Assert.DoesNotThrow(() => json.Foo = anon);
         }
 
         [Test]
         public void CanAssignAnonymousType_NewProperty()
         {
-            dynamic json = BinaryData.FromString("""{"foo":1}""").ToDynamicFromJson(DynamicCaseMapping.PascalToCamel);
+            dynamic json = BinaryData.FromString("""{"foo":1}""").ToDynamicFromJson(PropertyNamingConvention.CamelCase);
 
             var anon = new
             {
@@ -79,15 +78,13 @@ namespace Azure.Core.Tests
             };
 
             // New property
-            json.Bar = anon;
-
-            // TODO: Validate
+            Assert.DoesNotThrow(() => json.Bar = anon);
         }
 
         [Test]
         public void CannotAssignAnonymousTypeWithUnallowedProperty()
         {
-            dynamic json = BinaryData.FromString("""{"foo":1}""").ToDynamicFromJson(DynamicCaseMapping.PascalToCamel);
+            dynamic json = BinaryData.FromString("""{"foo":1}""").ToDynamicFromJson(PropertyNamingConvention.CamelCase);
 
             var anon = new
             {
@@ -105,7 +102,7 @@ namespace Azure.Core.Tests
         [Test]
         public void CanAssignAllowedModelsWithCyclesOneDeep_ExistingProperty()
         {
-            dynamic json = BinaryData.FromString("""{"foo":1}""").ToDynamicFromJson(DynamicCaseMapping.PascalToCamel);
+            dynamic json = BinaryData.FromString("""{"foo":1}""").ToDynamicFromJson(PropertyNamingConvention.CamelCase);
             NestedModel model = new()
             {
                 StringProperty = "a",
@@ -130,7 +127,7 @@ namespace Azure.Core.Tests
         [Test]
         public void CanAssignAllowedModelsWithCyclesOneDeep_NewProperty()
         {
-            dynamic json = BinaryData.FromString("""{"foo":1}""").ToDynamicFromJson(DynamicCaseMapping.PascalToCamel);
+            dynamic json = BinaryData.FromString("""{"foo":1}""").ToDynamicFromJson(PropertyNamingConvention.CamelCase);
             NestedModel model = new()
             {
                 StringProperty = "a",
@@ -155,7 +152,7 @@ namespace Azure.Core.Tests
         [Test]
         public void CanAssignAllowedModelsWithCyclesTwoDeep_ExistingProperty()
         {
-            dynamic json = BinaryData.FromString("""{"foo":1}""").ToDynamicFromJson(DynamicCaseMapping.PascalToCamel);
+            dynamic json = BinaryData.FromString("""{"foo":1}""").ToDynamicFromJson(PropertyNamingConvention.CamelCase);
             SkipNestedModel model = new()
             {
                 StringProperty = "a",
@@ -180,7 +177,7 @@ namespace Azure.Core.Tests
         [Test]
         public void CanAssignAllowedModelsWithCyclesTwoDeep_NewProperty()
         {
-            dynamic json = BinaryData.FromString("""{"foo":1}""").ToDynamicFromJson(DynamicCaseMapping.PascalToCamel);
+            dynamic json = BinaryData.FromString("""{"foo":1}""").ToDynamicFromJson(PropertyNamingConvention.CamelCase);
             SkipNestedModel model = new()
             {
                 StringProperty = "a",
@@ -205,7 +202,7 @@ namespace Azure.Core.Tests
         [Test]
         public void CannotAssignCyclicalModelsWithUnallowedProperties()
         {
-            dynamic json = BinaryData.FromString("""{"foo":1}""").ToDynamicFromJson(DynamicCaseMapping.PascalToCamel);
+            dynamic json = BinaryData.FromString("""{"foo":1}""").ToDynamicFromJson(PropertyNamingConvention.CamelCase);
             UnallowedNestedModel model = new()
             {
                 StringProperty = "a",
@@ -230,7 +227,7 @@ namespace Azure.Core.Tests
         [Test]
         public void CanAssignDictionaryContainingAllowedTypes_ExistingProperty()
         {
-            dynamic json = BinaryData.FromString("""{"foo":1}""").ToDynamicFromJson(DynamicCaseMapping.PascalToCamel);
+            dynamic json = BinaryData.FromString("""{"foo":1}""").ToDynamicFromJson(PropertyNamingConvention.CamelCase);
 
             Dictionary<string, object> values = new();
             values["stringValue"] = "a";
@@ -243,7 +240,7 @@ namespace Azure.Core.Tests
         [Test]
         public void CanAssignDictionaryContainingAllowedTypes_NewProperty()
         {
-            dynamic json = BinaryData.FromString("""{"foo":1}""").ToDynamicFromJson(DynamicCaseMapping.PascalToCamel);
+            dynamic json = BinaryData.FromString("""{"foo":1}""").ToDynamicFromJson(PropertyNamingConvention.CamelCase);
 
             Dictionary<string, object> values = new();
             values["stringValue"] = "a";
@@ -256,7 +253,7 @@ namespace Azure.Core.Tests
         [Test]
         public void CannotAssignDictionaryContainingUnallowedTypes()
         {
-            dynamic json = BinaryData.FromString("""{"foo":1}""").ToDynamicFromJson(DynamicCaseMapping.PascalToCamel);
+            dynamic json = BinaryData.FromString("""{"foo":1}""").ToDynamicFromJson(PropertyNamingConvention.CamelCase);
 
             Dictionary<string, object> values = new();
             values["stringValue"] = "a";
@@ -267,6 +264,198 @@ namespace Azure.Core.Tests
 
             // New property
             Assert.Throws<NotSupportedException>(() => json.Bar = values);
+        }
+
+        [Test]
+        public void CanAssignModelWithValidObjectProperty()
+        {
+            dynamic json = BinaryData.FromString("""{"foo":1}""").ToDynamicFromJson(PropertyNamingConvention.CamelCase);
+
+            ObjectPropertyModel model = new()
+            {
+                StringProperty = "a",
+                ObjectProperty = 1,
+            };
+
+            // Existing property
+            json.Foo = model;
+
+            // New property
+            json.Bar = model;
+
+            Assert.AreEqual("a", (string)json.Foo.StringProperty);
+            Assert.AreEqual(1, (int)json.Foo.ObjectProperty);
+
+            Assert.AreEqual("a", (string)json.Bar.StringProperty);
+            Assert.AreEqual(1, (int)json.Bar.ObjectProperty);
+        }
+
+        [Test]
+        public void ModelAssignmentRespectsReferenceSemantics()
+        {
+            dynamic json = BinaryData.FromString("""{"foo":1}""").ToDynamicFromJson(PropertyNamingConvention.CamelCase);
+
+            ObjectPropertyModel model = new()
+            {
+                StringProperty = "a",
+                ObjectProperty = 1,
+            };
+
+            // Existing property
+            json.Foo = model;
+
+            // New property
+            json.Bar = model;
+
+            Assert.AreEqual("a", (string)json.Foo.StringProperty);
+            Assert.AreEqual(1, (int)json.Foo.ObjectProperty);
+
+            Assert.AreEqual("a", (string)json.Bar.StringProperty);
+            Assert.AreEqual(1, (int)json.Bar.ObjectProperty);
+
+            model.StringProperty = "b";
+            model.ObjectProperty = 2;
+
+            Assert.AreEqual("b", (string)json.Foo.StringProperty);
+            Assert.AreEqual(2, (int)json.Foo.ObjectProperty);
+
+            Assert.AreEqual("b", (string)json.Bar.StringProperty);
+            Assert.AreEqual(2, (int)json.Bar.ObjectProperty);
+        }
+
+        [Test]
+        public void ModelAssignmentRespectsReferenceSemanticsAndThrowsWithNewUnallowedValue()
+        {
+            dynamic json = BinaryData.FromString("""{"foo":1}""").ToDynamicFromJson(PropertyNamingConvention.CamelCase);
+
+            ObjectPropertyModel model = new()
+            {
+                StringProperty = "a",
+                ObjectProperty = 1,
+            };
+
+            // Existing property
+            json.Foo = model;
+
+            // New property
+            json.Bar = model;
+
+            Assert.AreEqual("a", (string)json.Foo.StringProperty);
+            Assert.AreEqual(1, (int)json.Foo.ObjectProperty);
+
+            Assert.AreEqual("a", (string)json.Bar.StringProperty);
+            Assert.AreEqual(1, (int)json.Bar.ObjectProperty);
+
+            model.StringProperty = "b";
+            model.ObjectProperty = BinaryData.FromString("no");
+
+            Assert.AreEqual("b", (string)json.Foo.StringProperty);
+            Assert.Throws<NotSupportedException>(() => { int i = (int)json.Foo.ObjectProperty; });
+
+            Assert.AreEqual("b", (string)json.Bar.StringProperty);
+            Assert.Throws<NotSupportedException>(() => { int i = (int)json.Bar.ObjectProperty; });
+
+            Assert.Throws<NotSupportedException>(() =>
+            {
+                using MemoryStream stream = new();
+                using Utf8JsonWriter writer = new(stream);
+                json.WriteTo(writer);
+            });
+        }
+
+        [Test]
+        public void CannotAssignModelWithInvalidObjectProperty()
+        {
+            dynamic json = BinaryData.FromString("""{"foo":1}""").ToDynamicFromJson(PropertyNamingConvention.CamelCase);
+
+            ObjectPropertyModel model = new()
+            {
+                StringProperty = "a",
+                ObjectProperty = BinaryData.FromString("b"),
+            };
+
+            // Existing property
+            Assert.Throws<NotSupportedException>(() => json.Foo = model);
+
+            // New property
+            Assert.Throws<NotSupportedException>(() => json.Bar = model);
+        }
+
+        [Test]
+        public void CannotAssignModelWithInvalidObjectPropertyRegardlessOfOrder()
+        {
+            dynamic json = BinaryData.FromString("""{"foo":1}""").ToDynamicFromJson(PropertyNamingConvention.CamelCase);
+
+            MultipleObjectPropertyModel model = new()
+            {
+                A = "a",
+                B = BinaryData.FromString("b"),
+            };
+
+            // Existing property
+            Assert.Throws<NotSupportedException>(() => json.Foo = model);
+
+            // New property
+            Assert.Throws<NotSupportedException>(() => json.Bar = model);
+
+            model = new()
+            {
+                A = BinaryData.FromString("a"),
+                B = "b",
+            };
+
+            // Existing property
+            Assert.Throws<NotSupportedException>(() => json.Foo = model);
+
+            // New property
+            Assert.Throws<NotSupportedException>(() => json.Bar = model);
+
+            model = new()
+            {
+                A = BinaryData.FromString("a"),
+                B = BinaryData.FromString("b"),
+            };
+
+            // Existing property
+            Assert.Throws<NotSupportedException>(() => json.Foo = model);
+
+            // New property
+            Assert.Throws<NotSupportedException>(() => json.Bar = model);
+        }
+
+        [Test]
+        public void CanAssignNestedGenerics()
+        {
+            dynamic json = BinaryData.FromString("""{"foo":1}""").ToDynamicFromJson(PropertyNamingConvention.CamelCase);
+
+            List<List<object>> list = new();
+            list.Add(new List<object>() { "a" });
+
+            Assert.AreEqual("a", list[0][0]);
+
+            // Existing property
+            json.Foo = list;
+
+            // New property
+            json.Bar = list;
+
+            Assert.AreEqual("a", (string)json.Foo[0][0]);
+            Assert.AreEqual("a", (string)json.Bar[0][0]);
+        }
+
+        [Test]
+        public void CannotAssignNestedGenericsWithUnallowedValues()
+        {
+            dynamic json = BinaryData.FromString("""{"foo":1}""").ToDynamicFromJson(PropertyNamingConvention.CamelCase);
+
+            List<List<object>> list = new();
+            list.Add(new List<object>() { BinaryData.FromString("a") });
+
+            // Existing property
+            Assert.Throws<NotSupportedException>(() => json.Foo = list);
+
+            // New property
+            Assert.Throws<NotSupportedException>(() => json.Bar = list);
         }
 
         #region Helpers
@@ -311,6 +500,20 @@ namespace Azure.Core.Tests
             public string StringProperty { get; set; }
             public UnallowedNestedModel NestedProperty { get; set; }
             public BinaryData BinaryDataProperty { get; set; }
+        }
+
+        internal class ObjectPropertyModel
+        {
+            public ObjectPropertyModel() { }
+            public string StringProperty { get; set; }
+            public object ObjectProperty { get; set; }
+        }
+
+        internal class MultipleObjectPropertyModel
+        {
+            public MultipleObjectPropertyModel() { }
+            public object A { get; set; }
+            public object B { get; set; }
         }
         #endregion
     }
