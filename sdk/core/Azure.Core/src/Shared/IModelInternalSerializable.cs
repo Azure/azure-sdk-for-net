@@ -6,7 +6,7 @@ using Azure.Core.Serialization;
 
 namespace Azure.Core
 {
-    internal interface IModelInternalSerializable
+    internal interface IModelInternalSerializable : IModelSerializable
     {
         /// <summary>
         /// TODO

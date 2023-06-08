@@ -150,7 +150,10 @@ namespace Azure.Core.Tests.ModelSerializationTests
         {
             public override DogListProperty Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
-                return DeserializeDogListProperty(JsonDocument.ParseValue(ref reader).RootElement, ConvertOptions(options));
+                var model = DeserializeDogListProperty(JsonDocument.ParseValue(ref reader).RootElement, ConvertOptions(options));
+                //marker used for testing to know if this converter fires
+                model.RawData.Add("DogListPropertyConverterMarker", new BinaryData("true"));
+                return model;
             }
 
             public override void Write(Utf8JsonWriter writer, DogListProperty value, JsonSerializerOptions options)

@@ -3,6 +3,7 @@
 
 using System;
 using System.Linq;
+using System.Reflection;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 
@@ -42,7 +43,8 @@ namespace Azure.Core.Serialization
         /// <returns></returns>
         public override bool CanConvert(Type typeToConvert)
         {
-            return (typeToConvert.GetInterfaces().Any(i => i is IModelSerializable));
+            return typeToConvert.GetInterfaces().Any(i => i.Equals(typeof(IModelInternalSerializable))) &&
+                !Attribute.IsDefined(typeToConvert, typeof(JsonConverterAttribute));
         }
 
         /// <summary>
@@ -57,13 +59,15 @@ namespace Azure.Core.Serialization
         public override IModelSerializable Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
 #pragma warning restore AZC0014 // Avoid using banned types in public API
         {
-            SerializableOptions serializableOptions = ConvertOptions(options);
-            var model = Activator.CreateInstance(typeToConvert, true) as IModelInternalSerializable;
-            if (model is null)
-                throw new NotSupportedException($"{typeToConvert.Name} does not have a parameterless constructor");
+            var method = typeToConvert.GetMethod($"Deserialize{typeToConvert.Name}", BindingFlags.NonPublic | BindingFlags.Static);
+            if (method is null)
+                throw new NotSupportedException($"{typeToConvert.Name} does not have a deserialize method defined.");
 
-            model.Deserialize(ref reader, serializableOptions);
-            return (IModelSerializable)model;
+            var model = method.Invoke(null, new object[] { JsonDocument.ParseValue(ref reader).RootElement, ConvertOptions(options) }) as IModelSerializable;
+            if (model is null)
+                throw new InvalidOperationException($"Unexpected error when deserializing {typeToConvert.Name}.");
+
+            return model;
         }
 
         /// <summary>
@@ -76,8 +80,7 @@ namespace Azure.Core.Serialization
         public override void Write(Utf8JsonWriter writer, IModelSerializable value, JsonSerializerOptions options)
 #pragma warning restore AZC0014 // Avoid using banned types in public API
         {
-            SerializableOptions serializableOptions = ConvertOptions(options);
-            ((IModelInternalSerializable)value).Serialize(writer, serializableOptions);
+            ((IModelInternalSerializable)value).Serialize(writer, ConvertOptions(options));
         }
 
         private SerializableOptions ConvertOptions(JsonSerializerOptions options)
