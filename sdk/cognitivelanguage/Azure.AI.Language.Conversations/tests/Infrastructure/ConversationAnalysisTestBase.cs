@@ -45,7 +45,7 @@ namespace Azure.AI.Language.Conversations.Tests
             await base.StartTestRecordingAsync();
 
             ConversationsClientOptions options = new ConversationsClientOptions(ServiceVersion);
-            options.Protocol.PropertyNamingConvention = PropertyNamingConvention.CamelCase;
+            options.ProtocolMethods.ResponseContentConvention = PropertyNamingConvention.CamelCase;
 
             Client = CreateClient<TClient>(
                 TestEnvironment.Endpoint,
