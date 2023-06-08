@@ -53,7 +53,7 @@ namespace Azure.Core
                 RetryPolicy = clientOptions.RetryPolicy;
                 Diagnostics = diagnostics ?? new DiagnosticsOptions(clientOptions.Diagnostics);
                 _transport = clientOptions.Transport;
-                Protocol = clientOptions.Protocol;
+                ProtocolMethods = clientOptions.ProtocolMethods;
                 if (clientOptions.Policies != null)
                 {
                     Policies = new(clientOptions.Policies);
@@ -67,7 +67,7 @@ namespace Azure.Core
                 _transport = HttpPipelineTransport.Create();
                 Diagnostics = new DiagnosticsOptions(null);
                 Retry = new RetryOptions(null);
-                Protocol = new ProtocolOptions();
+                ProtocolMethods = new ProtocolMethodOptions();
             }
         }
 
@@ -105,7 +105,7 @@ namespace Azure.Core
         /// <summary>
         /// Gets the client options for prototol methods.
         /// </summary>
-        public ProtocolOptions Protocol { get; }
+        public ProtocolMethodOptions ProtocolMethods { get; }
 
         /// <summary>
         /// Adds an <see cref="HttpPipeline"/> policy into the client pipeline. The position of policy in the pipeline is controlled by the <paramref name="position"/> parameter.

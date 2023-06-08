@@ -44,7 +44,7 @@ namespace Azure.Core.Samples
         {
             #region Snippet:AzureCoreGetDynamicJsonPropertyPascalCase
             WidgetsClientOptions options = new WidgetsClientOptions();
-            options.Protocol.PropertyNamingConvention = PropertyNamingConvention.CamelCase;
+            options.ProtocolMethods.ResponseContentConvention = PropertyNamingConvention.CamelCase;
 
             WidgetsClient client = new WidgetsClient(new Uri("https://example.azure.com"), new DefaultAzureCredential(), options);
 #if !SNIPPET
@@ -210,19 +210,36 @@ namespace Azure.Core.Samples
         }
 
         [Test]
-        public void SetPropertyWithoutCaseMapping()
+        public void SetPropertyWithoutCaseMappingPerInstance()
         {
             WidgetsClient client = GetMockClient();
 
-            #region Snippet:AzureCoreSetPropertyWithoutCaseMapping
+            #region Snippet:AzureCoreSetPropertyWithoutCaseMappingPerInstance
             Response response = client.GetWidget();
-            dynamic widget = response.Content.ToDynamicFromJson();
+            dynamic widget = response.Content.ToDynamicFromJson(PropertyNamingConvention.None);
+
+            widget.details.IPAddress = "127.0.0.1";
+            // JSON is `{ "details" : { "IPAddress" : "127.0.0.1" } }`
+            #endregion
+
+            Assert.IsTrue(widget.details.IPAddress == "127.0.0.1");
+            Assert.IsTrue(widget.details["IPAddress"] == "127.0.0.1");
+        }
+        [Test]
+        public void SetPropertyWithoutCaseMappingPerProperty()
+        {
+            WidgetsClient client = GetMockClient();
+
+            #region Snippet:AzureCoreSetPropertyWithoutCaseMappingPerProperty
+            Response response = client.GetWidget();
+            dynamic widget = response.Content.ToDynamicFromJson(PropertyNamingConvention.CamelCase);
 
             widget.details["IPAddress"] = "127.0.0.1";
             // JSON is `{ "details" : { "IPAddress" : "127.0.0.1" } }`
             #endregion
 
             Assert.IsTrue(widget.details.IPAddress == "127.0.0.1");
+            Assert.IsTrue(widget.details["IPAddress"] == "127.0.0.1");
         }
 
         [Test]
@@ -315,7 +332,7 @@ namespace Azure.Core.Samples
                     new MockResponse(200).SetContent(initial),
                     new MockResponse(200).SetContent(updated))
             };
-            options.Protocol.PropertyNamingConvention = PropertyNamingConvention.CamelCase;
+            options.ProtocolMethods.ResponseContentConvention = PropertyNamingConvention.CamelCase;
             return new WidgetsClient(new Uri("https://example.azure.com"), new MockCredential(), options);
         }
     }

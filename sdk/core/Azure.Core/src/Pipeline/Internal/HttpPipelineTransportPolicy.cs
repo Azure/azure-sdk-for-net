@@ -13,9 +13,9 @@ namespace Azure.Core.Pipeline
         private readonly HttpPipelineTransport _transport;
         private readonly HttpMessageSanitizer _sanitizer;
         private readonly RequestFailedDetailsParser? _errorParser;
-        private readonly ProtocolOptions _protocolOptions;
+        private readonly ProtocolMethodOptions _protocolOptions;
 
-        public HttpPipelineTransportPolicy(HttpPipelineTransport transport, HttpMessageSanitizer sanitizer, ProtocolOptions protocolOptions, RequestFailedDetailsParser? failureContentExtractor = null)
+        public HttpPipelineTransportPolicy(HttpPipelineTransport transport, HttpMessageSanitizer sanitizer, ProtocolMethodOptions protocolOptions, RequestFailedDetailsParser? failureContentExtractor = null)
         {
             _transport = transport;
             _sanitizer = sanitizer;
@@ -32,7 +32,7 @@ namespace Azure.Core.Pipeline
             message.Response.RequestFailedDetailsParser = _errorParser;
             message.Response.Sanitizer = _sanitizer;
             message.Response.IsError = message.ResponseClassifier.IsErrorResponse(message);
-            message.Response.ProtocolOptions = _protocolOptions;
+            message.Response.ProtocolMethodOptions = _protocolOptions;
         }
 
         public override void Process(HttpMessage message, ReadOnlyMemory<HttpPipelinePolicy> pipeline)
@@ -44,7 +44,7 @@ namespace Azure.Core.Pipeline
             message.Response.RequestFailedDetailsParser = _errorParser;
             message.Response.Sanitizer = _sanitizer;
             message.Response.IsError = message.ResponseClassifier.IsErrorResponse(message);
-            message.Response.ProtocolOptions = _protocolOptions;
+            message.Response.ProtocolMethodOptions = _protocolOptions;
         }
     }
 }

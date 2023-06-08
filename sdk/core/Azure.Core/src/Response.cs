@@ -45,7 +45,7 @@ namespace Azure
         // TODO(matell): The .NET Framework team plans to add BinaryData.Empty in dotnet/runtime#49670, and we can use it then.
         private static readonly BinaryData s_EmptyBinaryData = new BinaryData(Array.Empty<byte>());
 
-        internal ProtocolOptions ProtocolOptions { get; set; } = new();
+        internal ProtocolMethodOptions ProtocolMethodOptions { get; set; } = new();
 
         /// <summary>
         /// Gets the contents of HTTP response, if it is available.
@@ -71,11 +71,11 @@ namespace Azure
 
                 if (memoryContent.TryGetBuffer(out ArraySegment<byte> segment))
                 {
-                    return new ResponseContent(segment.AsMemory(), ProtocolOptions);
+                    return new ResponseContent(segment.AsMemory(), ProtocolMethodOptions);
                 }
                 else
                 {
-                    return new ResponseContent(memoryContent.ToArray(), ProtocolOptions);
+                    return new ResponseContent(memoryContent.ToArray(), ProtocolMethodOptions);
                 }
             }
         }

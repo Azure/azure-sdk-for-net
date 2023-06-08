@@ -21,14 +21,14 @@ namespace Azure.Core.Tests
             ResponseContent content = response.Content as ResponseContent;
 
             Assert.IsNotNull(content);
-            Assert.AreEqual(content.ProtocolOptions.PropertyNamingConvention, PropertyNamingConvention.None);
+            Assert.AreEqual(content.ProtocolOptions.ResponseContentConvention, PropertyNamingConvention.None);
         }
 
         [Test]
         public async Task ProtocolOptionsSetDynamicOptionsNaming()
         {
             MockClientOptions options = new MockClientOptions();
-            options.Protocol.PropertyNamingConvention = PropertyNamingConvention.CamelCase;
+            options.ProtocolMethods.ResponseContentConvention = PropertyNamingConvention.CamelCase;
             MockClient client = new MockClient(options);
             Response response = await client.GetValueAsync();
             ResponseContent content = response.Content as ResponseContent;
@@ -51,7 +51,7 @@ namespace Azure.Core.Tests
         public async Task UseCamelCaseOptionEnablesPropertyNameConversion()
         {
             MockClientOptions options = new MockClientOptions();
-            options.Protocol.PropertyNamingConvention = PropertyNamingConvention.CamelCase;
+            options.ProtocolMethods.ResponseContentConvention = PropertyNamingConvention.CamelCase;
 
             MockClient client = new MockClient(options);
             Response response = await client.GetValueAsync();

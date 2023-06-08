@@ -8,21 +8,21 @@ namespace Azure
 {
     internal class ResponseContent : BinaryData
     {
-        private readonly ProtocolOptions _protocolOptions;
-        public ProtocolOptions ProtocolOptions { get => _protocolOptions; }
+        private readonly ProtocolMethodOptions _protocolOptions;
+        public ProtocolMethodOptions ProtocolOptions { get => _protocolOptions; }
 
-        public ResponseContent(ReadOnlyMemory<byte> data, ProtocolOptions options) : base(data)
+        public ResponseContent(ReadOnlyMemory<byte> data, ProtocolMethodOptions options) : base(data)
         {
             _protocolOptions = options;
         }
 
-        public ResponseContent(string data, ProtocolOptions options) : base(data)
+        public ResponseContent(string data, ProtocolMethodOptions options) : base(data)
         {
             _protocolOptions = options;
         }
 
-        public static ResponseContent FromBytes(ReadOnlyMemory<byte> data, ProtocolOptions options) => new ResponseContent(data, options);
+        public static ResponseContent FromBytes(ReadOnlyMemory<byte> data, ProtocolMethodOptions options) => new ResponseContent(data, options);
 
-        public static ResponseContent FromString(string data, ProtocolOptions options) => new ResponseContent(data, options);
+        public static ResponseContent FromString(string data, ProtocolMethodOptions options) => new ResponseContent(data, options);
     }
 }
