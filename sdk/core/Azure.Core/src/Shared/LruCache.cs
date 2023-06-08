@@ -10,7 +10,6 @@ namespace Azure.Core
 {
     /// <summary>
     /// A simple LRU cache implementation using a doubly linked list and dictionary.
-    ///
     /// </summary>
     /// <typeparam name="TKey">The type of key</typeparam>
     /// <typeparam name="TValue">The type of value</typeparam>
