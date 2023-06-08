@@ -141,6 +141,9 @@ namespace Azure.Messaging.ServiceBus
         /// </summary>
         public string Identifier { get; set; }
 
+        /// <summary>
+        /// Number of messages to receive.
+        /// </summary>
         public int BatchSize { get; set; } = 1; // Should be an integer > 1 and less than some limit.
 
         /// <summary>

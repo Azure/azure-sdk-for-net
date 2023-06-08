@@ -51,6 +51,9 @@ namespace Azure.Messaging.ServiceBus
         /// </summary>
         public SubQueue SubQueue { get; set; } = SubQueue.None;
 
+        /// <summary>
+        /// Number of messages to receive.
+        /// </summary>
         public int BatchSize { get; set; } = 1;
 
         /// <summary>

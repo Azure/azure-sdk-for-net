@@ -48,6 +48,28 @@ namespace Azure.Messaging.ServiceBus
             }
         }
 
+        internal ProcessorReceiveActions(IReadOnlyList<ServiceBusReceivedMessage> triggerMessages, ReceiverManager manager, bool autoRenewMessageLocks)
+        {
+            _manager = manager;
+
+            // manager would be null in scenarios where customers are using the public constructor of the event args for testing purposes.
+            _receiver = manager?.Receiver;
+            _autoRenew = autoRenewMessageLocks;
+            foreach (var triggerMessage in triggerMessages)
+            {
+                Messages[triggerMessage] = default;
+            }
+
+            if (_autoRenew)
+            {
+                _lockRenewalCancellationSource = new CancellationTokenSource();
+                foreach (var triggerMessage in triggerMessages)
+                {
+                    _renewalTasks[_manager.RenewMessageLockAsync(triggerMessage, _lockRenewalCancellationSource)] = default;
+                }
+            }
+        }
+
         /// <summary>
         /// Receives a list of <see cref="ServiceBusReceivedMessage"/> from the entity using <see cref="ServiceBusReceiveMode"/> mode
         /// configured in <see cref="ServiceBusProcessorOptions.ReceiveMode"/>, which defaults to PeekLock mode.

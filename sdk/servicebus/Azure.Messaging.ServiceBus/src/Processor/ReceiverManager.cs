@@ -169,7 +169,7 @@ namespace Azure.Messaging.ServiceBus
         protected async Task ProcessMessagesWithinScopeAsync(IReadOnlyList<ServiceBusReceivedMessage> messages, string activityName, CancellationToken cancellationToken)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope(activityName, DiagnosticScope.ActivityKind.Consumer, MessagingDiagnosticOperation.Process);
-            scope.SetMessageAsParent(messages);
+            scope.SetMessageAsParent(messages[0]); // TODO will need to rovle this for multiple messages
             scope.Start();
 
             try
@@ -185,7 +185,6 @@ namespace Azure.Messaging.ServiceBus
                 throw;
             }
         }
-
 
         private async Task ProcessOneMessage(
             ServiceBusReceivedMessage triggerMessage,
@@ -301,13 +300,13 @@ namespace Azure.Messaging.ServiceBus
                 errorSource = ServiceBusErrorSource.ProcessMessageCallback;
                 try
                 {
-                    ServiceBusEventSource.Log.ProcessorMessageHandlerStart(Processor.Identifier, triggerMessages[0].SequenceNumber, triggerMessages[0].LockTokenGuid);
+                    ServiceBusEventSource.Log.ProcessorMessageHandlerStart(Processor.Identifier, triggerMessages[0].SequenceNumber, triggerMessages[0].LockTokenGuid); // TODO will need to rovle this for multiple messages
                     await OnMessageHandler(args).ConfigureAwait(false);
-                    ServiceBusEventSource.Log.ProcessorMessageHandlerComplete(Processor.Identifier, triggerMessages[0].SequenceNumber, triggerMessages[0].LockTokenGuid);
+                    ServiceBusEventSource.Log.ProcessorMessageHandlerComplete(Processor.Identifier, triggerMessages[0].SequenceNumber, triggerMessages[0].LockTokenGuid); // TODO will need to rovle this for multiple messages
                 }
                 catch (Exception ex)
                 {
-                    ServiceBusEventSource.Log.ProcessorMessageHandlerException(Processor.Identifier, triggerMessages[0].SequenceNumber, ex.ToString(), triggerMessages[0].LockTokenGuid);
+                    ServiceBusEventSource.Log.ProcessorMessageHandlerException(Processor.Identifier, triggerMessages[0].SequenceNumber, ex.ToString(), triggerMessages[0].LockTokenGuid); // TODO will need to rovle this for multiple messages
                     throw;
                 }
 
@@ -393,7 +392,7 @@ namespace Azure.Messaging.ServiceBus
 
         private static ICollection<ServiceBusReceivedMessage> GetProcessedMessages(EventArgs args) =>
             args is ProcessMessageEventArgs processMessageEventArgs ? processMessageEventArgs.Messages.Keys
-                : ((ProcessSessionMessageEventArgs)args).Messages.Keys;
+                : ((ProcessSessionMessageEventArgs)args).Messages.Keys; // TODO resolve all 4 types or pull out a base class.
 
         internal bool ShouldAutoRenewMessageLock()
         {

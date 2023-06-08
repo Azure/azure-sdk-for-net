@@ -153,6 +153,9 @@ namespace Azure.Messaging.ServiceBus
         /// </summary>
         public IList<string> SessionIds { get; } = new List<string>();
 
+        /// <summary>
+        /// Number of messages to receive.
+        /// </summary>
         public int BatchSize { get; set; } = 1;
 
         /// <summary>

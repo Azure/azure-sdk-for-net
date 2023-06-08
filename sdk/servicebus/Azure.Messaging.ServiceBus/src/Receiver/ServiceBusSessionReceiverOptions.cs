@@ -43,6 +43,9 @@ namespace Azure.Messaging.ServiceBus
         /// <inheritdoc cref="ServiceBusReceiverOptions.Identifier"/>
         public string Identifier { get; set; }
 
+        /// <summary>
+        /// Number of messages to receive.
+        /// </summary>
         public int BatchSize { get; set; } = 1;
 
         /// <summary>
