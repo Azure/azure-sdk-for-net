@@ -58,9 +58,6 @@ parameters:
 - name: LimitForPullRequest
   type: boolean
   default: false
-- name: RunDefaultLiveTestStages
-  type: boolean
-  default: false
 - name: LiveTestStages
   type: stageList
   default: []
