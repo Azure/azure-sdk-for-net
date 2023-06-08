@@ -4,11 +4,13 @@
 using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core.Pipeline;
 using Azure.Core.Shared;
 using Azure.Messaging.ServiceBus.Diagnostics;
+using Azure.Messaging.ServiceBus.Processor;
 
 namespace Azure.Messaging.ServiceBus
 {
@@ -169,7 +171,7 @@ namespace Azure.Messaging.ServiceBus
         protected async Task ProcessMessagesWithinScopeAsync(IReadOnlyList<ServiceBusReceivedMessage> messages, string activityName, CancellationToken cancellationToken)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope(activityName, DiagnosticScope.ActivityKind.Consumer, MessagingDiagnosticOperation.Process);
-            scope.SetMessageAsParent(messages[0]); // TODO will need to rovle this for multiple messages
+            scope.SetMessageAsParent(messages[0]);
             scope.Start();
 
             try
@@ -293,20 +295,23 @@ namespace Azure.Messaging.ServiceBus
             CancellationToken cancellationToken)
         {
             ServiceBusErrorSource errorSource = ServiceBusErrorSource.Receive;
-            EventArgs args = ConstructEventArgs(triggerMessages, cancellationToken); //multiple event args, 1 per message
+            EventArgs args = ConstructEventArgs(triggerMessages, cancellationToken);
 
             try
             {
                 errorSource = ServiceBusErrorSource.ProcessMessageCallback;
+
+                // TODO resolve for batch
+                var triggerMessage = triggerMessages[0];
                 try
                 {
-                    ServiceBusEventSource.Log.ProcessorMessageHandlerStart(Processor.Identifier, triggerMessages[0].SequenceNumber, triggerMessages[0].LockTokenGuid); // TODO will need to rovle this for multiple messages
+                    ServiceBusEventSource.Log.ProcessorMessageHandlerStart(Processor.Identifier, triggerMessage.SequenceNumber, triggerMessage.LockTokenGuid);
                     await OnMessageHandler(args).ConfigureAwait(false);
-                    ServiceBusEventSource.Log.ProcessorMessageHandlerComplete(Processor.Identifier, triggerMessages[0].SequenceNumber, triggerMessages[0].LockTokenGuid); // TODO will need to rovle this for multiple messages
+                    ServiceBusEventSource.Log.ProcessorMessageHandlerComplete(Processor.Identifier, triggerMessage.SequenceNumber, triggerMessage.LockTokenGuid);
                 }
                 catch (Exception ex)
                 {
-                    ServiceBusEventSource.Log.ProcessorMessageHandlerException(Processor.Identifier, triggerMessages[0].SequenceNumber, ex.ToString(), triggerMessages[0].LockTokenGuid); // TODO will need to rovle this for multiple messages
+                    ServiceBusEventSource.Log.ProcessorMessageHandlerException(Processor.Identifier, triggerMessage.SequenceNumber, ex.ToString(), triggerMessage.LockTokenGuid);
                     throw;
                 }
 
@@ -390,9 +395,7 @@ namespace Azure.Messaging.ServiceBus
             }
         }
 
-        private static ICollection<ServiceBusReceivedMessage> GetProcessedMessages(EventArgs args) =>
-            args is ProcessMessageEventArgs processMessageEventArgs ? processMessageEventArgs.Messages.Keys
-                : ((ProcessSessionMessageEventArgs)args).Messages.Keys; // TODO resolve all 4 types or pull out a base class.
+        private static ICollection<ServiceBusReceivedMessage> GetProcessedMessages(EventArgs args) => args is IProcessedMessages processedMessages ? processedMessages.ProcessedMessages : throw new InvalidOperationException();
 
         internal bool ShouldAutoRenewMessageLock()
         {
@@ -401,22 +404,25 @@ namespace Azure.Messaging.ServiceBus
                    AutoRenewLock;
         }
 
-        protected virtual EventArgs ConstructEventArgs(ServiceBusReceivedMessage message, CancellationToken cancellationToken) =>
+        protected virtual ProcessMessageEventArgs ConstructEventArgs(ServiceBusReceivedMessage message, CancellationToken cancellationToken) =>
             new ProcessMessageEventArgs(
             message,
             this,
             Processor.Identifier,
             cancellationToken);
 
-        protected virtual EventArgs ConstructEventArgs(IReadOnlyList<ServiceBusReceivedMessage> messages, CancellationToken cancellationToken) =>
+        protected virtual ProcessMessagesEventArgs ConstructEventArgs(IReadOnlyList<ServiceBusReceivedMessage> messages, CancellationToken cancellationToken) =>
             new ProcessMessagesEventArgs(
             messages,
             this,
             Processor.Identifier,
             cancellationToken);
 
-        protected virtual async Task OnMessageHandler(EventArgs args) =>
-            await Processor.OnProcessMessageAsync((ProcessMessageEventArgs) args).ConfigureAwait(false);
+        protected virtual async Task OnMessageHandler(ProcessMessageEventArgs args) =>
+            await Processor.OnProcessMessageAsync(args).ConfigureAwait(false);
+
+        protected virtual async Task OnMessagesHandler(ProcessMessagesEventArgs args) =>
+            await Processor.OnProcessMessagesAsync(args).ConfigureAwait(false);
 
         internal async Task RenewMessageLockAsync(
             ServiceBusReceivedMessage message,

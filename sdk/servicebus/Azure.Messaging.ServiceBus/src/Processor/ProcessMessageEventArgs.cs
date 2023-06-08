@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure.Messaging.ServiceBus.Processor;
 
 namespace Azure.Messaging.ServiceBus
 {
@@ -14,7 +15,7 @@ namespace Azure.Messaging.ServiceBus
     /// The <see cref="ProcessMessageEventArgs"/> contain event args that are specific
     /// to the <see cref="ServiceBusReceivedMessage"/> that is being processed.
     /// </summary>
-    public class ProcessMessageEventArgs : EventArgs
+    public class ProcessMessageEventArgs : EventArgs, IProcessedMessages
     {
         /// <summary>
         /// The received message to be processed.
@@ -43,6 +44,8 @@ namespace Azure.Messaging.ServiceBus
         public string FullyQualifiedNamespace => _receiver.FullyQualifiedNamespace;
 
         internal ConcurrentDictionary<ServiceBusReceivedMessage, byte> Messages => _receiveActions.Messages;
+
+        ICollection<ServiceBusReceivedMessage> IProcessedMessages.ProcessedMessages => Messages.Keys;
 
         private readonly ServiceBusReceiver _receiver;
         private readonly ProcessorReceiveActions _receiveActions;

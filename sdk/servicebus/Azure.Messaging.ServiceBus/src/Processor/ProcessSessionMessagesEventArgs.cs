@@ -8,6 +8,7 @@ using System.ComponentModel;
 using System.Net.Security;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure.Messaging.ServiceBus.Processor;
 
 namespace Azure.Messaging.ServiceBus
 {
@@ -16,7 +17,7 @@ namespace Azure.Messaging.ServiceBus
     /// are specific to the <see cref="ServiceBusReceivedMessage"/> and session that
     /// is being processed.
     /// </summary>
-    public class ProcessSessionMessagesEventArgs : EventArgs
+    public class ProcessSessionMessagesEventArgs : EventArgs, IProcessedMessages
     {
         /// <summary>
         /// Gets the <see cref="ServiceBusReceivedMessage"/> to be processed.
@@ -31,6 +32,8 @@ namespace Azure.Messaging.ServiceBus
         public CancellationToken CancellationToken { get; }
 
         internal ConcurrentDictionary<ServiceBusReceivedMessage, byte> ReceivedActionsMessages => _receiveActions.Messages;
+
+        internal ICollection<ServiceBusReceivedMessage> ProcessedMessages => ReceivedActionsMessages.Keys;
 
         /// <summary>
         /// The <see cref="ServiceBusSessionReceiver"/> that will be used for all settlement methods for the args.
@@ -65,6 +68,8 @@ namespace Azure.Messaging.ServiceBus
         /// The fully qualified Service Bus namespace that the message was received from.
         /// </summary>
         public string FullyQualifiedNamespace => _sessionReceiver.FullyQualifiedNamespace;
+
+        ICollection<ServiceBusReceivedMessage> IProcessedMessages.ProcessedMessages => throw new NotImplementedException();
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ProcessSessionMessagesEventArgs"/> class.

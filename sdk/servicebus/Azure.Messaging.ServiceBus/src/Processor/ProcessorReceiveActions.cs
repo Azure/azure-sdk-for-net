@@ -32,41 +32,43 @@ namespace Azure.Messaging.ServiceBus
         {
         }
 
-        internal ProcessorReceiveActions(ServiceBusReceivedMessage triggerMessage, ReceiverManager manager, bool autoRenewMessageLocks)
+        internal ProcessorReceiveActions(ServiceBusReceivedMessage triggerMessage, ReceiverManager manager, bool autoRenewMessageLocks) : this(manager, autoRenewMessageLocks)
         {
-            _manager = manager;
-
-            // manager would be null in scenarios where customers are using the public constructor of the event args for testing purposes.
-            _receiver = manager?.Receiver;
-            _autoRenew = autoRenewMessageLocks;
-            Messages[triggerMessage] = default;
+            TrackMessage(triggerMessage);
 
             if (_autoRenew)
             {
-                _lockRenewalCancellationSource = new CancellationTokenSource();
-                _renewalTasks[_manager.RenewMessageLockAsync(triggerMessage, _lockRenewalCancellationSource)] = default;
+                TrackAutoRenewal(triggerMessage);
             }
         }
 
-        internal ProcessorReceiveActions(IReadOnlyList<ServiceBusReceivedMessage> triggerMessages, ReceiverManager manager, bool autoRenewMessageLocks)
+        internal ProcessorReceiveActions(IReadOnlyList<ServiceBusReceivedMessage> triggerMessages, ReceiverManager manager, bool autoRenewMessageLocks) : this(manager, autoRenewMessageLocks)
+        {
+            foreach (var triggerMessage in triggerMessages)
+            {
+                TrackMessage(triggerMessage);
+            }
+
+            if (_autoRenew)
+            {
+                foreach (var triggerMessage in triggerMessages)
+                {
+                    TrackAutoRenewal(triggerMessage);
+                }
+            }
+        }
+
+        private ProcessorReceiveActions(ReceiverManager manager, bool autoRenewMessageLocks)
         {
             _manager = manager;
 
             // manager would be null in scenarios where customers are using the public constructor of the event args for testing purposes.
             _receiver = manager?.Receiver;
             _autoRenew = autoRenewMessageLocks;
-            foreach (var triggerMessage in triggerMessages)
-            {
-                Messages[triggerMessage] = default;
-            }
 
             if (_autoRenew)
             {
                 _lockRenewalCancellationSource = new CancellationTokenSource();
-                foreach (var triggerMessage in triggerMessages)
-                {
-                    _renewalTasks[_manager.RenewMessageLockAsync(triggerMessage, _lockRenewalCancellationSource)] = default;
-                }
             }
         }
 
@@ -133,6 +135,16 @@ namespace Azure.Messaging.ServiceBus
                 fromSequenceNumber: fromSequenceNumber,
                 cancellationToken: cancellationToken).ConfigureAwait(false);
        }
+
+        private void TrackMessage(ServiceBusReceivedMessage triggerMessage)
+        {
+            Messages[triggerMessage] = default;
+        }
+
+        private void TrackAutoRenewal(ServiceBusReceivedMessage triggerMessage)
+        {
+            _renewalTasks[_manager.RenewMessageLockAsync(triggerMessage, _lockRenewalCancellationSource)] = default;
+        }
 
         private IReadOnlyList<ServiceBusReceivedMessage> TrackMessagesAsReceived(IReadOnlyList<ServiceBusReceivedMessage> messages)
         {

@@ -38,7 +38,9 @@ namespace Azure.Messaging.ServiceBus
     {
         private Func<ProcessMessageEventArgs, Task> _processMessageAsync;
 
-        private Func<ProcessSessionMessageEventArgs, Task> _processSessionMessageAsync;
+        private Func<ProcessMessagesEventArgs, Task> _processMessagesAsync;
+
+        private Func<ProcessSessionMessageEventArgs, Task> _processSessionMessageAsync; // TODO need a batch version of this one too
 
         private Func<ProcessErrorEventArgs, Task> _processErrorAsync;
 
@@ -376,6 +378,50 @@ namespace Azure.Messaging.ServiceBus
 
         /// <summary>
         /// The handler responsible for processing messages received from the Queue
+        /// or Subscription.
+        /// Implementation is mandatory.
+        /// </summary>
+        /// <remarks>
+        /// It is not recommended that the state of the processor be managed directly from within this handler; requesting to start or stop the processor may result in
+        /// a deadlock scenario.
+        /// </remarks>
+        [SuppressMessage("Usage", "AZC0002:Ensure all service methods take an optional CancellationToken parameter.",
+            Justification = "Guidance does not apply; this is an event.")]
+        [SuppressMessage("Usage", "AZC0003:DO make service methods virtual.",
+            Justification = "This member follows the standard .NET event pattern; override via the associated On<<EVENT>> method.")]
+        public event Func<ProcessMessagesEventArgs, Task> ProcessMessagesAsync
+        {
+            add
+            {
+                Argument.AssertNotNull(value, nameof(ProcessMessagesAsync));
+
+                if (_processMessagesAsync != default)
+                {
+#pragma warning disable CA1065 // Do not raise exceptions in unexpected locations
+                    throw new NotSupportedException(Resources.HandlerHasAlreadyBeenAssigned);
+#pragma warning restore CA1065 // Do not raise exceptions in unexpected locations
+                }
+
+                EnsureNotRunningAndInvoke(() => _processMessagesAsync = value);
+            }
+
+            remove
+            {
+                Argument.AssertNotNull(value, nameof(ProcessMessagesAsync));
+
+                if (_processMessagesAsync != value)
+                {
+#pragma warning disable CA1065 // Do not raise exceptions in unexpected locations
+                    throw new ArgumentException(Resources.HandlerHasNotBeenAssigned);
+#pragma warning restore CA1065 // Do not raise exceptions in unexpected locations
+                }
+
+                EnsureNotRunningAndInvoke(() => _processMessagesAsync = default);
+            }
+        }
+
+        /// <summary>
+        /// The handler responsible for processing messages received from the Queue
         /// or Subscription. Implementation is mandatory.
         /// </summary>
         [SuppressMessage("Usage", "AZC0002:Ensure all service methods take an optional CancellationToken parameter.",
@@ -531,6 +577,23 @@ namespace Azure.Messaging.ServiceBus
             try
             {
                 await _processMessageAsync(args).ConfigureAwait(false);
+            }
+            finally
+            {
+                args.EndExecutionScope();
+            }
+        }
+
+        /// <summary>
+        /// Invokes the process message event handler after a message has been received.
+        /// This method can be overridden to raise an event manually for testing purposes.
+        /// </summary>
+        /// <param name="args">The event args containing information related to the message.</param>
+        protected internal virtual async Task OnProcessMessagesAsync(ProcessMessagesEventArgs args)
+        {
+            try
+            {
+                await _processMessagesAsync(args).ConfigureAwait(false);
             }
             finally
             {
