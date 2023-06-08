@@ -27,7 +27,7 @@ string name = widget.name;
 
 By default, properties on dynamic content use exact name matches to lookup and set new properties in the content data.
 
-To use [C# naming conventions](https://learn.microsoft.com/dotnet/csharp/fundamentals/coding-style/coding-conventions#naming-conventions) with dynamic content, 
+To use [C# naming conventions](https://learn.microsoft.com/dotnet/csharp/fundamentals/coding-style/coding-conventions#naming-conventions) with dynamic content,
 set `options.Protocol.PropertyNamingConvention` to `PropertyNamingConvention.CamelCase` on the client's options.  This will enable PascalCase C# property names to get and set camelCase JSON members.
 
 ```C# Snippet:AzureCoreGetDynamicJsonPropertyPascalCase
@@ -45,7 +45,7 @@ The remainder of the samples in this section use a client with these options.
 
 ### Set a JSON property
 
-JSON members can be set on the dynamic object.  Pass `DynamicCaseMapping.PascalToCamel` to `ToDynamicFromJson()` to write JSON members with camelCase names.
+JSON members can be set on the dynamic object.
 
 ```C# Snippet:AzureCoreSetDynamicJsonProperty
 Response response = client.GetWidget();
@@ -152,7 +152,7 @@ When working with JSON from Azure services, you can learn what properties are av
 
 Note that most Azure services name JSON fields [with camelCase names](https://github.com/microsoft/api-guidelines/blob/vNext/azure/Guidelines.md#json-field-name-casing) to [treat them with case-sensitivity](https://github.com/microsoft/api-guidelines/blob/vNext/azure/Guidelines.md#json-field-names-case-sensitivity).  Not every Azure service adheres to this convention; please consult the service REST API documentation.
 
-If you are using the `ClientOptions.RawContent.UseCamelCaseNamingConvention` setting and there is a need to bypass these name mappings, JSON members can be accessed with exact strings using property indexers.
+If you set `ClientOptions.Protocol.PropertyNamingConvention` to a value other than `PropertyNamingConvention.None` and there is a need to bypass the name mapping, JSON members can be accessed with exact strings using property indexers.
 
 ```C# Snippet:AzureCoreSetPropertyWithoutCaseMapping
 Response response = client.GetWidget();

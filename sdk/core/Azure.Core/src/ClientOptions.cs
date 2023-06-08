@@ -103,7 +103,7 @@ namespace Azure.Core
         public HttpPipelinePolicy? RetryPolicy { get; set; }
 
         /// <summary>
-        /// Gets the client raw content options.
+        /// Gets the client options for prototol methods.
         /// </summary>
         public ProtocolOptions Protocol { get; }
 

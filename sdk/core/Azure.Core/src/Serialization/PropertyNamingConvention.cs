@@ -15,8 +15,8 @@ namespace Azure.Core.Serialization
 
         /// <summary>
         /// Indicates that a camel-case naming convention will be used in the target content.
-		///
-		/// With this option, names used in C# code will be converted to a camel-case format when working with the target content.
+        ///
+        /// With this option, names used in C# code will be converted to a camel-case format when working with the target content.
         /// See <see cref="System.Text.Json.JsonNamingPolicy.CamelCase"/> for details of the conversion.
         /// </summary>
         CamelCase = 1

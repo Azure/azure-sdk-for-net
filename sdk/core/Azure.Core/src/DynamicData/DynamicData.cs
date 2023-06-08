@@ -102,11 +102,10 @@ namespace Azure.Core.Dynamic
                 return new DynamicData(element, _options);
             }
 
-            // If the caller has opted-in to using a naming convention with the dynamic content
-            // apply that mapping in a second look-up.
+            // If the dynamic content uses a naming convention, do a second look-up.
             if (_options.PropertyNamingConvention != PropertyNamingConvention.None)
             {
-                if (_element.TryGetProperty(ConvertName(name), out element))
+                if (_element.TryGetProperty(ApplyNamingConvention(name), out element))
                 {
                     if (element.ValueKind == JsonValueKind.Null)
                     {
@@ -121,7 +120,7 @@ namespace Azure.Core.Dynamic
             return null;
         }
 
-        private string ConvertName(string value)
+        private string ApplyNamingConvention(string value)
         {
             return _options.PropertyNamingConvention switch
             {
@@ -181,14 +180,15 @@ namespace Azure.Core.Dynamic
                 value = ConvertType(value);
             }
 
-            if (_element.TryGetProperty(name, out MutableJsonElement _) ||
-                _options.PropertyNamingConvention == PropertyNamingConvention.None)
+            if (_options.PropertyNamingConvention == PropertyNamingConvention.None ||
+                _element.TryGetProperty(name, out MutableJsonElement _))
             {
                 _element = _element.SetProperty(name, value);
                 return null;
             }
 
-            _element = _element.SetProperty(ConvertName(name), value);
+            // The dynamic content uses a naming convention.  Set with that name.
+            _element = _element.SetProperty(ApplyNamingConvention(name), value);
 
             // Binding machinery expects the call site signature to return an object
             return null;

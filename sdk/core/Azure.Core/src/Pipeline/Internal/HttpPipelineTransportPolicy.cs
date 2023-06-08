@@ -4,7 +4,6 @@
 using System;
 using System.Diagnostics;
 using System.Threading.Tasks;
-using Azure.Core.Dynamic;
 using Azure.Core.Serialization;
 
 namespace Azure.Core.Pipeline

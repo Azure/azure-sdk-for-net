@@ -57,7 +57,7 @@ namespace Azure.Core.Tests
         }
 
         [Test]
-        public void CanGetPropertiesWithPascalToCamelMapping()
+        public void CanGetPropertiesWithCamelCaseNamingConvention()
         {
             DynamicDataOptions options = new() { PropertyNamingConvention = PropertyNamingConvention.CamelCase };
             dynamic value = new BinaryData(testJson).ToDynamicFromJson(options);
@@ -74,7 +74,7 @@ namespace Azure.Core.Tests
         }
 
         [Test]
-        public void CannotGetPropertiesWithUnmatchedCasingWithPascalToCamelMapping()
+        public void CannotGetPropertiesWithUnmatchedCasingWithCamelCaseNamingConvention()
         {
             DynamicDataOptions options = new() { PropertyNamingConvention = PropertyNamingConvention.CamelCase };
             dynamic value = new BinaryData(testJson).ToDynamicFromJson(options);
@@ -133,7 +133,7 @@ namespace Azure.Core.Tests
         }
 
         [Test]
-        public void CanSetExistingPropertiesWithPascalToCamelMapping()
+        public void CanSetExistingPropertiesWithCamelCaseNamingConvention()
         {
             DynamicDataOptions options = new() { PropertyNamingConvention = PropertyNamingConvention.CamelCase };
             dynamic value = new BinaryData(testJson).ToDynamicFromJson(options);
@@ -196,7 +196,7 @@ namespace Azure.Core.Tests
         }
 
         [Test]
-        public void CanSetNewPropertiesWithPascalToCamelMapping()
+        public void CanSetNewPropertiesWithCamelCaseNamingConvention()
         {
             DynamicDataOptions options = new() { PropertyNamingConvention = PropertyNamingConvention.CamelCase };
             dynamic value = new BinaryData("""{}""").ToDynamicFromJson(options);
@@ -282,7 +282,7 @@ namespace Azure.Core.Tests
         }
 
         [Test]
-        public void CanEnumeratePropertiesPascalGettersWithPascalToCamelMapping()
+        public void CanEnumeratePropertiesPascalGettersWithCamelCaseNamingConvention()
         {
             DynamicDataOptions options = new() { PropertyNamingConvention = PropertyNamingConvention.CamelCase };
             dynamic jsonData = BinaryData.FromString("""
@@ -347,7 +347,7 @@ namespace Azure.Core.Tests
         }
 
         [Test]
-        public void CanEnumerateArrayPascalGettersWithPascalToCamelMapping()
+        public void CanEnumerateArrayPascalGettersWithCamelCaseNamingConvention()
         {
             DynamicDataOptions options = new() { PropertyNamingConvention = PropertyNamingConvention.CamelCase };
             dynamic jsonData = BinaryData.FromString("""
