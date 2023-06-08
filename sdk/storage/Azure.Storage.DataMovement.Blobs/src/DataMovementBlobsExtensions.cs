@@ -220,37 +220,6 @@ namespace Azure.Storage.DataMovement.Blobs
             };
         }
 
-        internal static BlobCopyFromUriOptions ToBlobCopyFromUriOptions(
-            this AppendBlobStorageResourceOptions options,
-            bool overwrite,
-            HttpAuthorization sourceAuthorization)
-        {
-            // There's a lot of conditions that cannot be applied to a Copy Blob (async) Request.
-            // We need to omit them, but still apply them to other requests that do accept them.
-            // See https://learn.microsoft.com/en-us/rest/api/storageservices/copy-blob#request-headers
-            // to see what headers are accepted.
-            return new BlobCopyFromUriOptions()
-            {
-                Metadata = options?.Metadata,
-                Tags = options?.Tags,
-                AccessTier = options?.AccessTier,
-                SourceConditions = new BlobRequestConditions()
-                {
-                    IfMatch = options?.SourceConditions?.IfMatch,
-                    IfUnmodifiedSince = options?.SourceConditions?.IfUnmodifiedSince,
-                    IfModifiedSince = options?.SourceConditions?.IfModifiedSince,
-                    TagConditions = options?.SourceConditions?.TagConditions,
-                },
-                DestinationConditions = CreateRequestConditions(options?.DestinationConditions, overwrite),
-                ShouldSealDestination = options?.ShouldSealDestination,
-                RehydratePriority = options?.RehydratePriority,
-                DestinationImmutabilityPolicy = options?.DestinationImmutabilityPolicy,
-                LegalHold = options?.LegalHold,
-                SourceAuthentication = sourceAuthorization,
-                CopySourceTagsMode = options?.CopySourceTagsMode,
-            };
-        }
-
         internal static AppendBlobAppendBlockFromUriOptions ToAppendBlockFromUriOptions(
             this AppendBlobStorageResourceOptions options,
             bool overwrite,
@@ -327,36 +296,6 @@ namespace Azure.Storage.DataMovement.Blobs
             };
         }
 
-        internal static BlobCopyFromUriOptions ToBlobCopyFromUriOptions(
-            this BlockBlobStorageResourceOptions options,
-            bool overwrite,
-            HttpAuthorization sourceAuthorization)
-        {
-            // There's a lot of conditions that cannot be applied to a Copy Blob (async) Request.
-            // We need to omit them, but still apply them to other requests that do accept them.
-            // See https://learn.microsoft.com/en-us/rest/api/storageservices/copy-blob#request-headers
-            // to see what headers are accepted.
-            return new BlobCopyFromUriOptions()
-            {
-                Metadata = options?.Metadata,
-                Tags = options?.Tags,
-                AccessTier = options?.AccessTier,
-                SourceConditions = new BlobRequestConditions()
-                {
-                    IfMatch = options?.SourceConditions?.IfMatch,
-                    IfUnmodifiedSince = options?.SourceConditions?.IfUnmodifiedSince,
-                    IfModifiedSince = options?.SourceConditions?.IfModifiedSince,
-                    TagConditions = options?.SourceConditions?.TagConditions,
-                },
-                DestinationConditions = CreateRequestConditions(options?.DestinationConditions, overwrite),
-                RehydratePriority = options?.RehydratePriority,
-                DestinationImmutabilityPolicy = options?.DestinationImmutabilityPolicy,
-                LegalHold = options?.LegalHold,
-                SourceAuthentication = sourceAuthorization,
-                CopySourceTagsMode = options?.CopySourceTagsMode,
-            };
-        }
-
         internal static BlobSyncUploadFromUriOptions ToSyncUploadFromUriOptions(
             this BlockBlobStorageResourceOptions options,
             bool overwrite,
@@ -368,8 +307,8 @@ namespace Azure.Storage.DataMovement.Blobs
             // to see what headers are accepted.
             return new BlobSyncUploadFromUriOptions()
             {
-                CopySourceBlobProperties = options?.CopySourceBlobProperties,
                 HttpHeaders = options?.HttpHeaders,
+                // Metadata = options?.Metadata,
                 Tags = options?.Tags,
                 AccessTier = options?.AccessTier,
                 SourceConditions = new BlobRequestConditions()
@@ -381,7 +320,6 @@ namespace Azure.Storage.DataMovement.Blobs
                 },
                 DestinationConditions = CreateRequestConditions(options?.DestinationConditions, overwrite),
                 SourceAuthentication = sourceAuthorization,
-                CopySourceTagsMode = options?.CopySourceTagsMode,
             };
         }
 
@@ -474,36 +412,6 @@ namespace Azure.Storage.DataMovement.Blobs
             {
                 Conditions = CreateRequestConditions(options?.DestinationConditions, overwrite),
                 TransferValidation = options?.UploadTransferValidationOptions,
-            };
-        }
-
-        internal static BlobCopyFromUriOptions ToBlobCopyFromUriOptions(
-            this PageBlobStorageResourceOptions options,
-            bool overwrite,
-            HttpAuthorization sourceAuthorization)
-        {
-            // There's a lot of conditions that cannot be applied to a Copy Blob (async) Request.
-            // We need to omit them, but still apply them to other requests that do accept them.
-            // See https://learn.microsoft.com/en-us/rest/api/storageservices/copy-blob#request-headers
-            // to see what headers are accepted.
-            return new BlobCopyFromUriOptions()
-            {
-                Metadata = options?.Metadata,
-                Tags = options?.Tags,
-                AccessTier = options?.AccessTier,
-                SourceConditions = new BlobRequestConditions()
-                {
-                    IfMatch = options?.SourceConditions?.IfMatch,
-                    IfUnmodifiedSince = options?.SourceConditions?.IfUnmodifiedSince,
-                    IfModifiedSince = options?.SourceConditions?.IfModifiedSince,
-                    TagConditions = options?.SourceConditions?.TagConditions,
-                },
-                DestinationConditions = CreateRequestConditions(options?.DestinationConditions, overwrite),
-                RehydratePriority = options?.RehydratePriority,
-                DestinationImmutabilityPolicy = options?.DestinationImmutabilityPolicy,
-                LegalHold = options?.LegalHold,
-                SourceAuthentication = sourceAuthorization,
-                CopySourceTagsMode = options?.CopySourceTagsMode,
             };
         }
 

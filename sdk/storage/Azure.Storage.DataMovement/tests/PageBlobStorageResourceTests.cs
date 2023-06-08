@@ -2,11 +2,9 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Reflection.Metadata;
-using System.Text;
+using System.Net;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
 using Azure.Storage.Blobs;
@@ -253,16 +251,10 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
                     offset: 0);
             }
             PageBlobStorageResource sourceResource = new PageBlobStorageResource(sourceClient);
-            PageBlobStorageResource destinationResource = new PageBlobStorageResource(
-                destinationClient,
-                new PageBlobStorageResourceOptions()
-                {
-                    CopyMethod = TransferCopyMethod.AsyncCopy
-                });
+            PageBlobStorageResource destinationResource = new PageBlobStorageResource(destinationClient);
 
             // Act
             await destinationResource.CopyFromUriAsync(sourceResource, false, length);
-            ;
 
             // Assert
             await destinationClient.ExistsAsync();
@@ -335,7 +327,7 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
                 destinationResource.CopyFromUriAsync(sourceResource: sourceResource, overwrite: false, completeLength: length),
                 e =>
                 {
-                    Assert.IsTrue(e.Message.StartsWith("The specified blob does not exist."));
+                    Assert.IsTrue(e.Status == (int)HttpStatusCode.NotFound);
                 });
         }
 

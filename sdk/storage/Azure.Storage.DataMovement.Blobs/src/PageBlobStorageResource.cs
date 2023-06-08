@@ -182,11 +182,18 @@ namespace Azure.Storage.DataMovement.Blobs
                 options: _options.ToCreateOptions(overwrite),
                 cancellationToken: cancellationToken).ConfigureAwait(false);
 
-            // TODO: subject to change as we scale to support resource types outside of blobs.
-            await _blobClient.SyncCopyFromUriAsync(
-                sourceResource.Uri,
-                _options.ToBlobCopyFromUriOptions(overwrite, options?.SourceAuthentication),
-                cancellationToken: cancellationToken).ConfigureAwait(false);
+            // There is no synchronous single-call copy API for Append/Page -> Page Blob
+            // so use a single Put Page from URL instead.
+            if (completeLength > 0)
+            {
+                HttpRange range = new HttpRange(0, completeLength);
+                await _blobClient.UploadPagesFromUriAsync(
+                    sourceResource.Uri,
+                    sourceRange: range,
+                    range: range,
+                    options: _options.ToUploadPagesFromUriOptions(overwrite, options?.SourceAuthentication),
+                    cancellationToken: cancellationToken).ConfigureAwait(false);
+            }
         }
 
         /// <summary>
