@@ -176,3 +176,35 @@ string json = @"[{""LatinName"":""Animalia"",""Weight"":1.1,""Name"":""Doggo"","
 
 DogListProperty dog = ModelSerializer.Deserialize<DogListProperty>(json, options);
 ```
+
+## Using ModelJsonConverter for JsonSerializer
+By using the ModelJsonConverter class we can have a place to add additional properties to the JsonSerializerOptions.
+This will allow us to add things like `IgnoreAdditionalProperties` and `Version` to the options without needing to have our own ModelSerializer.
+The `SerializableOptions` would become internal and we would have a converter to convert from `JsonSerializerOptions` + `ModelJsonConverter` to `SerializableOptions`.
+
+Serialization
+```C# Snippet:ModelConverter_Serialize
+DogListProperty dog = new DogListProperty
+{
+    Name = "Doggo",
+    IsHungry = true,
+    Weight = 1.1,
+    FoodConsumed = { "kibble", "egg", "peanut butter" },
+};
+
+JsonSerializerOptions options = new JsonSerializerOptions();
+options.Converters.Add(new ModelJsonConverter(false));
+
+string json = JsonSerializer.Serialize(dog, options);
+```
+
+Deserialization
+
+```C# Snippet:ModelConverter_Deserialize
+string json = @"[{""LatinName"":""Animalia"",""Weight"":1.1,""Name"":""Doggo"",""IsHungry"":false,""FoodConsumed"":[""kibble"",""egg"",""peanut butter""],""NumberOfLegs"":4}]";
+
+JsonSerializerOptions options = new JsonSerializerOptions();
+options.Converters.Add(new ModelJsonConverter(false));
+
+DogListProperty dog = JsonSerializer.Deserialize<DogListProperty>(json, options);
+```

@@ -47,6 +47,8 @@ trigger:
     - sdk/containerregistry/Azure.ResourceManager.ContainerRegistry
     - sdk/containerservice/Azure.ResourceManager.ContainerService
     - sdk/cosmosdb/Azure.ResourceManager.CosmosDB
+    - sdk/cosmosdbforpostgresql/Azure.ResourceManager.CosmosDBForPostgreSql
+    - sdk/costmanagement/Azure.ResourceManager.CostManagement
     - sdk/customer-insights/Azure.ResourceManager.CustomerInsights
     - sdk/databox/Azure.ResourceManager.DataBox
     - sdk/databoxedge/Azure.ResourceManager.DataBoxEdge
@@ -99,6 +101,7 @@ trigger:
     - sdk/machinelearningservices/Azure.ResourceManager.MachineLearning
     - sdk/maintenance/Azure.ResourceManager.Maintenance
     - sdk/managednetwork/Azure.ResourceManager.ManagedNetwork
+    - sdk/managednetworkfabric/Azure.ResourceManager.ManagedNetworkFabric
     - sdk/managedserviceidentity/Azure.ResourceManager.ManagedServiceIdentities
     - sdk/managedservices/Azure.ResourceManager.ManagedServices
     - sdk/managementpartner/Azure.ResourceManager.ManagementPartner
@@ -112,6 +115,7 @@ trigger:
     - sdk/mysql/Azure.ResourceManager.MySql
     - sdk/netapp/Azure.ResourceManager.NetApp
     - sdk/network/Azure.ResourceManager.Network
+    - sdk/networkcloud/Azure.ResourceManager.NetworkCloud
     - sdk/networkfunction/Azure.ResourceManager.NetworkFunction
     - sdk/newrelicobservability/Azure.ResourceManager.NewRelicObservability
     - sdk/nginx/Azure.ResourceManager.Nginx
@@ -218,6 +222,8 @@ pr:
     - sdk/containerregistry/Azure.ResourceManager.ContainerRegistry
     - sdk/containerservice/Azure.ResourceManager.ContainerService
     - sdk/cosmosdb/Azure.ResourceManager.CosmosDB
+    - sdk/cosmosdbforpostgresql/Azure.ResourceManager.CosmosDBForPostgreSql
+    - sdk/costmanagement/Azure.ResourceManager.CostManagement
     - sdk/customer-insights/Azure.ResourceManager.CustomerInsights
     - sdk/databox/Azure.ResourceManager.DataBox
     - sdk/databoxedge/Azure.ResourceManager.DataBoxEdge
@@ -270,6 +276,7 @@ pr:
     - sdk/machinelearningservices/Azure.ResourceManager.MachineLearning
     - sdk/maintenance/Azure.ResourceManager.Maintenance
     - sdk/managednetwork/Azure.ResourceManager.ManagedNetwork
+    - sdk/managednetworkfabric/Azure.ResourceManager.ManagedNetworkFabric
     - sdk/managedserviceidentity/Azure.ResourceManager.ManagedServiceIdentities
     - sdk/managedservices/Azure.ResourceManager.ManagedServices
     - sdk/managementpartner/Azure.ResourceManager.ManagementPartner
@@ -283,6 +290,7 @@ pr:
     - sdk/mysql/Azure.ResourceManager.MySql
     - sdk/netapp/Azure.ResourceManager.NetApp
     - sdk/network/Azure.ResourceManager.Network
+    - sdk/networkcloud/Azure.ResourceManager.NetworkCloud
     - sdk/networkfunction/Azure.ResourceManager.NetworkFunction
     - sdk/newrelicobservability/Azure.ResourceManager.NewRelicObservability
     - sdk/nginx/Azure.ResourceManager.Nginx

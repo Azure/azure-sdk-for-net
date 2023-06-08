@@ -1,0 +1,889 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://api.openai.com/v1/completions",
+      "RequestMethod": "POST",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "Content-Length": "246",
+        "Content-Type": "application/json",
+        "traceparent": "00-d8bd94234b4d45e9b32fe43649e58cdd-cec0e2588553b484-00",
+        "User-Agent": "azsdk-net-AI.OpenAI/1.0.0-alpha.20230404.1 (.NET 6.0.15; Microsoft Windows 10.0.25324)",
+        "x-ms-client-request-id": "097cbf30dd04cd8473ece332b98914a8",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "prompt": [
+          "Are bananas especially radioactive?"
+        ],
+        "max_tokens": 512,
+        "temperature": 0.75,
+        "logit_bias": {
+          "25996": -100,
+          "35484": -100,
+          "40058": -100,
+          "15991": -100
+        },
+        "user": "AzureSDKOpenAITests",
+        "logprobs": 1,
+        "echo": true,
+        "best_of": 3,
+        "model": "text-davinci-002"
+      },
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Access-Control-Allow-Origin": "*",
+        "Alt-Svc": [
+          "h3=\u0022:443\u0022",
+          "h3-29=\u0022:443\u0022"
+        ],
+        "Cache-Control": "must-revalidate, no-cache",
+        "CF-Cache-Status": "DYNAMIC",
+        "CF-RAY": "7b2b433b38abc372-SEA",
+        "Connection": "keep-alive",
+        "Content-Length": "7194",
+        "Content-Type": "application/json",
+        "Date": "Tue, 04 Apr 2023 17:27:35 GMT",
+        "openai-model": "text-davinci-002",
+        "openai-organization": "msft-finetuning-2",
+        "openai-processing-ms": "3501",
+        "openai-version": "2020-10-01",
+        "Server": "cloudflare",
+        "Strict-Transport-Security": "max-age=15724800; includeSubDomains",
+        "x-ratelimit-limit-requests": "3000",
+        "x-ratelimit-limit-tokens": "250000",
+        "x-ratelimit-remaining-requests": "2999",
+        "x-ratelimit-remaining-tokens": "247951",
+        "x-ratelimit-reset-requests": "20ms",
+        "x-ratelimit-reset-tokens": "491ms",
+        "X-Request-ID": "b391dbe2ca8af1f79e3c47f9cca1eb84"
+      },
+      "ResponseBody": {
+        "id": "cmpl-71ejMVxL8LxzVYzY8Vu9A23tT38t3",
+        "object": "text_completion",
+        "created": 1680629252,
+        "model": "text-davinci-002",
+        "choices": [
+          {
+            "text": "Are bananas especially radioactive?\n\nBanana equivalent dose is a dose quantity used to compare the radiation exposure resulting from an exposure to radioactivity to the exposure resulting from eating a specified number of Bananass. The concept is useful in a variety of settings, such as in discussing natural background radiation, or in comparing radiation risks.\n\nThere is no simple answer to this question, as the radioactivity of Bananass can vary depending on a number of factors, including the type ofBanana, the age of theBanana, and where theBanana was grown. Generally speaking, however, Bananass are not considered to be especially radioactive.",
+            "index": 0,
+            "logprobs": {
+              "tokens": [
+                "Are",
+                " bananas",
+                " especially",
+                " radioactive",
+                "?",
+                "\n",
+                "\n",
+                "Ban",
+                "ana",
+                " equivalent",
+                " dose",
+                " is",
+                " a",
+                " dose",
+                " quantity",
+                " used",
+                " to",
+                " compare",
+                " the",
+                " radiation",
+                " exposure",
+                " resulting",
+                " from",
+                " an",
+                " exposure",
+                " to",
+                " radio",
+                "activity",
+                " to",
+                " the",
+                " exposure",
+                " resulting",
+                " from",
+                " eating",
+                " a",
+                " specified",
+                " number",
+                " of",
+                " Ban",
+                "an",
+                "ass",
+                ".",
+                " The",
+                " concept",
+                " is",
+                " useful",
+                " in",
+                " a",
+                " variety",
+                " of",
+                " settings",
+                ",",
+                " such",
+                " as",
+                " in",
+                " discussing",
+                " natural",
+                " background",
+                " radiation",
+                ",",
+                " or",
+                " in",
+                " comparing",
+                " radiation",
+                " risks",
+                ".",
+                "\n",
+                "\n",
+                "There",
+                " is",
+                " no",
+                " simple",
+                " answer",
+                " to",
+                " this",
+                " question",
+                ",",
+                " as",
+                " the",
+                " radio",
+                "activity",
+                " of",
+                " Ban",
+                "an",
+                "ass",
+                " can",
+                " vary",
+                " depending",
+                " on",
+                " a",
+                " number",
+                " of",
+                " factors",
+                ",",
+                " including",
+                " the",
+                " type",
+                " of",
+                "Ban",
+                "ana",
+                ",",
+                " the",
+                " age",
+                " of",
+                " the",
+                "Ban",
+                "ana",
+                ",",
+                " and",
+                " where",
+                " the",
+                "Ban",
+                "ana",
+                " was",
+                " grown",
+                ".",
+                " Generally",
+                " speaking",
+                ",",
+                " however",
+                ",",
+                " Ban",
+                "an",
+                "ass",
+                " are",
+                " not",
+                " considered",
+                " to",
+                " be",
+                " especially",
+                " radioactive",
+                "."
+              ],
+              "token_logprobs": [
+                null,
+                -14.243486,
+                -11.102837,
+                -6.3913608,
+                -0.064153925,
+                -0.00042043283,
+                -8.176345e-6,
+                -1.7488828,
+                -0.0007347279,
+                -0.9404941,
+                -0.29475394,
+                -0.05326591,
+                -0.025145452,
+                -3.9650016,
+                -1.4524974,
+                -0.090142794,
+                -0.00030570905,
+                -0.099097475,
+                -0.00537914,
+                -1.7939746,
+                -0.16522907,
+                -1.0478615,
+                -1.3823812e-6,
+                -0.8230058,
+                -2.0394795,
+                -0.026509648,
+                -1.298203,
+                -0.0012496894,
+                -0.020124989,
+                -0.00024155974,
+                -0.036266644,
+                -0.24160628,
+                -0.000045255874,
+                -0.014398472,
+                -0.46332732,
+                -0.20723008,
+                -0.08685457,
+                -9.251094e-6,
+                -0.29725748,
+                -0.34070292,
+                -0.25701037,
+                -0.00033665728,
+                -1.55735,
+                -0.33646926,
+                -0.5353909,
+                -0.5857729,
+                -0.23616834,
+                -1.8130851,
+                -0.34576148,
+                -0.00003988961,
+                -0.45150268,
+                -0.057658534,
+                -0.9280494,
+                -0.00009520714,
+                -0.35970438,
+                -1.186138,
+                -0.26196244,
+                -0.022451604,
+                -0.0021412794,
+                -1.1357151,
+                -1.6750174,
+                -0.47725722,
+                -0.14728859,
+                -2.2734704,
+                -2.2357805,
+                -0.28658018,
+                -0.33354962,
+                -0.0021670857,
+                -0.05494155,
+                -0.0031239488,
+                -0.0012877658,
+                -2.9721956,
+                -0.00015923065,
+                -0.000106773194,
+                -0.00009639735,
+                -0.00007720381,
+                -0.43507499,
+                -0.0014399061,
+                -0.027775874,
+                -1.1875255,
+                -3.076318e-7,
+                -0.0001101101,
+                -0.31939346,
+                -1.5006569e-6,
+                -3.529076e-6,
+                -0.19404039,
+                -0.00014671094,
+                -0.016723368,
+                -8.653179e-6,
+                -0.13730511,
+                -0.010659826,
+                -0.000010681599,
+                -0.0000142597355,
+                -0.00974027,
+                -0.4131914,
+                -0.108066574,
+                -0.36239997,
+                -0.000018788729,
+                -0.8540609,
+                -0.0000137819625,
+                -0.013790337,
+                -0.5413513,
+                -0.32380074,
+                -9.012677e-6,
+                -5.5556293e-6,
+                -0.0076169437,
+                -6.1516675e-6,
+                -5.675771e-6,
+                -0.000023675353,
+                -0.0293748,
+                -0.004005248,
+                -0.00055699435,
+                -0.000015805701,
+                -0.00032121275,
+                -0.000111657944,
+                -1.1430258e-6,
+                -1.6697112,
+                -0.0068257856,
+                -4.277735e-7,
+                -0.5275818,
+                0.0,
+                -0.02372813,
+                -3.076318e-7,
+                -0.000019980816,
+                -6.6294406e-6,
+                -0.000011159372,
+                -0.034205373,
+                -0.000100332174,
+                0.0,
+                -0.025777899,
+                -0.0012825159,
+                -0.000049187893
+              ],
+              "top_logprobs": [
+                null,
+                {
+                  " you": -0.5484283
+                },
+                {
+                  " good": -1.2691917
+                },
+                {
+                  " good": -0.6970006
+                },
+                {
+                  "?": -0.064153925
+                },
+                {
+                  "\n": -0.00042043283
+                },
+                {
+                  "\n": -8.176345e-6
+                },
+                {
+                  "There": -0.78191984
+                },
+                {
+                  "ana": -0.0007347279
+                },
+                {
+                  " equivalent": -0.9404941
+                },
+                {
+                  " dose": -0.29475394
+                },
+                {
+                  " is": -0.05326591
+                },
+                {
+                  " a": -0.025145452
+                },
+                {
+                  " measure": -0.6243072
+                },
+                {
+                  " unit": -1.021963
+                },
+                {
+                  " used": -0.090142794
+                },
+                {
+                  " to": -0.00030570905
+                },
+                {
+                  " compare": -0.099097475
+                },
+                {
+                  " the": -0.00537914
+                },
+                {
+                  " ion": -1.0836112
+                },
+                {
+                  " exposure": -0.16522907
+                },
+                {
+                  " of": -0.6273769
+                },
+                {
+                  " from": -1.3823812e-6
+                },
+                {
+                  " an": -0.8230058
+                },
+                {
+                  " intake": -1.1930717
+                },
+                {
+                  " to": -0.026509648
+                },
+                {
+                  " ion": -1.0677277
+                },
+                {
+                  "activity": -0.0012496894
+                },
+                {
+                  " to": -0.020124989
+                },
+                {
+                  " the": -0.00024155974
+                },
+                {
+                  " exposure": -0.036266644
+                },
+                {
+                  " resulting": -0.24160628
+                },
+                {
+                  " from": -0.000045255874
+                },
+                {
+                  " eating": -0.014398472
+                },
+                {
+                  " a": -0.46332732
+                },
+                {
+                  " specified": -0.20723008
+                },
+                {
+                  " number": -0.08685457
+                },
+                {
+                  " of": -9.251094e-6
+                },
+                {
+                  " Ban": -0.29725748
+                },
+                {
+                  "an": -0.34070292
+                },
+                {
+                  "ass": -0.25701037
+                },
+                {
+                  ".": -0.00033665728
+                },
+                {
+                  " For": -0.91721606
+                },
+                {
+                  " concept": -0.33646926
+                },
+                {
+                  " is": -0.5353909
+                },
+                {
+                  " useful": -0.5857729
+                },
+                {
+                  " in": -0.23616834
+                },
+                {
+                  " the": -1.4915433
+                },
+                {
+                  " variety": -0.34576148
+                },
+                {
+                  " of": -0.00003988961
+                },
+                {
+                  " settings": -0.45150268
+                },
+                {
+                  ",": -0.057658534
+                },
+                {
+                  " including": -0.5758031
+                },
+                {
+                  " as": -0.00009520714
+                },
+                {
+                  " in": -0.35970438
+                },
+                {
+                  " discussions": -0.91592664
+                },
+                {
+                  " natural": -0.26196244
+                },
+                {
+                  " background": -0.022451604
+                },
+                {
+                  " radiation": -0.0021412794
+                },
+                {
+                  ".": -0.6824709
+                },
+                {
+                  " comparing": -1.5562571
+                },
+                {
+                  " in": -0.47725722
+                },
+                {
+                  " comparing": -0.14728859
+                },
+                {
+                  " the": -0.48132294
+                },
+                {
+                  " exposures": -0.58160293
+                },
+                {
+                  ".": -0.28658018
+                },
+                {
+                  "\n": -0.33354962
+                },
+                {
+                  "\n": -0.0021670857
+                },
+                {
+                  "There": -0.05494155
+                },
+                {
+                  " is": -0.0031239488
+                },
+                {
+                  " no": -0.0012877658
+                },
+                {
+                  " definitive": -0.6146469
+                },
+                {
+                  " answer": -0.00015923065
+                },
+                {
+                  " to": -0.000106773194
+                },
+                {
+                  " this": -0.00009639735
+                },
+                {
+                  " question": -0.00007720381
+                },
+                {
+                  ",": -0.43507499
+                },
+                {
+                  " as": -0.0014399061
+                },
+                {
+                  " the": -0.027775874
+                },
+                {
+                  " level": -1.0055606
+                },
+                {
+                  "activity": -3.076318e-7
+                },
+                {
+                  " of": -0.0001101101
+                },
+                {
+                  " Ban": -0.31939346
+                },
+                {
+                  "an": -1.5006569e-6
+                },
+                {
+                  "ass": -3.529076e-6
+                },
+                {
+                  " can": -0.19404039
+                },
+                {
+                  " vary": -0.00014671094
+                },
+                {
+                  " depending": -0.016723368
+                },
+                {
+                  " on": -8.653179e-6
+                },
+                {
+                  " a": -0.13730511
+                },
+                {
+                  " number": -0.010659826
+                },
+                {
+                  " of": -0.000010681599
+                },
+                {
+                  " factors": -0.0000142597355
+                },
+                {
+                  ",": -0.00974027
+                },
+                {
+                  " including": -0.4131914
+                },
+                {
+                  " the": -0.108066574
+                },
+                {
+                  " type": -0.36239997
+                },
+                {
+                  " of": -0.000018788729
+                },
+                {
+                  " Ban": -0.5623166
+                },
+                {
+                  "ana": -0.0000137819625
+                },
+                {
+                  ",": -0.013790337
+                },
+                {
+                  " the": -0.5413513
+                },
+                {
+                  " age": -0.32380074
+                },
+                {
+                  " of": -9.012677e-6
+                },
+                {
+                  " the": -5.5556293e-6
+                },
+                {
+                  "Ban": -0.0076169437
+                },
+                {
+                  "ana": -6.1516675e-6
+                },
+                {
+                  ",": -5.675771e-6
+                },
+                {
+                  " and": -0.000023675353
+                },
+                {
+                  " where": -0.0293748
+                },
+                {
+                  " the": -0.004005248
+                },
+                {
+                  "Ban": -0.00055699435
+                },
+                {
+                  "ana": -0.000015805701
+                },
+                {
+                  " was": -0.00032121275
+                },
+                {
+                  " grown": -0.000111657944
+                },
+                {
+                  ".": -1.1430258e-6
+                },
+                {
+                  " In": -0.76612586
+                },
+                {
+                  " speaking": -0.0068257856
+                },
+                {
+                  ",": -4.277735e-7
+                },
+                {
+                  " however": -0.5275818
+                },
+                {
+                  ",": 0.0
+                },
+                {
+                  " Ban": -0.02372813
+                },
+                {
+                  "an": -3.076318e-7
+                },
+                {
+                  "ass": -0.000019980816
+                },
+                {
+                  " are": -6.6294406e-6
+                },
+                {
+                  " not": -0.000011159372
+                },
+                {
+                  " considered": -0.034205373
+                },
+                {
+                  " to": -0.000100332174
+                },
+                {
+                  " be": 0.0
+                },
+                {
+                  " especially": -0.025777899
+                },
+                {
+                  " radioactive": -0.0012825159
+                },
+                {
+                  ".": -0.000049187893
+                }
+              ],
+              "text_offset": [
+                0,
+                3,
+                11,
+                22,
+                34,
+                35,
+                36,
+                37,
+                40,
+                43,
+                54,
+                59,
+                62,
+                64,
+                69,
+                78,
+                83,
+                86,
+                94,
+                98,
+                108,
+                117,
+                127,
+                132,
+                135,
+                144,
+                147,
+                153,
+                161,
+                164,
+                168,
+                177,
+                187,
+                192,
+                199,
+                201,
+                211,
+                218,
+                221,
+                225,
+                227,
+                230,
+                231,
+                235,
+                243,
+                246,
+                253,
+                256,
+                258,
+                266,
+                269,
+                278,
+                279,
+                284,
+                287,
+                290,
+                301,
+                309,
+                320,
+                330,
+                331,
+                334,
+                337,
+                347,
+                357,
+                363,
+                364,
+                365,
+                366,
+                371,
+                374,
+                377,
+                384,
+                391,
+                394,
+                399,
+                408,
+                409,
+                412,
+                416,
+                422,
+                430,
+                433,
+                437,
+                439,
+                442,
+                446,
+                451,
+                461,
+                464,
+                466,
+                473,
+                476,
+                484,
+                485,
+                495,
+                499,
+                504,
+                507,
+                510,
+                513,
+                514,
+                518,
+                522,
+                525,
+                529,
+                532,
+                535,
+                536,
+                540,
+                546,
+                550,
+                553,
+                556,
+                560,
+                566,
+                567,
+                577,
+                586,
+                587,
+                595,
+                596,
+                600,
+                602,
+                605,
+                609,
+                613,
+                624,
+                627,
+                630,
+                641,
+                653
+              ]
+            },
+            "finish_reason": "stop"
+          }
+        ],
+        "usage": {
+          "prompt_tokens": 5,
+          "completion_tokens": 167,
+          "total_tokens": 172
+        }
+      }
+    }
+  ],
+  "Variables": {
+    "OPENAI_CHAT_COMPLETIONS_DEPLOYMENT_ID": "gpt-35-turbo",
+    "OPENAI_DEPLOYMENT_ID": "text-davinci-002",
+    "OPENAI_EMBEDDINGS_DEPLOYMENT_ID": "text-similarity-curie-001",
+    "OPENAI_ENDPOINT": "https://sdk8428.openai.azure.com/",
+    "RandomSeed": "699081371"
+  }
+}

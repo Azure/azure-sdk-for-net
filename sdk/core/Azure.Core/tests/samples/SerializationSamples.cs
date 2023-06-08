@@ -200,5 +200,39 @@ namespace Azure.Core.Samples
             DogListProperty dog = ModelSerializer.Deserialize<DogListProperty>(json);
             #endregion
         }
+
+        [Test]
+        [Ignore("Only verifying that the sample builds")]
+        public void ModelConverterSerialize()
+        {
+            #region Snippet:ModelConverter_Serialize
+            DogListProperty dog = new DogListProperty
+            {
+                Name = "Doggo",
+                IsHungry = true,
+                Weight = 1.1,
+                FoodConsumed = { "kibble", "egg", "peanut butter" },
+            };
+
+            JsonSerializerOptions options = new JsonSerializerOptions();
+            options.Converters.Add(new ModelJsonConverter(false));
+
+            string json = JsonSerializer.Serialize(dog, options);
+            #endregion
+        }
+
+        [Test]
+        [Ignore("Only verifying that the sample builds")]
+        public void ModelConverterDeserialize()
+        {
+            #region Snippet:ModelConverter_Deserialize
+            string json = @"[{""LatinName"":""Animalia"",""Weight"":1.1,""Name"":""Doggo"",""IsHungry"":false,""FoodConsumed"":[""kibble"",""egg"",""peanut butter""],""NumberOfLegs"":4}]";
+
+            JsonSerializerOptions options = new JsonSerializerOptions();
+            options.Converters.Add(new ModelJsonConverter(false));
+
+            DogListProperty dog = JsonSerializer.Deserialize<DogListProperty>(json, options);
+            #endregion
+        }
     }
 }

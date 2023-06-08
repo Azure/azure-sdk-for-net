@@ -4,6 +4,8 @@
 
 ### Features Added
 
+- Added `DynamicData` type to enable dynamic access to JSON.  See the [aka.ms/azsdk/net/dynamicdata](https://aka.ms/azsdk/net/dynamicdata) for further details.
+
 ### Breaking Changes
 
 ### Bugs Fixed

@@ -4,6 +4,8 @@
 
 ### Features Added
 
+- Introduced model factory `Azure.AI.Translation.Text.TextTranslationModelFactory` for mocking.
+
 ### Breaking Changes
 
 ### Bugs Fixed
