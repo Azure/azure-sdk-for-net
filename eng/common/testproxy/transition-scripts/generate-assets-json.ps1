@@ -372,7 +372,7 @@ if ($InitialPush) {
       $TestProxyExe = $StandaloneProxyExe
     }
     else {
-      Write-Error "The user has selected option InitialPush to push their assets, neither $TestProxyExe nor StandaloneProxyExe are installed on this machine."
+      Write-Error "The user has selected option InitialPush to push their assets, neither $TestProxyExe nor $StandaloneProxyExe are installed on this machine."
       exit 1
     }
   }
