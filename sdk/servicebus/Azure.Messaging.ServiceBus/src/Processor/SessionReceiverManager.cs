@@ -36,6 +36,7 @@ namespace Azure.Messaging.ServiceBus
         private volatile bool _receiveTimeout;
 
         internal override ServiceBusReceiver Receiver => _receiver;
+        internal CancellationToken SessionLockCancellationToken => _sessionCancellationSource.Token;
 
         private readonly SemaphoreSlim _semaphore = new SemaphoreSlim(1, 1);
         private readonly ServiceBusSessionProcessor _sessionProcessor;
@@ -113,6 +114,7 @@ namespace Azure.Messaging.ServiceBus
         {
             await CreateReceiver(processorCancellationToken).ConfigureAwait(false);
             _sessionCancellationSource = new CancellationTokenSource();
+            _sessionCancellationSource.CancelAfterLockExpired(_receiver);
 
             if (AutoRenewLock)
             {
@@ -379,11 +381,18 @@ namespace Azure.Messaging.ServiceBus
                         break;
                     }
                     await _receiver.RenewSessionLockAsync(sessionLockRenewalCancellationToken).ConfigureAwait(false);
+                    _sessionCancellationSource.CancelAfterLockExpired(_receiver);
                     ServiceBusEventSource.Log.ProcessorRenewSessionLockComplete(Processor.Identifier, _receiver.SessionId);
                 }
 
                 catch (Exception ex) when (ex is not TaskCanceledException)
                 {
+                    var serviceBusException = ex as ServiceBusException;
+                    if (serviceBusException?.Reason == ServiceBusFailureReason.SessionLockLost)
+                    {
+                        _sessionCancellationSource.Cancel();
+                    }
+
                     ServiceBusEventSource.Log.ProcessorRenewSessionLockException(Processor.Identifier, ex.ToString(), _receiver.SessionId);
                     await HandleRenewLockException(ex, sessionLockRenewalCancellationToken).ConfigureAwait(false);
 
@@ -431,6 +440,11 @@ namespace Azure.Messaging.ServiceBus
             {
                 await _sessionLockRenewalTask.ConfigureAwait(false);
             }
+        }
+
+        internal void RefreshSessionLockToken()
+        {
+            _sessionCancellationSource.CancelAfterLockExpired(_receiver);
         }
     }
 }
