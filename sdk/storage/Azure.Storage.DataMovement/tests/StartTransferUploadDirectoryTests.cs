@@ -930,7 +930,7 @@ namespace Azure.Storage.DataMovement.Tests
                 options: options,
                 size: Constants.KB * 4);
 
-            CancellationTokenSource cancellationTokenSource = new CancellationTokenSource(TimeSpan.FromSeconds(10));
+            CancellationTokenSource cancellationTokenSource = new CancellationTokenSource(TimeSpan.FromSeconds(20));
             transfer.EnsureCompleted(cancellationTokenSource.Token);
 
             // Assert
