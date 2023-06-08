@@ -3,6 +3,7 @@
 
 using System.Diagnostics.Tracing;
 using Azure.Core.Diagnostics;
+using Azure.Core;
 
 namespace Azure.Data.SchemaRegistry.Serialization
 {

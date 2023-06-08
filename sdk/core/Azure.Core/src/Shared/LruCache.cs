@@ -4,12 +4,12 @@
 using System.Collections;
 using System.Collections.Generic;
 
-namespace Azure.Data.SchemaRegistry.Serialization
+#nullable disable
+
+namespace Azure.Core
 {
     /// <summary>
     /// A simple LRU cache implementation using a doubly linked list and dictionary.
-    ///
-    /// TODO: MOVE TO CORE
     ///
     /// </summary>
     /// <typeparam name="TKey">The type of key</typeparam>
