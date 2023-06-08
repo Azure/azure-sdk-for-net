@@ -8,7 +8,9 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Azure.Core;
 using Azure.Core.TestFramework;
+using Azure.Identity;
 using Azure.Storage.Queues;
 using Microsoft.Azure.WebJobs.Extensions.Storage.Common.Tests;
 using Microsoft.Azure.WebJobs.Extensions.Storage.ScenarioTests;
@@ -101,7 +103,8 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Scenario.Tests
             var container = new ConfigurationBuilder()
                 .AddInMemoryCollection(new Dictionary<string, string>() { { QueueConnection1, TestEnvironment.PrimaryStorageAccountConnectionString } })
                 .Build();
-            TestComponentFactory factoryWrapper = new TestComponentFactory(defaultAzureComponentFactory, defaultAzureComponentFactory.CreateTokenCredential(container.GetSection(QueueConnection1)));
+            //var credentials = defaultAzureComponentFactory.CreateTokenCredential(container.GetSection(QueueConnection1))ж
+            TestComponentFactory factoryWrapper = new TestComponentFactory(defaultAzureComponentFactory, TestEnvironment.Credential);
 
             string hostId = "test-host";
             var loggerProvider = new TestLoggerProvider();
