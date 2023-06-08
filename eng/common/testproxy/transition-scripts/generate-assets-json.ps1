@@ -359,20 +359,20 @@ if ($InitialPush) {
 
   # try to fall back 
   if (-not $proxyPresent) {
-    $StandaloneProxyExe = "Azure.Sdk.Tools.TestProxy"
+    $StandaloneTestProxyExe = "Azure.Sdk.Tools.TestProxy"
 
     if ($IsWindows) {
-      $StandaloneProxyExe += ".exe"
+      $StandaloneTestProxyExe += ".exe"
     }
 
-    $standalonePresent = Test-Exe-In-Path -ExeToLookFor $StandaloneProxyExe -ExitOnError $false
+    $standalonePresent = Test-Exe-In-Path -ExeToLookFor $StandaloneTestProxyExe -ExitOnError $false
 
     if ($standalonePresent) {
-      Write-Host "Default proxy exe $TestProxyExe is not present, but standalone tool $StandaloneProxyExe is. Updating proxy exe to use the standalone version."
-      $TestProxyExe = $StandaloneProxyExe
+      Write-Host "Default proxy exe $TestProxyExe is not present, but standalone tool $StandaloneTestProxyExe is. Updating proxy exe to use the standalone version."
+      $TestProxyExe = $StandaloneTestProxyExe
     }
     else {
-      Write-Error "The user has selected option InitialPush to push their assets, neither $TestProxyExe nor $StandaloneProxyExe are installed on this machine."
+      Write-Error "The user has selected option InitialPush to push their assets, neither $TestProxyExe nor standalone executable $StandaloneTestProxyExe are installed on this machine."
       exit 1
     }
   }
