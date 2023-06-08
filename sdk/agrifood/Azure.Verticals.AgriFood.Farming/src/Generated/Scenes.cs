@@ -514,6 +514,7 @@ namespace Azure.Verticals.AgriFood.Farming
             uri.AppendQuery("partyId", partyId, true);
             uri.AppendQuery("boundaryId", boundaryId, true);
             uri.AppendQuery("source", source, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
             if (startDateTime != null)
             {
                 uri.AppendQuery("startDateTime", startDateTime.Value, "O", true);
@@ -559,7 +560,6 @@ namespace Azure.Verticals.AgriFood.Farming
             {
                 uri.AppendQuery("skipToken", skipToken, true);
             }
-            uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;
@@ -622,6 +622,7 @@ namespace Azure.Verticals.AgriFood.Farming
             uri.AppendPath("/scenes/stac-collections/", false);
             uri.AppendPath(collectionId, true);
             uri.AppendPath(":search", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
             if (maxpagesize != null)
             {
                 uri.AppendQuery("maxpagesize", maxpagesize.Value, true);
@@ -630,7 +631,6 @@ namespace Azure.Verticals.AgriFood.Farming
             {
                 uri.AppendQuery("skip", skip.Value, true);
             }
-            uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");

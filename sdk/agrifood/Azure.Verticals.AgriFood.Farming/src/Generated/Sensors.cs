@@ -528,6 +528,7 @@ namespace Azure.Verticals.AgriFood.Farming
             uri.AppendPath("/sensor-partners/", false);
             uri.AppendPath(sensorPartnerId, true);
             uri.AppendPath("/sensors", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
             if (sensorDataModelIds != null && Optional.IsCollectionDefined(sensorDataModelIds))
             {
                 foreach (var param in sensorDataModelIds)
@@ -601,7 +602,6 @@ namespace Azure.Verticals.AgriFood.Farming
             {
                 uri.AppendQuery("skipToken", skipToken, true);
             }
-            uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;

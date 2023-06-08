@@ -657,6 +657,7 @@ namespace Azure.Verticals.AgriFood.Farming
             uri.AppendPath("/resources/", false);
             uri.AppendPath(resourceId, true);
             uri.AppendPath("/insights", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
             if (minInsightStartDateTime != null)
             {
                 uri.AppendQuery("minInsightStartDateTime", minInsightStartDateTime.Value, "O", true);
@@ -732,7 +733,6 @@ namespace Azure.Verticals.AgriFood.Farming
             {
                 uri.AppendQuery("skipToken", skipToken, true);
             }
-            uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;

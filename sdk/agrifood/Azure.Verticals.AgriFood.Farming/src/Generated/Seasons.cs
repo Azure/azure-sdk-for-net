@@ -356,6 +356,7 @@ namespace Azure.Verticals.AgriFood.Farming
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/seasons", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
             if (minStartDateTime != null)
             {
                 uri.AppendQuery("minStartDateTime", minStartDateTime.Value, "O", true);
@@ -431,7 +432,6 @@ namespace Azure.Verticals.AgriFood.Farming
             {
                 uri.AppendQuery("skipToken", skipToken, true);
             }
-            uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;
