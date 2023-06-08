@@ -201,7 +201,9 @@ if ($generateFromLocalTypeSpec) {
 }
 
 # checking skip switch
-if (!$SkipSyncAndGenerate) {
+if ($SkipSyncAndGenerate) {
+  Write-Host "Skip calling TypeSpec-Project-Sync.ps1 and TypeSpec-Project-Generate.ps1."
+} else {
   # call TypeSpec-Project-Sync.ps1
   $syncScript = Join-Path $PSScriptRoot TypeSpec-Project-Sync.ps1
   & $syncScript $sdkProjectFolder $specRepoRoot
