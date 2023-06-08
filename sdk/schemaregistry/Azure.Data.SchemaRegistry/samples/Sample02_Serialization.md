@@ -24,7 +24,7 @@ internal class SampleJsonValidator : SchemaValidator
         // Your implementation using the third-party library of your choice goes here. This method throws
         // an exception if the data argument is not valid according to the schemaDefinition.
 
-        List<Exception> validationErrors = SampleValidationMethod(schemaDefinition, data, dataType);
+        List<Exception> validationErrors = SampleValidationClass.SampleValidationMethod(schemaDefinition, data, dataType);
 
         if (validationErrors.Count  > 0)
         {

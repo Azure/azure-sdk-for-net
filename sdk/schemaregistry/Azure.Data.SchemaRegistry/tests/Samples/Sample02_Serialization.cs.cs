@@ -191,7 +191,7 @@ namespace Azure.Data.SchemaRegistry.Tests.Samples
                 // Your implementation using the third-party library of your choice goes here. This method throws
                 // an exception if the data argument is not valid according to the schemaDefinition.
 
-                List<Exception> validationErrors = SampleValidationMethod(schemaDefinition, data, dataType);
+                List<Exception> validationErrors = SampleValidationClass.SampleValidationMethod(schemaDefinition, data, dataType);
 
                 if (validationErrors.Count  > 0)
                 {
@@ -201,13 +201,6 @@ namespace Azure.Data.SchemaRegistry.Tests.Samples
                 return;
             }
 
-#if SNIPPET
-#else
-            private List<Exception> SampleValidationMethod(string schemaDefinition, object data, Type dataType)
-            {
-                return new List<Exception>();
-            }
-#endif
             public override string GenerateSchema(Type dataType)
             {
 #if SNIPPET
@@ -221,5 +214,12 @@ namespace Azure.Data.SchemaRegistry.Tests.Samples
         }
 #endregion
 
+        internal static class SampleValidationClass
+        {
+            public static List<Exception> SampleValidationMethod(string schemaDefinition, object data, Type dataType)
+            {
+                return new List<Exception>();
+            }
+        }
     }
 }
