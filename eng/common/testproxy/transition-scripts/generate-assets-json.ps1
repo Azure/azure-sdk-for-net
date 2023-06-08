@@ -368,7 +368,7 @@ if ($InitialPush) {
     $standalonePresent = Test-Exe-In-Path -ExeToLookFor $StandaloneProxyExe -ExitOnError $false
 
     if ($standalonePresent) {
-      Write-Host "Default proxy exe $TestProxyExe is not present, but standalone tool $StandaloneProxyExe is. Updating proxy exe to standalone version."
+      Write-Host "Default proxy exe $TestProxyExe is not present, but standalone tool $StandaloneProxyExe is. Updating proxy exe to use the standalone version."
       $TestProxyExe = $StandaloneProxyExe
     }
     else {
