@@ -12,15 +12,15 @@ using Azure.Core;
 namespace Azure.ResourceManager.ConfidentialLedger.Models
 {
     /// <summary> Additional Managed CCF properties. </summary>
-    public partial class ManagedCCFProperties
+    public partial class ManagedCcfProperties
     {
-        /// <summary> Initializes a new instance of ManagedCCFProperties. </summary>
-        public ManagedCCFProperties()
+        /// <summary> Initializes a new instance of ManagedCcfProperties. </summary>
+        public ManagedCcfProperties()
         {
             MemberIdentityCertificates = new ChangeTrackingList<ConfidentialLedgerMemberIdentityCertificate>();
         }
 
-        /// <summary> Initializes a new instance of ManagedCCFProperties. </summary>
+        /// <summary> Initializes a new instance of ManagedCcfProperties. </summary>
         /// <param name="appName"> Unique name for the Managed CCF. </param>
         /// <param name="appUri"> Endpoint for calling Managed CCF Service. </param>
         /// <param name="identityServiceUri"> Endpoint for accessing network identity. </param>
@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.ConfidentialLedger.Models
         /// <param name="deploymentType"> Deployment Type of Managed CCF. </param>
         /// <param name="provisioningState"> Provisioning state of Ledger Resource. </param>
         /// <param name="nodeCount"> Number of CCF nodes in the Managed CCF. </param>
-        internal ManagedCCFProperties(string appName, Uri appUri, Uri identityServiceUri, IList<ConfidentialLedgerMemberIdentityCertificate> memberIdentityCertificates, ConfidentialLedgerDeploymentType deploymentType, ConfidentialLedgerProvisioningState? provisioningState, int? nodeCount)
+        internal ManagedCcfProperties(string appName, Uri appUri, Uri identityServiceUri, IList<ConfidentialLedgerMemberIdentityCertificate> memberIdentityCertificates, ConfidentialLedgerDeploymentType deploymentType, ConfidentialLedgerProvisioningState? provisioningState, int? nodeCount)
         {
             AppName = appName;
             AppUri = appUri;

@@ -12,7 +12,7 @@ namespace Azure.ResourceManager.ConfidentialLedger.Tests.Scenario
     [TestFixture("updateTest")]
     public class UpdateMccfTest : MccfManagementTestBase
     {
-        private ManagedCCFResource _mccfResource;
+        private ManagedCcfResource _mccfResource;
 
         public UpdateMccfTest(string testFixtureName) : base(true, RecordedTestMode.Record, testFixtureName)
         {
@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.ConfidentialLedger.Tests.Scenario
 
             // Add the AadBasedSecurityPrincipal
             _mccfResource.Data.Properties = UpdateDeploymentType(_mccfResource.Data.Properties, deploymentType);
-            await UpdateMccf(mccfName, _mccfResource.Data);
+            await UpdateMCcf(mccfName, _mccfResource.Data);
 
             // Get the updated ledger
             _mccfResource = await GetMccfByName(mccfName);
@@ -42,10 +42,10 @@ namespace Azure.ResourceManager.ConfidentialLedger.Tests.Scenario
         /// <param name="properties"></param>
         /// <param name="securityPrincipals"></param>
         /// <returns></returns>
-        private ManagedCCFProperties UpdateDeploymentType(ManagedCCFProperties properties,
+        private ManagedCcfProperties UpdateDeploymentType(ManagedCcfProperties properties,
             ConfidentialLedgerDeploymentType deploymentType)
         {
-            return new ManagedCCFProperties(properties.AppName, properties.AppUri,
+            return new ManagedCcfProperties(properties.AppName, properties.AppUri,
                 properties.IdentityServiceUri , properties.MemberIdentityCertificates, deploymentType,
                 properties.ProvisioningState, properties.NodeCount);
         }

@@ -13,18 +13,18 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.ConfidentialLedger
 {
     /// <summary>
-    /// A class representing the ManagedCCF data model.
+    /// A class representing the ManagedCcf data model.
     /// Managed CCF. Contains the properties of Managed CCF Resource.
     /// </summary>
-    public partial class ManagedCCFData : TrackedResourceData
+    public partial class ManagedCcfData : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of ManagedCCFData. </summary>
+        /// <summary> Initializes a new instance of ManagedCcfData. </summary>
         /// <param name="location"> The location. </param>
-        public ManagedCCFData(AzureLocation location) : base(location)
+        public ManagedCcfData(AzureLocation location) : base(location)
         {
         }
 
-        /// <summary> Initializes a new instance of ManagedCCFData. </summary>
+        /// <summary> Initializes a new instance of ManagedCcfData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -32,12 +32,12 @@ namespace Azure.ResourceManager.ConfidentialLedger
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
         /// <param name="properties"> Properties of Managed CCF Resource. </param>
-        internal ManagedCCFData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ManagedCCFProperties properties) : base(id, name, resourceType, systemData, tags, location)
+        internal ManagedCcfData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ManagedCcfProperties properties) : base(id, name, resourceType, systemData, tags, location)
         {
             Properties = properties;
         }
 
         /// <summary> Properties of Managed CCF Resource. </summary>
-        public ManagedCCFProperties Properties { get; set; }
+        public ManagedCcfProperties Properties { get; set; }
     }
 }

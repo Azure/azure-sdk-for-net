@@ -18,7 +18,7 @@ using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.ConfidentialLedger.Samples
 {
-    public partial class Sample_ManagedCCFCollection
+    public partial class Sample_ManagedCcfCollection
     {
         // ManagedCCFGet
         [NUnit.Framework.Test]
@@ -40,16 +40,16 @@ namespace Azure.ResourceManager.ConfidentialLedger.Samples
             ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
 
-            // get the collection of this ManagedCCFResource
-            ManagedCCFCollection collection = resourceGroupResource.GetManagedCCFs();
+            // get the collection of this ManagedCcfResource
+            ManagedCcfCollection collection = resourceGroupResource.GetManagedCcfs();
 
             // invoke the operation
             string appName = "DummyMccfAppName";
-            ManagedCCFResource result = await collection.GetAsync(appName);
+            ManagedCcfResource result = await collection.GetAsync(appName);
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            ManagedCCFData resourceData = result.Data;
+            ManagedCcfData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -74,8 +74,8 @@ namespace Azure.ResourceManager.ConfidentialLedger.Samples
             ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
 
-            // get the collection of this ManagedCCFResource
-            ManagedCCFCollection collection = resourceGroupResource.GetManagedCCFs();
+            // get the collection of this ManagedCcfResource
+            ManagedCcfCollection collection = resourceGroupResource.GetManagedCcfs();
 
             // invoke the operation
             string appName = "DummyMccfAppName";
@@ -104,14 +104,14 @@ namespace Azure.ResourceManager.ConfidentialLedger.Samples
             ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
 
-            // get the collection of this ManagedCCFResource
-            ManagedCCFCollection collection = resourceGroupResource.GetManagedCCFs();
+            // get the collection of this ManagedCcfResource
+            ManagedCcfCollection collection = resourceGroupResource.GetManagedCcfs();
 
             // invoke the operation
             string appName = "DummyMccfAppName";
-            ManagedCCFData data = new ManagedCCFData(new AzureLocation("EastUS"))
+            ManagedCcfData data = new ManagedCcfData(new AzureLocation("EastUS"))
             {
-                Properties = new ManagedCCFProperties()
+                Properties = new ManagedCcfProperties()
                 {
                     MemberIdentityCertificates =
 {
@@ -136,12 +136,12 @@ Tags = BinaryData.FromObjectAsJson(new Dictionary<string, object>()
 ["additionalProps1"] = "additional properties",
 },
             };
-            ArmOperation<ManagedCCFResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, appName, data);
-            ManagedCCFResource result = lro.Value;
+            ArmOperation<ManagedCcfResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, appName, data);
+            ManagedCcfResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            ManagedCCFData resourceData = result.Data;
+            ManagedCcfData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -166,15 +166,15 @@ Tags = BinaryData.FromObjectAsJson(new Dictionary<string, object>()
             ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
 
-            // get the collection of this ManagedCCFResource
-            ManagedCCFCollection collection = resourceGroupResource.GetManagedCCFs();
+            // get the collection of this ManagedCcfResource
+            ManagedCcfCollection collection = resourceGroupResource.GetManagedCcfs();
 
             // invoke the operation and iterate over the result
-            await foreach (ManagedCCFResource item in collection.GetAllAsync())
+            await foreach (ManagedCcfResource item in collection.GetAllAsync())
             {
                 // the variable item is a resource, you could call other operations on this instance as well
                 // but just for demo, we get its data from this resource instance
-                ManagedCCFData resourceData = item.Data;
+                ManagedCcfData resourceData = item.Data;
                 // for demo we just print out the id
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }

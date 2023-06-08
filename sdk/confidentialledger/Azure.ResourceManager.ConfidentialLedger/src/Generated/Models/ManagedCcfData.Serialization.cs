@@ -13,7 +13,7 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.ConfidentialLedger
 {
-    public partial class ManagedCCFData : IUtf8JsonSerializable
+    public partial class ManagedCcfData : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -39,13 +39,13 @@ namespace Azure.ResourceManager.ConfidentialLedger
             writer.WriteEndObject();
         }
 
-        internal static ManagedCCFData DeserializeManagedCCFData(JsonElement element)
+        internal static ManagedCcfData DeserializeManagedCcfData(JsonElement element)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<ManagedCCFProperties> properties = default;
+            Optional<ManagedCcfProperties> properties = default;
             Optional<IDictionary<string, string>> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.ConfidentialLedger
                     {
                         continue;
                     }
-                    properties = ManagedCCFProperties.DeserializeManagedCCFProperties(property.Value);
+                    properties = ManagedCcfProperties.DeserializeManagedCcfProperties(property.Value);
                     continue;
                 }
                 if (property.NameEquals("tags"u8))
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.ConfidentialLedger
                     continue;
                 }
             }
-            return new ManagedCCFData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, properties.Value);
+            return new ManagedCcfData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, properties.Value);
         }
     }
 }

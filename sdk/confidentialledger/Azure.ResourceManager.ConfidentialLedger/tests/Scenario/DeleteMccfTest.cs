@@ -11,7 +11,7 @@ namespace Azure.ResourceManager.ConfidentialLedger.Tests.Scenario
     [TestFixture("deleteTest")]
     public class DeleteMccfTest : MccfManagementTestBase
     {
-        private ManagedCCFResource _mccfResource;
+        private ManagedCcfResource _mccfResource;
         public DeleteMccfTest(string testFixtureName) : base(true, RecordedTestMode.Record, testFixtureName)
         {
         }

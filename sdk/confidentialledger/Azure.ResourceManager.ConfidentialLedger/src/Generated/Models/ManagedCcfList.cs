@@ -12,25 +12,25 @@ using Azure.ResourceManager.ConfidentialLedger;
 namespace Azure.ResourceManager.ConfidentialLedger.Models
 {
     /// <summary> Object that includes an array of Managed CCF and a possible link for next set. </summary>
-    internal partial class ManagedCCFList
+    internal partial class ManagedCcfList
     {
-        /// <summary> Initializes a new instance of ManagedCCFList. </summary>
-        internal ManagedCCFList()
+        /// <summary> Initializes a new instance of ManagedCcfList. </summary>
+        internal ManagedCcfList()
         {
-            Value = new ChangeTrackingList<ManagedCCFData>();
+            Value = new ChangeTrackingList<ManagedCcfData>();
         }
 
-        /// <summary> Initializes a new instance of ManagedCCFList. </summary>
+        /// <summary> Initializes a new instance of ManagedCcfList. </summary>
         /// <param name="value"> List of Managed CCF. </param>
         /// <param name="nextLink"> The URL the client should use to fetch the next page (per server side paging). </param>
-        internal ManagedCCFList(IReadOnlyList<ManagedCCFData> value, string nextLink)
+        internal ManagedCcfList(IReadOnlyList<ManagedCcfData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
         /// <summary> List of Managed CCF. </summary>
-        public IReadOnlyList<ManagedCCFData> Value { get; }
+        public IReadOnlyList<ManagedCcfData> Value { get; }
         /// <summary> The URL the client should use to fetch the next page (per server side paging). </summary>
         public string NextLink { get; }
     }

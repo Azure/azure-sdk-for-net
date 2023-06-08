@@ -15,6 +15,9 @@ skip-csproj: true
 modelerfour:
   flatten-payloads: false
 
+#mgmt-debug: 
+#  show-serialized-names: true
+
 override-operation-name:
   CheckNameAvailability: CheckConfidentialLedgerNameAvailability
 
@@ -48,6 +51,7 @@ rename-rules:
   URI: Uri
   Etag: ETag|etag
   AAD: Aad
+  CCF: Ccf
 
 prepend-rp-prefix:
   - DeploymentType
