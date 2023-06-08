@@ -28,7 +28,7 @@ namespace Azure.Storage.DataMovement.Blobs
         /// This optional property will be applied to copy scenarios and upload scenarios.
         /// Only applies when calling <see cref="StorageResource.CopyBlockFromUriAsync(StorageResource, HttpRange, bool, long, StorageResourceCopyFromUriOptions, System.Threading.CancellationToken)"/>,
         /// <see cref="StorageResource.WriteFromStreamAsync(System.IO.Stream, long, bool, long, long, StorageResourceWriteToOffsetOptions, System.Threading.CancellationToken)"/>,
-        /// and <see cref="StorageResource.CompleteTransferAsync(System.Threading.CancellationToken)"/>.
+        /// and <see cref="StorageResource.CompleteTransferAsync(bool, System.Threading.CancellationToken)"/>.
         /// </summary>
 #pragma warning disable CA2227 // Collection properties should be readonly
         public Metadata Metadata { get; set; }
@@ -41,7 +41,7 @@ namespace Azure.Storage.DataMovement.Blobs
         /// This optional property will be applied to copy scenarios and upload scenarios.
         /// Only applies when calling <see cref="StorageResource.CopyBlockFromUriAsync(StorageResource, HttpRange, bool, long, StorageResourceCopyFromUriOptions, System.Threading.CancellationToken)"/>,
         /// <see cref="StorageResource.WriteFromStreamAsync(System.IO.Stream, long, bool, long, long, StorageResourceWriteToOffsetOptions, System.Threading.CancellationToken)"/>,
-        /// and <see cref="StorageResource.CompleteTransferAsync(System.Threading.CancellationToken)"/>.
+        /// and <see cref="StorageResource.CompleteTransferAsync(bool, System.Threading.CancellationToken)"/>.
         /// </summary>
 #pragma warning disable CA2227 // Collection properties should be readonly
         public Tags Tags { get; set; }
@@ -54,7 +54,7 @@ namespace Azure.Storage.DataMovement.Blobs
         /// This optional property will be applied to copy scenarios and upload scenarios.
         /// Only applies when calling <see cref="StorageResource.CopyBlockFromUriAsync(StorageResource, HttpRange, bool, long, StorageResourceCopyFromUriOptions, System.Threading.CancellationToken)"/>,
         /// <see cref="StorageResource.WriteFromStreamAsync(System.IO.Stream, long, bool, long, long, StorageResourceWriteToOffsetOptions, System.Threading.CancellationToken)"/>,
-        /// and <see cref="StorageResource.CompleteTransferAsync(System.Threading.CancellationToken)"/>.
+        /// and <see cref="StorageResource.CompleteTransferAsync(bool, System.Threading.CancellationToken)"/>.
         /// </summary>
         public AccessTier? AccessTier { get; set; }
 
@@ -66,7 +66,7 @@ namespace Azure.Storage.DataMovement.Blobs
         /// This optional property will be applied to copy scenarios and upload scenarios.
         /// Only applies when calling <see cref="StorageResource.CopyBlockFromUriAsync(StorageResource, HttpRange, bool, long, StorageResourceCopyFromUriOptions, System.Threading.CancellationToken)"/>.
         /// <see cref="StorageResource.WriteFromStreamAsync(System.IO.Stream, long, bool, long, long, StorageResourceWriteToOffsetOptions, System.Threading.CancellationToken)"/>,
-        /// and <see cref="StorageResource.CompleteTransferAsync(System.Threading.CancellationToken)"/>.
+        /// and <see cref="StorageResource.CompleteTransferAsync(bool, System.Threading.CancellationToken)"/>.
         /// </summary>
         public long? SequenceNumber { get; set; }
 
@@ -77,7 +77,7 @@ namespace Azure.Storage.DataMovement.Blobs
         /// This optional property will be applied to copy and upload scenarios.
         /// Only applies to
         /// <see cref="StorageResource.WriteFromStreamAsync(System.IO.Stream, long, bool, long, long, StorageResourceWriteToOffsetOptions, System.Threading.CancellationToken)"/>,
-        /// and <see cref="StorageResource.CompleteTransferAsync(System.Threading.CancellationToken)"/>.
+        /// and <see cref="StorageResource.CompleteTransferAsync(bool, System.Threading.CancellationToken)"/>.
         /// Will also apply when calling
         /// <see cref="StorageResource.CopyBlockFromUriAsync(StorageResource, HttpRange, bool, long, StorageResourceCopyFromUriOptions, System.Threading.CancellationToken)"/>
         /// and when the <see cref="CopyMethod"/> is set to <see cref="TransferCopyMethod.SyncCopy"/>.
@@ -92,7 +92,7 @@ namespace Azure.Storage.DataMovement.Blobs
         /// This optional property will be applied to copy scenarios and upload scenarios.
         /// Only applies to
         /// <see cref="StorageResource.WriteFromStreamAsync(System.IO.Stream, long, bool, long, long, StorageResourceWriteToOffsetOptions, System.Threading.CancellationToken)"/>,
-        /// and <see cref="StorageResource.CompleteTransferAsync(System.Threading.CancellationToken)"/>.
+        /// and <see cref="StorageResource.CompleteTransferAsync(bool, System.Threading.CancellationToken)"/>.
         /// Will also apply when calling
         /// <see cref="StorageResource.CopyBlockFromUriAsync(StorageResource, HttpRange, bool, long, StorageResourceCopyFromUriOptions, System.Threading.CancellationToken)"/>
         /// and when <see cref="CopyMethod"/> is set to <see cref="TransferCopyMethod.AsyncCopy"/>.
@@ -107,7 +107,7 @@ namespace Azure.Storage.DataMovement.Blobs
         /// This optional property will be applied to copy scenarios and upload scenarios.
         /// Only applies when calling <see cref="StorageResource.CopyBlockFromUriAsync(StorageResource, HttpRange, bool, long, StorageResourceCopyFromUriOptions, System.Threading.CancellationToken)"/>,
         /// <see cref="StorageResource.WriteFromStreamAsync(System.IO.Stream, long, bool, long, long, StorageResourceWriteToOffsetOptions, System.Threading.CancellationToken)"/>,
-        /// and <see cref="StorageResource.CompleteTransferAsync(System.Threading.CancellationToken)"/>.
+        /// and <see cref="StorageResource.CompleteTransferAsync(bool, System.Threading.CancellationToken)"/>.
         /// </summary>
         public bool? LegalHold { get; set; }
 
@@ -140,7 +140,7 @@ namespace Azure.Storage.DataMovement.Blobs
         /// This optional property will be applied to copy scenarios and upload scenarios.
         /// Only applies when calling <see cref="StorageResource.CopyBlockFromUriAsync(StorageResource, HttpRange, bool, long, StorageResourceCopyFromUriOptions, System.Threading.CancellationToken)"/>.
         /// <see cref="StorageResource.WriteFromStreamAsync(System.IO.Stream, long, bool, long, long, StorageResourceWriteToOffsetOptions, System.Threading.CancellationToken)"/>,
-        /// and <see cref="StorageResource.CompleteTransferAsync(System.Threading.CancellationToken)"/>.
+        /// and <see cref="StorageResource.CompleteTransferAsync(bool, System.Threading.CancellationToken)"/>.
         /// </summary>
         public PageBlobRequestConditions DestinationConditions { get; set; }
 
@@ -163,7 +163,7 @@ namespace Azure.Storage.DataMovement.Blobs
         /// This optional property will applied to upload scenarios.
         /// Only applies to
         /// <see cref="StorageResource.WriteFromStreamAsync(System.IO.Stream, long, bool, long, long, StorageResourceWriteToOffsetOptions, System.Threading.CancellationToken)"/>,
-        /// and <see cref="StorageResource.CompleteTransferAsync(System.Threading.CancellationToken)"/>.
+        /// and <see cref="StorageResource.CompleteTransferAsync(bool, System.Threading.CancellationToken)"/>.
         /// </summary>
         public UploadTransferValidationOptions UploadTransferValidationOptions { get; set; }
 

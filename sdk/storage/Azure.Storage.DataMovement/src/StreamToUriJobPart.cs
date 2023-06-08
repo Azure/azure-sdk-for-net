@@ -324,37 +324,62 @@ namespace Azure.Storage.DataMovement
             long blockLength,
             long completeLength)
         {
-            Stream slicedStream = Stream.Null;
-            ReadStreamStorageResourceResult result = await _sourceResource.ReadStreamAsync(
-                position: offset,
-                length: blockLength,
-                cancellationToken: _cancellationToken).ConfigureAwait(false);
-            using (Stream stream = result.Content)
+            try
             {
-                slicedStream = await GetOffsetPartitionInternal(
-                    stream,
-                    (int)offset,
-                    (int)blockLength,
-                    UploadArrayPool,
-                    _cancellationToken).ConfigureAwait(false);
-                await _destinationResource.WriteFromStreamAsync(
-                    stream: slicedStream,
-                    streamLength: blockLength,
-                    overwrite: _createMode == StorageResourceCreateMode.Overwrite,
+                Stream slicedStream = Stream.Null;
+                ReadStreamStorageResourceResult result = await _sourceResource.ReadStreamAsync(
                     position: offset,
-                    completeLength: completeLength,
-                    default,
-                    _cancellationToken).ConfigureAwait(false);
+                    length: blockLength,
+                    cancellationToken: _cancellationToken).ConfigureAwait(false);
+                using (Stream stream = result.Content)
+                {
+                    slicedStream = await GetOffsetPartitionInternal(
+                        stream,
+                        (int)offset,
+                        (int)blockLength,
+                        UploadArrayPool,
+                        _cancellationToken).ConfigureAwait(false);
+                    await _destinationResource.WriteFromStreamAsync(
+                        stream: slicedStream,
+                        streamLength: blockLength,
+                        overwrite: _createMode == StorageResourceCreateMode.Overwrite,
+                        position: offset,
+                        completeLength: completeLength,
+                        default,
+                        _cancellationToken).ConfigureAwait(false);
+                }
+                // Invoke event handler to keep track of all the stage blocks
+                await _commitBlockHandler.InvokeEvent(
+                    new StageChunkEventArgs(
+                        transferId: _dataTransfer.Id,
+                        success: true,
+                        offset: offset,
+                        bytesTransferred: blockLength,
+                        exception: default,
+                        isRunningSynchronously: true,
+                        cancellationToken: _cancellationToken)).ConfigureAwait(false);
             }
-            // Invoke event handler to keep track of all the stage blocks
-            await _commitBlockHandler.InvokeEvent(
-                new StageChunkEventArgs(
-                    _dataTransfer.Id,
-                    true,
-                    offset,
-                    blockLength,
-                    true,
-                    _cancellationToken)).ConfigureAwait(false);
+            catch (Exception ex)
+            {
+                if (_commitBlockHandler != null)
+                {
+                    await _commitBlockHandler.InvokeEvent(
+                        new StageChunkEventArgs(
+                            transferId: _dataTransfer.Id,
+                            success: false,
+                            offset: offset,
+                            bytesTransferred: blockLength,
+                            exception: ex,
+                            isRunningSynchronously: true,
+                            cancellationToken: _cancellationToken)).ConfigureAwait(false);
+                }
+                else
+                {
+                    // If the _commitBlockHandler has been disposed before we call to it
+                    // we should at least filter the exception to error handling just in case.
+                    await InvokeFailedArg(ex).ConfigureAwait(false);
+                }
+            }
         }
 
         internal async Task CompleteTransferAsync()
@@ -362,7 +387,9 @@ namespace Azure.Storage.DataMovement
             CancellationHelper.ThrowIfCancellationRequested(_cancellationToken);
 
             // Apply necessary transfer completions on the destination.
-            await _destinationResource.CompleteTransferAsync(_cancellationToken).ConfigureAwait(false);
+            await _destinationResource.CompleteTransferAsync(
+                overwrite: _createMode == StorageResourceCreateMode.Overwrite,
+                cancellationToken: _cancellationToken).ConfigureAwait(false);
 
             // Dispose the handlers
             await DisposeHandlers().ConfigureAwait(false);

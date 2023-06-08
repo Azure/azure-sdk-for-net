@@ -412,7 +412,7 @@ namespace Azure.Storage.DataMovement.Blobs
             };
         }
 
-        internal static CommitBlockListOptions ToCommitBlockOptions(this BlockBlobStorageResourceOptions options)
+        internal static CommitBlockListOptions ToCommitBlockOptions(this BlockBlobStorageResourceOptions options, bool overwrite)
         {
             // There's a lot of conditions that cannot be applied to a StageBlock Request.
             // We need to omit them, but still apply them to other requests that do accept them.
@@ -426,7 +426,7 @@ namespace Azure.Storage.DataMovement.Blobs
                 AccessTier = options?.AccessTier,
                 ImmutabilityPolicy = options?.DestinationImmutabilityPolicy,
                 LegalHold = options?.LegalHold,
-                Conditions = CreateRequestConditions(options?.DestinationConditions, true)
+                Conditions = CreateRequestConditions(options?.DestinationConditions, overwrite)
             };
         }
 

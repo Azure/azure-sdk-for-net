@@ -166,6 +166,7 @@ namespace Azure.Storage.DataMovement.Tests
                 // Before commit block is called, one block chunk has already been added when creating the destination
                 offset: blockSize,
                 bytesTransferred: blockSize,
+                exception: default,
                 isRunningSynchronously: false,
                 cancellationToken: CancellationToken.None));
 
@@ -206,6 +207,7 @@ namespace Azure.Storage.DataMovement.Tests
                 // Before commit block is called, one block chunk has already been added when creating the destination
                 offset: blockSize,
                 bytesTransferred: blockSize,
+                exception: default,
                 isRunningSynchronously: false,
                 cancellationToken: CancellationToken.None));
 
@@ -224,6 +226,7 @@ namespace Azure.Storage.DataMovement.Tests
                 // Before commit block is called, one block chunk has already been added when creating the destination
                 offset: blockSize * 2,
                 bytesTransferred: blockSize,
+                exception: default,
                 isRunningSynchronously: false,
                 cancellationToken: CancellationToken.None));
 
@@ -265,6 +268,7 @@ namespace Azure.Storage.DataMovement.Tests
                 // Before commit block is called, one block chunk has already been added when creating the destination
                 offset: blockSize,
                 bytesTransferred: blockSize * 2,
+                exception: default,
                 isRunningSynchronously: false,
                 cancellationToken: CancellationToken.None));
 
@@ -311,6 +315,7 @@ namespace Azure.Storage.DataMovement.Tests
                     // Before commit block is called, one block chunk has already been added when creating the destination
                     offset: blockSize,
                     bytesTransferred: blockSize,
+                    exception: default,
                     isRunningSynchronously: false,
                     cancellationToken: CancellationToken.None));
                 runningTasks.Add(task);
@@ -358,6 +363,7 @@ namespace Azure.Storage.DataMovement.Tests
                 // Before commit block is called, one block chunk has already been added when creating the destination
                 offset: blockSize,
                 bytesTransferred: blockSize,
+                exception: default,
                 isRunningSynchronously: false,
                 cancellationToken: CancellationToken.None));
 
@@ -376,6 +382,7 @@ namespace Azure.Storage.DataMovement.Tests
                 // Before commit block is called, one block chunk has already been added when creating the destination
                 offset: blockSize * 2,
                 bytesTransferred: blockSize,
+                exception: default,
                 isRunningSynchronously: false,
                 cancellationToken: CancellationToken.None));
 
@@ -417,6 +424,7 @@ namespace Azure.Storage.DataMovement.Tests
                 // Before commit block is called, one block chunk has already been added when creating the destination
                 offset: blockSize,
                 bytesTransferred: blockSize * 2,
+                exception: default,
                 isRunningSynchronously: false,
                 cancellationToken: CancellationToken.None));
 
@@ -458,6 +466,7 @@ namespace Azure.Storage.DataMovement.Tests
                 success: true,
                 offset: blockSize,
                 bytesTransferred: blockSize,
+                exception: default,
                 isRunningSynchronously: false,
                 cancellationToken: CancellationToken.None));
 
@@ -498,6 +507,7 @@ namespace Azure.Storage.DataMovement.Tests
                 success: true,
                 offset: 0,
                 bytesTransferred: blockSize,
+                exception: default,
                 isRunningSynchronously: false,
                 cancellationToken: CancellationToken.None));
 

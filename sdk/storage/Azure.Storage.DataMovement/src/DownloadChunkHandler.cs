@@ -150,7 +150,7 @@ namespace Azure.Storage.DataMovement
 
         public async ValueTask DisposeAsync()
         {
-            _downloadRangeChannel.Writer.Complete();
+            _downloadRangeChannel.Writer.TryComplete();
             await _downloadRangeChannel.Reader.Completion.ConfigureAwait(false);
 
             if (_currentBytesSemaphore != default)
@@ -177,11 +177,7 @@ namespace Azure.Storage.DataMovement
                 else
                 {
                     // Report back failed event.
-                    await InvokeFailedEvent(
-                        Errors.FailedDownloadRange(
-                            offset: args.Offset,
-                            bytesTransferred: args.BytesTransferred,
-                            transferId: args.TransferId)).ConfigureAwait(false);
+                    await InvokeFailedEvent(args.Exception).ConfigureAwait(false);
                 }
             }
             catch (Exception ex)

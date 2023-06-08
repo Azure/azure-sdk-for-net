@@ -231,9 +231,16 @@ namespace Azure.Storage.DataMovement
             await QueueChunk(
                 async () =>
                 {
-                    await Task.Run(chunkTask).ConfigureAwait(false);
-                    chunkCompleted.SetResult(true);
-                    await CheckAndUpdateCancellationStatusAsync().ConfigureAwait(false);
+                    try
+                    {
+                        await Task.Run(chunkTask).ConfigureAwait(false);
+                        chunkCompleted.SetResult(true);
+                        await CheckAndUpdateCancellationStatusAsync().ConfigureAwait(false);
+                    }
+                    catch (Exception ex)
+                    {
+                        await InvokeFailedArg(ex).ConfigureAwait(false);
+                    }
                 }).ConfigureAwait(false);
         }
 

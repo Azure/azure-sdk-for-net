@@ -104,7 +104,7 @@ namespace Azure.Storage.DataMovement
         public async ValueTask DisposeAsync()
         {
             // We no longer have to read from the channel. We are not expecting any more requests.
-            _stageChunkChannel.Writer.Complete();
+            _stageChunkChannel.Writer.TryComplete();
             await _stageChunkChannel.Reader.Completion.ConfigureAwait(false);
 
             if (_currentBytesSemaphore != default)
@@ -135,10 +135,10 @@ namespace Azure.Storage.DataMovement
                 else
                 {
                     // Log an unexpected error since it came back unsuccessful
-                    await _invokeFailedEventHandler(Errors.FailedChunkTransfer(
+                    throw Errors.FailedChunkTransfer(
                         offset: args.Offset,
                         bytesTransferred: args.BytesTransferred,
-                        transferId: args.TransferId)).ConfigureAwait(false);
+                        transferId: args.TransferId);
                 }
             }
             catch (Exception ex)
@@ -215,10 +215,10 @@ namespace Azure.Storage.DataMovement
                 else
                 {
                     // Log an unexpected error since it came back unsuccessful
-                    await _invokeFailedEventHandler(Errors.FailedChunkTransfer(
+                    throw Errors.FailedChunkTransfer(
                         offset: args.Offset,
                         bytesTransferred: args.BytesTransferred,
-                        transferId: args.TransferId)).ConfigureAwait(false);
+                        transferId: args.TransferId);
                 }
             }
             catch (Exception ex)

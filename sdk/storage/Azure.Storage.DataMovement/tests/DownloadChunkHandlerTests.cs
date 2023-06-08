@@ -228,6 +228,7 @@ namespace Azure.Storage.DataMovement.Tests
                 offset: 0,
                 bytesTransferred: blockSize,
                 result: content,
+                exception: default,
                 isRunningSynchronously: false,
                 cancellationToken: CancellationToken.None));
 
@@ -273,6 +274,7 @@ namespace Azure.Storage.DataMovement.Tests
                 offset: 0,
                 bytesTransferred: blockSize,
                 result: content,
+                exception: default,
                 isRunningSynchronously: false,
                 cancellationToken: CancellationToken.None));
 
@@ -294,6 +296,7 @@ namespace Azure.Storage.DataMovement.Tests
                 offset: blockSize,
                 bytesTransferred: blockSize,
                 result: content2,
+                exception: default,
                 isRunningSynchronously: false,
                 cancellationToken: CancellationToken.None));
 
@@ -338,6 +341,7 @@ namespace Azure.Storage.DataMovement.Tests
                 offset: 0,
                 bytesTransferred: blockSize,
                 result: content,
+                exception: default,
                 isRunningSynchronously: false,
                 cancellationToken: CancellationToken.None));
 
@@ -348,6 +352,7 @@ namespace Azure.Storage.DataMovement.Tests
                 offset: 0,
                 bytesTransferred: blockSize,
                 result: content,
+                exception: default,
                 isRunningSynchronously: false,
                 cancellationToken: CancellationToken.None));
 
@@ -394,6 +399,7 @@ namespace Azure.Storage.DataMovement.Tests
                 offset: blockSize,
                 bytesTransferred: blockSize,
                 result: content,
+                exception: default,
                 isRunningSynchronously: false,
                 cancellationToken: CancellationToken.None));
 
@@ -413,6 +419,7 @@ namespace Azure.Storage.DataMovement.Tests
                 offset: 0,
                 bytesTransferred: blockSize,
                 result: content,
+                exception: default,
                 isRunningSynchronously: false,
                 cancellationToken: CancellationToken.None));
 
@@ -464,6 +471,7 @@ namespace Azure.Storage.DataMovement.Tests
                     offset: i * blockSize,
                     bytesTransferred: blockSize,
                     result: content,
+                    exception: default,
                     isRunningSynchronously: false,
                     cancellationToken: CancellationToken.None));
                 runningTasks.Add(task);
@@ -516,6 +524,7 @@ namespace Azure.Storage.DataMovement.Tests
                 offset: blockSize,
                 bytesTransferred: blockSize,
                 result: content,
+                exception: default,
                 isRunningSynchronously: false,
                 cancellationToken: CancellationToken.None));
 
@@ -562,6 +571,7 @@ namespace Azure.Storage.DataMovement.Tests
                 offset: 0,
                 bytesTransferred: blockSize,
                 result: content,
+                exception: default,
                 isRunningSynchronously: false,
                 cancellationToken: CancellationToken.None));
 
@@ -607,6 +617,7 @@ namespace Azure.Storage.DataMovement.Tests
                 offset: 0,
                 bytesTransferred: blockSize,
                 result: content,
+                exception: default,
                 isRunningSynchronously: false,
                 cancellationToken: CancellationToken.None));
 
