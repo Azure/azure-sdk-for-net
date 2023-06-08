@@ -14,6 +14,7 @@ using OpenTelemetry.PersistentStorage.Abstractions;
 using Azure.Monitor.OpenTelemetry.Exporter.Internals.PersistentStorage;
 using System.Diagnostics.CodeAnalysis;
 using Azure.Monitor.OpenTelemetry.Exporter.Internals.ConnectionString;
+using Azure.Monitor.OpenTelemetry.Exporter.Internals.Diagnostics;
 
 namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
 {
