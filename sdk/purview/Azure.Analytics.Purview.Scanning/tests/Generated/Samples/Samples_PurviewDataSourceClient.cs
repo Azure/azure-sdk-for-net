@@ -60,7 +60,7 @@ namespace Azure.Analytics.Purview.Scanning.Samples
                 kind = "AzureSubscription",
             };
 
-            Response response = client.CreateOrUpdate(RequestContent.Create(data), new RequestContext());
+            Response response = client.CreateOrUpdate(RequestContent.Create(data));
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("kind").ToString());
@@ -137,7 +137,7 @@ namespace Azure.Analytics.Purview.Scanning.Samples
                 kind = "AzureSubscription",
             };
 
-            Response response = await client.CreateOrUpdateAsync(RequestContent.Create(data), new RequestContext());
+            Response response = await client.CreateOrUpdateAsync(RequestContent.Create(data));
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("kind").ToString());
@@ -196,7 +196,7 @@ namespace Azure.Analytics.Purview.Scanning.Samples
             var endpoint = new Uri("<https://my-service.azure.com>");
             var client = new PurviewDataSourceClient(endpoint, "<dataSourceName>", credential);
 
-            Response response = client.GetProperties(new RequestContext());
+            Response response = client.GetProperties();
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("kind").ToString());
@@ -255,7 +255,7 @@ namespace Azure.Analytics.Purview.Scanning.Samples
             var endpoint = new Uri("<https://my-service.azure.com>");
             var client = new PurviewDataSourceClient(endpoint, "<dataSourceName>", credential);
 
-            Response response = await client.GetPropertiesAsync(new RequestContext());
+            Response response = await client.GetPropertiesAsync();
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("kind").ToString());
@@ -314,7 +314,7 @@ namespace Azure.Analytics.Purview.Scanning.Samples
             var endpoint = new Uri("<https://my-service.azure.com>");
             var client = new PurviewDataSourceClient(endpoint, "<dataSourceName>", credential);
 
-            Response response = client.Delete(new RequestContext());
+            Response response = client.Delete();
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("kind").ToString());
@@ -373,7 +373,7 @@ namespace Azure.Analytics.Purview.Scanning.Samples
             var endpoint = new Uri("<https://my-service.azure.com>");
             var client = new PurviewDataSourceClient(endpoint, "<dataSourceName>", credential);
 
-            Response response = await client.DeleteAsync(new RequestContext());
+            Response response = await client.DeleteAsync();
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("kind").ToString());
@@ -433,7 +433,7 @@ namespace Azure.Analytics.Purview.Scanning.Samples
             var endpoint = new Uri("<https://my-service.azure.com>");
             var client = new PurviewDataSourceClient(endpoint, "<dataSourceName>", credential);
 
-            foreach (var item in client.GetScans(new RequestContext()))
+            foreach (var item in client.GetScans())
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
                 Console.WriteLine(result.GetProperty("kind").ToString());
@@ -491,7 +491,7 @@ namespace Azure.Analytics.Purview.Scanning.Samples
             var endpoint = new Uri("<https://my-service.azure.com>");
             var client = new PurviewDataSourceClient(endpoint, "<dataSourceName>", credential);
 
-            await foreach (var item in client.GetScansAsync(new RequestContext()))
+            await foreach (var item in client.GetScansAsync())
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
                 Console.WriteLine(result.GetProperty("kind").ToString());
