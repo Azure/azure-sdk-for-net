@@ -418,7 +418,7 @@ namespace Azure.Core.Tests
         [Test]
         public void CanMapToCamelViaResponseContentOptions()
         {
-            DynamicDataOptions options = new() { PropertyNamingConvention = PropertyNamingConvention.CamelCase };
+            ProtocolOptions options = new() { PropertyNamingConvention = PropertyNamingConvention.CamelCase };
             dynamic value = new ResponseContent("""{"foo": null}""", options).ToDynamicFromJson();
 
             // Existing property
@@ -456,7 +456,7 @@ namespace Azure.Core.Tests
         [Test]
         public void CannotMapToCamelViaDefaultResponseContentOptions()
         {
-            DynamicDataOptions options = new();
+            ProtocolOptions options = new();
             dynamic value = new ResponseContent("""{"foo": "orig"}""", options).ToDynamicFromJson();
 
             // Existing property

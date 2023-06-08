@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System.Threading.Tasks;
+using Azure.Core.Dynamic;
 using Azure.Core.Pipeline;
 using Azure.Core.Serialization;
 using Azure.Core.TestFramework;
@@ -12,7 +13,7 @@ namespace Azure.Core.Tests
     public class ResponseContentTests
     {
         [Test]
-        public async Task CanSetDynamicOptionsFromClientOptions()
+        public async Task CanSetProtocolOptionsFromClientOptions()
         {
             MockClientOptions options = new MockClientOptions();
             MockClient client = new MockClient(options);
@@ -20,7 +21,19 @@ namespace Azure.Core.Tests
             ResponseContent content = response.Content as ResponseContent;
 
             Assert.IsNotNull(content);
-            Assert.AreEqual(content.DynamicOptions.PropertyNamingConvention, PropertyNamingConvention.None);
+            Assert.AreEqual(content.ProtocolOptions.PropertyNamingConvention, PropertyNamingConvention.None);
+        }
+
+        [Test]
+        public async Task ProtocolOptionsSetDynamicOptionsNaming()
+        {
+            MockClientOptions options = new MockClientOptions();
+            options.Protocol.PropertyNamingConvention = PropertyNamingConvention.CamelCase;
+            MockClient client = new MockClient(options);
+            Response response = await client.GetValueAsync();
+            ResponseContent content = response.Content as ResponseContent;
+            DynamicDataOptions dynamicOptions = content.ProtocolOptions.GetDynamicOptions();
+            Assert.AreEqual(PropertyNamingConvention.CamelCase, dynamicOptions.PropertyNamingConvention);
         }
 
         [Test]

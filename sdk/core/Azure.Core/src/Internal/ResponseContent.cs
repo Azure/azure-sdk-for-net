@@ -2,27 +2,27 @@
 // Licensed under the MIT License.
 
 using System;
-using Azure.Core.Dynamic;
+using Azure.Core.Serialization;
 
 namespace Azure
 {
     internal class ResponseContent : BinaryData
     {
-        private DynamicDataOptions _dynamicOptions;
-        public DynamicDataOptions DynamicOptions { get => _dynamicOptions; }
+        private readonly ProtocolOptions _protocolOptions;
+        public ProtocolOptions ProtocolOptions { get => _protocolOptions; }
 
-        public ResponseContent(ReadOnlyMemory<byte> data, DynamicDataOptions options) : base(data)
+        public ResponseContent(ReadOnlyMemory<byte> data, ProtocolOptions options) : base(data)
         {
-            _dynamicOptions = options;
+            _protocolOptions = options;
         }
 
-        public ResponseContent(string data, DynamicDataOptions options) : base(data)
+        public ResponseContent(string data, ProtocolOptions options) : base(data)
         {
-            _dynamicOptions = options;
+            _protocolOptions = options;
         }
 
-        public static ResponseContent FromBytes(ReadOnlyMemory<byte> data, DynamicDataOptions options) => new ResponseContent(data, options);
+        public static ResponseContent FromBytes(ReadOnlyMemory<byte> data, ProtocolOptions options) => new ResponseContent(data, options);
 
-        public static ResponseContent FromString(string data, DynamicDataOptions options) => new ResponseContent(data, options);
+        public static ResponseContent FromString(string data, ProtocolOptions options) => new ResponseContent(data, options);
     }
 }

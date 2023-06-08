@@ -66,7 +66,7 @@ namespace Azure
         public static dynamic ToDynamicFromJson(this BinaryData utf8Json)
         {
             DynamicDataOptions options = utf8Json is ResponseContent content ?
-                content.DynamicOptions :
+                content.ProtocolOptions.GetDynamicOptions() :
                 DynamicDataOptions.Default;
 
             return utf8Json.ToDynamicFromJson(options);
@@ -79,7 +79,7 @@ namespace Azure
         public static dynamic ToDynamicFromJson(this BinaryData utf8Json, PropertyNamingConvention propertyNamingConvention)
         {
             DynamicDataOptions options = utf8Json is ResponseContent content ?
-                new DynamicDataOptions(content.DynamicOptions) :
+                new DynamicDataOptions(content.ProtocolOptions.GetDynamicOptions()) :
                 new DynamicDataOptions(DynamicDataOptions.Default);
 
             options.PropertyNamingConvention = propertyNamingConvention;
