@@ -1177,16 +1177,17 @@ namespace Azure.Data.AppConfiguration
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/keys", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
             if (name != null)
             {
                 uri.AppendQuery("name", name, true);
             }
-            uri.AppendQuery("api-version", _apiVersion, true);
             if (after != null)
             {
                 uri.AppendQuery("After", after, true);
             }
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/vnd.microsoft.appconfig.keyset+json, application/problem+json");
             if (_syncToken != null)
             {
                 request.Headers.Add("Sync-Token", _syncToken);
@@ -1195,7 +1196,6 @@ namespace Azure.Data.AppConfiguration
             {
                 request.Headers.Add("Accept-Datetime", acceptDatetime);
             }
-            request.Headers.Add("Accept", "application/vnd.microsoft.appconfig.keyset+json, application/problem+json");
             return message;
         }
 
@@ -1207,11 +1207,11 @@ namespace Azure.Data.AppConfiguration
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/keys", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
             if (name != null)
             {
                 uri.AppendQuery("name", name, true);
             }
-            uri.AppendQuery("api-version", _apiVersion, true);
             if (after != null)
             {
                 uri.AppendQuery("After", after, true);
@@ -1236,6 +1236,7 @@ namespace Azure.Data.AppConfiguration
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/kv", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
             if (key != null)
             {
                 uri.AppendQuery("key", key, true);
@@ -1244,7 +1245,6 @@ namespace Azure.Data.AppConfiguration
             {
                 uri.AppendQuery("label", label, true);
             }
-            uri.AppendQuery("api-version", _apiVersion, true);
             if (after != null)
             {
                 uri.AppendQuery("After", after, true);
@@ -1258,6 +1258,7 @@ namespace Azure.Data.AppConfiguration
                 uri.AppendQuery("snapshot", snapshot, true);
             }
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/vnd.microsoft.appconfig.kvset+json, application/problem+json");
             if (_syncToken != null)
             {
                 request.Headers.Add("Sync-Token", _syncToken);
@@ -1266,7 +1267,6 @@ namespace Azure.Data.AppConfiguration
             {
                 request.Headers.Add("Accept-Datetime", acceptDatetime);
             }
-            request.Headers.Add("Accept", "application/vnd.microsoft.appconfig.kvset+json, application/problem+json");
             return message;
         }
 
@@ -1278,6 +1278,7 @@ namespace Azure.Data.AppConfiguration
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/kv", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
             if (key != null)
             {
                 uri.AppendQuery("key", key, true);
@@ -1286,7 +1287,6 @@ namespace Azure.Data.AppConfiguration
             {
                 uri.AppendQuery("label", label, true);
             }
-            uri.AppendQuery("api-version", _apiVersion, true);
             if (after != null)
             {
                 uri.AppendQuery("After", after, true);
@@ -1320,16 +1320,17 @@ namespace Azure.Data.AppConfiguration
             uri.Reset(_endpoint);
             uri.AppendPath("/kv/", false);
             uri.AppendPath(key, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
             if (label != null)
             {
                 uri.AppendQuery("label", label, true);
             }
-            uri.AppendQuery("api-version", _apiVersion, true);
             if (select != null && Optional.IsCollectionDefined(select))
             {
                 uri.AppendQueryDelimited("$Select", select, ",", true);
             }
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/vnd.microsoft.appconfig.kv+json, application/problem+json");
             if (_syncToken != null)
             {
                 request.Headers.Add("Sync-Token", _syncToken);
@@ -1338,7 +1339,6 @@ namespace Azure.Data.AppConfiguration
             {
                 request.Headers.Add("Accept-Datetime", acceptDatetime);
             }
-            request.Headers.Add("Accept", "application/vnd.microsoft.appconfig.kv+json, application/problem+json");
             if (matchConditions != null)
             {
                 request.Headers.Add(matchConditions);
@@ -1355,17 +1355,17 @@ namespace Azure.Data.AppConfiguration
             uri.Reset(_endpoint);
             uri.AppendPath("/kv/", false);
             uri.AppendPath(key, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
             if (label != null)
             {
                 uri.AppendQuery("label", label, true);
             }
-            uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/vnd.microsoft.appconfig.kv+json, application/problem+json");
             if (_syncToken != null)
             {
                 request.Headers.Add("Sync-Token", _syncToken);
             }
-            request.Headers.Add("Accept", "application/vnd.microsoft.appconfig.kv+json, application/problem+json");
             if (matchConditions != null)
             {
                 request.Headers.Add(matchConditions);
@@ -1384,17 +1384,17 @@ namespace Azure.Data.AppConfiguration
             uri.Reset(_endpoint);
             uri.AppendPath("/kv/", false);
             uri.AppendPath(key, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
             if (label != null)
             {
                 uri.AppendQuery("label", label, true);
             }
-            uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/vnd.microsoft.appconfig.kv+json, application/problem+json");
             if (_syncToken != null)
             {
                 request.Headers.Add("Sync-Token", _syncToken);
             }
-            request.Headers.Add("Accept", "application/vnd.microsoft.appconfig.kv+json, application/problem+json");
             if (ifMatch != null)
             {
                 request.Headers.Add("If-Match", ifMatch.Value);
@@ -1411,11 +1411,11 @@ namespace Azure.Data.AppConfiguration
             uri.Reset(_endpoint);
             uri.AppendPath("/kv/", false);
             uri.AppendPath(key, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
             if (label != null)
             {
                 uri.AppendQuery("label", label, true);
             }
-            uri.AppendQuery("api-version", _apiVersion, true);
             if (select != null && Optional.IsCollectionDefined(select))
             {
                 uri.AppendQueryDelimited("$Select", select, ",", true);
@@ -1444,11 +1444,11 @@ namespace Azure.Data.AppConfiguration
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/snapshots", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
             if (name != null)
             {
                 uri.AppendQuery("name", name, true);
             }
-            uri.AppendQuery("api-version", _apiVersion, true);
             if (after != null)
             {
                 uri.AppendQuery("After", after, true);
@@ -1462,11 +1462,11 @@ namespace Azure.Data.AppConfiguration
                 uri.AppendQueryDelimited("Status", status, ",", true);
             }
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/vnd.microsoft.appconfig.snapshotset+json, application/problem+json");
             if (_syncToken != null)
             {
                 request.Headers.Add("Sync-Token", _syncToken);
             }
-            request.Headers.Add("Accept", "application/vnd.microsoft.appconfig.snapshotset+json, application/problem+json");
             return message;
         }
 
@@ -1506,11 +1506,11 @@ namespace Azure.Data.AppConfiguration
                 uri.AppendQueryDelimited("$Select", select, ",", true);
             }
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/vnd.microsoft.appconfig.snapshot+json, application/problem+json");
             if (_syncToken != null)
             {
                 request.Headers.Add("Sync-Token", _syncToken);
             }
-            request.Headers.Add("Accept", "application/vnd.microsoft.appconfig.snapshot+json, application/problem+json");
             if (matchConditions != null)
             {
                 request.Headers.Add(matchConditions);
@@ -1529,11 +1529,11 @@ namespace Azure.Data.AppConfiguration
             uri.AppendPath(name, true);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/vnd.microsoft.appconfig.snapshot+json, application/problem+json");
             if (_syncToken != null)
             {
                 request.Headers.Add("Sync-Token", _syncToken);
             }
-            request.Headers.Add("Accept", "application/vnd.microsoft.appconfig.snapshot+json, application/problem+json");
             request.Headers.Add("Content-Type", contentType.ToString());
             request.Content = content;
             return message;
@@ -1550,11 +1550,11 @@ namespace Azure.Data.AppConfiguration
             uri.AppendPath(name, true);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/vnd.microsoft.appconfig.snapshot+json, application/problem+json");
             if (_syncToken != null)
             {
                 request.Headers.Add("Sync-Token", _syncToken);
             }
-            request.Headers.Add("Accept", "application/vnd.microsoft.appconfig.snapshot+json, application/problem+json");
             if (matchConditions != null)
             {
                 request.Headers.Add(matchConditions);
@@ -1594,11 +1594,11 @@ namespace Azure.Data.AppConfiguration
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/labels", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
             if (name != null)
             {
                 uri.AppendQuery("name", name, true);
             }
-            uri.AppendQuery("api-version", _apiVersion, true);
             if (after != null)
             {
                 uri.AppendQuery("After", after, true);
@@ -1608,6 +1608,7 @@ namespace Azure.Data.AppConfiguration
                 uri.AppendQueryDelimited("$Select", select, ",", true);
             }
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/vnd.microsoft.appconfig.labelset+json, application/problem+json");
             if (_syncToken != null)
             {
                 request.Headers.Add("Sync-Token", _syncToken);
@@ -1616,7 +1617,6 @@ namespace Azure.Data.AppConfiguration
             {
                 request.Headers.Add("Accept-Datetime", acceptDatetime);
             }
-            request.Headers.Add("Accept", "application/vnd.microsoft.appconfig.labelset+json, application/problem+json");
             return message;
         }
 
@@ -1628,11 +1628,11 @@ namespace Azure.Data.AppConfiguration
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/labels", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
             if (name != null)
             {
                 uri.AppendQuery("name", name, true);
             }
-            uri.AppendQuery("api-version", _apiVersion, true);
             if (after != null)
             {
                 uri.AppendQuery("After", after, true);
@@ -1662,17 +1662,17 @@ namespace Azure.Data.AppConfiguration
             uri.Reset(_endpoint);
             uri.AppendPath("/locks/", false);
             uri.AppendPath(key, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
             if (label != null)
             {
                 uri.AppendQuery("label", label, true);
             }
-            uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/vnd.microsoft.appconfig.kv+json, application/problem+json");
             if (_syncToken != null)
             {
                 request.Headers.Add("Sync-Token", _syncToken);
             }
-            request.Headers.Add("Accept", "application/vnd.microsoft.appconfig.kv+json, application/problem+json");
             if (matchConditions != null)
             {
                 request.Headers.Add(matchConditions);
@@ -1689,17 +1689,17 @@ namespace Azure.Data.AppConfiguration
             uri.Reset(_endpoint);
             uri.AppendPath("/locks/", false);
             uri.AppendPath(key, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
             if (label != null)
             {
                 uri.AppendQuery("label", label, true);
             }
-            uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/vnd.microsoft.appconfig.kv+json, application/problem+json");
             if (_syncToken != null)
             {
                 request.Headers.Add("Sync-Token", _syncToken);
             }
-            request.Headers.Add("Accept", "application/vnd.microsoft.appconfig.kv+json, application/problem+json");
             if (matchConditions != null)
             {
                 request.Headers.Add(matchConditions);
@@ -1715,6 +1715,7 @@ namespace Azure.Data.AppConfiguration
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/revisions", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
             if (key != null)
             {
                 uri.AppendQuery("key", key, true);
@@ -1723,7 +1724,6 @@ namespace Azure.Data.AppConfiguration
             {
                 uri.AppendQuery("label", label, true);
             }
-            uri.AppendQuery("api-version", _apiVersion, true);
             if (after != null)
             {
                 uri.AppendQuery("After", after, true);
@@ -1733,6 +1733,7 @@ namespace Azure.Data.AppConfiguration
                 uri.AppendQueryDelimited("$Select", select, ",", true);
             }
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/vnd.microsoft.appconfig.kvset+json, application/problem+json");
             if (_syncToken != null)
             {
                 request.Headers.Add("Sync-Token", _syncToken);
@@ -1741,7 +1742,6 @@ namespace Azure.Data.AppConfiguration
             {
                 request.Headers.Add("Accept-Datetime", acceptDatetime);
             }
-            request.Headers.Add("Accept", "application/vnd.microsoft.appconfig.kvset+json, application/problem+json");
             return message;
         }
 
@@ -1753,6 +1753,7 @@ namespace Azure.Data.AppConfiguration
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/revisions", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
             if (key != null)
             {
                 uri.AppendQuery("key", key, true);
@@ -1761,7 +1762,6 @@ namespace Azure.Data.AppConfiguration
             {
                 uri.AppendQuery("label", label, true);
             }
-            uri.AppendQuery("api-version", _apiVersion, true);
             if (after != null)
             {
                 uri.AppendQuery("After", after, true);
@@ -1790,8 +1790,8 @@ namespace Azure.Data.AppConfiguration
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/operations", false);
-            uri.AppendQuery("snapshot", snapshot, true);
             uri.AppendQuery("api-version", _apiVersion, true);
+            uri.AppendQuery("snapshot", snapshot, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;
@@ -1806,6 +1806,7 @@ namespace Azure.Data.AppConfiguration
             uri.Reset(_endpoint);
             uri.AppendRawNextLink(nextLink, false);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/vnd.microsoft.appconfig.keyset+json, application/problem+json");
             if (_syncToken != null)
             {
                 request.Headers.Add("Sync-Token", _syncToken);
@@ -1814,7 +1815,6 @@ namespace Azure.Data.AppConfiguration
             {
                 request.Headers.Add("Accept-Datetime", acceptDatetime);
             }
-            request.Headers.Add("Accept", "application/vnd.microsoft.appconfig.keyset+json, application/problem+json");
             return message;
         }
 
@@ -1827,6 +1827,7 @@ namespace Azure.Data.AppConfiguration
             uri.Reset(_endpoint);
             uri.AppendRawNextLink(nextLink, false);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/vnd.microsoft.appconfig.kvset+json, application/problem+json");
             if (_syncToken != null)
             {
                 request.Headers.Add("Sync-Token", _syncToken);
@@ -1835,7 +1836,6 @@ namespace Azure.Data.AppConfiguration
             {
                 request.Headers.Add("Accept-Datetime", acceptDatetime);
             }
-            request.Headers.Add("Accept", "application/vnd.microsoft.appconfig.kvset+json, application/problem+json");
             return message;
         }
 
@@ -1848,11 +1848,11 @@ namespace Azure.Data.AppConfiguration
             uri.Reset(_endpoint);
             uri.AppendRawNextLink(nextLink, false);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/vnd.microsoft.appconfig.snapshotset+json, application/problem+json");
             if (_syncToken != null)
             {
                 request.Headers.Add("Sync-Token", _syncToken);
             }
-            request.Headers.Add("Accept", "application/vnd.microsoft.appconfig.snapshotset+json, application/problem+json");
             return message;
         }
 
@@ -1865,6 +1865,7 @@ namespace Azure.Data.AppConfiguration
             uri.Reset(_endpoint);
             uri.AppendRawNextLink(nextLink, false);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/vnd.microsoft.appconfig.labelset+json, application/problem+json");
             if (_syncToken != null)
             {
                 request.Headers.Add("Sync-Token", _syncToken);
@@ -1873,7 +1874,6 @@ namespace Azure.Data.AppConfiguration
             {
                 request.Headers.Add("Accept-Datetime", acceptDatetime);
             }
-            request.Headers.Add("Accept", "application/vnd.microsoft.appconfig.labelset+json, application/problem+json");
             return message;
         }
 
@@ -1886,6 +1886,7 @@ namespace Azure.Data.AppConfiguration
             uri.Reset(_endpoint);
             uri.AppendRawNextLink(nextLink, false);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/vnd.microsoft.appconfig.kvset+json, application/problem+json");
             if (_syncToken != null)
             {
                 request.Headers.Add("Sync-Token", _syncToken);
@@ -1894,7 +1895,6 @@ namespace Azure.Data.AppConfiguration
             {
                 request.Headers.Add("Accept-Datetime", acceptDatetime);
             }
-            request.Headers.Add("Accept", "application/vnd.microsoft.appconfig.kvset+json, application/problem+json");
             return message;
         }
 

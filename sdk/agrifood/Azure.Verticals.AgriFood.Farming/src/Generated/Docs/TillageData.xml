@@ -6,9 +6,10 @@
 This sample shows how to call GetTillageDataAsync with required parameters and parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var client = new FarmBeatsClient(credential).GetTillageDataClient("2022-11-01-preview");
+var endpoint = new Uri("<https://my-service.azure.com>");
+var client = new FarmBeatsClient(endpoint, credential).GetTillageDataClient("2022-11-01-preview");
 
-Response response = await client.GetTillageDataAsync("<partyId>", "<tillageDataId>", new RequestContext());
+Response response = await client.GetTillageDataAsync("<partyId>", "<tillageDataId>");
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("tillageDepth").GetProperty("unit").ToString());
@@ -42,9 +43,10 @@ Console.WriteLine(result.GetProperty("properties").GetProperty("<test>").ToStrin
 This sample shows how to call GetTillageData with required parameters and parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var client = new FarmBeatsClient(credential).GetTillageDataClient("2022-11-01-preview");
+var endpoint = new Uri("<https://my-service.azure.com>");
+var client = new FarmBeatsClient(endpoint, credential).GetTillageDataClient("2022-11-01-preview");
 
-Response response = client.GetTillageData("<partyId>", "<tillageDataId>", new RequestContext());
+Response response = client.GetTillageData("<partyId>", "<tillageDataId>");
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("tillageDepth").GetProperty("unit").ToString());
@@ -78,7 +80,8 @@ Console.WriteLine(result.GetProperty("properties").GetProperty("<test>").ToStrin
 This sample shows how to call CreateOrUpdateAsync with required parameters and parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var client = new FarmBeatsClient(credential).GetTillageDataClient("2022-11-01-preview");
+var endpoint = new Uri("<https://my-service.azure.com>");
+var client = new FarmBeatsClient(endpoint, credential).GetTillageDataClient("2022-11-01-preview");
 
 var data = new {};
 
@@ -90,7 +93,8 @@ Console.WriteLine(result.ToString());
 This sample shows how to call CreateOrUpdateAsync with all parameters and request content, and how to parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var client = new FarmBeatsClient(credential).GetTillageDataClient("2022-11-01-preview");
+var endpoint = new Uri("<https://my-service.azure.com>");
+var client = new FarmBeatsClient(endpoint, credential).GetTillageDataClient("2022-11-01-preview");
 
 var data = new {
     tillageDepth = new {
@@ -118,7 +122,7 @@ var data = new {
     },
 };
 
-Response response = await client.CreateOrUpdateAsync("<partyId>", "<tillageDataId>", RequestContent.Create(data), new RequestContext());
+Response response = await client.CreateOrUpdateAsync("<partyId>", "<tillageDataId>", RequestContent.Create(data));
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("tillageDepth").GetProperty("unit").ToString());
@@ -152,7 +156,8 @@ Console.WriteLine(result.GetProperty("properties").GetProperty("<test>").ToStrin
 This sample shows how to call CreateOrUpdate with required parameters and parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var client = new FarmBeatsClient(credential).GetTillageDataClient("2022-11-01-preview");
+var endpoint = new Uri("<https://my-service.azure.com>");
+var client = new FarmBeatsClient(endpoint, credential).GetTillageDataClient("2022-11-01-preview");
 
 var data = new {};
 
@@ -164,7 +169,8 @@ Console.WriteLine(result.ToString());
 This sample shows how to call CreateOrUpdate with all parameters and request content, and how to parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var client = new FarmBeatsClient(credential).GetTillageDataClient("2022-11-01-preview");
+var endpoint = new Uri("<https://my-service.azure.com>");
+var client = new FarmBeatsClient(endpoint, credential).GetTillageDataClient("2022-11-01-preview");
 
 var data = new {
     tillageDepth = new {
@@ -192,7 +198,7 @@ var data = new {
     },
 };
 
-Response response = client.CreateOrUpdate("<partyId>", "<tillageDataId>", RequestContent.Create(data), new RequestContext());
+Response response = client.CreateOrUpdate("<partyId>", "<tillageDataId>", RequestContent.Create(data));
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("tillageDepth").GetProperty("unit").ToString());
@@ -226,9 +232,10 @@ Console.WriteLine(result.GetProperty("properties").GetProperty("<test>").ToStrin
 This sample shows how to call DeleteAsync with required parameters.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var client = new FarmBeatsClient(credential).GetTillageDataClient("2022-11-01-preview");
+var endpoint = new Uri("<https://my-service.azure.com>");
+var client = new FarmBeatsClient(endpoint, credential).GetTillageDataClient("2022-11-01-preview");
 
-Response response = await client.DeleteAsync("<partyId>", "<tillageDataId>", new RequestContext());
+Response response = await client.DeleteAsync("<partyId>", "<tillageDataId>");
 Console.WriteLine(response.Status);
 ]]></code>
 </example>
@@ -238,9 +245,10 @@ Console.WriteLine(response.Status);
 This sample shows how to call Delete with required parameters.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var client = new FarmBeatsClient(credential).GetTillageDataClient("2022-11-01-preview");
+var endpoint = new Uri("<https://my-service.azure.com>");
+var client = new FarmBeatsClient(endpoint, credential).GetTillageDataClient("2022-11-01-preview");
 
-Response response = client.Delete("<partyId>", "<tillageDataId>", new RequestContext());
+Response response = client.Delete("<partyId>", "<tillageDataId>");
 Console.WriteLine(response.Status);
 ]]></code>
 </example>
@@ -250,9 +258,10 @@ Console.WriteLine(response.Status);
 This sample shows how to call GetCascadeDeleteJobDetailsAsync with required parameters and parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var client = new FarmBeatsClient(credential).GetTillageDataClient("2022-11-01-preview");
+var endpoint = new Uri("<https://my-service.azure.com>");
+var client = new FarmBeatsClient(endpoint, credential).GetTillageDataClient("2022-11-01-preview");
 
-Response response = await client.GetCascadeDeleteJobDetailsAsync("<jobId>", new RequestContext());
+Response response = await client.GetCascadeDeleteJobDetailsAsync("<jobId>");
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("partyId").ToString());
@@ -275,9 +284,10 @@ Console.WriteLine(result.GetProperty("endTime").ToString());
 This sample shows how to call GetCascadeDeleteJobDetails with required parameters and parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var client = new FarmBeatsClient(credential).GetTillageDataClient("2022-11-01-preview");
+var endpoint = new Uri("<https://my-service.azure.com>");
+var client = new FarmBeatsClient(endpoint, credential).GetTillageDataClient("2022-11-01-preview");
 
-Response response = client.GetCascadeDeleteJobDetails("<jobId>", new RequestContext());
+Response response = client.GetCascadeDeleteJobDetails("<jobId>");
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("partyId").ToString());
@@ -300,7 +310,8 @@ Console.WriteLine(result.GetProperty("endTime").ToString());
 This sample shows how to call GetAllTillageDataByPartyIdAsync with required parameters and parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var client = new FarmBeatsClient(credential).GetTillageDataClient("2022-11-01-preview");
+var endpoint = new Uri("<https://my-service.azure.com>");
+var client = new FarmBeatsClient(endpoint, credential).GetTillageDataClient("2022-11-01-preview");
 
 await foreach (var item in client.GetAllTillageDataByPartyIdAsync("<partyId>"))
 {
@@ -311,9 +322,10 @@ await foreach (var item in client.GetAllTillageDataByPartyIdAsync("<partyId>"))
 This sample shows how to call GetAllTillageDataByPartyIdAsync with all parameters, and how to parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var client = new FarmBeatsClient(credential).GetTillageDataClient("2022-11-01-preview");
+var endpoint = new Uri("<https://my-service.azure.com>");
+var client = new FarmBeatsClient(endpoint, credential).GetTillageDataClient("2022-11-01-preview");
 
-await foreach (var item in client.GetAllTillageDataByPartyIdAsync("<partyId>", 3.14, 3.14, 3.14, 3.14, new String[]{"<sources>"}, new String[]{"<associatedBoundaryIds>"}, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, 3.14, 3.14, new String[]{"<ids>"}, new String[]{"<names>"}, new String[]{"<propertyFilters>"}, new String[]{"<statuses>"}, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, 1234, "<skipToken>", new RequestContext()))
+await foreach (var item in client.GetAllTillageDataByPartyIdAsync("<partyId>", 3.14, 3.14, 3.14, 3.14, new String[]{"<sources>"}, new String[]{"<associatedBoundaryIds>"}, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, 3.14, 3.14, new String[]{"<ids>"}, new String[]{"<names>"}, new String[]{"<propertyFilters>"}, new String[]{"<statuses>"}, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, 1234, "<skipToken>"))
 {
     JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
     Console.WriteLine(result.GetProperty("tillageDepth").GetProperty("unit").ToString());
@@ -348,7 +360,8 @@ await foreach (var item in client.GetAllTillageDataByPartyIdAsync("<partyId>", 3
 This sample shows how to call GetAllTillageDataByPartyId with required parameters and parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var client = new FarmBeatsClient(credential).GetTillageDataClient("2022-11-01-preview");
+var endpoint = new Uri("<https://my-service.azure.com>");
+var client = new FarmBeatsClient(endpoint, credential).GetTillageDataClient("2022-11-01-preview");
 
 foreach (var item in client.GetAllTillageDataByPartyId("<partyId>"))
 {
@@ -359,9 +372,10 @@ foreach (var item in client.GetAllTillageDataByPartyId("<partyId>"))
 This sample shows how to call GetAllTillageDataByPartyId with all parameters, and how to parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var client = new FarmBeatsClient(credential).GetTillageDataClient("2022-11-01-preview");
+var endpoint = new Uri("<https://my-service.azure.com>");
+var client = new FarmBeatsClient(endpoint, credential).GetTillageDataClient("2022-11-01-preview");
 
-foreach (var item in client.GetAllTillageDataByPartyId("<partyId>", 3.14, 3.14, 3.14, 3.14, new String[]{"<sources>"}, new String[]{"<associatedBoundaryIds>"}, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, 3.14, 3.14, new String[]{"<ids>"}, new String[]{"<names>"}, new String[]{"<propertyFilters>"}, new String[]{"<statuses>"}, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, 1234, "<skipToken>", new RequestContext()))
+foreach (var item in client.GetAllTillageDataByPartyId("<partyId>", 3.14, 3.14, 3.14, 3.14, new String[]{"<sources>"}, new String[]{"<associatedBoundaryIds>"}, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, 3.14, 3.14, new String[]{"<ids>"}, new String[]{"<names>"}, new String[]{"<propertyFilters>"}, new String[]{"<statuses>"}, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, 1234, "<skipToken>"))
 {
     JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
     Console.WriteLine(result.GetProperty("tillageDepth").GetProperty("unit").ToString());
@@ -396,7 +410,8 @@ foreach (var item in client.GetAllTillageDataByPartyId("<partyId>", 3.14, 3.14, 
 This sample shows how to call GetAllTillageDataAsync and parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var client = new FarmBeatsClient(credential).GetTillageDataClient("2022-11-01-preview");
+var endpoint = new Uri("<https://my-service.azure.com>");
+var client = new FarmBeatsClient(endpoint, credential).GetTillageDataClient("2022-11-01-preview");
 
 await foreach (var item in client.GetAllTillageDataAsync())
 {
@@ -407,9 +422,10 @@ await foreach (var item in client.GetAllTillageDataAsync())
 This sample shows how to call GetAllTillageDataAsync with all parameters, and how to parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var client = new FarmBeatsClient(credential).GetTillageDataClient("2022-11-01-preview");
+var endpoint = new Uri("<https://my-service.azure.com>");
+var client = new FarmBeatsClient(endpoint, credential).GetTillageDataClient("2022-11-01-preview");
 
-await foreach (var item in client.GetAllTillageDataAsync(3.14, 3.14, 3.14, 3.14, new String[]{"<sources>"}, new String[]{"<associatedBoundaryIds>"}, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, 3.14, 3.14, new String[]{"<tillageDataIds>"}, new String[]{"<names>"}, new String[]{"<propertyFilters>"}, new String[]{"<statuses>"}, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, 1234, "<skipToken>", new RequestContext()))
+await foreach (var item in client.GetAllTillageDataAsync(3.14, 3.14, 3.14, 3.14, new String[]{"<sources>"}, new String[]{"<associatedBoundaryIds>"}, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, 3.14, 3.14, new String[]{"<tillageDataIds>"}, new String[]{"<names>"}, new String[]{"<propertyFilters>"}, new String[]{"<statuses>"}, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, 1234, "<skipToken>"))
 {
     JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
     Console.WriteLine(result.GetProperty("tillageDepth").GetProperty("unit").ToString());
@@ -444,7 +460,8 @@ await foreach (var item in client.GetAllTillageDataAsync(3.14, 3.14, 3.14, 3.14,
 This sample shows how to call GetAllTillageData and parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var client = new FarmBeatsClient(credential).GetTillageDataClient("2022-11-01-preview");
+var endpoint = new Uri("<https://my-service.azure.com>");
+var client = new FarmBeatsClient(endpoint, credential).GetTillageDataClient("2022-11-01-preview");
 
 foreach (var item in client.GetAllTillageData())
 {
@@ -455,9 +472,10 @@ foreach (var item in client.GetAllTillageData())
 This sample shows how to call GetAllTillageData with all parameters, and how to parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var client = new FarmBeatsClient(credential).GetTillageDataClient("2022-11-01-preview");
+var endpoint = new Uri("<https://my-service.azure.com>");
+var client = new FarmBeatsClient(endpoint, credential).GetTillageDataClient("2022-11-01-preview");
 
-foreach (var item in client.GetAllTillageData(3.14, 3.14, 3.14, 3.14, new String[]{"<sources>"}, new String[]{"<associatedBoundaryIds>"}, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, 3.14, 3.14, new String[]{"<tillageDataIds>"}, new String[]{"<names>"}, new String[]{"<propertyFilters>"}, new String[]{"<statuses>"}, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, 1234, "<skipToken>", new RequestContext()))
+foreach (var item in client.GetAllTillageData(3.14, 3.14, 3.14, 3.14, new String[]{"<sources>"}, new String[]{"<associatedBoundaryIds>"}, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, 3.14, 3.14, new String[]{"<tillageDataIds>"}, new String[]{"<names>"}, new String[]{"<propertyFilters>"}, new String[]{"<statuses>"}, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, 1234, "<skipToken>"))
 {
     JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
     Console.WriteLine(result.GetProperty("tillageDepth").GetProperty("unit").ToString());
@@ -492,9 +510,10 @@ foreach (var item in client.GetAllTillageData(3.14, 3.14, 3.14, 3.14, new String
 This sample shows how to call CreateCascadeDeleteJobAsync with required parameters and parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var client = new FarmBeatsClient(credential).GetTillageDataClient("2022-11-01-preview");
+var endpoint = new Uri("<https://my-service.azure.com>");
+var client = new FarmBeatsClient(endpoint, credential).GetTillageDataClient("2022-11-01-preview");
 
-var operation = await client.CreateCascadeDeleteJobAsync(WaitUntil.Completed, "<jobId>", "<partyId>", "<tillageDataId>", new RequestContext());
+var operation = await client.CreateCascadeDeleteJobAsync(WaitUntil.Completed, "<jobId>", "<partyId>", "<tillageDataId>");
 
 BinaryData responseData = operation.Value;
 JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
@@ -518,9 +537,10 @@ Console.WriteLine(result.GetProperty("endTime").ToString());
 This sample shows how to call CreateCascadeDeleteJob with required parameters and parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var client = new FarmBeatsClient(credential).GetTillageDataClient("2022-11-01-preview");
+var endpoint = new Uri("<https://my-service.azure.com>");
+var client = new FarmBeatsClient(endpoint, credential).GetTillageDataClient("2022-11-01-preview");
 
-var operation = client.CreateCascadeDeleteJob(WaitUntil.Completed, "<jobId>", "<partyId>", "<tillageDataId>", new RequestContext());
+var operation = client.CreateCascadeDeleteJob(WaitUntil.Completed, "<jobId>", "<partyId>", "<tillageDataId>");
 
 BinaryData responseData = operation.Value;
 JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;

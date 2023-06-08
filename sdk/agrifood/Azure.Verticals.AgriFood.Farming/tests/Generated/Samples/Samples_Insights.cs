@@ -24,7 +24,8 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
         public void Example_GetCascadeDeleteJobDetails()
         {
             var credential = new DefaultAzureCredential();
-            var client = new FarmBeatsClient(credential).GetInsightsClient("2022-11-01-preview");
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new FarmBeatsClient(endpoint, credential).GetInsightsClient("2022-11-01-preview");
 
             Response response = client.GetCascadeDeleteJobDetails("<jobId>");
 
@@ -39,9 +40,10 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
         public void Example_GetCascadeDeleteJobDetails_AllParameters()
         {
             var credential = new DefaultAzureCredential();
-            var client = new FarmBeatsClient(credential).GetInsightsClient("2022-11-01-preview");
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new FarmBeatsClient(endpoint, credential).GetInsightsClient("2022-11-01-preview");
 
-            Response response = client.GetCascadeDeleteJobDetails("<jobId>", new RequestContext());
+            Response response = client.GetCascadeDeleteJobDetails("<jobId>");
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("partyId").ToString());
@@ -63,7 +65,8 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
         public async Task Example_GetCascadeDeleteJobDetails_Async()
         {
             var credential = new DefaultAzureCredential();
-            var client = new FarmBeatsClient(credential).GetInsightsClient("2022-11-01-preview");
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new FarmBeatsClient(endpoint, credential).GetInsightsClient("2022-11-01-preview");
 
             Response response = await client.GetCascadeDeleteJobDetailsAsync("<jobId>");
 
@@ -78,9 +81,10 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
         public async Task Example_GetCascadeDeleteJobDetails_AllParameters_Async()
         {
             var credential = new DefaultAzureCredential();
-            var client = new FarmBeatsClient(credential).GetInsightsClient("2022-11-01-preview");
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new FarmBeatsClient(endpoint, credential).GetInsightsClient("2022-11-01-preview");
 
-            Response response = await client.GetCascadeDeleteJobDetailsAsync("<jobId>", new RequestContext());
+            Response response = await client.GetCascadeDeleteJobDetailsAsync("<jobId>");
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("partyId").ToString());
@@ -102,7 +106,8 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
         public void Example_CreateOrUpdate()
         {
             var credential = new DefaultAzureCredential();
-            var client = new FarmBeatsClient(credential).GetInsightsClient("2022-11-01-preview");
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new FarmBeatsClient(endpoint, credential).GetInsightsClient("2022-11-01-preview");
 
             var data = new { };
 
@@ -117,7 +122,8 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
         public void Example_CreateOrUpdate_AllParameters()
         {
             var credential = new DefaultAzureCredential();
-            var client = new FarmBeatsClient(credential).GetInsightsClient("2022-11-01-preview");
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new FarmBeatsClient(endpoint, credential).GetInsightsClient("2022-11-01-preview");
 
             var data = new
             {
@@ -141,7 +147,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
                 },
             };
 
-            Response response = client.CreateOrUpdate("<partyId>", "<modelId>", "<resourceType>", "<resourceId>", "<insightId>", RequestContent.Create(data), new RequestContext());
+            Response response = client.CreateOrUpdate("<partyId>", "<modelId>", "<resourceType>", "<resourceId>", "<insightId>", RequestContent.Create(data));
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("partyId").ToString());
@@ -171,7 +177,8 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
         public async Task Example_CreateOrUpdate_Async()
         {
             var credential = new DefaultAzureCredential();
-            var client = new FarmBeatsClient(credential).GetInsightsClient("2022-11-01-preview");
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new FarmBeatsClient(endpoint, credential).GetInsightsClient("2022-11-01-preview");
 
             var data = new { };
 
@@ -186,7 +193,8 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
         public async Task Example_CreateOrUpdate_AllParameters_Async()
         {
             var credential = new DefaultAzureCredential();
-            var client = new FarmBeatsClient(credential).GetInsightsClient("2022-11-01-preview");
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new FarmBeatsClient(endpoint, credential).GetInsightsClient("2022-11-01-preview");
 
             var data = new
             {
@@ -210,7 +218,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
                 },
             };
 
-            Response response = await client.CreateOrUpdateAsync("<partyId>", "<modelId>", "<resourceType>", "<resourceId>", "<insightId>", RequestContent.Create(data), new RequestContext());
+            Response response = await client.CreateOrUpdateAsync("<partyId>", "<modelId>", "<resourceType>", "<resourceId>", "<insightId>", RequestContent.Create(data));
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("partyId").ToString());
@@ -240,7 +248,8 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
         public void Example_GetInsight()
         {
             var credential = new DefaultAzureCredential();
-            var client = new FarmBeatsClient(credential).GetInsightsClient("2022-11-01-preview");
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new FarmBeatsClient(endpoint, credential).GetInsightsClient("2022-11-01-preview");
 
             Response response = client.GetInsight("<partyId>", "<modelId>", "<resourceType>", "<resourceId>", "<insightId>");
 
@@ -253,9 +262,10 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
         public void Example_GetInsight_AllParameters()
         {
             var credential = new DefaultAzureCredential();
-            var client = new FarmBeatsClient(credential).GetInsightsClient("2022-11-01-preview");
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new FarmBeatsClient(endpoint, credential).GetInsightsClient("2022-11-01-preview");
 
-            Response response = client.GetInsight("<partyId>", "<modelId>", "<resourceType>", "<resourceId>", "<insightId>", new RequestContext());
+            Response response = client.GetInsight("<partyId>", "<modelId>", "<resourceType>", "<resourceId>", "<insightId>");
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("partyId").ToString());
@@ -285,7 +295,8 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
         public async Task Example_GetInsight_Async()
         {
             var credential = new DefaultAzureCredential();
-            var client = new FarmBeatsClient(credential).GetInsightsClient("2022-11-01-preview");
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new FarmBeatsClient(endpoint, credential).GetInsightsClient("2022-11-01-preview");
 
             Response response = await client.GetInsightAsync("<partyId>", "<modelId>", "<resourceType>", "<resourceId>", "<insightId>");
 
@@ -298,9 +309,10 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
         public async Task Example_GetInsight_AllParameters_Async()
         {
             var credential = new DefaultAzureCredential();
-            var client = new FarmBeatsClient(credential).GetInsightsClient("2022-11-01-preview");
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new FarmBeatsClient(endpoint, credential).GetInsightsClient("2022-11-01-preview");
 
-            Response response = await client.GetInsightAsync("<partyId>", "<modelId>", "<resourceType>", "<resourceId>", "<insightId>", new RequestContext());
+            Response response = await client.GetInsightAsync("<partyId>", "<modelId>", "<resourceType>", "<resourceId>", "<insightId>");
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("partyId").ToString());
@@ -330,7 +342,8 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
         public void Example_Delete()
         {
             var credential = new DefaultAzureCredential();
-            var client = new FarmBeatsClient(credential).GetInsightsClient("2022-11-01-preview");
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new FarmBeatsClient(endpoint, credential).GetInsightsClient("2022-11-01-preview");
 
             Response response = client.Delete("<partyId>", "<modelId>", "<resourceType>", "<resourceId>", "<insightId>");
             Console.WriteLine(response.Status);
@@ -341,9 +354,10 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
         public void Example_Delete_AllParameters()
         {
             var credential = new DefaultAzureCredential();
-            var client = new FarmBeatsClient(credential).GetInsightsClient("2022-11-01-preview");
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new FarmBeatsClient(endpoint, credential).GetInsightsClient("2022-11-01-preview");
 
-            Response response = client.Delete("<partyId>", "<modelId>", "<resourceType>", "<resourceId>", "<insightId>", new RequestContext());
+            Response response = client.Delete("<partyId>", "<modelId>", "<resourceType>", "<resourceId>", "<insightId>");
             Console.WriteLine(response.Status);
         }
 
@@ -352,7 +366,8 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
         public async Task Example_Delete_Async()
         {
             var credential = new DefaultAzureCredential();
-            var client = new FarmBeatsClient(credential).GetInsightsClient("2022-11-01-preview");
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new FarmBeatsClient(endpoint, credential).GetInsightsClient("2022-11-01-preview");
 
             Response response = await client.DeleteAsync("<partyId>", "<modelId>", "<resourceType>", "<resourceId>", "<insightId>");
             Console.WriteLine(response.Status);
@@ -363,9 +378,10 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
         public async Task Example_Delete_AllParameters_Async()
         {
             var credential = new DefaultAzureCredential();
-            var client = new FarmBeatsClient(credential).GetInsightsClient("2022-11-01-preview");
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new FarmBeatsClient(endpoint, credential).GetInsightsClient("2022-11-01-preview");
 
-            Response response = await client.DeleteAsync("<partyId>", "<modelId>", "<resourceType>", "<resourceId>", "<insightId>", new RequestContext());
+            Response response = await client.DeleteAsync("<partyId>", "<modelId>", "<resourceType>", "<resourceId>", "<insightId>");
             Console.WriteLine(response.Status);
         }
 
@@ -374,7 +390,8 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
         public void Example_GetInsightsByPartyIdModelIdAndResource()
         {
             var credential = new DefaultAzureCredential();
-            var client = new FarmBeatsClient(credential).GetInsightsClient("2022-11-01-preview");
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new FarmBeatsClient(endpoint, credential).GetInsightsClient("2022-11-01-preview");
 
             foreach (var item in client.GetInsightsByPartyIdModelIdAndResource("<partyId>", "<modelId>", "<resourceType>", "<resourceId>"))
             {
@@ -388,9 +405,10 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
         public void Example_GetInsightsByPartyIdModelIdAndResource_AllParameters()
         {
             var credential = new DefaultAzureCredential();
-            var client = new FarmBeatsClient(credential).GetInsightsClient("2022-11-01-preview");
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new FarmBeatsClient(endpoint, credential).GetInsightsClient("2022-11-01-preview");
 
-            foreach (var item in client.GetInsightsByPartyIdModelIdAndResource("<partyId>", "<modelId>", "<resourceType>", "<resourceId>", DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, new string[] { "<measurementFilters>" }, new string[] { "<ids>" }, new string[] { "<names>" }, new string[] { "<propertyFilters>" }, new string[] { "<statuses>" }, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, 1234, "<skipToken>", new RequestContext()))
+            foreach (var item in client.GetInsightsByPartyIdModelIdAndResource("<partyId>", "<modelId>", "<resourceType>", "<resourceId>", DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, new string[] { "<measurementFilters>" }, new string[] { "<ids>" }, new string[] { "<names>" }, new string[] { "<propertyFilters>" }, new string[] { "<statuses>" }, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, 1234, "<skipToken>"))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
                 Console.WriteLine(result.GetProperty("partyId").ToString());
@@ -421,7 +439,8 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
         public async Task Example_GetInsightsByPartyIdModelIdAndResource_Async()
         {
             var credential = new DefaultAzureCredential();
-            var client = new FarmBeatsClient(credential).GetInsightsClient("2022-11-01-preview");
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new FarmBeatsClient(endpoint, credential).GetInsightsClient("2022-11-01-preview");
 
             await foreach (var item in client.GetInsightsByPartyIdModelIdAndResourceAsync("<partyId>", "<modelId>", "<resourceType>", "<resourceId>"))
             {
@@ -435,9 +454,10 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
         public async Task Example_GetInsightsByPartyIdModelIdAndResource_AllParameters_Async()
         {
             var credential = new DefaultAzureCredential();
-            var client = new FarmBeatsClient(credential).GetInsightsClient("2022-11-01-preview");
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new FarmBeatsClient(endpoint, credential).GetInsightsClient("2022-11-01-preview");
 
-            await foreach (var item in client.GetInsightsByPartyIdModelIdAndResourceAsync("<partyId>", "<modelId>", "<resourceType>", "<resourceId>", DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, new string[] { "<measurementFilters>" }, new string[] { "<ids>" }, new string[] { "<names>" }, new string[] { "<propertyFilters>" }, new string[] { "<statuses>" }, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, 1234, "<skipToken>", new RequestContext()))
+            await foreach (var item in client.GetInsightsByPartyIdModelIdAndResourceAsync("<partyId>", "<modelId>", "<resourceType>", "<resourceId>", DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, new string[] { "<measurementFilters>" }, new string[] { "<ids>" }, new string[] { "<names>" }, new string[] { "<propertyFilters>" }, new string[] { "<statuses>" }, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, 1234, "<skipToken>"))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
                 Console.WriteLine(result.GetProperty("partyId").ToString());
@@ -468,7 +488,8 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
         public void Example_CreateCascadeDeleteJob()
         {
             var credential = new DefaultAzureCredential();
-            var client = new FarmBeatsClient(credential).GetInsightsClient("2022-11-01-preview");
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new FarmBeatsClient(endpoint, credential).GetInsightsClient("2022-11-01-preview");
 
             var operation = client.CreateCascadeDeleteJob(WaitUntil.Completed, "<jobId>", "<partyId>", "<modelId>", "<resourceType>", "<resourceId>", "<insightId>");
 
@@ -484,9 +505,10 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
         public void Example_CreateCascadeDeleteJob_AllParameters()
         {
             var credential = new DefaultAzureCredential();
-            var client = new FarmBeatsClient(credential).GetInsightsClient("2022-11-01-preview");
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new FarmBeatsClient(endpoint, credential).GetInsightsClient("2022-11-01-preview");
 
-            var operation = client.CreateCascadeDeleteJob(WaitUntil.Completed, "<jobId>", "<partyId>", "<modelId>", "<resourceType>", "<resourceId>", "<insightId>", new RequestContext());
+            var operation = client.CreateCascadeDeleteJob(WaitUntil.Completed, "<jobId>", "<partyId>", "<modelId>", "<resourceType>", "<resourceId>", "<insightId>");
 
             BinaryData responseData = operation.Value;
             JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
@@ -509,7 +531,8 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
         public async Task Example_CreateCascadeDeleteJob_Async()
         {
             var credential = new DefaultAzureCredential();
-            var client = new FarmBeatsClient(credential).GetInsightsClient("2022-11-01-preview");
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new FarmBeatsClient(endpoint, credential).GetInsightsClient("2022-11-01-preview");
 
             var operation = await client.CreateCascadeDeleteJobAsync(WaitUntil.Completed, "<jobId>", "<partyId>", "<modelId>", "<resourceType>", "<resourceId>", "<insightId>");
 
@@ -525,9 +548,10 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
         public async Task Example_CreateCascadeDeleteJob_AllParameters_Async()
         {
             var credential = new DefaultAzureCredential();
-            var client = new FarmBeatsClient(credential).GetInsightsClient("2022-11-01-preview");
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new FarmBeatsClient(endpoint, credential).GetInsightsClient("2022-11-01-preview");
 
-            var operation = await client.CreateCascadeDeleteJobAsync(WaitUntil.Completed, "<jobId>", "<partyId>", "<modelId>", "<resourceType>", "<resourceId>", "<insightId>", new RequestContext());
+            var operation = await client.CreateCascadeDeleteJobAsync(WaitUntil.Completed, "<jobId>", "<partyId>", "<modelId>", "<resourceType>", "<resourceId>", "<insightId>");
 
             BinaryData responseData = operation.Value;
             JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;

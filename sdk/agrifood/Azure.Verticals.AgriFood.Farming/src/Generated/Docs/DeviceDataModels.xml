@@ -6,7 +6,8 @@
 This sample shows how to call CreateOrUpdateAsync with required parameters and parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var client = new FarmBeatsClient(credential).GetDeviceDataModelsClient("2022-11-01-preview");
+var endpoint = new Uri("<https://my-service.azure.com>");
+var client = new FarmBeatsClient(endpoint, credential).GetDeviceDataModelsClient("2022-11-01-preview");
 
 var data = new {};
 
@@ -18,7 +19,8 @@ Console.WriteLine(result.ToString());
 This sample shows how to call CreateOrUpdateAsync with all parameters and request content, and how to parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var client = new FarmBeatsClient(credential).GetDeviceDataModelsClient("2022-11-01-preview");
+var endpoint = new Uri("<https://my-service.azure.com>");
+var client = new FarmBeatsClient(endpoint, credential).GetDeviceDataModelsClient("2022-11-01-preview");
 
 var data = new {
     type = "<type>",
@@ -38,7 +40,7 @@ var data = new {
     },
 };
 
-Response response = await client.CreateOrUpdateAsync("<sensorPartnerId>", "<deviceDataModelId>", RequestContent.Create(data), new RequestContext());
+Response response = await client.CreateOrUpdateAsync("<sensorPartnerId>", "<deviceDataModelId>", RequestContent.Create(data));
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("type").ToString());
@@ -65,7 +67,8 @@ Console.WriteLine(result.GetProperty("properties").GetProperty("<test>").ToStrin
 This sample shows how to call CreateOrUpdate with required parameters and parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var client = new FarmBeatsClient(credential).GetDeviceDataModelsClient("2022-11-01-preview");
+var endpoint = new Uri("<https://my-service.azure.com>");
+var client = new FarmBeatsClient(endpoint, credential).GetDeviceDataModelsClient("2022-11-01-preview");
 
 var data = new {};
 
@@ -77,7 +80,8 @@ Console.WriteLine(result.ToString());
 This sample shows how to call CreateOrUpdate with all parameters and request content, and how to parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var client = new FarmBeatsClient(credential).GetDeviceDataModelsClient("2022-11-01-preview");
+var endpoint = new Uri("<https://my-service.azure.com>");
+var client = new FarmBeatsClient(endpoint, credential).GetDeviceDataModelsClient("2022-11-01-preview");
 
 var data = new {
     type = "<type>",
@@ -97,7 +101,7 @@ var data = new {
     },
 };
 
-Response response = client.CreateOrUpdate("<sensorPartnerId>", "<deviceDataModelId>", RequestContent.Create(data), new RequestContext());
+Response response = client.CreateOrUpdate("<sensorPartnerId>", "<deviceDataModelId>", RequestContent.Create(data));
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("type").ToString());
@@ -124,9 +128,10 @@ Console.WriteLine(result.GetProperty("properties").GetProperty("<test>").ToStrin
 This sample shows how to call GetDeviceDataModelAsync with required parameters and parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var client = new FarmBeatsClient(credential).GetDeviceDataModelsClient("2022-11-01-preview");
+var endpoint = new Uri("<https://my-service.azure.com>");
+var client = new FarmBeatsClient(endpoint, credential).GetDeviceDataModelsClient("2022-11-01-preview");
 
-Response response = await client.GetDeviceDataModelAsync("<sensorPartnerId>", "<deviceDataModelId>", new RequestContext());
+Response response = await client.GetDeviceDataModelAsync("<sensorPartnerId>", "<deviceDataModelId>");
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("type").ToString());
@@ -153,9 +158,10 @@ Console.WriteLine(result.GetProperty("properties").GetProperty("<test>").ToStrin
 This sample shows how to call GetDeviceDataModel with required parameters and parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var client = new FarmBeatsClient(credential).GetDeviceDataModelsClient("2022-11-01-preview");
+var endpoint = new Uri("<https://my-service.azure.com>");
+var client = new FarmBeatsClient(endpoint, credential).GetDeviceDataModelsClient("2022-11-01-preview");
 
-Response response = client.GetDeviceDataModel("<sensorPartnerId>", "<deviceDataModelId>", new RequestContext());
+Response response = client.GetDeviceDataModel("<sensorPartnerId>", "<deviceDataModelId>");
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("type").ToString());
@@ -182,9 +188,10 @@ Console.WriteLine(result.GetProperty("properties").GetProperty("<test>").ToStrin
 This sample shows how to call DeleteAsync with required parameters.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var client = new FarmBeatsClient(credential).GetDeviceDataModelsClient("2022-11-01-preview");
+var endpoint = new Uri("<https://my-service.azure.com>");
+var client = new FarmBeatsClient(endpoint, credential).GetDeviceDataModelsClient("2022-11-01-preview");
 
-Response response = await client.DeleteAsync("<sensorPartnerId>", "<deviceDataModelId>", new RequestContext());
+Response response = await client.DeleteAsync("<sensorPartnerId>", "<deviceDataModelId>");
 Console.WriteLine(response.Status);
 ]]></code>
 </example>
@@ -194,9 +201,10 @@ Console.WriteLine(response.Status);
 This sample shows how to call Delete with required parameters.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var client = new FarmBeatsClient(credential).GetDeviceDataModelsClient("2022-11-01-preview");
+var endpoint = new Uri("<https://my-service.azure.com>");
+var client = new FarmBeatsClient(endpoint, credential).GetDeviceDataModelsClient("2022-11-01-preview");
 
-Response response = client.Delete("<sensorPartnerId>", "<deviceDataModelId>", new RequestContext());
+Response response = client.Delete("<sensorPartnerId>", "<deviceDataModelId>");
 Console.WriteLine(response.Status);
 ]]></code>
 </example>
@@ -206,7 +214,8 @@ Console.WriteLine(response.Status);
 This sample shows how to call GetDeviceDataModelsAsync with required parameters and parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var client = new FarmBeatsClient(credential).GetDeviceDataModelsClient("2022-11-01-preview");
+var endpoint = new Uri("<https://my-service.azure.com>");
+var client = new FarmBeatsClient(endpoint, credential).GetDeviceDataModelsClient("2022-11-01-preview");
 
 await foreach (var item in client.GetDeviceDataModelsAsync("<sensorPartnerId>"))
 {
@@ -217,9 +226,10 @@ await foreach (var item in client.GetDeviceDataModelsAsync("<sensorPartnerId>"))
 This sample shows how to call GetDeviceDataModelsAsync with all parameters, and how to parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var client = new FarmBeatsClient(credential).GetDeviceDataModelsClient("2022-11-01-preview");
+var endpoint = new Uri("<https://my-service.azure.com>");
+var client = new FarmBeatsClient(endpoint, credential).GetDeviceDataModelsClient("2022-11-01-preview");
 
-await foreach (var item in client.GetDeviceDataModelsAsync("<sensorPartnerId>", new String[]{"<ids>"}, new String[]{"<names>"}, new String[]{"<propertyFilters>"}, new String[]{"<statuses>"}, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, 1234, "<skipToken>", new RequestContext()))
+await foreach (var item in client.GetDeviceDataModelsAsync("<sensorPartnerId>", new String[]{"<ids>"}, new String[]{"<names>"}, new String[]{"<propertyFilters>"}, new String[]{"<statuses>"}, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, 1234, "<skipToken>"))
 {
     JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
     Console.WriteLine(result.GetProperty("type").ToString());
@@ -247,7 +257,8 @@ await foreach (var item in client.GetDeviceDataModelsAsync("<sensorPartnerId>", 
 This sample shows how to call GetDeviceDataModels with required parameters and parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var client = new FarmBeatsClient(credential).GetDeviceDataModelsClient("2022-11-01-preview");
+var endpoint = new Uri("<https://my-service.azure.com>");
+var client = new FarmBeatsClient(endpoint, credential).GetDeviceDataModelsClient("2022-11-01-preview");
 
 foreach (var item in client.GetDeviceDataModels("<sensorPartnerId>"))
 {
@@ -258,9 +269,10 @@ foreach (var item in client.GetDeviceDataModels("<sensorPartnerId>"))
 This sample shows how to call GetDeviceDataModels with all parameters, and how to parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var client = new FarmBeatsClient(credential).GetDeviceDataModelsClient("2022-11-01-preview");
+var endpoint = new Uri("<https://my-service.azure.com>");
+var client = new FarmBeatsClient(endpoint, credential).GetDeviceDataModelsClient("2022-11-01-preview");
 
-foreach (var item in client.GetDeviceDataModels("<sensorPartnerId>", new String[]{"<ids>"}, new String[]{"<names>"}, new String[]{"<propertyFilters>"}, new String[]{"<statuses>"}, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, 1234, "<skipToken>", new RequestContext()))
+foreach (var item in client.GetDeviceDataModels("<sensorPartnerId>", new String[]{"<ids>"}, new String[]{"<names>"}, new String[]{"<propertyFilters>"}, new String[]{"<statuses>"}, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, 1234, "<skipToken>"))
 {
     JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
     Console.WriteLine(result.GetProperty("type").ToString());

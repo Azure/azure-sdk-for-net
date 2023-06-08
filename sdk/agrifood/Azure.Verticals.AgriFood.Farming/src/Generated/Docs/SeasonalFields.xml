@@ -6,9 +6,10 @@
 This sample shows how to call GetSeasonalFieldAsync with required parameters and parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var client = new FarmBeatsClient(credential).GetSeasonalFieldsClient("2022-11-01-preview");
+var endpoint = new Uri("<https://my-service.azure.com>");
+var client = new FarmBeatsClient(endpoint, credential).GetSeasonalFieldsClient("2022-11-01-preview");
 
-Response response = await client.GetSeasonalFieldAsync("<partyId>", "<seasonalFieldId>", new RequestContext());
+Response response = await client.GetSeasonalFieldAsync("<partyId>", "<seasonalFieldId>");
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("partyId").ToString());
@@ -36,9 +37,10 @@ Console.WriteLine(result.GetProperty("properties").GetProperty("<test>").ToStrin
 This sample shows how to call GetSeasonalField with required parameters and parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var client = new FarmBeatsClient(credential).GetSeasonalFieldsClient("2022-11-01-preview");
+var endpoint = new Uri("<https://my-service.azure.com>");
+var client = new FarmBeatsClient(endpoint, credential).GetSeasonalFieldsClient("2022-11-01-preview");
 
-Response response = client.GetSeasonalField("<partyId>", "<seasonalFieldId>", new RequestContext());
+Response response = client.GetSeasonalField("<partyId>", "<seasonalFieldId>");
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("partyId").ToString());
@@ -66,7 +68,8 @@ Console.WriteLine(result.GetProperty("properties").GetProperty("<test>").ToStrin
 This sample shows how to call CreateOrUpdateAsync with required parameters and parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var client = new FarmBeatsClient(credential).GetSeasonalFieldsClient("2022-11-01-preview");
+var endpoint = new Uri("<https://my-service.azure.com>");
+var client = new FarmBeatsClient(endpoint, credential).GetSeasonalFieldsClient("2022-11-01-preview");
 
 var data = new {};
 
@@ -78,7 +81,8 @@ Console.WriteLine(result.ToString());
 This sample shows how to call CreateOrUpdateAsync with all parameters and request content, and how to parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var client = new FarmBeatsClient(credential).GetSeasonalFieldsClient("2022-11-01-preview");
+var endpoint = new Uri("<https://my-service.azure.com>");
+var client = new FarmBeatsClient(endpoint, credential).GetSeasonalFieldsClient("2022-11-01-preview");
 
 var data = new {
     farmId = "<farmId>",
@@ -97,7 +101,7 @@ var data = new {
     },
 };
 
-Response response = await client.CreateOrUpdateAsync("<partyId>", "<seasonalFieldId>", RequestContent.Create(data), new RequestContext());
+Response response = await client.CreateOrUpdateAsync("<partyId>", "<seasonalFieldId>", RequestContent.Create(data));
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("partyId").ToString());
@@ -125,7 +129,8 @@ Console.WriteLine(result.GetProperty("properties").GetProperty("<test>").ToStrin
 This sample shows how to call CreateOrUpdate with required parameters and parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var client = new FarmBeatsClient(credential).GetSeasonalFieldsClient("2022-11-01-preview");
+var endpoint = new Uri("<https://my-service.azure.com>");
+var client = new FarmBeatsClient(endpoint, credential).GetSeasonalFieldsClient("2022-11-01-preview");
 
 var data = new {};
 
@@ -137,7 +142,8 @@ Console.WriteLine(result.ToString());
 This sample shows how to call CreateOrUpdate with all parameters and request content, and how to parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var client = new FarmBeatsClient(credential).GetSeasonalFieldsClient("2022-11-01-preview");
+var endpoint = new Uri("<https://my-service.azure.com>");
+var client = new FarmBeatsClient(endpoint, credential).GetSeasonalFieldsClient("2022-11-01-preview");
 
 var data = new {
     farmId = "<farmId>",
@@ -156,7 +162,7 @@ var data = new {
     },
 };
 
-Response response = client.CreateOrUpdate("<partyId>", "<seasonalFieldId>", RequestContent.Create(data), new RequestContext());
+Response response = client.CreateOrUpdate("<partyId>", "<seasonalFieldId>", RequestContent.Create(data));
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("partyId").ToString());
@@ -184,9 +190,10 @@ Console.WriteLine(result.GetProperty("properties").GetProperty("<test>").ToStrin
 This sample shows how to call DeleteAsync with required parameters.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var client = new FarmBeatsClient(credential).GetSeasonalFieldsClient("2022-11-01-preview");
+var endpoint = new Uri("<https://my-service.azure.com>");
+var client = new FarmBeatsClient(endpoint, credential).GetSeasonalFieldsClient("2022-11-01-preview");
 
-Response response = await client.DeleteAsync("<partyId>", "<seasonalFieldId>", new RequestContext());
+Response response = await client.DeleteAsync("<partyId>", "<seasonalFieldId>");
 Console.WriteLine(response.Status);
 ]]></code>
 </example>
@@ -196,9 +203,10 @@ Console.WriteLine(response.Status);
 This sample shows how to call Delete with required parameters.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var client = new FarmBeatsClient(credential).GetSeasonalFieldsClient("2022-11-01-preview");
+var endpoint = new Uri("<https://my-service.azure.com>");
+var client = new FarmBeatsClient(endpoint, credential).GetSeasonalFieldsClient("2022-11-01-preview");
 
-Response response = client.Delete("<partyId>", "<seasonalFieldId>", new RequestContext());
+Response response = client.Delete("<partyId>", "<seasonalFieldId>");
 Console.WriteLine(response.Status);
 ]]></code>
 </example>
@@ -208,9 +216,10 @@ Console.WriteLine(response.Status);
 This sample shows how to call GetCascadeDeleteJobDetailsAsync with required parameters and parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var client = new FarmBeatsClient(credential).GetSeasonalFieldsClient("2022-11-01-preview");
+var endpoint = new Uri("<https://my-service.azure.com>");
+var client = new FarmBeatsClient(endpoint, credential).GetSeasonalFieldsClient("2022-11-01-preview");
 
-Response response = await client.GetCascadeDeleteJobDetailsAsync("<jobId>", new RequestContext());
+Response response = await client.GetCascadeDeleteJobDetailsAsync("<jobId>");
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("partyId").ToString());
@@ -233,9 +242,10 @@ Console.WriteLine(result.GetProperty("endTime").ToString());
 This sample shows how to call GetCascadeDeleteJobDetails with required parameters and parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var client = new FarmBeatsClient(credential).GetSeasonalFieldsClient("2022-11-01-preview");
+var endpoint = new Uri("<https://my-service.azure.com>");
+var client = new FarmBeatsClient(endpoint, credential).GetSeasonalFieldsClient("2022-11-01-preview");
 
-Response response = client.GetCascadeDeleteJobDetails("<jobId>", new RequestContext());
+Response response = client.GetCascadeDeleteJobDetails("<jobId>");
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("partyId").ToString());
@@ -258,7 +268,8 @@ Console.WriteLine(result.GetProperty("endTime").ToString());
 This sample shows how to call GetSeasonalFieldsByPartyIdAsync with required parameters and parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var client = new FarmBeatsClient(credential).GetSeasonalFieldsClient("2022-11-01-preview");
+var endpoint = new Uri("<https://my-service.azure.com>");
+var client = new FarmBeatsClient(endpoint, credential).GetSeasonalFieldsClient("2022-11-01-preview");
 
 await foreach (var item in client.GetSeasonalFieldsByPartyIdAsync("<partyId>"))
 {
@@ -269,9 +280,10 @@ await foreach (var item in client.GetSeasonalFieldsByPartyIdAsync("<partyId>"))
 This sample shows how to call GetSeasonalFieldsByPartyIdAsync with all parameters, and how to parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var client = new FarmBeatsClient(credential).GetSeasonalFieldsClient("2022-11-01-preview");
+var endpoint = new Uri("<https://my-service.azure.com>");
+var client = new FarmBeatsClient(endpoint, credential).GetSeasonalFieldsClient("2022-11-01-preview");
 
-await foreach (var item in client.GetSeasonalFieldsByPartyIdAsync("<partyId>", new String[]{"<farmIds>"}, new String[]{"<fieldIds>"}, new String[]{"<seasonIds>"}, new String[]{"<cropProductIds>"}, new String[]{"<cropIds>"}, new String[]{"<ids>"}, new String[]{"<names>"}, new String[]{"<propertyFilters>"}, new String[]{"<statuses>"}, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, 1234, "<skipToken>", new RequestContext()))
+await foreach (var item in client.GetSeasonalFieldsByPartyIdAsync("<partyId>", new String[]{"<farmIds>"}, new String[]{"<fieldIds>"}, new String[]{"<seasonIds>"}, new String[]{"<cropProductIds>"}, new String[]{"<cropIds>"}, new String[]{"<ids>"}, new String[]{"<names>"}, new String[]{"<propertyFilters>"}, new String[]{"<statuses>"}, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, 1234, "<skipToken>"))
 {
     JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
     Console.WriteLine(result.GetProperty("partyId").ToString());
@@ -300,7 +312,8 @@ await foreach (var item in client.GetSeasonalFieldsByPartyIdAsync("<partyId>", n
 This sample shows how to call GetSeasonalFieldsByPartyId with required parameters and parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var client = new FarmBeatsClient(credential).GetSeasonalFieldsClient("2022-11-01-preview");
+var endpoint = new Uri("<https://my-service.azure.com>");
+var client = new FarmBeatsClient(endpoint, credential).GetSeasonalFieldsClient("2022-11-01-preview");
 
 foreach (var item in client.GetSeasonalFieldsByPartyId("<partyId>"))
 {
@@ -311,9 +324,10 @@ foreach (var item in client.GetSeasonalFieldsByPartyId("<partyId>"))
 This sample shows how to call GetSeasonalFieldsByPartyId with all parameters, and how to parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var client = new FarmBeatsClient(credential).GetSeasonalFieldsClient("2022-11-01-preview");
+var endpoint = new Uri("<https://my-service.azure.com>");
+var client = new FarmBeatsClient(endpoint, credential).GetSeasonalFieldsClient("2022-11-01-preview");
 
-foreach (var item in client.GetSeasonalFieldsByPartyId("<partyId>", new String[]{"<farmIds>"}, new String[]{"<fieldIds>"}, new String[]{"<seasonIds>"}, new String[]{"<cropProductIds>"}, new String[]{"<cropIds>"}, new String[]{"<ids>"}, new String[]{"<names>"}, new String[]{"<propertyFilters>"}, new String[]{"<statuses>"}, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, 1234, "<skipToken>", new RequestContext()))
+foreach (var item in client.GetSeasonalFieldsByPartyId("<partyId>", new String[]{"<farmIds>"}, new String[]{"<fieldIds>"}, new String[]{"<seasonIds>"}, new String[]{"<cropProductIds>"}, new String[]{"<cropIds>"}, new String[]{"<ids>"}, new String[]{"<names>"}, new String[]{"<propertyFilters>"}, new String[]{"<statuses>"}, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, 1234, "<skipToken>"))
 {
     JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
     Console.WriteLine(result.GetProperty("partyId").ToString());
@@ -342,7 +356,8 @@ foreach (var item in client.GetSeasonalFieldsByPartyId("<partyId>", new String[]
 This sample shows how to call GetSeasonalFieldsAsync and parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var client = new FarmBeatsClient(credential).GetSeasonalFieldsClient("2022-11-01-preview");
+var endpoint = new Uri("<https://my-service.azure.com>");
+var client = new FarmBeatsClient(endpoint, credential).GetSeasonalFieldsClient("2022-11-01-preview");
 
 await foreach (var item in client.GetSeasonalFieldsAsync())
 {
@@ -353,9 +368,10 @@ await foreach (var item in client.GetSeasonalFieldsAsync())
 This sample shows how to call GetSeasonalFieldsAsync with all parameters, and how to parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var client = new FarmBeatsClient(credential).GetSeasonalFieldsClient("2022-11-01-preview");
+var endpoint = new Uri("<https://my-service.azure.com>");
+var client = new FarmBeatsClient(endpoint, credential).GetSeasonalFieldsClient("2022-11-01-preview");
 
-await foreach (var item in client.GetSeasonalFieldsAsync(new String[]{"<farmIds>"}, new String[]{"<fieldIds>"}, new String[]{"<seasonIds>"}, new String[]{"<cropProductIds>"}, new String[]{"<cropIds>"}, new String[]{"<seasonalFieldIds>"}, new String[]{"<names>"}, new String[]{"<propertyFilters>"}, new String[]{"<statuses>"}, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, 1234, "<skipToken>", new RequestContext()))
+await foreach (var item in client.GetSeasonalFieldsAsync(new String[]{"<farmIds>"}, new String[]{"<fieldIds>"}, new String[]{"<seasonIds>"}, new String[]{"<cropProductIds>"}, new String[]{"<cropIds>"}, new String[]{"<seasonalFieldIds>"}, new String[]{"<names>"}, new String[]{"<propertyFilters>"}, new String[]{"<statuses>"}, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, 1234, "<skipToken>"))
 {
     JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
     Console.WriteLine(result.GetProperty("partyId").ToString());
@@ -384,7 +400,8 @@ await foreach (var item in client.GetSeasonalFieldsAsync(new String[]{"<farmIds>
 This sample shows how to call GetSeasonalFields and parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var client = new FarmBeatsClient(credential).GetSeasonalFieldsClient("2022-11-01-preview");
+var endpoint = new Uri("<https://my-service.azure.com>");
+var client = new FarmBeatsClient(endpoint, credential).GetSeasonalFieldsClient("2022-11-01-preview");
 
 foreach (var item in client.GetSeasonalFields())
 {
@@ -395,9 +412,10 @@ foreach (var item in client.GetSeasonalFields())
 This sample shows how to call GetSeasonalFields with all parameters, and how to parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var client = new FarmBeatsClient(credential).GetSeasonalFieldsClient("2022-11-01-preview");
+var endpoint = new Uri("<https://my-service.azure.com>");
+var client = new FarmBeatsClient(endpoint, credential).GetSeasonalFieldsClient("2022-11-01-preview");
 
-foreach (var item in client.GetSeasonalFields(new String[]{"<farmIds>"}, new String[]{"<fieldIds>"}, new String[]{"<seasonIds>"}, new String[]{"<cropProductIds>"}, new String[]{"<cropIds>"}, new String[]{"<seasonalFieldIds>"}, new String[]{"<names>"}, new String[]{"<propertyFilters>"}, new String[]{"<statuses>"}, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, 1234, "<skipToken>", new RequestContext()))
+foreach (var item in client.GetSeasonalFields(new String[]{"<farmIds>"}, new String[]{"<fieldIds>"}, new String[]{"<seasonIds>"}, new String[]{"<cropProductIds>"}, new String[]{"<cropIds>"}, new String[]{"<seasonalFieldIds>"}, new String[]{"<names>"}, new String[]{"<propertyFilters>"}, new String[]{"<statuses>"}, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, 1234, "<skipToken>"))
 {
     JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
     Console.WriteLine(result.GetProperty("partyId").ToString());
@@ -426,9 +444,10 @@ foreach (var item in client.GetSeasonalFields(new String[]{"<farmIds>"}, new Str
 This sample shows how to call CreateCascadeDeleteJobAsync with required parameters and parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var client = new FarmBeatsClient(credential).GetSeasonalFieldsClient("2022-11-01-preview");
+var endpoint = new Uri("<https://my-service.azure.com>");
+var client = new FarmBeatsClient(endpoint, credential).GetSeasonalFieldsClient("2022-11-01-preview");
 
-var operation = await client.CreateCascadeDeleteJobAsync(WaitUntil.Completed, "<jobId>", "<partyId>", "<seasonalFieldId>", new RequestContext());
+var operation = await client.CreateCascadeDeleteJobAsync(WaitUntil.Completed, "<jobId>", "<partyId>", "<seasonalFieldId>");
 
 BinaryData responseData = operation.Value;
 JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
@@ -452,9 +471,10 @@ Console.WriteLine(result.GetProperty("endTime").ToString());
 This sample shows how to call CreateCascadeDeleteJob with required parameters and parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var client = new FarmBeatsClient(credential).GetSeasonalFieldsClient("2022-11-01-preview");
+var endpoint = new Uri("<https://my-service.azure.com>");
+var client = new FarmBeatsClient(endpoint, credential).GetSeasonalFieldsClient("2022-11-01-preview");
 
-var operation = client.CreateCascadeDeleteJob(WaitUntil.Completed, "<jobId>", "<partyId>", "<seasonalFieldId>", new RequestContext());
+var operation = client.CreateCascadeDeleteJob(WaitUntil.Completed, "<jobId>", "<partyId>", "<seasonalFieldId>");
 
 BinaryData responseData = operation.Value;
 JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;

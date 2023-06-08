@@ -6,9 +6,10 @@
 This sample shows how to call GetJobDetailsAsync with required parameters and parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var client = new FarmBeatsClient(credential).GetFarmOperationsDataIngestionClient("2022-11-01-preview");
+var endpoint = new Uri("<https://my-service.azure.com>");
+var client = new FarmBeatsClient(endpoint, credential).GetFarmOperationsDataIngestionClient("2022-11-01-preview");
 
-Response response = await client.GetJobDetailsAsync("<jobId>", new RequestContext());
+Response response = await client.GetJobDetailsAsync("<jobId>");
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("partyId").ToString());
@@ -38,9 +39,10 @@ Console.WriteLine(result.GetProperty("properties").GetProperty("<test>").ToStrin
 This sample shows how to call GetJobDetails with required parameters and parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var client = new FarmBeatsClient(credential).GetFarmOperationsDataIngestionClient("2022-11-01-preview");
+var endpoint = new Uri("<https://my-service.azure.com>");
+var client = new FarmBeatsClient(endpoint, credential).GetFarmOperationsDataIngestionClient("2022-11-01-preview");
 
-Response response = client.GetJobDetails("<jobId>", new RequestContext());
+Response response = client.GetJobDetails("<jobId>");
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("partyId").ToString());
@@ -70,7 +72,8 @@ Console.WriteLine(result.GetProperty("properties").GetProperty("<test>").ToStrin
 This sample shows how to call CreateJobAsync with required parameters and request content, and how to parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var client = new FarmBeatsClient(credential).GetFarmOperationsDataIngestionClient("2022-11-01-preview");
+var endpoint = new Uri("<https://my-service.azure.com>");
+var client = new FarmBeatsClient(endpoint, credential).GetFarmOperationsDataIngestionClient("2022-11-01-preview");
 
 var data = new {
     partyId = "<partyId>",
@@ -89,7 +92,8 @@ Console.WriteLine(result.GetProperty("startYear").ToString());
 This sample shows how to call CreateJobAsync with all parameters and request content, and how to parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var client = new FarmBeatsClient(credential).GetFarmOperationsDataIngestionClient("2022-11-01-preview");
+var endpoint = new Uri("<https://my-service.azure.com>");
+var client = new FarmBeatsClient(endpoint, credential).GetFarmOperationsDataIngestionClient("2022-11-01-preview");
 
 var data = new {
     partyId = "<partyId>",
@@ -106,7 +110,7 @@ var data = new {
     },
 };
 
-var operation = await client.CreateJobAsync(WaitUntil.Completed, "<jobId>", RequestContent.Create(data), new RequestContext());
+var operation = await client.CreateJobAsync(WaitUntil.Completed, "<jobId>", RequestContent.Create(data));
 
 BinaryData responseData = operation.Value;
 JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
@@ -137,7 +141,8 @@ Console.WriteLine(result.GetProperty("properties").GetProperty("<test>").ToStrin
 This sample shows how to call CreateJob with required parameters and request content, and how to parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var client = new FarmBeatsClient(credential).GetFarmOperationsDataIngestionClient("2022-11-01-preview");
+var endpoint = new Uri("<https://my-service.azure.com>");
+var client = new FarmBeatsClient(endpoint, credential).GetFarmOperationsDataIngestionClient("2022-11-01-preview");
 
 var data = new {
     partyId = "<partyId>",
@@ -156,7 +161,8 @@ Console.WriteLine(result.GetProperty("startYear").ToString());
 This sample shows how to call CreateJob with all parameters and request content, and how to parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var client = new FarmBeatsClient(credential).GetFarmOperationsDataIngestionClient("2022-11-01-preview");
+var endpoint = new Uri("<https://my-service.azure.com>");
+var client = new FarmBeatsClient(endpoint, credential).GetFarmOperationsDataIngestionClient("2022-11-01-preview");
 
 var data = new {
     partyId = "<partyId>",
@@ -173,7 +179,7 @@ var data = new {
     },
 };
 
-var operation = client.CreateJob(WaitUntil.Completed, "<jobId>", RequestContent.Create(data), new RequestContext());
+var operation = client.CreateJob(WaitUntil.Completed, "<jobId>", RequestContent.Create(data));
 
 BinaryData responseData = operation.Value;
 JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;

@@ -466,6 +466,7 @@ namespace Azure.Verticals.AgriFood.Farming
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/nutrient-analyses", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
             if (parentType != null)
             {
                 uri.AppendQuery("parentType", parentType, true);
@@ -536,7 +537,6 @@ namespace Azure.Verticals.AgriFood.Farming
             {
                 uri.AppendQuery("skipToken", skipToken, true);
             }
-            uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;
@@ -552,6 +552,7 @@ namespace Azure.Verticals.AgriFood.Farming
             uri.AppendPath("/parties/", false);
             uri.AppendPath(partyId, true);
             uri.AppendPath("/nutrient-analyses", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
             if (parentType != null)
             {
                 uri.AppendQuery("parentType", parentType, true);
@@ -622,7 +623,6 @@ namespace Azure.Verticals.AgriFood.Farming
             {
                 uri.AppendQuery("skipToken", skipToken, true);
             }
-            uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;

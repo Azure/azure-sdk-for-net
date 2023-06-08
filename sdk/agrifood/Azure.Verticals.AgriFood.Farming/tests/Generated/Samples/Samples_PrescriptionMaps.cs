@@ -24,7 +24,8 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
         public void Example_GetPrescriptionMap()
         {
             var credential = new DefaultAzureCredential();
-            var client = new FarmBeatsClient(credential).GetPrescriptionMapsClient("2022-11-01-preview");
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new FarmBeatsClient(endpoint, credential).GetPrescriptionMapsClient("2022-11-01-preview");
 
             Response response = client.GetPrescriptionMap("<partyId>", "<prescriptionMapId>");
 
@@ -37,9 +38,10 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
         public void Example_GetPrescriptionMap_AllParameters()
         {
             var credential = new DefaultAzureCredential();
-            var client = new FarmBeatsClient(credential).GetPrescriptionMapsClient("2022-11-01-preview");
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new FarmBeatsClient(endpoint, credential).GetPrescriptionMapsClient("2022-11-01-preview");
 
-            Response response = client.GetPrescriptionMap("<partyId>", "<prescriptionMapId>", new RequestContext());
+            Response response = client.GetPrescriptionMap("<partyId>", "<prescriptionMapId>");
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("partyId").ToString());
@@ -65,7 +67,8 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
         public async Task Example_GetPrescriptionMap_Async()
         {
             var credential = new DefaultAzureCredential();
-            var client = new FarmBeatsClient(credential).GetPrescriptionMapsClient("2022-11-01-preview");
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new FarmBeatsClient(endpoint, credential).GetPrescriptionMapsClient("2022-11-01-preview");
 
             Response response = await client.GetPrescriptionMapAsync("<partyId>", "<prescriptionMapId>");
 
@@ -78,9 +81,10 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
         public async Task Example_GetPrescriptionMap_AllParameters_Async()
         {
             var credential = new DefaultAzureCredential();
-            var client = new FarmBeatsClient(credential).GetPrescriptionMapsClient("2022-11-01-preview");
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new FarmBeatsClient(endpoint, credential).GetPrescriptionMapsClient("2022-11-01-preview");
 
-            Response response = await client.GetPrescriptionMapAsync("<partyId>", "<prescriptionMapId>", new RequestContext());
+            Response response = await client.GetPrescriptionMapAsync("<partyId>", "<prescriptionMapId>");
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("partyId").ToString());
@@ -106,7 +110,8 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
         public void Example_CreateOrUpdate()
         {
             var credential = new DefaultAzureCredential();
-            var client = new FarmBeatsClient(credential).GetPrescriptionMapsClient("2022-11-01-preview");
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new FarmBeatsClient(endpoint, credential).GetPrescriptionMapsClient("2022-11-01-preview");
 
             var data = new { };
 
@@ -121,7 +126,8 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
         public void Example_CreateOrUpdate_AllParameters()
         {
             var credential = new DefaultAzureCredential();
-            var client = new FarmBeatsClient(credential).GetPrescriptionMapsClient("2022-11-01-preview");
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new FarmBeatsClient(endpoint, credential).GetPrescriptionMapsClient("2022-11-01-preview");
 
             var data = new
             {
@@ -139,7 +145,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
                 },
             };
 
-            Response response = client.CreateOrUpdate("<partyId>", "<prescriptionMapId>", RequestContent.Create(data), new RequestContext());
+            Response response = client.CreateOrUpdate("<partyId>", "<prescriptionMapId>", RequestContent.Create(data));
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("partyId").ToString());
@@ -165,7 +171,8 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
         public async Task Example_CreateOrUpdate_Async()
         {
             var credential = new DefaultAzureCredential();
-            var client = new FarmBeatsClient(credential).GetPrescriptionMapsClient("2022-11-01-preview");
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new FarmBeatsClient(endpoint, credential).GetPrescriptionMapsClient("2022-11-01-preview");
 
             var data = new { };
 
@@ -180,7 +187,8 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
         public async Task Example_CreateOrUpdate_AllParameters_Async()
         {
             var credential = new DefaultAzureCredential();
-            var client = new FarmBeatsClient(credential).GetPrescriptionMapsClient("2022-11-01-preview");
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new FarmBeatsClient(endpoint, credential).GetPrescriptionMapsClient("2022-11-01-preview");
 
             var data = new
             {
@@ -198,7 +206,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
                 },
             };
 
-            Response response = await client.CreateOrUpdateAsync("<partyId>", "<prescriptionMapId>", RequestContent.Create(data), new RequestContext());
+            Response response = await client.CreateOrUpdateAsync("<partyId>", "<prescriptionMapId>", RequestContent.Create(data));
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("partyId").ToString());
@@ -224,7 +232,8 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
         public void Example_Delete()
         {
             var credential = new DefaultAzureCredential();
-            var client = new FarmBeatsClient(credential).GetPrescriptionMapsClient("2022-11-01-preview");
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new FarmBeatsClient(endpoint, credential).GetPrescriptionMapsClient("2022-11-01-preview");
 
             Response response = client.Delete("<partyId>", "<prescriptionMapId>");
             Console.WriteLine(response.Status);
@@ -235,9 +244,10 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
         public void Example_Delete_AllParameters()
         {
             var credential = new DefaultAzureCredential();
-            var client = new FarmBeatsClient(credential).GetPrescriptionMapsClient("2022-11-01-preview");
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new FarmBeatsClient(endpoint, credential).GetPrescriptionMapsClient("2022-11-01-preview");
 
-            Response response = client.Delete("<partyId>", "<prescriptionMapId>", new RequestContext());
+            Response response = client.Delete("<partyId>", "<prescriptionMapId>");
             Console.WriteLine(response.Status);
         }
 
@@ -246,7 +256,8 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
         public async Task Example_Delete_Async()
         {
             var credential = new DefaultAzureCredential();
-            var client = new FarmBeatsClient(credential).GetPrescriptionMapsClient("2022-11-01-preview");
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new FarmBeatsClient(endpoint, credential).GetPrescriptionMapsClient("2022-11-01-preview");
 
             Response response = await client.DeleteAsync("<partyId>", "<prescriptionMapId>");
             Console.WriteLine(response.Status);
@@ -257,9 +268,10 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
         public async Task Example_Delete_AllParameters_Async()
         {
             var credential = new DefaultAzureCredential();
-            var client = new FarmBeatsClient(credential).GetPrescriptionMapsClient("2022-11-01-preview");
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new FarmBeatsClient(endpoint, credential).GetPrescriptionMapsClient("2022-11-01-preview");
 
-            Response response = await client.DeleteAsync("<partyId>", "<prescriptionMapId>", new RequestContext());
+            Response response = await client.DeleteAsync("<partyId>", "<prescriptionMapId>");
             Console.WriteLine(response.Status);
         }
 
@@ -268,7 +280,8 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
         public void Example_GetCascadeDeleteJobDetails()
         {
             var credential = new DefaultAzureCredential();
-            var client = new FarmBeatsClient(credential).GetPrescriptionMapsClient("2022-11-01-preview");
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new FarmBeatsClient(endpoint, credential).GetPrescriptionMapsClient("2022-11-01-preview");
 
             Response response = client.GetCascadeDeleteJobDetails("<jobId>");
 
@@ -283,9 +296,10 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
         public void Example_GetCascadeDeleteJobDetails_AllParameters()
         {
             var credential = new DefaultAzureCredential();
-            var client = new FarmBeatsClient(credential).GetPrescriptionMapsClient("2022-11-01-preview");
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new FarmBeatsClient(endpoint, credential).GetPrescriptionMapsClient("2022-11-01-preview");
 
-            Response response = client.GetCascadeDeleteJobDetails("<jobId>", new RequestContext());
+            Response response = client.GetCascadeDeleteJobDetails("<jobId>");
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("partyId").ToString());
@@ -307,7 +321,8 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
         public async Task Example_GetCascadeDeleteJobDetails_Async()
         {
             var credential = new DefaultAzureCredential();
-            var client = new FarmBeatsClient(credential).GetPrescriptionMapsClient("2022-11-01-preview");
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new FarmBeatsClient(endpoint, credential).GetPrescriptionMapsClient("2022-11-01-preview");
 
             Response response = await client.GetCascadeDeleteJobDetailsAsync("<jobId>");
 
@@ -322,9 +337,10 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
         public async Task Example_GetCascadeDeleteJobDetails_AllParameters_Async()
         {
             var credential = new DefaultAzureCredential();
-            var client = new FarmBeatsClient(credential).GetPrescriptionMapsClient("2022-11-01-preview");
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new FarmBeatsClient(endpoint, credential).GetPrescriptionMapsClient("2022-11-01-preview");
 
-            Response response = await client.GetCascadeDeleteJobDetailsAsync("<jobId>", new RequestContext());
+            Response response = await client.GetCascadeDeleteJobDetailsAsync("<jobId>");
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("partyId").ToString());
@@ -346,7 +362,8 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
         public void Example_GetPrescriptionMapsByPartyId()
         {
             var credential = new DefaultAzureCredential();
-            var client = new FarmBeatsClient(credential).GetPrescriptionMapsClient("2022-11-01-preview");
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new FarmBeatsClient(endpoint, credential).GetPrescriptionMapsClient("2022-11-01-preview");
 
             foreach (var item in client.GetPrescriptionMapsByPartyId("<partyId>"))
             {
@@ -360,9 +377,10 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
         public void Example_GetPrescriptionMapsByPartyId_AllParameters()
         {
             var credential = new DefaultAzureCredential();
-            var client = new FarmBeatsClient(credential).GetPrescriptionMapsClient("2022-11-01-preview");
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new FarmBeatsClient(endpoint, credential).GetPrescriptionMapsClient("2022-11-01-preview");
 
-            foreach (var item in client.GetPrescriptionMapsByPartyId("<partyId>", new string[] { "<types>" }, new string[] { "<cropIds>" }, new string[] { "<seasonIds>" }, new string[] { "<fieldIds>" }, new string[] { "<sources>" }, new string[] { "<ids>" }, new string[] { "<names>" }, new string[] { "<propertyFilters>" }, new string[] { "<statuses>" }, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, 1234, "<skipToken>", new RequestContext()))
+            foreach (var item in client.GetPrescriptionMapsByPartyId("<partyId>", new string[] { "<types>" }, new string[] { "<cropIds>" }, new string[] { "<seasonIds>" }, new string[] { "<fieldIds>" }, new string[] { "<sources>" }, new string[] { "<ids>" }, new string[] { "<names>" }, new string[] { "<propertyFilters>" }, new string[] { "<statuses>" }, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, 1234, "<skipToken>"))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
                 Console.WriteLine(result.GetProperty("partyId").ToString());
@@ -389,7 +407,8 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
         public async Task Example_GetPrescriptionMapsByPartyId_Async()
         {
             var credential = new DefaultAzureCredential();
-            var client = new FarmBeatsClient(credential).GetPrescriptionMapsClient("2022-11-01-preview");
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new FarmBeatsClient(endpoint, credential).GetPrescriptionMapsClient("2022-11-01-preview");
 
             await foreach (var item in client.GetPrescriptionMapsByPartyIdAsync("<partyId>"))
             {
@@ -403,9 +422,10 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
         public async Task Example_GetPrescriptionMapsByPartyId_AllParameters_Async()
         {
             var credential = new DefaultAzureCredential();
-            var client = new FarmBeatsClient(credential).GetPrescriptionMapsClient("2022-11-01-preview");
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new FarmBeatsClient(endpoint, credential).GetPrescriptionMapsClient("2022-11-01-preview");
 
-            await foreach (var item in client.GetPrescriptionMapsByPartyIdAsync("<partyId>", new string[] { "<types>" }, new string[] { "<cropIds>" }, new string[] { "<seasonIds>" }, new string[] { "<fieldIds>" }, new string[] { "<sources>" }, new string[] { "<ids>" }, new string[] { "<names>" }, new string[] { "<propertyFilters>" }, new string[] { "<statuses>" }, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, 1234, "<skipToken>", new RequestContext()))
+            await foreach (var item in client.GetPrescriptionMapsByPartyIdAsync("<partyId>", new string[] { "<types>" }, new string[] { "<cropIds>" }, new string[] { "<seasonIds>" }, new string[] { "<fieldIds>" }, new string[] { "<sources>" }, new string[] { "<ids>" }, new string[] { "<names>" }, new string[] { "<propertyFilters>" }, new string[] { "<statuses>" }, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, 1234, "<skipToken>"))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
                 Console.WriteLine(result.GetProperty("partyId").ToString());
@@ -432,7 +452,8 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
         public void Example_GetPrescriptionMaps()
         {
             var credential = new DefaultAzureCredential();
-            var client = new FarmBeatsClient(credential).GetPrescriptionMapsClient("2022-11-01-preview");
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new FarmBeatsClient(endpoint, credential).GetPrescriptionMapsClient("2022-11-01-preview");
 
             foreach (var item in client.GetPrescriptionMaps())
             {
@@ -446,9 +467,10 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
         public void Example_GetPrescriptionMaps_AllParameters()
         {
             var credential = new DefaultAzureCredential();
-            var client = new FarmBeatsClient(credential).GetPrescriptionMapsClient("2022-11-01-preview");
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new FarmBeatsClient(endpoint, credential).GetPrescriptionMapsClient("2022-11-01-preview");
 
-            foreach (var item in client.GetPrescriptionMaps(new string[] { "<types>" }, new string[] { "<cropIds>" }, new string[] { "<seasonIds>" }, new string[] { "<fieldIds>" }, new string[] { "<sources>" }, new string[] { "<ids>" }, new string[] { "<names>" }, new string[] { "<propertyFilters>" }, new string[] { "<statuses>" }, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, 1234, "<skipToken>", new RequestContext()))
+            foreach (var item in client.GetPrescriptionMaps(new string[] { "<types>" }, new string[] { "<cropIds>" }, new string[] { "<seasonIds>" }, new string[] { "<fieldIds>" }, new string[] { "<sources>" }, new string[] { "<ids>" }, new string[] { "<names>" }, new string[] { "<propertyFilters>" }, new string[] { "<statuses>" }, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, 1234, "<skipToken>"))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
                 Console.WriteLine(result.GetProperty("partyId").ToString());
@@ -475,7 +497,8 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
         public async Task Example_GetPrescriptionMaps_Async()
         {
             var credential = new DefaultAzureCredential();
-            var client = new FarmBeatsClient(credential).GetPrescriptionMapsClient("2022-11-01-preview");
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new FarmBeatsClient(endpoint, credential).GetPrescriptionMapsClient("2022-11-01-preview");
 
             await foreach (var item in client.GetPrescriptionMapsAsync())
             {
@@ -489,9 +512,10 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
         public async Task Example_GetPrescriptionMaps_AllParameters_Async()
         {
             var credential = new DefaultAzureCredential();
-            var client = new FarmBeatsClient(credential).GetPrescriptionMapsClient("2022-11-01-preview");
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new FarmBeatsClient(endpoint, credential).GetPrescriptionMapsClient("2022-11-01-preview");
 
-            await foreach (var item in client.GetPrescriptionMapsAsync(new string[] { "<types>" }, new string[] { "<cropIds>" }, new string[] { "<seasonIds>" }, new string[] { "<fieldIds>" }, new string[] { "<sources>" }, new string[] { "<ids>" }, new string[] { "<names>" }, new string[] { "<propertyFilters>" }, new string[] { "<statuses>" }, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, 1234, "<skipToken>", new RequestContext()))
+            await foreach (var item in client.GetPrescriptionMapsAsync(new string[] { "<types>" }, new string[] { "<cropIds>" }, new string[] { "<seasonIds>" }, new string[] { "<fieldIds>" }, new string[] { "<sources>" }, new string[] { "<ids>" }, new string[] { "<names>" }, new string[] { "<propertyFilters>" }, new string[] { "<statuses>" }, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, 1234, "<skipToken>"))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
                 Console.WriteLine(result.GetProperty("partyId").ToString());
@@ -518,7 +542,8 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
         public void Example_CreateCascadeDeleteJob()
         {
             var credential = new DefaultAzureCredential();
-            var client = new FarmBeatsClient(credential).GetPrescriptionMapsClient("2022-11-01-preview");
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new FarmBeatsClient(endpoint, credential).GetPrescriptionMapsClient("2022-11-01-preview");
 
             var operation = client.CreateCascadeDeleteJob(WaitUntil.Completed, "<jobId>", "<partyId>", "<prescriptionMapId>");
 
@@ -534,9 +559,10 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
         public void Example_CreateCascadeDeleteJob_AllParameters()
         {
             var credential = new DefaultAzureCredential();
-            var client = new FarmBeatsClient(credential).GetPrescriptionMapsClient("2022-11-01-preview");
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new FarmBeatsClient(endpoint, credential).GetPrescriptionMapsClient("2022-11-01-preview");
 
-            var operation = client.CreateCascadeDeleteJob(WaitUntil.Completed, "<jobId>", "<partyId>", "<prescriptionMapId>", new RequestContext());
+            var operation = client.CreateCascadeDeleteJob(WaitUntil.Completed, "<jobId>", "<partyId>", "<prescriptionMapId>");
 
             BinaryData responseData = operation.Value;
             JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
@@ -559,7 +585,8 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
         public async Task Example_CreateCascadeDeleteJob_Async()
         {
             var credential = new DefaultAzureCredential();
-            var client = new FarmBeatsClient(credential).GetPrescriptionMapsClient("2022-11-01-preview");
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new FarmBeatsClient(endpoint, credential).GetPrescriptionMapsClient("2022-11-01-preview");
 
             var operation = await client.CreateCascadeDeleteJobAsync(WaitUntil.Completed, "<jobId>", "<partyId>", "<prescriptionMapId>");
 
@@ -575,9 +602,10 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
         public async Task Example_CreateCascadeDeleteJob_AllParameters_Async()
         {
             var credential = new DefaultAzureCredential();
-            var client = new FarmBeatsClient(credential).GetPrescriptionMapsClient("2022-11-01-preview");
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new FarmBeatsClient(endpoint, credential).GetPrescriptionMapsClient("2022-11-01-preview");
 
-            var operation = await client.CreateCascadeDeleteJobAsync(WaitUntil.Completed, "<jobId>", "<partyId>", "<prescriptionMapId>", new RequestContext());
+            var operation = await client.CreateCascadeDeleteJobAsync(WaitUntil.Completed, "<jobId>", "<partyId>", "<prescriptionMapId>");
 
             BinaryData responseData = operation.Value;
             JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;

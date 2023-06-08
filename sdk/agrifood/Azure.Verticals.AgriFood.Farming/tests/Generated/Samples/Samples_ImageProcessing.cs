@@ -24,7 +24,8 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
         public void Example_GetRasterizeJob()
         {
             var credential = new DefaultAzureCredential();
-            var client = new FarmBeatsClient(credential).GetImageProcessingClient("2022-11-01-preview");
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new FarmBeatsClient(endpoint, credential).GetImageProcessingClient("2022-11-01-preview");
 
             Response response = client.GetRasterizeJob("<jobId>");
 
@@ -39,9 +40,10 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
         public void Example_GetRasterizeJob_AllParameters()
         {
             var credential = new DefaultAzureCredential();
-            var client = new FarmBeatsClient(credential).GetImageProcessingClient("2022-11-01-preview");
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new FarmBeatsClient(endpoint, credential).GetImageProcessingClient("2022-11-01-preview");
 
-            Response response = client.GetRasterizeJob("<jobId>", new RequestContext());
+            Response response = client.GetRasterizeJob("<jobId>");
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("partyId").ToString());
@@ -68,7 +70,8 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
         public async Task Example_GetRasterizeJob_Async()
         {
             var credential = new DefaultAzureCredential();
-            var client = new FarmBeatsClient(credential).GetImageProcessingClient("2022-11-01-preview");
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new FarmBeatsClient(endpoint, credential).GetImageProcessingClient("2022-11-01-preview");
 
             Response response = await client.GetRasterizeJobAsync("<jobId>");
 
@@ -83,9 +86,10 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
         public async Task Example_GetRasterizeJob_AllParameters_Async()
         {
             var credential = new DefaultAzureCredential();
-            var client = new FarmBeatsClient(credential).GetImageProcessingClient("2022-11-01-preview");
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new FarmBeatsClient(endpoint, credential).GetImageProcessingClient("2022-11-01-preview");
 
-            Response response = await client.GetRasterizeJobAsync("<jobId>", new RequestContext());
+            Response response = await client.GetRasterizeJobAsync("<jobId>");
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("partyId").ToString());
@@ -112,7 +116,8 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
         public void Example_CreateRasterizeJob()
         {
             var credential = new DefaultAzureCredential();
-            var client = new FarmBeatsClient(credential).GetImageProcessingClient("2022-11-01-preview");
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new FarmBeatsClient(endpoint, credential).GetImageProcessingClient("2022-11-01-preview");
 
             var data = new
             {
@@ -137,7 +142,8 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
         public void Example_CreateRasterizeJob_AllParameters()
         {
             var credential = new DefaultAzureCredential();
-            var client = new FarmBeatsClient(credential).GetImageProcessingClient("2022-11-01-preview");
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new FarmBeatsClient(endpoint, credential).GetImageProcessingClient("2022-11-01-preview");
 
             var data = new
             {
@@ -154,7 +160,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
                 },
             };
 
-            var operation = client.CreateRasterizeJob(WaitUntil.Completed, "<jobId>", RequestContent.Create(data), new RequestContext());
+            var operation = client.CreateRasterizeJob(WaitUntil.Completed, "<jobId>", RequestContent.Create(data));
 
             BinaryData responseData = operation.Value;
             JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
@@ -182,7 +188,8 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
         public async Task Example_CreateRasterizeJob_Async()
         {
             var credential = new DefaultAzureCredential();
-            var client = new FarmBeatsClient(credential).GetImageProcessingClient("2022-11-01-preview");
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new FarmBeatsClient(endpoint, credential).GetImageProcessingClient("2022-11-01-preview");
 
             var data = new
             {
@@ -207,7 +214,8 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
         public async Task Example_CreateRasterizeJob_AllParameters_Async()
         {
             var credential = new DefaultAzureCredential();
-            var client = new FarmBeatsClient(credential).GetImageProcessingClient("2022-11-01-preview");
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new FarmBeatsClient(endpoint, credential).GetImageProcessingClient("2022-11-01-preview");
 
             var data = new
             {
@@ -224,7 +232,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
                 },
             };
 
-            var operation = await client.CreateRasterizeJobAsync(WaitUntil.Completed, "<jobId>", RequestContent.Create(data), new RequestContext());
+            var operation = await client.CreateRasterizeJobAsync(WaitUntil.Completed, "<jobId>", RequestContent.Create(data));
 
             BinaryData responseData = operation.Value;
             JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;

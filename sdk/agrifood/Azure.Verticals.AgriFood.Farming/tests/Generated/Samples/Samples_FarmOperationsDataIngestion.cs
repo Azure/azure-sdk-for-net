@@ -24,7 +24,8 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
         public void Example_GetJobDetails()
         {
             var credential = new DefaultAzureCredential();
-            var client = new FarmBeatsClient(credential).GetFarmOperationsDataIngestionClient("2022-11-01-preview");
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new FarmBeatsClient(endpoint, credential).GetFarmOperationsDataIngestionClient("2022-11-01-preview");
 
             Response response = client.GetJobDetails("<jobId>");
 
@@ -39,9 +40,10 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
         public void Example_GetJobDetails_AllParameters()
         {
             var credential = new DefaultAzureCredential();
-            var client = new FarmBeatsClient(credential).GetFarmOperationsDataIngestionClient("2022-11-01-preview");
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new FarmBeatsClient(endpoint, credential).GetFarmOperationsDataIngestionClient("2022-11-01-preview");
 
-            Response response = client.GetJobDetails("<jobId>", new RequestContext());
+            Response response = client.GetJobDetails("<jobId>");
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("partyId").ToString());
@@ -70,7 +72,8 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
         public async Task Example_GetJobDetails_Async()
         {
             var credential = new DefaultAzureCredential();
-            var client = new FarmBeatsClient(credential).GetFarmOperationsDataIngestionClient("2022-11-01-preview");
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new FarmBeatsClient(endpoint, credential).GetFarmOperationsDataIngestionClient("2022-11-01-preview");
 
             Response response = await client.GetJobDetailsAsync("<jobId>");
 
@@ -85,9 +88,10 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
         public async Task Example_GetJobDetails_AllParameters_Async()
         {
             var credential = new DefaultAzureCredential();
-            var client = new FarmBeatsClient(credential).GetFarmOperationsDataIngestionClient("2022-11-01-preview");
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new FarmBeatsClient(endpoint, credential).GetFarmOperationsDataIngestionClient("2022-11-01-preview");
 
-            Response response = await client.GetJobDetailsAsync("<jobId>", new RequestContext());
+            Response response = await client.GetJobDetailsAsync("<jobId>");
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("partyId").ToString());
@@ -116,7 +120,8 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
         public void Example_CreateJob()
         {
             var credential = new DefaultAzureCredential();
-            var client = new FarmBeatsClient(credential).GetFarmOperationsDataIngestionClient("2022-11-01-preview");
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new FarmBeatsClient(endpoint, credential).GetFarmOperationsDataIngestionClient("2022-11-01-preview");
 
             var data = new
             {
@@ -139,7 +144,8 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
         public void Example_CreateJob_AllParameters()
         {
             var credential = new DefaultAzureCredential();
-            var client = new FarmBeatsClient(credential).GetFarmOperationsDataIngestionClient("2022-11-01-preview");
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new FarmBeatsClient(endpoint, credential).GetFarmOperationsDataIngestionClient("2022-11-01-preview");
 
             var data = new
             {
@@ -158,7 +164,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
                 },
             };
 
-            var operation = client.CreateJob(WaitUntil.Completed, "<jobId>", RequestContent.Create(data), new RequestContext());
+            var operation = client.CreateJob(WaitUntil.Completed, "<jobId>", RequestContent.Create(data));
 
             BinaryData responseData = operation.Value;
             JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
@@ -188,7 +194,8 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
         public async Task Example_CreateJob_Async()
         {
             var credential = new DefaultAzureCredential();
-            var client = new FarmBeatsClient(credential).GetFarmOperationsDataIngestionClient("2022-11-01-preview");
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new FarmBeatsClient(endpoint, credential).GetFarmOperationsDataIngestionClient("2022-11-01-preview");
 
             var data = new
             {
@@ -211,7 +218,8 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
         public async Task Example_CreateJob_AllParameters_Async()
         {
             var credential = new DefaultAzureCredential();
-            var client = new FarmBeatsClient(credential).GetFarmOperationsDataIngestionClient("2022-11-01-preview");
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new FarmBeatsClient(endpoint, credential).GetFarmOperationsDataIngestionClient("2022-11-01-preview");
 
             var data = new
             {
@@ -230,7 +238,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
                 },
             };
 
-            var operation = await client.CreateJobAsync(WaitUntil.Completed, "<jobId>", RequestContent.Create(data), new RequestContext());
+            var operation = await client.CreateJobAsync(WaitUntil.Completed, "<jobId>", RequestContent.Create(data));
 
             BinaryData responseData = operation.Value;
             JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;

@@ -6,9 +6,10 @@
 This sample shows how to call GetOAuthProviderAsync with required parameters and parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var client = new FarmBeatsClient(credential).GetOAuthProvidersClient("2022-11-01-preview");
+var endpoint = new Uri("<https://my-service.azure.com>");
+var client = new FarmBeatsClient(endpoint, credential).GetOAuthProvidersClient("2022-11-01-preview");
 
-Response response = await client.GetOAuthProviderAsync("<oauthProviderId>", new RequestContext());
+Response response = await client.GetOAuthProviderAsync("<oauthProviderId>");
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("appId").ToString());
@@ -32,9 +33,10 @@ Console.WriteLine(result.GetProperty("properties").GetProperty("<test>").ToStrin
 This sample shows how to call GetOAuthProvider with required parameters and parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var client = new FarmBeatsClient(credential).GetOAuthProvidersClient("2022-11-01-preview");
+var endpoint = new Uri("<https://my-service.azure.com>");
+var client = new FarmBeatsClient(endpoint, credential).GetOAuthProvidersClient("2022-11-01-preview");
 
-Response response = client.GetOAuthProvider("<oauthProviderId>", new RequestContext());
+Response response = client.GetOAuthProvider("<oauthProviderId>");
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("appId").ToString());
@@ -58,7 +60,8 @@ Console.WriteLine(result.GetProperty("properties").GetProperty("<test>").ToStrin
 This sample shows how to call CreateOrUpdateAsync with required parameters and parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var client = new FarmBeatsClient(credential).GetOAuthProvidersClient("2022-11-01-preview");
+var endpoint = new Uri("<https://my-service.azure.com>");
+var client = new FarmBeatsClient(endpoint, credential).GetOAuthProvidersClient("2022-11-01-preview");
 
 var data = new {};
 
@@ -70,7 +73,8 @@ Console.WriteLine(result.ToString());
 This sample shows how to call CreateOrUpdateAsync with all parameters and request content, and how to parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var client = new FarmBeatsClient(credential).GetOAuthProvidersClient("2022-11-01-preview");
+var endpoint = new Uri("<https://my-service.azure.com>");
+var client = new FarmBeatsClient(endpoint, credential).GetOAuthProvidersClient("2022-11-01-preview");
 
 var data = new {
     appId = "<appId>",
@@ -84,7 +88,7 @@ var data = new {
     },
 };
 
-Response response = await client.CreateOrUpdateAsync("<oauthProviderId>", RequestContent.Create(data), new RequestContext());
+Response response = await client.CreateOrUpdateAsync("<oauthProviderId>", RequestContent.Create(data));
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("appId").ToString());
@@ -108,7 +112,8 @@ Console.WriteLine(result.GetProperty("properties").GetProperty("<test>").ToStrin
 This sample shows how to call CreateOrUpdate with required parameters and parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var client = new FarmBeatsClient(credential).GetOAuthProvidersClient("2022-11-01-preview");
+var endpoint = new Uri("<https://my-service.azure.com>");
+var client = new FarmBeatsClient(endpoint, credential).GetOAuthProvidersClient("2022-11-01-preview");
 
 var data = new {};
 
@@ -120,7 +125,8 @@ Console.WriteLine(result.ToString());
 This sample shows how to call CreateOrUpdate with all parameters and request content, and how to parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var client = new FarmBeatsClient(credential).GetOAuthProvidersClient("2022-11-01-preview");
+var endpoint = new Uri("<https://my-service.azure.com>");
+var client = new FarmBeatsClient(endpoint, credential).GetOAuthProvidersClient("2022-11-01-preview");
 
 var data = new {
     appId = "<appId>",
@@ -134,7 +140,7 @@ var data = new {
     },
 };
 
-Response response = client.CreateOrUpdate("<oauthProviderId>", RequestContent.Create(data), new RequestContext());
+Response response = client.CreateOrUpdate("<oauthProviderId>", RequestContent.Create(data));
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("appId").ToString());
@@ -158,9 +164,10 @@ Console.WriteLine(result.GetProperty("properties").GetProperty("<test>").ToStrin
 This sample shows how to call DeleteAsync with required parameters.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var client = new FarmBeatsClient(credential).GetOAuthProvidersClient("2022-11-01-preview");
+var endpoint = new Uri("<https://my-service.azure.com>");
+var client = new FarmBeatsClient(endpoint, credential).GetOAuthProvidersClient("2022-11-01-preview");
 
-Response response = await client.DeleteAsync("<oauthProviderId>", new RequestContext());
+Response response = await client.DeleteAsync("<oauthProviderId>");
 Console.WriteLine(response.Status);
 ]]></code>
 </example>
@@ -170,9 +177,10 @@ Console.WriteLine(response.Status);
 This sample shows how to call Delete with required parameters.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var client = new FarmBeatsClient(credential).GetOAuthProvidersClient("2022-11-01-preview");
+var endpoint = new Uri("<https://my-service.azure.com>");
+var client = new FarmBeatsClient(endpoint, credential).GetOAuthProvidersClient("2022-11-01-preview");
 
-Response response = client.Delete("<oauthProviderId>", new RequestContext());
+Response response = client.Delete("<oauthProviderId>");
 Console.WriteLine(response.Status);
 ]]></code>
 </example>
@@ -182,9 +190,10 @@ Console.WriteLine(response.Status);
 This sample shows how to call GetCascadeDeleteJobDetailsAsync with required parameters and parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var client = new FarmBeatsClient(credential).GetOAuthProvidersClient("2022-11-01-preview");
+var endpoint = new Uri("<https://my-service.azure.com>");
+var client = new FarmBeatsClient(endpoint, credential).GetOAuthProvidersClient("2022-11-01-preview");
 
-Response response = await client.GetCascadeDeleteJobDetailsAsync("<jobId>", new RequestContext());
+Response response = await client.GetCascadeDeleteJobDetailsAsync("<jobId>");
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("oauthProviderId").ToString());
@@ -210,9 +219,10 @@ Console.WriteLine(result.GetProperty("properties").GetProperty("<test>").ToStrin
 This sample shows how to call GetCascadeDeleteJobDetails with required parameters and parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var client = new FarmBeatsClient(credential).GetOAuthProvidersClient("2022-11-01-preview");
+var endpoint = new Uri("<https://my-service.azure.com>");
+var client = new FarmBeatsClient(endpoint, credential).GetOAuthProvidersClient("2022-11-01-preview");
 
-Response response = client.GetCascadeDeleteJobDetails("<jobId>", new RequestContext());
+Response response = client.GetCascadeDeleteJobDetails("<jobId>");
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("oauthProviderId").ToString());
@@ -238,7 +248,8 @@ Console.WriteLine(result.GetProperty("properties").GetProperty("<test>").ToStrin
 This sample shows how to call GetOAuthProvidersAsync and parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var client = new FarmBeatsClient(credential).GetOAuthProvidersClient("2022-11-01-preview");
+var endpoint = new Uri("<https://my-service.azure.com>");
+var client = new FarmBeatsClient(endpoint, credential).GetOAuthProvidersClient("2022-11-01-preview");
 
 await foreach (var item in client.GetOAuthProvidersAsync())
 {
@@ -249,9 +260,10 @@ await foreach (var item in client.GetOAuthProvidersAsync())
 This sample shows how to call GetOAuthProvidersAsync with all parameters, and how to parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var client = new FarmBeatsClient(credential).GetOAuthProvidersClient("2022-11-01-preview");
+var endpoint = new Uri("<https://my-service.azure.com>");
+var client = new FarmBeatsClient(endpoint, credential).GetOAuthProvidersClient("2022-11-01-preview");
 
-await foreach (var item in client.GetOAuthProvidersAsync(new String[]{"<providerIds>"}, new String[]{"<names>"}, new String[]{"<propertyFilters>"}, new String[]{"<statuses>"}, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, 1234, "<skipToken>", new RequestContext()))
+await foreach (var item in client.GetOAuthProvidersAsync(new String[]{"<providerIds>"}, new String[]{"<names>"}, new String[]{"<propertyFilters>"}, new String[]{"<statuses>"}, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, 1234, "<skipToken>"))
 {
     JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
     Console.WriteLine(result.GetProperty("appId").ToString());
@@ -276,7 +288,8 @@ await foreach (var item in client.GetOAuthProvidersAsync(new String[]{"<provider
 This sample shows how to call GetOAuthProviders and parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var client = new FarmBeatsClient(credential).GetOAuthProvidersClient("2022-11-01-preview");
+var endpoint = new Uri("<https://my-service.azure.com>");
+var client = new FarmBeatsClient(endpoint, credential).GetOAuthProvidersClient("2022-11-01-preview");
 
 foreach (var item in client.GetOAuthProviders())
 {
@@ -287,9 +300,10 @@ foreach (var item in client.GetOAuthProviders())
 This sample shows how to call GetOAuthProviders with all parameters, and how to parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var client = new FarmBeatsClient(credential).GetOAuthProvidersClient("2022-11-01-preview");
+var endpoint = new Uri("<https://my-service.azure.com>");
+var client = new FarmBeatsClient(endpoint, credential).GetOAuthProvidersClient("2022-11-01-preview");
 
-foreach (var item in client.GetOAuthProviders(new String[]{"<providerIds>"}, new String[]{"<names>"}, new String[]{"<propertyFilters>"}, new String[]{"<statuses>"}, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, 1234, "<skipToken>", new RequestContext()))
+foreach (var item in client.GetOAuthProviders(new String[]{"<providerIds>"}, new String[]{"<names>"}, new String[]{"<propertyFilters>"}, new String[]{"<statuses>"}, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, 1234, "<skipToken>"))
 {
     JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
     Console.WriteLine(result.GetProperty("appId").ToString());
@@ -314,9 +328,10 @@ foreach (var item in client.GetOAuthProviders(new String[]{"<providerIds>"}, new
 This sample shows how to call CreateCascadeDeleteJobAsync with required parameters and parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var client = new FarmBeatsClient(credential).GetOAuthProvidersClient("2022-11-01-preview");
+var endpoint = new Uri("<https://my-service.azure.com>");
+var client = new FarmBeatsClient(endpoint, credential).GetOAuthProvidersClient("2022-11-01-preview");
 
-var operation = await client.CreateCascadeDeleteJobAsync(WaitUntil.Completed, "<jobId>", "<oauthProviderId>", new RequestContext());
+var operation = await client.CreateCascadeDeleteJobAsync(WaitUntil.Completed, "<jobId>", "<oauthProviderId>");
 
 BinaryData responseData = operation.Value;
 JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
@@ -343,9 +358,10 @@ Console.WriteLine(result.GetProperty("properties").GetProperty("<test>").ToStrin
 This sample shows how to call CreateCascadeDeleteJob with required parameters and parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var client = new FarmBeatsClient(credential).GetOAuthProvidersClient("2022-11-01-preview");
+var endpoint = new Uri("<https://my-service.azure.com>");
+var client = new FarmBeatsClient(endpoint, credential).GetOAuthProvidersClient("2022-11-01-preview");
 
-var operation = client.CreateCascadeDeleteJob(WaitUntil.Completed, "<jobId>", "<oauthProviderId>", new RequestContext());
+var operation = client.CreateCascadeDeleteJob(WaitUntil.Completed, "<jobId>", "<oauthProviderId>");
 
 BinaryData responseData = operation.Value;
 JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;

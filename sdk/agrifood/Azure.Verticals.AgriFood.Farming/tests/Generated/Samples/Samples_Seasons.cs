@@ -24,7 +24,8 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
         public void Example_GetSeason()
         {
             var credential = new DefaultAzureCredential();
-            var client = new FarmBeatsClient(credential).GetSeasonsClient("2022-11-01-preview");
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new FarmBeatsClient(endpoint, credential).GetSeasonsClient("2022-11-01-preview");
 
             Response response = client.GetSeason("<seasonId>");
 
@@ -37,9 +38,10 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
         public void Example_GetSeason_AllParameters()
         {
             var credential = new DefaultAzureCredential();
-            var client = new FarmBeatsClient(credential).GetSeasonsClient("2022-11-01-preview");
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new FarmBeatsClient(endpoint, credential).GetSeasonsClient("2022-11-01-preview");
 
-            Response response = client.GetSeason("<seasonId>", new RequestContext());
+            Response response = client.GetSeason("<seasonId>");
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("startDateTime").ToString());
@@ -64,7 +66,8 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
         public async Task Example_GetSeason_Async()
         {
             var credential = new DefaultAzureCredential();
-            var client = new FarmBeatsClient(credential).GetSeasonsClient("2022-11-01-preview");
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new FarmBeatsClient(endpoint, credential).GetSeasonsClient("2022-11-01-preview");
 
             Response response = await client.GetSeasonAsync("<seasonId>");
 
@@ -77,9 +80,10 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
         public async Task Example_GetSeason_AllParameters_Async()
         {
             var credential = new DefaultAzureCredential();
-            var client = new FarmBeatsClient(credential).GetSeasonsClient("2022-11-01-preview");
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new FarmBeatsClient(endpoint, credential).GetSeasonsClient("2022-11-01-preview");
 
-            Response response = await client.GetSeasonAsync("<seasonId>", new RequestContext());
+            Response response = await client.GetSeasonAsync("<seasonId>");
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("startDateTime").ToString());
@@ -104,7 +108,8 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
         public void Example_CreateOrUpdate()
         {
             var credential = new DefaultAzureCredential();
-            var client = new FarmBeatsClient(credential).GetSeasonsClient("2022-11-01-preview");
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new FarmBeatsClient(endpoint, credential).GetSeasonsClient("2022-11-01-preview");
 
             var data = new { };
 
@@ -119,7 +124,8 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
         public void Example_CreateOrUpdate_AllParameters()
         {
             var credential = new DefaultAzureCredential();
-            var client = new FarmBeatsClient(credential).GetSeasonsClient("2022-11-01-preview");
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new FarmBeatsClient(endpoint, credential).GetSeasonsClient("2022-11-01-preview");
 
             var data = new
             {
@@ -137,7 +143,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
                 },
             };
 
-            Response response = client.CreateOrUpdate("<seasonId>", RequestContent.Create(data), new RequestContext());
+            Response response = client.CreateOrUpdate("<seasonId>", RequestContent.Create(data));
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("startDateTime").ToString());
@@ -162,7 +168,8 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
         public async Task Example_CreateOrUpdate_Async()
         {
             var credential = new DefaultAzureCredential();
-            var client = new FarmBeatsClient(credential).GetSeasonsClient("2022-11-01-preview");
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new FarmBeatsClient(endpoint, credential).GetSeasonsClient("2022-11-01-preview");
 
             var data = new { };
 
@@ -177,7 +184,8 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
         public async Task Example_CreateOrUpdate_AllParameters_Async()
         {
             var credential = new DefaultAzureCredential();
-            var client = new FarmBeatsClient(credential).GetSeasonsClient("2022-11-01-preview");
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new FarmBeatsClient(endpoint, credential).GetSeasonsClient("2022-11-01-preview");
 
             var data = new
             {
@@ -195,7 +203,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
                 },
             };
 
-            Response response = await client.CreateOrUpdateAsync("<seasonId>", RequestContent.Create(data), new RequestContext());
+            Response response = await client.CreateOrUpdateAsync("<seasonId>", RequestContent.Create(data));
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("startDateTime").ToString());
@@ -220,7 +228,8 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
         public void Example_Delete()
         {
             var credential = new DefaultAzureCredential();
-            var client = new FarmBeatsClient(credential).GetSeasonsClient("2022-11-01-preview");
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new FarmBeatsClient(endpoint, credential).GetSeasonsClient("2022-11-01-preview");
 
             Response response = client.Delete("<seasonId>");
             Console.WriteLine(response.Status);
@@ -231,9 +240,10 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
         public void Example_Delete_AllParameters()
         {
             var credential = new DefaultAzureCredential();
-            var client = new FarmBeatsClient(credential).GetSeasonsClient("2022-11-01-preview");
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new FarmBeatsClient(endpoint, credential).GetSeasonsClient("2022-11-01-preview");
 
-            Response response = client.Delete("<seasonId>", new RequestContext());
+            Response response = client.Delete("<seasonId>");
             Console.WriteLine(response.Status);
         }
 
@@ -242,7 +252,8 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
         public async Task Example_Delete_Async()
         {
             var credential = new DefaultAzureCredential();
-            var client = new FarmBeatsClient(credential).GetSeasonsClient("2022-11-01-preview");
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new FarmBeatsClient(endpoint, credential).GetSeasonsClient("2022-11-01-preview");
 
             Response response = await client.DeleteAsync("<seasonId>");
             Console.WriteLine(response.Status);
@@ -253,9 +264,10 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
         public async Task Example_Delete_AllParameters_Async()
         {
             var credential = new DefaultAzureCredential();
-            var client = new FarmBeatsClient(credential).GetSeasonsClient("2022-11-01-preview");
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new FarmBeatsClient(endpoint, credential).GetSeasonsClient("2022-11-01-preview");
 
-            Response response = await client.DeleteAsync("<seasonId>", new RequestContext());
+            Response response = await client.DeleteAsync("<seasonId>");
             Console.WriteLine(response.Status);
         }
 
@@ -264,7 +276,8 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
         public void Example_GetSeasons()
         {
             var credential = new DefaultAzureCredential();
-            var client = new FarmBeatsClient(credential).GetSeasonsClient("2022-11-01-preview");
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new FarmBeatsClient(endpoint, credential).GetSeasonsClient("2022-11-01-preview");
 
             foreach (var item in client.GetSeasons())
             {
@@ -278,9 +291,10 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
         public void Example_GetSeasons_AllParameters()
         {
             var credential = new DefaultAzureCredential();
-            var client = new FarmBeatsClient(credential).GetSeasonsClient("2022-11-01-preview");
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new FarmBeatsClient(endpoint, credential).GetSeasonsClient("2022-11-01-preview");
 
-            foreach (var item in client.GetSeasons(DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, new int[] { 1234 }, new string[] { "<seasonIds>" }, new string[] { "<names>" }, new string[] { "<propertyFilters>" }, new string[] { "<statuses>" }, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, 1234, "<skipToken>", new RequestContext()))
+            foreach (var item in client.GetSeasons(DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, new int[] { 1234 }, new string[] { "<seasonIds>" }, new string[] { "<names>" }, new string[] { "<propertyFilters>" }, new string[] { "<statuses>" }, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, 1234, "<skipToken>"))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
                 Console.WriteLine(result.GetProperty("startDateTime").ToString());
@@ -306,7 +320,8 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
         public async Task Example_GetSeasons_Async()
         {
             var credential = new DefaultAzureCredential();
-            var client = new FarmBeatsClient(credential).GetSeasonsClient("2022-11-01-preview");
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new FarmBeatsClient(endpoint, credential).GetSeasonsClient("2022-11-01-preview");
 
             await foreach (var item in client.GetSeasonsAsync())
             {
@@ -320,9 +335,10 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
         public async Task Example_GetSeasons_AllParameters_Async()
         {
             var credential = new DefaultAzureCredential();
-            var client = new FarmBeatsClient(credential).GetSeasonsClient("2022-11-01-preview");
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new FarmBeatsClient(endpoint, credential).GetSeasonsClient("2022-11-01-preview");
 
-            await foreach (var item in client.GetSeasonsAsync(DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, new int[] { 1234 }, new string[] { "<seasonIds>" }, new string[] { "<names>" }, new string[] { "<propertyFilters>" }, new string[] { "<statuses>" }, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, 1234, "<skipToken>", new RequestContext()))
+            await foreach (var item in client.GetSeasonsAsync(DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, new int[] { 1234 }, new string[] { "<seasonIds>" }, new string[] { "<names>" }, new string[] { "<propertyFilters>" }, new string[] { "<statuses>" }, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, 1234, "<skipToken>"))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
                 Console.WriteLine(result.GetProperty("startDateTime").ToString());

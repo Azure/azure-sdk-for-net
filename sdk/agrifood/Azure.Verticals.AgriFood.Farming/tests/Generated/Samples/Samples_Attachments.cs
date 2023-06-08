@@ -24,7 +24,8 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
         public void Example_GetAttachment()
         {
             var credential = new DefaultAzureCredential();
-            var client = new FarmBeatsClient(credential).GetAttachmentsClient("2022-11-01-preview");
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new FarmBeatsClient(endpoint, credential).GetAttachmentsClient("2022-11-01-preview");
 
             Response response = client.GetAttachment("<partyId>", "<attachmentId>");
 
@@ -37,9 +38,10 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
         public void Example_GetAttachment_AllParameters()
         {
             var credential = new DefaultAzureCredential();
-            var client = new FarmBeatsClient(credential).GetAttachmentsClient("2022-11-01-preview");
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new FarmBeatsClient(endpoint, credential).GetAttachmentsClient("2022-11-01-preview");
 
-            Response response = client.GetAttachment("<partyId>", "<attachmentId>", new RequestContext());
+            Response response = client.GetAttachment("<partyId>", "<attachmentId>");
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("resourceId").ToString());
@@ -63,7 +65,8 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
         public async Task Example_GetAttachment_Async()
         {
             var credential = new DefaultAzureCredential();
-            var client = new FarmBeatsClient(credential).GetAttachmentsClient("2022-11-01-preview");
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new FarmBeatsClient(endpoint, credential).GetAttachmentsClient("2022-11-01-preview");
 
             Response response = await client.GetAttachmentAsync("<partyId>", "<attachmentId>");
 
@@ -76,9 +79,10 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
         public async Task Example_GetAttachment_AllParameters_Async()
         {
             var credential = new DefaultAzureCredential();
-            var client = new FarmBeatsClient(credential).GetAttachmentsClient("2022-11-01-preview");
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new FarmBeatsClient(endpoint, credential).GetAttachmentsClient("2022-11-01-preview");
 
-            Response response = await client.GetAttachmentAsync("<partyId>", "<attachmentId>", new RequestContext());
+            Response response = await client.GetAttachmentAsync("<partyId>", "<attachmentId>");
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("resourceId").ToString());
@@ -102,7 +106,8 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
         public void Example_CreateOrUpdate()
         {
             var credential = new DefaultAzureCredential();
-            var client = new FarmBeatsClient(credential).GetAttachmentsClient("2022-11-01-preview");
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new FarmBeatsClient(endpoint, credential).GetAttachmentsClient("2022-11-01-preview");
 
             var data = File.OpenRead("<filePath>");
 
@@ -117,11 +122,12 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
         public void Example_CreateOrUpdate_AllParameters()
         {
             var credential = new DefaultAzureCredential();
-            var client = new FarmBeatsClient(credential).GetAttachmentsClient("2022-11-01-preview");
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new FarmBeatsClient(endpoint, credential).GetAttachmentsClient("2022-11-01-preview");
 
             var data = File.OpenRead("<filePath>");
 
-            Response response = client.CreateOrUpdate("<partyId>", "<attachmentId>", RequestContent.Create(data), new RequestContext());
+            Response response = client.CreateOrUpdate("<partyId>", "<attachmentId>", RequestContent.Create(data));
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("resourceId").ToString());
@@ -145,7 +151,8 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
         public async Task Example_CreateOrUpdate_Async()
         {
             var credential = new DefaultAzureCredential();
-            var client = new FarmBeatsClient(credential).GetAttachmentsClient("2022-11-01-preview");
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new FarmBeatsClient(endpoint, credential).GetAttachmentsClient("2022-11-01-preview");
 
             var data = File.OpenRead("<filePath>");
 
@@ -160,11 +167,12 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
         public async Task Example_CreateOrUpdate_AllParameters_Async()
         {
             var credential = new DefaultAzureCredential();
-            var client = new FarmBeatsClient(credential).GetAttachmentsClient("2022-11-01-preview");
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new FarmBeatsClient(endpoint, credential).GetAttachmentsClient("2022-11-01-preview");
 
             var data = File.OpenRead("<filePath>");
 
-            Response response = await client.CreateOrUpdateAsync("<partyId>", "<attachmentId>", RequestContent.Create(data), new RequestContext());
+            Response response = await client.CreateOrUpdateAsync("<partyId>", "<attachmentId>", RequestContent.Create(data));
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("resourceId").ToString());
@@ -188,7 +196,8 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
         public void Example_Delete()
         {
             var credential = new DefaultAzureCredential();
-            var client = new FarmBeatsClient(credential).GetAttachmentsClient("2022-11-01-preview");
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new FarmBeatsClient(endpoint, credential).GetAttachmentsClient("2022-11-01-preview");
 
             Response response = client.Delete("<partyId>", "<attachmentId>");
             Console.WriteLine(response.Status);
@@ -199,9 +208,10 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
         public void Example_Delete_AllParameters()
         {
             var credential = new DefaultAzureCredential();
-            var client = new FarmBeatsClient(credential).GetAttachmentsClient("2022-11-01-preview");
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new FarmBeatsClient(endpoint, credential).GetAttachmentsClient("2022-11-01-preview");
 
-            Response response = client.Delete("<partyId>", "<attachmentId>", new RequestContext());
+            Response response = client.Delete("<partyId>", "<attachmentId>");
             Console.WriteLine(response.Status);
         }
 
@@ -210,7 +220,8 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
         public async Task Example_Delete_Async()
         {
             var credential = new DefaultAzureCredential();
-            var client = new FarmBeatsClient(credential).GetAttachmentsClient("2022-11-01-preview");
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new FarmBeatsClient(endpoint, credential).GetAttachmentsClient("2022-11-01-preview");
 
             Response response = await client.DeleteAsync("<partyId>", "<attachmentId>");
             Console.WriteLine(response.Status);
@@ -221,9 +232,10 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
         public async Task Example_Delete_AllParameters_Async()
         {
             var credential = new DefaultAzureCredential();
-            var client = new FarmBeatsClient(credential).GetAttachmentsClient("2022-11-01-preview");
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new FarmBeatsClient(endpoint, credential).GetAttachmentsClient("2022-11-01-preview");
 
-            Response response = await client.DeleteAsync("<partyId>", "<attachmentId>", new RequestContext());
+            Response response = await client.DeleteAsync("<partyId>", "<attachmentId>");
             Console.WriteLine(response.Status);
         }
 
@@ -232,7 +244,8 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
         public void Example_Download()
         {
             var credential = new DefaultAzureCredential();
-            var client = new FarmBeatsClient(credential).GetAttachmentsClient("2022-11-01-preview");
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new FarmBeatsClient(endpoint, credential).GetAttachmentsClient("2022-11-01-preview");
 
             Response response = client.Download("<partyId>", "<attachmentId>");
             if (response.ContentStream != null)
@@ -249,9 +262,10 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
         public void Example_Download_AllParameters()
         {
             var credential = new DefaultAzureCredential();
-            var client = new FarmBeatsClient(credential).GetAttachmentsClient("2022-11-01-preview");
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new FarmBeatsClient(endpoint, credential).GetAttachmentsClient("2022-11-01-preview");
 
-            Response response = client.Download("<partyId>", "<attachmentId>", new RequestContext());
+            Response response = client.Download("<partyId>", "<attachmentId>");
             if (response.ContentStream != null)
             {
                 using (Stream outFileStream = File.OpenWrite("<filePath>"))
@@ -266,7 +280,8 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
         public async Task Example_Download_Async()
         {
             var credential = new DefaultAzureCredential();
-            var client = new FarmBeatsClient(credential).GetAttachmentsClient("2022-11-01-preview");
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new FarmBeatsClient(endpoint, credential).GetAttachmentsClient("2022-11-01-preview");
 
             Response response = await client.DownloadAsync("<partyId>", "<attachmentId>");
             if (response.ContentStream != null)
@@ -283,9 +298,10 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
         public async Task Example_Download_AllParameters_Async()
         {
             var credential = new DefaultAzureCredential();
-            var client = new FarmBeatsClient(credential).GetAttachmentsClient("2022-11-01-preview");
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new FarmBeatsClient(endpoint, credential).GetAttachmentsClient("2022-11-01-preview");
 
-            Response response = await client.DownloadAsync("<partyId>", "<attachmentId>", new RequestContext());
+            Response response = await client.DownloadAsync("<partyId>", "<attachmentId>");
             if (response.ContentStream != null)
             {
                 using (Stream outFileStream = File.OpenWrite("<filePath>"))
@@ -300,7 +316,8 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
         public void Example_GetAttachmentsByPartyId()
         {
             var credential = new DefaultAzureCredential();
-            var client = new FarmBeatsClient(credential).GetAttachmentsClient("2022-11-01-preview");
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new FarmBeatsClient(endpoint, credential).GetAttachmentsClient("2022-11-01-preview");
 
             foreach (var item in client.GetAttachmentsByPartyId("<partyId>"))
             {
@@ -314,9 +331,10 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
         public void Example_GetAttachmentsByPartyId_AllParameters()
         {
             var credential = new DefaultAzureCredential();
-            var client = new FarmBeatsClient(credential).GetAttachmentsClient("2022-11-01-preview");
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new FarmBeatsClient(endpoint, credential).GetAttachmentsClient("2022-11-01-preview");
 
-            foreach (var item in client.GetAttachmentsByPartyId("<partyId>", new string[] { "<resourceIds>" }, new string[] { "<resourceTypes>" }, new string[] { "<ids>" }, new string[] { "<names>" }, new string[] { "<propertyFilters>" }, new string[] { "<statuses>" }, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, 1234, "<skipToken>", new RequestContext()))
+            foreach (var item in client.GetAttachmentsByPartyId("<partyId>", new string[] { "<resourceIds>" }, new string[] { "<resourceTypes>" }, new string[] { "<ids>" }, new string[] { "<names>" }, new string[] { "<propertyFilters>" }, new string[] { "<statuses>" }, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, 1234, "<skipToken>"))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
                 Console.WriteLine(result.GetProperty("resourceId").ToString());
@@ -341,7 +359,8 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
         public async Task Example_GetAttachmentsByPartyId_Async()
         {
             var credential = new DefaultAzureCredential();
-            var client = new FarmBeatsClient(credential).GetAttachmentsClient("2022-11-01-preview");
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new FarmBeatsClient(endpoint, credential).GetAttachmentsClient("2022-11-01-preview");
 
             await foreach (var item in client.GetAttachmentsByPartyIdAsync("<partyId>"))
             {
@@ -355,9 +374,10 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
         public async Task Example_GetAttachmentsByPartyId_AllParameters_Async()
         {
             var credential = new DefaultAzureCredential();
-            var client = new FarmBeatsClient(credential).GetAttachmentsClient("2022-11-01-preview");
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new FarmBeatsClient(endpoint, credential).GetAttachmentsClient("2022-11-01-preview");
 
-            await foreach (var item in client.GetAttachmentsByPartyIdAsync("<partyId>", new string[] { "<resourceIds>" }, new string[] { "<resourceTypes>" }, new string[] { "<ids>" }, new string[] { "<names>" }, new string[] { "<propertyFilters>" }, new string[] { "<statuses>" }, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, 1234, "<skipToken>", new RequestContext()))
+            await foreach (var item in client.GetAttachmentsByPartyIdAsync("<partyId>", new string[] { "<resourceIds>" }, new string[] { "<resourceTypes>" }, new string[] { "<ids>" }, new string[] { "<names>" }, new string[] { "<propertyFilters>" }, new string[] { "<statuses>" }, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, 1234, "<skipToken>"))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
                 Console.WriteLine(result.GetProperty("resourceId").ToString());

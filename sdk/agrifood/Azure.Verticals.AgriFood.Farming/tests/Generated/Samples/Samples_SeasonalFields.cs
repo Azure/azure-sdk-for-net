@@ -24,7 +24,8 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
         public void Example_GetSeasonalField()
         {
             var credential = new DefaultAzureCredential();
-            var client = new FarmBeatsClient(credential).GetSeasonalFieldsClient("2022-11-01-preview");
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new FarmBeatsClient(endpoint, credential).GetSeasonalFieldsClient("2022-11-01-preview");
 
             Response response = client.GetSeasonalField("<partyId>", "<seasonalFieldId>");
 
@@ -37,9 +38,10 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
         public void Example_GetSeasonalField_AllParameters()
         {
             var credential = new DefaultAzureCredential();
-            var client = new FarmBeatsClient(credential).GetSeasonalFieldsClient("2022-11-01-preview");
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new FarmBeatsClient(endpoint, credential).GetSeasonalFieldsClient("2022-11-01-preview");
 
-            Response response = client.GetSeasonalField("<partyId>", "<seasonalFieldId>", new RequestContext());
+            Response response = client.GetSeasonalField("<partyId>", "<seasonalFieldId>");
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("partyId").ToString());
@@ -66,7 +68,8 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
         public async Task Example_GetSeasonalField_Async()
         {
             var credential = new DefaultAzureCredential();
-            var client = new FarmBeatsClient(credential).GetSeasonalFieldsClient("2022-11-01-preview");
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new FarmBeatsClient(endpoint, credential).GetSeasonalFieldsClient("2022-11-01-preview");
 
             Response response = await client.GetSeasonalFieldAsync("<partyId>", "<seasonalFieldId>");
 
@@ -79,9 +82,10 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
         public async Task Example_GetSeasonalField_AllParameters_Async()
         {
             var credential = new DefaultAzureCredential();
-            var client = new FarmBeatsClient(credential).GetSeasonalFieldsClient("2022-11-01-preview");
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new FarmBeatsClient(endpoint, credential).GetSeasonalFieldsClient("2022-11-01-preview");
 
-            Response response = await client.GetSeasonalFieldAsync("<partyId>", "<seasonalFieldId>", new RequestContext());
+            Response response = await client.GetSeasonalFieldAsync("<partyId>", "<seasonalFieldId>");
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("partyId").ToString());
@@ -108,7 +112,8 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
         public void Example_CreateOrUpdate()
         {
             var credential = new DefaultAzureCredential();
-            var client = new FarmBeatsClient(credential).GetSeasonalFieldsClient("2022-11-01-preview");
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new FarmBeatsClient(endpoint, credential).GetSeasonalFieldsClient("2022-11-01-preview");
 
             var data = new { };
 
@@ -123,7 +128,8 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
         public void Example_CreateOrUpdate_AllParameters()
         {
             var credential = new DefaultAzureCredential();
-            var client = new FarmBeatsClient(credential).GetSeasonalFieldsClient("2022-11-01-preview");
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new FarmBeatsClient(endpoint, credential).GetSeasonalFieldsClient("2022-11-01-preview");
 
             var data = new
             {
@@ -144,7 +150,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
                 },
             };
 
-            Response response = client.CreateOrUpdate("<partyId>", "<seasonalFieldId>", RequestContent.Create(data), new RequestContext());
+            Response response = client.CreateOrUpdate("<partyId>", "<seasonalFieldId>", RequestContent.Create(data));
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("partyId").ToString());
@@ -171,7 +177,8 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
         public async Task Example_CreateOrUpdate_Async()
         {
             var credential = new DefaultAzureCredential();
-            var client = new FarmBeatsClient(credential).GetSeasonalFieldsClient("2022-11-01-preview");
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new FarmBeatsClient(endpoint, credential).GetSeasonalFieldsClient("2022-11-01-preview");
 
             var data = new { };
 
@@ -186,7 +193,8 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
         public async Task Example_CreateOrUpdate_AllParameters_Async()
         {
             var credential = new DefaultAzureCredential();
-            var client = new FarmBeatsClient(credential).GetSeasonalFieldsClient("2022-11-01-preview");
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new FarmBeatsClient(endpoint, credential).GetSeasonalFieldsClient("2022-11-01-preview");
 
             var data = new
             {
@@ -207,7 +215,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
                 },
             };
 
-            Response response = await client.CreateOrUpdateAsync("<partyId>", "<seasonalFieldId>", RequestContent.Create(data), new RequestContext());
+            Response response = await client.CreateOrUpdateAsync("<partyId>", "<seasonalFieldId>", RequestContent.Create(data));
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("partyId").ToString());
@@ -234,7 +242,8 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
         public void Example_Delete()
         {
             var credential = new DefaultAzureCredential();
-            var client = new FarmBeatsClient(credential).GetSeasonalFieldsClient("2022-11-01-preview");
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new FarmBeatsClient(endpoint, credential).GetSeasonalFieldsClient("2022-11-01-preview");
 
             Response response = client.Delete("<partyId>", "<seasonalFieldId>");
             Console.WriteLine(response.Status);
@@ -245,9 +254,10 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
         public void Example_Delete_AllParameters()
         {
             var credential = new DefaultAzureCredential();
-            var client = new FarmBeatsClient(credential).GetSeasonalFieldsClient("2022-11-01-preview");
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new FarmBeatsClient(endpoint, credential).GetSeasonalFieldsClient("2022-11-01-preview");
 
-            Response response = client.Delete("<partyId>", "<seasonalFieldId>", new RequestContext());
+            Response response = client.Delete("<partyId>", "<seasonalFieldId>");
             Console.WriteLine(response.Status);
         }
 
@@ -256,7 +266,8 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
         public async Task Example_Delete_Async()
         {
             var credential = new DefaultAzureCredential();
-            var client = new FarmBeatsClient(credential).GetSeasonalFieldsClient("2022-11-01-preview");
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new FarmBeatsClient(endpoint, credential).GetSeasonalFieldsClient("2022-11-01-preview");
 
             Response response = await client.DeleteAsync("<partyId>", "<seasonalFieldId>");
             Console.WriteLine(response.Status);
@@ -267,9 +278,10 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
         public async Task Example_Delete_AllParameters_Async()
         {
             var credential = new DefaultAzureCredential();
-            var client = new FarmBeatsClient(credential).GetSeasonalFieldsClient("2022-11-01-preview");
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new FarmBeatsClient(endpoint, credential).GetSeasonalFieldsClient("2022-11-01-preview");
 
-            Response response = await client.DeleteAsync("<partyId>", "<seasonalFieldId>", new RequestContext());
+            Response response = await client.DeleteAsync("<partyId>", "<seasonalFieldId>");
             Console.WriteLine(response.Status);
         }
 
@@ -278,7 +290,8 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
         public void Example_GetCascadeDeleteJobDetails()
         {
             var credential = new DefaultAzureCredential();
-            var client = new FarmBeatsClient(credential).GetSeasonalFieldsClient("2022-11-01-preview");
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new FarmBeatsClient(endpoint, credential).GetSeasonalFieldsClient("2022-11-01-preview");
 
             Response response = client.GetCascadeDeleteJobDetails("<jobId>");
 
@@ -293,9 +306,10 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
         public void Example_GetCascadeDeleteJobDetails_AllParameters()
         {
             var credential = new DefaultAzureCredential();
-            var client = new FarmBeatsClient(credential).GetSeasonalFieldsClient("2022-11-01-preview");
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new FarmBeatsClient(endpoint, credential).GetSeasonalFieldsClient("2022-11-01-preview");
 
-            Response response = client.GetCascadeDeleteJobDetails("<jobId>", new RequestContext());
+            Response response = client.GetCascadeDeleteJobDetails("<jobId>");
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("partyId").ToString());
@@ -317,7 +331,8 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
         public async Task Example_GetCascadeDeleteJobDetails_Async()
         {
             var credential = new DefaultAzureCredential();
-            var client = new FarmBeatsClient(credential).GetSeasonalFieldsClient("2022-11-01-preview");
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new FarmBeatsClient(endpoint, credential).GetSeasonalFieldsClient("2022-11-01-preview");
 
             Response response = await client.GetCascadeDeleteJobDetailsAsync("<jobId>");
 
@@ -332,9 +347,10 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
         public async Task Example_GetCascadeDeleteJobDetails_AllParameters_Async()
         {
             var credential = new DefaultAzureCredential();
-            var client = new FarmBeatsClient(credential).GetSeasonalFieldsClient("2022-11-01-preview");
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new FarmBeatsClient(endpoint, credential).GetSeasonalFieldsClient("2022-11-01-preview");
 
-            Response response = await client.GetCascadeDeleteJobDetailsAsync("<jobId>", new RequestContext());
+            Response response = await client.GetCascadeDeleteJobDetailsAsync("<jobId>");
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("partyId").ToString());
@@ -356,7 +372,8 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
         public void Example_GetSeasonalFieldsByPartyId()
         {
             var credential = new DefaultAzureCredential();
-            var client = new FarmBeatsClient(credential).GetSeasonalFieldsClient("2022-11-01-preview");
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new FarmBeatsClient(endpoint, credential).GetSeasonalFieldsClient("2022-11-01-preview");
 
             foreach (var item in client.GetSeasonalFieldsByPartyId("<partyId>"))
             {
@@ -370,9 +387,10 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
         public void Example_GetSeasonalFieldsByPartyId_AllParameters()
         {
             var credential = new DefaultAzureCredential();
-            var client = new FarmBeatsClient(credential).GetSeasonalFieldsClient("2022-11-01-preview");
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new FarmBeatsClient(endpoint, credential).GetSeasonalFieldsClient("2022-11-01-preview");
 
-            foreach (var item in client.GetSeasonalFieldsByPartyId("<partyId>", new string[] { "<farmIds>" }, new string[] { "<fieldIds>" }, new string[] { "<seasonIds>" }, new string[] { "<cropProductIds>" }, new string[] { "<cropIds>" }, new string[] { "<ids>" }, new string[] { "<names>" }, new string[] { "<propertyFilters>" }, new string[] { "<statuses>" }, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, 1234, "<skipToken>", new RequestContext()))
+            foreach (var item in client.GetSeasonalFieldsByPartyId("<partyId>", new string[] { "<farmIds>" }, new string[] { "<fieldIds>" }, new string[] { "<seasonIds>" }, new string[] { "<cropProductIds>" }, new string[] { "<cropIds>" }, new string[] { "<ids>" }, new string[] { "<names>" }, new string[] { "<propertyFilters>" }, new string[] { "<statuses>" }, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, 1234, "<skipToken>"))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
                 Console.WriteLine(result.GetProperty("partyId").ToString());
@@ -400,7 +418,8 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
         public async Task Example_GetSeasonalFieldsByPartyId_Async()
         {
             var credential = new DefaultAzureCredential();
-            var client = new FarmBeatsClient(credential).GetSeasonalFieldsClient("2022-11-01-preview");
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new FarmBeatsClient(endpoint, credential).GetSeasonalFieldsClient("2022-11-01-preview");
 
             await foreach (var item in client.GetSeasonalFieldsByPartyIdAsync("<partyId>"))
             {
@@ -414,9 +433,10 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
         public async Task Example_GetSeasonalFieldsByPartyId_AllParameters_Async()
         {
             var credential = new DefaultAzureCredential();
-            var client = new FarmBeatsClient(credential).GetSeasonalFieldsClient("2022-11-01-preview");
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new FarmBeatsClient(endpoint, credential).GetSeasonalFieldsClient("2022-11-01-preview");
 
-            await foreach (var item in client.GetSeasonalFieldsByPartyIdAsync("<partyId>", new string[] { "<farmIds>" }, new string[] { "<fieldIds>" }, new string[] { "<seasonIds>" }, new string[] { "<cropProductIds>" }, new string[] { "<cropIds>" }, new string[] { "<ids>" }, new string[] { "<names>" }, new string[] { "<propertyFilters>" }, new string[] { "<statuses>" }, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, 1234, "<skipToken>", new RequestContext()))
+            await foreach (var item in client.GetSeasonalFieldsByPartyIdAsync("<partyId>", new string[] { "<farmIds>" }, new string[] { "<fieldIds>" }, new string[] { "<seasonIds>" }, new string[] { "<cropProductIds>" }, new string[] { "<cropIds>" }, new string[] { "<ids>" }, new string[] { "<names>" }, new string[] { "<propertyFilters>" }, new string[] { "<statuses>" }, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, 1234, "<skipToken>"))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
                 Console.WriteLine(result.GetProperty("partyId").ToString());
@@ -444,7 +464,8 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
         public void Example_GetSeasonalFields()
         {
             var credential = new DefaultAzureCredential();
-            var client = new FarmBeatsClient(credential).GetSeasonalFieldsClient("2022-11-01-preview");
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new FarmBeatsClient(endpoint, credential).GetSeasonalFieldsClient("2022-11-01-preview");
 
             foreach (var item in client.GetSeasonalFields())
             {
@@ -458,9 +479,10 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
         public void Example_GetSeasonalFields_AllParameters()
         {
             var credential = new DefaultAzureCredential();
-            var client = new FarmBeatsClient(credential).GetSeasonalFieldsClient("2022-11-01-preview");
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new FarmBeatsClient(endpoint, credential).GetSeasonalFieldsClient("2022-11-01-preview");
 
-            foreach (var item in client.GetSeasonalFields(new string[] { "<farmIds>" }, new string[] { "<fieldIds>" }, new string[] { "<seasonIds>" }, new string[] { "<cropProductIds>" }, new string[] { "<cropIds>" }, new string[] { "<seasonalFieldIds>" }, new string[] { "<names>" }, new string[] { "<propertyFilters>" }, new string[] { "<statuses>" }, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, 1234, "<skipToken>", new RequestContext()))
+            foreach (var item in client.GetSeasonalFields(new string[] { "<farmIds>" }, new string[] { "<fieldIds>" }, new string[] { "<seasonIds>" }, new string[] { "<cropProductIds>" }, new string[] { "<cropIds>" }, new string[] { "<seasonalFieldIds>" }, new string[] { "<names>" }, new string[] { "<propertyFilters>" }, new string[] { "<statuses>" }, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, 1234, "<skipToken>"))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
                 Console.WriteLine(result.GetProperty("partyId").ToString());
@@ -488,7 +510,8 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
         public async Task Example_GetSeasonalFields_Async()
         {
             var credential = new DefaultAzureCredential();
-            var client = new FarmBeatsClient(credential).GetSeasonalFieldsClient("2022-11-01-preview");
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new FarmBeatsClient(endpoint, credential).GetSeasonalFieldsClient("2022-11-01-preview");
 
             await foreach (var item in client.GetSeasonalFieldsAsync())
             {
@@ -502,9 +525,10 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
         public async Task Example_GetSeasonalFields_AllParameters_Async()
         {
             var credential = new DefaultAzureCredential();
-            var client = new FarmBeatsClient(credential).GetSeasonalFieldsClient("2022-11-01-preview");
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new FarmBeatsClient(endpoint, credential).GetSeasonalFieldsClient("2022-11-01-preview");
 
-            await foreach (var item in client.GetSeasonalFieldsAsync(new string[] { "<farmIds>" }, new string[] { "<fieldIds>" }, new string[] { "<seasonIds>" }, new string[] { "<cropProductIds>" }, new string[] { "<cropIds>" }, new string[] { "<seasonalFieldIds>" }, new string[] { "<names>" }, new string[] { "<propertyFilters>" }, new string[] { "<statuses>" }, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, 1234, "<skipToken>", new RequestContext()))
+            await foreach (var item in client.GetSeasonalFieldsAsync(new string[] { "<farmIds>" }, new string[] { "<fieldIds>" }, new string[] { "<seasonIds>" }, new string[] { "<cropProductIds>" }, new string[] { "<cropIds>" }, new string[] { "<seasonalFieldIds>" }, new string[] { "<names>" }, new string[] { "<propertyFilters>" }, new string[] { "<statuses>" }, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, 1234, "<skipToken>"))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
                 Console.WriteLine(result.GetProperty("partyId").ToString());
@@ -532,7 +556,8 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
         public void Example_CreateCascadeDeleteJob()
         {
             var credential = new DefaultAzureCredential();
-            var client = new FarmBeatsClient(credential).GetSeasonalFieldsClient("2022-11-01-preview");
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new FarmBeatsClient(endpoint, credential).GetSeasonalFieldsClient("2022-11-01-preview");
 
             var operation = client.CreateCascadeDeleteJob(WaitUntil.Completed, "<jobId>", "<partyId>", "<seasonalFieldId>");
 
@@ -548,9 +573,10 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
         public void Example_CreateCascadeDeleteJob_AllParameters()
         {
             var credential = new DefaultAzureCredential();
-            var client = new FarmBeatsClient(credential).GetSeasonalFieldsClient("2022-11-01-preview");
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new FarmBeatsClient(endpoint, credential).GetSeasonalFieldsClient("2022-11-01-preview");
 
-            var operation = client.CreateCascadeDeleteJob(WaitUntil.Completed, "<jobId>", "<partyId>", "<seasonalFieldId>", new RequestContext());
+            var operation = client.CreateCascadeDeleteJob(WaitUntil.Completed, "<jobId>", "<partyId>", "<seasonalFieldId>");
 
             BinaryData responseData = operation.Value;
             JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
@@ -573,7 +599,8 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
         public async Task Example_CreateCascadeDeleteJob_Async()
         {
             var credential = new DefaultAzureCredential();
-            var client = new FarmBeatsClient(credential).GetSeasonalFieldsClient("2022-11-01-preview");
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new FarmBeatsClient(endpoint, credential).GetSeasonalFieldsClient("2022-11-01-preview");
 
             var operation = await client.CreateCascadeDeleteJobAsync(WaitUntil.Completed, "<jobId>", "<partyId>", "<seasonalFieldId>");
 
@@ -589,9 +616,10 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
         public async Task Example_CreateCascadeDeleteJob_AllParameters_Async()
         {
             var credential = new DefaultAzureCredential();
-            var client = new FarmBeatsClient(credential).GetSeasonalFieldsClient("2022-11-01-preview");
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new FarmBeatsClient(endpoint, credential).GetSeasonalFieldsClient("2022-11-01-preview");
 
-            var operation = await client.CreateCascadeDeleteJobAsync(WaitUntil.Completed, "<jobId>", "<partyId>", "<seasonalFieldId>", new RequestContext());
+            var operation = await client.CreateCascadeDeleteJobAsync(WaitUntil.Completed, "<jobId>", "<partyId>", "<seasonalFieldId>");
 
             BinaryData responseData = operation.Value;
             JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;

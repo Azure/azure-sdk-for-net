@@ -24,7 +24,8 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
         public void Example_CreateOrUpdate()
         {
             var credential = new DefaultAzureCredential();
-            var client = new FarmBeatsClient(credential).GetSensorDataModelsClient("2022-11-01-preview");
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new FarmBeatsClient(endpoint, credential).GetSensorDataModelsClient("2022-11-01-preview");
 
             var data = new
             {
@@ -48,7 +49,8 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
         public void Example_CreateOrUpdate_AllParameters()
         {
             var credential = new DefaultAzureCredential();
-            var client = new FarmBeatsClient(credential).GetSensorDataModelsClient("2022-11-01-preview");
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new FarmBeatsClient(endpoint, credential).GetSensorDataModelsClient("2022-11-01-preview");
 
             var data = new
             {
@@ -78,7 +80,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
                 },
             };
 
-            Response response = client.CreateOrUpdate("<sensorPartnerId>", "<sensorDataModelId>", RequestContent.Create(data), new RequestContext());
+            Response response = client.CreateOrUpdate("<sensorPartnerId>", "<sensorDataModelId>", RequestContent.Create(data));
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("type").ToString());
@@ -107,7 +109,8 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
         public async Task Example_CreateOrUpdate_Async()
         {
             var credential = new DefaultAzureCredential();
-            var client = new FarmBeatsClient(credential).GetSensorDataModelsClient("2022-11-01-preview");
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new FarmBeatsClient(endpoint, credential).GetSensorDataModelsClient("2022-11-01-preview");
 
             var data = new
             {
@@ -131,7 +134,8 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
         public async Task Example_CreateOrUpdate_AllParameters_Async()
         {
             var credential = new DefaultAzureCredential();
-            var client = new FarmBeatsClient(credential).GetSensorDataModelsClient("2022-11-01-preview");
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new FarmBeatsClient(endpoint, credential).GetSensorDataModelsClient("2022-11-01-preview");
 
             var data = new
             {
@@ -161,7 +165,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
                 },
             };
 
-            Response response = await client.CreateOrUpdateAsync("<sensorPartnerId>", "<sensorDataModelId>", RequestContent.Create(data), new RequestContext());
+            Response response = await client.CreateOrUpdateAsync("<sensorPartnerId>", "<sensorDataModelId>", RequestContent.Create(data));
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("type").ToString());
@@ -190,7 +194,8 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
         public void Example_GetSensorDataModel()
         {
             var credential = new DefaultAzureCredential();
-            var client = new FarmBeatsClient(credential).GetSensorDataModelsClient("2022-11-01-preview");
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new FarmBeatsClient(endpoint, credential).GetSensorDataModelsClient("2022-11-01-preview");
 
             Response response = client.GetSensorDataModel("<sensorPartnerId>", "<sensorDataModelId>");
 
@@ -203,9 +208,10 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
         public void Example_GetSensorDataModel_AllParameters()
         {
             var credential = new DefaultAzureCredential();
-            var client = new FarmBeatsClient(credential).GetSensorDataModelsClient("2022-11-01-preview");
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new FarmBeatsClient(endpoint, credential).GetSensorDataModelsClient("2022-11-01-preview");
 
-            Response response = client.GetSensorDataModel("<sensorPartnerId>", "<sensorDataModelId>", new RequestContext());
+            Response response = client.GetSensorDataModel("<sensorPartnerId>", "<sensorDataModelId>");
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("type").ToString());
@@ -234,7 +240,8 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
         public async Task Example_GetSensorDataModel_Async()
         {
             var credential = new DefaultAzureCredential();
-            var client = new FarmBeatsClient(credential).GetSensorDataModelsClient("2022-11-01-preview");
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new FarmBeatsClient(endpoint, credential).GetSensorDataModelsClient("2022-11-01-preview");
 
             Response response = await client.GetSensorDataModelAsync("<sensorPartnerId>", "<sensorDataModelId>");
 
@@ -247,9 +254,10 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
         public async Task Example_GetSensorDataModel_AllParameters_Async()
         {
             var credential = new DefaultAzureCredential();
-            var client = new FarmBeatsClient(credential).GetSensorDataModelsClient("2022-11-01-preview");
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new FarmBeatsClient(endpoint, credential).GetSensorDataModelsClient("2022-11-01-preview");
 
-            Response response = await client.GetSensorDataModelAsync("<sensorPartnerId>", "<sensorDataModelId>", new RequestContext());
+            Response response = await client.GetSensorDataModelAsync("<sensorPartnerId>", "<sensorDataModelId>");
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("type").ToString());
@@ -278,7 +286,8 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
         public void Example_Delete()
         {
             var credential = new DefaultAzureCredential();
-            var client = new FarmBeatsClient(credential).GetSensorDataModelsClient("2022-11-01-preview");
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new FarmBeatsClient(endpoint, credential).GetSensorDataModelsClient("2022-11-01-preview");
 
             Response response = client.Delete("<sensorPartnerId>", "<sensorDataModelId>");
             Console.WriteLine(response.Status);
@@ -289,9 +298,10 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
         public void Example_Delete_AllParameters()
         {
             var credential = new DefaultAzureCredential();
-            var client = new FarmBeatsClient(credential).GetSensorDataModelsClient("2022-11-01-preview");
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new FarmBeatsClient(endpoint, credential).GetSensorDataModelsClient("2022-11-01-preview");
 
-            Response response = client.Delete("<sensorPartnerId>", "<sensorDataModelId>", new RequestContext());
+            Response response = client.Delete("<sensorPartnerId>", "<sensorDataModelId>");
             Console.WriteLine(response.Status);
         }
 
@@ -300,7 +310,8 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
         public async Task Example_Delete_Async()
         {
             var credential = new DefaultAzureCredential();
-            var client = new FarmBeatsClient(credential).GetSensorDataModelsClient("2022-11-01-preview");
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new FarmBeatsClient(endpoint, credential).GetSensorDataModelsClient("2022-11-01-preview");
 
             Response response = await client.DeleteAsync("<sensorPartnerId>", "<sensorDataModelId>");
             Console.WriteLine(response.Status);
@@ -311,9 +322,10 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
         public async Task Example_Delete_AllParameters_Async()
         {
             var credential = new DefaultAzureCredential();
-            var client = new FarmBeatsClient(credential).GetSensorDataModelsClient("2022-11-01-preview");
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new FarmBeatsClient(endpoint, credential).GetSensorDataModelsClient("2022-11-01-preview");
 
-            Response response = await client.DeleteAsync("<sensorPartnerId>", "<sensorDataModelId>", new RequestContext());
+            Response response = await client.DeleteAsync("<sensorPartnerId>", "<sensorDataModelId>");
             Console.WriteLine(response.Status);
         }
 
@@ -322,7 +334,8 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
         public void Example_GetSensorDataModels()
         {
             var credential = new DefaultAzureCredential();
-            var client = new FarmBeatsClient(credential).GetSensorDataModelsClient("2022-11-01-preview");
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new FarmBeatsClient(endpoint, credential).GetSensorDataModelsClient("2022-11-01-preview");
 
             foreach (var item in client.GetSensorDataModels("<sensorPartnerId>"))
             {
@@ -336,9 +349,10 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
         public void Example_GetSensorDataModels_AllParameters()
         {
             var credential = new DefaultAzureCredential();
-            var client = new FarmBeatsClient(credential).GetSensorDataModelsClient("2022-11-01-preview");
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new FarmBeatsClient(endpoint, credential).GetSensorDataModelsClient("2022-11-01-preview");
 
-            foreach (var item in client.GetSensorDataModels("<sensorPartnerId>", new string[] { "<ids>" }, new string[] { "<names>" }, new string[] { "<propertyFilters>" }, new string[] { "<statuses>" }, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, 1234, "<skipToken>", new RequestContext()))
+            foreach (var item in client.GetSensorDataModels("<sensorPartnerId>", new string[] { "<ids>" }, new string[] { "<names>" }, new string[] { "<propertyFilters>" }, new string[] { "<statuses>" }, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, 1234, "<skipToken>"))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
                 Console.WriteLine(result.GetProperty("type").ToString());
@@ -368,7 +382,8 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
         public async Task Example_GetSensorDataModels_Async()
         {
             var credential = new DefaultAzureCredential();
-            var client = new FarmBeatsClient(credential).GetSensorDataModelsClient("2022-11-01-preview");
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new FarmBeatsClient(endpoint, credential).GetSensorDataModelsClient("2022-11-01-preview");
 
             await foreach (var item in client.GetSensorDataModelsAsync("<sensorPartnerId>"))
             {
@@ -382,9 +397,10 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
         public async Task Example_GetSensorDataModels_AllParameters_Async()
         {
             var credential = new DefaultAzureCredential();
-            var client = new FarmBeatsClient(credential).GetSensorDataModelsClient("2022-11-01-preview");
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new FarmBeatsClient(endpoint, credential).GetSensorDataModelsClient("2022-11-01-preview");
 
-            await foreach (var item in client.GetSensorDataModelsAsync("<sensorPartnerId>", new string[] { "<ids>" }, new string[] { "<names>" }, new string[] { "<propertyFilters>" }, new string[] { "<statuses>" }, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, 1234, "<skipToken>", new RequestContext()))
+            await foreach (var item in client.GetSensorDataModelsAsync("<sensorPartnerId>", new string[] { "<ids>" }, new string[] { "<names>" }, new string[] { "<propertyFilters>" }, new string[] { "<statuses>" }, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, 1234, "<skipToken>"))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
                 Console.WriteLine(result.GetProperty("type").ToString());

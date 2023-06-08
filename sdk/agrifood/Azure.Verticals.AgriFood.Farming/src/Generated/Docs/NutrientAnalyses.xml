@@ -6,9 +6,10 @@
 This sample shows how to call GetNutrientAnalysisAsync with required parameters and parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var client = new FarmBeatsClient(credential).GetNutrientAnalysesClient("2022-11-01-preview");
+var endpoint = new Uri("<https://my-service.azure.com>");
+var client = new FarmBeatsClient(endpoint, credential).GetNutrientAnalysesClient("2022-11-01-preview");
 
-Response response = await client.GetNutrientAnalysisAsync("<partyId>", "<nutrientAnalysisId>", new RequestContext());
+Response response = await client.GetNutrientAnalysisAsync("<partyId>", "<nutrientAnalysisId>");
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("partyId").ToString());
@@ -42,9 +43,10 @@ Console.WriteLine(result.GetProperty("properties").GetProperty("<test>").ToStrin
 This sample shows how to call GetNutrientAnalysis with required parameters and parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var client = new FarmBeatsClient(credential).GetNutrientAnalysesClient("2022-11-01-preview");
+var endpoint = new Uri("<https://my-service.azure.com>");
+var client = new FarmBeatsClient(endpoint, credential).GetNutrientAnalysesClient("2022-11-01-preview");
 
-Response response = client.GetNutrientAnalysis("<partyId>", "<nutrientAnalysisId>", new RequestContext());
+Response response = client.GetNutrientAnalysis("<partyId>", "<nutrientAnalysisId>");
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("partyId").ToString());
@@ -78,7 +80,8 @@ Console.WriteLine(result.GetProperty("properties").GetProperty("<test>").ToStrin
 This sample shows how to call CreateOrUpdateAsync with required parameters and parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var client = new FarmBeatsClient(credential).GetNutrientAnalysesClient("2022-11-01-preview");
+var endpoint = new Uri("<https://my-service.azure.com>");
+var client = new FarmBeatsClient(endpoint, credential).GetNutrientAnalysesClient("2022-11-01-preview");
 
 var data = new {};
 
@@ -90,7 +93,8 @@ Console.WriteLine(result.ToString());
 This sample shows how to call CreateOrUpdateAsync with all parameters and request content, and how to parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var client = new FarmBeatsClient(credential).GetNutrientAnalysesClient("2022-11-01-preview");
+var endpoint = new Uri("<https://my-service.azure.com>");
+var client = new FarmBeatsClient(endpoint, credential).GetNutrientAnalysesClient("2022-11-01-preview");
 
 var data = new {
     parentId = "<parentId>",
@@ -117,7 +121,7 @@ var data = new {
     },
 };
 
-Response response = await client.CreateOrUpdateAsync("<partyId>", "<nutrientAnalysisId>", RequestContent.Create(data), new RequestContext());
+Response response = await client.CreateOrUpdateAsync("<partyId>", "<nutrientAnalysisId>", RequestContent.Create(data));
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("partyId").ToString());
@@ -151,7 +155,8 @@ Console.WriteLine(result.GetProperty("properties").GetProperty("<test>").ToStrin
 This sample shows how to call CreateOrUpdate with required parameters and parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var client = new FarmBeatsClient(credential).GetNutrientAnalysesClient("2022-11-01-preview");
+var endpoint = new Uri("<https://my-service.azure.com>");
+var client = new FarmBeatsClient(endpoint, credential).GetNutrientAnalysesClient("2022-11-01-preview");
 
 var data = new {};
 
@@ -163,7 +168,8 @@ Console.WriteLine(result.ToString());
 This sample shows how to call CreateOrUpdate with all parameters and request content, and how to parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var client = new FarmBeatsClient(credential).GetNutrientAnalysesClient("2022-11-01-preview");
+var endpoint = new Uri("<https://my-service.azure.com>");
+var client = new FarmBeatsClient(endpoint, credential).GetNutrientAnalysesClient("2022-11-01-preview");
 
 var data = new {
     parentId = "<parentId>",
@@ -190,7 +196,7 @@ var data = new {
     },
 };
 
-Response response = client.CreateOrUpdate("<partyId>", "<nutrientAnalysisId>", RequestContent.Create(data), new RequestContext());
+Response response = client.CreateOrUpdate("<partyId>", "<nutrientAnalysisId>", RequestContent.Create(data));
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("partyId").ToString());
@@ -224,9 +230,10 @@ Console.WriteLine(result.GetProperty("properties").GetProperty("<test>").ToStrin
 This sample shows how to call DeleteAsync with required parameters.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var client = new FarmBeatsClient(credential).GetNutrientAnalysesClient("2022-11-01-preview");
+var endpoint = new Uri("<https://my-service.azure.com>");
+var client = new FarmBeatsClient(endpoint, credential).GetNutrientAnalysesClient("2022-11-01-preview");
 
-Response response = await client.DeleteAsync("<partyId>", "<nutrientAnalysisId>", new RequestContext());
+Response response = await client.DeleteAsync("<partyId>", "<nutrientAnalysisId>");
 Console.WriteLine(response.Status);
 ]]></code>
 </example>
@@ -236,9 +243,10 @@ Console.WriteLine(response.Status);
 This sample shows how to call Delete with required parameters.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var client = new FarmBeatsClient(credential).GetNutrientAnalysesClient("2022-11-01-preview");
+var endpoint = new Uri("<https://my-service.azure.com>");
+var client = new FarmBeatsClient(endpoint, credential).GetNutrientAnalysesClient("2022-11-01-preview");
 
-Response response = client.Delete("<partyId>", "<nutrientAnalysisId>", new RequestContext());
+Response response = client.Delete("<partyId>", "<nutrientAnalysisId>");
 Console.WriteLine(response.Status);
 ]]></code>
 </example>
@@ -248,7 +256,8 @@ Console.WriteLine(response.Status);
 This sample shows how to call GetNutrientAnalysesAsync and parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var client = new FarmBeatsClient(credential).GetNutrientAnalysesClient("2022-11-01-preview");
+var endpoint = new Uri("<https://my-service.azure.com>");
+var client = new FarmBeatsClient(endpoint, credential).GetNutrientAnalysesClient("2022-11-01-preview");
 
 await foreach (var item in client.GetNutrientAnalysesAsync())
 {
@@ -259,9 +268,10 @@ await foreach (var item in client.GetNutrientAnalysesAsync())
 This sample shows how to call GetNutrientAnalysesAsync with all parameters, and how to parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var client = new FarmBeatsClient(credential).GetNutrientAnalysesClient("2022-11-01-preview");
+var endpoint = new Uri("<https://my-service.azure.com>");
+var client = new FarmBeatsClient(endpoint, credential).GetNutrientAnalysesClient("2022-11-01-preview");
 
-await foreach (var item in client.GetNutrientAnalysesAsync("<parentType>", new String[]{"<parentIds>"}, new String[]{"<classifications>"}, new String[]{"<ids>"}, new String[]{"<names>"}, new String[]{"<propertyFilters>"}, new String[]{"<statuses>"}, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, 1234, "<skipToken>", new RequestContext()))
+await foreach (var item in client.GetNutrientAnalysesAsync("<parentType>", new String[]{"<parentIds>"}, new String[]{"<classifications>"}, new String[]{"<ids>"}, new String[]{"<names>"}, new String[]{"<propertyFilters>"}, new String[]{"<statuses>"}, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, 1234, "<skipToken>"))
 {
     JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
     Console.WriteLine(result.GetProperty("partyId").ToString());
@@ -296,7 +306,8 @@ await foreach (var item in client.GetNutrientAnalysesAsync("<parentType>", new S
 This sample shows how to call GetNutrientAnalyses and parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var client = new FarmBeatsClient(credential).GetNutrientAnalysesClient("2022-11-01-preview");
+var endpoint = new Uri("<https://my-service.azure.com>");
+var client = new FarmBeatsClient(endpoint, credential).GetNutrientAnalysesClient("2022-11-01-preview");
 
 foreach (var item in client.GetNutrientAnalyses())
 {
@@ -307,9 +318,10 @@ foreach (var item in client.GetNutrientAnalyses())
 This sample shows how to call GetNutrientAnalyses with all parameters, and how to parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var client = new FarmBeatsClient(credential).GetNutrientAnalysesClient("2022-11-01-preview");
+var endpoint = new Uri("<https://my-service.azure.com>");
+var client = new FarmBeatsClient(endpoint, credential).GetNutrientAnalysesClient("2022-11-01-preview");
 
-foreach (var item in client.GetNutrientAnalyses("<parentType>", new String[]{"<parentIds>"}, new String[]{"<classifications>"}, new String[]{"<ids>"}, new String[]{"<names>"}, new String[]{"<propertyFilters>"}, new String[]{"<statuses>"}, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, 1234, "<skipToken>", new RequestContext()))
+foreach (var item in client.GetNutrientAnalyses("<parentType>", new String[]{"<parentIds>"}, new String[]{"<classifications>"}, new String[]{"<ids>"}, new String[]{"<names>"}, new String[]{"<propertyFilters>"}, new String[]{"<statuses>"}, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, 1234, "<skipToken>"))
 {
     JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
     Console.WriteLine(result.GetProperty("partyId").ToString());
@@ -344,7 +356,8 @@ foreach (var item in client.GetNutrientAnalyses("<parentType>", new String[]{"<p
 This sample shows how to call GetNutrientAnalysesByPartyIdAsync with required parameters and parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var client = new FarmBeatsClient(credential).GetNutrientAnalysesClient("2022-11-01-preview");
+var endpoint = new Uri("<https://my-service.azure.com>");
+var client = new FarmBeatsClient(endpoint, credential).GetNutrientAnalysesClient("2022-11-01-preview");
 
 await foreach (var item in client.GetNutrientAnalysesByPartyIdAsync("<partyId>"))
 {
@@ -355,9 +368,10 @@ await foreach (var item in client.GetNutrientAnalysesByPartyIdAsync("<partyId>")
 This sample shows how to call GetNutrientAnalysesByPartyIdAsync with all parameters, and how to parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var client = new FarmBeatsClient(credential).GetNutrientAnalysesClient("2022-11-01-preview");
+var endpoint = new Uri("<https://my-service.azure.com>");
+var client = new FarmBeatsClient(endpoint, credential).GetNutrientAnalysesClient("2022-11-01-preview");
 
-await foreach (var item in client.GetNutrientAnalysesByPartyIdAsync("<partyId>", "<parentType>", new String[]{"<parentIds>"}, new String[]{"<classifications>"}, new String[]{"<ids>"}, new String[]{"<names>"}, new String[]{"<propertyFilters>"}, new String[]{"<statuses>"}, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, 1234, "<skipToken>", new RequestContext()))
+await foreach (var item in client.GetNutrientAnalysesByPartyIdAsync("<partyId>", "<parentType>", new String[]{"<parentIds>"}, new String[]{"<classifications>"}, new String[]{"<ids>"}, new String[]{"<names>"}, new String[]{"<propertyFilters>"}, new String[]{"<statuses>"}, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, 1234, "<skipToken>"))
 {
     JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
     Console.WriteLine(result.GetProperty("partyId").ToString());
@@ -392,7 +406,8 @@ await foreach (var item in client.GetNutrientAnalysesByPartyIdAsync("<partyId>",
 This sample shows how to call GetNutrientAnalysesByPartyId with required parameters and parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var client = new FarmBeatsClient(credential).GetNutrientAnalysesClient("2022-11-01-preview");
+var endpoint = new Uri("<https://my-service.azure.com>");
+var client = new FarmBeatsClient(endpoint, credential).GetNutrientAnalysesClient("2022-11-01-preview");
 
 foreach (var item in client.GetNutrientAnalysesByPartyId("<partyId>"))
 {
@@ -403,9 +418,10 @@ foreach (var item in client.GetNutrientAnalysesByPartyId("<partyId>"))
 This sample shows how to call GetNutrientAnalysesByPartyId with all parameters, and how to parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var client = new FarmBeatsClient(credential).GetNutrientAnalysesClient("2022-11-01-preview");
+var endpoint = new Uri("<https://my-service.azure.com>");
+var client = new FarmBeatsClient(endpoint, credential).GetNutrientAnalysesClient("2022-11-01-preview");
 
-foreach (var item in client.GetNutrientAnalysesByPartyId("<partyId>", "<parentType>", new String[]{"<parentIds>"}, new String[]{"<classifications>"}, new String[]{"<ids>"}, new String[]{"<names>"}, new String[]{"<propertyFilters>"}, new String[]{"<statuses>"}, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, 1234, "<skipToken>", new RequestContext()))
+foreach (var item in client.GetNutrientAnalysesByPartyId("<partyId>", "<parentType>", new String[]{"<parentIds>"}, new String[]{"<classifications>"}, new String[]{"<ids>"}, new String[]{"<names>"}, new String[]{"<propertyFilters>"}, new String[]{"<statuses>"}, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, 1234, "<skipToken>"))
 {
     JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
     Console.WriteLine(result.GetProperty("partyId").ToString());
