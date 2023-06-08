@@ -404,8 +404,18 @@ namespace Azure.Messaging.ServiceBus
                 Processor.Identifier,
                 cancellationToken);
 
+        protected override EventArgs ConstructEventArgs(IReadOnlyList<ServiceBusReceivedMessage> messages, CancellationToken cancellationToken) =>
+            new ProcessSessionMessagesEventArgs(
+                messages,
+                this,
+                Processor.Identifier,
+                cancellationToken);
+
         protected override async Task OnMessageHandler(EventArgs args) =>
             await _sessionProcessor.OnProcessSessionMessageAsync((ProcessSessionMessageEventArgs) args).ConfigureAwait(false);
+
+        protected override async Task OnMessagesHandler(EventArgs args) =>
+            await _sessionProcessor.OnProcessSessionMessagesAsync((ProcessSessionMessagesEventArgs) args).ConfigureAwait(false);
 
         protected override async Task RaiseExceptionReceived(ProcessErrorEventArgs eventArgs)
         {

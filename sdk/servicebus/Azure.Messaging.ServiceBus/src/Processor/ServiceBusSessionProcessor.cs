@@ -154,6 +154,16 @@ namespace Azure.Messaging.ServiceBus
             await InnerProcessor.OnProcessSessionMessageAsync(args).ConfigureAwait(false);
         }
 
+        /// <summary>
+        /// Invokes the process message event handler after a message has been received.
+        /// This method can be overriden to raise an event manually for testing purposes.
+        /// </summary>
+        /// <param name="args">The event args containing information related to the session message.</param>
+        protected internal virtual async Task OnProcessSessionMessagesAsync(ProcessSessionMessagesEventArgs args)
+        {
+            await InnerProcessor.OnProcessSessionMessagesAsync(args).ConfigureAwait(false);
+        }
+
         /// <inheritdoc cref="ServiceBusProcessor.OnProcessErrorAsync(ProcessErrorEventArgs)"/>
         protected internal virtual async Task OnProcessErrorAsync(ProcessErrorEventArgs args)
         {

@@ -306,7 +306,7 @@ namespace Azure.Messaging.ServiceBus
                 try
                 {
                     ServiceBusEventSource.Log.ProcessorMessageHandlerStart(Processor.Identifier, triggerMessage.SequenceNumber, triggerMessage.LockTokenGuid);
-                    await OnMessageHandler(args).ConfigureAwait(false);
+                    await OnMessagesHandler(args).ConfigureAwait(false);
                     ServiceBusEventSource.Log.ProcessorMessageHandlerComplete(Processor.Identifier, triggerMessage.SequenceNumber, triggerMessage.LockTokenGuid);
                 }
                 catch (Exception ex)
@@ -404,25 +404,25 @@ namespace Azure.Messaging.ServiceBus
                    AutoRenewLock;
         }
 
-        protected virtual ProcessMessageEventArgs ConstructEventArgs(ServiceBusReceivedMessage message, CancellationToken cancellationToken) =>
+        protected virtual EventArgs ConstructEventArgs(ServiceBusReceivedMessage message, CancellationToken cancellationToken) =>
             new ProcessMessageEventArgs(
             message,
             this,
             Processor.Identifier,
             cancellationToken);
 
-        protected virtual ProcessMessagesEventArgs ConstructEventArgs(IReadOnlyList<ServiceBusReceivedMessage> messages, CancellationToken cancellationToken) =>
+        protected virtual EventArgs ConstructEventArgs(IReadOnlyList<ServiceBusReceivedMessage> messages, CancellationToken cancellationToken) =>
             new ProcessMessagesEventArgs(
             messages,
             this,
             Processor.Identifier,
             cancellationToken);
 
-        protected virtual async Task OnMessageHandler(ProcessMessageEventArgs args) =>
-            await Processor.OnProcessMessageAsync(args).ConfigureAwait(false);
+        protected virtual async Task OnMessageHandler(EventArgs args) =>
+            await Processor.OnProcessMessageAsync((ProcessMessageEventArgs) args).ConfigureAwait(false);
 
-        protected virtual async Task OnMessagesHandler(ProcessMessagesEventArgs args) =>
-            await Processor.OnProcessMessagesAsync(args).ConfigureAwait(false);
+        protected virtual async Task OnMessagesHandler(EventArgs args) =>
+            await Processor.OnProcessMessagesAsync((ProcessMessagesEventArgs) args).ConfigureAwait(false);
 
         internal async Task RenewMessageLockAsync(
             ServiceBusReceivedMessage message,

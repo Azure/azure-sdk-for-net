@@ -40,7 +40,9 @@ namespace Azure.Messaging.ServiceBus
 
         private Func<ProcessMessagesEventArgs, Task> _processMessagesAsync;
 
-        private Func<ProcessSessionMessageEventArgs, Task> _processSessionMessageAsync; // TODO need a batch version of this one too
+        private Func<ProcessSessionMessageEventArgs, Task> _processSessionMessageAsync;
+
+        private Func<ProcessSessionMessagesEventArgs, Task> _processSessionMessagesAsync;
 
         private Func<ProcessErrorEventArgs, Task> _processErrorAsync;
 
@@ -456,6 +458,41 @@ namespace Azure.Messaging.ServiceBus
         }
 
         /// <summary>
+        /// The handler responsible for processing messages received from the Queue
+        /// or Subscription. Implementation is mandatory.
+        /// </summary>
+        [SuppressMessage("Usage", "AZC0002:Ensure all service methods take an optional CancellationToken parameter.",
+            Justification = "Guidance does not apply; this is an event.")]
+        [SuppressMessage("Usage", "AZC0003:DO make service methods virtual.",
+            Justification = "This member follows the standard .NET event pattern; override via the associated On<<EVENT>> method.")]
+        internal event Func<ProcessSessionMessagesEventArgs, Task> ProcessSessionMessagesAsync
+        {
+            add
+            {
+                Argument.AssertNotNull(value, nameof(ProcessSessionMessagesAsync));
+
+                if (_processSessionMessagesAsync != default)
+                {
+                    throw new NotSupportedException(Resources.HandlerHasAlreadyBeenAssigned);
+                }
+
+                EnsureNotRunningAndInvoke(() => _processSessionMessagesAsync = value);
+            }
+
+            remove
+            {
+                Argument.AssertNotNull(value, nameof(ProcessSessionMessagesAsync));
+
+                if (_processSessionMessagesAsync != value)
+                {
+                    throw new ArgumentException(Resources.HandlerHasNotBeenAssigned);
+                }
+
+                EnsureNotRunningAndInvoke(() => _processSessionMessagesAsync = default);
+            }
+        }
+
+        /// <summary>
         /// The handler responsible for processing unhandled exceptions thrown while
         /// this processor is running.
         /// Implementation is mandatory.
@@ -616,6 +653,18 @@ namespace Azure.Messaging.ServiceBus
             try
             {
                 await _processSessionMessageAsync(args).ConfigureAwait(false);
+            }
+            finally
+            {
+                args.EndExecutionScope();
+            }
+        }
+
+        internal async Task OnProcessSessionMessagesAsync(ProcessSessionMessagesEventArgs args)
+        {
+            try
+            {
+                await _processSessionMessagesAsync(args).ConfigureAwait(false);
             }
             finally
             {
