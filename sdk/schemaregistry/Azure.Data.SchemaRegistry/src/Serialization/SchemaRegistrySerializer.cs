@@ -16,9 +16,9 @@ using Azure.Core.Serialization;
 namespace Azure.Data.SchemaRegistry.Serialization
 {
     /// <summary>
-    /// The Schema Registry Json serializer serializes and deserializes JSON payloads. It uses an implemented
-    /// <see cref="SchemaValidator"/> and a <see cref="SchemaRegistryClient"/> to enrich messages
-    /// inheriting from <see cref="MessageContent"/> with a Schema Id.
+    /// The Schema Registry serializer serializes and deserializes payloads using the <see cref="SchemaRegistrySerializerOptions.Serializer"/>.
+    /// By default, this is a JSON object serializer. It uses an implemented <see cref="SchemaValidator"/> and a <see cref="SchemaRegistryClient"/>
+    /// to enrich messages inheriting from <see cref="MessageContent"/> with a Schema Id.
     /// </summary>
     /// <remarks>
     /// See <see cref="SchemaValidator"/> for additional information.
@@ -30,6 +30,7 @@ namespace Azure.Data.SchemaRegistry.Serialization
         private readonly SchemaValidator _schemaGenerator;
         private readonly SchemaRegistrySerializerOptions _serializerOptions;
         private const string JsonMimeType = "application/json";
+        private const string CustomMimeType = "text/plain";
         private const int CacheCapacity = 128;
 
         /// <summary>
@@ -105,13 +106,14 @@ namespace Azure.Data.SchemaRegistry.Serialization
 
         #region Serialize
         /// <summary>
-        /// Serializes the message data as JSON and stores it in <see cref="MessageContent.Data"/>. The <see cref="MessageContent.ContentType"/>
-        /// will be set to "application/json+schemaId" where schemaId is the Id of the schema that was generated from the type.
+        /// Serializes the message data and stores it in <see cref="MessageContent.Data"/>. The <see cref="MessageContent.ContentType"/>
+        /// will be set to "application/json+schemaId" if serializing with JSON, "text/plain+schemaId" otherwise, where schemaId is the Id
+        /// of the schema that was generated from the type.
         /// </summary>
-        /// <param name="data">The data to serialize to JSON and serialize into the message.</param>
+        /// <param name="data">The data to serialize into the message.</param>
         /// <param name="cancellationToken">An optional <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
-        /// <typeparam name="TMessage">The <see cref="MessageContent"/> type to serialize the data into.</typeparam>
-        /// <typeparam name="TData">The type of the data to serialize.</typeparam>
+        /// <typeparam name="TMessage">The <see cref="MessageContent"/> type to hold the serialized data.</typeparam>
+        /// <typeparam name="TData">The type of the data being serialized.</typeparam>
         /// <exception cref="InvalidOperationException">
         ///   This can occur if the <c>groupName</c> was not specified when constructing the <see cref="SchemaRegistrySerializer"/>.
         ///   It can also occur if the <typeparamref name="TMessage"/> type does not have a public parameterless constructor.
@@ -130,13 +132,14 @@ namespace Azure.Data.SchemaRegistry.Serialization
             => (TMessage)SerializeInternalAsync(data, typeof(TData), typeof(TMessage), false, cancellationToken).EnsureCompleted();
 
         /// <summary>
-        /// Serializes the message data as JSON and stores it in <see cref="MessageContent.Data"/>. The <see cref="MessageContent.ContentType"/>
-        /// will be set to "application/json+schemaId" where schemaId is the Id of the schema that was generated from the type.
+        /// Serializes the message data and stores it in <see cref="MessageContent.Data"/>. The <see cref="MessageContent.ContentType"/>
+        /// will be set to "application/json+schemaId" if serializing with JSON, "text/plain+schemaId" otherwise, where schemaId is the Id
+        /// of the schema that was generated from the type.
         /// </summary>
-        /// <param name="data">The data to serialize to JSON and serialize into the message.</param>
+        /// <param name="data">The data to serialize into the message.</param>
         /// <param name="cancellationToken">An optional <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
-        /// <typeparam name="TMessage">The <see cref="MessageContent"/> type to serialize the data into.</typeparam>
-        /// <typeparam name="TData">The type of the data to serialize.</typeparam>
+        /// <typeparam name="TMessage">The <see cref="MessageContent"/> type to hold the serialized data.</typeparam>
+        /// <typeparam name="TData">The type of the data being serialized.</typeparam>
         /// <exception cref="InvalidOperationException">
         ///   This can occur if the <c>groupName</c> was not specified when constructing the <see cref="SchemaRegistrySerializer"/>.
         ///   It can also occur if the <typeparamref name="TMessage"/> type does not have a public parameterless constructor.
@@ -155,15 +158,16 @@ namespace Azure.Data.SchemaRegistry.Serialization
             => (TMessage)await SerializeInternalAsync(data, typeof(TData), typeof(TMessage), true, cancellationToken).ConfigureAwait(false);
 
         /// <summary>
-        /// Serializes the message data as JSON and stores it in <see cref="MessageContent.Data"/>. The <see cref="MessageContent.ContentType"/>
-        /// will be set to "application/json+schemaId" where schemaId is the Id of the schema that was generated from the type.
+        /// Serializes the message data and stores it in <see cref="MessageContent.Data"/>. The <see cref="MessageContent.ContentType"/>
+        /// will be set to "application/json+schemaId" if serializing with JSON, "text/plain+schemaId" otherwise, where schemaId is the Id
+        /// of the schema that was generated from the type.
         /// </summary>
-        /// <param name="data">The data to serialize to JSON and serialize into the message.</param>
-        /// <param name="dataType">The type of the data to serialize. If left blank, the type will be determined at runtime by
+        /// <param name="data">The data to serialize into the message.</param>
+        /// <param name="dataType">The type of the data being serialized. If left blank, the type will be determined at runtime by
         /// calling <see cref="Object.GetType"/>.</param>
-        /// <param name="messageType">The type of message to serialize the data into. Must extend from <see cref="MessageContent"/>, and
+        /// <param name="messageType">The type of message to hold the serialized data. Must extend from <see cref="MessageContent"/>, and
         /// have a parameterless constructor.
-        /// If left blank, the data will be serialized into a <see cref="MessageContent"/> instance.</param>
+        /// If left blank, the serialized data will be set in a <see cref="MessageContent"/> instance.</param>
         /// <param name="cancellationToken">An optional <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
         /// <exception cref="InvalidOperationException">
         ///   This can occur if the <c>groupName</c> was not specified when constructing the <see cref="SchemaRegistrySerializer"/>.
@@ -185,15 +189,16 @@ namespace Azure.Data.SchemaRegistry.Serialization
             => SerializeInternalAsync(data, dataType, messageType, false, cancellationToken).EnsureCompleted();
 
         /// <summary>
-        /// Serializes the message data as JSON and stores it in <see cref="MessageContent.Data"/>. The <see cref="MessageContent.ContentType"/>
-        /// will be set to "application/json+schemaId" where schemaId is the Id of the schema that was generated from the type.
+        /// Serializes the message data and stores it in <see cref="MessageContent.Data"/>. The <see cref="MessageContent.ContentType"/>
+        /// will be set to "application/json+schemaId" if serializing with JSON, "text/plain+schemaId" otherwise, where schemaId is the Id
+        /// of the schema that was generated from the type.
         /// </summary>
-        /// <param name="data">The data to serialize to JSON and serialize into the message.</param>
-        /// <param name="dataType">The type of the data to serialize. If left blank, the type will be determined at runtime by
+        /// <param name="data">The data to serialize into the message.</param>
+        /// <param name="dataType">The type of the data being serialized. If left blank, the type will be determined at runtime by
         /// calling <see cref="Object.GetType"/>.</param>
-        /// <param name="messageType">The type of message to serialize the data into. Must extend from <see cref="MessageContent"/>, and
+        /// <param name="messageType">The type of message to hold the serialized data. Must extend from <see cref="MessageContent"/>, and
         /// have a parameterless constructor.
-        /// If left blank, the data will be serialized into a <see cref="MessageContent"/> instance.</param>
+        /// If left blank, the serialized data will be set in a <see cref="MessageContent"/> instance.</param>
         /// <param name="cancellationToken">An optional <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
         /// <exception cref="InvalidOperationException">
         ///   This can occur if the <c>groupName</c> was not specified when constructing the <see cref="SchemaRegistrySerializer"/>.
@@ -242,7 +247,8 @@ namespace Azure.Data.SchemaRegistry.Serialization
                 : SerializeInternalAsync(data, dataType, false, cancellationToken).EnsureCompleted();
 
             message.Data = bd;
-            message.ContentType = $"{JsonMimeType}+{retrievedSchemaId}";
+            var mimeType = (_serializerOptions.Format == SchemaFormat.Json) ? JsonMimeType : CustomMimeType;
+            message.ContentType = $"{mimeType}+{retrievedSchemaId}";
             return message;
         }
 
@@ -323,8 +329,8 @@ namespace Azure.Data.SchemaRegistry.Serialization
             }
 
             var schemaProperties = (async) ?
-                await _client.GetSchemaPropertiesAsync(_groupName, schemaName, schema, SchemaFormat.Json, cancellationToken).ConfigureAwait(false) :
-                _client.GetSchemaProperties(_groupName, schemaName, schema, SchemaFormat.Json, cancellationToken);
+                await _client.GetSchemaPropertiesAsync(_groupName, schemaName, schema, _serializerOptions.Format, cancellationToken).ConfigureAwait(false) :
+                _client.GetSchemaProperties(_groupName, schemaName, schema, _serializerOptions.Format, cancellationToken);
 
             string id = schemaProperties.Value.Id;
 
@@ -344,8 +350,8 @@ namespace Azure.Data.SchemaRegistry.Serialization
         /// <typeparam name="TData">The type to deserialize the message data into.</typeparam>
         /// <returns>The deserialized data.</returns>
         /// <exception cref="FormatException">
-        ///   The ContentType is not in the expected format. The ContentType is expected to be 'application/json+schema-id', where 'schema-id' is
-        ///   the Schema Registry schema Id.
+        ///   The ContentType is not in the expected format. The ContentType is expected to be "application/json+schema-id" if serializing with JSON,
+        ///   "text/plain+schemaId" otherwise, where "schema-id" is the Schema Registry schema Id.
         /// </exception>
         /// <exception cref="RequestFailedException">
         ///   An error occurred while attempting to communicate with the Schema Registry service. This can occur if the schema generated from the type
@@ -368,8 +374,8 @@ namespace Azure.Data.SchemaRegistry.Serialization
         /// <typeparam name="TData">The type to deserialize the message data into.</typeparam>
         /// <returns>The deserialized data.</returns>
         /// <exception cref="FormatException">
-        ///   The ContentType is not in the expected format. The ContentType is expected to be 'application/json+schema-id', where 'schema-id' is
-        ///   the Schema Registry schema Id.
+        ///   The ContentType is not in the expected format. The ContentType is expected to be "application/json+schema-id" if serializing with JSON,
+        ///   "text/plain+schemaId" otherwise, where "schema-id" is the Schema Registry schema Id.
         /// </exception>
         /// <exception cref="RequestFailedException">
         ///   An error occurred while attempting to communicate with the Schema Registry service. This can occur if the schema generated from the type
@@ -392,8 +398,8 @@ namespace Azure.Data.SchemaRegistry.Serialization
         /// <param name="cancellationToken">An optional <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
         /// <returns>The deserialized data.</returns>
         /// <exception cref="FormatException">
-        ///   The ContentType is not in the expected format. The ContentType is expected to be 'application/json+schema-id', where 'schema-id' is
-        ///   the Schema Registry schema Id.
+        ///   The ContentType is not in the expected format. The ContentType is expected to be "application/json+schema-id" if serializing with JSON,
+        ///   "text/plain+schemaId" otherwise, where "schema-id" is the Schema Registry schema Id.
         /// </exception>
         /// <exception cref="RequestFailedException">
         ///   An error occurred while attempting to communicate with the Schema Registry service. This can occur if the schema generated from the type
@@ -417,8 +423,8 @@ namespace Azure.Data.SchemaRegistry.Serialization
         /// <param name="cancellationToken">An optional <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
         /// <returns>The deserialized data.</returns>
         /// <exception cref="FormatException">
-        ///   The ContentType is not in the expected format. The ContentType is expected to be 'application/json+schema-id', where 'schema-id' is
-        ///   the Schema Registry schema Id.
+        ///   The ContentType is not in the expected format. The ContentType is expected to be "application/json+schema-id" if serializing with JSON,
+        ///   "text/plain+schemaId" otherwise, where "schema-id" is the Schema Registry schema Id.
         /// </exception>
         /// <exception cref="RequestFailedException">
         ///   An error occurred while attempting to communicate with the Schema Registry service. This can occur if the schema generated from the type
@@ -444,10 +450,12 @@ namespace Azure.Data.SchemaRegistry.Serialization
             Argument.AssertNotNull(data, nameof(data));
             Argument.AssertNotNull(contentType, nameof(contentType));
 
+            var mimeType = (_serializerOptions.Format == SchemaFormat.Json) ? JsonMimeType : CustomMimeType;
+
             string[] contentTypeArray = contentType.ToString().Split('+');
-            if (contentTypeArray.Length != 2 || contentTypeArray[0] != JsonMimeType)
+            if (contentTypeArray.Length != 2 || contentTypeArray[0] != mimeType)
             {
-                throw new FormatException($"Content type was not in the expected format of '{JsonMimeType}+schema-id', where 'schema-id' " +
+                throw new FormatException($"Content type was not in the expected format of '{mimeType}+schema-id', where 'schema-id' " +
                                           "is the Schema Registry schema ID.");
             }
 

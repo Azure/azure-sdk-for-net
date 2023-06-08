@@ -16,11 +16,17 @@ namespace Azure.Data.SchemaRegistry.Serialization
         /// </summary>
         public ObjectSerializer Serializer { get; set; } = new JsonObjectSerializer();
 
+        /// <summary>
+        /// The format of the schema to use for serialization. The default is JSON.
+        /// </summary>
+        public SchemaFormat Format { get; set; } = SchemaFormat.Json;
+
         internal SchemaRegistrySerializerOptions Clone()
         {
             return new()
             {
-                Serializer = Serializer
+                Serializer = Serializer,
+                Format = Format
             };
         }
     }

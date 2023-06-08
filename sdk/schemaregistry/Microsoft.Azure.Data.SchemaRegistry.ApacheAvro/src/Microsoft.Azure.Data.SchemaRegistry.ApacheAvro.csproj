@@ -12,11 +12,12 @@
   <ItemGroup>
     <PackageReference Include="Apache.Avro" />
     <!-- <PackageReference Include="Azure.Data.SchemaRegistry" /> -->
-    <PackageReference Include="Azure.Core" />
+    <!--<PackageReference Include="Azure.Core" />-->
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\..\Azure.Data.SchemaRegistry\src\Azure.Data.SchemaRegistry.csproj" />
+	  <ProjectReference Include="..\..\..\core\Azure.Core\src\Azure.Core.csproj" />
   </ItemGroup>
 
   <!-- Shared source from Azure.Core -->

@@ -8,7 +8,7 @@ namespace Azure.Data.SchemaRegistry.Tests.Serialization
 {
     public class SchemaRegistrySerializerLiveTestBase : RecordedTestBase<SchemaRegistrySerializerTestEnvironment>
     {
-        public SchemaRegistrySerializerLiveTestBase(bool isAsync) : base(isAsync)
+        public SchemaRegistrySerializerLiveTestBase(bool isAsync) : base(isAsync, RecordedTestMode.Playback)
         {
             TestDiagnostics = false;
         }
@@ -16,6 +16,13 @@ namespace Azure.Data.SchemaRegistry.Tests.Serialization
         protected SchemaRegistryClient CreateClient() =>
             InstrumentClient(new SchemaRegistryClient(
                 TestEnvironment.SchemaRegistryEndpoint,
+                TestEnvironment.Credential,
+                InstrumentClientOptions(new SchemaRegistryClientOptions())
+            ));
+
+        protected SchemaRegistryClient CreateCustomClient() =>
+            InstrumentClient(new SchemaRegistryClient(
+                TestEnvironment.SchemaRegistryEndpointCustom,
                 TestEnvironment.Credential,
                 InstrumentClientOptions(new SchemaRegistryClientOptions())
             ));

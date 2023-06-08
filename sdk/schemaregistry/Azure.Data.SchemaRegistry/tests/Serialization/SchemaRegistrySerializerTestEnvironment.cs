@@ -9,6 +9,8 @@ namespace Azure.Data.SchemaRegistry.Tests.Serialization
     {
         public string SchemaRegistryEndpoint => GetRecordedVariable("SCHEMAREGISTRY_ENDPOINT_JSON");
 
+        public string SchemaRegistryEndpointCustom => GetRecordedVariable("SCHEMAREGISTRY_ENDPOINT_CUSTOM");
+
         public string SchemaRegistryGroup => GetRecordedVariable("SCHEMAREGISTRY_GROUP");
 
         public string SchemaRegistryEventHubEndpoint => GetRecordedVariable("SCHEMAREGISTRY_ENDPOINT_AVRO");

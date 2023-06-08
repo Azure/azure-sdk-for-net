@@ -8,17 +8,18 @@ using Azure;
 using Azure.Core.TestFramework;
 using Azure.Data.SchemaRegistry;
 using Moq;
-using Newtonsoft.Json.Schema;
 using NUnit.Framework;
 using TestSchema;
 using Azure.Core.Serialization;
 using Azure.Data.SchemaRegistry.Serialization;
+using System.IO;
 
 namespace Azure.Data.SchemaRegistry.Tests.Serialization
 {
     public class SchemaRegistrySerializerTests
     {
         private static readonly string s_schema = "{\r\n  \"$schema\": \"http://json-schema.org/draft-04/schema#\",\r\n  \"title\": \"Employee\",\r\n  \"type\": \"object\",\r\n  \"additionalProperties\": false,\r\n  \"properties\": {\r\n    \"Age\": {\r\n      \"type\": \"integer\",\r\n      \"format\": \"int32\"\r\n    },\r\n    \"Name\": {\r\n      \"type\": [\r\n        \"null\",\r\n        \"string\"\r\n      ]\r\n    }\r\n  }\r\n}";
+        private static readonly string s_customSchema = "Employee: { Age = int, Name = string }";
 
         [Test]
         public async Task SerializeWorks()
@@ -40,6 +41,81 @@ namespace Azure.Data.SchemaRegistry.Tests.Serialization
             var serializer = new SchemaRegistrySerializer(mockClient.Object, "groupName", new SampleJsonGenerator());
             var content = await serializer.SerializeAsync(new Employee { Age = 42, Name = "Caketown" }).ConfigureAwait(false);
             Assert.AreEqual("SchemaId", content.ContentType.ToString().Split('+')[1]);
+        }
+
+        [Test]
+        public async Task SerializeDeserializeWorksWithCustomType()
+        {
+            var mockClient = new Mock<SchemaRegistryClient>();
+            mockClient
+                .Setup(
+                    client => client.GetSchemaPropertiesAsync(
+                    "groupName",
+                    nameof(Employee),
+                    s_customSchema,
+                    SchemaFormat.Custom,
+                    CancellationToken.None))
+                .Returns(
+                    Task.FromResult(
+                        Response.FromValue(
+                            SchemaRegistryModelFactory.SchemaProperties(SchemaFormat.Custom, "SchemaId"), new MockResponse(200))));
+
+            var options = new SchemaRegistrySerializerOptions { Format = SchemaFormat.Custom, Serializer = new FakeCustomSerializer() };
+
+            var serializer = new SchemaRegistrySerializer(mockClient.Object, "groupName", new SampleCustomGenerator(), options);
+            var content = await serializer.SerializeAsync(new Employee { Age = 25, Name = "Name" }).ConfigureAwait(false);
+            Assert.AreEqual("SchemaId", content.ContentType.ToString().Split('+')[1]);
+        }
+
+        private class FakeCustomSerializer : ObjectSerializer
+        {
+            public override object Deserialize(Stream stream, Type returnType, CancellationToken cancellationToken)
+            {
+                return new Employee
+                {
+                    Age = 25,
+                    Name = "Name"
+                };
+            }
+
+            public override async ValueTask<object> DeserializeAsync(Stream stream, Type returnType, CancellationToken cancellationToken)
+            {
+                await Task.Yield();
+                return new Employee
+                {
+                    Age = 25,
+                    Name = "Name"
+                };
+            }
+
+            public override void Serialize(Stream stream, object value, Type inputType, CancellationToken cancellationToken)
+            {
+                var data = new BinaryData(s_customSchema);
+                var dataArray = data.ToArray();
+                stream.Write(dataArray, 0, dataArray.Length);
+            }
+
+            public override async ValueTask SerializeAsync(Stream stream, object value, Type inputType, CancellationToken cancellationToken)
+            {
+                var data = new BinaryData(s_customSchema);
+                var dataArray = data.ToArray();
+                await stream.WriteAsync(dataArray, 0, dataArray.Length, cancellationToken).ConfigureAwait(false);
+            }
+        }
+
+        private class SampleCustomGenerator : SchemaValidator
+        {
+            public override string GenerateSchema(Type dataType)
+            {
+                return s_customSchema;
+            }
+
+            public override void Validate(object data, Type dataType, string schemaDefinition)
+            {
+                Assert.That(data, Is.TypeOf<Employee>());
+                Assert.AreEqual(dataType.Name, "Employee");
+                Assert.AreEqual(schemaDefinition, s_customSchema);
+            }
         }
 
         private class SampleJsonGenerator : SchemaValidator
