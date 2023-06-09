@@ -355,8 +355,8 @@ namespace Azure.Core.Tests
             // New property
             json.Bar = model;
 
-            //Assert.AreEqual("a", (string)json.Foo.StringProperty);
-            //Assert.AreEqual(1, (int)json.Foo.ObjectProperty);
+            Assert.AreEqual("a", (string)json.Foo.StringProperty);
+            Assert.AreEqual(1, (int)json.Foo.ObjectProperty);
 
             Assert.AreEqual("a", (string)json.Bar.StringProperty);
             Assert.AreEqual(1, (int)json.Bar.ObjectProperty);
@@ -364,8 +364,8 @@ namespace Azure.Core.Tests
             model.StringProperty = "b";
             model.ObjectProperty = 2;
 
-            //Assert.AreEqual("b", (string)json.Foo.StringProperty);
-            //Assert.AreEqual(2, (int)json.Foo.ObjectProperty);
+            Assert.AreEqual("b", (string)json.Foo.StringProperty);
+            Assert.AreEqual(2, (int)json.Foo.ObjectProperty);
 
             Assert.AreEqual("b", (string)json.Bar.StringProperty);
             Assert.AreEqual(2, (int)json.Bar.ObjectProperty);

@@ -1095,6 +1095,39 @@ namespace Azure.Core.Tests
             validate(roundTrip);
         }
 
+        [Test]
+        public void ChangesToPocosAreReflectedInPropertyReads()
+        {
+            dynamic json = BinaryData.FromString("""{"foo":1}""").ToDynamicFromJson(PropertyNamingConvention.CamelCase);
+
+            SampleModel model = new()
+            {
+                Message = "a",
+                Number = 1
+            };
+
+            // Existing property
+            json.Foo = model;
+
+            // New property
+            json.Bar = model;
+
+            Assert.AreEqual("a", (string)json.Foo.Message);
+            Assert.AreEqual(1, (int)json.Foo.Number);
+
+            Assert.AreEqual("a", (string)json.Bar.Message);
+            Assert.AreEqual(1, (int)json.Bar.Number);
+
+            model.Message = "b";
+            model.Number = 2;
+
+            Assert.AreEqual("b", (string)json.Foo.Message);
+            Assert.AreEqual(2, (int)json.Foo.Number);
+
+            Assert.AreEqual("b", (string)json.Bar.Message);
+            Assert.AreEqual(2, (int)json.Bar.Number);
+        }
+
         #region Helpers
         internal static dynamic GetDynamicJson(string json)
         {
@@ -1126,8 +1159,8 @@ namespace Azure.Core.Tests
             yield return new object[] { 1, "1" };
             yield return new object[] { 1.0, "1" };
 #if NETCOREAPP
-            yield return new object[] {1.1D, "1.1"};
-            yield return new object[] {1.1F, "1.1"};
+            yield return new object[] { 1.1D, "1.1" };
+            yield return new object[] { 1.1F, "1.1" };
 #else
             yield return new object[] { 1.1D, "1.1000000000000001" };
             yield return new object[] { 1.1F, "1.10000002" };
@@ -1192,6 +1225,7 @@ namespace Azure.Core.Tests
                 return Message == obj.Message && Number == obj.Number;
             }
         }
+
         private T JsonAsType<T>(string json)
         {
             dynamic jsonData = DynamicJsonTests.GetDynamicJson(json);
