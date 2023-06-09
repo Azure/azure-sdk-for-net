@@ -11,6 +11,7 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.ResourceManager;
+using Azure.ResourceManager.PaloAltoNetworks.Ngfw.Testing;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
@@ -18,51 +19,51 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
     /// <summary> A class to add extension methods to Azure.ResourceManager.PaloAltoNetworks.Ngfw. </summary>
     public static partial class NgfwExtensions
     {
-        private static ResourceGroupResourceExtensionClient GetResourceGroupResourceExtensionClient(ArmResource resource)
+        private static NgfwResourceGroupResourceExtension GetNgfwResourceGroupResourceExtension(ArmResource resource)
         {
             return resource.GetCachedClient(client =>
             {
-                return new ResourceGroupResourceExtensionClient(client, resource.Id);
+                return new NgfwResourceGroupResourceExtension(client, resource.Id);
             });
         }
 
-        private static ResourceGroupResourceExtensionClient GetResourceGroupResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
+        private static NgfwResourceGroupResourceExtension GetNgfwResourceGroupResourceExtension(ArmClient client, ResourceIdentifier scope)
         {
             return client.GetResourceClient(() =>
             {
-                return new ResourceGroupResourceExtensionClient(client, scope);
+                return new NgfwResourceGroupResourceExtension(client, scope);
             });
         }
 
-        private static SubscriptionResourceExtensionClient GetSubscriptionResourceExtensionClient(ArmResource resource)
+        private static NgfwSubscriptionResourceExtension GetNgfwSubscriptionResourceExtension(ArmResource resource)
         {
             return resource.GetCachedClient(client =>
             {
-                return new SubscriptionResourceExtensionClient(client, resource.Id);
+                return new NgfwSubscriptionResourceExtension(client, resource.Id);
             });
         }
 
-        private static SubscriptionResourceExtensionClient GetSubscriptionResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
+        private static NgfwSubscriptionResourceExtension GetNgfwSubscriptionResourceExtension(ArmClient client, ResourceIdentifier scope)
         {
             return client.GetResourceClient(() =>
             {
-                return new SubscriptionResourceExtensionClient(client, scope);
+                return new NgfwSubscriptionResourceExtension(client, scope);
             });
         }
 
-        private static TenantResourceExtensionClient GetTenantResourceExtensionClient(ArmResource resource)
+        private static NgfwTenantResourceExtension GetNgfwTenantResourceExtension(ArmResource resource)
         {
             return resource.GetCachedClient(client =>
             {
-                return new TenantResourceExtensionClient(client, resource.Id);
+                return new NgfwTenantResourceExtension(client, resource.Id);
             });
         }
 
-        private static TenantResourceExtensionClient GetTenantResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
+        private static NgfwTenantResourceExtension GetNgfwTenantResourceExtension(ArmClient client, ResourceIdentifier scope)
         {
             return client.GetResourceClient(() =>
             {
-                return new TenantResourceExtensionClient(client, scope);
+                return new NgfwTenantResourceExtension(client, scope);
             });
         }
         #region GlobalRulestackResource
@@ -298,7 +299,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         /// <returns> An object representing collection of FirewallResources and their operations over a FirewallResource. </returns>
         public static FirewallResourceCollection GetFirewallResources(this ResourceGroupResource resourceGroupResource)
         {
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetFirewallResources();
+            return GetNgfwResourceGroupResourceExtension(resourceGroupResource).GetFirewallResources();
         }
 
         /// <summary>
@@ -354,7 +355,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         /// <returns> An object representing collection of LocalRulestackResources and their operations over a LocalRulestackResource. </returns>
         public static LocalRulestackResourceCollection GetLocalRulestackResources(this ResourceGroupResource resourceGroupResource)
         {
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetLocalRulestackResources();
+            return GetNgfwResourceGroupResourceExtension(resourceGroupResource).GetLocalRulestackResources();
         }
 
         /// <summary>
@@ -423,7 +424,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         /// <returns> An async collection of <see cref="FirewallResource" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<FirewallResource> GetFirewallResourcesAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetFirewallResourcesAsync(cancellationToken);
+            return GetNgfwSubscriptionResourceExtension(subscriptionResource).GetFirewallResourcesAsync(cancellationToken);
         }
 
         /// <summary>
@@ -444,7 +445,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         /// <returns> A collection of <see cref="FirewallResource" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<FirewallResource> GetFirewallResources(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetFirewallResources(cancellationToken);
+            return GetNgfwSubscriptionResourceExtension(subscriptionResource).GetFirewallResources(cancellationToken);
         }
 
         /// <summary>
@@ -465,7 +466,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         /// <returns> An async collection of <see cref="LocalRulestackResource" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<LocalRulestackResource> GetLocalRulestackResourcesAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetLocalRulestackResourcesAsync(cancellationToken);
+            return GetNgfwSubscriptionResourceExtension(subscriptionResource).GetLocalRulestackResourcesAsync(cancellationToken);
         }
 
         /// <summary>
@@ -486,7 +487,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         /// <returns> A collection of <see cref="LocalRulestackResource" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<LocalRulestackResource> GetLocalRulestackResources(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetLocalRulestackResources(cancellationToken);
+            return GetNgfwSubscriptionResourceExtension(subscriptionResource).GetLocalRulestackResources(cancellationToken);
         }
 
         /// <summary> Gets a collection of GlobalRulestackResources in the TenantResource. </summary>
@@ -494,7 +495,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         /// <returns> An object representing collection of GlobalRulestackResources and their operations over a GlobalRulestackResource. </returns>
         public static GlobalRulestackResourceCollection GetGlobalRulestackResources(this TenantResource tenantResource)
         {
-            return GetTenantResourceExtensionClient(tenantResource).GetGlobalRulestackResources();
+            return GetNgfwTenantResourceExtension(tenantResource).GetGlobalRulestackResources();
         }
 
         /// <summary>

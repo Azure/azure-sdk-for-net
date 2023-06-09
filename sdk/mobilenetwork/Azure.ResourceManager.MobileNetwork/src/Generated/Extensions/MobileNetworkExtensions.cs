@@ -11,6 +11,7 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.ResourceManager;
+using Azure.ResourceManager.MobileNetwork.Testing;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.MobileNetwork
@@ -18,51 +19,51 @@ namespace Azure.ResourceManager.MobileNetwork
     /// <summary> A class to add extension methods to Azure.ResourceManager.MobileNetwork. </summary>
     public static partial class MobileNetworkExtensions
     {
-        private static ResourceGroupResourceExtensionClient GetResourceGroupResourceExtensionClient(ArmResource resource)
+        private static MobileNetworkResourceGroupResourceExtension GetMobileNetworkResourceGroupResourceExtension(ArmResource resource)
         {
             return resource.GetCachedClient(client =>
             {
-                return new ResourceGroupResourceExtensionClient(client, resource.Id);
+                return new MobileNetworkResourceGroupResourceExtension(client, resource.Id);
             });
         }
 
-        private static ResourceGroupResourceExtensionClient GetResourceGroupResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
+        private static MobileNetworkResourceGroupResourceExtension GetMobileNetworkResourceGroupResourceExtension(ArmClient client, ResourceIdentifier scope)
         {
             return client.GetResourceClient(() =>
             {
-                return new ResourceGroupResourceExtensionClient(client, scope);
+                return new MobileNetworkResourceGroupResourceExtension(client, scope);
             });
         }
 
-        private static SubscriptionResourceExtensionClient GetSubscriptionResourceExtensionClient(ArmResource resource)
+        private static MobileNetworkSubscriptionResourceExtension GetMobileNetworkSubscriptionResourceExtension(ArmResource resource)
         {
             return resource.GetCachedClient(client =>
             {
-                return new SubscriptionResourceExtensionClient(client, resource.Id);
+                return new MobileNetworkSubscriptionResourceExtension(client, resource.Id);
             });
         }
 
-        private static SubscriptionResourceExtensionClient GetSubscriptionResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
+        private static MobileNetworkSubscriptionResourceExtension GetMobileNetworkSubscriptionResourceExtension(ArmClient client, ResourceIdentifier scope)
         {
             return client.GetResourceClient(() =>
             {
-                return new SubscriptionResourceExtensionClient(client, scope);
+                return new MobileNetworkSubscriptionResourceExtension(client, scope);
             });
         }
 
-        private static TenantResourceExtensionClient GetTenantResourceExtensionClient(ArmResource resource)
+        private static MobileNetworkTenantResourceExtension GetMobileNetworkTenantResourceExtension(ArmResource resource)
         {
             return resource.GetCachedClient(client =>
             {
-                return new TenantResourceExtensionClient(client, resource.Id);
+                return new MobileNetworkTenantResourceExtension(client, resource.Id);
             });
         }
 
-        private static TenantResourceExtensionClient GetTenantResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
+        private static MobileNetworkTenantResourceExtension GetMobileNetworkTenantResourceExtension(ArmClient client, ResourceIdentifier scope)
         {
             return client.GetResourceClient(() =>
             {
-                return new TenantResourceExtensionClient(client, scope);
+                return new MobileNetworkTenantResourceExtension(client, scope);
             });
         }
         #region AttachedDataNetworkResource
@@ -298,7 +299,7 @@ namespace Azure.ResourceManager.MobileNetwork
         /// <returns> An object representing collection of MobileNetworkResources and their operations over a MobileNetworkResource. </returns>
         public static MobileNetworkCollection GetMobileNetworks(this ResourceGroupResource resourceGroupResource)
         {
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetMobileNetworks();
+            return GetMobileNetworkResourceGroupResourceExtension(resourceGroupResource).GetMobileNetworks();
         }
 
         /// <summary>
@@ -354,7 +355,7 @@ namespace Azure.ResourceManager.MobileNetwork
         /// <returns> An object representing collection of PacketCoreControlPlaneResources and their operations over a PacketCoreControlPlaneResource. </returns>
         public static PacketCoreControlPlaneCollection GetPacketCoreControlPlanes(this ResourceGroupResource resourceGroupResource)
         {
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetPacketCoreControlPlanes();
+            return GetMobileNetworkResourceGroupResourceExtension(resourceGroupResource).GetPacketCoreControlPlanes();
         }
 
         /// <summary>
@@ -410,7 +411,7 @@ namespace Azure.ResourceManager.MobileNetwork
         /// <returns> An object representing collection of SimGroupResources and their operations over a SimGroupResource. </returns>
         public static SimGroupCollection GetSimGroups(this ResourceGroupResource resourceGroupResource)
         {
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetSimGroups();
+            return GetMobileNetworkResourceGroupResourceExtension(resourceGroupResource).GetSimGroups();
         }
 
         /// <summary>
@@ -479,7 +480,7 @@ namespace Azure.ResourceManager.MobileNetwork
         /// <returns> An async collection of <see cref="MobileNetworkResource" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<MobileNetworkResource> GetMobileNetworksAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetMobileNetworksAsync(cancellationToken);
+            return GetMobileNetworkSubscriptionResourceExtension(subscriptionResource).GetMobileNetworksAsync(cancellationToken);
         }
 
         /// <summary>
@@ -500,7 +501,7 @@ namespace Azure.ResourceManager.MobileNetwork
         /// <returns> A collection of <see cref="MobileNetworkResource" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<MobileNetworkResource> GetMobileNetworks(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetMobileNetworks(cancellationToken);
+            return GetMobileNetworkSubscriptionResourceExtension(subscriptionResource).GetMobileNetworks(cancellationToken);
         }
 
         /// <summary>
@@ -521,7 +522,7 @@ namespace Azure.ResourceManager.MobileNetwork
         /// <returns> An async collection of <see cref="PacketCoreControlPlaneResource" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<PacketCoreControlPlaneResource> GetPacketCoreControlPlanesAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetPacketCoreControlPlanesAsync(cancellationToken);
+            return GetMobileNetworkSubscriptionResourceExtension(subscriptionResource).GetPacketCoreControlPlanesAsync(cancellationToken);
         }
 
         /// <summary>
@@ -542,7 +543,7 @@ namespace Azure.ResourceManager.MobileNetwork
         /// <returns> A collection of <see cref="PacketCoreControlPlaneResource" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<PacketCoreControlPlaneResource> GetPacketCoreControlPlanes(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetPacketCoreControlPlanes(cancellationToken);
+            return GetMobileNetworkSubscriptionResourceExtension(subscriptionResource).GetPacketCoreControlPlanes(cancellationToken);
         }
 
         /// <summary>
@@ -563,7 +564,7 @@ namespace Azure.ResourceManager.MobileNetwork
         /// <returns> An async collection of <see cref="SimGroupResource" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<SimGroupResource> GetSimGroupsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetSimGroupsAsync(cancellationToken);
+            return GetMobileNetworkSubscriptionResourceExtension(subscriptionResource).GetSimGroupsAsync(cancellationToken);
         }
 
         /// <summary>
@@ -584,7 +585,7 @@ namespace Azure.ResourceManager.MobileNetwork
         /// <returns> A collection of <see cref="SimGroupResource" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<SimGroupResource> GetSimGroups(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetSimGroups(cancellationToken);
+            return GetMobileNetworkSubscriptionResourceExtension(subscriptionResource).GetSimGroups(cancellationToken);
         }
 
         /// <summary> Gets a collection of PacketCoreControlPlaneVersionResources in the TenantResource. </summary>
@@ -592,7 +593,7 @@ namespace Azure.ResourceManager.MobileNetwork
         /// <returns> An object representing collection of PacketCoreControlPlaneVersionResources and their operations over a PacketCoreControlPlaneVersionResource. </returns>
         public static PacketCoreControlPlaneVersionCollection GetPacketCoreControlPlaneVersions(this TenantResource tenantResource)
         {
-            return GetTenantResourceExtensionClient(tenantResource).GetPacketCoreControlPlaneVersions();
+            return GetMobileNetworkTenantResourceExtension(tenantResource).GetPacketCoreControlPlaneVersions();
         }
 
         /// <summary>

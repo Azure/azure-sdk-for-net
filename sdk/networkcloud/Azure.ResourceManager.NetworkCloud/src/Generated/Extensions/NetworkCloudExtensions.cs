@@ -11,6 +11,7 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.ResourceManager;
+using Azure.ResourceManager.NetworkCloud.Testing;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.NetworkCloud
@@ -18,35 +19,35 @@ namespace Azure.ResourceManager.NetworkCloud
     /// <summary> A class to add extension methods to Azure.ResourceManager.NetworkCloud. </summary>
     public static partial class NetworkCloudExtensions
     {
-        private static ResourceGroupResourceExtensionClient GetResourceGroupResourceExtensionClient(ArmResource resource)
+        private static NetworkCloudResourceGroupResourceExtension GetNetworkCloudResourceGroupResourceExtension(ArmResource resource)
         {
             return resource.GetCachedClient(client =>
             {
-                return new ResourceGroupResourceExtensionClient(client, resource.Id);
+                return new NetworkCloudResourceGroupResourceExtension(client, resource.Id);
             });
         }
 
-        private static ResourceGroupResourceExtensionClient GetResourceGroupResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
+        private static NetworkCloudResourceGroupResourceExtension GetNetworkCloudResourceGroupResourceExtension(ArmClient client, ResourceIdentifier scope)
         {
             return client.GetResourceClient(() =>
             {
-                return new ResourceGroupResourceExtensionClient(client, scope);
+                return new NetworkCloudResourceGroupResourceExtension(client, scope);
             });
         }
 
-        private static SubscriptionResourceExtensionClient GetSubscriptionResourceExtensionClient(ArmResource resource)
+        private static NetworkCloudSubscriptionResourceExtension GetNetworkCloudSubscriptionResourceExtension(ArmResource resource)
         {
             return resource.GetCachedClient(client =>
             {
-                return new SubscriptionResourceExtensionClient(client, resource.Id);
+                return new NetworkCloudSubscriptionResourceExtension(client, resource.Id);
             });
         }
 
-        private static SubscriptionResourceExtensionClient GetSubscriptionResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
+        private static NetworkCloudSubscriptionResourceExtension GetNetworkCloudSubscriptionResourceExtension(ArmClient client, ResourceIdentifier scope)
         {
             return client.GetResourceClient(() =>
             {
-                return new SubscriptionResourceExtensionClient(client, scope);
+                return new NetworkCloudSubscriptionResourceExtension(client, scope);
             });
         }
         #region BareMetalMachineResource
@@ -396,7 +397,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <returns> An object representing collection of BareMetalMachineResources and their operations over a BareMetalMachineResource. </returns>
         public static BareMetalMachineCollection GetBareMetalMachines(this ResourceGroupResource resourceGroupResource)
         {
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetBareMetalMachines();
+            return GetNetworkCloudResourceGroupResourceExtension(resourceGroupResource).GetBareMetalMachines();
         }
 
         /// <summary>
@@ -452,7 +453,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <returns> An object representing collection of CloudServicesNetworkResources and their operations over a CloudServicesNetworkResource. </returns>
         public static CloudServicesNetworkCollection GetCloudServicesNetworks(this ResourceGroupResource resourceGroupResource)
         {
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetCloudServicesNetworks();
+            return GetNetworkCloudResourceGroupResourceExtension(resourceGroupResource).GetCloudServicesNetworks();
         }
 
         /// <summary>
@@ -508,7 +509,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <returns> An object representing collection of ClusterManagerResources and their operations over a ClusterManagerResource. </returns>
         public static ClusterManagerCollection GetClusterManagers(this ResourceGroupResource resourceGroupResource)
         {
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetClusterManagers();
+            return GetNetworkCloudResourceGroupResourceExtension(resourceGroupResource).GetClusterManagers();
         }
 
         /// <summary>
@@ -564,7 +565,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <returns> An object representing collection of ClusterResources and their operations over a ClusterResource. </returns>
         public static ClusterCollection GetClusters(this ResourceGroupResource resourceGroupResource)
         {
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetClusters();
+            return GetNetworkCloudResourceGroupResourceExtension(resourceGroupResource).GetClusters();
         }
 
         /// <summary>
@@ -620,7 +621,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <returns> An object representing collection of DefaultCniNetworkResources and their operations over a DefaultCniNetworkResource. </returns>
         public static DefaultCniNetworkCollection GetDefaultCniNetworks(this ResourceGroupResource resourceGroupResource)
         {
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetDefaultCniNetworks();
+            return GetNetworkCloudResourceGroupResourceExtension(resourceGroupResource).GetDefaultCniNetworks();
         }
 
         /// <summary>
@@ -676,7 +677,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <returns> An object representing collection of HybridAksClusterResources and their operations over a HybridAksClusterResource. </returns>
         public static HybridAksClusterCollection GetHybridAksClusters(this ResourceGroupResource resourceGroupResource)
         {
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetHybridAksClusters();
+            return GetNetworkCloudResourceGroupResourceExtension(resourceGroupResource).GetHybridAksClusters();
         }
 
         /// <summary>
@@ -732,7 +733,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <returns> An object representing collection of L2NetworkResources and their operations over a L2NetworkResource. </returns>
         public static L2NetworkCollection GetL2Networks(this ResourceGroupResource resourceGroupResource)
         {
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetL2Networks();
+            return GetNetworkCloudResourceGroupResourceExtension(resourceGroupResource).GetL2Networks();
         }
 
         /// <summary>
@@ -788,7 +789,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <returns> An object representing collection of L3NetworkResources and their operations over a L3NetworkResource. </returns>
         public static L3NetworkCollection GetL3Networks(this ResourceGroupResource resourceGroupResource)
         {
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetL3Networks();
+            return GetNetworkCloudResourceGroupResourceExtension(resourceGroupResource).GetL3Networks();
         }
 
         /// <summary>
@@ -844,7 +845,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <returns> An object representing collection of RackResources and their operations over a RackResource. </returns>
         public static RackCollection GetRacks(this ResourceGroupResource resourceGroupResource)
         {
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetRacks();
+            return GetNetworkCloudResourceGroupResourceExtension(resourceGroupResource).GetRacks();
         }
 
         /// <summary>
@@ -900,7 +901,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <returns> An object representing collection of StorageApplianceResources and their operations over a StorageApplianceResource. </returns>
         public static StorageApplianceCollection GetStorageAppliances(this ResourceGroupResource resourceGroupResource)
         {
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetStorageAppliances();
+            return GetNetworkCloudResourceGroupResourceExtension(resourceGroupResource).GetStorageAppliances();
         }
 
         /// <summary>
@@ -956,7 +957,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <returns> An object representing collection of TrunkedNetworkResources and their operations over a TrunkedNetworkResource. </returns>
         public static TrunkedNetworkCollection GetTrunkedNetworks(this ResourceGroupResource resourceGroupResource)
         {
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetTrunkedNetworks();
+            return GetNetworkCloudResourceGroupResourceExtension(resourceGroupResource).GetTrunkedNetworks();
         }
 
         /// <summary>
@@ -1012,7 +1013,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <returns> An object representing collection of VirtualMachineResources and their operations over a VirtualMachineResource. </returns>
         public static VirtualMachineCollection GetVirtualMachines(this ResourceGroupResource resourceGroupResource)
         {
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetVirtualMachines();
+            return GetNetworkCloudResourceGroupResourceExtension(resourceGroupResource).GetVirtualMachines();
         }
 
         /// <summary>
@@ -1068,7 +1069,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <returns> An object representing collection of VolumeResources and their operations over a VolumeResource. </returns>
         public static VolumeCollection GetVolumes(this ResourceGroupResource resourceGroupResource)
         {
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetVolumes();
+            return GetNetworkCloudResourceGroupResourceExtension(resourceGroupResource).GetVolumes();
         }
 
         /// <summary>
@@ -1124,7 +1125,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <returns> An object representing collection of RackSkuResources and their operations over a RackSkuResource. </returns>
         public static RackSkuCollection GetRackSkus(this SubscriptionResource subscriptionResource)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetRackSkus();
+            return GetNetworkCloudSubscriptionResourceExtension(subscriptionResource).GetRackSkus();
         }
 
         /// <summary>
@@ -1193,7 +1194,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <returns> An async collection of <see cref="BareMetalMachineResource" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<BareMetalMachineResource> GetBareMetalMachinesAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetBareMetalMachinesAsync(cancellationToken);
+            return GetNetworkCloudSubscriptionResourceExtension(subscriptionResource).GetBareMetalMachinesAsync(cancellationToken);
         }
 
         /// <summary>
@@ -1214,7 +1215,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <returns> A collection of <see cref="BareMetalMachineResource" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<BareMetalMachineResource> GetBareMetalMachines(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetBareMetalMachines(cancellationToken);
+            return GetNetworkCloudSubscriptionResourceExtension(subscriptionResource).GetBareMetalMachines(cancellationToken);
         }
 
         /// <summary>
@@ -1235,7 +1236,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <returns> An async collection of <see cref="CloudServicesNetworkResource" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<CloudServicesNetworkResource> GetCloudServicesNetworksAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetCloudServicesNetworksAsync(cancellationToken);
+            return GetNetworkCloudSubscriptionResourceExtension(subscriptionResource).GetCloudServicesNetworksAsync(cancellationToken);
         }
 
         /// <summary>
@@ -1256,7 +1257,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <returns> A collection of <see cref="CloudServicesNetworkResource" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<CloudServicesNetworkResource> GetCloudServicesNetworks(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetCloudServicesNetworks(cancellationToken);
+            return GetNetworkCloudSubscriptionResourceExtension(subscriptionResource).GetCloudServicesNetworks(cancellationToken);
         }
 
         /// <summary>
@@ -1277,7 +1278,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <returns> An async collection of <see cref="ClusterManagerResource" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<ClusterManagerResource> GetClusterManagersAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetClusterManagersAsync(cancellationToken);
+            return GetNetworkCloudSubscriptionResourceExtension(subscriptionResource).GetClusterManagersAsync(cancellationToken);
         }
 
         /// <summary>
@@ -1298,7 +1299,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <returns> A collection of <see cref="ClusterManagerResource" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<ClusterManagerResource> GetClusterManagers(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetClusterManagers(cancellationToken);
+            return GetNetworkCloudSubscriptionResourceExtension(subscriptionResource).GetClusterManagers(cancellationToken);
         }
 
         /// <summary>
@@ -1319,7 +1320,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <returns> An async collection of <see cref="ClusterResource" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<ClusterResource> GetClustersAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetClustersAsync(cancellationToken);
+            return GetNetworkCloudSubscriptionResourceExtension(subscriptionResource).GetClustersAsync(cancellationToken);
         }
 
         /// <summary>
@@ -1340,7 +1341,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <returns> A collection of <see cref="ClusterResource" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<ClusterResource> GetClusters(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetClusters(cancellationToken);
+            return GetNetworkCloudSubscriptionResourceExtension(subscriptionResource).GetClusters(cancellationToken);
         }
 
         /// <summary>
@@ -1361,7 +1362,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <returns> An async collection of <see cref="DefaultCniNetworkResource" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<DefaultCniNetworkResource> GetDefaultCniNetworksAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetDefaultCniNetworksAsync(cancellationToken);
+            return GetNetworkCloudSubscriptionResourceExtension(subscriptionResource).GetDefaultCniNetworksAsync(cancellationToken);
         }
 
         /// <summary>
@@ -1382,7 +1383,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <returns> A collection of <see cref="DefaultCniNetworkResource" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<DefaultCniNetworkResource> GetDefaultCniNetworks(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetDefaultCniNetworks(cancellationToken);
+            return GetNetworkCloudSubscriptionResourceExtension(subscriptionResource).GetDefaultCniNetworks(cancellationToken);
         }
 
         /// <summary>
@@ -1403,7 +1404,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <returns> An async collection of <see cref="HybridAksClusterResource" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<HybridAksClusterResource> GetHybridAksClustersAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetHybridAksClustersAsync(cancellationToken);
+            return GetNetworkCloudSubscriptionResourceExtension(subscriptionResource).GetHybridAksClustersAsync(cancellationToken);
         }
 
         /// <summary>
@@ -1424,7 +1425,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <returns> A collection of <see cref="HybridAksClusterResource" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<HybridAksClusterResource> GetHybridAksClusters(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetHybridAksClusters(cancellationToken);
+            return GetNetworkCloudSubscriptionResourceExtension(subscriptionResource).GetHybridAksClusters(cancellationToken);
         }
 
         /// <summary>
@@ -1445,7 +1446,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <returns> An async collection of <see cref="L2NetworkResource" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<L2NetworkResource> GetL2NetworksAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetL2NetworksAsync(cancellationToken);
+            return GetNetworkCloudSubscriptionResourceExtension(subscriptionResource).GetL2NetworksAsync(cancellationToken);
         }
 
         /// <summary>
@@ -1466,7 +1467,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <returns> A collection of <see cref="L2NetworkResource" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<L2NetworkResource> GetL2Networks(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetL2Networks(cancellationToken);
+            return GetNetworkCloudSubscriptionResourceExtension(subscriptionResource).GetL2Networks(cancellationToken);
         }
 
         /// <summary>
@@ -1487,7 +1488,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <returns> An async collection of <see cref="L3NetworkResource" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<L3NetworkResource> GetL3NetworksAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetL3NetworksAsync(cancellationToken);
+            return GetNetworkCloudSubscriptionResourceExtension(subscriptionResource).GetL3NetworksAsync(cancellationToken);
         }
 
         /// <summary>
@@ -1508,7 +1509,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <returns> A collection of <see cref="L3NetworkResource" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<L3NetworkResource> GetL3Networks(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetL3Networks(cancellationToken);
+            return GetNetworkCloudSubscriptionResourceExtension(subscriptionResource).GetL3Networks(cancellationToken);
         }
 
         /// <summary>
@@ -1529,7 +1530,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <returns> An async collection of <see cref="RackResource" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<RackResource> GetRacksAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetRacksAsync(cancellationToken);
+            return GetNetworkCloudSubscriptionResourceExtension(subscriptionResource).GetRacksAsync(cancellationToken);
         }
 
         /// <summary>
@@ -1550,7 +1551,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <returns> A collection of <see cref="RackResource" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<RackResource> GetRacks(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetRacks(cancellationToken);
+            return GetNetworkCloudSubscriptionResourceExtension(subscriptionResource).GetRacks(cancellationToken);
         }
 
         /// <summary>
@@ -1571,7 +1572,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <returns> An async collection of <see cref="StorageApplianceResource" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<StorageApplianceResource> GetStorageAppliancesAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetStorageAppliancesAsync(cancellationToken);
+            return GetNetworkCloudSubscriptionResourceExtension(subscriptionResource).GetStorageAppliancesAsync(cancellationToken);
         }
 
         /// <summary>
@@ -1592,7 +1593,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <returns> A collection of <see cref="StorageApplianceResource" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<StorageApplianceResource> GetStorageAppliances(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetStorageAppliances(cancellationToken);
+            return GetNetworkCloudSubscriptionResourceExtension(subscriptionResource).GetStorageAppliances(cancellationToken);
         }
 
         /// <summary>
@@ -1613,7 +1614,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <returns> An async collection of <see cref="TrunkedNetworkResource" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<TrunkedNetworkResource> GetTrunkedNetworksAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetTrunkedNetworksAsync(cancellationToken);
+            return GetNetworkCloudSubscriptionResourceExtension(subscriptionResource).GetTrunkedNetworksAsync(cancellationToken);
         }
 
         /// <summary>
@@ -1634,7 +1635,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <returns> A collection of <see cref="TrunkedNetworkResource" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<TrunkedNetworkResource> GetTrunkedNetworks(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetTrunkedNetworks(cancellationToken);
+            return GetNetworkCloudSubscriptionResourceExtension(subscriptionResource).GetTrunkedNetworks(cancellationToken);
         }
 
         /// <summary>
@@ -1655,7 +1656,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <returns> An async collection of <see cref="VirtualMachineResource" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<VirtualMachineResource> GetVirtualMachinesAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetVirtualMachinesAsync(cancellationToken);
+            return GetNetworkCloudSubscriptionResourceExtension(subscriptionResource).GetVirtualMachinesAsync(cancellationToken);
         }
 
         /// <summary>
@@ -1676,7 +1677,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <returns> A collection of <see cref="VirtualMachineResource" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<VirtualMachineResource> GetVirtualMachines(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetVirtualMachines(cancellationToken);
+            return GetNetworkCloudSubscriptionResourceExtension(subscriptionResource).GetVirtualMachines(cancellationToken);
         }
 
         /// <summary>
@@ -1697,7 +1698,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <returns> An async collection of <see cref="VolumeResource" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<VolumeResource> GetVolumesAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetVolumesAsync(cancellationToken);
+            return GetNetworkCloudSubscriptionResourceExtension(subscriptionResource).GetVolumesAsync(cancellationToken);
         }
 
         /// <summary>
@@ -1718,7 +1719,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <returns> A collection of <see cref="VolumeResource" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<VolumeResource> GetVolumes(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetVolumes(cancellationToken);
+            return GetNetworkCloudSubscriptionResourceExtension(subscriptionResource).GetVolumes(cancellationToken);
         }
     }
 }

@@ -12,6 +12,7 @@ using Azure;
 using Azure.Core;
 using Azure.ResourceManager;
 using Azure.ResourceManager.MixedReality.Models;
+using Azure.ResourceManager.MixedReality.Testing;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.MixedReality
@@ -19,35 +20,35 @@ namespace Azure.ResourceManager.MixedReality
     /// <summary> A class to add extension methods to Azure.ResourceManager.MixedReality. </summary>
     public static partial class MixedRealityExtensions
     {
-        private static ResourceGroupResourceExtensionClient GetResourceGroupResourceExtensionClient(ArmResource resource)
+        private static MixedRealityResourceGroupResourceExtension GetMixedRealityResourceGroupResourceExtension(ArmResource resource)
         {
             return resource.GetCachedClient(client =>
             {
-                return new ResourceGroupResourceExtensionClient(client, resource.Id);
+                return new MixedRealityResourceGroupResourceExtension(client, resource.Id);
             });
         }
 
-        private static ResourceGroupResourceExtensionClient GetResourceGroupResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
+        private static MixedRealityResourceGroupResourceExtension GetMixedRealityResourceGroupResourceExtension(ArmClient client, ResourceIdentifier scope)
         {
             return client.GetResourceClient(() =>
             {
-                return new ResourceGroupResourceExtensionClient(client, scope);
+                return new MixedRealityResourceGroupResourceExtension(client, scope);
             });
         }
 
-        private static SubscriptionResourceExtensionClient GetSubscriptionResourceExtensionClient(ArmResource resource)
+        private static MixedRealitySubscriptionResourceExtension GetMixedRealitySubscriptionResourceExtension(ArmResource resource)
         {
             return resource.GetCachedClient(client =>
             {
-                return new SubscriptionResourceExtensionClient(client, resource.Id);
+                return new MixedRealitySubscriptionResourceExtension(client, resource.Id);
             });
         }
 
-        private static SubscriptionResourceExtensionClient GetSubscriptionResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
+        private static MixedRealitySubscriptionResourceExtension GetMixedRealitySubscriptionResourceExtension(ArmClient client, ResourceIdentifier scope)
         {
             return client.GetResourceClient(() =>
             {
-                return new SubscriptionResourceExtensionClient(client, scope);
+                return new MixedRealitySubscriptionResourceExtension(client, scope);
             });
         }
         #region SpatialAnchorsAccountResource
@@ -93,7 +94,7 @@ namespace Azure.ResourceManager.MixedReality
         /// <returns> An object representing collection of SpatialAnchorsAccountResources and their operations over a SpatialAnchorsAccountResource. </returns>
         public static SpatialAnchorsAccountCollection GetSpatialAnchorsAccounts(this ResourceGroupResource resourceGroupResource)
         {
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetSpatialAnchorsAccounts();
+            return GetMixedRealityResourceGroupResourceExtension(resourceGroupResource).GetSpatialAnchorsAccounts();
         }
 
         /// <summary>
@@ -149,7 +150,7 @@ namespace Azure.ResourceManager.MixedReality
         /// <returns> An object representing collection of RemoteRenderingAccountResources and their operations over a RemoteRenderingAccountResource. </returns>
         public static RemoteRenderingAccountCollection GetRemoteRenderingAccounts(this ResourceGroupResource resourceGroupResource)
         {
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetRemoteRenderingAccounts();
+            return GetMixedRealityResourceGroupResourceExtension(resourceGroupResource).GetRemoteRenderingAccounts();
         }
 
         /// <summary>
@@ -222,7 +223,7 @@ namespace Azure.ResourceManager.MixedReality
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            return await GetSubscriptionResourceExtensionClient(subscriptionResource).CheckMixedRealityNameAvailabilityAsync(location, content, cancellationToken).ConfigureAwait(false);
+            return await GetMixedRealitySubscriptionResourceExtension(subscriptionResource).CheckMixedRealityNameAvailabilityAsync(location, content, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -247,7 +248,7 @@ namespace Azure.ResourceManager.MixedReality
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).CheckMixedRealityNameAvailability(location, content, cancellationToken);
+            return GetMixedRealitySubscriptionResourceExtension(subscriptionResource).CheckMixedRealityNameAvailability(location, content, cancellationToken);
         }
 
         /// <summary>
@@ -268,7 +269,7 @@ namespace Azure.ResourceManager.MixedReality
         /// <returns> An async collection of <see cref="SpatialAnchorsAccountResource" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<SpatialAnchorsAccountResource> GetSpatialAnchorsAccountsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetSpatialAnchorsAccountsAsync(cancellationToken);
+            return GetMixedRealitySubscriptionResourceExtension(subscriptionResource).GetSpatialAnchorsAccountsAsync(cancellationToken);
         }
 
         /// <summary>
@@ -289,7 +290,7 @@ namespace Azure.ResourceManager.MixedReality
         /// <returns> A collection of <see cref="SpatialAnchorsAccountResource" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<SpatialAnchorsAccountResource> GetSpatialAnchorsAccounts(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetSpatialAnchorsAccounts(cancellationToken);
+            return GetMixedRealitySubscriptionResourceExtension(subscriptionResource).GetSpatialAnchorsAccounts(cancellationToken);
         }
 
         /// <summary>
@@ -310,7 +311,7 @@ namespace Azure.ResourceManager.MixedReality
         /// <returns> An async collection of <see cref="RemoteRenderingAccountResource" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<RemoteRenderingAccountResource> GetRemoteRenderingAccountsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetRemoteRenderingAccountsAsync(cancellationToken);
+            return GetMixedRealitySubscriptionResourceExtension(subscriptionResource).GetRemoteRenderingAccountsAsync(cancellationToken);
         }
 
         /// <summary>
@@ -331,7 +332,7 @@ namespace Azure.ResourceManager.MixedReality
         /// <returns> A collection of <see cref="RemoteRenderingAccountResource" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<RemoteRenderingAccountResource> GetRemoteRenderingAccounts(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetRemoteRenderingAccounts(cancellationToken);
+            return GetMixedRealitySubscriptionResourceExtension(subscriptionResource).GetRemoteRenderingAccounts(cancellationToken);
         }
     }
 }

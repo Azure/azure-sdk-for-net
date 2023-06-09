@@ -12,6 +12,7 @@ using Azure;
 using Azure.Core;
 using Azure.ResourceManager;
 using Azure.ResourceManager.MySql.Models;
+using Azure.ResourceManager.MySql.Testing;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.MySql
@@ -19,35 +20,35 @@ namespace Azure.ResourceManager.MySql
     /// <summary> A class to add extension methods to Azure.ResourceManager.MySql. </summary>
     public static partial class MySqlExtensions
     {
-        private static ResourceGroupResourceExtensionClient GetResourceGroupResourceExtensionClient(ArmResource resource)
+        private static MySqlResourceGroupResourceExtension GetMySqlResourceGroupResourceExtension(ArmResource resource)
         {
             return resource.GetCachedClient(client =>
             {
-                return new ResourceGroupResourceExtensionClient(client, resource.Id);
+                return new MySqlResourceGroupResourceExtension(client, resource.Id);
             });
         }
 
-        private static ResourceGroupResourceExtensionClient GetResourceGroupResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
+        private static MySqlResourceGroupResourceExtension GetMySqlResourceGroupResourceExtension(ArmClient client, ResourceIdentifier scope)
         {
             return client.GetResourceClient(() =>
             {
-                return new ResourceGroupResourceExtensionClient(client, scope);
+                return new MySqlResourceGroupResourceExtension(client, scope);
             });
         }
 
-        private static SubscriptionResourceExtensionClient GetSubscriptionResourceExtensionClient(ArmResource resource)
+        private static MySqlSubscriptionResourceExtension GetMySqlSubscriptionResourceExtension(ArmResource resource)
         {
             return resource.GetCachedClient(client =>
             {
-                return new SubscriptionResourceExtensionClient(client, resource.Id);
+                return new MySqlSubscriptionResourceExtension(client, resource.Id);
             });
         }
 
-        private static SubscriptionResourceExtensionClient GetSubscriptionResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
+        private static MySqlSubscriptionResourceExtension GetMySqlSubscriptionResourceExtension(ArmClient client, ResourceIdentifier scope)
         {
             return client.GetResourceClient(() =>
             {
-                return new SubscriptionResourceExtensionClient(client, scope);
+                return new MySqlSubscriptionResourceExtension(client, scope);
             });
         }
         #region MySqlServerResource
@@ -340,7 +341,7 @@ namespace Azure.ResourceManager.MySql
         /// <returns> An object representing collection of MySqlServerResources and their operations over a MySqlServerResource. </returns>
         public static MySqlServerCollection GetMySqlServers(this ResourceGroupResource resourceGroupResource)
         {
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetMySqlServers();
+            return GetMySqlResourceGroupResourceExtension(resourceGroupResource).GetMySqlServers();
         }
 
         /// <summary>
@@ -409,7 +410,7 @@ namespace Azure.ResourceManager.MySql
         /// <returns> An async collection of <see cref="MySqlServerResource" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<MySqlServerResource> GetMySqlServersAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetMySqlServersAsync(cancellationToken);
+            return GetMySqlSubscriptionResourceExtension(subscriptionResource).GetMySqlServersAsync(cancellationToken);
         }
 
         /// <summary>
@@ -430,7 +431,7 @@ namespace Azure.ResourceManager.MySql
         /// <returns> A collection of <see cref="MySqlServerResource" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<MySqlServerResource> GetMySqlServers(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetMySqlServers(cancellationToken);
+            return GetMySqlSubscriptionResourceExtension(subscriptionResource).GetMySqlServers(cancellationToken);
         }
 
         /// <summary>
@@ -452,7 +453,7 @@ namespace Azure.ResourceManager.MySql
         /// <returns> An async collection of <see cref="MySqlPerformanceTier" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<MySqlPerformanceTier> GetLocationBasedPerformanceTiersAsync(this SubscriptionResource subscriptionResource, AzureLocation locationName, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetLocationBasedPerformanceTiersAsync(locationName, cancellationToken);
+            return GetMySqlSubscriptionResourceExtension(subscriptionResource).GetLocationBasedPerformanceTiersAsync(locationName, cancellationToken);
         }
 
         /// <summary>
@@ -474,7 +475,7 @@ namespace Azure.ResourceManager.MySql
         /// <returns> A collection of <see cref="MySqlPerformanceTier" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<MySqlPerformanceTier> GetLocationBasedPerformanceTiers(this SubscriptionResource subscriptionResource, AzureLocation locationName, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetLocationBasedPerformanceTiers(locationName, cancellationToken);
+            return GetMySqlSubscriptionResourceExtension(subscriptionResource).GetLocationBasedPerformanceTiers(locationName, cancellationToken);
         }
 
         /// <summary>
@@ -498,7 +499,7 @@ namespace Azure.ResourceManager.MySql
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            return await GetSubscriptionResourceExtensionClient(subscriptionResource).CheckMySqlNameAvailabilityAsync(content, cancellationToken).ConfigureAwait(false);
+            return await GetMySqlSubscriptionResourceExtension(subscriptionResource).CheckMySqlNameAvailabilityAsync(content, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -522,7 +523,7 @@ namespace Azure.ResourceManager.MySql
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).CheckMySqlNameAvailability(content, cancellationToken);
+            return GetMySqlSubscriptionResourceExtension(subscriptionResource).CheckMySqlNameAvailability(content, cancellationToken);
         }
     }
 }
