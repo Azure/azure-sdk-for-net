@@ -33,14 +33,6 @@ namespace Azure.Storage.DataMovement.Blobs
         }
 
         /// <summary>
-        /// Optional. See <see cref="TransferCopyMethod"/>.
-        /// Defines the copy operation to use. Defaults to <see cref="TransferCopyMethod.SyncCopy"/>.
-        ///
-        /// Applies to copy transfers.
-        /// </summary>
-        public TransferCopyMethod CopyMethod { get; set; }
-
-        /// <summary>
         /// Optional. Defines custom metadata to set on the destination blob.
         ///
         /// Applies to upload and copy transfers.
