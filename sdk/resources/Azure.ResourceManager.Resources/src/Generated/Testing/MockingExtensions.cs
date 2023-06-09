@@ -34,20 +34,22 @@ namespace Azure.ResourceManager.Resources.Testing
             // for instance we get it like this: var tenantExtensionClient = new Mock<TenantExtensionClient>();
             // and then call this method instead:
             // tenantExtensionClient.Setup(tenant => tenant.CalculateDeploymentTemplateHashAsync(mockTemplate, default)) // using the same expression but change the type of the argument to extension client
+            if (ExpressionUtilities.IsExtensionMethod(expression, out var extensionMethodInfo))
+            {
+                // find the type of extension client: using pattern: $"{T}Extension"
+                // TODO -- update the pattern: $"{RPName}{T}Extension"
+                var extensionClientName = typeof(T).Name + "ExtensionClient";
+                var typeOfExtension = extensionMethodInfo.DeclaringType;
+                // get the namespace of the current SDK dynamically
+                var thisNamespace = typeOfExtension.Namespace;
+                var extensionClientType = typeOfExtension.Assembly.GetType($"{thisNamespace}.{extensionClientName}");
 
-            // first find the type name we are using in the expression
-            var name = typeof(T).Name;
-            // construct a new name from the above name to its corresponding extension client
-            var extensionClientName = name + "ExtensionClient";
-            // get the namespace of the current SDK dynamically
-            var thisNamespace = typeof(MockingExtensions).Namespace;
-            var ns = thisNamespace.Substring(0, thisNamespace.Length - 8);
-            var extensionClientType = typeof(MockingExtensions).Assembly.GetType($"{ns}.{extensionClientName}");
-            var methodInfo = extensionClientType.GetMethod(_mockingMethodName, BindingFlags.Static | BindingFlags.NonPublic).MakeGenericMethod(typeof(R));
-            var newExpression = ChangeType(expression, extensionClientType);
-            var intermediateSetup = methodInfo.Invoke(null, new object[] { mock, newExpression });
-
-            return new AzureSetupAdapter<T, R>(intermediateSetup);
+                return mock.RedirectMock(expression, extensionClientType);
+            }
+            else
+            {
+                return mock.Setup(expression);
+            }
         }
 
         private static Expression ChangeType<T, R>(Expression<Func<T, R>> expression, Type newType) where T : ArmResource
@@ -73,6 +75,55 @@ namespace Azure.ResourceManager.Resources.Testing
             var newMethodCallExpression = Expression.Call(instanceExpression, methodInfo, originalArguments.Skip(1));
 
             return Expression.Lambda(newMethodCallExpression, instanceExpression);
+        }
+
+        internal static ISetup<T, R> RedirectMock<T, R>(this Mock<T> originalMock, Expression<Func<T, R>> expression, Type extensionClientType) where T : ArmResource
+        {
+            var newExpression = ExpressionUtilities.ChangeType(expression, extensionClientType);
+            // create an intermediate mock - new Mock<TExtensionClient>()
+            var intermediateMock = (Mock)Activator.CreateInstance(typeof(Mock<>).MakeGenericType(extensionClientType));
+            // find the Setup(Expression<Func<T, TResult>>) method on the intermediateMock
+            var setupWithReturn = GetSetupWithReturnMethod(intermediateMock.GetType(), typeof(R));
+
+            // call Setup on the intermediate mock object
+            var intermediateSetup = setupWithReturn.Invoke(intermediateMock, new object[] { newExpression });
+
+            // call the Setup on the original mock object to Mock the GetCachedClient method
+            // first get an instance of It.IsAny<Func<ArmClient, TExtensionClient>>
+            var funcType = typeof(Func<,>).MakeGenericType(typeof(ArmClient), extensionClientType);
+            var itIsAnyExpression = Expression.Call(isAnyMethod.MakeGenericMethod(funcType));
+
+            // construct an expression of `tenant.GetCachedClient(itIsAnyResult)`
+            var parameter = Expression.Parameter(typeof(T), "resource");
+            var methodCallExpression = Expression.Call(parameter, "GetCachedClient", new[] { extensionClientType }, itIsAnyExpression);
+            var getCachedClientExpression = Expression.Lambda(typeof(Func<,>).MakeGenericType(typeof(T), extensionClientType), methodCallExpression, parameter);
+
+            // calling originalMock.Setup(tenant => tenant.GetCachedClient(It.IsAny<Func<ArmClient, TenantResourceExtensionClient>>()))
+            setupWithReturn = GetSetupWithReturnMethod(typeof(Mock<T>), extensionClientType);
+            var getCachedClientResult = setupWithReturn.Invoke(originalMock, new object[] { getCachedClientExpression });
+
+            // get intermediateMock.Object
+            var intermediateMockObject = intermediateMock.GetType().GetProperty("Object", extensionClientType).GetValue(intermediateMock);
+
+            // call Returns on the getCachedClientResult
+            var returnsMethod = getCachedClientResult.GetType().GetMethod("Returns", new[] { extensionClientType });
+            returnsMethod.Invoke(getCachedClientResult, new object[] { intermediateMockObject });
+
+            return new AzureSetupAdapter<T, R>(intermediateSetup);
+        }
+
+        private static readonly MethodInfo isAnyMethod = typeof(It).GetMethod(nameof(It.IsAny), BindingFlags.Public | BindingFlags.Static);
+
+        private static readonly MethodInfo getCachedClientMethod = typeof(ArmResource).GetMethod("GetCachedClient", BindingFlags.Public | BindingFlags.Instance);
+
+        private static MethodInfo GetSetupWithReturnMethod(Type mockType, Type typeOfReturn)
+        {
+            // find the Setup(Expression<Func<T, TResult>>) method on the Mock<T>
+            var setupMethods = mockType.GetMethods(BindingFlags.Public | BindingFlags.Instance)
+                .Where(m => m.Name == "Setup");
+            var setupWithReturn = setupMethods.First(m => m.IsGenericMethod);
+            var method = setupWithReturn.MakeGenericMethod(typeOfReturn);
+            return method;
         }
 
         /// <summary>
