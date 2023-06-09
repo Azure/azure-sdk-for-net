@@ -141,6 +141,7 @@ namespace Azure.Messaging.ServiceBus
             CancellationToken cancellationToken = default) =>
             await _sessionReceiver.SetSessionStateAsync(sessionState, cancellationToken).ConfigureAwait(false);
 
+        // TODO probably need a version of Abandon, Complete, and DeadLetter that operate on a list.
         /// <inheritdoc cref="ServiceBusReceiver.AbandonMessageAsync(ServiceBusReceivedMessage, IDictionary{string, object}, CancellationToken)"/>
         public virtual async Task AbandonMessageAsync(
             ServiceBusReceivedMessage message,
