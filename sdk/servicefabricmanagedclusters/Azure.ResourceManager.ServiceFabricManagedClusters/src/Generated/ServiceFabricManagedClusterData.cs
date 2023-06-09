@@ -17,15 +17,39 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
 {
     /// <summary>
     /// A class representing the ServiceFabricManagedCluster data model.
-    /// The manged cluster resource
+    /// The managed cluster resource
     /// 
     /// </summary>
     public partial class ServiceFabricManagedClusterData : TrackedResourceData
     {
         /// <summary> Initializes a new instance of ServiceFabricManagedClusterData. </summary>
         /// <param name="location"> The location. </param>
+        /// <param name="sku"> The sku of the managed cluster. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="sku"/> is null. </exception>
+        public ServiceFabricManagedClusterData(AzureLocation location, ServiceFabricManagedClustersSku sku) : base(location)
+        {
+            Argument.AssertNotNull(sku, nameof(sku));
+
+            Sku = sku;
+            ClusterCertificateThumbprints = new ChangeTrackingList<BinaryData>();
+            LoadBalancingRules = new ChangeTrackingList<ManagedClusterLoadBalancingRule>();
+            NetworkSecurityRules = new ChangeTrackingList<ServiceFabricManagedNetworkSecurityRule>();
+            Clients = new ChangeTrackingList<ManagedClusterClientCertificate>();
+            FabricSettings = new ChangeTrackingList<ClusterFabricSettingsSection>();
+            AddOnFeatures = new ChangeTrackingList<ManagedClusterAddOnFeature>();
+            IPTags = new ChangeTrackingList<ManagedClusterIPTag>();
+            AuxiliarySubnets = new ChangeTrackingList<ManagedClusterSubnet>();
+            ServiceEndpoints = new ChangeTrackingList<ManagedClusterServiceEndpoint>();
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ServiceFabricManagedClusterData"/> class.
+        /// </summary>
+        /// <param name="location"></param>
         public ServiceFabricManagedClusterData(AzureLocation location) : base(location)
         {
+
+            Sku = new ServiceFabricManagedClustersSku(ServiceFabricManagedClustersSkuName.Standard);
             ClusterCertificateThumbprints = new ChangeTrackingList<BinaryData>();
             LoadBalancingRules = new ChangeTrackingList<ManagedClusterLoadBalancingRule>();
             NetworkSecurityRules = new ChangeTrackingList<ServiceFabricManagedNetworkSecurityRule>();
@@ -79,8 +103,10 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
         /// <param name="isServicePublicIPEnabled"> Setting this to true will link the IPv4 address as the ServicePublicIP of the IPv6 address. It can only be set to True if IPv6 is enabled on the cluster. </param>
         /// <param name="auxiliarySubnets"> Auxiliary subnets for the cluster. </param>
         /// <param name="serviceEndpoints"> Service endpoints for subnets in the cluster. </param>
+        /// <param name="zonalUpdateMode"> Indicates the update mode for Cross Az clusters. </param>
+        /// <param name="useCustomVnet"> For new clusters, this parameter indicates that it uses Bring your own VNet, but the subnet is specified at node type level; and for such clusters, the subnetId property is required for node types. </param>
         /// <param name="etag"> Azure resource etag. </param>
-        internal ServiceFabricManagedClusterData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ServiceFabricManagedClustersSku sku, string dnsName, string fqdn, IPAddress ipv4Address, Guid? clusterId, ServiceFabricManagedClusterState? clusterState, IReadOnlyList<BinaryData> clusterCertificateThumbprints, int? clientConnectionPort, int? httpGatewayConnectionPort, string adminUserName, string adminPassword, IList<ManagedClusterLoadBalancingRule> loadBalancingRules, bool? isRdpAccessAllowed, IList<ServiceFabricManagedNetworkSecurityRule> networkSecurityRules, IList<ManagedClusterClientCertificate> clients, ManagedClusterAzureActiveDirectory azureActiveDirectory, IList<ClusterFabricSettingsSection> fabricSettings, ServiceFabricManagedResourceProvisioningState? provisioningState, string clusterCodeVersion, ManagedClusterUpgradeMode? clusterUpgradeMode, ManagedClusterUpgradeCadence? clusterUpgradeCadence, IList<ManagedClusterAddOnFeature> addOnFeatures, bool? isAutoOSUpgradeEnabled, bool? hasZoneResiliency, ApplicationTypeVersionsCleanupPolicy applicationTypeVersionsCleanupPolicy, bool? isIPv6Enabled, string subnetId, IList<ManagedClusterIPTag> ipTags, IPAddress ipv6Address, bool? isServicePublicIPEnabled, IList<ManagedClusterSubnet> auxiliarySubnets, IList<ManagedClusterServiceEndpoint> serviceEndpoints, ETag? etag) : base(id, name, resourceType, systemData, tags, location)
+        internal ServiceFabricManagedClusterData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ServiceFabricManagedClustersSku sku, string dnsName, string fqdn, IPAddress ipv4Address, Guid? clusterId, ServiceFabricManagedClusterState? clusterState, IReadOnlyList<BinaryData> clusterCertificateThumbprints, int? clientConnectionPort, int? httpGatewayConnectionPort, string adminUserName, string adminPassword, IList<ManagedClusterLoadBalancingRule> loadBalancingRules, bool? isRdpAccessAllowed, IList<ServiceFabricManagedNetworkSecurityRule> networkSecurityRules, IList<ManagedClusterClientCertificate> clients, ManagedClusterAzureActiveDirectory azureActiveDirectory, IList<ClusterFabricSettingsSection> fabricSettings, ServiceFabricManagedResourceProvisioningState? provisioningState, string clusterCodeVersion, ManagedClusterUpgradeMode? clusterUpgradeMode, ManagedClusterUpgradeCadence? clusterUpgradeCadence, IList<ManagedClusterAddOnFeature> addOnFeatures, bool? isAutoOSUpgradeEnabled, bool? hasZoneResiliency, ApplicationTypeVersionsCleanupPolicy applicationTypeVersionsCleanupPolicy, bool? isIPv6Enabled, string subnetId, IList<ManagedClusterIPTag> ipTags, IPAddress ipv6Address, bool? isServicePublicIPEnabled, IList<ManagedClusterSubnet> auxiliarySubnets, IList<ManagedClusterServiceEndpoint> serviceEndpoints, ZonalUpdateMode? zonalUpdateMode, bool? useCustomVnet, ETag? etag) : base(id, name, resourceType, systemData, tags, location)
         {
             Sku = sku;
             DnsName = dnsName;
@@ -114,6 +140,8 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
             IsServicePublicIPEnabled = isServicePublicIPEnabled;
             AuxiliarySubnets = auxiliarySubnets;
             ServiceEndpoints = serviceEndpoints;
+            ZonalUpdateMode = zonalUpdateMode;
+            UseCustomVnet = useCustomVnet;
             ETag = etag;
         }
 
@@ -233,6 +261,10 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
         public IList<ManagedClusterSubnet> AuxiliarySubnets { get; }
         /// <summary> Service endpoints for subnets in the cluster. </summary>
         public IList<ManagedClusterServiceEndpoint> ServiceEndpoints { get; }
+        /// <summary> Indicates the update mode for Cross Az clusters. </summary>
+        public ZonalUpdateMode? ZonalUpdateMode { get; set; }
+        /// <summary> For new clusters, this parameter indicates that it uses Bring your own VNet, but the subnet is specified at node type level; and for such clusters, the subnetId property is required for node types. </summary>
+        public bool? UseCustomVnet { get; set; }
         /// <summary> Azure resource etag. </summary>
         public ETag? ETag { get; }
     }

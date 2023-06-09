@@ -50,6 +50,44 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
                 return new SubscriptionResourceExtensionClient(client, scope);
             });
         }
+        #region ServiceFabricManagedClusterResource
+        /// <summary>
+        /// Gets an object representing a <see cref="ServiceFabricManagedClusterResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ServiceFabricManagedClusterResource.CreateResourceIdentifier" /> to create a <see cref="ServiceFabricManagedClusterResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="ServiceFabricManagedClusterResource" /> object. </returns>
+        public static ServiceFabricManagedClusterResource GetServiceFabricManagedClusterResource(this ArmClient client, ResourceIdentifier id)
+        {
+            return client.GetResourceClient(() =>
+            {
+                ServiceFabricManagedClusterResource.ValidateResourceId(id);
+                return new ServiceFabricManagedClusterResource(client, id);
+            }
+            );
+        }
+        #endregion
+
+        #region ServiceFabricManagedNodeTypeResource
+        /// <summary>
+        /// Gets an object representing a <see cref="ServiceFabricManagedNodeTypeResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ServiceFabricManagedNodeTypeResource.CreateResourceIdentifier" /> to create a <see cref="ServiceFabricManagedNodeTypeResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="ServiceFabricManagedNodeTypeResource" /> object. </returns>
+        public static ServiceFabricManagedNodeTypeResource GetServiceFabricManagedNodeTypeResource(this ArmClient client, ResourceIdentifier id)
+        {
+            return client.GetResourceClient(() =>
+            {
+                ServiceFabricManagedNodeTypeResource.ValidateResourceId(id);
+                return new ServiceFabricManagedNodeTypeResource(client, id);
+            }
+            );
+        }
+        #endregion
+
         #region ServiceFabricManagedApplicationTypeResource
         /// <summary>
         /// Gets an object representing a <see cref="ServiceFabricManagedApplicationTypeResource" /> along with the instance operations that can be performed on it but with no data.
@@ -121,44 +159,6 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
             {
                 ServiceFabricManagedServiceResource.ValidateResourceId(id);
                 return new ServiceFabricManagedServiceResource(client, id);
-            }
-            );
-        }
-        #endregion
-
-        #region ServiceFabricManagedClusterResource
-        /// <summary>
-        /// Gets an object representing a <see cref="ServiceFabricManagedClusterResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ServiceFabricManagedClusterResource.CreateResourceIdentifier" /> to create a <see cref="ServiceFabricManagedClusterResource" /> <see cref="ResourceIdentifier" /> from its components.
-        /// </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ServiceFabricManagedClusterResource" /> object. </returns>
-        public static ServiceFabricManagedClusterResource GetServiceFabricManagedClusterResource(this ArmClient client, ResourceIdentifier id)
-        {
-            return client.GetResourceClient(() =>
-            {
-                ServiceFabricManagedClusterResource.ValidateResourceId(id);
-                return new ServiceFabricManagedClusterResource(client, id);
-            }
-            );
-        }
-        #endregion
-
-        #region ServiceFabricManagedNodeTypeResource
-        /// <summary>
-        /// Gets an object representing a <see cref="ServiceFabricManagedNodeTypeResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ServiceFabricManagedNodeTypeResource.CreateResourceIdentifier" /> to create a <see cref="ServiceFabricManagedNodeTypeResource" /> <see cref="ResourceIdentifier" /> from its components.
-        /// </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ServiceFabricManagedNodeTypeResource" /> object. </returns>
-        public static ServiceFabricManagedNodeTypeResource GetServiceFabricManagedNodeTypeResource(this ArmClient client, ResourceIdentifier id)
-        {
-            return client.GetResourceClient(() =>
-            {
-                ServiceFabricManagedNodeTypeResource.ValidateResourceId(id);
-                return new ServiceFabricManagedNodeTypeResource(client, id);
             }
             );
         }

@@ -21,11 +21,13 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
         /// <param name="ipAddressType"> The IP address type of this frontend configuration. If omitted the default value is IPv4. </param>
         /// <param name="loadBalancerBackendAddressPoolId"> The resource Id of the Load Balancer backend address pool that the VM instances of the node type are associated with. The format of the resource Id is &apos;/subscriptions/&lt;subscriptionId&gt;/resourceGroups/&lt;resourceGroupName&gt;/providers/Microsoft.Network/loadBalancers/&lt;loadBalancerName&gt;/backendAddressPools/&lt;backendAddressPoolName&gt;&apos;. </param>
         /// <param name="loadBalancerInboundNatPoolId"> The resource Id of the Load Balancer inbound NAT pool that the VM instances of the node type are associated with. The format of the resource Id is &apos;/subscriptions/&lt;subscriptionId&gt;/resourceGroups/&lt;resourceGroupName&gt;/providers/Microsoft.Network/loadBalancers/&lt;loadBalancerName&gt;/inboundNatPools/&lt;inboundNatPoolName&gt;&apos;. </param>
-        internal NodeTypeFrontendConfiguration(NodeTypeFrontendConfigurationIPAddressType? ipAddressType, ResourceIdentifier loadBalancerBackendAddressPoolId, ResourceIdentifier loadBalancerInboundNatPoolId)
+        /// <param name="applicationGatewayBackendAddressPoolId"> The resource Id of application gateway backend address pool. The format of the resource Id is &apos;/subscriptions/&lt;subscriptionId&gt;/resourceGroups/&lt;resourceGroupName&gt;/providers/Microsoft.Network/applicationGateways/&lt;applicationGatewayName&gt;/backendAddressPools/&lt;backendAddressPoolName&gt;&apos;. </param>
+        internal NodeTypeFrontendConfiguration(NodeTypeFrontendConfigurationIPAddressType? ipAddressType, ResourceIdentifier loadBalancerBackendAddressPoolId, ResourceIdentifier loadBalancerInboundNatPoolId, ResourceIdentifier applicationGatewayBackendAddressPoolId)
         {
             IPAddressType = ipAddressType;
             LoadBalancerBackendAddressPoolId = loadBalancerBackendAddressPoolId;
             LoadBalancerInboundNatPoolId = loadBalancerInboundNatPoolId;
+            ApplicationGatewayBackendAddressPoolId = applicationGatewayBackendAddressPoolId;
         }
 
         /// <summary> The IP address type of this frontend configuration. If omitted the default value is IPv4. </summary>
@@ -34,5 +36,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
         public ResourceIdentifier LoadBalancerBackendAddressPoolId { get; set; }
         /// <summary> The resource Id of the Load Balancer inbound NAT pool that the VM instances of the node type are associated with. The format of the resource Id is &apos;/subscriptions/&lt;subscriptionId&gt;/resourceGroups/&lt;resourceGroupName&gt;/providers/Microsoft.Network/loadBalancers/&lt;loadBalancerName&gt;/inboundNatPools/&lt;inboundNatPoolName&gt;&apos;. </summary>
         public ResourceIdentifier LoadBalancerInboundNatPoolId { get; set; }
+        /// <summary> The resource Id of application gateway backend address pool. The format of the resource Id is &apos;/subscriptions/&lt;subscriptionId&gt;/resourceGroups/&lt;resourceGroupName&gt;/providers/Microsoft.Network/applicationGateways/&lt;applicationGatewayName&gt;/backendAddressPools/&lt;backendAddressPoolName&gt;&apos;. </summary>
+        public ResourceIdentifier ApplicationGatewayBackendAddressPoolId { get; set; }
     }
 }
