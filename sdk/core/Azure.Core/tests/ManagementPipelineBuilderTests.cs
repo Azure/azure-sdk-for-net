@@ -7,7 +7,6 @@ using System.Reflection;
 using System.Threading;
 using Azure.Core.Pipeline;
 using Azure.Core.TestFramework;
-using Azure.Identity;
 using Azure.ResourceManager;
 using NUnit.Framework;
 using static Azure.Core.Tests.Management.ManagementPipelineBuilderTests;
