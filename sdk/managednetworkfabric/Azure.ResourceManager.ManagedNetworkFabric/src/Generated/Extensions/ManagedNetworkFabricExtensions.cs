@@ -11,6 +11,7 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.ResourceManager;
+using Azure.ResourceManager.ManagedNetworkFabric.Testing;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.ManagedNetworkFabric
@@ -18,35 +19,35 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
     /// <summary> A class to add extension methods to Azure.ResourceManager.ManagedNetworkFabric. </summary>
     public static partial class ManagedNetworkFabricExtensions
     {
-        private static ResourceGroupResourceExtensionClient GetResourceGroupResourceExtensionClient(ArmResource resource)
+        private static ManagedNetworkFabricResourceGroupResourceExtension GetManagedNetworkFabricResourceGroupResourceExtension(ArmResource resource)
         {
             return resource.GetCachedClient(client =>
             {
-                return new ResourceGroupResourceExtensionClient(client, resource.Id);
+                return new ManagedNetworkFabricResourceGroupResourceExtension(client, resource.Id);
             });
         }
 
-        private static ResourceGroupResourceExtensionClient GetResourceGroupResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
+        private static ManagedNetworkFabricResourceGroupResourceExtension GetManagedNetworkFabricResourceGroupResourceExtension(ArmClient client, ResourceIdentifier scope)
         {
             return client.GetResourceClient(() =>
             {
-                return new ResourceGroupResourceExtensionClient(client, scope);
+                return new ManagedNetworkFabricResourceGroupResourceExtension(client, scope);
             });
         }
 
-        private static SubscriptionResourceExtensionClient GetSubscriptionResourceExtensionClient(ArmResource resource)
+        private static ManagedNetworkFabricSubscriptionResourceExtension GetManagedNetworkFabricSubscriptionResourceExtension(ArmResource resource)
         {
             return resource.GetCachedClient(client =>
             {
-                return new SubscriptionResourceExtensionClient(client, resource.Id);
+                return new ManagedNetworkFabricSubscriptionResourceExtension(client, resource.Id);
             });
         }
 
-        private static SubscriptionResourceExtensionClient GetSubscriptionResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
+        private static ManagedNetworkFabricSubscriptionResourceExtension GetManagedNetworkFabricSubscriptionResourceExtension(ArmClient client, ResourceIdentifier scope)
         {
             return client.GetResourceClient(() =>
             {
-                return new SubscriptionResourceExtensionClient(client, scope);
+                return new ManagedNetworkFabricSubscriptionResourceExtension(client, scope);
             });
         }
         #region AccessControlListResource
@@ -377,7 +378,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <returns> An object representing collection of AccessControlListResources and their operations over a AccessControlListResource. </returns>
         public static AccessControlListCollection GetAccessControlLists(this ResourceGroupResource resourceGroupResource)
         {
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetAccessControlLists();
+            return GetManagedNetworkFabricResourceGroupResourceExtension(resourceGroupResource).GetAccessControlLists();
         }
 
         /// <summary>
@@ -433,7 +434,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <returns> An object representing collection of IPCommunityListResources and their operations over a IPCommunityListResource. </returns>
         public static IPCommunityListCollection GetIPCommunityLists(this ResourceGroupResource resourceGroupResource)
         {
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetIPCommunityLists();
+            return GetManagedNetworkFabricResourceGroupResourceExtension(resourceGroupResource).GetIPCommunityLists();
         }
 
         /// <summary>
@@ -489,7 +490,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <returns> An object representing collection of IPPrefixListResources and their operations over a IPPrefixListResource. </returns>
         public static IPPrefixListCollection GetIPPrefixLists(this ResourceGroupResource resourceGroupResource)
         {
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetIPPrefixLists();
+            return GetManagedNetworkFabricResourceGroupResourceExtension(resourceGroupResource).GetIPPrefixLists();
         }
 
         /// <summary>
@@ -545,7 +546,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <returns> An object representing collection of L2IsolationDomainResources and their operations over a L2IsolationDomainResource. </returns>
         public static L2IsolationDomainCollection GetL2IsolationDomains(this ResourceGroupResource resourceGroupResource)
         {
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetL2IsolationDomains();
+            return GetManagedNetworkFabricResourceGroupResourceExtension(resourceGroupResource).GetL2IsolationDomains();
         }
 
         /// <summary>
@@ -601,7 +602,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <returns> An object representing collection of L3IsolationDomainResources and their operations over a L3IsolationDomainResource. </returns>
         public static L3IsolationDomainCollection GetL3IsolationDomains(this ResourceGroupResource resourceGroupResource)
         {
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetL3IsolationDomains();
+            return GetManagedNetworkFabricResourceGroupResourceExtension(resourceGroupResource).GetL3IsolationDomains();
         }
 
         /// <summary>
@@ -657,7 +658,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <returns> An object representing collection of NetworkDeviceResources and their operations over a NetworkDeviceResource. </returns>
         public static NetworkDeviceCollection GetNetworkDevices(this ResourceGroupResource resourceGroupResource)
         {
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetNetworkDevices();
+            return GetManagedNetworkFabricResourceGroupResourceExtension(resourceGroupResource).GetNetworkDevices();
         }
 
         /// <summary>
@@ -713,7 +714,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <returns> An object representing collection of NetworkFabricControllerResources and their operations over a NetworkFabricControllerResource. </returns>
         public static NetworkFabricControllerCollection GetNetworkFabricControllers(this ResourceGroupResource resourceGroupResource)
         {
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetNetworkFabricControllers();
+            return GetManagedNetworkFabricResourceGroupResourceExtension(resourceGroupResource).GetNetworkFabricControllers();
         }
 
         /// <summary>
@@ -769,7 +770,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <returns> An object representing collection of NetworkFabricResources and their operations over a NetworkFabricResource. </returns>
         public static NetworkFabricCollection GetNetworkFabrics(this ResourceGroupResource resourceGroupResource)
         {
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetNetworkFabrics();
+            return GetManagedNetworkFabricResourceGroupResourceExtension(resourceGroupResource).GetNetworkFabrics();
         }
 
         /// <summary>
@@ -825,7 +826,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <returns> An object representing collection of NetworkRackResources and their operations over a NetworkRackResource. </returns>
         public static NetworkRackCollection GetNetworkRacks(this ResourceGroupResource resourceGroupResource)
         {
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetNetworkRacks();
+            return GetManagedNetworkFabricResourceGroupResourceExtension(resourceGroupResource).GetNetworkRacks();
         }
 
         /// <summary>
@@ -881,7 +882,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <returns> An object representing collection of RoutePolicyResources and their operations over a RoutePolicyResource. </returns>
         public static RoutePolicyCollection GetRoutePolicies(this ResourceGroupResource resourceGroupResource)
         {
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetRoutePolicies();
+            return GetManagedNetworkFabricResourceGroupResourceExtension(resourceGroupResource).GetRoutePolicies();
         }
 
         /// <summary>
@@ -937,7 +938,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <returns> An object representing collection of NetworkDeviceSkuResources and their operations over a NetworkDeviceSkuResource. </returns>
         public static NetworkDeviceSkuCollection GetNetworkDeviceSkus(this SubscriptionResource subscriptionResource)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetNetworkDeviceSkus();
+            return GetManagedNetworkFabricSubscriptionResourceExtension(subscriptionResource).GetNetworkDeviceSkus();
         }
 
         /// <summary>
@@ -993,7 +994,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <returns> An object representing collection of NetworkFabricSkuResources and their operations over a NetworkFabricSkuResource. </returns>
         public static NetworkFabricSkuCollection GetNetworkFabricSkus(this SubscriptionResource subscriptionResource)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetNetworkFabricSkus();
+            return GetManagedNetworkFabricSubscriptionResourceExtension(subscriptionResource).GetNetworkFabricSkus();
         }
 
         /// <summary>
@@ -1049,7 +1050,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <returns> An object representing collection of NetworkRackSkuResources and their operations over a NetworkRackSkuResource. </returns>
         public static NetworkRackSkuCollection GetNetworkRackSkus(this SubscriptionResource subscriptionResource)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetNetworkRackSkus();
+            return GetManagedNetworkFabricSubscriptionResourceExtension(subscriptionResource).GetNetworkRackSkus();
         }
 
         /// <summary>
@@ -1118,7 +1119,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <returns> An async collection of <see cref="AccessControlListResource" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<AccessControlListResource> GetAccessControlListsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetAccessControlListsAsync(cancellationToken);
+            return GetManagedNetworkFabricSubscriptionResourceExtension(subscriptionResource).GetAccessControlListsAsync(cancellationToken);
         }
 
         /// <summary>
@@ -1139,7 +1140,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <returns> A collection of <see cref="AccessControlListResource" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<AccessControlListResource> GetAccessControlLists(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetAccessControlLists(cancellationToken);
+            return GetManagedNetworkFabricSubscriptionResourceExtension(subscriptionResource).GetAccessControlLists(cancellationToken);
         }
 
         /// <summary>
@@ -1160,7 +1161,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <returns> An async collection of <see cref="IPCommunityListResource" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<IPCommunityListResource> GetIPCommunityListsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetIPCommunityListsAsync(cancellationToken);
+            return GetManagedNetworkFabricSubscriptionResourceExtension(subscriptionResource).GetIPCommunityListsAsync(cancellationToken);
         }
 
         /// <summary>
@@ -1181,7 +1182,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <returns> A collection of <see cref="IPCommunityListResource" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<IPCommunityListResource> GetIPCommunityLists(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetIPCommunityLists(cancellationToken);
+            return GetManagedNetworkFabricSubscriptionResourceExtension(subscriptionResource).GetIPCommunityLists(cancellationToken);
         }
 
         /// <summary>
@@ -1202,7 +1203,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <returns> An async collection of <see cref="IPPrefixListResource" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<IPPrefixListResource> GetIPPrefixListsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetIPPrefixListsAsync(cancellationToken);
+            return GetManagedNetworkFabricSubscriptionResourceExtension(subscriptionResource).GetIPPrefixListsAsync(cancellationToken);
         }
 
         /// <summary>
@@ -1223,7 +1224,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <returns> A collection of <see cref="IPPrefixListResource" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<IPPrefixListResource> GetIPPrefixLists(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetIPPrefixLists(cancellationToken);
+            return GetManagedNetworkFabricSubscriptionResourceExtension(subscriptionResource).GetIPPrefixLists(cancellationToken);
         }
 
         /// <summary>
@@ -1244,7 +1245,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <returns> An async collection of <see cref="L2IsolationDomainResource" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<L2IsolationDomainResource> GetL2IsolationDomainsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetL2IsolationDomainsAsync(cancellationToken);
+            return GetManagedNetworkFabricSubscriptionResourceExtension(subscriptionResource).GetL2IsolationDomainsAsync(cancellationToken);
         }
 
         /// <summary>
@@ -1265,7 +1266,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <returns> A collection of <see cref="L2IsolationDomainResource" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<L2IsolationDomainResource> GetL2IsolationDomains(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetL2IsolationDomains(cancellationToken);
+            return GetManagedNetworkFabricSubscriptionResourceExtension(subscriptionResource).GetL2IsolationDomains(cancellationToken);
         }
 
         /// <summary>
@@ -1286,7 +1287,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <returns> An async collection of <see cref="L3IsolationDomainResource" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<L3IsolationDomainResource> GetL3IsolationDomainsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetL3IsolationDomainsAsync(cancellationToken);
+            return GetManagedNetworkFabricSubscriptionResourceExtension(subscriptionResource).GetL3IsolationDomainsAsync(cancellationToken);
         }
 
         /// <summary>
@@ -1307,7 +1308,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <returns> A collection of <see cref="L3IsolationDomainResource" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<L3IsolationDomainResource> GetL3IsolationDomains(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetL3IsolationDomains(cancellationToken);
+            return GetManagedNetworkFabricSubscriptionResourceExtension(subscriptionResource).GetL3IsolationDomains(cancellationToken);
         }
 
         /// <summary>
@@ -1328,7 +1329,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <returns> An async collection of <see cref="NetworkDeviceResource" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<NetworkDeviceResource> GetNetworkDevicesAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetNetworkDevicesAsync(cancellationToken);
+            return GetManagedNetworkFabricSubscriptionResourceExtension(subscriptionResource).GetNetworkDevicesAsync(cancellationToken);
         }
 
         /// <summary>
@@ -1349,7 +1350,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <returns> A collection of <see cref="NetworkDeviceResource" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<NetworkDeviceResource> GetNetworkDevices(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetNetworkDevices(cancellationToken);
+            return GetManagedNetworkFabricSubscriptionResourceExtension(subscriptionResource).GetNetworkDevices(cancellationToken);
         }
 
         /// <summary>
@@ -1370,7 +1371,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <returns> An async collection of <see cref="NetworkFabricControllerResource" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<NetworkFabricControllerResource> GetNetworkFabricControllersAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetNetworkFabricControllersAsync(cancellationToken);
+            return GetManagedNetworkFabricSubscriptionResourceExtension(subscriptionResource).GetNetworkFabricControllersAsync(cancellationToken);
         }
 
         /// <summary>
@@ -1391,7 +1392,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <returns> A collection of <see cref="NetworkFabricControllerResource" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<NetworkFabricControllerResource> GetNetworkFabricControllers(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetNetworkFabricControllers(cancellationToken);
+            return GetManagedNetworkFabricSubscriptionResourceExtension(subscriptionResource).GetNetworkFabricControllers(cancellationToken);
         }
 
         /// <summary>
@@ -1412,7 +1413,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <returns> An async collection of <see cref="NetworkFabricResource" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<NetworkFabricResource> GetNetworkFabricsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetNetworkFabricsAsync(cancellationToken);
+            return GetManagedNetworkFabricSubscriptionResourceExtension(subscriptionResource).GetNetworkFabricsAsync(cancellationToken);
         }
 
         /// <summary>
@@ -1433,7 +1434,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <returns> A collection of <see cref="NetworkFabricResource" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<NetworkFabricResource> GetNetworkFabrics(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetNetworkFabrics(cancellationToken);
+            return GetManagedNetworkFabricSubscriptionResourceExtension(subscriptionResource).GetNetworkFabrics(cancellationToken);
         }
 
         /// <summary>
@@ -1454,7 +1455,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <returns> An async collection of <see cref="NetworkRackResource" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<NetworkRackResource> GetNetworkRacksAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetNetworkRacksAsync(cancellationToken);
+            return GetManagedNetworkFabricSubscriptionResourceExtension(subscriptionResource).GetNetworkRacksAsync(cancellationToken);
         }
 
         /// <summary>
@@ -1475,7 +1476,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <returns> A collection of <see cref="NetworkRackResource" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<NetworkRackResource> GetNetworkRacks(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetNetworkRacks(cancellationToken);
+            return GetManagedNetworkFabricSubscriptionResourceExtension(subscriptionResource).GetNetworkRacks(cancellationToken);
         }
 
         /// <summary>
@@ -1496,7 +1497,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <returns> An async collection of <see cref="RoutePolicyResource" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<RoutePolicyResource> GetRoutePoliciesAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetRoutePoliciesAsync(cancellationToken);
+            return GetManagedNetworkFabricSubscriptionResourceExtension(subscriptionResource).GetRoutePoliciesAsync(cancellationToken);
         }
 
         /// <summary>
@@ -1517,7 +1518,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <returns> A collection of <see cref="RoutePolicyResource" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<RoutePolicyResource> GetRoutePolicies(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetRoutePolicies(cancellationToken);
+            return GetManagedNetworkFabricSubscriptionResourceExtension(subscriptionResource).GetRoutePolicies(cancellationToken);
         }
     }
 }

@@ -12,6 +12,7 @@ using Azure;
 using Azure.Core;
 using Azure.ResourceManager;
 using Azure.ResourceManager.MachineLearning.Models;
+using Azure.ResourceManager.MachineLearning.Testing;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.MachineLearning
@@ -19,35 +20,35 @@ namespace Azure.ResourceManager.MachineLearning
     /// <summary> A class to add extension methods to Azure.ResourceManager.MachineLearning. </summary>
     public static partial class MachineLearningExtensions
     {
-        private static ResourceGroupResourceExtensionClient GetResourceGroupResourceExtensionClient(ArmResource resource)
+        private static MachineLearningResourceGroupResourceExtension GetMachineLearningResourceGroupResourceExtension(ArmResource resource)
         {
             return resource.GetCachedClient(client =>
             {
-                return new ResourceGroupResourceExtensionClient(client, resource.Id);
+                return new MachineLearningResourceGroupResourceExtension(client, resource.Id);
             });
         }
 
-        private static ResourceGroupResourceExtensionClient GetResourceGroupResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
+        private static MachineLearningResourceGroupResourceExtension GetMachineLearningResourceGroupResourceExtension(ArmClient client, ResourceIdentifier scope)
         {
             return client.GetResourceClient(() =>
             {
-                return new ResourceGroupResourceExtensionClient(client, scope);
+                return new MachineLearningResourceGroupResourceExtension(client, scope);
             });
         }
 
-        private static SubscriptionResourceExtensionClient GetSubscriptionResourceExtensionClient(ArmResource resource)
+        private static MachineLearningSubscriptionResourceExtension GetMachineLearningSubscriptionResourceExtension(ArmResource resource)
         {
             return resource.GetCachedClient(client =>
             {
-                return new SubscriptionResourceExtensionClient(client, resource.Id);
+                return new MachineLearningSubscriptionResourceExtension(client, resource.Id);
             });
         }
 
-        private static SubscriptionResourceExtensionClient GetSubscriptionResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
+        private static MachineLearningSubscriptionResourceExtension GetMachineLearningSubscriptionResourceExtension(ArmClient client, ResourceIdentifier scope)
         {
             return client.GetResourceClient(() =>
             {
-                return new SubscriptionResourceExtensionClient(client, scope);
+                return new MachineLearningSubscriptionResourceExtension(client, scope);
             });
         }
         #region MachineLearningWorkspaceResource
@@ -454,7 +455,7 @@ namespace Azure.ResourceManager.MachineLearning
         /// <returns> An object representing collection of MachineLearningWorkspaceResources and their operations over a MachineLearningWorkspaceResource. </returns>
         public static MachineLearningWorkspaceCollection GetMachineLearningWorkspaces(this ResourceGroupResource resourceGroupResource)
         {
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetMachineLearningWorkspaces();
+            return GetMachineLearningResourceGroupResourceExtension(resourceGroupResource).GetMachineLearningWorkspaces();
         }
 
         /// <summary>
@@ -524,7 +525,7 @@ namespace Azure.ResourceManager.MachineLearning
         /// <returns> An async collection of <see cref="MachineLearningWorkspaceResource" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<MachineLearningWorkspaceResource> GetMachineLearningWorkspacesAsync(this SubscriptionResource subscriptionResource, string skip = null, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetMachineLearningWorkspacesAsync(skip, cancellationToken);
+            return GetMachineLearningSubscriptionResourceExtension(subscriptionResource).GetMachineLearningWorkspacesAsync(skip, cancellationToken);
         }
 
         /// <summary>
@@ -546,7 +547,7 @@ namespace Azure.ResourceManager.MachineLearning
         /// <returns> A collection of <see cref="MachineLearningWorkspaceResource" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<MachineLearningWorkspaceResource> GetMachineLearningWorkspaces(this SubscriptionResource subscriptionResource, string skip = null, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetMachineLearningWorkspaces(skip, cancellationToken);
+            return GetMachineLearningSubscriptionResourceExtension(subscriptionResource).GetMachineLearningWorkspaces(skip, cancellationToken);
         }
 
         /// <summary>
@@ -568,7 +569,7 @@ namespace Azure.ResourceManager.MachineLearning
         /// <returns> An async collection of <see cref="MachineLearningUsage" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<MachineLearningUsage> GetMachineLearningUsagesAsync(this SubscriptionResource subscriptionResource, AzureLocation location, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetMachineLearningUsagesAsync(location, cancellationToken);
+            return GetMachineLearningSubscriptionResourceExtension(subscriptionResource).GetMachineLearningUsagesAsync(location, cancellationToken);
         }
 
         /// <summary>
@@ -590,7 +591,7 @@ namespace Azure.ResourceManager.MachineLearning
         /// <returns> A collection of <see cref="MachineLearningUsage" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<MachineLearningUsage> GetMachineLearningUsages(this SubscriptionResource subscriptionResource, AzureLocation location, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetMachineLearningUsages(location, cancellationToken);
+            return GetMachineLearningSubscriptionResourceExtension(subscriptionResource).GetMachineLearningUsages(location, cancellationToken);
         }
 
         /// <summary>
@@ -612,7 +613,7 @@ namespace Azure.ResourceManager.MachineLearning
         /// <returns> An async collection of <see cref="MachineLearningVmSize" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<MachineLearningVmSize> GetMachineLearningVmSizesAsync(this SubscriptionResource subscriptionResource, AzureLocation location, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetMachineLearningVmSizesAsync(location, cancellationToken);
+            return GetMachineLearningSubscriptionResourceExtension(subscriptionResource).GetMachineLearningVmSizesAsync(location, cancellationToken);
         }
 
         /// <summary>
@@ -634,7 +635,7 @@ namespace Azure.ResourceManager.MachineLearning
         /// <returns> A collection of <see cref="MachineLearningVmSize" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<MachineLearningVmSize> GetMachineLearningVmSizes(this SubscriptionResource subscriptionResource, AzureLocation location, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetMachineLearningVmSizes(location, cancellationToken);
+            return GetMachineLearningSubscriptionResourceExtension(subscriptionResource).GetMachineLearningVmSizes(location, cancellationToken);
         }
 
         /// <summary>
@@ -660,7 +661,7 @@ namespace Azure.ResourceManager.MachineLearning
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).UpdateMachineLearningQuotasAsync(location, content, cancellationToken);
+            return GetMachineLearningSubscriptionResourceExtension(subscriptionResource).UpdateMachineLearningQuotasAsync(location, content, cancellationToken);
         }
 
         /// <summary>
@@ -686,7 +687,7 @@ namespace Azure.ResourceManager.MachineLearning
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).UpdateMachineLearningQuotas(location, content, cancellationToken);
+            return GetMachineLearningSubscriptionResourceExtension(subscriptionResource).UpdateMachineLearningQuotas(location, content, cancellationToken);
         }
 
         /// <summary>
@@ -708,7 +709,7 @@ namespace Azure.ResourceManager.MachineLearning
         /// <returns> An async collection of <see cref="MachineLearningResourceQuota" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<MachineLearningResourceQuota> GetMachineLearningQuotasAsync(this SubscriptionResource subscriptionResource, AzureLocation location, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetMachineLearningQuotasAsync(location, cancellationToken);
+            return GetMachineLearningSubscriptionResourceExtension(subscriptionResource).GetMachineLearningQuotasAsync(location, cancellationToken);
         }
 
         /// <summary>
@@ -730,7 +731,7 @@ namespace Azure.ResourceManager.MachineLearning
         /// <returns> A collection of <see cref="MachineLearningResourceQuota" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<MachineLearningResourceQuota> GetMachineLearningQuotas(this SubscriptionResource subscriptionResource, AzureLocation location, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetMachineLearningQuotas(location, cancellationToken);
+            return GetMachineLearningSubscriptionResourceExtension(subscriptionResource).GetMachineLearningQuotas(location, cancellationToken);
         }
     }
 }

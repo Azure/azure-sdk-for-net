@@ -12,6 +12,7 @@ using Azure;
 using Azure.Core;
 using Azure.ResourceManager;
 using Azure.ResourceManager.Media.Models;
+using Azure.ResourceManager.Media.Testing;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.Media
@@ -19,35 +20,35 @@ namespace Azure.ResourceManager.Media
     /// <summary> A class to add extension methods to Azure.ResourceManager.Media. </summary>
     public static partial class MediaExtensions
     {
-        private static ResourceGroupResourceExtensionClient GetResourceGroupResourceExtensionClient(ArmResource resource)
+        private static MediaResourceGroupResourceExtension GetMediaResourceGroupResourceExtension(ArmResource resource)
         {
             return resource.GetCachedClient(client =>
             {
-                return new ResourceGroupResourceExtensionClient(client, resource.Id);
+                return new MediaResourceGroupResourceExtension(client, resource.Id);
             });
         }
 
-        private static ResourceGroupResourceExtensionClient GetResourceGroupResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
+        private static MediaResourceGroupResourceExtension GetMediaResourceGroupResourceExtension(ArmClient client, ResourceIdentifier scope)
         {
             return client.GetResourceClient(() =>
             {
-                return new ResourceGroupResourceExtensionClient(client, scope);
+                return new MediaResourceGroupResourceExtension(client, scope);
             });
         }
 
-        private static SubscriptionResourceExtensionClient GetSubscriptionResourceExtensionClient(ArmResource resource)
+        private static MediaSubscriptionResourceExtension GetMediaSubscriptionResourceExtension(ArmResource resource)
         {
             return resource.GetCachedClient(client =>
             {
-                return new SubscriptionResourceExtensionClient(client, resource.Id);
+                return new MediaSubscriptionResourceExtension(client, resource.Id);
             });
         }
 
-        private static SubscriptionResourceExtensionClient GetSubscriptionResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
+        private static MediaSubscriptionResourceExtension GetMediaSubscriptionResourceExtension(ArmClient client, ResourceIdentifier scope)
         {
             return client.GetResourceClient(() =>
             {
-                return new SubscriptionResourceExtensionClient(client, scope);
+                return new MediaSubscriptionResourceExtension(client, scope);
             });
         }
         #region MediaServicesAccountFilterResource
@@ -340,7 +341,7 @@ namespace Azure.ResourceManager.Media
         /// <returns> An object representing collection of MediaServicesAccountResources and their operations over a MediaServicesAccountResource. </returns>
         public static MediaServicesAccountCollection GetMediaServicesAccounts(this ResourceGroupResource resourceGroupResource)
         {
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetMediaServicesAccounts();
+            return GetMediaResourceGroupResourceExtension(resourceGroupResource).GetMediaServicesAccounts();
         }
 
         /// <summary>
@@ -409,7 +410,7 @@ namespace Azure.ResourceManager.Media
         /// <returns> An async collection of <see cref="MediaServicesAccountResource" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<MediaServicesAccountResource> GetMediaServicesAccountsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetMediaServicesAccountsAsync(cancellationToken);
+            return GetMediaSubscriptionResourceExtension(subscriptionResource).GetMediaServicesAccountsAsync(cancellationToken);
         }
 
         /// <summary>
@@ -430,7 +431,7 @@ namespace Azure.ResourceManager.Media
         /// <returns> A collection of <see cref="MediaServicesAccountResource" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<MediaServicesAccountResource> GetMediaServicesAccounts(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetMediaServicesAccounts(cancellationToken);
+            return GetMediaSubscriptionResourceExtension(subscriptionResource).GetMediaServicesAccounts(cancellationToken);
         }
 
         /// <summary>
@@ -455,7 +456,7 @@ namespace Azure.ResourceManager.Media
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            return await GetSubscriptionResourceExtensionClient(subscriptionResource).CheckMediaServicesNameAvailabilityAsync(locationName, content, cancellationToken).ConfigureAwait(false);
+            return await GetMediaSubscriptionResourceExtension(subscriptionResource).CheckMediaServicesNameAvailabilityAsync(locationName, content, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -480,7 +481,7 @@ namespace Azure.ResourceManager.Media
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).CheckMediaServicesNameAvailability(locationName, content, cancellationToken);
+            return GetMediaSubscriptionResourceExtension(subscriptionResource).CheckMediaServicesNameAvailability(locationName, content, cancellationToken);
         }
     }
 }
