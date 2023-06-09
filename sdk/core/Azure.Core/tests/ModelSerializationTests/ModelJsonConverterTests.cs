@@ -75,7 +75,9 @@ namespace Azure.Core.Tests.ModelSerializationTests
             expected += "\"weight\":1.5,";
             expected += "\"foodConsumed\":[\"kibble\",\"egg\",\"peanut butter\"]";
             if (!ignoreAdditionalProperties)
-                expected += ",\"numberOfLegs\":4";
+            {
+                expected += ",\"numberOfLegs\":4,\"DogListPropertyConverterMarker\":true"; //validate marker exists to ensure we are using the class converter if it exists
+            }
             expected += "}";
 
             var actual = JsonSerializer.Serialize(dog, options);
@@ -197,10 +199,11 @@ namespace Azure.Core.Tests.ModelSerializationTests
             }
 
             string expected = "{\"kind\":\"Z\",\"name\":\"zmodel\"";
-            if (!ignoreReadonlyProperties)
-                expected += ",\"zProperty\":1.5";
             if (!ignoreAdditionalProperties)
+            {
+                expected += ",\"zProperty\":1.5";
                 expected += ",\"extra\":\"stuff\"";
+            }
             expected += "}";
             var actual = JsonSerializer.Serialize(baseModel, options);
             Assert.AreEqual(expected, actual);

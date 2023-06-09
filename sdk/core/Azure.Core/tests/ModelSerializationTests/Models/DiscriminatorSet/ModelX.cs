@@ -11,7 +11,7 @@ using Azure.Core.Serialization;
 
 namespace Azure.Core.Tests.ModelSerializationTests.Models
 {
-    internal class ModelX : BaseModel, IUtf8JsonSerializable, IModelInternalSerializable
+    internal class ModelX : BaseModel, IUtf8JsonSerializable, IAzureModelInternal
     {
         private Dictionary<string, BinaryData> RawData { get; set; } = new Dictionary<string, BinaryData>();
 

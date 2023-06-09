@@ -11,7 +11,7 @@ using Azure.Core.Serialization;
 
 namespace Azure.Core.Tests.ModelSerializationTests.Models
 {
-    internal abstract class BaseModel : IUtf8JsonSerializable, IModelInternalSerializable
+    internal abstract class BaseModel : IUtf8JsonSerializable, IAzureModelInternal
     {
         private Dictionary<string, BinaryData> RawData { get; set; } = new Dictionary<string, BinaryData>();
 
@@ -63,12 +63,12 @@ namespace Azure.Core.Tests.ModelSerializationTests.Models
             return UnknownBaseModel.DeserializeUnknownBaseModel(element, options);
         }
 
-        void IModelInternalSerializable.Serialize(Utf8JsonWriter writer, SerializableOptions options)
+        void IAzureModelInternal.Serialize(Utf8JsonWriter writer, SerializableOptions options)
         {
             ((IUtf8JsonSerializable)this).Write(writer, options ?? new SerializableOptions());
         }
 
-        void IModelInternalSerializable.Deserialize(ref Utf8JsonReader reader, SerializableOptions options)
+        void IAzureModelInternal.Deserialize(ref Utf8JsonReader reader, SerializableOptions options)
         {
             var model = DeserializeBaseModel(JsonDocument.ParseValue(ref reader).RootElement, options);
             CopyModel(model);

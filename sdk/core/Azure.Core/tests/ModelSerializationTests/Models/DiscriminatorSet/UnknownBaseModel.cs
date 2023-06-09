@@ -12,7 +12,7 @@ using Newtonsoft.Json.Linq;
 
 namespace Azure.Core.Tests.ModelSerializationTests.Models
 {
-    internal class UnknownBaseModel : BaseModel, IUtf8JsonSerializable, IModelInternalSerializable
+    internal class UnknownBaseModel : BaseModel, IUtf8JsonSerializable, IAzureModelInternal
     {
         private Dictionary<string, BinaryData> RawData { get; set; } = new Dictionary<string, BinaryData>();
 
