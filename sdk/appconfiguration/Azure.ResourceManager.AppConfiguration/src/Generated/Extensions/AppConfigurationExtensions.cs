@@ -12,6 +12,7 @@ using Azure;
 using Azure.Core;
 using Azure.ResourceManager;
 using Azure.ResourceManager.AppConfiguration.Models;
+using Azure.ResourceManager.AppConfiguration.Testing;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.AppConfiguration
@@ -19,35 +20,35 @@ namespace Azure.ResourceManager.AppConfiguration
     /// <summary> A class to add extension methods to Azure.ResourceManager.AppConfiguration. </summary>
     public static partial class AppConfigurationExtensions
     {
-        private static ResourceGroupResourceExtensionClient GetResourceGroupResourceExtensionClient(ArmResource resource)
+        private static AppConfigurationResourceGroupResourceExtension GetAppConfigurationResourceGroupResourceExtension(ArmResource resource)
         {
             return resource.GetCachedClient(client =>
             {
-                return new ResourceGroupResourceExtensionClient(client, resource.Id);
+                return new AppConfigurationResourceGroupResourceExtension(client, resource.Id);
             });
         }
 
-        private static ResourceGroupResourceExtensionClient GetResourceGroupResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
+        private static AppConfigurationResourceGroupResourceExtension GetAppConfigurationResourceGroupResourceExtension(ArmClient client, ResourceIdentifier scope)
         {
             return client.GetResourceClient(() =>
             {
-                return new ResourceGroupResourceExtensionClient(client, scope);
+                return new AppConfigurationResourceGroupResourceExtension(client, scope);
             });
         }
 
-        private static SubscriptionResourceExtensionClient GetSubscriptionResourceExtensionClient(ArmResource resource)
+        private static AppConfigurationSubscriptionResourceExtension GetAppConfigurationSubscriptionResourceExtension(ArmResource resource)
         {
             return resource.GetCachedClient(client =>
             {
-                return new SubscriptionResourceExtensionClient(client, resource.Id);
+                return new AppConfigurationSubscriptionResourceExtension(client, resource.Id);
             });
         }
 
-        private static SubscriptionResourceExtensionClient GetSubscriptionResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
+        private static AppConfigurationSubscriptionResourceExtension GetAppConfigurationSubscriptionResourceExtension(ArmClient client, ResourceIdentifier scope)
         {
             return client.GetResourceClient(() =>
             {
-                return new SubscriptionResourceExtensionClient(client, scope);
+                return new AppConfigurationSubscriptionResourceExtension(client, scope);
             });
         }
         #region AppConfigurationStoreResource
@@ -150,7 +151,7 @@ namespace Azure.ResourceManager.AppConfiguration
         /// <returns> An object representing collection of AppConfigurationStoreResources and their operations over a AppConfigurationStoreResource. </returns>
         public static AppConfigurationStoreCollection GetAppConfigurationStores(this ResourceGroupResource resourceGroupResource)
         {
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetAppConfigurationStores();
+            return GetAppConfigurationResourceGroupResourceExtension(resourceGroupResource).GetAppConfigurationStores();
         }
 
         /// <summary>
@@ -206,7 +207,7 @@ namespace Azure.ResourceManager.AppConfiguration
         /// <returns> An object representing collection of DeletedAppConfigurationStoreResources and their operations over a DeletedAppConfigurationStoreResource. </returns>
         public static DeletedAppConfigurationStoreCollection GetDeletedAppConfigurationStores(this SubscriptionResource subscriptionResource)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetDeletedAppConfigurationStores();
+            return GetAppConfigurationSubscriptionResourceExtension(subscriptionResource).GetDeletedAppConfigurationStores();
         }
 
         /// <summary>
@@ -278,7 +279,7 @@ namespace Azure.ResourceManager.AppConfiguration
         /// <returns> An async collection of <see cref="AppConfigurationStoreResource" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<AppConfigurationStoreResource> GetAppConfigurationStoresAsync(this SubscriptionResource subscriptionResource, string skipToken = null, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetAppConfigurationStoresAsync(skipToken, cancellationToken);
+            return GetAppConfigurationSubscriptionResourceExtension(subscriptionResource).GetAppConfigurationStoresAsync(skipToken, cancellationToken);
         }
 
         /// <summary>
@@ -300,7 +301,7 @@ namespace Azure.ResourceManager.AppConfiguration
         /// <returns> A collection of <see cref="AppConfigurationStoreResource" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<AppConfigurationStoreResource> GetAppConfigurationStores(this SubscriptionResource subscriptionResource, string skipToken = null, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetAppConfigurationStores(skipToken, cancellationToken);
+            return GetAppConfigurationSubscriptionResourceExtension(subscriptionResource).GetAppConfigurationStores(skipToken, cancellationToken);
         }
 
         /// <summary>
@@ -324,7 +325,7 @@ namespace Azure.ResourceManager.AppConfiguration
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            return await GetSubscriptionResourceExtensionClient(subscriptionResource).CheckAppConfigurationNameAvailabilityAsync(content, cancellationToken).ConfigureAwait(false);
+            return await GetAppConfigurationSubscriptionResourceExtension(subscriptionResource).CheckAppConfigurationNameAvailabilityAsync(content, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -348,7 +349,7 @@ namespace Azure.ResourceManager.AppConfiguration
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).CheckAppConfigurationNameAvailability(content, cancellationToken);
+            return GetAppConfigurationSubscriptionResourceExtension(subscriptionResource).CheckAppConfigurationNameAvailability(content, cancellationToken);
         }
     }
 }

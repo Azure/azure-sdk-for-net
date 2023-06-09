@@ -12,6 +12,7 @@ using Azure;
 using Azure.Core;
 using Azure.ResourceManager;
 using Azure.ResourceManager.BotService.Models;
+using Azure.ResourceManager.BotService.Testing;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.BotService
@@ -19,51 +20,51 @@ namespace Azure.ResourceManager.BotService
     /// <summary> A class to add extension methods to Azure.ResourceManager.BotService. </summary>
     public static partial class BotServiceExtensions
     {
-        private static ResourceGroupResourceExtensionClient GetResourceGroupResourceExtensionClient(ArmResource resource)
+        private static BotServiceResourceGroupResourceExtension GetBotServiceResourceGroupResourceExtension(ArmResource resource)
         {
             return resource.GetCachedClient(client =>
             {
-                return new ResourceGroupResourceExtensionClient(client, resource.Id);
+                return new BotServiceResourceGroupResourceExtension(client, resource.Id);
             });
         }
 
-        private static ResourceGroupResourceExtensionClient GetResourceGroupResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
+        private static BotServiceResourceGroupResourceExtension GetBotServiceResourceGroupResourceExtension(ArmClient client, ResourceIdentifier scope)
         {
             return client.GetResourceClient(() =>
             {
-                return new ResourceGroupResourceExtensionClient(client, scope);
+                return new BotServiceResourceGroupResourceExtension(client, scope);
             });
         }
 
-        private static SubscriptionResourceExtensionClient GetSubscriptionResourceExtensionClient(ArmResource resource)
+        private static BotServiceSubscriptionResourceExtension GetBotServiceSubscriptionResourceExtension(ArmResource resource)
         {
             return resource.GetCachedClient(client =>
             {
-                return new SubscriptionResourceExtensionClient(client, resource.Id);
+                return new BotServiceSubscriptionResourceExtension(client, resource.Id);
             });
         }
 
-        private static SubscriptionResourceExtensionClient GetSubscriptionResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
+        private static BotServiceSubscriptionResourceExtension GetBotServiceSubscriptionResourceExtension(ArmClient client, ResourceIdentifier scope)
         {
             return client.GetResourceClient(() =>
             {
-                return new SubscriptionResourceExtensionClient(client, scope);
+                return new BotServiceSubscriptionResourceExtension(client, scope);
             });
         }
 
-        private static TenantResourceExtensionClient GetTenantResourceExtensionClient(ArmResource resource)
+        private static BotServiceTenantResourceExtension GetBotServiceTenantResourceExtension(ArmResource resource)
         {
             return resource.GetCachedClient(client =>
             {
-                return new TenantResourceExtensionClient(client, resource.Id);
+                return new BotServiceTenantResourceExtension(client, resource.Id);
             });
         }
 
-        private static TenantResourceExtensionClient GetTenantResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
+        private static BotServiceTenantResourceExtension GetBotServiceTenantResourceExtension(ArmClient client, ResourceIdentifier scope)
         {
             return client.GetResourceClient(() =>
             {
-                return new TenantResourceExtensionClient(client, scope);
+                return new BotServiceTenantResourceExtension(client, scope);
             });
         }
         #region BotResource
@@ -147,7 +148,7 @@ namespace Azure.ResourceManager.BotService
         /// <returns> An object representing collection of BotResources and their operations over a BotResource. </returns>
         public static BotCollection GetBots(this ResourceGroupResource resourceGroupResource)
         {
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetBots();
+            return GetBotServiceResourceGroupResourceExtension(resourceGroupResource).GetBots();
         }
 
         /// <summary>
@@ -216,7 +217,7 @@ namespace Azure.ResourceManager.BotService
         /// <returns> An async collection of <see cref="BotResource" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<BotResource> GetBotsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetBotsAsync(cancellationToken);
+            return GetBotServiceSubscriptionResourceExtension(subscriptionResource).GetBotsAsync(cancellationToken);
         }
 
         /// <summary>
@@ -237,7 +238,7 @@ namespace Azure.ResourceManager.BotService
         /// <returns> A collection of <see cref="BotResource" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<BotResource> GetBots(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetBots(cancellationToken);
+            return GetBotServiceSubscriptionResourceExtension(subscriptionResource).GetBots(cancellationToken);
         }
 
         /// <summary>
@@ -258,7 +259,7 @@ namespace Azure.ResourceManager.BotService
         /// <returns> An async collection of <see cref="BotServiceProvider" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<BotServiceProvider> GetBotConnectionServiceProvidersAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetBotConnectionServiceProvidersAsync(cancellationToken);
+            return GetBotServiceSubscriptionResourceExtension(subscriptionResource).GetBotConnectionServiceProvidersAsync(cancellationToken);
         }
 
         /// <summary>
@@ -279,7 +280,7 @@ namespace Azure.ResourceManager.BotService
         /// <returns> A collection of <see cref="BotServiceProvider" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<BotServiceProvider> GetBotConnectionServiceProviders(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetBotConnectionServiceProviders(cancellationToken);
+            return GetBotServiceSubscriptionResourceExtension(subscriptionResource).GetBotConnectionServiceProviders(cancellationToken);
         }
 
         /// <summary>
@@ -303,7 +304,7 @@ namespace Azure.ResourceManager.BotService
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            return await GetSubscriptionResourceExtensionClient(subscriptionResource).GetBotServiceQnAMakerEndpointKeyAsync(content, cancellationToken).ConfigureAwait(false);
+            return await GetBotServiceSubscriptionResourceExtension(subscriptionResource).GetBotServiceQnAMakerEndpointKeyAsync(content, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -327,7 +328,7 @@ namespace Azure.ResourceManager.BotService
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetBotServiceQnAMakerEndpointKey(content, cancellationToken);
+            return GetBotServiceSubscriptionResourceExtension(subscriptionResource).GetBotServiceQnAMakerEndpointKey(content, cancellationToken);
         }
 
         /// <summary>
@@ -347,7 +348,7 @@ namespace Azure.ResourceManager.BotService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public static async Task<Response<BotServiceHostSettingsResult>> GetBotServiceHostSettingsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return await GetSubscriptionResourceExtensionClient(subscriptionResource).GetBotServiceHostSettingsAsync(cancellationToken).ConfigureAwait(false);
+            return await GetBotServiceSubscriptionResourceExtension(subscriptionResource).GetBotServiceHostSettingsAsync(cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -367,7 +368,7 @@ namespace Azure.ResourceManager.BotService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public static Response<BotServiceHostSettingsResult> GetBotServiceHostSettings(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetBotServiceHostSettings(cancellationToken);
+            return GetBotServiceSubscriptionResourceExtension(subscriptionResource).GetBotServiceHostSettings(cancellationToken);
         }
 
         /// <summary>
@@ -391,7 +392,7 @@ namespace Azure.ResourceManager.BotService
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            return await GetTenantResourceExtensionClient(tenantResource).CheckBotServiceNameAvailabilityAsync(content, cancellationToken).ConfigureAwait(false);
+            return await GetBotServiceTenantResourceExtension(tenantResource).CheckBotServiceNameAvailabilityAsync(content, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -415,7 +416,7 @@ namespace Azure.ResourceManager.BotService
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            return GetTenantResourceExtensionClient(tenantResource).CheckBotServiceNameAvailability(content, cancellationToken);
+            return GetBotServiceTenantResourceExtension(tenantResource).CheckBotServiceNameAvailability(content, cancellationToken);
         }
     }
 }

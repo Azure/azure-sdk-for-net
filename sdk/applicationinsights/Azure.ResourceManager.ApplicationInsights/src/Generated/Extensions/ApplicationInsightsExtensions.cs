@@ -13,6 +13,7 @@ using Azure;
 using Azure.Core;
 using Azure.ResourceManager;
 using Azure.ResourceManager.ApplicationInsights.Models;
+using Azure.ResourceManager.ApplicationInsights.Testing;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.ApplicationInsights
@@ -20,51 +21,51 @@ namespace Azure.ResourceManager.ApplicationInsights
     /// <summary> A class to add extension methods to Azure.ResourceManager.ApplicationInsights. </summary>
     public static partial class ApplicationInsightsExtensions
     {
-        private static ArmResourceExtensionClient GetArmResourceExtensionClient(ArmResource resource)
+        private static ApplicationInsightsArmResourceExtension GetApplicationInsightsArmResourceExtension(ArmResource resource)
         {
             return resource.GetCachedClient(client =>
             {
-                return new ArmResourceExtensionClient(client, resource.Id);
+                return new ApplicationInsightsArmResourceExtension(client, resource.Id);
             });
         }
 
-        private static ArmResourceExtensionClient GetArmResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
+        private static ApplicationInsightsArmResourceExtension GetApplicationInsightsArmResourceExtension(ArmClient client, ResourceIdentifier scope)
         {
             return client.GetResourceClient(() =>
             {
-                return new ArmResourceExtensionClient(client, scope);
+                return new ApplicationInsightsArmResourceExtension(client, scope);
             });
         }
 
-        private static ResourceGroupResourceExtensionClient GetResourceGroupResourceExtensionClient(ArmResource resource)
+        private static ApplicationInsightsResourceGroupResourceExtension GetApplicationInsightsResourceGroupResourceExtension(ArmResource resource)
         {
             return resource.GetCachedClient(client =>
             {
-                return new ResourceGroupResourceExtensionClient(client, resource.Id);
+                return new ApplicationInsightsResourceGroupResourceExtension(client, resource.Id);
             });
         }
 
-        private static ResourceGroupResourceExtensionClient GetResourceGroupResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
+        private static ApplicationInsightsResourceGroupResourceExtension GetApplicationInsightsResourceGroupResourceExtension(ArmClient client, ResourceIdentifier scope)
         {
             return client.GetResourceClient(() =>
             {
-                return new ResourceGroupResourceExtensionClient(client, scope);
+                return new ApplicationInsightsResourceGroupResourceExtension(client, scope);
             });
         }
 
-        private static SubscriptionResourceExtensionClient GetSubscriptionResourceExtensionClient(ArmResource resource)
+        private static ApplicationInsightsSubscriptionResourceExtension GetApplicationInsightsSubscriptionResourceExtension(ArmResource resource)
         {
             return resource.GetCachedClient(client =>
             {
-                return new SubscriptionResourceExtensionClient(client, resource.Id);
+                return new ApplicationInsightsSubscriptionResourceExtension(client, resource.Id);
             });
         }
 
-        private static SubscriptionResourceExtensionClient GetSubscriptionResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
+        private static ApplicationInsightsSubscriptionResourceExtension GetApplicationInsightsSubscriptionResourceExtension(ArmClient client, ResourceIdentifier scope)
         {
             return client.GetResourceClient(() =>
             {
-                return new SubscriptionResourceExtensionClient(client, scope);
+                return new ApplicationInsightsSubscriptionResourceExtension(client, scope);
             });
         }
         #region ApplicationInsightsComponentResource
@@ -218,7 +219,7 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public static async Task<Response<LiveTokenResponse>> GetLiveTokenAsync(this ArmClient client, ResourceIdentifier scope, CancellationToken cancellationToken = default)
         {
-            return await GetArmResourceExtensionClient(client, scope).GetLiveTokenAsync(cancellationToken).ConfigureAwait(false);
+            return await GetApplicationInsightsArmResourceExtension(client, scope).GetLiveTokenAsync(cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -239,7 +240,7 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public static Response<LiveTokenResponse> GetLiveToken(this ArmClient client, ResourceIdentifier scope, CancellationToken cancellationToken = default)
         {
-            return GetArmResourceExtensionClient(client, scope).GetLiveToken(cancellationToken);
+            return GetApplicationInsightsArmResourceExtension(client, scope).GetLiveToken(cancellationToken);
         }
 
         /// <summary> Gets a collection of ApplicationInsightsComponentResources in the ResourceGroupResource. </summary>
@@ -247,7 +248,7 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// <returns> An object representing collection of ApplicationInsightsComponentResources and their operations over a ApplicationInsightsComponentResource. </returns>
         public static ApplicationInsightsComponentCollection GetApplicationInsightsComponents(this ResourceGroupResource resourceGroupResource)
         {
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetApplicationInsightsComponents();
+            return GetApplicationInsightsResourceGroupResourceExtension(resourceGroupResource).GetApplicationInsightsComponents();
         }
 
         /// <summary>
@@ -303,7 +304,7 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// <returns> An object representing collection of WebTestResources and their operations over a WebTestResource. </returns>
         public static WebTestCollection GetWebTests(this ResourceGroupResource resourceGroupResource)
         {
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetWebTests();
+            return GetApplicationInsightsResourceGroupResourceExtension(resourceGroupResource).GetWebTests();
         }
 
         /// <summary>
@@ -359,7 +360,7 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// <returns> An object representing collection of WorkbookTemplateResources and their operations over a WorkbookTemplateResource. </returns>
         public static WorkbookTemplateCollection GetWorkbookTemplates(this ResourceGroupResource resourceGroupResource)
         {
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetWorkbookTemplates();
+            return GetApplicationInsightsResourceGroupResourceExtension(resourceGroupResource).GetWorkbookTemplates();
         }
 
         /// <summary>
@@ -415,7 +416,7 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// <returns> An object representing collection of MyWorkbookResources and their operations over a MyWorkbookResource. </returns>
         public static MyWorkbookCollection GetMyWorkbooks(this ResourceGroupResource resourceGroupResource)
         {
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetMyWorkbooks();
+            return GetApplicationInsightsResourceGroupResourceExtension(resourceGroupResource).GetMyWorkbooks();
         }
 
         /// <summary>
@@ -471,7 +472,7 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// <returns> An object representing collection of WorkbookResources and their operations over a WorkbookResource. </returns>
         public static WorkbookCollection GetWorkbooks(this ResourceGroupResource resourceGroupResource)
         {
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetWorkbooks();
+            return GetApplicationInsightsResourceGroupResourceExtension(resourceGroupResource).GetWorkbooks();
         }
 
         /// <summary>
@@ -542,7 +543,7 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// <returns> An async collection of <see cref="ApplicationInsightsComponentResource" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<ApplicationInsightsComponentResource> GetApplicationInsightsComponentsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetApplicationInsightsComponentsAsync(cancellationToken);
+            return GetApplicationInsightsSubscriptionResourceExtension(subscriptionResource).GetApplicationInsightsComponentsAsync(cancellationToken);
         }
 
         /// <summary>
@@ -563,7 +564,7 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// <returns> A collection of <see cref="ApplicationInsightsComponentResource" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<ApplicationInsightsComponentResource> GetApplicationInsightsComponents(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetApplicationInsightsComponents(cancellationToken);
+            return GetApplicationInsightsSubscriptionResourceExtension(subscriptionResource).GetApplicationInsightsComponents(cancellationToken);
         }
 
         /// <summary>
@@ -584,7 +585,7 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// <returns> An async collection of <see cref="WebTestResource" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<WebTestResource> GetWebTestsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetWebTestsAsync(cancellationToken);
+            return GetApplicationInsightsSubscriptionResourceExtension(subscriptionResource).GetWebTestsAsync(cancellationToken);
         }
 
         /// <summary>
@@ -605,7 +606,7 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// <returns> A collection of <see cref="WebTestResource" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<WebTestResource> GetWebTests(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetWebTests(cancellationToken);
+            return GetApplicationInsightsSubscriptionResourceExtension(subscriptionResource).GetWebTests(cancellationToken);
         }
 
         /// <summary>
@@ -629,7 +630,7 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// <returns> An async collection of <see cref="MyWorkbookResource" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<MyWorkbookResource> GetMyWorkbooksAsync(this SubscriptionResource subscriptionResource, CategoryType category, IEnumerable<string> tags = null, bool? canFetchContent = null, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetMyWorkbooksAsync(category, tags, canFetchContent, cancellationToken);
+            return GetApplicationInsightsSubscriptionResourceExtension(subscriptionResource).GetMyWorkbooksAsync(category, tags, canFetchContent, cancellationToken);
         }
 
         /// <summary>
@@ -653,7 +654,7 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// <returns> A collection of <see cref="MyWorkbookResource" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<MyWorkbookResource> GetMyWorkbooks(this SubscriptionResource subscriptionResource, CategoryType category, IEnumerable<string> tags = null, bool? canFetchContent = null, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetMyWorkbooks(category, tags, canFetchContent, cancellationToken);
+            return GetApplicationInsightsSubscriptionResourceExtension(subscriptionResource).GetMyWorkbooks(category, tags, canFetchContent, cancellationToken);
         }
 
         /// <summary>
@@ -677,7 +678,7 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// <returns> An async collection of <see cref="WorkbookResource" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<WorkbookResource> GetWorkbooksAsync(this SubscriptionResource subscriptionResource, CategoryType category, IEnumerable<string> tags = null, bool? canFetchContent = null, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetWorkbooksAsync(category, tags, canFetchContent, cancellationToken);
+            return GetApplicationInsightsSubscriptionResourceExtension(subscriptionResource).GetWorkbooksAsync(category, tags, canFetchContent, cancellationToken);
         }
 
         /// <summary>
@@ -701,7 +702,7 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// <returns> A collection of <see cref="WorkbookResource" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<WorkbookResource> GetWorkbooks(this SubscriptionResource subscriptionResource, CategoryType category, IEnumerable<string> tags = null, bool? canFetchContent = null, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetWorkbooks(category, tags, canFetchContent, cancellationToken);
+            return GetApplicationInsightsSubscriptionResourceExtension(subscriptionResource).GetWorkbooks(category, tags, canFetchContent, cancellationToken);
         }
     }
 }

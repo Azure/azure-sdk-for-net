@@ -12,6 +12,7 @@ using Azure;
 using Azure.Core;
 using Azure.ResourceManager;
 using Azure.ResourceManager.AppPlatform.Models;
+using Azure.ResourceManager.AppPlatform.Testing;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.AppPlatform
@@ -19,51 +20,51 @@ namespace Azure.ResourceManager.AppPlatform
     /// <summary> A class to add extension methods to Azure.ResourceManager.AppPlatform. </summary>
     public static partial class AppPlatformExtensions
     {
-        private static ResourceGroupResourceExtensionClient GetResourceGroupResourceExtensionClient(ArmResource resource)
+        private static AppPlatformResourceGroupResourceExtension GetAppPlatformResourceGroupResourceExtension(ArmResource resource)
         {
             return resource.GetCachedClient(client =>
             {
-                return new ResourceGroupResourceExtensionClient(client, resource.Id);
+                return new AppPlatformResourceGroupResourceExtension(client, resource.Id);
             });
         }
 
-        private static ResourceGroupResourceExtensionClient GetResourceGroupResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
+        private static AppPlatformResourceGroupResourceExtension GetAppPlatformResourceGroupResourceExtension(ArmClient client, ResourceIdentifier scope)
         {
             return client.GetResourceClient(() =>
             {
-                return new ResourceGroupResourceExtensionClient(client, scope);
+                return new AppPlatformResourceGroupResourceExtension(client, scope);
             });
         }
 
-        private static SubscriptionResourceExtensionClient GetSubscriptionResourceExtensionClient(ArmResource resource)
+        private static AppPlatformSubscriptionResourceExtension GetAppPlatformSubscriptionResourceExtension(ArmResource resource)
         {
             return resource.GetCachedClient(client =>
             {
-                return new SubscriptionResourceExtensionClient(client, resource.Id);
+                return new AppPlatformSubscriptionResourceExtension(client, resource.Id);
             });
         }
 
-        private static SubscriptionResourceExtensionClient GetSubscriptionResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
+        private static AppPlatformSubscriptionResourceExtension GetAppPlatformSubscriptionResourceExtension(ArmClient client, ResourceIdentifier scope)
         {
             return client.GetResourceClient(() =>
             {
-                return new SubscriptionResourceExtensionClient(client, scope);
+                return new AppPlatformSubscriptionResourceExtension(client, scope);
             });
         }
 
-        private static TenantResourceExtensionClient GetTenantResourceExtensionClient(ArmResource resource)
+        private static AppPlatformTenantResourceExtension GetAppPlatformTenantResourceExtension(ArmResource resource)
         {
             return resource.GetCachedClient(client =>
             {
-                return new TenantResourceExtensionClient(client, resource.Id);
+                return new AppPlatformTenantResourceExtension(client, resource.Id);
             });
         }
 
-        private static TenantResourceExtensionClient GetTenantResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
+        private static AppPlatformTenantResourceExtension GetAppPlatformTenantResourceExtension(ArmClient client, ResourceIdentifier scope)
         {
             return client.GetResourceClient(() =>
             {
-                return new TenantResourceExtensionClient(client, scope);
+                return new AppPlatformTenantResourceExtension(client, scope);
             });
         }
         #region AppPlatformServiceResource
@@ -527,7 +528,7 @@ namespace Azure.ResourceManager.AppPlatform
         /// <returns> An object representing collection of AppPlatformServiceResources and their operations over a AppPlatformServiceResource. </returns>
         public static AppPlatformServiceCollection GetAppPlatformServices(this ResourceGroupResource resourceGroupResource)
         {
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetAppPlatformServices();
+            return GetAppPlatformResourceGroupResourceExtension(resourceGroupResource).GetAppPlatformServices();
         }
 
         /// <summary>
@@ -600,7 +601,7 @@ namespace Azure.ResourceManager.AppPlatform
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            return await GetSubscriptionResourceExtensionClient(subscriptionResource).CheckAppPlatformNameAvailabilityAsync(location, content, cancellationToken).ConfigureAwait(false);
+            return await GetAppPlatformSubscriptionResourceExtension(subscriptionResource).CheckAppPlatformNameAvailabilityAsync(location, content, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -625,7 +626,7 @@ namespace Azure.ResourceManager.AppPlatform
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).CheckAppPlatformNameAvailability(location, content, cancellationToken);
+            return GetAppPlatformSubscriptionResourceExtension(subscriptionResource).CheckAppPlatformNameAvailability(location, content, cancellationToken);
         }
 
         /// <summary>
@@ -646,7 +647,7 @@ namespace Azure.ResourceManager.AppPlatform
         /// <returns> An async collection of <see cref="AppPlatformServiceResource" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<AppPlatformServiceResource> GetAppPlatformServicesAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetAppPlatformServicesAsync(cancellationToken);
+            return GetAppPlatformSubscriptionResourceExtension(subscriptionResource).GetAppPlatformServicesAsync(cancellationToken);
         }
 
         /// <summary>
@@ -667,7 +668,7 @@ namespace Azure.ResourceManager.AppPlatform
         /// <returns> A collection of <see cref="AppPlatformServiceResource" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<AppPlatformServiceResource> GetAppPlatformServices(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetAppPlatformServices(cancellationToken);
+            return GetAppPlatformSubscriptionResourceExtension(subscriptionResource).GetAppPlatformServices(cancellationToken);
         }
 
         /// <summary>
@@ -688,7 +689,7 @@ namespace Azure.ResourceManager.AppPlatform
         /// <returns> An async collection of <see cref="AvailableAppPlatformSku" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<AvailableAppPlatformSku> GetSkusAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetSkusAsync(cancellationToken);
+            return GetAppPlatformSubscriptionResourceExtension(subscriptionResource).GetSkusAsync(cancellationToken);
         }
 
         /// <summary>
@@ -709,7 +710,7 @@ namespace Azure.ResourceManager.AppPlatform
         /// <returns> A collection of <see cref="AvailableAppPlatformSku" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<AvailableAppPlatformSku> GetSkus(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetSkus(cancellationToken);
+            return GetAppPlatformSubscriptionResourceExtension(subscriptionResource).GetSkus(cancellationToken);
         }
 
         /// <summary>
@@ -730,7 +731,7 @@ namespace Azure.ResourceManager.AppPlatform
         /// <returns> An async collection of <see cref="AppPlatformSupportedRuntimeVersion" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<AppPlatformSupportedRuntimeVersion> GetRuntimeVersionsAsync(this TenantResource tenantResource, CancellationToken cancellationToken = default)
         {
-            return GetTenantResourceExtensionClient(tenantResource).GetRuntimeVersionsAsync(cancellationToken);
+            return GetAppPlatformTenantResourceExtension(tenantResource).GetRuntimeVersionsAsync(cancellationToken);
         }
 
         /// <summary>
@@ -751,7 +752,7 @@ namespace Azure.ResourceManager.AppPlatform
         /// <returns> A collection of <see cref="AppPlatformSupportedRuntimeVersion" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<AppPlatformSupportedRuntimeVersion> GetRuntimeVersions(this TenantResource tenantResource, CancellationToken cancellationToken = default)
         {
-            return GetTenantResourceExtensionClient(tenantResource).GetRuntimeVersions(cancellationToken);
+            return GetAppPlatformTenantResourceExtension(tenantResource).GetRuntimeVersions(cancellationToken);
         }
     }
 }

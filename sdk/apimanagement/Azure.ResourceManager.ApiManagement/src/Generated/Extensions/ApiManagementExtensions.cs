@@ -12,6 +12,7 @@ using Azure;
 using Azure.Core;
 using Azure.ResourceManager;
 using Azure.ResourceManager.ApiManagement.Models;
+using Azure.ResourceManager.ApiManagement.Testing;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.ApiManagement
@@ -19,35 +20,35 @@ namespace Azure.ResourceManager.ApiManagement
     /// <summary> A class to add extension methods to Azure.ResourceManager.ApiManagement. </summary>
     public static partial class ApiManagementExtensions
     {
-        private static ResourceGroupResourceExtensionClient GetResourceGroupResourceExtensionClient(ArmResource resource)
+        private static ApiManagementResourceGroupResourceExtension GetApiManagementResourceGroupResourceExtension(ArmResource resource)
         {
             return resource.GetCachedClient(client =>
             {
-                return new ResourceGroupResourceExtensionClient(client, resource.Id);
+                return new ApiManagementResourceGroupResourceExtension(client, resource.Id);
             });
         }
 
-        private static ResourceGroupResourceExtensionClient GetResourceGroupResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
+        private static ApiManagementResourceGroupResourceExtension GetApiManagementResourceGroupResourceExtension(ArmClient client, ResourceIdentifier scope)
         {
             return client.GetResourceClient(() =>
             {
-                return new ResourceGroupResourceExtensionClient(client, scope);
+                return new ApiManagementResourceGroupResourceExtension(client, scope);
             });
         }
 
-        private static SubscriptionResourceExtensionClient GetSubscriptionResourceExtensionClient(ArmResource resource)
+        private static ApiManagementSubscriptionResourceExtension GetApiManagementSubscriptionResourceExtension(ArmResource resource)
         {
             return resource.GetCachedClient(client =>
             {
-                return new SubscriptionResourceExtensionClient(client, resource.Id);
+                return new ApiManagementSubscriptionResourceExtension(client, resource.Id);
             });
         }
 
-        private static SubscriptionResourceExtensionClient GetSubscriptionResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
+        private static ApiManagementSubscriptionResourceExtension GetApiManagementSubscriptionResourceExtension(ArmClient client, ResourceIdentifier scope)
         {
             return client.GetResourceClient(() =>
             {
-                return new SubscriptionResourceExtensionClient(client, scope);
+                return new ApiManagementSubscriptionResourceExtension(client, scope);
             });
         }
         #region ApiResource
@@ -986,7 +987,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <returns> An object representing collection of ApiManagementServiceResources and their operations over a ApiManagementServiceResource. </returns>
         public static ApiManagementServiceCollection GetApiManagementServices(this ResourceGroupResource resourceGroupResource)
         {
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetApiManagementServices();
+            return GetApiManagementResourceGroupResourceExtension(resourceGroupResource).GetApiManagementServices();
         }
 
         /// <summary>
@@ -1042,7 +1043,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <returns> An object representing collection of ApiManagementDeletedServiceResources and their operations over a ApiManagementDeletedServiceResource. </returns>
         public static ApiManagementDeletedServiceCollection GetApiManagementDeletedServices(this SubscriptionResource subscriptionResource)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetApiManagementDeletedServices();
+            return GetApiManagementSubscriptionResourceExtension(subscriptionResource).GetApiManagementDeletedServices();
         }
 
         /// <summary>
@@ -1113,7 +1114,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <returns> An async collection of <see cref="ApiManagementDeletedServiceResource" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<ApiManagementDeletedServiceResource> GetApiManagementDeletedServicesAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetApiManagementDeletedServicesAsync(cancellationToken);
+            return GetApiManagementSubscriptionResourceExtension(subscriptionResource).GetApiManagementDeletedServicesAsync(cancellationToken);
         }
 
         /// <summary>
@@ -1134,7 +1135,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <returns> A collection of <see cref="ApiManagementDeletedServiceResource" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<ApiManagementDeletedServiceResource> GetApiManagementDeletedServices(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetApiManagementDeletedServices(cancellationToken);
+            return GetApiManagementSubscriptionResourceExtension(subscriptionResource).GetApiManagementDeletedServices(cancellationToken);
         }
 
         /// <summary>
@@ -1155,7 +1156,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <returns> An async collection of <see cref="ApiManagementServiceResource" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<ApiManagementServiceResource> GetApiManagementServicesAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetApiManagementServicesAsync(cancellationToken);
+            return GetApiManagementSubscriptionResourceExtension(subscriptionResource).GetApiManagementServicesAsync(cancellationToken);
         }
 
         /// <summary>
@@ -1176,7 +1177,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <returns> A collection of <see cref="ApiManagementServiceResource" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<ApiManagementServiceResource> GetApiManagementServices(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetApiManagementServices(cancellationToken);
+            return GetApiManagementSubscriptionResourceExtension(subscriptionResource).GetApiManagementServices(cancellationToken);
         }
 
         /// <summary>
@@ -1200,7 +1201,7 @@ namespace Azure.ResourceManager.ApiManagement
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            return await GetSubscriptionResourceExtensionClient(subscriptionResource).CheckApiManagementServiceNameAvailabilityAsync(content, cancellationToken).ConfigureAwait(false);
+            return await GetApiManagementSubscriptionResourceExtension(subscriptionResource).CheckApiManagementServiceNameAvailabilityAsync(content, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -1224,7 +1225,7 @@ namespace Azure.ResourceManager.ApiManagement
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).CheckApiManagementServiceNameAvailability(content, cancellationToken);
+            return GetApiManagementSubscriptionResourceExtension(subscriptionResource).CheckApiManagementServiceNameAvailability(content, cancellationToken);
         }
 
         /// <summary>
@@ -1244,7 +1245,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public static async Task<Response<ApiManagementServiceGetDomainOwnershipIdentifierResult>> GetApiManagementServiceDomainOwnershipIdentifierAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return await GetSubscriptionResourceExtensionClient(subscriptionResource).GetApiManagementServiceDomainOwnershipIdentifierAsync(cancellationToken).ConfigureAwait(false);
+            return await GetApiManagementSubscriptionResourceExtension(subscriptionResource).GetApiManagementServiceDomainOwnershipIdentifierAsync(cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -1264,7 +1265,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public static Response<ApiManagementServiceGetDomainOwnershipIdentifierResult> GetApiManagementServiceDomainOwnershipIdentifier(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetApiManagementServiceDomainOwnershipIdentifier(cancellationToken);
+            return GetApiManagementSubscriptionResourceExtension(subscriptionResource).GetApiManagementServiceDomainOwnershipIdentifier(cancellationToken);
         }
 
         /// <summary>
@@ -1285,7 +1286,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <returns> An async collection of <see cref="ApiManagementSku" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<ApiManagementSku> GetApiManagementSkusAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetApiManagementSkusAsync(cancellationToken);
+            return GetApiManagementSubscriptionResourceExtension(subscriptionResource).GetApiManagementSkusAsync(cancellationToken);
         }
 
         /// <summary>
@@ -1306,7 +1307,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <returns> A collection of <see cref="ApiManagementSku" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<ApiManagementSku> GetApiManagementSkus(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetApiManagementSkus(cancellationToken);
+            return GetApiManagementSubscriptionResourceExtension(subscriptionResource).GetApiManagementSkus(cancellationToken);
         }
     }
 }

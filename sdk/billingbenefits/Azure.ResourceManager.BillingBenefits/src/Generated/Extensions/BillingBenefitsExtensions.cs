@@ -12,6 +12,7 @@ using Azure;
 using Azure.Core;
 using Azure.ResourceManager;
 using Azure.ResourceManager.BillingBenefits.Models;
+using Azure.ResourceManager.BillingBenefits.Testing;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.BillingBenefits
@@ -19,19 +20,19 @@ namespace Azure.ResourceManager.BillingBenefits
     /// <summary> A class to add extension methods to Azure.ResourceManager.BillingBenefits. </summary>
     public static partial class BillingBenefitsExtensions
     {
-        private static TenantResourceExtensionClient GetTenantResourceExtensionClient(ArmResource resource)
+        private static BillingBenefitsTenantResourceExtension GetBillingBenefitsTenantResourceExtension(ArmResource resource)
         {
             return resource.GetCachedClient(client =>
             {
-                return new TenantResourceExtensionClient(client, resource.Id);
+                return new BillingBenefitsTenantResourceExtension(client, resource.Id);
             });
         }
 
-        private static TenantResourceExtensionClient GetTenantResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
+        private static BillingBenefitsTenantResourceExtension GetBillingBenefitsTenantResourceExtension(ArmClient client, ResourceIdentifier scope)
         {
             return client.GetResourceClient(() =>
             {
-                return new TenantResourceExtensionClient(client, scope);
+                return new BillingBenefitsTenantResourceExtension(client, scope);
             });
         }
         #region BillingBenefitsSavingsPlanOrderAliasResource
@@ -115,7 +116,7 @@ namespace Azure.ResourceManager.BillingBenefits
         /// <returns> An object representing collection of BillingBenefitsSavingsPlanOrderAliasResources and their operations over a BillingBenefitsSavingsPlanOrderAliasResource. </returns>
         public static BillingBenefitsSavingsPlanOrderAliasCollection GetBillingBenefitsSavingsPlanOrderAliases(this TenantResource tenantResource)
         {
-            return GetTenantResourceExtensionClient(tenantResource).GetBillingBenefitsSavingsPlanOrderAliases();
+            return GetBillingBenefitsTenantResourceExtension(tenantResource).GetBillingBenefitsSavingsPlanOrderAliases();
         }
 
         /// <summary>
@@ -171,7 +172,7 @@ namespace Azure.ResourceManager.BillingBenefits
         /// <returns> An object representing collection of BillingBenefitsSavingsPlanOrderResources and their operations over a BillingBenefitsSavingsPlanOrderResource. </returns>
         public static BillingBenefitsSavingsPlanOrderCollection GetBillingBenefitsSavingsPlanOrders(this TenantResource tenantResource)
         {
-            return GetTenantResourceExtensionClient(tenantResource).GetBillingBenefitsSavingsPlanOrders();
+            return GetBillingBenefitsTenantResourceExtension(tenantResource).GetBillingBenefitsSavingsPlanOrders();
         }
 
         /// <summary>
@@ -229,7 +230,7 @@ namespace Azure.ResourceManager.BillingBenefits
         /// <returns> An object representing collection of BillingBenefitsReservationOrderAliasResources and their operations over a BillingBenefitsReservationOrderAliasResource. </returns>
         public static BillingBenefitsReservationOrderAliasCollection GetBillingBenefitsReservationOrderAliases(this TenantResource tenantResource)
         {
-            return GetTenantResourceExtensionClient(tenantResource).GetBillingBenefitsReservationOrderAliases();
+            return GetBillingBenefitsTenantResourceExtension(tenantResource).GetBillingBenefitsReservationOrderAliases();
         }
 
         /// <summary>
@@ -301,7 +302,7 @@ namespace Azure.ResourceManager.BillingBenefits
         {
             options ??= new TenantResourceGetBillingBenefitsSavingsPlansOptions();
 
-            return GetTenantResourceExtensionClient(tenantResource).GetBillingBenefitsSavingsPlansAsync(options, cancellationToken);
+            return GetBillingBenefitsTenantResourceExtension(tenantResource).GetBillingBenefitsSavingsPlansAsync(options, cancellationToken);
         }
 
         /// <summary>
@@ -325,7 +326,7 @@ namespace Azure.ResourceManager.BillingBenefits
         {
             options ??= new TenantResourceGetBillingBenefitsSavingsPlansOptions();
 
-            return GetTenantResourceExtensionClient(tenantResource).GetBillingBenefitsSavingsPlans(options, cancellationToken);
+            return GetBillingBenefitsTenantResourceExtension(tenantResource).GetBillingBenefitsSavingsPlans(options, cancellationToken);
         }
 
         /// <summary>
@@ -350,7 +351,7 @@ namespace Azure.ResourceManager.BillingBenefits
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            return GetTenantResourceExtensionClient(tenantResource).ValidatePurchaseAsync(content, cancellationToken);
+            return GetBillingBenefitsTenantResourceExtension(tenantResource).ValidatePurchaseAsync(content, cancellationToken);
         }
 
         /// <summary>
@@ -375,7 +376,7 @@ namespace Azure.ResourceManager.BillingBenefits
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            return GetTenantResourceExtensionClient(tenantResource).ValidatePurchase(content, cancellationToken);
+            return GetBillingBenefitsTenantResourceExtension(tenantResource).ValidatePurchase(content, cancellationToken);
         }
     }
 }

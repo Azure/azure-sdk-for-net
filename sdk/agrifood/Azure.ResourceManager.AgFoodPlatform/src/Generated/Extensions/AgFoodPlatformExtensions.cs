@@ -12,6 +12,7 @@ using Azure;
 using Azure.Core;
 using Azure.ResourceManager;
 using Azure.ResourceManager.AgFoodPlatform.Models;
+using Azure.ResourceManager.AgFoodPlatform.Testing;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.AgFoodPlatform
@@ -19,51 +20,51 @@ namespace Azure.ResourceManager.AgFoodPlatform
     /// <summary> A class to add extension methods to Azure.ResourceManager.AgFoodPlatform. </summary>
     public static partial class AgFoodPlatformExtensions
     {
-        private static ResourceGroupResourceExtensionClient GetResourceGroupResourceExtensionClient(ArmResource resource)
+        private static AgFoodPlatformResourceGroupResourceExtension GetAgFoodPlatformResourceGroupResourceExtension(ArmResource resource)
         {
             return resource.GetCachedClient(client =>
             {
-                return new ResourceGroupResourceExtensionClient(client, resource.Id);
+                return new AgFoodPlatformResourceGroupResourceExtension(client, resource.Id);
             });
         }
 
-        private static ResourceGroupResourceExtensionClient GetResourceGroupResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
+        private static AgFoodPlatformResourceGroupResourceExtension GetAgFoodPlatformResourceGroupResourceExtension(ArmClient client, ResourceIdentifier scope)
         {
             return client.GetResourceClient(() =>
             {
-                return new ResourceGroupResourceExtensionClient(client, scope);
+                return new AgFoodPlatformResourceGroupResourceExtension(client, scope);
             });
         }
 
-        private static SubscriptionResourceExtensionClient GetSubscriptionResourceExtensionClient(ArmResource resource)
+        private static AgFoodPlatformSubscriptionResourceExtension GetAgFoodPlatformSubscriptionResourceExtension(ArmResource resource)
         {
             return resource.GetCachedClient(client =>
             {
-                return new SubscriptionResourceExtensionClient(client, resource.Id);
+                return new AgFoodPlatformSubscriptionResourceExtension(client, resource.Id);
             });
         }
 
-        private static SubscriptionResourceExtensionClient GetSubscriptionResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
+        private static AgFoodPlatformSubscriptionResourceExtension GetAgFoodPlatformSubscriptionResourceExtension(ArmClient client, ResourceIdentifier scope)
         {
             return client.GetResourceClient(() =>
             {
-                return new SubscriptionResourceExtensionClient(client, scope);
+                return new AgFoodPlatformSubscriptionResourceExtension(client, scope);
             });
         }
 
-        private static TenantResourceExtensionClient GetTenantResourceExtensionClient(ArmResource resource)
+        private static AgFoodPlatformTenantResourceExtension GetAgFoodPlatformTenantResourceExtension(ArmResource resource)
         {
             return resource.GetCachedClient(client =>
             {
-                return new TenantResourceExtensionClient(client, resource.Id);
+                return new AgFoodPlatformTenantResourceExtension(client, resource.Id);
             });
         }
 
-        private static TenantResourceExtensionClient GetTenantResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
+        private static AgFoodPlatformTenantResourceExtension GetAgFoodPlatformTenantResourceExtension(ArmClient client, ResourceIdentifier scope)
         {
             return client.GetResourceClient(() =>
             {
-                return new TenantResourceExtensionClient(client, scope);
+                return new AgFoodPlatformTenantResourceExtension(client, scope);
             });
         }
         #region ExtensionResource
@@ -166,7 +167,7 @@ namespace Azure.ResourceManager.AgFoodPlatform
         /// <returns> An object representing collection of FarmBeatResources and their operations over a FarmBeatResource. </returns>
         public static FarmBeatCollection GetFarmBeats(this ResourceGroupResource resourceGroupResource)
         {
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetFarmBeats();
+            return GetAgFoodPlatformResourceGroupResourceExtension(resourceGroupResource).GetFarmBeats();
         }
 
         /// <summary>
@@ -240,7 +241,7 @@ namespace Azure.ResourceManager.AgFoodPlatform
         /// <returns> An async collection of <see cref="FarmBeatResource" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<FarmBeatResource> GetFarmBeatsAsync(this SubscriptionResource subscriptionResource, int? maxPageSize = null, string skipToken = null, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetFarmBeatsAsync(maxPageSize, skipToken, cancellationToken);
+            return GetAgFoodPlatformSubscriptionResourceExtension(subscriptionResource).GetFarmBeatsAsync(maxPageSize, skipToken, cancellationToken);
         }
 
         /// <summary>
@@ -266,7 +267,7 @@ namespace Azure.ResourceManager.AgFoodPlatform
         /// <returns> A collection of <see cref="FarmBeatResource" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<FarmBeatResource> GetFarmBeats(this SubscriptionResource subscriptionResource, int? maxPageSize = null, string skipToken = null, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetFarmBeats(maxPageSize, skipToken, cancellationToken);
+            return GetAgFoodPlatformSubscriptionResourceExtension(subscriptionResource).GetFarmBeats(maxPageSize, skipToken, cancellationToken);
         }
 
         /// <summary>
@@ -290,7 +291,7 @@ namespace Azure.ResourceManager.AgFoodPlatform
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            return await GetSubscriptionResourceExtensionClient(subscriptionResource).CheckNameAvailabilityLocationAsync(content, cancellationToken).ConfigureAwait(false);
+            return await GetAgFoodPlatformSubscriptionResourceExtension(subscriptionResource).CheckNameAvailabilityLocationAsync(content, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -314,7 +315,7 @@ namespace Azure.ResourceManager.AgFoodPlatform
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).CheckNameAvailabilityLocation(content, cancellationToken);
+            return GetAgFoodPlatformSubscriptionResourceExtension(subscriptionResource).CheckNameAvailabilityLocation(content, cancellationToken);
         }
 
         /// <summary> Gets a collection of FarmBeatsExtensionResources in the TenantResource. </summary>
@@ -322,7 +323,7 @@ namespace Azure.ResourceManager.AgFoodPlatform
         /// <returns> An object representing collection of FarmBeatsExtensionResources and their operations over a FarmBeatsExtensionResource. </returns>
         public static FarmBeatsExtensionCollection GetFarmBeatsExtensions(this TenantResource tenantResource)
         {
-            return GetTenantResourceExtensionClient(tenantResource).GetFarmBeatsExtensions();
+            return GetAgFoodPlatformTenantResourceExtension(tenantResource).GetFarmBeatsExtensions();
         }
 
         /// <summary>
