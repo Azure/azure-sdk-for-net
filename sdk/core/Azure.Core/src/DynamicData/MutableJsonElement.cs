@@ -81,11 +81,14 @@ namespace Azure.Core.Json
             var path = MutableJsonDocument.ChangeTracker.PushProperty(_path, name);
             if (Changes.TryGetChange(path, _highWaterMark, out MutableJsonChange change))
             {
-                //if (change.ReplacesJsonElement)
-                //{
+                if (change.ChangeKind == MutableJsonChangeKind.PropertyRemoval)
+                {
+                    value = default;
+                    return false;
+                }
+
                 value = new MutableJsonElement(_root, change.AsJsonElement(), path, change.Index);
                 return true;
-                //}
             }
 
             //// Check for changes to descendants
@@ -814,13 +817,8 @@ namespace Azure.Core.Json
                 throw new InvalidOperationException($"Object does not have property: '{name}'.");
             }
 
-            Dictionary<string, object> dict = JsonSerializer.Deserialize<Dictionary<string, object>>(GetRawBytes(), _root.SerializerOptions)!;
-            dict.Remove(name);
-
-            byte[] bytes = JsonSerializer.SerializeToUtf8Bytes(dict, _root.SerializerOptions);
-            JsonElement newElement = JsonDocument.Parse(bytes).RootElement;
-
-            Changes.AddChange(_path, newElement, kind: null, false, changeKind: MutableJsonChangeKind.PropertyRemoval);
+            string path = MutableJsonDocument.ChangeTracker.PushProperty(_path, name);
+            Changes.AddChange(path, null, kind: null, false, changeKind: MutableJsonChangeKind.PropertyRemoval);
         }
 
         /// <summary>

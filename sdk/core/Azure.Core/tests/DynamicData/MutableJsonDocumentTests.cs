@@ -403,35 +403,35 @@ namespace Azure.Core.Tests
         {
             string json = """
                 {
-                  "Foo" : {
-                    "A": 1.2,
-                    "B": "hi"
+                  "foo" : {
+                    "a": 1.2,
+                    "b": "hi"
                     }
                 }
                 """;
 
             MutableJsonDocument mdoc = MutableJsonDocument.Parse(json);
 
-            mdoc.RootElement.GetProperty("Foo").RemoveProperty("B");
+            mdoc.RootElement.GetProperty("foo").RemoveProperty("b");
 
             // Assert:
 
             // 1. Old property is present.
-            Assert.AreEqual(1.2, mdoc.RootElement.GetProperty("Foo").GetProperty("A").GetDouble());
+            Assert.AreEqual(1.2, mdoc.RootElement.GetProperty("foo").GetProperty("a").GetDouble());
 
             // 2. New property is absent.
-            Assert.IsFalse(mdoc.RootElement.GetProperty("Foo").TryGetProperty("B", out var _));
+            Assert.IsFalse(mdoc.RootElement.GetProperty("foo").TryGetProperty("b", out var _));
 
             // 3. Type round-trips correctly.
             BinaryData buffer = GetWriteToBuffer(mdoc);
             JsonDocument doc = JsonDocument.Parse(buffer);
 
-            Assert.AreEqual(1.2, doc.RootElement.GetProperty("Foo").GetProperty("A").GetDouble());
+            Assert.AreEqual(1.2, doc.RootElement.GetProperty("foo").GetProperty("a").GetDouble());
 
             string expected = """
                 {
-                  "Foo" : {
-                    "A": 1.2
+                  "foo" : {
+                    "a": 1.2
                     }
                 }
                 """;
