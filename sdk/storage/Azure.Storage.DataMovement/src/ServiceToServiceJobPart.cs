@@ -23,12 +23,6 @@ namespace Azure.Storage.DataMovement
         private CommitChunkHandler _commitBlockHandler;
 
         /// <summary>
-        ///  Will handle the calling the commit block list API once
-        ///  all commit blocks have been uploaded.
-        /// </summary>
-        private CopyStatusHandler _copyStatusHandler;
-
-        /// <summary>
         /// Creating job part based on a single transfer job
         /// </summary>
         private ServiceToServiceJobPart(ServiceToServiceTransferJob job, int partNumber, bool isFinalPart)
@@ -292,24 +286,6 @@ namespace Azure.Storage.DataMovement
         }
         #endregion
 
-        #region AsyncCopyStatusController
-        internal static CopyStatusHandler GetCopyStatusController(
-            ServiceToServiceJobPart jobPart)
-        => new CopyStatusHandler(GetCopyStatusBehaviors(jobPart));
-
-        internal static CopyStatusHandler.Behaviors GetCopyStatusBehaviors(
-            ServiceToServiceJobPart jobPart)
-        {
-            return new CopyStatusHandler.Behaviors
-            {
-                QueueGetPropertiesTask = async () => await jobPart.CopyStatusCheckAsync().ConfigureAwait(false),
-                ReportProgressInBytes = (long bytesWritten) => jobPart.ReportBytesWritten(bytesWritten),
-                InvokeFailedHandler = async (ex) => await jobPart.InvokeFailedArg(ex).ConfigureAwait(false),
-                UpdateTransferStatus = async (status) => await jobPart.OnTransferStatusChanged(status).ConfigureAwait(false)
-            };
-        }
-        #endregion
-
         internal async Task CompleteTransferAsync()
         {
             try
@@ -352,42 +328,6 @@ namespace Azure.Storage.DataMovement
                 throw new ArgumentException($"Invalid copy progress - {copyProgress}");
             }
             return long.Parse(progress[0], CultureInfo.InvariantCulture);
-        }
-
-        internal async Task CopyStatusCheckAsync(bool waitEnabled = true)
-        {
-            // Determine the polling time we need to wait until we can queue
-            // up the next GetProperties call.
-            if (waitEnabled)
-            {
-                TimeSpan suggestedInterval = TimeSpan.FromSeconds(DataMovementConstants.StatusCheckInSec);
-                await Task.Delay(suggestedInterval, _cancellationToken).ConfigureAwait(false);
-            }
-
-            // Call GetProperties
-            try
-            {
-                StorageResourceProperties properties = await _destinationResource.GetPropertiesAsync().ConfigureAwait(false);
-                if (properties != default && properties.CopyStatus.HasValue)
-                {
-                    await _copyStatusHandler.InvokeEvent(new CopyStatusEventArgs(
-                        _dataTransfer.Id,
-                        properties.CopyStatus.Value,
-                        properties.CopyId,
-                        ParseCopyProgress(properties.CopyProgress),
-                        false,
-                        _cancellationToken)).ConfigureAwait(false);
-                }
-                else
-                {
-                    await InvokeFailedArg(
-                        new Exception("Get properties failed to return copy progress on the destination.")).ConfigureAwait(false);
-                }
-            }
-            catch (Exception ex)
-            {
-                await InvokeFailedArg(ex).ConfigureAwait(false);
-            }
         }
 
         internal async Task PutBlockFromUri(
@@ -469,10 +409,6 @@ namespace Azure.Storage.DataMovement
 
         internal async Task DisposeHandlers()
         {
-            if (_copyStatusHandler != default)
-            {
-                _copyStatusHandler.Dispose();
-            }
             if (_commitBlockHandler != default)
             {
                 await _commitBlockHandler.DisposeAsync().ConfigureAwait(false);
