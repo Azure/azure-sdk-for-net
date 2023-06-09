@@ -13,41 +13,42 @@ using Azure.Core;
 using Azure.ResourceManager;
 using Azure.ResourceManager.Resources;
 using Azure.ResourceManager.StorageSync.Models;
+using Azure.ResourceManager.StorageSync.Testing;
 
 namespace Azure.ResourceManager.StorageSync
 {
     /// <summary> A class to add extension methods to Azure.ResourceManager.StorageSync. </summary>
     public static partial class StorageSyncExtensions
     {
-        private static ResourceGroupResourceExtensionClient GetResourceGroupResourceExtensionClient(ArmResource resource)
+        private static StorageSyncResourceGroupResourceExtension GetStorageSyncResourceGroupResourceExtension(ArmResource resource)
         {
             return resource.GetCachedClient(client =>
             {
-                return new ResourceGroupResourceExtensionClient(client, resource.Id);
+                return new StorageSyncResourceGroupResourceExtension(client, resource.Id);
             });
         }
 
-        private static ResourceGroupResourceExtensionClient GetResourceGroupResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
+        private static StorageSyncResourceGroupResourceExtension GetStorageSyncResourceGroupResourceExtension(ArmClient client, ResourceIdentifier scope)
         {
             return client.GetResourceClient(() =>
             {
-                return new ResourceGroupResourceExtensionClient(client, scope);
+                return new StorageSyncResourceGroupResourceExtension(client, scope);
             });
         }
 
-        private static SubscriptionResourceExtensionClient GetSubscriptionResourceExtensionClient(ArmResource resource)
+        private static StorageSyncSubscriptionResourceExtension GetStorageSyncSubscriptionResourceExtension(ArmResource resource)
         {
             return resource.GetCachedClient(client =>
             {
-                return new SubscriptionResourceExtensionClient(client, resource.Id);
+                return new StorageSyncSubscriptionResourceExtension(client, resource.Id);
             });
         }
 
-        private static SubscriptionResourceExtensionClient GetSubscriptionResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
+        private static StorageSyncSubscriptionResourceExtension GetStorageSyncSubscriptionResourceExtension(ArmClient client, ResourceIdentifier scope)
         {
             return client.GetResourceClient(() =>
             {
-                return new SubscriptionResourceExtensionClient(client, scope);
+                return new StorageSyncSubscriptionResourceExtension(client, scope);
             });
         }
         #region StorageSyncServiceResource
@@ -188,7 +189,7 @@ namespace Azure.ResourceManager.StorageSync
         /// <returns> An object representing collection of StorageSyncServiceResources and their operations over a StorageSyncServiceResource. </returns>
         public static StorageSyncServiceCollection GetStorageSyncServices(this ResourceGroupResource resourceGroupResource)
         {
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetStorageSyncServices();
+            return GetStorageSyncResourceGroupResourceExtension(resourceGroupResource).GetStorageSyncServices();
         }
 
         /// <summary>
@@ -263,7 +264,7 @@ namespace Azure.ResourceManager.StorageSync
             Argument.AssertNotNullOrEmpty(locationName, nameof(locationName));
             Argument.AssertNotNull(content, nameof(content));
 
-            return await GetSubscriptionResourceExtensionClient(subscriptionResource).CheckStorageSyncNameAvailabilityAsync(locationName, content, cancellationToken).ConfigureAwait(false);
+            return await GetStorageSyncSubscriptionResourceExtension(subscriptionResource).CheckStorageSyncNameAvailabilityAsync(locationName, content, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -290,7 +291,7 @@ namespace Azure.ResourceManager.StorageSync
             Argument.AssertNotNullOrEmpty(locationName, nameof(locationName));
             Argument.AssertNotNull(content, nameof(content));
 
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).CheckStorageSyncNameAvailability(locationName, content, cancellationToken);
+            return GetStorageSyncSubscriptionResourceExtension(subscriptionResource).CheckStorageSyncNameAvailability(locationName, content, cancellationToken);
         }
 
         /// <summary>
@@ -311,7 +312,7 @@ namespace Azure.ResourceManager.StorageSync
         /// <returns> An async collection of <see cref="StorageSyncServiceResource" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<StorageSyncServiceResource> GetStorageSyncServicesAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetStorageSyncServicesAsync(cancellationToken);
+            return GetStorageSyncSubscriptionResourceExtension(subscriptionResource).GetStorageSyncServicesAsync(cancellationToken);
         }
 
         /// <summary>
@@ -332,7 +333,7 @@ namespace Azure.ResourceManager.StorageSync
         /// <returns> A collection of <see cref="StorageSyncServiceResource" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<StorageSyncServiceResource> GetStorageSyncServices(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetStorageSyncServices(cancellationToken);
+            return GetStorageSyncSubscriptionResourceExtension(subscriptionResource).GetStorageSyncServices(cancellationToken);
         }
     }
 }

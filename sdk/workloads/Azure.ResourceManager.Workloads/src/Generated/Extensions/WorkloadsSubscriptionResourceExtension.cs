@@ -12,12 +12,13 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
+using Azure.ResourceManager.Workloads;
 using Azure.ResourceManager.Workloads.Models;
 
-namespace Azure.ResourceManager.Workloads
+namespace Azure.ResourceManager.Workloads.Testing
 {
     /// <summary> A class to add extension methods to SubscriptionResource. </summary>
-    internal partial class SubscriptionResourceExtensionClient : ArmResource
+    public partial class WorkloadsSubscriptionResourceExtension : ArmResource
     {
         private ClientDiagnostics _defaultClientDiagnostics;
         private WorkloadsRestOperations _defaultRestClient;
@@ -26,15 +27,15 @@ namespace Azure.ResourceManager.Workloads
         private ClientDiagnostics _sapMonitormonitorsClientDiagnostics;
         private MonitorsRestOperations _sapMonitormonitorsRestClient;
 
-        /// <summary> Initializes a new instance of the <see cref="SubscriptionResourceExtensionClient"/> class for mocking. </summary>
-        protected SubscriptionResourceExtensionClient()
+        /// <summary> Initializes a new instance of the <see cref="WorkloadsSubscriptionResourceExtension"/> class for mocking. </summary>
+        protected WorkloadsSubscriptionResourceExtension()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="SubscriptionResourceExtensionClient"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="WorkloadsSubscriptionResourceExtension"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal SubscriptionResourceExtensionClient(ArmClient client, ResourceIdentifier id) : base(client, id)
+        internal WorkloadsSubscriptionResourceExtension(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
         }
 
@@ -69,7 +70,7 @@ namespace Azure.ResourceManager.Workloads
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<SapSizingRecommendationResult>> SapSizingRecommendationsAsync(AzureLocation location, SapSizingRecommendationContent content = null, CancellationToken cancellationToken = default)
         {
-            using var scope = DefaultClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.SapSizingRecommendations");
+            using var scope = DefaultClientDiagnostics.CreateScope("WorkloadsSubscriptionResourceExtension.SapSizingRecommendations");
             scope.Start();
             try
             {
@@ -101,7 +102,7 @@ namespace Azure.ResourceManager.Workloads
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<SapSizingRecommendationResult> SapSizingRecommendations(AzureLocation location, SapSizingRecommendationContent content = null, CancellationToken cancellationToken = default)
         {
-            using var scope = DefaultClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.SapSizingRecommendations");
+            using var scope = DefaultClientDiagnostics.CreateScope("WorkloadsSubscriptionResourceExtension.SapSizingRecommendations");
             scope.Start();
             try
             {
@@ -133,7 +134,7 @@ namespace Azure.ResourceManager.Workloads
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<SapSupportedResourceSkusResult>> SapSupportedSkuAsync(AzureLocation location, SapSupportedSkusContent content = null, CancellationToken cancellationToken = default)
         {
-            using var scope = DefaultClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.SapSupportedSku");
+            using var scope = DefaultClientDiagnostics.CreateScope("WorkloadsSubscriptionResourceExtension.SapSupportedSku");
             scope.Start();
             try
             {
@@ -165,7 +166,7 @@ namespace Azure.ResourceManager.Workloads
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<SapSupportedResourceSkusResult> SapSupportedSku(AzureLocation location, SapSupportedSkusContent content = null, CancellationToken cancellationToken = default)
         {
-            using var scope = DefaultClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.SapSupportedSku");
+            using var scope = DefaultClientDiagnostics.CreateScope("WorkloadsSubscriptionResourceExtension.SapSupportedSku");
             scope.Start();
             try
             {
@@ -197,7 +198,7 @@ namespace Azure.ResourceManager.Workloads
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<SapDiskConfigurationsResult>> SapDiskConfigurationsAsync(AzureLocation location, SapDiskConfigurationsContent content = null, CancellationToken cancellationToken = default)
         {
-            using var scope = DefaultClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.SapDiskConfigurations");
+            using var scope = DefaultClientDiagnostics.CreateScope("WorkloadsSubscriptionResourceExtension.SapDiskConfigurations");
             scope.Start();
             try
             {
@@ -229,7 +230,7 @@ namespace Azure.ResourceManager.Workloads
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<SapDiskConfigurationsResult> SapDiskConfigurations(AzureLocation location, SapDiskConfigurationsContent content = null, CancellationToken cancellationToken = default)
         {
-            using var scope = DefaultClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.SapDiskConfigurations");
+            using var scope = DefaultClientDiagnostics.CreateScope("WorkloadsSubscriptionResourceExtension.SapDiskConfigurations");
             scope.Start();
             try
             {
@@ -261,7 +262,7 @@ namespace Azure.ResourceManager.Workloads
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<SapAvailabilityZoneDetailsResult>> SapAvailabilityZoneDetailsAsync(AzureLocation location, SapAvailabilityZoneDetailsContent content = null, CancellationToken cancellationToken = default)
         {
-            using var scope = DefaultClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.SapAvailabilityZoneDetails");
+            using var scope = DefaultClientDiagnostics.CreateScope("WorkloadsSubscriptionResourceExtension.SapAvailabilityZoneDetails");
             scope.Start();
             try
             {
@@ -293,7 +294,7 @@ namespace Azure.ResourceManager.Workloads
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<SapAvailabilityZoneDetailsResult> SapAvailabilityZoneDetails(AzureLocation location, SapAvailabilityZoneDetailsContent content = null, CancellationToken cancellationToken = default)
         {
-            using var scope = DefaultClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.SapAvailabilityZoneDetails");
+            using var scope = DefaultClientDiagnostics.CreateScope("WorkloadsSubscriptionResourceExtension.SapAvailabilityZoneDetails");
             scope.Start();
             try
             {
@@ -326,7 +327,7 @@ namespace Azure.ResourceManager.Workloads
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => SapVirtualInstanceSAPVirtualInstancesRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => SapVirtualInstanceSAPVirtualInstancesRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new SapVirtualInstanceResource(Client, SapVirtualInstanceData.DeserializeSapVirtualInstanceData(e)), SapVirtualInstanceSAPVirtualInstancesClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetSapVirtualInstances", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new SapVirtualInstanceResource(Client, SapVirtualInstanceData.DeserializeSapVirtualInstanceData(e)), SapVirtualInstanceSAPVirtualInstancesClientDiagnostics, Pipeline, "WorkloadsSubscriptionResourceExtension.GetSapVirtualInstances", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -348,7 +349,7 @@ namespace Azure.ResourceManager.Workloads
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => SapVirtualInstanceSAPVirtualInstancesRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => SapVirtualInstanceSAPVirtualInstancesRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new SapVirtualInstanceResource(Client, SapVirtualInstanceData.DeserializeSapVirtualInstanceData(e)), SapVirtualInstanceSAPVirtualInstancesClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetSapVirtualInstances", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new SapVirtualInstanceResource(Client, SapVirtualInstanceData.DeserializeSapVirtualInstanceData(e)), SapVirtualInstanceSAPVirtualInstancesClientDiagnostics, Pipeline, "WorkloadsSubscriptionResourceExtension.GetSapVirtualInstances", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -370,7 +371,7 @@ namespace Azure.ResourceManager.Workloads
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => SapMonitormonitorsRestClient.CreateListRequest(Id.SubscriptionId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => SapMonitormonitorsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new SapMonitorResource(Client, SapMonitorData.DeserializeSapMonitorData(e)), SapMonitormonitorsClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetSapMonitors", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new SapMonitorResource(Client, SapMonitorData.DeserializeSapMonitorData(e)), SapMonitormonitorsClientDiagnostics, Pipeline, "WorkloadsSubscriptionResourceExtension.GetSapMonitors", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -392,7 +393,7 @@ namespace Azure.ResourceManager.Workloads
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => SapMonitormonitorsRestClient.CreateListRequest(Id.SubscriptionId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => SapMonitormonitorsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new SapMonitorResource(Client, SapMonitorData.DeserializeSapMonitorData(e)), SapMonitormonitorsClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetSapMonitors", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new SapMonitorResource(Client, SapMonitorData.DeserializeSapMonitorData(e)), SapMonitormonitorsClientDiagnostics, Pipeline, "WorkloadsSubscriptionResourceExtension.GetSapMonitors", "value", "nextLink", cancellationToken);
         }
     }
 }

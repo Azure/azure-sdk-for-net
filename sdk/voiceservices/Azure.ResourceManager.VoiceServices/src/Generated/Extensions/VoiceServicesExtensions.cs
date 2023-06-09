@@ -13,41 +13,42 @@ using Azure.Core;
 using Azure.ResourceManager;
 using Azure.ResourceManager.Resources;
 using Azure.ResourceManager.VoiceServices.Models;
+using Azure.ResourceManager.VoiceServices.Testing;
 
 namespace Azure.ResourceManager.VoiceServices
 {
     /// <summary> A class to add extension methods to Azure.ResourceManager.VoiceServices. </summary>
     public static partial class VoiceServicesExtensions
     {
-        private static ResourceGroupResourceExtensionClient GetResourceGroupResourceExtensionClient(ArmResource resource)
+        private static VoiceServicesResourceGroupResourceExtension GetVoiceServicesResourceGroupResourceExtension(ArmResource resource)
         {
             return resource.GetCachedClient(client =>
             {
-                return new ResourceGroupResourceExtensionClient(client, resource.Id);
+                return new VoiceServicesResourceGroupResourceExtension(client, resource.Id);
             });
         }
 
-        private static ResourceGroupResourceExtensionClient GetResourceGroupResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
+        private static VoiceServicesResourceGroupResourceExtension GetVoiceServicesResourceGroupResourceExtension(ArmClient client, ResourceIdentifier scope)
         {
             return client.GetResourceClient(() =>
             {
-                return new ResourceGroupResourceExtensionClient(client, scope);
+                return new VoiceServicesResourceGroupResourceExtension(client, scope);
             });
         }
 
-        private static SubscriptionResourceExtensionClient GetSubscriptionResourceExtensionClient(ArmResource resource)
+        private static VoiceServicesSubscriptionResourceExtension GetVoiceServicesSubscriptionResourceExtension(ArmResource resource)
         {
             return resource.GetCachedClient(client =>
             {
-                return new SubscriptionResourceExtensionClient(client, resource.Id);
+                return new VoiceServicesSubscriptionResourceExtension(client, resource.Id);
             });
         }
 
-        private static SubscriptionResourceExtensionClient GetSubscriptionResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
+        private static VoiceServicesSubscriptionResourceExtension GetVoiceServicesSubscriptionResourceExtension(ArmClient client, ResourceIdentifier scope)
         {
             return client.GetResourceClient(() =>
             {
-                return new SubscriptionResourceExtensionClient(client, scope);
+                return new VoiceServicesSubscriptionResourceExtension(client, scope);
             });
         }
         #region VoiceServicesCommunicationsGatewayResource
@@ -93,7 +94,7 @@ namespace Azure.ResourceManager.VoiceServices
         /// <returns> An object representing collection of VoiceServicesCommunicationsGatewayResources and their operations over a VoiceServicesCommunicationsGatewayResource. </returns>
         public static VoiceServicesCommunicationsGatewayCollection GetVoiceServicesCommunicationsGateways(this ResourceGroupResource resourceGroupResource)
         {
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetVoiceServicesCommunicationsGateways();
+            return GetVoiceServicesResourceGroupResourceExtension(resourceGroupResource).GetVoiceServicesCommunicationsGateways();
         }
 
         /// <summary>
@@ -162,7 +163,7 @@ namespace Azure.ResourceManager.VoiceServices
         /// <returns> An async collection of <see cref="VoiceServicesCommunicationsGatewayResource" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<VoiceServicesCommunicationsGatewayResource> GetVoiceServicesCommunicationsGatewaysAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetVoiceServicesCommunicationsGatewaysAsync(cancellationToken);
+            return GetVoiceServicesSubscriptionResourceExtension(subscriptionResource).GetVoiceServicesCommunicationsGatewaysAsync(cancellationToken);
         }
 
         /// <summary>
@@ -183,7 +184,7 @@ namespace Azure.ResourceManager.VoiceServices
         /// <returns> A collection of <see cref="VoiceServicesCommunicationsGatewayResource" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<VoiceServicesCommunicationsGatewayResource> GetVoiceServicesCommunicationsGateways(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetVoiceServicesCommunicationsGateways(cancellationToken);
+            return GetVoiceServicesSubscriptionResourceExtension(subscriptionResource).GetVoiceServicesCommunicationsGateways(cancellationToken);
         }
 
         /// <summary>
@@ -208,7 +209,7 @@ namespace Azure.ResourceManager.VoiceServices
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            return await GetSubscriptionResourceExtensionClient(subscriptionResource).CheckVoiceServicesNameAvailabilityAsync(location, content, cancellationToken).ConfigureAwait(false);
+            return await GetVoiceServicesSubscriptionResourceExtension(subscriptionResource).CheckVoiceServicesNameAvailabilityAsync(location, content, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -233,7 +234,7 @@ namespace Azure.ResourceManager.VoiceServices
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).CheckVoiceServicesNameAvailability(location, content, cancellationToken);
+            return GetVoiceServicesSubscriptionResourceExtension(subscriptionResource).CheckVoiceServicesNameAvailability(location, content, cancellationToken);
         }
     }
 }

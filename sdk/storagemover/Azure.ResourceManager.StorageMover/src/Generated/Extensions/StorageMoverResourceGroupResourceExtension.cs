@@ -7,21 +7,22 @@
 
 using Azure.Core;
 using Azure.ResourceManager;
+using Azure.ResourceManager.StorageMover;
 
-namespace Azure.ResourceManager.StorageMover
+namespace Azure.ResourceManager.StorageMover.Testing
 {
     /// <summary> A class to add extension methods to ResourceGroupResource. </summary>
-    internal partial class ResourceGroupResourceExtensionClient : ArmResource
+    public partial class StorageMoverResourceGroupResourceExtension : ArmResource
     {
-        /// <summary> Initializes a new instance of the <see cref="ResourceGroupResourceExtensionClient"/> class for mocking. </summary>
-        protected ResourceGroupResourceExtensionClient()
+        /// <summary> Initializes a new instance of the <see cref="StorageMoverResourceGroupResourceExtension"/> class for mocking. </summary>
+        protected StorageMoverResourceGroupResourceExtension()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="ResourceGroupResourceExtensionClient"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="StorageMoverResourceGroupResourceExtension"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal ResourceGroupResourceExtensionClient(ArmClient client, ResourceIdentifier id) : base(client, id)
+        internal StorageMoverResourceGroupResourceExtension(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
         }
 

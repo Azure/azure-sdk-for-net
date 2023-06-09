@@ -12,25 +12,26 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
+using Azure.ResourceManager.TrafficManager;
 using Azure.ResourceManager.TrafficManager.Models;
 
-namespace Azure.ResourceManager.TrafficManager
+namespace Azure.ResourceManager.TrafficManager.Testing
 {
     /// <summary> A class to add extension methods to TenantResource. </summary>
-    internal partial class TenantResourceExtensionClient : ArmResource
+    public partial class TrafficManagerTenantResourceExtension : ArmResource
     {
         private ClientDiagnostics _trafficManagerProfileProfilesClientDiagnostics;
         private ProfilesRestOperations _trafficManagerProfileProfilesRestClient;
 
-        /// <summary> Initializes a new instance of the <see cref="TenantResourceExtensionClient"/> class for mocking. </summary>
-        protected TenantResourceExtensionClient()
+        /// <summary> Initializes a new instance of the <see cref="TrafficManagerTenantResourceExtension"/> class for mocking. </summary>
+        protected TrafficManagerTenantResourceExtension()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="TenantResourceExtensionClient"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="TrafficManagerTenantResourceExtension"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal TenantResourceExtensionClient(ArmClient client, ResourceIdentifier id) : base(client, id)
+        internal TrafficManagerTenantResourceExtension(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
         }
 
@@ -65,9 +66,12 @@ namespace Azure.ResourceManager.TrafficManager
         /// </summary>
         /// <param name="content"> The Traffic Manager name parameters supplied to the CheckTrafficManagerNameAvailability operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual async Task<Response<TrafficManagerNameAvailabilityResult>> CheckTrafficManagerRelativeDnsNameAvailabilityAsync(TrafficManagerRelativeDnsNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            using var scope = TrafficManagerProfileProfilesClientDiagnostics.CreateScope("TenantResourceExtensionClient.CheckTrafficManagerRelativeDnsNameAvailability");
+            Argument.AssertNotNull(content, nameof(content));
+
+            using var scope = TrafficManagerProfileProfilesClientDiagnostics.CreateScope("TrafficManagerTenantResourceExtension.CheckTrafficManagerRelativeDnsNameAvailability");
             scope.Start();
             try
             {
@@ -96,9 +100,12 @@ namespace Azure.ResourceManager.TrafficManager
         /// </summary>
         /// <param name="content"> The Traffic Manager name parameters supplied to the CheckTrafficManagerNameAvailability operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual Response<TrafficManagerNameAvailabilityResult> CheckTrafficManagerRelativeDnsNameAvailability(TrafficManagerRelativeDnsNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            using var scope = TrafficManagerProfileProfilesClientDiagnostics.CreateScope("TenantResourceExtensionClient.CheckTrafficManagerRelativeDnsNameAvailability");
+            Argument.AssertNotNull(content, nameof(content));
+
+            using var scope = TrafficManagerProfileProfilesClientDiagnostics.CreateScope("TrafficManagerTenantResourceExtension.CheckTrafficManagerRelativeDnsNameAvailability");
             scope.Start();
             try
             {

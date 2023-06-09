@@ -12,25 +12,26 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
+using Azure.ResourceManager.Subscription;
 using Azure.ResourceManager.Subscription.Models;
 
-namespace Azure.ResourceManager.Subscription
+namespace Azure.ResourceManager.Subscription.Testing
 {
     /// <summary> A class to add extension methods to SubscriptionResource. </summary>
-    internal partial class SubscriptionResourceExtensionClient : ArmResource
+    public partial class SubscriptionSubscriptionResourceExtension : ArmResource
     {
         private ClientDiagnostics _subscriptionClientDiagnostics;
         private SubscriptionRestOperations _subscriptionRestClient;
 
-        /// <summary> Initializes a new instance of the <see cref="SubscriptionResourceExtensionClient"/> class for mocking. </summary>
-        protected SubscriptionResourceExtensionClient()
+        /// <summary> Initializes a new instance of the <see cref="SubscriptionSubscriptionResourceExtension"/> class for mocking. </summary>
+        protected SubscriptionSubscriptionResourceExtension()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="SubscriptionResourceExtensionClient"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="SubscriptionSubscriptionResourceExtension"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal SubscriptionResourceExtensionClient(ArmClient client, ResourceIdentifier id) : base(client, id)
+        internal SubscriptionSubscriptionResourceExtension(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
         }
 
@@ -59,7 +60,7 @@ namespace Azure.ResourceManager.Subscription
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<CanceledSubscriptionId>> CancelSubscriptionAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = SubscriptionClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.CancelSubscription");
+            using var scope = SubscriptionClientDiagnostics.CreateScope("SubscriptionSubscriptionResourceExtension.CancelSubscription");
             scope.Start();
             try
             {
@@ -89,7 +90,7 @@ namespace Azure.ResourceManager.Subscription
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<CanceledSubscriptionId> CancelSubscription(CancellationToken cancellationToken = default)
         {
-            using var scope = SubscriptionClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.CancelSubscription");
+            using var scope = SubscriptionClientDiagnostics.CreateScope("SubscriptionSubscriptionResourceExtension.CancelSubscription");
             scope.Start();
             try
             {
@@ -118,9 +119,12 @@ namespace Azure.ResourceManager.Subscription
         /// </summary>
         /// <param name="body"> Subscription Name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
         public virtual async Task<Response<RenamedSubscriptionId>> RenameSubscriptionAsync(SubscriptionName body, CancellationToken cancellationToken = default)
         {
-            using var scope = SubscriptionClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.RenameSubscription");
+            Argument.AssertNotNull(body, nameof(body));
+
+            using var scope = SubscriptionClientDiagnostics.CreateScope("SubscriptionSubscriptionResourceExtension.RenameSubscription");
             scope.Start();
             try
             {
@@ -149,9 +153,12 @@ namespace Azure.ResourceManager.Subscription
         /// </summary>
         /// <param name="body"> Subscription Name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
         public virtual Response<RenamedSubscriptionId> RenameSubscription(SubscriptionName body, CancellationToken cancellationToken = default)
         {
-            using var scope = SubscriptionClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.RenameSubscription");
+            Argument.AssertNotNull(body, nameof(body));
+
+            using var scope = SubscriptionClientDiagnostics.CreateScope("SubscriptionSubscriptionResourceExtension.RenameSubscription");
             scope.Start();
             try
             {
@@ -181,7 +188,7 @@ namespace Azure.ResourceManager.Subscription
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<EnabledSubscriptionId>> EnableSubscriptionAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = SubscriptionClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.EnableSubscription");
+            using var scope = SubscriptionClientDiagnostics.CreateScope("SubscriptionSubscriptionResourceExtension.EnableSubscription");
             scope.Start();
             try
             {
@@ -211,7 +218,7 @@ namespace Azure.ResourceManager.Subscription
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<EnabledSubscriptionId> EnableSubscription(CancellationToken cancellationToken = default)
         {
-            using var scope = SubscriptionClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.EnableSubscription");
+            using var scope = SubscriptionClientDiagnostics.CreateScope("SubscriptionSubscriptionResourceExtension.EnableSubscription");
             scope.Start();
             try
             {

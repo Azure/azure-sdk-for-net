@@ -13,41 +13,42 @@ using Azure.Core;
 using Azure.ResourceManager;
 using Azure.ResourceManager.Resources;
 using Azure.ResourceManager.Workloads.Models;
+using Azure.ResourceManager.Workloads.Testing;
 
 namespace Azure.ResourceManager.Workloads
 {
     /// <summary> A class to add extension methods to Azure.ResourceManager.Workloads. </summary>
     public static partial class WorkloadsExtensions
     {
-        private static ResourceGroupResourceExtensionClient GetResourceGroupResourceExtensionClient(ArmResource resource)
+        private static WorkloadsResourceGroupResourceExtension GetWorkloadsResourceGroupResourceExtension(ArmResource resource)
         {
             return resource.GetCachedClient(client =>
             {
-                return new ResourceGroupResourceExtensionClient(client, resource.Id);
+                return new WorkloadsResourceGroupResourceExtension(client, resource.Id);
             });
         }
 
-        private static ResourceGroupResourceExtensionClient GetResourceGroupResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
+        private static WorkloadsResourceGroupResourceExtension GetWorkloadsResourceGroupResourceExtension(ArmClient client, ResourceIdentifier scope)
         {
             return client.GetResourceClient(() =>
             {
-                return new ResourceGroupResourceExtensionClient(client, scope);
+                return new WorkloadsResourceGroupResourceExtension(client, scope);
             });
         }
 
-        private static SubscriptionResourceExtensionClient GetSubscriptionResourceExtensionClient(ArmResource resource)
+        private static WorkloadsSubscriptionResourceExtension GetWorkloadsSubscriptionResourceExtension(ArmResource resource)
         {
             return resource.GetCachedClient(client =>
             {
-                return new SubscriptionResourceExtensionClient(client, resource.Id);
+                return new WorkloadsSubscriptionResourceExtension(client, resource.Id);
             });
         }
 
-        private static SubscriptionResourceExtensionClient GetSubscriptionResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
+        private static WorkloadsSubscriptionResourceExtension GetWorkloadsSubscriptionResourceExtension(ArmClient client, ResourceIdentifier scope)
         {
             return client.GetResourceClient(() =>
             {
-                return new SubscriptionResourceExtensionClient(client, scope);
+                return new WorkloadsSubscriptionResourceExtension(client, scope);
             });
         }
         #region SapVirtualInstanceResource
@@ -188,7 +189,7 @@ namespace Azure.ResourceManager.Workloads
         /// <returns> An object representing collection of SapVirtualInstanceResources and their operations over a SapVirtualInstanceResource. </returns>
         public static SapVirtualInstanceCollection GetSapVirtualInstances(this ResourceGroupResource resourceGroupResource)
         {
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetSapVirtualInstances();
+            return GetWorkloadsResourceGroupResourceExtension(resourceGroupResource).GetSapVirtualInstances();
         }
 
         /// <summary>
@@ -244,7 +245,7 @@ namespace Azure.ResourceManager.Workloads
         /// <returns> An object representing collection of SapMonitorResources and their operations over a SapMonitorResource. </returns>
         public static SapMonitorCollection GetSapMonitors(this ResourceGroupResource resourceGroupResource)
         {
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetSapMonitors();
+            return GetWorkloadsResourceGroupResourceExtension(resourceGroupResource).GetSapMonitors();
         }
 
         /// <summary>
@@ -314,7 +315,7 @@ namespace Azure.ResourceManager.Workloads
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public static async Task<Response<SapSizingRecommendationResult>> SapSizingRecommendationsAsync(this SubscriptionResource subscriptionResource, AzureLocation location, SapSizingRecommendationContent content = null, CancellationToken cancellationToken = default)
         {
-            return await GetSubscriptionResourceExtensionClient(subscriptionResource).SapSizingRecommendationsAsync(location, content, cancellationToken).ConfigureAwait(false);
+            return await GetWorkloadsSubscriptionResourceExtension(subscriptionResource).SapSizingRecommendationsAsync(location, content, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -336,7 +337,7 @@ namespace Azure.ResourceManager.Workloads
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public static Response<SapSizingRecommendationResult> SapSizingRecommendations(this SubscriptionResource subscriptionResource, AzureLocation location, SapSizingRecommendationContent content = null, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).SapSizingRecommendations(location, content, cancellationToken);
+            return GetWorkloadsSubscriptionResourceExtension(subscriptionResource).SapSizingRecommendations(location, content, cancellationToken);
         }
 
         /// <summary>
@@ -358,7 +359,7 @@ namespace Azure.ResourceManager.Workloads
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public static async Task<Response<SapSupportedResourceSkusResult>> SapSupportedSkuAsync(this SubscriptionResource subscriptionResource, AzureLocation location, SapSupportedSkusContent content = null, CancellationToken cancellationToken = default)
         {
-            return await GetSubscriptionResourceExtensionClient(subscriptionResource).SapSupportedSkuAsync(location, content, cancellationToken).ConfigureAwait(false);
+            return await GetWorkloadsSubscriptionResourceExtension(subscriptionResource).SapSupportedSkuAsync(location, content, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -380,7 +381,7 @@ namespace Azure.ResourceManager.Workloads
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public static Response<SapSupportedResourceSkusResult> SapSupportedSku(this SubscriptionResource subscriptionResource, AzureLocation location, SapSupportedSkusContent content = null, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).SapSupportedSku(location, content, cancellationToken);
+            return GetWorkloadsSubscriptionResourceExtension(subscriptionResource).SapSupportedSku(location, content, cancellationToken);
         }
 
         /// <summary>
@@ -402,7 +403,7 @@ namespace Azure.ResourceManager.Workloads
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public static async Task<Response<SapDiskConfigurationsResult>> SapDiskConfigurationsAsync(this SubscriptionResource subscriptionResource, AzureLocation location, SapDiskConfigurationsContent content = null, CancellationToken cancellationToken = default)
         {
-            return await GetSubscriptionResourceExtensionClient(subscriptionResource).SapDiskConfigurationsAsync(location, content, cancellationToken).ConfigureAwait(false);
+            return await GetWorkloadsSubscriptionResourceExtension(subscriptionResource).SapDiskConfigurationsAsync(location, content, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -424,7 +425,7 @@ namespace Azure.ResourceManager.Workloads
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public static Response<SapDiskConfigurationsResult> SapDiskConfigurations(this SubscriptionResource subscriptionResource, AzureLocation location, SapDiskConfigurationsContent content = null, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).SapDiskConfigurations(location, content, cancellationToken);
+            return GetWorkloadsSubscriptionResourceExtension(subscriptionResource).SapDiskConfigurations(location, content, cancellationToken);
         }
 
         /// <summary>
@@ -446,7 +447,7 @@ namespace Azure.ResourceManager.Workloads
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public static async Task<Response<SapAvailabilityZoneDetailsResult>> SapAvailabilityZoneDetailsAsync(this SubscriptionResource subscriptionResource, AzureLocation location, SapAvailabilityZoneDetailsContent content = null, CancellationToken cancellationToken = default)
         {
-            return await GetSubscriptionResourceExtensionClient(subscriptionResource).SapAvailabilityZoneDetailsAsync(location, content, cancellationToken).ConfigureAwait(false);
+            return await GetWorkloadsSubscriptionResourceExtension(subscriptionResource).SapAvailabilityZoneDetailsAsync(location, content, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -468,7 +469,7 @@ namespace Azure.ResourceManager.Workloads
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public static Response<SapAvailabilityZoneDetailsResult> SapAvailabilityZoneDetails(this SubscriptionResource subscriptionResource, AzureLocation location, SapAvailabilityZoneDetailsContent content = null, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).SapAvailabilityZoneDetails(location, content, cancellationToken);
+            return GetWorkloadsSubscriptionResourceExtension(subscriptionResource).SapAvailabilityZoneDetails(location, content, cancellationToken);
         }
 
         /// <summary>
@@ -489,7 +490,7 @@ namespace Azure.ResourceManager.Workloads
         /// <returns> An async collection of <see cref="SapVirtualInstanceResource" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<SapVirtualInstanceResource> GetSapVirtualInstancesAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetSapVirtualInstancesAsync(cancellationToken);
+            return GetWorkloadsSubscriptionResourceExtension(subscriptionResource).GetSapVirtualInstancesAsync(cancellationToken);
         }
 
         /// <summary>
@@ -510,7 +511,7 @@ namespace Azure.ResourceManager.Workloads
         /// <returns> A collection of <see cref="SapVirtualInstanceResource" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<SapVirtualInstanceResource> GetSapVirtualInstances(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetSapVirtualInstances(cancellationToken);
+            return GetWorkloadsSubscriptionResourceExtension(subscriptionResource).GetSapVirtualInstances(cancellationToken);
         }
 
         /// <summary>
@@ -531,7 +532,7 @@ namespace Azure.ResourceManager.Workloads
         /// <returns> An async collection of <see cref="SapMonitorResource" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<SapMonitorResource> GetSapMonitorsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetSapMonitorsAsync(cancellationToken);
+            return GetWorkloadsSubscriptionResourceExtension(subscriptionResource).GetSapMonitorsAsync(cancellationToken);
         }
 
         /// <summary>
@@ -552,7 +553,7 @@ namespace Azure.ResourceManager.Workloads
         /// <returns> A collection of <see cref="SapMonitorResource" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<SapMonitorResource> GetSapMonitors(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetSapMonitors(cancellationToken);
+            return GetWorkloadsSubscriptionResourceExtension(subscriptionResource).GetSapMonitors(cancellationToken);
         }
     }
 }

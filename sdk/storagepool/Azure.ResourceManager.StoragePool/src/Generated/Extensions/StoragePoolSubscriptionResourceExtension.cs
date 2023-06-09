@@ -10,12 +10,13 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
+using Azure.ResourceManager.StoragePool;
 using Azure.ResourceManager.StoragePool.Models;
 
-namespace Azure.ResourceManager.StoragePool
+namespace Azure.ResourceManager.StoragePool.Testing
 {
     /// <summary> A class to add extension methods to SubscriptionResource. </summary>
-    internal partial class SubscriptionResourceExtensionClient : ArmResource
+    public partial class StoragePoolSubscriptionResourceExtension : ArmResource
     {
         private ClientDiagnostics _diskPoolClientDiagnostics;
         private DiskPoolsRestOperations _diskPoolRestClient;
@@ -24,15 +25,15 @@ namespace Azure.ResourceManager.StoragePool
         private ClientDiagnostics _resourceSkusClientDiagnostics;
         private ResourceSkusRestOperations _resourceSkusRestClient;
 
-        /// <summary> Initializes a new instance of the <see cref="SubscriptionResourceExtensionClient"/> class for mocking. </summary>
-        protected SubscriptionResourceExtensionClient()
+        /// <summary> Initializes a new instance of the <see cref="StoragePoolSubscriptionResourceExtension"/> class for mocking. </summary>
+        protected StoragePoolSubscriptionResourceExtension()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="SubscriptionResourceExtensionClient"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="StoragePoolSubscriptionResourceExtension"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal SubscriptionResourceExtensionClient(ArmClient client, ResourceIdentifier id) : base(client, id)
+        internal StoragePoolSubscriptionResourceExtension(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
         }
 
@@ -68,7 +69,7 @@ namespace Azure.ResourceManager.StoragePool
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => DiskPoolRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => DiskPoolRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new DiskPoolResource(Client, DiskPoolData.DeserializeDiskPoolData(e)), DiskPoolClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetDiskPools", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new DiskPoolResource(Client, DiskPoolData.DeserializeDiskPoolData(e)), DiskPoolClientDiagnostics, Pipeline, "StoragePoolSubscriptionResourceExtension.GetDiskPools", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -90,7 +91,7 @@ namespace Azure.ResourceManager.StoragePool
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => DiskPoolRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => DiskPoolRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new DiskPoolResource(Client, DiskPoolData.DeserializeDiskPoolData(e)), DiskPoolClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetDiskPools", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new DiskPoolResource(Client, DiskPoolData.DeserializeDiskPoolData(e)), DiskPoolClientDiagnostics, Pipeline, "StoragePoolSubscriptionResourceExtension.GetDiskPools", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -113,7 +114,7 @@ namespace Azure.ResourceManager.StoragePool
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => DiskPoolZonesRestClient.CreateListRequest(Id.SubscriptionId, location);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => DiskPoolZonesRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, location);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, DiskPoolZoneInfo.DeserializeDiskPoolZoneInfo, DiskPoolZonesClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetDiskPoolZones", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, DiskPoolZoneInfo.DeserializeDiskPoolZoneInfo, DiskPoolZonesClientDiagnostics, Pipeline, "StoragePoolSubscriptionResourceExtension.GetDiskPoolZones", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -136,7 +137,7 @@ namespace Azure.ResourceManager.StoragePool
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => DiskPoolZonesRestClient.CreateListRequest(Id.SubscriptionId, location);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => DiskPoolZonesRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, location);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, DiskPoolZoneInfo.DeserializeDiskPoolZoneInfo, DiskPoolZonesClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetDiskPoolZones", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, DiskPoolZoneInfo.DeserializeDiskPoolZoneInfo, DiskPoolZonesClientDiagnostics, Pipeline, "StoragePoolSubscriptionResourceExtension.GetDiskPoolZones", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -159,7 +160,7 @@ namespace Azure.ResourceManager.StoragePool
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => ResourceSkusRestClient.CreateListRequest(Id.SubscriptionId, location);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => ResourceSkusRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, location);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, StoragePoolSkuInfo.DeserializeStoragePoolSkuInfo, ResourceSkusClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetResourceSkus", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, StoragePoolSkuInfo.DeserializeStoragePoolSkuInfo, ResourceSkusClientDiagnostics, Pipeline, "StoragePoolSubscriptionResourceExtension.GetResourceSkus", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -182,7 +183,7 @@ namespace Azure.ResourceManager.StoragePool
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => ResourceSkusRestClient.CreateListRequest(Id.SubscriptionId, location);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => ResourceSkusRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, location);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, StoragePoolSkuInfo.DeserializeStoragePoolSkuInfo, ResourceSkusClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetResourceSkus", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, StoragePoolSkuInfo.DeserializeStoragePoolSkuInfo, ResourceSkusClientDiagnostics, Pipeline, "StoragePoolSubscriptionResourceExtension.GetResourceSkus", "value", "nextLink", cancellationToken);
         }
     }
 }

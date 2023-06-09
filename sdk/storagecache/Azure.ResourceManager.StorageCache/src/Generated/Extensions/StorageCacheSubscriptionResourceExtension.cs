@@ -10,12 +10,13 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
+using Azure.ResourceManager.StorageCache;
 using Azure.ResourceManager.StorageCache.Models;
 
-namespace Azure.ResourceManager.StorageCache
+namespace Azure.ResourceManager.StorageCache.Testing
 {
     /// <summary> A class to add extension methods to SubscriptionResource. </summary>
-    internal partial class SubscriptionResourceExtensionClient : ArmResource
+    public partial class StorageCacheSubscriptionResourceExtension : ArmResource
     {
         private ClientDiagnostics _skusClientDiagnostics;
         private SkusRestOperations _skusRestClient;
@@ -26,15 +27,15 @@ namespace Azure.ResourceManager.StorageCache
         private ClientDiagnostics _storageCacheCachesClientDiagnostics;
         private CachesRestOperations _storageCacheCachesRestClient;
 
-        /// <summary> Initializes a new instance of the <see cref="SubscriptionResourceExtensionClient"/> class for mocking. </summary>
-        protected SubscriptionResourceExtensionClient()
+        /// <summary> Initializes a new instance of the <see cref="StorageCacheSubscriptionResourceExtension"/> class for mocking. </summary>
+        protected StorageCacheSubscriptionResourceExtension()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="SubscriptionResourceExtensionClient"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="StorageCacheSubscriptionResourceExtension"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal SubscriptionResourceExtensionClient(ArmClient client, ResourceIdentifier id) : base(client, id)
+        internal StorageCacheSubscriptionResourceExtension(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
         }
 
@@ -72,7 +73,7 @@ namespace Azure.ResourceManager.StorageCache
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => SkusRestClient.CreateListRequest(Id.SubscriptionId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => SkusRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, StorageCacheSku.DeserializeStorageCacheSku, SkusClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetStorageCacheSkus", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, StorageCacheSku.DeserializeStorageCacheSku, SkusClientDiagnostics, Pipeline, "StorageCacheSubscriptionResourceExtension.GetStorageCacheSkus", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -94,7 +95,7 @@ namespace Azure.ResourceManager.StorageCache
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => SkusRestClient.CreateListRequest(Id.SubscriptionId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => SkusRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, StorageCacheSku.DeserializeStorageCacheSku, SkusClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetStorageCacheSkus", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, StorageCacheSku.DeserializeStorageCacheSku, SkusClientDiagnostics, Pipeline, "StorageCacheSubscriptionResourceExtension.GetStorageCacheSkus", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -116,7 +117,7 @@ namespace Azure.ResourceManager.StorageCache
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => UsageModelsRestClient.CreateListRequest(Id.SubscriptionId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => UsageModelsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, StorageCacheUsageModel.DeserializeStorageCacheUsageModel, UsageModelsClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetUsageModels", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, StorageCacheUsageModel.DeserializeStorageCacheUsageModel, UsageModelsClientDiagnostics, Pipeline, "StorageCacheSubscriptionResourceExtension.GetUsageModels", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -138,7 +139,7 @@ namespace Azure.ResourceManager.StorageCache
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => UsageModelsRestClient.CreateListRequest(Id.SubscriptionId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => UsageModelsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, StorageCacheUsageModel.DeserializeStorageCacheUsageModel, UsageModelsClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetUsageModels", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, StorageCacheUsageModel.DeserializeStorageCacheUsageModel, UsageModelsClientDiagnostics, Pipeline, "StorageCacheSubscriptionResourceExtension.GetUsageModels", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -161,7 +162,7 @@ namespace Azure.ResourceManager.StorageCache
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => AscUsagesRestClient.CreateListRequest(Id.SubscriptionId, location);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => AscUsagesRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, location);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, StorageCacheUsage.DeserializeStorageCacheUsage, AscUsagesClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetStorageCacheUsages", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, StorageCacheUsage.DeserializeStorageCacheUsage, AscUsagesClientDiagnostics, Pipeline, "StorageCacheSubscriptionResourceExtension.GetStorageCacheUsages", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -184,7 +185,7 @@ namespace Azure.ResourceManager.StorageCache
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => AscUsagesRestClient.CreateListRequest(Id.SubscriptionId, location);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => AscUsagesRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, location);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, StorageCacheUsage.DeserializeStorageCacheUsage, AscUsagesClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetStorageCacheUsages", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, StorageCacheUsage.DeserializeStorageCacheUsage, AscUsagesClientDiagnostics, Pipeline, "StorageCacheSubscriptionResourceExtension.GetStorageCacheUsages", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -206,7 +207,7 @@ namespace Azure.ResourceManager.StorageCache
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => StorageCacheCachesRestClient.CreateListRequest(Id.SubscriptionId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => StorageCacheCachesRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new StorageCacheResource(Client, StorageCacheData.DeserializeStorageCacheData(e)), StorageCacheCachesClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetStorageCaches", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new StorageCacheResource(Client, StorageCacheData.DeserializeStorageCacheData(e)), StorageCacheCachesClientDiagnostics, Pipeline, "StorageCacheSubscriptionResourceExtension.GetStorageCaches", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -228,7 +229,7 @@ namespace Azure.ResourceManager.StorageCache
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => StorageCacheCachesRestClient.CreateListRequest(Id.SubscriptionId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => StorageCacheCachesRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new StorageCacheResource(Client, StorageCacheData.DeserializeStorageCacheData(e)), StorageCacheCachesClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetStorageCaches", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new StorageCacheResource(Client, StorageCacheData.DeserializeStorageCacheData(e)), StorageCacheCachesClientDiagnostics, Pipeline, "StorageCacheSubscriptionResourceExtension.GetStorageCaches", "value", "nextLink", cancellationToken);
         }
     }
 }

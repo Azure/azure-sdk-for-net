@@ -7,21 +7,22 @@
 
 using Azure.Core;
 using Azure.ResourceManager;
+using Azure.ResourceManager.Storage;
 
-namespace Azure.ResourceManager.Storage
+namespace Azure.ResourceManager.Storage.Testing
 {
     /// <summary> A class to add extension methods to ResourceGroupResource. </summary>
-    internal partial class ResourceGroupResourceExtensionClient : ArmResource
+    public partial class StorageResourceGroupResourceExtension : ArmResource
     {
-        /// <summary> Initializes a new instance of the <see cref="ResourceGroupResourceExtensionClient"/> class for mocking. </summary>
-        protected ResourceGroupResourceExtensionClient()
+        /// <summary> Initializes a new instance of the <see cref="StorageResourceGroupResourceExtension"/> class for mocking. </summary>
+        protected StorageResourceGroupResourceExtension()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="ResourceGroupResourceExtensionClient"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="StorageResourceGroupResourceExtension"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal ResourceGroupResourceExtensionClient(ArmClient client, ResourceIdentifier id) : base(client, id)
+        internal StorageResourceGroupResourceExtension(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
         }
 

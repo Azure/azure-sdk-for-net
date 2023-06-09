@@ -7,21 +7,22 @@
 
 using Azure.Core;
 using Azure.ResourceManager;
+using Azure.ResourceManager.Support;
 
-namespace Azure.ResourceManager.Support
+namespace Azure.ResourceManager.Support.Testing
 {
     /// <summary> A class to add extension methods to TenantResource. </summary>
-    internal partial class TenantResourceExtensionClient : ArmResource
+    public partial class SupportTenantResourceExtension : ArmResource
     {
-        /// <summary> Initializes a new instance of the <see cref="TenantResourceExtensionClient"/> class for mocking. </summary>
-        protected TenantResourceExtensionClient()
+        /// <summary> Initializes a new instance of the <see cref="SupportTenantResourceExtension"/> class for mocking. </summary>
+        protected SupportTenantResourceExtension()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="TenantResourceExtensionClient"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="SupportTenantResourceExtension"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal TenantResourceExtensionClient(ArmClient client, ResourceIdentifier id) : base(client, id)
+        internal SupportTenantResourceExtension(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
         }
 

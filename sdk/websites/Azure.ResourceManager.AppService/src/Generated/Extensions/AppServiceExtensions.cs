@@ -12,6 +12,7 @@ using Azure;
 using Azure.Core;
 using Azure.ResourceManager;
 using Azure.ResourceManager.AppService.Models;
+using Azure.ResourceManager.AppService.Testing;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.AppService
@@ -19,51 +20,51 @@ namespace Azure.ResourceManager.AppService
     /// <summary> A class to add extension methods to Azure.ResourceManager.AppService. </summary>
     public static partial class AppServiceExtensions
     {
-        private static ResourceGroupResourceExtensionClient GetResourceGroupResourceExtensionClient(ArmResource resource)
+        private static AppServiceResourceGroupResourceExtension GetAppServiceResourceGroupResourceExtension(ArmResource resource)
         {
             return resource.GetCachedClient(client =>
             {
-                return new ResourceGroupResourceExtensionClient(client, resource.Id);
+                return new AppServiceResourceGroupResourceExtension(client, resource.Id);
             });
         }
 
-        private static ResourceGroupResourceExtensionClient GetResourceGroupResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
+        private static AppServiceResourceGroupResourceExtension GetAppServiceResourceGroupResourceExtension(ArmClient client, ResourceIdentifier scope)
         {
             return client.GetResourceClient(() =>
             {
-                return new ResourceGroupResourceExtensionClient(client, scope);
+                return new AppServiceResourceGroupResourceExtension(client, scope);
             });
         }
 
-        private static SubscriptionResourceExtensionClient GetSubscriptionResourceExtensionClient(ArmResource resource)
+        private static AppServiceSubscriptionResourceExtension GetAppServiceSubscriptionResourceExtension(ArmResource resource)
         {
             return resource.GetCachedClient(client =>
             {
-                return new SubscriptionResourceExtensionClient(client, resource.Id);
+                return new AppServiceSubscriptionResourceExtension(client, resource.Id);
             });
         }
 
-        private static SubscriptionResourceExtensionClient GetSubscriptionResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
+        private static AppServiceSubscriptionResourceExtension GetAppServiceSubscriptionResourceExtension(ArmClient client, ResourceIdentifier scope)
         {
             return client.GetResourceClient(() =>
             {
-                return new SubscriptionResourceExtensionClient(client, scope);
+                return new AppServiceSubscriptionResourceExtension(client, scope);
             });
         }
 
-        private static TenantResourceExtensionClient GetTenantResourceExtensionClient(ArmResource resource)
+        private static AppServiceTenantResourceExtension GetAppServiceTenantResourceExtension(ArmResource resource)
         {
             return resource.GetCachedClient(client =>
             {
-                return new TenantResourceExtensionClient(client, resource.Id);
+                return new AppServiceTenantResourceExtension(client, resource.Id);
             });
         }
 
-        private static TenantResourceExtensionClient GetTenantResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
+        private static AppServiceTenantResourceExtension GetAppServiceTenantResourceExtension(ArmClient client, ResourceIdentifier scope)
         {
             return client.GetResourceClient(() =>
             {
-                return new TenantResourceExtensionClient(client, scope);
+                return new AppServiceTenantResourceExtension(client, scope);
             });
         }
         #region AppServiceCertificateOrderResource
@@ -2218,7 +2219,7 @@ namespace Azure.ResourceManager.AppService
         /// <returns> An object representing collection of AppServiceCertificateOrderResources and their operations over a AppServiceCertificateOrderResource. </returns>
         public static AppServiceCertificateOrderCollection GetAppServiceCertificateOrders(this ResourceGroupResource resourceGroupResource)
         {
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetAppServiceCertificateOrders();
+            return GetAppServiceResourceGroupResourceExtension(resourceGroupResource).GetAppServiceCertificateOrders();
         }
 
         /// <summary>
@@ -2274,7 +2275,7 @@ namespace Azure.ResourceManager.AppService
         /// <returns> An object representing collection of AppServiceDomainResources and their operations over a AppServiceDomainResource. </returns>
         public static AppServiceDomainCollection GetAppServiceDomains(this ResourceGroupResource resourceGroupResource)
         {
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetAppServiceDomains();
+            return GetAppServiceResourceGroupResourceExtension(resourceGroupResource).GetAppServiceDomains();
         }
 
         /// <summary>
@@ -2330,7 +2331,7 @@ namespace Azure.ResourceManager.AppService
         /// <returns> An object representing collection of AppServiceEnvironmentResources and their operations over a AppServiceEnvironmentResource. </returns>
         public static AppServiceEnvironmentCollection GetAppServiceEnvironments(this ResourceGroupResource resourceGroupResource)
         {
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetAppServiceEnvironments();
+            return GetAppServiceResourceGroupResourceExtension(resourceGroupResource).GetAppServiceEnvironments();
         }
 
         /// <summary>
@@ -2386,7 +2387,7 @@ namespace Azure.ResourceManager.AppService
         /// <returns> An object representing collection of AppServicePlanResources and their operations over a AppServicePlanResource. </returns>
         public static AppServicePlanCollection GetAppServicePlans(this ResourceGroupResource resourceGroupResource)
         {
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetAppServicePlans();
+            return GetAppServiceResourceGroupResourceExtension(resourceGroupResource).GetAppServicePlans();
         }
 
         /// <summary>
@@ -2442,7 +2443,7 @@ namespace Azure.ResourceManager.AppService
         /// <returns> An object representing collection of AppCertificateResources and their operations over a AppCertificateResource. </returns>
         public static AppCertificateCollection GetAppCertificates(this ResourceGroupResource resourceGroupResource)
         {
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetAppCertificates();
+            return GetAppServiceResourceGroupResourceExtension(resourceGroupResource).GetAppCertificates();
         }
 
         /// <summary>
@@ -2498,7 +2499,7 @@ namespace Azure.ResourceManager.AppService
         /// <returns> An object representing collection of KubeEnvironmentResources and their operations over a KubeEnvironmentResource. </returns>
         public static KubeEnvironmentCollection GetKubeEnvironments(this ResourceGroupResource resourceGroupResource)
         {
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetKubeEnvironments();
+            return GetAppServiceResourceGroupResourceExtension(resourceGroupResource).GetKubeEnvironments();
         }
 
         /// <summary>
@@ -2554,7 +2555,7 @@ namespace Azure.ResourceManager.AppService
         /// <returns> An object representing collection of StaticSiteResources and their operations over a StaticSiteResource. </returns>
         public static StaticSiteCollection GetStaticSites(this ResourceGroupResource resourceGroupResource)
         {
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetStaticSites();
+            return GetAppServiceResourceGroupResourceExtension(resourceGroupResource).GetStaticSites();
         }
 
         /// <summary>
@@ -2610,7 +2611,7 @@ namespace Azure.ResourceManager.AppService
         /// <returns> An object representing collection of WebSiteResources and their operations over a WebSiteResource. </returns>
         public static WebSiteCollection GetWebSites(this ResourceGroupResource resourceGroupResource)
         {
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetWebSites();
+            return GetAppServiceResourceGroupResourceExtension(resourceGroupResource).GetWebSites();
         }
 
         /// <summary>
@@ -2682,7 +2683,7 @@ namespace Azure.ResourceManager.AppService
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            return await GetResourceGroupResourceExtensionClient(resourceGroupResource).ValidateAsync(content, cancellationToken).ConfigureAwait(false);
+            return await GetAppServiceResourceGroupResourceExtension(resourceGroupResource).ValidateAsync(content, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -2706,7 +2707,7 @@ namespace Azure.ResourceManager.AppService
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).Validate(content, cancellationToken);
+            return GetAppServiceResourceGroupResourceExtension(resourceGroupResource).Validate(content, cancellationToken);
         }
 
         /// <summary> Gets a collection of TopLevelDomainResources in the SubscriptionResource. </summary>
@@ -2714,7 +2715,7 @@ namespace Azure.ResourceManager.AppService
         /// <returns> An object representing collection of TopLevelDomainResources and their operations over a TopLevelDomainResource. </returns>
         public static TopLevelDomainCollection GetTopLevelDomains(this SubscriptionResource subscriptionResource)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetTopLevelDomains();
+            return GetAppServiceSubscriptionResourceExtension(subscriptionResource).GetTopLevelDomains();
         }
 
         /// <summary>
@@ -2770,7 +2771,7 @@ namespace Azure.ResourceManager.AppService
         /// <returns> An object representing collection of DeletedSiteResources and their operations over a DeletedSiteResource. </returns>
         public static DeletedSiteCollection GetDeletedSites(this SubscriptionResource subscriptionResource)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetDeletedSites();
+            return GetAppServiceSubscriptionResourceExtension(subscriptionResource).GetDeletedSites();
         }
 
         /// <summary>
@@ -2839,7 +2840,7 @@ namespace Azure.ResourceManager.AppService
         /// <returns> An async collection of <see cref="AppServiceCertificateOrderResource" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<AppServiceCertificateOrderResource> GetAppServiceCertificateOrdersAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetAppServiceCertificateOrdersAsync(cancellationToken);
+            return GetAppServiceSubscriptionResourceExtension(subscriptionResource).GetAppServiceCertificateOrdersAsync(cancellationToken);
         }
 
         /// <summary>
@@ -2860,7 +2861,7 @@ namespace Azure.ResourceManager.AppService
         /// <returns> A collection of <see cref="AppServiceCertificateOrderResource" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<AppServiceCertificateOrderResource> GetAppServiceCertificateOrders(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetAppServiceCertificateOrders(cancellationToken);
+            return GetAppServiceSubscriptionResourceExtension(subscriptionResource).GetAppServiceCertificateOrders(cancellationToken);
         }
 
         /// <summary>
@@ -2884,7 +2885,7 @@ namespace Azure.ResourceManager.AppService
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            return await GetSubscriptionResourceExtensionClient(subscriptionResource).ValidateAppServiceCertificateOrderPurchaseInformationAsync(data, cancellationToken).ConfigureAwait(false);
+            return await GetAppServiceSubscriptionResourceExtension(subscriptionResource).ValidateAppServiceCertificateOrderPurchaseInformationAsync(data, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -2908,7 +2909,7 @@ namespace Azure.ResourceManager.AppService
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).ValidateAppServiceCertificateOrderPurchaseInformation(data, cancellationToken);
+            return GetAppServiceSubscriptionResourceExtension(subscriptionResource).ValidateAppServiceCertificateOrderPurchaseInformation(data, cancellationToken);
         }
 
         /// <summary>
@@ -2932,7 +2933,7 @@ namespace Azure.ResourceManager.AppService
         {
             Argument.AssertNotNull(identifier, nameof(identifier));
 
-            return await GetSubscriptionResourceExtensionClient(subscriptionResource).CheckAppServiceDomainRegistrationAvailabilityAsync(identifier, cancellationToken).ConfigureAwait(false);
+            return await GetAppServiceSubscriptionResourceExtension(subscriptionResource).CheckAppServiceDomainRegistrationAvailabilityAsync(identifier, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -2956,7 +2957,7 @@ namespace Azure.ResourceManager.AppService
         {
             Argument.AssertNotNull(identifier, nameof(identifier));
 
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).CheckAppServiceDomainRegistrationAvailability(identifier, cancellationToken);
+            return GetAppServiceSubscriptionResourceExtension(subscriptionResource).CheckAppServiceDomainRegistrationAvailability(identifier, cancellationToken);
         }
 
         /// <summary>
@@ -2977,7 +2978,7 @@ namespace Azure.ResourceManager.AppService
         /// <returns> An async collection of <see cref="AppServiceDomainResource" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<AppServiceDomainResource> GetAppServiceDomainsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetAppServiceDomainsAsync(cancellationToken);
+            return GetAppServiceSubscriptionResourceExtension(subscriptionResource).GetAppServiceDomainsAsync(cancellationToken);
         }
 
         /// <summary>
@@ -2998,7 +2999,7 @@ namespace Azure.ResourceManager.AppService
         /// <returns> A collection of <see cref="AppServiceDomainResource" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<AppServiceDomainResource> GetAppServiceDomains(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetAppServiceDomains(cancellationToken);
+            return GetAppServiceSubscriptionResourceExtension(subscriptionResource).GetAppServiceDomains(cancellationToken);
         }
 
         /// <summary>
@@ -3018,7 +3019,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public static async Task<Response<DomainControlCenterSsoRequestInfo>> GetControlCenterSsoRequestDomainAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return await GetSubscriptionResourceExtensionClient(subscriptionResource).GetControlCenterSsoRequestDomainAsync(cancellationToken).ConfigureAwait(false);
+            return await GetAppServiceSubscriptionResourceExtension(subscriptionResource).GetControlCenterSsoRequestDomainAsync(cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -3038,7 +3039,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public static Response<DomainControlCenterSsoRequestInfo> GetControlCenterSsoRequestDomain(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetControlCenterSsoRequestDomain(cancellationToken);
+            return GetAppServiceSubscriptionResourceExtension(subscriptionResource).GetControlCenterSsoRequestDomain(cancellationToken);
         }
 
         /// <summary>
@@ -3063,7 +3064,7 @@ namespace Azure.ResourceManager.AppService
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetAppServiceDomainRecommendationsAsync(content, cancellationToken);
+            return GetAppServiceSubscriptionResourceExtension(subscriptionResource).GetAppServiceDomainRecommendationsAsync(content, cancellationToken);
         }
 
         /// <summary>
@@ -3088,7 +3089,7 @@ namespace Azure.ResourceManager.AppService
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetAppServiceDomainRecommendations(content, cancellationToken);
+            return GetAppServiceSubscriptionResourceExtension(subscriptionResource).GetAppServiceDomainRecommendations(content, cancellationToken);
         }
 
         /// <summary>
@@ -3109,7 +3110,7 @@ namespace Azure.ResourceManager.AppService
         /// <returns> An async collection of <see cref="AppServiceEnvironmentResource" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<AppServiceEnvironmentResource> GetAppServiceEnvironmentsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetAppServiceEnvironmentsAsync(cancellationToken);
+            return GetAppServiceSubscriptionResourceExtension(subscriptionResource).GetAppServiceEnvironmentsAsync(cancellationToken);
         }
 
         /// <summary>
@@ -3130,7 +3131,7 @@ namespace Azure.ResourceManager.AppService
         /// <returns> A collection of <see cref="AppServiceEnvironmentResource" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<AppServiceEnvironmentResource> GetAppServiceEnvironments(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetAppServiceEnvironments(cancellationToken);
+            return GetAppServiceSubscriptionResourceExtension(subscriptionResource).GetAppServiceEnvironments(cancellationToken);
         }
 
         /// <summary>
@@ -3155,7 +3156,7 @@ namespace Azure.ResourceManager.AppService
         /// <returns> An async collection of <see cref="AppServicePlanResource" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<AppServicePlanResource> GetAppServicePlansAsync(this SubscriptionResource subscriptionResource, bool? detailed = null, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetAppServicePlansAsync(detailed, cancellationToken);
+            return GetAppServiceSubscriptionResourceExtension(subscriptionResource).GetAppServicePlansAsync(detailed, cancellationToken);
         }
 
         /// <summary>
@@ -3180,7 +3181,7 @@ namespace Azure.ResourceManager.AppService
         /// <returns> A collection of <see cref="AppServicePlanResource" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<AppServicePlanResource> GetAppServicePlans(this SubscriptionResource subscriptionResource, bool? detailed = null, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetAppServicePlans(detailed, cancellationToken);
+            return GetAppServiceSubscriptionResourceExtension(subscriptionResource).GetAppServicePlans(detailed, cancellationToken);
         }
 
         /// <summary>
@@ -3202,7 +3203,7 @@ namespace Azure.ResourceManager.AppService
         /// <returns> An async collection of <see cref="AppCertificateResource" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<AppCertificateResource> GetAppCertificatesAsync(this SubscriptionResource subscriptionResource, string filter = null, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetAppCertificatesAsync(filter, cancellationToken);
+            return GetAppServiceSubscriptionResourceExtension(subscriptionResource).GetAppCertificatesAsync(filter, cancellationToken);
         }
 
         /// <summary>
@@ -3224,7 +3225,7 @@ namespace Azure.ResourceManager.AppService
         /// <returns> A collection of <see cref="AppCertificateResource" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<AppCertificateResource> GetAppCertificates(this SubscriptionResource subscriptionResource, string filter = null, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetAppCertificates(filter, cancellationToken);
+            return GetAppServiceSubscriptionResourceExtension(subscriptionResource).GetAppCertificates(filter, cancellationToken);
         }
 
         /// <summary>
@@ -3246,7 +3247,7 @@ namespace Azure.ResourceManager.AppService
         /// <returns> An async collection of <see cref="DeletedSiteResource" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<DeletedSiteResource> GetDeletedSitesByLocationAsync(this SubscriptionResource subscriptionResource, AzureLocation location, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetDeletedSitesByLocationAsync(location, cancellationToken);
+            return GetAppServiceSubscriptionResourceExtension(subscriptionResource).GetDeletedSitesByLocationAsync(location, cancellationToken);
         }
 
         /// <summary>
@@ -3268,7 +3269,7 @@ namespace Azure.ResourceManager.AppService
         /// <returns> A collection of <see cref="DeletedSiteResource" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<DeletedSiteResource> GetDeletedSitesByLocation(this SubscriptionResource subscriptionResource, AzureLocation location, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetDeletedSitesByLocation(location, cancellationToken);
+            return GetAppServiceSubscriptionResourceExtension(subscriptionResource).GetDeletedSitesByLocation(location, cancellationToken);
         }
 
         /// <summary>
@@ -3294,7 +3295,7 @@ namespace Azure.ResourceManager.AppService
         {
             Argument.AssertNotNullOrEmpty(deletedSiteId, nameof(deletedSiteId));
 
-            return await GetSubscriptionResourceExtensionClient(subscriptionResource).GetDeletedWebAppByLocationDeletedWebAppAsync(location, deletedSiteId, cancellationToken).ConfigureAwait(false);
+            return await GetAppServiceSubscriptionResourceExtension(subscriptionResource).GetDeletedWebAppByLocationDeletedWebAppAsync(location, deletedSiteId, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -3320,7 +3321,7 @@ namespace Azure.ResourceManager.AppService
         {
             Argument.AssertNotNullOrEmpty(deletedSiteId, nameof(deletedSiteId));
 
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetDeletedWebAppByLocationDeletedWebApp(location, deletedSiteId, cancellationToken);
+            return GetAppServiceSubscriptionResourceExtension(subscriptionResource).GetDeletedWebAppByLocationDeletedWebApp(location, deletedSiteId, cancellationToken);
         }
 
         /// <summary>
@@ -3341,7 +3342,7 @@ namespace Azure.ResourceManager.AppService
         /// <returns> An async collection of <see cref="KubeEnvironmentResource" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<KubeEnvironmentResource> GetKubeEnvironmentsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetKubeEnvironmentsAsync(cancellationToken);
+            return GetAppServiceSubscriptionResourceExtension(subscriptionResource).GetKubeEnvironmentsAsync(cancellationToken);
         }
 
         /// <summary>
@@ -3362,7 +3363,7 @@ namespace Azure.ResourceManager.AppService
         /// <returns> A collection of <see cref="KubeEnvironmentResource" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<KubeEnvironmentResource> GetKubeEnvironments(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetKubeEnvironments(cancellationToken);
+            return GetAppServiceSubscriptionResourceExtension(subscriptionResource).GetKubeEnvironments(cancellationToken);
         }
 
         /// <summary>
@@ -3384,7 +3385,7 @@ namespace Azure.ResourceManager.AppService
         /// <returns> An async collection of <see cref="ApplicationStackResource" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<ApplicationStackResource> GetAvailableStacksOnPremProvidersAsync(this SubscriptionResource subscriptionResource, ProviderOSTypeSelected? osTypeSelected = null, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetAvailableStacksOnPremProvidersAsync(osTypeSelected, cancellationToken);
+            return GetAppServiceSubscriptionResourceExtension(subscriptionResource).GetAvailableStacksOnPremProvidersAsync(osTypeSelected, cancellationToken);
         }
 
         /// <summary>
@@ -3406,7 +3407,7 @@ namespace Azure.ResourceManager.AppService
         /// <returns> A collection of <see cref="ApplicationStackResource" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<ApplicationStackResource> GetAvailableStacksOnPremProviders(this SubscriptionResource subscriptionResource, ProviderOSTypeSelected? osTypeSelected = null, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetAvailableStacksOnPremProviders(osTypeSelected, cancellationToken);
+            return GetAppServiceSubscriptionResourceExtension(subscriptionResource).GetAvailableStacksOnPremProviders(osTypeSelected, cancellationToken);
         }
 
         /// <summary>
@@ -3429,7 +3430,7 @@ namespace Azure.ResourceManager.AppService
         /// <returns> An async collection of <see cref="AppServiceRecommendation" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<AppServiceRecommendation> GetRecommendationsAsync(this SubscriptionResource subscriptionResource, bool? featured = null, string filter = null, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetRecommendationsAsync(featured, filter, cancellationToken);
+            return GetAppServiceSubscriptionResourceExtension(subscriptionResource).GetRecommendationsAsync(featured, filter, cancellationToken);
         }
 
         /// <summary>
@@ -3452,7 +3453,7 @@ namespace Azure.ResourceManager.AppService
         /// <returns> A collection of <see cref="AppServiceRecommendation" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<AppServiceRecommendation> GetRecommendations(this SubscriptionResource subscriptionResource, bool? featured = null, string filter = null, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetRecommendations(featured, filter, cancellationToken);
+            return GetAppServiceSubscriptionResourceExtension(subscriptionResource).GetRecommendations(featured, filter, cancellationToken);
         }
 
         /// <summary>
@@ -3472,7 +3473,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public static async Task<Response> ResetAllRecommendationFiltersAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return await GetSubscriptionResourceExtensionClient(subscriptionResource).ResetAllRecommendationFiltersAsync(cancellationToken).ConfigureAwait(false);
+            return await GetAppServiceSubscriptionResourceExtension(subscriptionResource).ResetAllRecommendationFiltersAsync(cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -3492,7 +3493,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public static Response ResetAllRecommendationFilters(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).ResetAllRecommendationFilters(cancellationToken);
+            return GetAppServiceSubscriptionResourceExtension(subscriptionResource).ResetAllRecommendationFilters(cancellationToken);
         }
 
         /// <summary>
@@ -3517,7 +3518,7 @@ namespace Azure.ResourceManager.AppService
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
-            return await GetSubscriptionResourceExtensionClient(subscriptionResource).DisableAppServiceRecommendationAsync(name, cancellationToken).ConfigureAwait(false);
+            return await GetAppServiceSubscriptionResourceExtension(subscriptionResource).DisableAppServiceRecommendationAsync(name, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -3542,7 +3543,7 @@ namespace Azure.ResourceManager.AppService
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).DisableAppServiceRecommendation(name, cancellationToken);
+            return GetAppServiceSubscriptionResourceExtension(subscriptionResource).DisableAppServiceRecommendation(name, cancellationToken);
         }
 
         /// <summary>
@@ -3563,7 +3564,7 @@ namespace Azure.ResourceManager.AppService
         /// <returns> An async collection of <see cref="ResourceHealthMetadataData" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<ResourceHealthMetadataData> GetAllResourceHealthMetadataAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetAllResourceHealthMetadataAsync(cancellationToken);
+            return GetAppServiceSubscriptionResourceExtension(subscriptionResource).GetAllResourceHealthMetadataAsync(cancellationToken);
         }
 
         /// <summary>
@@ -3584,7 +3585,7 @@ namespace Azure.ResourceManager.AppService
         /// <returns> A collection of <see cref="ResourceHealthMetadataData" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<ResourceHealthMetadataData> GetAllResourceHealthMetadata(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetAllResourceHealthMetadata(cancellationToken);
+            return GetAppServiceSubscriptionResourceExtension(subscriptionResource).GetAllResourceHealthMetadata(cancellationToken);
         }
 
         /// <summary>
@@ -3607,7 +3608,7 @@ namespace Azure.ResourceManager.AppService
         /// <returns> An async collection of <see cref="AppServiceBillingMeter" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<AppServiceBillingMeter> GetBillingMetersAsync(this SubscriptionResource subscriptionResource, string billingLocation = null, string osType = null, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetBillingMetersAsync(billingLocation, osType, cancellationToken);
+            return GetAppServiceSubscriptionResourceExtension(subscriptionResource).GetBillingMetersAsync(billingLocation, osType, cancellationToken);
         }
 
         /// <summary>
@@ -3630,7 +3631,7 @@ namespace Azure.ResourceManager.AppService
         /// <returns> A collection of <see cref="AppServiceBillingMeter" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<AppServiceBillingMeter> GetBillingMeters(this SubscriptionResource subscriptionResource, string billingLocation = null, string osType = null, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetBillingMeters(billingLocation, osType, cancellationToken);
+            return GetAppServiceSubscriptionResourceExtension(subscriptionResource).GetBillingMeters(billingLocation, osType, cancellationToken);
         }
 
         /// <summary>
@@ -3654,7 +3655,7 @@ namespace Azure.ResourceManager.AppService
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            return await GetSubscriptionResourceExtensionClient(subscriptionResource).CheckAppServiceNameAvailabilityAsync(content, cancellationToken).ConfigureAwait(false);
+            return await GetAppServiceSubscriptionResourceExtension(subscriptionResource).CheckAppServiceNameAvailabilityAsync(content, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -3678,7 +3679,7 @@ namespace Azure.ResourceManager.AppService
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).CheckAppServiceNameAvailability(content, cancellationToken);
+            return GetAppServiceSubscriptionResourceExtension(subscriptionResource).CheckAppServiceNameAvailability(content, cancellationToken);
         }
 
         /// <summary>
@@ -3698,7 +3699,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public static async Task<Response<AppServiceDeploymentLocations>> GetAppServiceDeploymentLocationsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return await GetSubscriptionResourceExtensionClient(subscriptionResource).GetAppServiceDeploymentLocationsAsync(cancellationToken).ConfigureAwait(false);
+            return await GetAppServiceSubscriptionResourceExtension(subscriptionResource).GetAppServiceDeploymentLocationsAsync(cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -3718,7 +3719,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public static Response<AppServiceDeploymentLocations> GetAppServiceDeploymentLocations(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetAppServiceDeploymentLocations(cancellationToken);
+            return GetAppServiceSubscriptionResourceExtension(subscriptionResource).GetAppServiceDeploymentLocations(cancellationToken);
         }
 
         /// <summary>
@@ -3743,7 +3744,7 @@ namespace Azure.ResourceManager.AppService
         /// <returns> An async collection of <see cref="AppServiceGeoRegion" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<AppServiceGeoRegion> GetGeoRegionsAsync(this SubscriptionResource subscriptionResource, AppServiceSkuName? sku = null, bool? linuxWorkersEnabled = null, bool? xenonWorkersEnabled = null, bool? linuxDynamicWorkersEnabled = null, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetGeoRegionsAsync(sku, linuxWorkersEnabled, xenonWorkersEnabled, linuxDynamicWorkersEnabled, cancellationToken);
+            return GetAppServiceSubscriptionResourceExtension(subscriptionResource).GetGeoRegionsAsync(sku, linuxWorkersEnabled, xenonWorkersEnabled, linuxDynamicWorkersEnabled, cancellationToken);
         }
 
         /// <summary>
@@ -3768,7 +3769,7 @@ namespace Azure.ResourceManager.AppService
         /// <returns> A collection of <see cref="AppServiceGeoRegion" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<AppServiceGeoRegion> GetGeoRegions(this SubscriptionResource subscriptionResource, AppServiceSkuName? sku = null, bool? linuxWorkersEnabled = null, bool? xenonWorkersEnabled = null, bool? linuxDynamicWorkersEnabled = null, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetGeoRegions(sku, linuxWorkersEnabled, xenonWorkersEnabled, linuxDynamicWorkersEnabled, cancellationToken);
+            return GetAppServiceSubscriptionResourceExtension(subscriptionResource).GetGeoRegions(sku, linuxWorkersEnabled, xenonWorkersEnabled, linuxDynamicWorkersEnabled, cancellationToken);
         }
 
         /// <summary>
@@ -3789,7 +3790,7 @@ namespace Azure.ResourceManager.AppService
         /// <returns> An async collection of <see cref="PremierAddOnOffer" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<PremierAddOnOffer> GetPremierAddOnOffersAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetPremierAddOnOffersAsync(cancellationToken);
+            return GetAppServiceSubscriptionResourceExtension(subscriptionResource).GetPremierAddOnOffersAsync(cancellationToken);
         }
 
         /// <summary>
@@ -3810,7 +3811,7 @@ namespace Azure.ResourceManager.AppService
         /// <returns> A collection of <see cref="PremierAddOnOffer" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<PremierAddOnOffer> GetPremierAddOnOffers(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetPremierAddOnOffers(cancellationToken);
+            return GetAppServiceSubscriptionResourceExtension(subscriptionResource).GetPremierAddOnOffers(cancellationToken);
         }
 
         /// <summary>
@@ -3830,7 +3831,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public static async Task<Response<AppServiceSkuResult>> GetSkusAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return await GetSubscriptionResourceExtensionClient(subscriptionResource).GetSkusAsync(cancellationToken).ConfigureAwait(false);
+            return await GetAppServiceSubscriptionResourceExtension(subscriptionResource).GetSkusAsync(cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -3850,7 +3851,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public static Response<AppServiceSkuResult> GetSkus(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetSkus(cancellationToken);
+            return GetAppServiceSubscriptionResourceExtension(subscriptionResource).GetSkus(cancellationToken);
         }
 
         /// <summary>
@@ -3874,7 +3875,7 @@ namespace Azure.ResourceManager.AppService
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            return await GetSubscriptionResourceExtensionClient(subscriptionResource).VerifyHostingEnvironmentVnetAsync(content, cancellationToken).ConfigureAwait(false);
+            return await GetAppServiceSubscriptionResourceExtension(subscriptionResource).VerifyHostingEnvironmentVnetAsync(content, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -3898,7 +3899,7 @@ namespace Azure.ResourceManager.AppService
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).VerifyHostingEnvironmentVnet(content, cancellationToken);
+            return GetAppServiceSubscriptionResourceExtension(subscriptionResource).VerifyHostingEnvironmentVnet(content, cancellationToken);
         }
 
         /// <summary>
@@ -3923,7 +3924,7 @@ namespace Azure.ResourceManager.AppService
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            return await GetSubscriptionResourceExtensionClient(subscriptionResource).PreviewStaticSiteWorkflowAsync(location, content, cancellationToken).ConfigureAwait(false);
+            return await GetAppServiceSubscriptionResourceExtension(subscriptionResource).PreviewStaticSiteWorkflowAsync(location, content, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -3948,7 +3949,7 @@ namespace Azure.ResourceManager.AppService
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).PreviewStaticSiteWorkflow(location, content, cancellationToken);
+            return GetAppServiceSubscriptionResourceExtension(subscriptionResource).PreviewStaticSiteWorkflow(location, content, cancellationToken);
         }
 
         /// <summary>
@@ -3969,7 +3970,7 @@ namespace Azure.ResourceManager.AppService
         /// <returns> An async collection of <see cref="StaticSiteResource" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<StaticSiteResource> GetStaticSitesAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetStaticSitesAsync(cancellationToken);
+            return GetAppServiceSubscriptionResourceExtension(subscriptionResource).GetStaticSitesAsync(cancellationToken);
         }
 
         /// <summary>
@@ -3990,7 +3991,7 @@ namespace Azure.ResourceManager.AppService
         /// <returns> A collection of <see cref="StaticSiteResource" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<StaticSiteResource> GetStaticSites(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetStaticSites(cancellationToken);
+            return GetAppServiceSubscriptionResourceExtension(subscriptionResource).GetStaticSites(cancellationToken);
         }
 
         /// <summary>
@@ -4011,7 +4012,7 @@ namespace Azure.ResourceManager.AppService
         /// <returns> An async collection of <see cref="WebSiteResource" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<WebSiteResource> GetWebSitesAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetWebSitesAsync(cancellationToken);
+            return GetAppServiceSubscriptionResourceExtension(subscriptionResource).GetWebSitesAsync(cancellationToken);
         }
 
         /// <summary>
@@ -4032,7 +4033,7 @@ namespace Azure.ResourceManager.AppService
         /// <returns> A collection of <see cref="WebSiteResource" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<WebSiteResource> GetWebSites(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetWebSites(cancellationToken);
+            return GetAppServiceSubscriptionResourceExtension(subscriptionResource).GetWebSites(cancellationToken);
         }
 
         /// <summary> Gets an object representing a PublishingUserResource along with the instance operations that can be performed on it in the TenantResource. </summary>
@@ -4040,7 +4041,7 @@ namespace Azure.ResourceManager.AppService
         /// <returns> Returns a <see cref="PublishingUserResource" /> object. </returns>
         public static PublishingUserResource GetPublishingUser(this TenantResource tenantResource)
         {
-            return GetTenantResourceExtensionClient(tenantResource).GetPublishingUser();
+            return GetAppServiceTenantResourceExtension(tenantResource).GetPublishingUser();
         }
 
         /// <summary> Gets a collection of AppServiceSourceControlResources in the TenantResource. </summary>
@@ -4048,7 +4049,7 @@ namespace Azure.ResourceManager.AppService
         /// <returns> An object representing collection of AppServiceSourceControlResources and their operations over a AppServiceSourceControlResource. </returns>
         public static AppServiceSourceControlCollection GetAppServiceSourceControls(this TenantResource tenantResource)
         {
-            return GetTenantResourceExtensionClient(tenantResource).GetAppServiceSourceControls();
+            return GetAppServiceTenantResourceExtension(tenantResource).GetAppServiceSourceControls();
         }
 
         /// <summary>
@@ -4117,7 +4118,7 @@ namespace Azure.ResourceManager.AppService
         /// <returns> An async collection of <see cref="CsmOperationDescription" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<CsmOperationDescription> GetOperationsCertificateRegistrationProvidersAsync(this TenantResource tenantResource, CancellationToken cancellationToken = default)
         {
-            return GetTenantResourceExtensionClient(tenantResource).GetOperationsCertificateRegistrationProvidersAsync(cancellationToken);
+            return GetAppServiceTenantResourceExtension(tenantResource).GetOperationsCertificateRegistrationProvidersAsync(cancellationToken);
         }
 
         /// <summary>
@@ -4138,7 +4139,7 @@ namespace Azure.ResourceManager.AppService
         /// <returns> A collection of <see cref="CsmOperationDescription" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<CsmOperationDescription> GetOperationsCertificateRegistrationProviders(this TenantResource tenantResource, CancellationToken cancellationToken = default)
         {
-            return GetTenantResourceExtensionClient(tenantResource).GetOperationsCertificateRegistrationProviders(cancellationToken);
+            return GetAppServiceTenantResourceExtension(tenantResource).GetOperationsCertificateRegistrationProviders(cancellationToken);
         }
 
         /// <summary>
@@ -4159,7 +4160,7 @@ namespace Azure.ResourceManager.AppService
         /// <returns> An async collection of <see cref="CsmOperationDescription" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<CsmOperationDescription> GetOperationsDomainRegistrationProvidersAsync(this TenantResource tenantResource, CancellationToken cancellationToken = default)
         {
-            return GetTenantResourceExtensionClient(tenantResource).GetOperationsDomainRegistrationProvidersAsync(cancellationToken);
+            return GetAppServiceTenantResourceExtension(tenantResource).GetOperationsDomainRegistrationProvidersAsync(cancellationToken);
         }
 
         /// <summary>
@@ -4180,7 +4181,7 @@ namespace Azure.ResourceManager.AppService
         /// <returns> A collection of <see cref="CsmOperationDescription" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<CsmOperationDescription> GetOperationsDomainRegistrationProviders(this TenantResource tenantResource, CancellationToken cancellationToken = default)
         {
-            return GetTenantResourceExtensionClient(tenantResource).GetOperationsDomainRegistrationProviders(cancellationToken);
+            return GetAppServiceTenantResourceExtension(tenantResource).GetOperationsDomainRegistrationProviders(cancellationToken);
         }
 
         /// <summary>
@@ -4202,7 +4203,7 @@ namespace Azure.ResourceManager.AppService
         /// <returns> An async collection of <see cref="ApplicationStackResource" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<ApplicationStackResource> GetAvailableStacksProvidersAsync(this TenantResource tenantResource, ProviderOSTypeSelected? osTypeSelected = null, CancellationToken cancellationToken = default)
         {
-            return GetTenantResourceExtensionClient(tenantResource).GetAvailableStacksProvidersAsync(osTypeSelected, cancellationToken);
+            return GetAppServiceTenantResourceExtension(tenantResource).GetAvailableStacksProvidersAsync(osTypeSelected, cancellationToken);
         }
 
         /// <summary>
@@ -4224,7 +4225,7 @@ namespace Azure.ResourceManager.AppService
         /// <returns> A collection of <see cref="ApplicationStackResource" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<ApplicationStackResource> GetAvailableStacksProviders(this TenantResource tenantResource, ProviderOSTypeSelected? osTypeSelected = null, CancellationToken cancellationToken = default)
         {
-            return GetTenantResourceExtensionClient(tenantResource).GetAvailableStacksProviders(osTypeSelected, cancellationToken);
+            return GetAppServiceTenantResourceExtension(tenantResource).GetAvailableStacksProviders(osTypeSelected, cancellationToken);
         }
 
         /// <summary>
@@ -4246,7 +4247,7 @@ namespace Azure.ResourceManager.AppService
         /// <returns> An async collection of <see cref="FunctionAppStack" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<FunctionAppStack> GetFunctionAppStacksProvidersAsync(this TenantResource tenantResource, ProviderStackOSType? stackOSType = null, CancellationToken cancellationToken = default)
         {
-            return GetTenantResourceExtensionClient(tenantResource).GetFunctionAppStacksProvidersAsync(stackOSType, cancellationToken);
+            return GetAppServiceTenantResourceExtension(tenantResource).GetFunctionAppStacksProvidersAsync(stackOSType, cancellationToken);
         }
 
         /// <summary>
@@ -4268,7 +4269,7 @@ namespace Azure.ResourceManager.AppService
         /// <returns> A collection of <see cref="FunctionAppStack" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<FunctionAppStack> GetFunctionAppStacksProviders(this TenantResource tenantResource, ProviderStackOSType? stackOSType = null, CancellationToken cancellationToken = default)
         {
-            return GetTenantResourceExtensionClient(tenantResource).GetFunctionAppStacksProviders(stackOSType, cancellationToken);
+            return GetAppServiceTenantResourceExtension(tenantResource).GetFunctionAppStacksProviders(stackOSType, cancellationToken);
         }
 
         /// <summary>
@@ -4291,7 +4292,7 @@ namespace Azure.ResourceManager.AppService
         /// <returns> An async collection of <see cref="FunctionAppStack" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<FunctionAppStack> GetFunctionAppStacksForLocationProvidersAsync(this TenantResource tenantResource, AzureLocation location, ProviderStackOSType? stackOSType = null, CancellationToken cancellationToken = default)
         {
-            return GetTenantResourceExtensionClient(tenantResource).GetFunctionAppStacksForLocationProvidersAsync(location, stackOSType, cancellationToken);
+            return GetAppServiceTenantResourceExtension(tenantResource).GetFunctionAppStacksForLocationProvidersAsync(location, stackOSType, cancellationToken);
         }
 
         /// <summary>
@@ -4314,7 +4315,7 @@ namespace Azure.ResourceManager.AppService
         /// <returns> A collection of <see cref="FunctionAppStack" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<FunctionAppStack> GetFunctionAppStacksForLocationProviders(this TenantResource tenantResource, AzureLocation location, ProviderStackOSType? stackOSType = null, CancellationToken cancellationToken = default)
         {
-            return GetTenantResourceExtensionClient(tenantResource).GetFunctionAppStacksForLocationProviders(location, stackOSType, cancellationToken);
+            return GetAppServiceTenantResourceExtension(tenantResource).GetFunctionAppStacksForLocationProviders(location, stackOSType, cancellationToken);
         }
 
         /// <summary>
@@ -4337,7 +4338,7 @@ namespace Azure.ResourceManager.AppService
         /// <returns> An async collection of <see cref="WebAppStack" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<WebAppStack> GetWebAppStacksByLocationAsync(this TenantResource tenantResource, AzureLocation location, ProviderStackOSType? stackOSType = null, CancellationToken cancellationToken = default)
         {
-            return GetTenantResourceExtensionClient(tenantResource).GetWebAppStacksByLocationAsync(location, stackOSType, cancellationToken);
+            return GetAppServiceTenantResourceExtension(tenantResource).GetWebAppStacksByLocationAsync(location, stackOSType, cancellationToken);
         }
 
         /// <summary>
@@ -4360,7 +4361,7 @@ namespace Azure.ResourceManager.AppService
         /// <returns> A collection of <see cref="WebAppStack" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<WebAppStack> GetWebAppStacksByLocation(this TenantResource tenantResource, AzureLocation location, ProviderStackOSType? stackOSType = null, CancellationToken cancellationToken = default)
         {
-            return GetTenantResourceExtensionClient(tenantResource).GetWebAppStacksByLocation(location, stackOSType, cancellationToken);
+            return GetAppServiceTenantResourceExtension(tenantResource).GetWebAppStacksByLocation(location, stackOSType, cancellationToken);
         }
 
         /// <summary>
@@ -4381,7 +4382,7 @@ namespace Azure.ResourceManager.AppService
         /// <returns> An async collection of <see cref="CsmOperationDescription" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<CsmOperationDescription> GetOperationsProvidersAsync(this TenantResource tenantResource, CancellationToken cancellationToken = default)
         {
-            return GetTenantResourceExtensionClient(tenantResource).GetOperationsProvidersAsync(cancellationToken);
+            return GetAppServiceTenantResourceExtension(tenantResource).GetOperationsProvidersAsync(cancellationToken);
         }
 
         /// <summary>
@@ -4402,7 +4403,7 @@ namespace Azure.ResourceManager.AppService
         /// <returns> A collection of <see cref="CsmOperationDescription" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<CsmOperationDescription> GetOperationsProviders(this TenantResource tenantResource, CancellationToken cancellationToken = default)
         {
-            return GetTenantResourceExtensionClient(tenantResource).GetOperationsProviders(cancellationToken);
+            return GetAppServiceTenantResourceExtension(tenantResource).GetOperationsProviders(cancellationToken);
         }
 
         /// <summary>
@@ -4424,7 +4425,7 @@ namespace Azure.ResourceManager.AppService
         /// <returns> An async collection of <see cref="WebAppStack" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<WebAppStack> GetWebAppStacksProvidersAsync(this TenantResource tenantResource, ProviderStackOSType? stackOSType = null, CancellationToken cancellationToken = default)
         {
-            return GetTenantResourceExtensionClient(tenantResource).GetWebAppStacksProvidersAsync(stackOSType, cancellationToken);
+            return GetAppServiceTenantResourceExtension(tenantResource).GetWebAppStacksProvidersAsync(stackOSType, cancellationToken);
         }
 
         /// <summary>
@@ -4446,7 +4447,7 @@ namespace Azure.ResourceManager.AppService
         /// <returns> A collection of <see cref="WebAppStack" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<WebAppStack> GetWebAppStacksProviders(this TenantResource tenantResource, ProviderStackOSType? stackOSType = null, CancellationToken cancellationToken = default)
         {
-            return GetTenantResourceExtensionClient(tenantResource).GetWebAppStacksProviders(stackOSType, cancellationToken);
+            return GetAppServiceTenantResourceExtension(tenantResource).GetWebAppStacksProviders(stackOSType, cancellationToken);
         }
     }
 }

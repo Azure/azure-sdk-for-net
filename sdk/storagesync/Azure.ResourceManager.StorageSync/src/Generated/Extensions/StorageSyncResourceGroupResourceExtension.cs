@@ -7,21 +7,22 @@
 
 using Azure.Core;
 using Azure.ResourceManager;
+using Azure.ResourceManager.StorageSync;
 
-namespace Azure.ResourceManager.StorageSync
+namespace Azure.ResourceManager.StorageSync.Testing
 {
     /// <summary> A class to add extension methods to ResourceGroupResource. </summary>
-    internal partial class ResourceGroupResourceExtensionClient : ArmResource
+    public partial class StorageSyncResourceGroupResourceExtension : ArmResource
     {
-        /// <summary> Initializes a new instance of the <see cref="ResourceGroupResourceExtensionClient"/> class for mocking. </summary>
-        protected ResourceGroupResourceExtensionClient()
+        /// <summary> Initializes a new instance of the <see cref="StorageSyncResourceGroupResourceExtension"/> class for mocking. </summary>
+        protected StorageSyncResourceGroupResourceExtension()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="ResourceGroupResourceExtensionClient"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="StorageSyncResourceGroupResourceExtension"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal ResourceGroupResourceExtensionClient(ArmClient client, ResourceIdentifier id) : base(client, id)
+        internal StorageSyncResourceGroupResourceExtension(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
         }
 

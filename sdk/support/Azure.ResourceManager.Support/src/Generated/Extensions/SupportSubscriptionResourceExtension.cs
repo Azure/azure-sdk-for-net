@@ -12,25 +12,26 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
+using Azure.ResourceManager.Support;
 using Azure.ResourceManager.Support.Models;
 
-namespace Azure.ResourceManager.Support
+namespace Azure.ResourceManager.Support.Testing
 {
     /// <summary> A class to add extension methods to SubscriptionResource. </summary>
-    internal partial class SubscriptionResourceExtensionClient : ArmResource
+    public partial class SupportSubscriptionResourceExtension : ArmResource
     {
         private ClientDiagnostics _supportTicketClientDiagnostics;
         private SupportTicketsRestOperations _supportTicketRestClient;
 
-        /// <summary> Initializes a new instance of the <see cref="SubscriptionResourceExtensionClient"/> class for mocking. </summary>
-        protected SubscriptionResourceExtensionClient()
+        /// <summary> Initializes a new instance of the <see cref="SupportSubscriptionResourceExtension"/> class for mocking. </summary>
+        protected SupportSubscriptionResourceExtension()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="SubscriptionResourceExtensionClient"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="SupportSubscriptionResourceExtension"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal SubscriptionResourceExtensionClient(ArmClient client, ResourceIdentifier id) : base(client, id)
+        internal SupportSubscriptionResourceExtension(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
         }
 
@@ -65,9 +66,12 @@ namespace Azure.ResourceManager.Support
         /// </summary>
         /// <param name="content"> Input to check. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual async Task<Response<SupportNameAvailabilityResult>> CheckSupportTicketNameAvailabilityAsync(SupportNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            using var scope = SupportTicketClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.CheckSupportTicketNameAvailability");
+            Argument.AssertNotNull(content, nameof(content));
+
+            using var scope = SupportTicketClientDiagnostics.CreateScope("SupportSubscriptionResourceExtension.CheckSupportTicketNameAvailability");
             scope.Start();
             try
             {
@@ -96,9 +100,12 @@ namespace Azure.ResourceManager.Support
         /// </summary>
         /// <param name="content"> Input to check. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual Response<SupportNameAvailabilityResult> CheckSupportTicketNameAvailability(SupportNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            using var scope = SupportTicketClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.CheckSupportTicketNameAvailability");
+            Argument.AssertNotNull(content, nameof(content));
+
+            using var scope = SupportTicketClientDiagnostics.CreateScope("SupportSubscriptionResourceExtension.CheckSupportTicketNameAvailability");
             scope.Start();
             try
             {

@@ -12,12 +12,13 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
+using Azure.ResourceManager.Synapse;
 using Azure.ResourceManager.Synapse.Models;
 
-namespace Azure.ResourceManager.Synapse
+namespace Azure.ResourceManager.Synapse.Testing
 {
     /// <summary> A class to add extension methods to SubscriptionResource. </summary>
-    internal partial class SubscriptionResourceExtensionClient : ArmResource
+    public partial class SynapseSubscriptionResourceExtension : ArmResource
     {
         private ClientDiagnostics _synapsePrivateLinkHubPrivateLinkHubsClientDiagnostics;
         private PrivateLinkHubsRestOperations _synapsePrivateLinkHubPrivateLinkHubsRestClient;
@@ -26,15 +27,15 @@ namespace Azure.ResourceManager.Synapse
         private ClientDiagnostics _synapseKustoPoolKustoPoolsClientDiagnostics;
         private KustoPoolsRestOperations _synapseKustoPoolKustoPoolsRestClient;
 
-        /// <summary> Initializes a new instance of the <see cref="SubscriptionResourceExtensionClient"/> class for mocking. </summary>
-        protected SubscriptionResourceExtensionClient()
+        /// <summary> Initializes a new instance of the <see cref="SynapseSubscriptionResourceExtension"/> class for mocking. </summary>
+        protected SynapseSubscriptionResourceExtension()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="SubscriptionResourceExtensionClient"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="SynapseSubscriptionResourceExtension"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal SubscriptionResourceExtensionClient(ArmClient client, ResourceIdentifier id) : base(client, id)
+        internal SynapseSubscriptionResourceExtension(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
         }
 
@@ -70,7 +71,7 @@ namespace Azure.ResourceManager.Synapse
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => SynapsePrivateLinkHubPrivateLinkHubsRestClient.CreateListRequest(Id.SubscriptionId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => SynapsePrivateLinkHubPrivateLinkHubsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new SynapsePrivateLinkHubResource(Client, SynapsePrivateLinkHubData.DeserializeSynapsePrivateLinkHubData(e)), SynapsePrivateLinkHubPrivateLinkHubsClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetSynapsePrivateLinkHubs", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new SynapsePrivateLinkHubResource(Client, SynapsePrivateLinkHubData.DeserializeSynapsePrivateLinkHubData(e)), SynapsePrivateLinkHubPrivateLinkHubsClientDiagnostics, Pipeline, "SynapseSubscriptionResourceExtension.GetSynapsePrivateLinkHubs", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -92,7 +93,7 @@ namespace Azure.ResourceManager.Synapse
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => SynapsePrivateLinkHubPrivateLinkHubsRestClient.CreateListRequest(Id.SubscriptionId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => SynapsePrivateLinkHubPrivateLinkHubsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new SynapsePrivateLinkHubResource(Client, SynapsePrivateLinkHubData.DeserializeSynapsePrivateLinkHubData(e)), SynapsePrivateLinkHubPrivateLinkHubsClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetSynapsePrivateLinkHubs", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new SynapsePrivateLinkHubResource(Client, SynapsePrivateLinkHubData.DeserializeSynapsePrivateLinkHubData(e)), SynapsePrivateLinkHubPrivateLinkHubsClientDiagnostics, Pipeline, "SynapseSubscriptionResourceExtension.GetSynapsePrivateLinkHubs", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -114,7 +115,7 @@ namespace Azure.ResourceManager.Synapse
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => SynapseWorkspaceWorkspacesRestClient.CreateListRequest(Id.SubscriptionId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => SynapseWorkspaceWorkspacesRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new SynapseWorkspaceResource(Client, SynapseWorkspaceData.DeserializeSynapseWorkspaceData(e)), SynapseWorkspaceWorkspacesClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetSynapseWorkspaces", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new SynapseWorkspaceResource(Client, SynapseWorkspaceData.DeserializeSynapseWorkspaceData(e)), SynapseWorkspaceWorkspacesClientDiagnostics, Pipeline, "SynapseSubscriptionResourceExtension.GetSynapseWorkspaces", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -136,7 +137,7 @@ namespace Azure.ResourceManager.Synapse
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => SynapseWorkspaceWorkspacesRestClient.CreateListRequest(Id.SubscriptionId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => SynapseWorkspaceWorkspacesRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new SynapseWorkspaceResource(Client, SynapseWorkspaceData.DeserializeSynapseWorkspaceData(e)), SynapseWorkspaceWorkspacesClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetSynapseWorkspaces", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new SynapseWorkspaceResource(Client, SynapseWorkspaceData.DeserializeSynapseWorkspaceData(e)), SynapseWorkspaceWorkspacesClientDiagnostics, Pipeline, "SynapseSubscriptionResourceExtension.GetSynapseWorkspaces", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -157,7 +158,7 @@ namespace Azure.ResourceManager.Synapse
         public virtual AsyncPageable<KustoPoolSkuDescription> GetSkusKustoPoolsAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => SynapseKustoPoolKustoPoolsRestClient.CreateListSkusRequest(Id.SubscriptionId);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, KustoPoolSkuDescription.DeserializeKustoPoolSkuDescription, SynapseKustoPoolKustoPoolsClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetSkusKustoPools", "value", null, cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, KustoPoolSkuDescription.DeserializeKustoPoolSkuDescription, SynapseKustoPoolKustoPoolsClientDiagnostics, Pipeline, "SynapseSubscriptionResourceExtension.GetSkusKustoPools", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -178,7 +179,7 @@ namespace Azure.ResourceManager.Synapse
         public virtual Pageable<KustoPoolSkuDescription> GetSkusKustoPools(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => SynapseKustoPoolKustoPoolsRestClient.CreateListSkusRequest(Id.SubscriptionId);
-            return PageableHelpers.CreatePageable(FirstPageRequest, null, KustoPoolSkuDescription.DeserializeKustoPoolSkuDescription, SynapseKustoPoolKustoPoolsClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetSkusKustoPools", "value", null, cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, null, KustoPoolSkuDescription.DeserializeKustoPoolSkuDescription, SynapseKustoPoolKustoPoolsClientDiagnostics, Pipeline, "SynapseSubscriptionResourceExtension.GetSkusKustoPools", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -197,9 +198,12 @@ namespace Azure.ResourceManager.Synapse
         /// <param name="location"> The name of Azure region. </param>
         /// <param name="content"> The name of the cluster. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual async Task<Response<KustoPoolNameAvailabilityResult>> CheckKustoPoolNameAvailabilityAsync(AzureLocation location, KustoPoolNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            using var scope = SynapseKustoPoolKustoPoolsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.CheckKustoPoolNameAvailability");
+            Argument.AssertNotNull(content, nameof(content));
+
+            using var scope = SynapseKustoPoolKustoPoolsClientDiagnostics.CreateScope("SynapseSubscriptionResourceExtension.CheckKustoPoolNameAvailability");
             scope.Start();
             try
             {
@@ -229,9 +233,12 @@ namespace Azure.ResourceManager.Synapse
         /// <param name="location"> The name of Azure region. </param>
         /// <param name="content"> The name of the cluster. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual Response<KustoPoolNameAvailabilityResult> CheckKustoPoolNameAvailability(AzureLocation location, KustoPoolNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            using var scope = SynapseKustoPoolKustoPoolsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.CheckKustoPoolNameAvailability");
+            Argument.AssertNotNull(content, nameof(content));
+
+            using var scope = SynapseKustoPoolKustoPoolsClientDiagnostics.CreateScope("SynapseSubscriptionResourceExtension.CheckKustoPoolNameAvailability");
             scope.Start();
             try
             {

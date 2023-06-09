@@ -10,24 +10,25 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
+using Azure.ResourceManager.TrafficManager;
 
-namespace Azure.ResourceManager.TrafficManager
+namespace Azure.ResourceManager.TrafficManager.Testing
 {
     /// <summary> A class to add extension methods to SubscriptionResource. </summary>
-    internal partial class SubscriptionResourceExtensionClient : ArmResource
+    public partial class TrafficManagerSubscriptionResourceExtension : ArmResource
     {
         private ClientDiagnostics _trafficManagerProfileProfilesClientDiagnostics;
         private ProfilesRestOperations _trafficManagerProfileProfilesRestClient;
 
-        /// <summary> Initializes a new instance of the <see cref="SubscriptionResourceExtensionClient"/> class for mocking. </summary>
-        protected SubscriptionResourceExtensionClient()
+        /// <summary> Initializes a new instance of the <see cref="TrafficManagerSubscriptionResourceExtension"/> class for mocking. </summary>
+        protected TrafficManagerSubscriptionResourceExtension()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="SubscriptionResourceExtensionClient"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="TrafficManagerSubscriptionResourceExtension"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal SubscriptionResourceExtensionClient(ArmClient client, ResourceIdentifier id) : base(client, id)
+        internal TrafficManagerSubscriptionResourceExtension(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
         }
 
@@ -65,7 +66,7 @@ namespace Azure.ResourceManager.TrafficManager
         public virtual AsyncPageable<TrafficManagerProfileResource> GetTrafficManagerProfilesAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => TrafficManagerProfileProfilesRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new TrafficManagerProfileResource(Client, TrafficManagerProfileData.DeserializeTrafficManagerProfileData(e)), TrafficManagerProfileProfilesClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetTrafficManagerProfiles", "value", null, cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new TrafficManagerProfileResource(Client, TrafficManagerProfileData.DeserializeTrafficManagerProfileData(e)), TrafficManagerProfileProfilesClientDiagnostics, Pipeline, "TrafficManagerSubscriptionResourceExtension.GetTrafficManagerProfiles", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -86,7 +87,7 @@ namespace Azure.ResourceManager.TrafficManager
         public virtual Pageable<TrafficManagerProfileResource> GetTrafficManagerProfiles(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => TrafficManagerProfileProfilesRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
-            return PageableHelpers.CreatePageable(FirstPageRequest, null, e => new TrafficManagerProfileResource(Client, TrafficManagerProfileData.DeserializeTrafficManagerProfileData(e)), TrafficManagerProfileProfilesClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetTrafficManagerProfiles", "value", null, cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, null, e => new TrafficManagerProfileResource(Client, TrafficManagerProfileData.DeserializeTrafficManagerProfileData(e)), TrafficManagerProfileProfilesClientDiagnostics, Pipeline, "TrafficManagerSubscriptionResourceExtension.GetTrafficManagerProfiles", "value", null, cancellationToken);
         }
     }
 }

@@ -12,25 +12,26 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
+using Azure.ResourceManager.Subscription;
 using Azure.ResourceManager.Subscription.Models;
 
-namespace Azure.ResourceManager.Subscription
+namespace Azure.ResourceManager.Subscription.Testing
 {
     /// <summary> A class to add extension methods to TenantResource. </summary>
-    internal partial class TenantResourceExtensionClient : ArmResource
+    public partial class SubscriptionTenantResourceExtension : ArmResource
     {
         private ClientDiagnostics _subscriptionClientDiagnostics;
         private SubscriptionRestOperations _subscriptionRestClient;
 
-        /// <summary> Initializes a new instance of the <see cref="TenantResourceExtensionClient"/> class for mocking. </summary>
-        protected TenantResourceExtensionClient()
+        /// <summary> Initializes a new instance of the <see cref="SubscriptionTenantResourceExtension"/> class for mocking. </summary>
+        protected SubscriptionTenantResourceExtension()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="TenantResourceExtensionClient"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="SubscriptionTenantResourceExtension"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal TenantResourceExtensionClient(ArmClient client, ResourceIdentifier id) : base(client, id)
+        internal SubscriptionTenantResourceExtension(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
         }
 
@@ -81,9 +82,14 @@ namespace Azure.ResourceManager.Subscription
         /// <param name="subscriptionId"> Subscription Id. </param>
         /// <param name="content"> The AcceptOwnershipContent to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="content"/> is null. </exception>
         public virtual async Task<ArmOperation> AcceptSubscriptionOwnershipAsync(WaitUntil waitUntil, string subscriptionId, AcceptOwnershipContent content, CancellationToken cancellationToken = default)
         {
-            using var scope = SubscriptionClientDiagnostics.CreateScope("TenantResourceExtensionClient.AcceptSubscriptionOwnership");
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNull(content, nameof(content));
+
+            using var scope = SubscriptionClientDiagnostics.CreateScope("SubscriptionTenantResourceExtension.AcceptSubscriptionOwnership");
             scope.Start();
             try
             {
@@ -117,9 +123,14 @@ namespace Azure.ResourceManager.Subscription
         /// <param name="subscriptionId"> Subscription Id. </param>
         /// <param name="content"> The AcceptOwnershipContent to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="content"/> is null. </exception>
         public virtual ArmOperation AcceptSubscriptionOwnership(WaitUntil waitUntil, string subscriptionId, AcceptOwnershipContent content, CancellationToken cancellationToken = default)
         {
-            using var scope = SubscriptionClientDiagnostics.CreateScope("TenantResourceExtensionClient.AcceptSubscriptionOwnership");
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNull(content, nameof(content));
+
+            using var scope = SubscriptionClientDiagnostics.CreateScope("SubscriptionTenantResourceExtension.AcceptSubscriptionOwnership");
             scope.Start();
             try
             {
@@ -151,9 +162,13 @@ namespace Azure.ResourceManager.Subscription
         /// </summary>
         /// <param name="subscriptionId"> Subscription Id. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
         public virtual async Task<Response<AcceptOwnershipStatus>> GetAcceptOwnershipStatusAsync(string subscriptionId, CancellationToken cancellationToken = default)
         {
-            using var scope = SubscriptionClientDiagnostics.CreateScope("TenantResourceExtensionClient.GetAcceptOwnershipStatus");
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+
+            using var scope = SubscriptionClientDiagnostics.CreateScope("SubscriptionTenantResourceExtension.GetAcceptOwnershipStatus");
             scope.Start();
             try
             {
@@ -182,9 +197,13 @@ namespace Azure.ResourceManager.Subscription
         /// </summary>
         /// <param name="subscriptionId"> Subscription Id. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
         public virtual Response<AcceptOwnershipStatus> GetAcceptOwnershipStatus(string subscriptionId, CancellationToken cancellationToken = default)
         {
-            using var scope = SubscriptionClientDiagnostics.CreateScope("TenantResourceExtensionClient.GetAcceptOwnershipStatus");
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+
+            using var scope = SubscriptionClientDiagnostics.CreateScope("SubscriptionTenantResourceExtension.GetAcceptOwnershipStatus");
             scope.Start();
             try
             {

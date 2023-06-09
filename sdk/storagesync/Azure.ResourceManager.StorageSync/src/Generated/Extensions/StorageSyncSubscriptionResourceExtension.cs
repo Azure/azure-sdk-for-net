@@ -12,25 +12,26 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
+using Azure.ResourceManager.StorageSync;
 using Azure.ResourceManager.StorageSync.Models;
 
-namespace Azure.ResourceManager.StorageSync
+namespace Azure.ResourceManager.StorageSync.Testing
 {
     /// <summary> A class to add extension methods to SubscriptionResource. </summary>
-    internal partial class SubscriptionResourceExtensionClient : ArmResource
+    public partial class StorageSyncSubscriptionResourceExtension : ArmResource
     {
         private ClientDiagnostics _storageSyncServiceClientDiagnostics;
         private StorageSyncServicesRestOperations _storageSyncServiceRestClient;
 
-        /// <summary> Initializes a new instance of the <see cref="SubscriptionResourceExtensionClient"/> class for mocking. </summary>
-        protected SubscriptionResourceExtensionClient()
+        /// <summary> Initializes a new instance of the <see cref="StorageSyncSubscriptionResourceExtension"/> class for mocking. </summary>
+        protected StorageSyncSubscriptionResourceExtension()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="SubscriptionResourceExtensionClient"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="StorageSyncSubscriptionResourceExtension"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal SubscriptionResourceExtensionClient(ArmClient client, ResourceIdentifier id) : base(client, id)
+        internal StorageSyncSubscriptionResourceExtension(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
         }
 
@@ -59,9 +60,14 @@ namespace Azure.ResourceManager.StorageSync
         /// <param name="locationName"> The desired region for the name check. </param>
         /// <param name="content"> Parameters to check availability of the given namespace name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="locationName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="locationName"/> or <paramref name="content"/> is null. </exception>
         public virtual async Task<Response<StorageSyncNameAvailabilityResult>> CheckStorageSyncNameAvailabilityAsync(string locationName, StorageSyncNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            using var scope = StorageSyncServiceClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.CheckStorageSyncNameAvailability");
+            Argument.AssertNotNullOrEmpty(locationName, nameof(locationName));
+            Argument.AssertNotNull(content, nameof(content));
+
+            using var scope = StorageSyncServiceClientDiagnostics.CreateScope("StorageSyncSubscriptionResourceExtension.CheckStorageSyncNameAvailability");
             scope.Start();
             try
             {
@@ -91,9 +97,14 @@ namespace Azure.ResourceManager.StorageSync
         /// <param name="locationName"> The desired region for the name check. </param>
         /// <param name="content"> Parameters to check availability of the given namespace name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="locationName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="locationName"/> or <paramref name="content"/> is null. </exception>
         public virtual Response<StorageSyncNameAvailabilityResult> CheckStorageSyncNameAvailability(string locationName, StorageSyncNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            using var scope = StorageSyncServiceClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.CheckStorageSyncNameAvailability");
+            Argument.AssertNotNullOrEmpty(locationName, nameof(locationName));
+            Argument.AssertNotNull(content, nameof(content));
+
+            using var scope = StorageSyncServiceClientDiagnostics.CreateScope("StorageSyncSubscriptionResourceExtension.CheckStorageSyncNameAvailability");
             scope.Start();
             try
             {
@@ -125,7 +136,7 @@ namespace Azure.ResourceManager.StorageSync
         public virtual AsyncPageable<StorageSyncServiceResource> GetStorageSyncServicesAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => StorageSyncServiceRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new StorageSyncServiceResource(Client, StorageSyncServiceData.DeserializeStorageSyncServiceData(e)), StorageSyncServiceClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetStorageSyncServices", "value", null, cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new StorageSyncServiceResource(Client, StorageSyncServiceData.DeserializeStorageSyncServiceData(e)), StorageSyncServiceClientDiagnostics, Pipeline, "StorageSyncSubscriptionResourceExtension.GetStorageSyncServices", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -146,7 +157,7 @@ namespace Azure.ResourceManager.StorageSync
         public virtual Pageable<StorageSyncServiceResource> GetStorageSyncServices(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => StorageSyncServiceRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
-            return PageableHelpers.CreatePageable(FirstPageRequest, null, e => new StorageSyncServiceResource(Client, StorageSyncServiceData.DeserializeStorageSyncServiceData(e)), StorageSyncServiceClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetStorageSyncServices", "value", null, cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, null, e => new StorageSyncServiceResource(Client, StorageSyncServiceData.DeserializeStorageSyncServiceData(e)), StorageSyncServiceClientDiagnostics, Pipeline, "StorageSyncSubscriptionResourceExtension.GetStorageSyncServices", "value", null, cancellationToken);
         }
     }
 }

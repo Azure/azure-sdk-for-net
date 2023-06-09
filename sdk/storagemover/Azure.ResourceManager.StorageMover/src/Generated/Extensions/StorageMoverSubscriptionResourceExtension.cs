@@ -10,24 +10,25 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
+using Azure.ResourceManager.StorageMover;
 
-namespace Azure.ResourceManager.StorageMover
+namespace Azure.ResourceManager.StorageMover.Testing
 {
     /// <summary> A class to add extension methods to SubscriptionResource. </summary>
-    internal partial class SubscriptionResourceExtensionClient : ArmResource
+    public partial class StorageMoverSubscriptionResourceExtension : ArmResource
     {
         private ClientDiagnostics _storageMoverClientDiagnostics;
         private StorageMoversRestOperations _storageMoverRestClient;
 
-        /// <summary> Initializes a new instance of the <see cref="SubscriptionResourceExtensionClient"/> class for mocking. </summary>
-        protected SubscriptionResourceExtensionClient()
+        /// <summary> Initializes a new instance of the <see cref="StorageMoverSubscriptionResourceExtension"/> class for mocking. </summary>
+        protected StorageMoverSubscriptionResourceExtension()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="SubscriptionResourceExtensionClient"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="StorageMoverSubscriptionResourceExtension"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal SubscriptionResourceExtensionClient(ArmClient client, ResourceIdentifier id) : base(client, id)
+        internal StorageMoverSubscriptionResourceExtension(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
         }
 
@@ -59,7 +60,7 @@ namespace Azure.ResourceManager.StorageMover
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => StorageMoverRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => StorageMoverRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new StorageMoverResource(Client, StorageMoverData.DeserializeStorageMoverData(e)), StorageMoverClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetStorageMovers", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new StorageMoverResource(Client, StorageMoverData.DeserializeStorageMoverData(e)), StorageMoverClientDiagnostics, Pipeline, "StorageMoverSubscriptionResourceExtension.GetStorageMovers", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -81,7 +82,7 @@ namespace Azure.ResourceManager.StorageMover
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => StorageMoverRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => StorageMoverRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new StorageMoverResource(Client, StorageMoverData.DeserializeStorageMoverData(e)), StorageMoverClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetStorageMovers", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new StorageMoverResource(Client, StorageMoverData.DeserializeStorageMoverData(e)), StorageMoverClientDiagnostics, Pipeline, "StorageMoverSubscriptionResourceExtension.GetStorageMovers", "value", "nextLink", cancellationToken);
         }
     }
 }

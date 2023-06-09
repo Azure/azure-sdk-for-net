@@ -13,41 +13,42 @@ using Azure.Core;
 using Azure.ResourceManager;
 using Azure.ResourceManager.Resources;
 using Azure.ResourceManager.WebPubSub.Models;
+using Azure.ResourceManager.WebPubSub.Testing;
 
 namespace Azure.ResourceManager.WebPubSub
 {
     /// <summary> A class to add extension methods to Azure.ResourceManager.WebPubSub. </summary>
     public static partial class WebPubSubExtensions
     {
-        private static ResourceGroupResourceExtensionClient GetResourceGroupResourceExtensionClient(ArmResource resource)
+        private static WebPubSubResourceGroupResourceExtension GetWebPubSubResourceGroupResourceExtension(ArmResource resource)
         {
             return resource.GetCachedClient(client =>
             {
-                return new ResourceGroupResourceExtensionClient(client, resource.Id);
+                return new WebPubSubResourceGroupResourceExtension(client, resource.Id);
             });
         }
 
-        private static ResourceGroupResourceExtensionClient GetResourceGroupResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
+        private static WebPubSubResourceGroupResourceExtension GetWebPubSubResourceGroupResourceExtension(ArmClient client, ResourceIdentifier scope)
         {
             return client.GetResourceClient(() =>
             {
-                return new ResourceGroupResourceExtensionClient(client, scope);
+                return new WebPubSubResourceGroupResourceExtension(client, scope);
             });
         }
 
-        private static SubscriptionResourceExtensionClient GetSubscriptionResourceExtensionClient(ArmResource resource)
+        private static WebPubSubSubscriptionResourceExtension GetWebPubSubSubscriptionResourceExtension(ArmResource resource)
         {
             return resource.GetCachedClient(client =>
             {
-                return new SubscriptionResourceExtensionClient(client, resource.Id);
+                return new WebPubSubSubscriptionResourceExtension(client, resource.Id);
             });
         }
 
-        private static SubscriptionResourceExtensionClient GetSubscriptionResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
+        private static WebPubSubSubscriptionResourceExtension GetWebPubSubSubscriptionResourceExtension(ArmClient client, ResourceIdentifier scope)
         {
             return client.GetResourceClient(() =>
             {
-                return new SubscriptionResourceExtensionClient(client, scope);
+                return new WebPubSubSubscriptionResourceExtension(client, scope);
             });
         }
         #region WebPubSubResource
@@ -131,7 +132,7 @@ namespace Azure.ResourceManager.WebPubSub
         /// <returns> An object representing collection of WebPubSubResources and their operations over a WebPubSubResource. </returns>
         public static WebPubSubCollection GetWebPubSubs(this ResourceGroupResource resourceGroupResource)
         {
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetWebPubSubs();
+            return GetWebPubSubResourceGroupResourceExtension(resourceGroupResource).GetWebPubSubs();
         }
 
         /// <summary>
@@ -204,7 +205,7 @@ namespace Azure.ResourceManager.WebPubSub
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            return await GetSubscriptionResourceExtensionClient(subscriptionResource).CheckWebPubSubNameAvailabilityAsync(location, content, cancellationToken).ConfigureAwait(false);
+            return await GetWebPubSubSubscriptionResourceExtension(subscriptionResource).CheckWebPubSubNameAvailabilityAsync(location, content, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -229,7 +230,7 @@ namespace Azure.ResourceManager.WebPubSub
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).CheckWebPubSubNameAvailability(location, content, cancellationToken);
+            return GetWebPubSubSubscriptionResourceExtension(subscriptionResource).CheckWebPubSubNameAvailability(location, content, cancellationToken);
         }
 
         /// <summary>
@@ -250,7 +251,7 @@ namespace Azure.ResourceManager.WebPubSub
         /// <returns> An async collection of <see cref="WebPubSubResource" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<WebPubSubResource> GetWebPubSubsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetWebPubSubsAsync(cancellationToken);
+            return GetWebPubSubSubscriptionResourceExtension(subscriptionResource).GetWebPubSubsAsync(cancellationToken);
         }
 
         /// <summary>
@@ -271,7 +272,7 @@ namespace Azure.ResourceManager.WebPubSub
         /// <returns> A collection of <see cref="WebPubSubResource" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<WebPubSubResource> GetWebPubSubs(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetWebPubSubs(cancellationToken);
+            return GetWebPubSubSubscriptionResourceExtension(subscriptionResource).GetWebPubSubs(cancellationToken);
         }
 
         /// <summary>
@@ -293,7 +294,7 @@ namespace Azure.ResourceManager.WebPubSub
         /// <returns> An async collection of <see cref="SignalRServiceUsage" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<SignalRServiceUsage> GetUsagesAsync(this SubscriptionResource subscriptionResource, AzureLocation location, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetUsagesAsync(location, cancellationToken);
+            return GetWebPubSubSubscriptionResourceExtension(subscriptionResource).GetUsagesAsync(location, cancellationToken);
         }
 
         /// <summary>
@@ -315,7 +316,7 @@ namespace Azure.ResourceManager.WebPubSub
         /// <returns> A collection of <see cref="SignalRServiceUsage" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<SignalRServiceUsage> GetUsages(this SubscriptionResource subscriptionResource, AzureLocation location, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetUsages(location, cancellationToken);
+            return GetWebPubSubSubscriptionResourceExtension(subscriptionResource).GetUsages(location, cancellationToken);
         }
     }
 }
