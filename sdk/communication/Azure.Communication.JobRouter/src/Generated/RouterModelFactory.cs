@@ -8,12 +8,12 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Azure.Communication.JobRouter.Models;
+using Azure.Communication.JobRouter;
 
-namespace Azure.Communication.JobRouter
+namespace Azure.Communication.JobRouter.Models
 {
     /// <summary> Model factory for models. </summary>
-    public static partial class JobRouterModelFactory
+    public static partial class RouterModelFactory
     {
         /// <summary> Initializes a new instance of ClassificationPolicy. </summary>
         /// <param name="id"> Unique identifier of this policy. </param>
