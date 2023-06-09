@@ -1128,6 +1128,55 @@ namespace Azure.Core.Tests
             Assert.AreEqual(2, (int)json.Bar.Number);
         }
 
+        [Test]
+        public void CanChangeArrayElementJsonValueKind()
+        {
+            dynamic json = BinaryData.FromString("[0]").ToDynamicFromJson(PropertyNamingConvention.CamelCase);
+            dynamic child = BinaryData.FromString("{}").ToDynamicFromJson(PropertyNamingConvention.CamelCase);
+
+            json[0] = child;
+            child.Foo = 2;
+
+            Assert.AreEqual(2, (int)json[0].Foo);
+        }
+
+        [Test]
+        public void CanMakeInterleavedReferenceChanges()
+        {
+            dynamic json = BinaryData.FromString("[0]").ToDynamicFromJson(PropertyNamingConvention.CamelCase);
+            dynamic child = BinaryData.FromString("""{"foo":1}""").ToDynamicFromJson(PropertyNamingConvention.CamelCase);
+
+            json[0] = child;
+            child.Foo = 2;
+
+            SampleModel model = new()
+            {
+                Message = "a",
+                Number = 1,
+            };
+
+            child.Bar = model;
+
+            model.Message = "b";
+
+            child.Foo = 3;
+
+            model.Number = 4;
+
+            Assert.AreEqual(3, (int)json[0].Foo);
+            Assert.AreEqual("b", (string)json[0].Bar.Message);
+            Assert.AreEqual(4, (int)json[0].Bar.Number);
+
+            child.Foo = BinaryData.FromString("""{}""").ToDynamicFromJson(PropertyNamingConvention.CamelCase);
+            child.Foo.C = "c";
+
+            child.Bar.Message = "d";
+
+            Assert.AreEqual("c", (string)json[0].Foo.C);
+            Assert.AreEqual("d", (string)json[0].Bar.Message);
+            Assert.AreEqual(4, (int)json[0].Bar.Number);
+        }
+
         #region Helpers
         internal static dynamic GetDynamicJson(string json)
         {

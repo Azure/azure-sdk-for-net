@@ -1093,6 +1093,31 @@ namespace Azure.Core.Tests
             Assert.Throws<ObjectDisposedException>(() => { var foo = mdoc.RootElement.GetProperty("Foo"); });
         }
 
+        [Test]
+        public void CanChangeRootElement()
+        {
+            string json = "1";
+            MutableJsonDocument mdoc = MutableJsonDocument.Parse(json);
+            mdoc.RootElement.Set(2);
+
+            Assert.AreEqual(2, mdoc.RootElement.GetInt32());
+        }
+
+        [Test]
+        [Ignore("This API isn't public and can't be accessed from the consumer dynamic layer.")]
+        public void CanChangeRootElementJsonValueKind()
+        {
+            string json = "1";
+            MutableJsonDocument mdoc = MutableJsonDocument.Parse(json);
+
+            MutableJsonDocument child = MutableJsonDocument.Parse("""{}""");
+
+            mdoc.RootElement.Set(child);
+            child.RootElement.SetProperty("foo", 2);
+
+            Assert.AreEqual(2, mdoc.RootElement.GetProperty("foo").GetInt32());
+        }
+
         #region Helpers
 
         internal static void ValidateWriteTo(BinaryData json, MutableJsonDocument mdoc)
