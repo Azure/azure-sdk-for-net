@@ -1,6 +1,6 @@
 # Release History
 
-## 1.0.0 (2023-05-29) 
+## 1.0.0 (2023-06-14)
 
 ### Features Added 
 - Outbound calls can now be created without providing a User Identifier. This value can be specified in the CallAutomationClientOption if desired.
