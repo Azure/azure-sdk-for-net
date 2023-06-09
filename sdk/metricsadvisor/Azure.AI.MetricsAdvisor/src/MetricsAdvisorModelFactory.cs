@@ -12,7 +12,7 @@ namespace Azure.AI.MetricsAdvisor.Models
     /// A factory that builds Azure.AI.MetricsAdvisor and Azure.AI.MetricsAdvisor.Administration
     /// model types used for mocking.
     /// </summary>
-    public static class MetricsAdvisorModelFactory
+    public static partial class MetricsAdvisorModelFactory
     {
         /// <summary>
         /// Initializes a new instance of <see cref="Models.AnomalyAlert"/> for mocking purposes.

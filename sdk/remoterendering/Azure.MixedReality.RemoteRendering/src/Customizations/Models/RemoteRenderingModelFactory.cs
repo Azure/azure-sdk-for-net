@@ -5,7 +5,7 @@ using System;
 using System.Collections.Generic;
 using Azure.Core;
 
-[assembly: CodeGenSuppressType("MixedRealityRemoteRenderingModelFactory")]
+[assembly: CodeGenSuppressType("RemoteRenderingModelFactory")]
 
 namespace Azure.MixedReality.RemoteRendering
 {

@@ -270,7 +270,7 @@ namespace Azure.AI.Translation.Text
         public System.Collections.Generic.IReadOnlyList<Azure.AI.Translation.Text.TransliterableScript> Scripts { get { throw null; } }
     }
 }
-namespace Azure.AI.Translation.Text.Custom
+namespace Microsoft.Extensions.Azure
 {
     public static partial class TextTranslationClientBuilderExtensions
     {
