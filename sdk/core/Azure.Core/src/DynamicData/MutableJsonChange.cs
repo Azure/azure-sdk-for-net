@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
 using System.Text.Json;
 
 namespace Azure.Core.Json
@@ -12,17 +13,19 @@ namespace Azure.Core.Json
         public MutableJsonChange(string path,
             int index,
             object? value,
-            bool replacesJsonElement,
+            JsonValueKind? valueKind,
             JsonSerializerOptions options,
             // TODO: once proven, reorder parameters
-            bool isAddition)
+            MutableJsonChangeKind changeKind,
+            string? addedPropertyName)
         {
             Path = path;
             Index = index;
             Value = value;
-            ReplacesJsonElement = replacesJsonElement;
+            ValueKind = valueKind;
             _serializerOptions = options;
-            IsAddition = isAddition;
+            ChangeKind = changeKind;
+            AddedPropertyName = addedPropertyName;
         }
 
         public string Path { get; }
@@ -31,17 +34,36 @@ namespace Azure.Core.Json
 
         public object? Value { get; }
 
-        /// <summary>
-        /// The change invalidates the existing node's JsonElement
-        /// due to changes in JsonValueKind or path structure.
-        /// If this is true, Value holds a new JsonElement.
-        /// </summary>
-        public bool ReplacesJsonElement { get; }
+        public JsonValueKind? ValueKind { get; }
 
-        /// <summary>
-        /// Indicates this is a new property added to its parent object.
-        /// </summary>
-        public bool IsAddition {  get; }
+        public string? AddedPropertyName {  get; }
+
+        public MutableJsonChangeKind ChangeKind {  get; }
+
+        internal bool IsDescendant(string path)
+        {
+            if (path.Length > 0)
+            {
+                // Restrict matches (e.g. so we don't think 'a' is a parent of 'abc').
+                path += MutableJsonDocument.ChangeTracker.Delimiter;
+            }
+
+            return Path.StartsWith(path, StringComparison.Ordinal);
+        }
+
+        internal bool IsDirectDescendant(string path)
+        {
+            if (!IsDescendant(path))
+            {
+                return false;
+            }
+
+            string[] ancestorPath = path.Split(MutableJsonDocument.ChangeTracker.Delimiter);
+            int ancestorPathLength = string.IsNullOrEmpty(ancestorPath[0]) ? 0 : ancestorPath.Length;
+            int descendantPathLength = Path.Split(MutableJsonDocument.ChangeTracker.Delimiter).Length;
+
+            return ancestorPathLength == (descendantPathLength - 1);
+        }
 
         internal JsonElement AsJsonElement()
         {
@@ -64,7 +86,7 @@ namespace Azure.Core.Json
 
         public override string ToString()
         {
-            return $"Path={Path}; Value={Value}; ReplacesJsonElement={ReplacesJsonElement}";
+            return $"Path={Path}; Value={Value}; Kind={ValueKind}";
         }
     }
 }

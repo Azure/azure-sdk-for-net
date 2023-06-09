@@ -2,7 +2,9 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using System.Linq;
 
 namespace Azure.Core.Json
 {
@@ -69,14 +71,36 @@ namespace Azure.Core.Json
 
         private void WriteObject(string path, int highWaterMark, JsonElement element, Utf8JsonWriter writer)
         {
+            // TODO: Hashmap for lookups
+
+            List<MutableJsonChange> added = Changes.GetAddedProperties(path, highWaterMark);
+            List<MutableJsonChange> removed = Changes.GetRemovedProperties(path, highWaterMark);
+
             writer.WriteStartObject();
 
             foreach (JsonProperty property in element.EnumerateObject())
             {
                 string propertyPath = MutableJsonDocument.ChangeTracker.PushProperty(path, property.Name);
 
-                writer.WritePropertyName(property.Name);
-                WriteElement(propertyPath, highWaterMark, property.Value, writer);
+                // TODO: rewrite for clarity
+                IEnumerable<MutableJsonChange> matches = removed.Where(change => change.Path == propertyPath);
+                bool thisOneWasRemoved = matches.Any();
+                if (!thisOneWasRemoved)
+                {
+                    writer.WritePropertyName(property.Name);
+                    WriteElement(propertyPath, highWaterMark, property.Value, writer);
+                }
+            }
+
+            foreach (MutableJsonChange property in added)
+            {
+                string propertyName = property.AddedPropertyName!;
+                string propertyPath = MutableJsonDocument.ChangeTracker.PushProperty(path, propertyName);
+
+                // TODO: Test case: add an object to an object, and make sure it gets updates
+
+                writer.WritePropertyName(propertyName);
+                WriteElement(propertyPath, highWaterMark, property.AsJsonElement(), writer);
             }
 
             writer.WriteEndObject();
