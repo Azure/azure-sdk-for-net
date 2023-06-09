@@ -13,7 +13,7 @@ namespace Azure.Storage.DataMovement
     /// Base Checkpointer class to create the checkpointing logic
     /// to resume from.
     /// </summary>
-    internal abstract class TransferCheckpointer
+    public abstract class TransferCheckpointer
     {
         /// <summary>
         /// The protected constructor for the abstract TransferCheckpointer class (to allow for mocking).
@@ -30,7 +30,7 @@ namespace Azure.Storage.DataMovement
         /// Optional <see cref="CancellationToken"/> to propagate
         /// notifications that the operation should be canceled.
         /// </param>
-        public abstract Task AddNewJobAsync(
+        internal abstract Task AddNewJobAsync(
             string transferId,
             CancellationToken cancellationToken = default);
 
@@ -47,7 +47,7 @@ namespace Azure.Storage.DataMovement
         /// Optional <see cref="CancellationToken"/> to propagate
         /// notifications that the operation should be canceled.
         /// </param>
-        public abstract Task AddNewJobPartAsync(
+        internal abstract Task AddNewJobPartAsync(
             string transferId,
             int partNumber,
             int chunksTotal,
@@ -64,7 +64,7 @@ namespace Azure.Storage.DataMovement
         /// Optional <see cref="CancellationToken"/> to propagate
         /// notifications that the operation should be canceled.
         /// </param>
-        public abstract Task AddExistingJobAsync(
+        internal abstract Task AddExistingJobAsync(
             string transferId,
             CancellationToken cancellationToken = default);
 
@@ -78,7 +78,7 @@ namespace Azure.Storage.DataMovement
         /// notifications that the operation should be canceled.
         /// </param>
         /// <returns>The number of chunks in the job part.</returns>
-        public abstract Task<int> CurrentJobPartCountAsync(
+        internal abstract Task<int> CurrentJobPartCountAsync(
             string transferId,
             CancellationToken cancellationToken = default);
 
@@ -97,7 +97,7 @@ namespace Azure.Storage.DataMovement
         /// notifications that the operation should be canceled.
         /// </param>
         /// <returns>The Stream to the checkpoint of the respective job ID and part number.</returns>
-        public abstract Task<Stream> ReadableStreamAsync(
+        internal abstract Task<Stream> ReadableStreamAsync(
             string transferId,
             int partNumber,
             long offset,
@@ -118,7 +118,7 @@ namespace Azure.Storage.DataMovement
         /// notifications that the operation should be canceled.
         /// </param>
         /// <returns></returns>
-        public abstract Task WriteToCheckpointAsync(
+        internal abstract Task WriteToCheckpointAsync(
             string transferId,
             int partNumber,
             long offset,
@@ -134,7 +134,7 @@ namespace Azure.Storage.DataMovement
         /// Optional <see cref="CancellationToken"/> to propagate
         /// notifications that the operation should be canceled.
         /// </param>
-        public abstract Task SetJobTransferStatusAsync(
+        internal abstract Task SetJobTransferStatusAsync(
             string transferId,
             StorageTransferStatus status,
             CancellationToken cancellationToken = default);
@@ -149,7 +149,7 @@ namespace Azure.Storage.DataMovement
         /// Optional <see cref="CancellationToken"/> to propagate
         /// notifications that the operation should be canceled.
         /// </param>
-        public abstract Task SetJobPartTransferStatusAsync(
+        internal abstract Task SetJobPartTransferStatusAsync(
             string transferId,
             int partNumber,
             StorageTransferStatus status,
@@ -164,7 +164,7 @@ namespace Azure.Storage.DataMovement
         /// notifications that the operation should be canceled.
         /// </param>
         /// <returns>Returns a bool that is true if operation is successful, otherwise is false.</returns>
-        public abstract Task<bool> TryRemoveStoredTransferAsync(
+        internal abstract Task<bool> TryRemoveStoredTransferAsync(
             string transferId,
             CancellationToken cancellationToken = default);
 
@@ -172,6 +172,6 @@ namespace Azure.Storage.DataMovement
         /// Lists all the transfers contained in the checkpointer.
         /// </summary>
         /// <returns>The list of all the transfers contained in the checkpointer.</returns>
-        public abstract Task<List<string>> GetStoredTransfersAsync(CancellationToken cancellationToken = default);
+        internal abstract Task<List<string>> GetStoredTransfersAsync(CancellationToken cancellationToken = default);
     }
 }

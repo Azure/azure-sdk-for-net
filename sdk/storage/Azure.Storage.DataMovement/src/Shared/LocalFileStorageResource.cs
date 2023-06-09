@@ -261,5 +261,42 @@ namespace Azure.Storage.DataMovement
             }
             return Task.FromResult(false);
         }
+
+        /// <summary>
+        /// stub
+        /// </summary>
+        /// <param name="checkpointer"></param>
+        /// <param name="transferId"></param>
+        /// <param name="isSource"></param>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
+        /// <exception cref="NotImplementedException"></exception>
+        public static async Task<LocalFileStorageResource> RehydrateStorageResource(
+            TransferCheckpointer checkpointer,
+            string transferId,
+            bool isSource,
+            CancellationToken cancellationToken)
+        {
+            Argument.AssertNotNull(checkpointer, nameof(checkpointer));
+
+            using (Stream stream = await checkpointer.ReadableStreamAsync(
+                            transferId: transferId,
+                            partNumber: 0,
+                            offset: 0,
+                            readSize: 0,
+                            cancellationToken: cancellationToken).ConfigureAwait(false))
+            {
+                if (isSource)
+                {
+                    // TODO: implement reading the source resource
+                }
+                else
+                {
+                    // TODO: implement reading the destination resource
+                }
+            }
+
+            throw new NotImplementedException();
+        }
     }
 }

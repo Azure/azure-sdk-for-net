@@ -17,7 +17,7 @@ namespace Azure.Storage.DataMovement
     /// Creates a checkpointer which uses a locally stored file to obtain
     /// the information in order to resume transfers in the future.
     /// </summary>
-    internal class LocalTransferCheckpointer : TransferCheckpointer
+    public class LocalTransferCheckpointer : TransferCheckpointer
     {
         internal string _pathToCheckpointer;
 
@@ -54,7 +54,7 @@ namespace Azure.Storage.DataMovement
         }
 
         /// <inheritdoc/>
-        public override Task AddNewJobAsync(
+        internal override Task AddNewJobAsync(
             string transferId,
             CancellationToken cancellationToken = default)
         {
@@ -72,7 +72,7 @@ namespace Azure.Storage.DataMovement
         }
 
         /// <inheritdoc/>
-        public override async Task AddNewJobPartAsync(
+        internal override async Task AddNewJobPartAsync(
             string transferId,
             int partNumber,
             int chunksTotal,
@@ -110,7 +110,7 @@ namespace Azure.Storage.DataMovement
         }
 
         /// <inheritdoc/>
-        public override Task AddExistingJobAsync(
+        internal override Task AddExistingJobAsync(
             string transferId,
             CancellationToken cancellationToken = default)
         {
@@ -159,7 +159,7 @@ namespace Azure.Storage.DataMovement
         }
 
         /// <inheritdoc/>
-        public override Task<int> CurrentJobPartCountAsync(
+        internal override Task<int> CurrentJobPartCountAsync(
             string transferId,
             CancellationToken cancellationToken = default)
         {
@@ -172,7 +172,7 @@ namespace Azure.Storage.DataMovement
         }
 
         /// <inheritdoc/>
-        public override async Task<Stream> ReadableStreamAsync(
+        internal override async Task<Stream> ReadableStreamAsync(
             string transferId,
             int partNumber,
             long offset,
@@ -209,7 +209,7 @@ namespace Azure.Storage.DataMovement
         }
 
         /// <inheritdoc/>
-        public override async Task WriteToCheckpointAsync(
+        internal override async Task WriteToCheckpointAsync(
             string transferId,
             int partNumber,
             long chunkIndex,
@@ -261,7 +261,7 @@ namespace Azure.Storage.DataMovement
         }
 
         /// <inheritdoc/>
-        public override Task<bool> TryRemoveStoredTransferAsync(string transferId, CancellationToken cancellationToken = default)
+        internal override Task<bool> TryRemoveStoredTransferAsync(string transferId, CancellationToken cancellationToken = default)
         {
             bool result = true;
             Argument.AssertNotNullOrWhiteSpace(transferId, nameof(transferId));
@@ -294,13 +294,13 @@ namespace Azure.Storage.DataMovement
         }
 
         /// <inheritdoc/>
-        public override Task<List<string>> GetStoredTransfersAsync(CancellationToken cancellationToken = default)
+        internal override Task<List<string>> GetStoredTransfersAsync(CancellationToken cancellationToken = default)
         {
             return Task.FromResult(_transferStates.Keys.ToList());
         }
 
         /// <inheritdoc/>
-        public override async Task SetJobTransferStatusAsync(
+        internal override async Task SetJobTransferStatusAsync(
             string transferId,
             StorageTransferStatus status,
             CancellationToken cancellationToken = default)
@@ -342,7 +342,7 @@ namespace Azure.Storage.DataMovement
         }
 
         /// <inheritdoc/>
-        public override async Task SetJobPartTransferStatusAsync(
+        internal override async Task SetJobPartTransferStatusAsync(
             string transferId,
             int partNumber,
             StorageTransferStatus status,
