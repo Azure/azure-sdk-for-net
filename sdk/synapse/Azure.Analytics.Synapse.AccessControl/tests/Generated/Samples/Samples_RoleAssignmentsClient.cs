@@ -315,6 +315,20 @@ namespace Azure.Analytics.Synapse.AccessControl.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
+        public void Example_GetRoleAssignmentById()
+        {
+            var credential = new DefaultAzureCredential();
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new RoleAssignmentsClient(endpoint, credential);
+
+            Response response = client.GetRoleAssignmentById("<roleAssignmentId>");
+
+            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result.ToString());
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public void Example_GetRoleAssignmentById_AllParameters()
         {
             var credential = new DefaultAzureCredential();
@@ -329,6 +343,20 @@ namespace Azure.Analytics.Synapse.AccessControl.Samples
             Console.WriteLine(result.GetProperty("principalId").ToString());
             Console.WriteLine(result.GetProperty("scope").ToString());
             Console.WriteLine(result.GetProperty("principalType").ToString());
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_GetRoleAssignmentById_Async()
+        {
+            var credential = new DefaultAzureCredential();
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new RoleAssignmentsClient(endpoint, credential);
+
+            Response response = await client.GetRoleAssignmentByIdAsync("<roleAssignmentId>");
+
+            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result.ToString());
         }
 
         [Test]

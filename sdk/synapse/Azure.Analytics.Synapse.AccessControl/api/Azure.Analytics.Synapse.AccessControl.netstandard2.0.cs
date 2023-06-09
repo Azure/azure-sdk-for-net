@@ -59,9 +59,9 @@ namespace Azure.Analytics.Synapse.AccessControl
         public virtual System.Threading.Tasks.Task<Azure.Response> CreateRoleAssignmentAsync(string roleAssignmentId, Azure.Core.RequestContent content, Azure.Core.ContentType contentType, Azure.RequestContext context = null) { throw null; }
         public virtual Azure.Response DeleteRoleAssignmentById(string roleAssignmentId, string scope = null, Azure.RequestContext context = null) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> DeleteRoleAssignmentByIdAsync(string roleAssignmentId, string scope = null, Azure.RequestContext context = null) { throw null; }
-        public virtual Azure.Response<Azure.Analytics.Synapse.AccessControl.RoleAssignmentDetails> GetRoleAssignmentById(string roleAssignmentId) { throw null; }
+        public virtual Azure.Response<Azure.Analytics.Synapse.AccessControl.RoleAssignmentDetails> GetRoleAssignment(string roleAssignmentId) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Analytics.Synapse.AccessControl.RoleAssignmentDetails>> GetRoleAssignmentAsync(string roleAssignmentId) { throw null; }
         public virtual Azure.Response GetRoleAssignmentById(string roleAssignmentId, Azure.RequestContext context = null) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Analytics.Synapse.AccessControl.RoleAssignmentDetails>> GetRoleAssignmentByIdAsync(string roleAssignmentId) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> GetRoleAssignmentByIdAsync(string roleAssignmentId, Azure.RequestContext context = null) { throw null; }
         public virtual Azure.Response GetRoleAssignments(string roleId = null, string principalId = null, string scope = null, string continuationToken = null, Azure.RequestContext context = null) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> GetRoleAssignmentsAsync(string roleId = null, string principalId = null, string scope = null, string continuationToken = null, Azure.RequestContext context = null) { throw null; }

@@ -14,13 +14,13 @@ namespace Azure.Analytics.Synapse.AccessControl
 {
     public partial class RoleAssignmentsClient
     {
-        public virtual Response<RoleAssignmentDetails> GetRoleAssignmentById(string roleAssignmentId)
+        public virtual Response<RoleAssignmentDetails> GetRoleAssignment(string roleAssignmentId)
         {
             Response response = GetRoleAssignmentById(roleAssignmentId, default);
             return Response.FromValue((RoleAssignmentDetails)response, response);
         }
 
-        public virtual async Task<Response<RoleAssignmentDetails>> GetRoleAssignmentByIdAsync(string roleAssignmentId)
+        public virtual async Task<Response<RoleAssignmentDetails>> GetRoleAssignmentAsync(string roleAssignmentId)
         {
             Response response = await GetRoleAssignmentByIdAsync(roleAssignmentId, default).ConfigureAwait(false);
             return Response.FromValue((RoleAssignmentDetails)response, response);

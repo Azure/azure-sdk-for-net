@@ -135,7 +135,7 @@ namespace Azure.Analytics.Synapse.AccessControl.Tests
 
             await using DisposableClientRole role = await DisposableClientRole.Create(assignmentsClient, definitionsClient, TestEnvironment);
 
-            Response<RoleAssignmentDetails> response = await assignmentsClient.GetRoleAssignmentByIdAsync(role.RoleAssignmentId);
+            Response<RoleAssignmentDetails> response = await assignmentsClient.GetRoleAssignmentAsync(role.RoleAssignmentId);
 
             Assert.AreEqual(role.RoleAssignmentRoleDefinitionId, response.Value.RoleDefinitionId.ToString());
             Assert.AreEqual(role.RoleAssignmentPrincipalId, response.Value.PrincipalId.ToString());
