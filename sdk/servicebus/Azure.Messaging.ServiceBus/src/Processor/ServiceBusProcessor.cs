@@ -835,15 +835,45 @@ namespace Azure.Messaging.ServiceBus
 
         private void ValidateMessageHandler()
         {
+            var isBatchProcessor = Options.BatchSize > 1;
             if (IsSessionProcessor)
             {
-                if (_processSessionMessageAsync == null)
+                ValidateSessionProcessorMessageHandler(isBatchProcessor);
+            }
+            else
+            {
+                ValidateNonsessionProcessorMessageHander(isBatchProcessor);
+            }
+        }
+
+        private void ValidateSessionProcessorMessageHandler(bool isBatchProcessor)
+        {
+            if (isBatchProcessor)
+            {
+                if (_processSessionMessagesAsync == null)
                 {
                     throw new InvalidOperationException(string.Format(CultureInfo.CurrentCulture,
-                        Resources.CannotStartMessageProcessorWithoutHandler, nameof(ProcessMessageAsync)));
+                        Resources.CannotStartMessageProcessorWithoutHandler, nameof(ProcessMessagesAsync)));
                 }
             }
-            else if (_processMessageAsync == null)
+            else if (_processSessionMessageAsync == null)
+            {
+                throw new InvalidOperationException(string.Format(CultureInfo.CurrentCulture,
+                    Resources.CannotStartMessageProcessorWithoutHandler, nameof(ProcessMessageAsync)));
+            }
+        }
+
+        private void ValidateNonsessionProcessorMessageHander(bool isBatchProcessor)
+        {
+            if (isBatchProcessor)
+            {
+                if (_processMessagesAsync == null)
+                {
+                    throw new InvalidOperationException(string.Format(CultureInfo.CurrentCulture,
+                        Resources.CannotStartMessageProcessorWithoutHandler, nameof(ProcessMessagesAsync)));
+                }
+            }
+            if (_processMessageAsync == null)
             {
                 throw new InvalidOperationException(string.Format(CultureInfo.CurrentCulture,
                     Resources.CannotStartMessageProcessorWithoutHandler, nameof(ProcessMessageAsync)));

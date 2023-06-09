@@ -82,7 +82,7 @@ namespace Azure.Messaging.ServiceBus
         public virtual async Task ReceiveAndProcessMessagesAsync(CancellationToken cancellationToken)
         {
             ServiceBusErrorSource errorSource = ServiceBusErrorSource.Receive;
-            var isReceivingMessagesInBatch = ProcessorOptions.BatchSize > 1;
+            var isBatchProcessor = ProcessorOptions.BatchSize > 1;
             try
             {
                 // loop within the context of this thread
@@ -98,7 +98,7 @@ namespace Azure.Messaging.ServiceBus
                     {
                         continue;
                     }
-                    else if (isReceivingMessagesInBatch)
+                    else if (isBatchProcessor)
                     {
                         await ProcessMessagesWithinScopeAsync(
                             messages,

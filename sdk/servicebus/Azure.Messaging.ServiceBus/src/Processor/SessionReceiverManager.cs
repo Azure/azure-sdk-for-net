@@ -272,6 +272,7 @@ namespace Azure.Messaging.ServiceBus
         public override async Task ReceiveAndProcessMessagesAsync(CancellationToken processorCancellationToken)
         {
             ServiceBusErrorSource errorSource = ServiceBusErrorSource.AcceptSession;
+            var isBatchProcessor = ProcessorOptions.BatchSize > 1;
             bool canProcess = false;
             try
             {
@@ -292,26 +293,36 @@ namespace Azure.Messaging.ServiceBus
                 }
 
                 using var linkedTokenSource = CancellationTokenSource.CreateLinkedTokenSource(processorCancellationToken, _sessionCancellationSource.Token);
-                while (!linkedTokenSource.Token.IsCancellationRequested)
+                var receiveAndProcessCancellationToken = linkedTokenSource.Token;
+                while (!receiveAndProcessCancellationToken.IsCancellationRequested)
                 {
                     errorSource = ServiceBusErrorSource.Receive;
                     IReadOnlyList<ServiceBusReceivedMessage> messages = await Receiver.ReceiveMessagesAsync(
-                        maxMessages: 1,
+                        maxMessages: ProcessorOptions.BatchSize,
                         maxWaitTime: _maxReceiveWaitTime,
                         isProcessor: true,
-                        cancellationToken: linkedTokenSource.Token).ConfigureAwait(false);
-                    ServiceBusReceivedMessage message = messages.Count == 0 ? null : messages[0];
-                    if (message == null)
+                        cancellationToken: receiveAndProcessCancellationToken).ConfigureAwait(false);
+                    if (messages.Count == 0)
                     {
                         // Break out of the loop to allow a new session to
                         // be processed.
                         _receiveTimeout = true;
                         break;
                     }
-                    await ProcessOneMessageWithinScopeAsync(
-                        message,
-                        DiagnosticProperty.ProcessSessionMessageActivityName,
-                        linkedTokenSource.Token).ConfigureAwait(false);
+                    else if (isBatchProcessor)
+                    {
+                        await ProcessMessagesWithinScopeAsync(
+                            messages,
+                            DiagnosticProperty.ProcessSessionMessageActivityName,
+                            receiveAndProcessCancellationToken).ConfigureAwait(false);
+                    }
+                    else
+                    {
+                        await ProcessOneMessageWithinScopeAsync(
+                            messages[0],
+                            DiagnosticProperty.ProcessSessionMessageActivityName,
+                            receiveAndProcessCancellationToken).ConfigureAwait(false);
+                    }
                 }
             }
             catch (Exception ex)
