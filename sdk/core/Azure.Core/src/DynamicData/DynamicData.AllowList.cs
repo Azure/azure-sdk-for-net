@@ -234,17 +234,19 @@ namespace Azure.Core.Dynamic
                     return true;
                 }
 
-                // GetType() should not return object.
-                // This is the base case for recursion.
+                // GetType() should not return object. This is the base case for recursion.
                 Type type = value.GetType();
                 if (IsAllowedPrimitive(type))
                 {
                     return true;
                 }
 
-                return
-                    IsAllowedKnownValue(value) ||
-                    IsAllowedPocoValue(value);
+                if (IsAllowedKnownType(type, out _))
+                {
+                    return IsAllowedKnownValue(value);
+                }
+
+                return IsAllowedPocoValue(value);
             }
 
             private static bool IsAllowedKnownValue<T>(T value)
@@ -343,6 +345,16 @@ namespace Azure.Core.Dynamic
                 }
 
                 Type type = value.GetType();
+                if (!IsAllowedPocoType(type, new HashSet<Type>(), out bool needsValueCheck))
+                {
+                    return false;
+                }
+
+                if (!needsValueCheck)
+                {
+                    return true;
+                }
+
                 foreach (PropertyInfo property in type.GetProperties())
                 {
                     object? propertyValue = property.GetValue(value);
