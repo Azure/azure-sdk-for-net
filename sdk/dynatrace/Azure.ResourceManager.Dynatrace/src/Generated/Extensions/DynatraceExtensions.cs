@@ -11,6 +11,7 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.ResourceManager;
+using Azure.ResourceManager.Dynatrace.Testing;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.Dynatrace
@@ -18,35 +19,35 @@ namespace Azure.ResourceManager.Dynatrace
     /// <summary> A class to add extension methods to Azure.ResourceManager.Dynatrace. </summary>
     public static partial class DynatraceExtensions
     {
-        private static ResourceGroupResourceExtensionClient GetResourceGroupResourceExtensionClient(ArmResource resource)
+        private static DynatraceResourceGroupResourceExtension GetDynatraceResourceGroupResourceExtension(ArmResource resource)
         {
             return resource.GetCachedClient(client =>
             {
-                return new ResourceGroupResourceExtensionClient(client, resource.Id);
+                return new DynatraceResourceGroupResourceExtension(client, resource.Id);
             });
         }
 
-        private static ResourceGroupResourceExtensionClient GetResourceGroupResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
+        private static DynatraceResourceGroupResourceExtension GetDynatraceResourceGroupResourceExtension(ArmClient client, ResourceIdentifier scope)
         {
             return client.GetResourceClient(() =>
             {
-                return new ResourceGroupResourceExtensionClient(client, scope);
+                return new DynatraceResourceGroupResourceExtension(client, scope);
             });
         }
 
-        private static SubscriptionResourceExtensionClient GetSubscriptionResourceExtensionClient(ArmResource resource)
+        private static DynatraceSubscriptionResourceExtension GetDynatraceSubscriptionResourceExtension(ArmResource resource)
         {
             return resource.GetCachedClient(client =>
             {
-                return new SubscriptionResourceExtensionClient(client, resource.Id);
+                return new DynatraceSubscriptionResourceExtension(client, resource.Id);
             });
         }
 
-        private static SubscriptionResourceExtensionClient GetSubscriptionResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
+        private static DynatraceSubscriptionResourceExtension GetDynatraceSubscriptionResourceExtension(ArmClient client, ResourceIdentifier scope)
         {
             return client.GetResourceClient(() =>
             {
-                return new SubscriptionResourceExtensionClient(client, scope);
+                return new DynatraceSubscriptionResourceExtension(client, scope);
             });
         }
         #region DynatraceMonitorResource
@@ -111,7 +112,7 @@ namespace Azure.ResourceManager.Dynatrace
         /// <returns> An object representing collection of DynatraceMonitorResources and their operations over a DynatraceMonitorResource. </returns>
         public static DynatraceMonitorCollection GetDynatraceMonitors(this ResourceGroupResource resourceGroupResource)
         {
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetDynatraceMonitors();
+            return GetDynatraceResourceGroupResourceExtension(resourceGroupResource).GetDynatraceMonitors();
         }
 
         /// <summary>
@@ -180,7 +181,7 @@ namespace Azure.ResourceManager.Dynatrace
         /// <returns> An async collection of <see cref="DynatraceMonitorResource" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<DynatraceMonitorResource> GetDynatraceMonitorsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetDynatraceMonitorsAsync(cancellationToken);
+            return GetDynatraceSubscriptionResourceExtension(subscriptionResource).GetDynatraceMonitorsAsync(cancellationToken);
         }
 
         /// <summary>
@@ -201,7 +202,7 @@ namespace Azure.ResourceManager.Dynatrace
         /// <returns> A collection of <see cref="DynatraceMonitorResource" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<DynatraceMonitorResource> GetDynatraceMonitors(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetDynatraceMonitors(cancellationToken);
+            return GetDynatraceSubscriptionResourceExtension(subscriptionResource).GetDynatraceMonitors(cancellationToken);
         }
     }
 }

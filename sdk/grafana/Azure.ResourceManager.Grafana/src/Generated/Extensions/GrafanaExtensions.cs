@@ -11,6 +11,7 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.ResourceManager;
+using Azure.ResourceManager.Grafana.Testing;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.Grafana
@@ -18,35 +19,35 @@ namespace Azure.ResourceManager.Grafana
     /// <summary> A class to add extension methods to Azure.ResourceManager.Grafana. </summary>
     public static partial class GrafanaExtensions
     {
-        private static ResourceGroupResourceExtensionClient GetResourceGroupResourceExtensionClient(ArmResource resource)
+        private static GrafanaResourceGroupResourceExtension GetGrafanaResourceGroupResourceExtension(ArmResource resource)
         {
             return resource.GetCachedClient(client =>
             {
-                return new ResourceGroupResourceExtensionClient(client, resource.Id);
+                return new GrafanaResourceGroupResourceExtension(client, resource.Id);
             });
         }
 
-        private static ResourceGroupResourceExtensionClient GetResourceGroupResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
+        private static GrafanaResourceGroupResourceExtension GetGrafanaResourceGroupResourceExtension(ArmClient client, ResourceIdentifier scope)
         {
             return client.GetResourceClient(() =>
             {
-                return new ResourceGroupResourceExtensionClient(client, scope);
+                return new GrafanaResourceGroupResourceExtension(client, scope);
             });
         }
 
-        private static SubscriptionResourceExtensionClient GetSubscriptionResourceExtensionClient(ArmResource resource)
+        private static GrafanaSubscriptionResourceExtension GetGrafanaSubscriptionResourceExtension(ArmResource resource)
         {
             return resource.GetCachedClient(client =>
             {
-                return new SubscriptionResourceExtensionClient(client, resource.Id);
+                return new GrafanaSubscriptionResourceExtension(client, resource.Id);
             });
         }
 
-        private static SubscriptionResourceExtensionClient GetSubscriptionResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
+        private static GrafanaSubscriptionResourceExtension GetGrafanaSubscriptionResourceExtension(ArmClient client, ResourceIdentifier scope)
         {
             return client.GetResourceClient(() =>
             {
-                return new SubscriptionResourceExtensionClient(client, scope);
+                return new GrafanaSubscriptionResourceExtension(client, scope);
             });
         }
         #region ManagedGrafanaResource
@@ -111,7 +112,7 @@ namespace Azure.ResourceManager.Grafana
         /// <returns> An object representing collection of ManagedGrafanaResources and their operations over a ManagedGrafanaResource. </returns>
         public static ManagedGrafanaCollection GetManagedGrafanas(this ResourceGroupResource resourceGroupResource)
         {
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetManagedGrafanas();
+            return GetGrafanaResourceGroupResourceExtension(resourceGroupResource).GetManagedGrafanas();
         }
 
         /// <summary>
@@ -180,7 +181,7 @@ namespace Azure.ResourceManager.Grafana
         /// <returns> An async collection of <see cref="ManagedGrafanaResource" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<ManagedGrafanaResource> GetManagedGrafanasAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetManagedGrafanasAsync(cancellationToken);
+            return GetGrafanaSubscriptionResourceExtension(subscriptionResource).GetManagedGrafanasAsync(cancellationToken);
         }
 
         /// <summary>
@@ -201,7 +202,7 @@ namespace Azure.ResourceManager.Grafana
         /// <returns> A collection of <see cref="ManagedGrafanaResource" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<ManagedGrafanaResource> GetManagedGrafanas(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetManagedGrafanas(cancellationToken);
+            return GetGrafanaSubscriptionResourceExtension(subscriptionResource).GetManagedGrafanas(cancellationToken);
         }
     }
 }

@@ -11,6 +11,7 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.ResourceManager;
+using Azure.ResourceManager.DevTestLabs.Testing;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.DevTestLabs
@@ -18,35 +19,35 @@ namespace Azure.ResourceManager.DevTestLabs
     /// <summary> A class to add extension methods to Azure.ResourceManager.DevTestLabs. </summary>
     public static partial class DevTestLabsExtensions
     {
-        private static ResourceGroupResourceExtensionClient GetResourceGroupResourceExtensionClient(ArmResource resource)
+        private static DevTestLabsResourceGroupResourceExtension GetDevTestLabsResourceGroupResourceExtension(ArmResource resource)
         {
             return resource.GetCachedClient(client =>
             {
-                return new ResourceGroupResourceExtensionClient(client, resource.Id);
+                return new DevTestLabsResourceGroupResourceExtension(client, resource.Id);
             });
         }
 
-        private static ResourceGroupResourceExtensionClient GetResourceGroupResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
+        private static DevTestLabsResourceGroupResourceExtension GetDevTestLabsResourceGroupResourceExtension(ArmClient client, ResourceIdentifier scope)
         {
             return client.GetResourceClient(() =>
             {
-                return new ResourceGroupResourceExtensionClient(client, scope);
+                return new DevTestLabsResourceGroupResourceExtension(client, scope);
             });
         }
 
-        private static SubscriptionResourceExtensionClient GetSubscriptionResourceExtensionClient(ArmResource resource)
+        private static DevTestLabsSubscriptionResourceExtension GetDevTestLabsSubscriptionResourceExtension(ArmResource resource)
         {
             return resource.GetCachedClient(client =>
             {
-                return new SubscriptionResourceExtensionClient(client, resource.Id);
+                return new DevTestLabsSubscriptionResourceExtension(client, resource.Id);
             });
         }
 
-        private static SubscriptionResourceExtensionClient GetSubscriptionResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
+        private static DevTestLabsSubscriptionResourceExtension GetDevTestLabsSubscriptionResourceExtension(ArmClient client, ResourceIdentifier scope)
         {
             return client.GetResourceClient(() =>
             {
-                return new SubscriptionResourceExtensionClient(client, scope);
+                return new DevTestLabsSubscriptionResourceExtension(client, scope);
             });
         }
         #region DevTestLabResource
@@ -453,7 +454,7 @@ namespace Azure.ResourceManager.DevTestLabs
         /// <returns> An object representing collection of DevTestLabResources and their operations over a DevTestLabResource. </returns>
         public static DevTestLabCollection GetDevTestLabs(this ResourceGroupResource resourceGroupResource)
         {
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetDevTestLabs();
+            return GetDevTestLabsResourceGroupResourceExtension(resourceGroupResource).GetDevTestLabs();
         }
 
         /// <summary>
@@ -511,7 +512,7 @@ namespace Azure.ResourceManager.DevTestLabs
         /// <returns> An object representing collection of DevTestLabGlobalScheduleResources and their operations over a DevTestLabGlobalScheduleResource. </returns>
         public static DevTestLabGlobalScheduleCollection GetDevTestLabGlobalSchedules(this ResourceGroupResource resourceGroupResource)
         {
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetDevTestLabGlobalSchedules();
+            return GetDevTestLabsResourceGroupResourceExtension(resourceGroupResource).GetDevTestLabGlobalSchedules();
         }
 
         /// <summary>
@@ -586,7 +587,7 @@ namespace Azure.ResourceManager.DevTestLabs
         /// <returns> An async collection of <see cref="DevTestLabResource" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<DevTestLabResource> GetDevTestLabsAsync(this SubscriptionResource subscriptionResource, string expand = null, string filter = null, int? top = null, string orderby = null, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetDevTestLabsAsync(expand, filter, top, orderby, cancellationToken);
+            return GetDevTestLabsSubscriptionResourceExtension(subscriptionResource).GetDevTestLabsAsync(expand, filter, top, orderby, cancellationToken);
         }
 
         /// <summary>
@@ -611,7 +612,7 @@ namespace Azure.ResourceManager.DevTestLabs
         /// <returns> A collection of <see cref="DevTestLabResource" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<DevTestLabResource> GetDevTestLabs(this SubscriptionResource subscriptionResource, string expand = null, string filter = null, int? top = null, string orderby = null, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetDevTestLabs(expand, filter, top, orderby, cancellationToken);
+            return GetDevTestLabsSubscriptionResourceExtension(subscriptionResource).GetDevTestLabs(expand, filter, top, orderby, cancellationToken);
         }
 
         /// <summary>
@@ -636,7 +637,7 @@ namespace Azure.ResourceManager.DevTestLabs
         /// <returns> An async collection of <see cref="DevTestLabGlobalScheduleResource" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<DevTestLabGlobalScheduleResource> GetDevTestLabGlobalSchedulesAsync(this SubscriptionResource subscriptionResource, string expand = null, string filter = null, int? top = null, string orderby = null, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetDevTestLabGlobalSchedulesAsync(expand, filter, top, orderby, cancellationToken);
+            return GetDevTestLabsSubscriptionResourceExtension(subscriptionResource).GetDevTestLabGlobalSchedulesAsync(expand, filter, top, orderby, cancellationToken);
         }
 
         /// <summary>
@@ -661,7 +662,7 @@ namespace Azure.ResourceManager.DevTestLabs
         /// <returns> A collection of <see cref="DevTestLabGlobalScheduleResource" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<DevTestLabGlobalScheduleResource> GetDevTestLabGlobalSchedules(this SubscriptionResource subscriptionResource, string expand = null, string filter = null, int? top = null, string orderby = null, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetDevTestLabGlobalSchedules(expand, filter, top, orderby, cancellationToken);
+            return GetDevTestLabsSubscriptionResourceExtension(subscriptionResource).GetDevTestLabGlobalSchedules(expand, filter, top, orderby, cancellationToken);
         }
     }
 }

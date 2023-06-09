@@ -11,6 +11,7 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.ResourceManager;
+using Azure.ResourceManager.DnsResolver.Testing;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.DnsResolver
@@ -18,35 +19,35 @@ namespace Azure.ResourceManager.DnsResolver
     /// <summary> A class to add extension methods to Azure.ResourceManager.DnsResolver. </summary>
     public static partial class DnsResolverExtensions
     {
-        private static ResourceGroupResourceExtensionClient GetResourceGroupResourceExtensionClient(ArmResource resource)
+        private static DnsResolverResourceGroupResourceExtension GetDnsResolverResourceGroupResourceExtension(ArmResource resource)
         {
             return resource.GetCachedClient(client =>
             {
-                return new ResourceGroupResourceExtensionClient(client, resource.Id);
+                return new DnsResolverResourceGroupResourceExtension(client, resource.Id);
             });
         }
 
-        private static ResourceGroupResourceExtensionClient GetResourceGroupResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
+        private static DnsResolverResourceGroupResourceExtension GetDnsResolverResourceGroupResourceExtension(ArmClient client, ResourceIdentifier scope)
         {
             return client.GetResourceClient(() =>
             {
-                return new ResourceGroupResourceExtensionClient(client, scope);
+                return new DnsResolverResourceGroupResourceExtension(client, scope);
             });
         }
 
-        private static SubscriptionResourceExtensionClient GetSubscriptionResourceExtensionClient(ArmResource resource)
+        private static DnsResolverSubscriptionResourceExtension GetDnsResolverSubscriptionResourceExtension(ArmResource resource)
         {
             return resource.GetCachedClient(client =>
             {
-                return new SubscriptionResourceExtensionClient(client, resource.Id);
+                return new DnsResolverSubscriptionResourceExtension(client, resource.Id);
             });
         }
 
-        private static SubscriptionResourceExtensionClient GetSubscriptionResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
+        private static DnsResolverSubscriptionResourceExtension GetDnsResolverSubscriptionResourceExtension(ArmClient client, ResourceIdentifier scope)
         {
             return client.GetResourceClient(() =>
             {
-                return new SubscriptionResourceExtensionClient(client, scope);
+                return new DnsResolverSubscriptionResourceExtension(client, scope);
             });
         }
         #region DnsResolverResource
@@ -187,7 +188,7 @@ namespace Azure.ResourceManager.DnsResolver
         /// <returns> An object representing collection of DnsResolverResources and their operations over a DnsResolverResource. </returns>
         public static DnsResolverCollection GetDnsResolvers(this ResourceGroupResource resourceGroupResource)
         {
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetDnsResolvers();
+            return GetDnsResolverResourceGroupResourceExtension(resourceGroupResource).GetDnsResolvers();
         }
 
         /// <summary>
@@ -243,7 +244,7 @@ namespace Azure.ResourceManager.DnsResolver
         /// <returns> An object representing collection of DnsForwardingRulesetResources and their operations over a DnsForwardingRulesetResource. </returns>
         public static DnsForwardingRulesetCollection GetDnsForwardingRulesets(this ResourceGroupResource resourceGroupResource)
         {
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetDnsForwardingRulesets();
+            return GetDnsResolverResourceGroupResourceExtension(resourceGroupResource).GetDnsForwardingRulesets();
         }
 
         /// <summary>
@@ -313,7 +314,7 @@ namespace Azure.ResourceManager.DnsResolver
         /// <returns> An async collection of <see cref="DnsResolverResource" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<DnsResolverResource> GetDnsResolversAsync(this SubscriptionResource subscriptionResource, int? top = null, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetDnsResolversAsync(top, cancellationToken);
+            return GetDnsResolverSubscriptionResourceExtension(subscriptionResource).GetDnsResolversAsync(top, cancellationToken);
         }
 
         /// <summary>
@@ -335,7 +336,7 @@ namespace Azure.ResourceManager.DnsResolver
         /// <returns> A collection of <see cref="DnsResolverResource" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<DnsResolverResource> GetDnsResolvers(this SubscriptionResource subscriptionResource, int? top = null, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetDnsResolvers(top, cancellationToken);
+            return GetDnsResolverSubscriptionResourceExtension(subscriptionResource).GetDnsResolvers(top, cancellationToken);
         }
 
         /// <summary>
@@ -357,7 +358,7 @@ namespace Azure.ResourceManager.DnsResolver
         /// <returns> An async collection of <see cref="DnsForwardingRulesetResource" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<DnsForwardingRulesetResource> GetDnsForwardingRulesetsAsync(this SubscriptionResource subscriptionResource, int? top = null, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetDnsForwardingRulesetsAsync(top, cancellationToken);
+            return GetDnsResolverSubscriptionResourceExtension(subscriptionResource).GetDnsForwardingRulesetsAsync(top, cancellationToken);
         }
 
         /// <summary>
@@ -379,7 +380,7 @@ namespace Azure.ResourceManager.DnsResolver
         /// <returns> A collection of <see cref="DnsForwardingRulesetResource" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<DnsForwardingRulesetResource> GetDnsForwardingRulesets(this SubscriptionResource subscriptionResource, int? top = null, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetDnsForwardingRulesets(top, cancellationToken);
+            return GetDnsResolverSubscriptionResourceExtension(subscriptionResource).GetDnsForwardingRulesets(top, cancellationToken);
         }
     }
 }

@@ -12,6 +12,7 @@ using Azure;
 using Azure.Core;
 using Azure.ResourceManager;
 using Azure.ResourceManager.EventHubs.Models;
+using Azure.ResourceManager.EventHubs.Testing;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.EventHubs
@@ -19,35 +20,35 @@ namespace Azure.ResourceManager.EventHubs
     /// <summary> A class to add extension methods to Azure.ResourceManager.EventHubs. </summary>
     public static partial class EventHubsExtensions
     {
-        private static ResourceGroupResourceExtensionClient GetResourceGroupResourceExtensionClient(ArmResource resource)
+        private static EventHubsResourceGroupResourceExtension GetEventHubsResourceGroupResourceExtension(ArmResource resource)
         {
             return resource.GetCachedClient(client =>
             {
-                return new ResourceGroupResourceExtensionClient(client, resource.Id);
+                return new EventHubsResourceGroupResourceExtension(client, resource.Id);
             });
         }
 
-        private static ResourceGroupResourceExtensionClient GetResourceGroupResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
+        private static EventHubsResourceGroupResourceExtension GetEventHubsResourceGroupResourceExtension(ArmClient client, ResourceIdentifier scope)
         {
             return client.GetResourceClient(() =>
             {
-                return new ResourceGroupResourceExtensionClient(client, scope);
+                return new EventHubsResourceGroupResourceExtension(client, scope);
             });
         }
 
-        private static SubscriptionResourceExtensionClient GetSubscriptionResourceExtensionClient(ArmResource resource)
+        private static EventHubsSubscriptionResourceExtension GetEventHubsSubscriptionResourceExtension(ArmResource resource)
         {
             return resource.GetCachedClient(client =>
             {
-                return new SubscriptionResourceExtensionClient(client, resource.Id);
+                return new EventHubsSubscriptionResourceExtension(client, resource.Id);
             });
         }
 
-        private static SubscriptionResourceExtensionClient GetSubscriptionResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
+        private static EventHubsSubscriptionResourceExtension GetEventHubsSubscriptionResourceExtension(ArmClient client, ResourceIdentifier scope)
         {
             return client.GetResourceClient(() =>
             {
-                return new SubscriptionResourceExtensionClient(client, scope);
+                return new EventHubsSubscriptionResourceExtension(client, scope);
             });
         }
         #region EventHubsClusterResource
@@ -283,7 +284,7 @@ namespace Azure.ResourceManager.EventHubs
         /// <returns> An object representing collection of EventHubsClusterResources and their operations over a EventHubsClusterResource. </returns>
         public static EventHubsClusterCollection GetEventHubsClusters(this ResourceGroupResource resourceGroupResource)
         {
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetEventHubsClusters();
+            return GetEventHubsResourceGroupResourceExtension(resourceGroupResource).GetEventHubsClusters();
         }
 
         /// <summary>
@@ -339,7 +340,7 @@ namespace Azure.ResourceManager.EventHubs
         /// <returns> An object representing collection of EventHubsNamespaceResources and their operations over a EventHubsNamespaceResource. </returns>
         public static EventHubsNamespaceCollection GetEventHubsNamespaces(this ResourceGroupResource resourceGroupResource)
         {
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetEventHubsNamespaces();
+            return GetEventHubsResourceGroupResourceExtension(resourceGroupResource).GetEventHubsNamespaces();
         }
 
         /// <summary>
@@ -408,7 +409,7 @@ namespace Azure.ResourceManager.EventHubs
         /// <returns> An async collection of <see cref="AvailableCluster" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<AvailableCluster> GetAvailableClusterRegionClustersAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetAvailableClusterRegionClustersAsync(cancellationToken);
+            return GetEventHubsSubscriptionResourceExtension(subscriptionResource).GetAvailableClusterRegionClustersAsync(cancellationToken);
         }
 
         /// <summary>
@@ -429,7 +430,7 @@ namespace Azure.ResourceManager.EventHubs
         /// <returns> A collection of <see cref="AvailableCluster" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<AvailableCluster> GetAvailableClusterRegionClusters(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetAvailableClusterRegionClusters(cancellationToken);
+            return GetEventHubsSubscriptionResourceExtension(subscriptionResource).GetAvailableClusterRegionClusters(cancellationToken);
         }
 
         /// <summary>
@@ -450,7 +451,7 @@ namespace Azure.ResourceManager.EventHubs
         /// <returns> An async collection of <see cref="EventHubsClusterResource" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<EventHubsClusterResource> GetEventHubsClustersAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetEventHubsClustersAsync(cancellationToken);
+            return GetEventHubsSubscriptionResourceExtension(subscriptionResource).GetEventHubsClustersAsync(cancellationToken);
         }
 
         /// <summary>
@@ -471,7 +472,7 @@ namespace Azure.ResourceManager.EventHubs
         /// <returns> A collection of <see cref="EventHubsClusterResource" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<EventHubsClusterResource> GetEventHubsClusters(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetEventHubsClusters(cancellationToken);
+            return GetEventHubsSubscriptionResourceExtension(subscriptionResource).GetEventHubsClusters(cancellationToken);
         }
 
         /// <summary>
@@ -492,7 +493,7 @@ namespace Azure.ResourceManager.EventHubs
         /// <returns> An async collection of <see cref="EventHubsNamespaceResource" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<EventHubsNamespaceResource> GetEventHubsNamespacesAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetEventHubsNamespacesAsync(cancellationToken);
+            return GetEventHubsSubscriptionResourceExtension(subscriptionResource).GetEventHubsNamespacesAsync(cancellationToken);
         }
 
         /// <summary>
@@ -513,7 +514,7 @@ namespace Azure.ResourceManager.EventHubs
         /// <returns> A collection of <see cref="EventHubsNamespaceResource" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<EventHubsNamespaceResource> GetEventHubsNamespaces(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetEventHubsNamespaces(cancellationToken);
+            return GetEventHubsSubscriptionResourceExtension(subscriptionResource).GetEventHubsNamespaces(cancellationToken);
         }
 
         /// <summary>
@@ -537,7 +538,7 @@ namespace Azure.ResourceManager.EventHubs
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            return await GetSubscriptionResourceExtensionClient(subscriptionResource).CheckEventHubsNamespaceNameAvailabilityAsync(content, cancellationToken).ConfigureAwait(false);
+            return await GetEventHubsSubscriptionResourceExtension(subscriptionResource).CheckEventHubsNamespaceNameAvailabilityAsync(content, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -561,7 +562,7 @@ namespace Azure.ResourceManager.EventHubs
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).CheckEventHubsNamespaceNameAvailability(content, cancellationToken);
+            return GetEventHubsSubscriptionResourceExtension(subscriptionResource).CheckEventHubsNamespaceNameAvailability(content, cancellationToken);
         }
     }
 }

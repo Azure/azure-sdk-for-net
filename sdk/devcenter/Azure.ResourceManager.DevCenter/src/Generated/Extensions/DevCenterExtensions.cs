@@ -12,6 +12,7 @@ using Azure;
 using Azure.Core;
 using Azure.ResourceManager;
 using Azure.ResourceManager.DevCenter.Models;
+using Azure.ResourceManager.DevCenter.Testing;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.DevCenter
@@ -19,35 +20,35 @@ namespace Azure.ResourceManager.DevCenter
     /// <summary> A class to add extension methods to Azure.ResourceManager.DevCenter. </summary>
     public static partial class DevCenterExtensions
     {
-        private static ResourceGroupResourceExtensionClient GetResourceGroupResourceExtensionClient(ArmResource resource)
+        private static DevCenterResourceGroupResourceExtension GetDevCenterResourceGroupResourceExtension(ArmResource resource)
         {
             return resource.GetCachedClient(client =>
             {
-                return new ResourceGroupResourceExtensionClient(client, resource.Id);
+                return new DevCenterResourceGroupResourceExtension(client, resource.Id);
             });
         }
 
-        private static ResourceGroupResourceExtensionClient GetResourceGroupResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
+        private static DevCenterResourceGroupResourceExtension GetDevCenterResourceGroupResourceExtension(ArmClient client, ResourceIdentifier scope)
         {
             return client.GetResourceClient(() =>
             {
-                return new ResourceGroupResourceExtensionClient(client, scope);
+                return new DevCenterResourceGroupResourceExtension(client, scope);
             });
         }
 
-        private static SubscriptionResourceExtensionClient GetSubscriptionResourceExtensionClient(ArmResource resource)
+        private static DevCenterSubscriptionResourceExtension GetDevCenterSubscriptionResourceExtension(ArmResource resource)
         {
             return resource.GetCachedClient(client =>
             {
-                return new SubscriptionResourceExtensionClient(client, resource.Id);
+                return new DevCenterSubscriptionResourceExtension(client, resource.Id);
             });
         }
 
-        private static SubscriptionResourceExtensionClient GetSubscriptionResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
+        private static DevCenterSubscriptionResourceExtension GetDevCenterSubscriptionResourceExtension(ArmClient client, ResourceIdentifier scope)
         {
             return client.GetResourceClient(() =>
             {
-                return new SubscriptionResourceExtensionClient(client, scope);
+                return new DevCenterSubscriptionResourceExtension(client, scope);
             });
         }
         #region DevCenterResource
@@ -378,7 +379,7 @@ namespace Azure.ResourceManager.DevCenter
         /// <returns> An object representing collection of DevCenterResources and their operations over a DevCenterResource. </returns>
         public static DevCenterCollection GetDevCenters(this ResourceGroupResource resourceGroupResource)
         {
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetDevCenters();
+            return GetDevCenterResourceGroupResourceExtension(resourceGroupResource).GetDevCenters();
         }
 
         /// <summary>
@@ -434,7 +435,7 @@ namespace Azure.ResourceManager.DevCenter
         /// <returns> An object representing collection of DevCenterProjectResources and their operations over a DevCenterProjectResource. </returns>
         public static DevCenterProjectCollection GetDevCenterProjects(this ResourceGroupResource resourceGroupResource)
         {
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetDevCenterProjects();
+            return GetDevCenterResourceGroupResourceExtension(resourceGroupResource).GetDevCenterProjects();
         }
 
         /// <summary>
@@ -490,7 +491,7 @@ namespace Azure.ResourceManager.DevCenter
         /// <returns> An object representing collection of DevCenterNetworkConnectionResources and their operations over a DevCenterNetworkConnectionResource. </returns>
         public static DevCenterNetworkConnectionCollection GetDevCenterNetworkConnections(this ResourceGroupResource resourceGroupResource)
         {
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetDevCenterNetworkConnections();
+            return GetDevCenterResourceGroupResourceExtension(resourceGroupResource).GetDevCenterNetworkConnections();
         }
 
         /// <summary>
@@ -560,7 +561,7 @@ namespace Azure.ResourceManager.DevCenter
         /// <returns> An async collection of <see cref="DevCenterResource" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<DevCenterResource> GetDevCentersAsync(this SubscriptionResource subscriptionResource, int? top = null, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetDevCentersAsync(top, cancellationToken);
+            return GetDevCenterSubscriptionResourceExtension(subscriptionResource).GetDevCentersAsync(top, cancellationToken);
         }
 
         /// <summary>
@@ -582,7 +583,7 @@ namespace Azure.ResourceManager.DevCenter
         /// <returns> A collection of <see cref="DevCenterResource" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<DevCenterResource> GetDevCenters(this SubscriptionResource subscriptionResource, int? top = null, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetDevCenters(top, cancellationToken);
+            return GetDevCenterSubscriptionResourceExtension(subscriptionResource).GetDevCenters(top, cancellationToken);
         }
 
         /// <summary>
@@ -604,7 +605,7 @@ namespace Azure.ResourceManager.DevCenter
         /// <returns> An async collection of <see cref="DevCenterProjectResource" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<DevCenterProjectResource> GetDevCenterProjectsAsync(this SubscriptionResource subscriptionResource, int? top = null, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetDevCenterProjectsAsync(top, cancellationToken);
+            return GetDevCenterSubscriptionResourceExtension(subscriptionResource).GetDevCenterProjectsAsync(top, cancellationToken);
         }
 
         /// <summary>
@@ -626,7 +627,7 @@ namespace Azure.ResourceManager.DevCenter
         /// <returns> A collection of <see cref="DevCenterProjectResource" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<DevCenterProjectResource> GetDevCenterProjects(this SubscriptionResource subscriptionResource, int? top = null, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetDevCenterProjects(top, cancellationToken);
+            return GetDevCenterSubscriptionResourceExtension(subscriptionResource).GetDevCenterProjects(top, cancellationToken);
         }
 
         /// <summary>
@@ -652,7 +653,7 @@ namespace Azure.ResourceManager.DevCenter
         {
             Argument.AssertNotNullOrEmpty(operationId, nameof(operationId));
 
-            return await GetSubscriptionResourceExtensionClient(subscriptionResource).GetDevCenterOperationStatusAsync(location, operationId, cancellationToken).ConfigureAwait(false);
+            return await GetDevCenterSubscriptionResourceExtension(subscriptionResource).GetDevCenterOperationStatusAsync(location, operationId, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -678,7 +679,7 @@ namespace Azure.ResourceManager.DevCenter
         {
             Argument.AssertNotNullOrEmpty(operationId, nameof(operationId));
 
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetDevCenterOperationStatus(location, operationId, cancellationToken);
+            return GetDevCenterSubscriptionResourceExtension(subscriptionResource).GetDevCenterOperationStatus(location, operationId, cancellationToken);
         }
 
         /// <summary>
@@ -700,7 +701,7 @@ namespace Azure.ResourceManager.DevCenter
         /// <returns> An async collection of <see cref="DevCenterUsage" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<DevCenterUsage> GetDevCenterUsagesByLocationAsync(this SubscriptionResource subscriptionResource, AzureLocation location, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetDevCenterUsagesByLocationAsync(location, cancellationToken);
+            return GetDevCenterSubscriptionResourceExtension(subscriptionResource).GetDevCenterUsagesByLocationAsync(location, cancellationToken);
         }
 
         /// <summary>
@@ -722,7 +723,7 @@ namespace Azure.ResourceManager.DevCenter
         /// <returns> A collection of <see cref="DevCenterUsage" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<DevCenterUsage> GetDevCenterUsagesByLocation(this SubscriptionResource subscriptionResource, AzureLocation location, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetDevCenterUsagesByLocation(location, cancellationToken);
+            return GetDevCenterSubscriptionResourceExtension(subscriptionResource).GetDevCenterUsagesByLocation(location, cancellationToken);
         }
 
         /// <summary>
@@ -746,7 +747,7 @@ namespace Azure.ResourceManager.DevCenter
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            return await GetSubscriptionResourceExtensionClient(subscriptionResource).CheckDevCenterNameAvailabilityAsync(content, cancellationToken).ConfigureAwait(false);
+            return await GetDevCenterSubscriptionResourceExtension(subscriptionResource).CheckDevCenterNameAvailabilityAsync(content, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -770,7 +771,7 @@ namespace Azure.ResourceManager.DevCenter
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).CheckDevCenterNameAvailability(content, cancellationToken);
+            return GetDevCenterSubscriptionResourceExtension(subscriptionResource).CheckDevCenterNameAvailability(content, cancellationToken);
         }
 
         /// <summary>
@@ -792,7 +793,7 @@ namespace Azure.ResourceManager.DevCenter
         /// <returns> An async collection of <see cref="DevCenterSkuDetails" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<DevCenterSkuDetails> GetDevCenterSkusBySubscriptionAsync(this SubscriptionResource subscriptionResource, int? top = null, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetDevCenterSkusBySubscriptionAsync(top, cancellationToken);
+            return GetDevCenterSubscriptionResourceExtension(subscriptionResource).GetDevCenterSkusBySubscriptionAsync(top, cancellationToken);
         }
 
         /// <summary>
@@ -814,7 +815,7 @@ namespace Azure.ResourceManager.DevCenter
         /// <returns> A collection of <see cref="DevCenterSkuDetails" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<DevCenterSkuDetails> GetDevCenterSkusBySubscription(this SubscriptionResource subscriptionResource, int? top = null, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetDevCenterSkusBySubscription(top, cancellationToken);
+            return GetDevCenterSubscriptionResourceExtension(subscriptionResource).GetDevCenterSkusBySubscription(top, cancellationToken);
         }
 
         /// <summary>
@@ -836,7 +837,7 @@ namespace Azure.ResourceManager.DevCenter
         /// <returns> An async collection of <see cref="DevCenterNetworkConnectionResource" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<DevCenterNetworkConnectionResource> GetDevCenterNetworkConnectionsAsync(this SubscriptionResource subscriptionResource, int? top = null, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetDevCenterNetworkConnectionsAsync(top, cancellationToken);
+            return GetDevCenterSubscriptionResourceExtension(subscriptionResource).GetDevCenterNetworkConnectionsAsync(top, cancellationToken);
         }
 
         /// <summary>
@@ -858,7 +859,7 @@ namespace Azure.ResourceManager.DevCenter
         /// <returns> A collection of <see cref="DevCenterNetworkConnectionResource" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<DevCenterNetworkConnectionResource> GetDevCenterNetworkConnections(this SubscriptionResource subscriptionResource, int? top = null, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetDevCenterNetworkConnections(top, cancellationToken);
+            return GetDevCenterSubscriptionResourceExtension(subscriptionResource).GetDevCenterNetworkConnections(top, cancellationToken);
         }
     }
 }

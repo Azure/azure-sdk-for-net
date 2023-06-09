@@ -12,6 +12,7 @@ using Azure;
 using Azure.Core;
 using Azure.ResourceManager;
 using Azure.ResourceManager.DeviceUpdate.Models;
+using Azure.ResourceManager.DeviceUpdate.Testing;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.DeviceUpdate
@@ -19,35 +20,35 @@ namespace Azure.ResourceManager.DeviceUpdate
     /// <summary> A class to add extension methods to Azure.ResourceManager.DeviceUpdate. </summary>
     public static partial class DeviceUpdateExtensions
     {
-        private static ResourceGroupResourceExtensionClient GetResourceGroupResourceExtensionClient(ArmResource resource)
+        private static DeviceUpdateResourceGroupResourceExtension GetDeviceUpdateResourceGroupResourceExtension(ArmResource resource)
         {
             return resource.GetCachedClient(client =>
             {
-                return new ResourceGroupResourceExtensionClient(client, resource.Id);
+                return new DeviceUpdateResourceGroupResourceExtension(client, resource.Id);
             });
         }
 
-        private static ResourceGroupResourceExtensionClient GetResourceGroupResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
+        private static DeviceUpdateResourceGroupResourceExtension GetDeviceUpdateResourceGroupResourceExtension(ArmClient client, ResourceIdentifier scope)
         {
             return client.GetResourceClient(() =>
             {
-                return new ResourceGroupResourceExtensionClient(client, scope);
+                return new DeviceUpdateResourceGroupResourceExtension(client, scope);
             });
         }
 
-        private static SubscriptionResourceExtensionClient GetSubscriptionResourceExtensionClient(ArmResource resource)
+        private static DeviceUpdateSubscriptionResourceExtension GetDeviceUpdateSubscriptionResourceExtension(ArmResource resource)
         {
             return resource.GetCachedClient(client =>
             {
-                return new SubscriptionResourceExtensionClient(client, resource.Id);
+                return new DeviceUpdateSubscriptionResourceExtension(client, resource.Id);
             });
         }
 
-        private static SubscriptionResourceExtensionClient GetSubscriptionResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
+        private static DeviceUpdateSubscriptionResourceExtension GetDeviceUpdateSubscriptionResourceExtension(ArmClient client, ResourceIdentifier scope)
         {
             return client.GetResourceClient(() =>
             {
-                return new SubscriptionResourceExtensionClient(client, scope);
+                return new DeviceUpdateSubscriptionResourceExtension(client, scope);
             });
         }
         #region DeviceUpdateAccountResource
@@ -150,7 +151,7 @@ namespace Azure.ResourceManager.DeviceUpdate
         /// <returns> An object representing collection of DeviceUpdateAccountResources and their operations over a DeviceUpdateAccountResource. </returns>
         public static DeviceUpdateAccountCollection GetDeviceUpdateAccounts(this ResourceGroupResource resourceGroupResource)
         {
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetDeviceUpdateAccounts();
+            return GetDeviceUpdateResourceGroupResourceExtension(resourceGroupResource).GetDeviceUpdateAccounts();
         }
 
         /// <summary>
@@ -222,7 +223,7 @@ namespace Azure.ResourceManager.DeviceUpdate
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            return await GetSubscriptionResourceExtensionClient(subscriptionResource).CheckDeviceUpdateNameAvailabilityAsync(content, cancellationToken).ConfigureAwait(false);
+            return await GetDeviceUpdateSubscriptionResourceExtension(subscriptionResource).CheckDeviceUpdateNameAvailabilityAsync(content, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -246,7 +247,7 @@ namespace Azure.ResourceManager.DeviceUpdate
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).CheckDeviceUpdateNameAvailability(content, cancellationToken);
+            return GetDeviceUpdateSubscriptionResourceExtension(subscriptionResource).CheckDeviceUpdateNameAvailability(content, cancellationToken);
         }
 
         /// <summary>
@@ -267,7 +268,7 @@ namespace Azure.ResourceManager.DeviceUpdate
         /// <returns> An async collection of <see cref="DeviceUpdateAccountResource" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<DeviceUpdateAccountResource> GetDeviceUpdateAccountsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetDeviceUpdateAccountsAsync(cancellationToken);
+            return GetDeviceUpdateSubscriptionResourceExtension(subscriptionResource).GetDeviceUpdateAccountsAsync(cancellationToken);
         }
 
         /// <summary>
@@ -288,7 +289,7 @@ namespace Azure.ResourceManager.DeviceUpdate
         /// <returns> A collection of <see cref="DeviceUpdateAccountResource" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<DeviceUpdateAccountResource> GetDeviceUpdateAccounts(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetDeviceUpdateAccounts(cancellationToken);
+            return GetDeviceUpdateSubscriptionResourceExtension(subscriptionResource).GetDeviceUpdateAccounts(cancellationToken);
         }
     }
 }

@@ -12,6 +12,7 @@ using Azure;
 using Azure.Core;
 using Azure.ResourceManager;
 using Azure.ResourceManager.DeviceProvisioningServices.Models;
+using Azure.ResourceManager.DeviceProvisioningServices.Testing;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.DeviceProvisioningServices
@@ -19,35 +20,35 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
     /// <summary> A class to add extension methods to Azure.ResourceManager.DeviceProvisioningServices. </summary>
     public static partial class DeviceProvisioningServicesExtensions
     {
-        private static ResourceGroupResourceExtensionClient GetResourceGroupResourceExtensionClient(ArmResource resource)
+        private static DeviceProvisioningServicesResourceGroupResourceExtension GetDeviceProvisioningServicesResourceGroupResourceExtension(ArmResource resource)
         {
             return resource.GetCachedClient(client =>
             {
-                return new ResourceGroupResourceExtensionClient(client, resource.Id);
+                return new DeviceProvisioningServicesResourceGroupResourceExtension(client, resource.Id);
             });
         }
 
-        private static ResourceGroupResourceExtensionClient GetResourceGroupResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
+        private static DeviceProvisioningServicesResourceGroupResourceExtension GetDeviceProvisioningServicesResourceGroupResourceExtension(ArmClient client, ResourceIdentifier scope)
         {
             return client.GetResourceClient(() =>
             {
-                return new ResourceGroupResourceExtensionClient(client, scope);
+                return new DeviceProvisioningServicesResourceGroupResourceExtension(client, scope);
             });
         }
 
-        private static SubscriptionResourceExtensionClient GetSubscriptionResourceExtensionClient(ArmResource resource)
+        private static DeviceProvisioningServicesSubscriptionResourceExtension GetDeviceProvisioningServicesSubscriptionResourceExtension(ArmResource resource)
         {
             return resource.GetCachedClient(client =>
             {
-                return new SubscriptionResourceExtensionClient(client, resource.Id);
+                return new DeviceProvisioningServicesSubscriptionResourceExtension(client, resource.Id);
             });
         }
 
-        private static SubscriptionResourceExtensionClient GetSubscriptionResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
+        private static DeviceProvisioningServicesSubscriptionResourceExtension GetDeviceProvisioningServicesSubscriptionResourceExtension(ArmClient client, ResourceIdentifier scope)
         {
             return client.GetResourceClient(() =>
             {
-                return new SubscriptionResourceExtensionClient(client, scope);
+                return new DeviceProvisioningServicesSubscriptionResourceExtension(client, scope);
             });
         }
         #region DeviceProvisioningServicesCertificateResource
@@ -131,7 +132,7 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
         /// <returns> An object representing collection of DeviceProvisioningServiceResources and their operations over a DeviceProvisioningServiceResource. </returns>
         public static DeviceProvisioningServiceCollection GetDeviceProvisioningServices(this ResourceGroupResource resourceGroupResource)
         {
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetDeviceProvisioningServices();
+            return GetDeviceProvisioningServicesResourceGroupResourceExtension(resourceGroupResource).GetDeviceProvisioningServices();
         }
 
         /// <summary>
@@ -200,7 +201,7 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
         /// <returns> An async collection of <see cref="DeviceProvisioningServiceResource" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<DeviceProvisioningServiceResource> GetDeviceProvisioningServicesAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetDeviceProvisioningServicesAsync(cancellationToken);
+            return GetDeviceProvisioningServicesSubscriptionResourceExtension(subscriptionResource).GetDeviceProvisioningServicesAsync(cancellationToken);
         }
 
         /// <summary>
@@ -221,7 +222,7 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
         /// <returns> A collection of <see cref="DeviceProvisioningServiceResource" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<DeviceProvisioningServiceResource> GetDeviceProvisioningServices(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetDeviceProvisioningServices(cancellationToken);
+            return GetDeviceProvisioningServicesSubscriptionResourceExtension(subscriptionResource).GetDeviceProvisioningServices(cancellationToken);
         }
 
         /// <summary>
@@ -245,7 +246,7 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            return await GetSubscriptionResourceExtensionClient(subscriptionResource).CheckDeviceProvisioningServicesNameAvailabilityAsync(content, cancellationToken).ConfigureAwait(false);
+            return await GetDeviceProvisioningServicesSubscriptionResourceExtension(subscriptionResource).CheckDeviceProvisioningServicesNameAvailabilityAsync(content, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -269,7 +270,7 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).CheckDeviceProvisioningServicesNameAvailability(content, cancellationToken);
+            return GetDeviceProvisioningServicesSubscriptionResourceExtension(subscriptionResource).CheckDeviceProvisioningServicesNameAvailability(content, cancellationToken);
         }
     }
 }
