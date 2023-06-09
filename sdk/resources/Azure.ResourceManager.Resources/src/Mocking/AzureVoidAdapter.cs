@@ -9,11 +9,11 @@ using Moq.Language.Flow;
 
 namespace Azure.ResourceManager.Resources.Testing
 {
-    internal class AzureReturns<T> : IReturnsResult<T> where T : ArmResource
+    internal class AzureVoidAdapter<T> : IReturnsResult<T>, ISetup<T> where T : ArmResource
     {
         private readonly object _intermediateReturns; // runtime type: IReturnsResult<TExtensionClient>
 
-        public AzureReturns(object intermediateReturns)
+        public AzureVoidAdapter(object intermediateReturns)
         {
             _intermediateReturns = intermediateReturns;
         }
@@ -123,13 +123,13 @@ namespace Azure.ResourceManager.Resources.Testing
 
         public ICallbackResult Callback<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13>(Action<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13> action)
         {
-            var result = MockingExtensions.RedirectMethodInvocation(_intermediateReturns, MethodBase.GetCurrentMethod().Name, new[] {typeof(Action<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13>)}, new object[] {action});
+            var result = MockingExtensions.RedirectMethodInvocation(_intermediateReturns, MethodBase.GetCurrentMethod().Name, new[] { typeof(Action<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13>) }, new object[] { action });
             return (ICallbackResult)result;
         }
 
         public ICallbackResult Callback<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14>(Action<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14> action)
         {
-            var result = MockingExtensions.RedirectMethodInvocation(_intermediateReturns, MethodBase.GetCurrentMethod().Name, new[] {typeof(Action<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14>)}, new object[] {action});
+            var result = MockingExtensions.RedirectMethodInvocation(_intermediateReturns, MethodBase.GetCurrentMethod().Name, new[] { typeof(Action<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14>) }, new object[] { action });
             return (ICallbackResult)result;
         }
 
@@ -143,6 +143,12 @@ namespace Azure.ResourceManager.Resources.Testing
         {
             var result = MockingExtensions.RedirectMethodInvocation(_intermediateReturns, MethodBase.GetCurrentMethod().Name, new[] { typeof(Action<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16>) }, new object[] { action });
             return (ICallbackResult)result;
+        }
+
+        public ICallBaseResult CallBase()
+        {
+            var result = MockingExtensions.RedirectMethodInvocation(_intermediateReturns, MethodBase.GetCurrentMethod().Name, Array.Empty<Type>(), Array.Empty<object>());
+            return (ICallBaseResult)result;
         }
 
         public IVerifies Raises(Action<T> eventExpression, EventArgs args)
@@ -259,6 +265,110 @@ namespace Azure.ResourceManager.Resources.Testing
             return (IVerifies)result;
         }
 
+        public IThrowsResult Throws(Exception exception)
+        {
+            var result = MockingExtensions.RedirectMethodInvocation(_intermediateReturns, MethodBase.GetCurrentMethod().Name, new[] { typeof(Exception) }, new object[] { exception });
+            return (IThrowsResult)result;
+        }
+
+        public IThrowsResult Throws<TException>() where TException : Exception, new()
+        {
+            var result = MockingExtensions.RedirectMethodInvocation(_intermediateReturns, MethodBase.GetCurrentMethod().Name, Array.Empty<Type>(), Array.Empty<object>());
+            return (IThrowsResult)result;
+        }
+
+        public IThrowsResult Throws(Delegate exceptionFunction)
+        {
+            var result = MockingExtensions.RedirectMethodInvocation(_intermediateReturns, MethodBase.GetCurrentMethod().Name, new[] {typeof(Delegate)}, new object[] { exceptionFunction });
+            return (IThrowsResult)result;
+        }
+
+        // these methods may have issues because these are generic methods.
+        public IThrowsResult Throws<TException>(Func<TException> exceptionFunction) where TException : Exception
+        {
+            return Throws((Delegate)exceptionFunction);
+        }
+
+        public IThrowsResult Throws<T1, TException>(Func<T1, TException> exceptionFunction) where TException : Exception
+        {
+            return Throws((Delegate)exceptionFunction);
+        }
+
+        public IThrowsResult Throws<T1, T2, TException>(Func<T1, T2, TException> exceptionFunction) where TException : Exception
+        {
+            return Throws((Delegate)exceptionFunction);
+        }
+
+        public IThrowsResult Throws<T1, T2, T3, TException>(Func<T1, T2, T3, TException> exceptionFunction) where TException : Exception
+        {
+            return Throws((Delegate)exceptionFunction);
+        }
+
+        public IThrowsResult Throws<T1, T2, T3, T4, TException>(Func<T1, T2, T3, T4, TException> exceptionFunction) where TException : Exception
+        {
+            return Throws((Delegate)exceptionFunction);
+        }
+
+        public IThrowsResult Throws<T1, T2, T3, T4, T5, TException>(Func<T1, T2, T3, T4, T5, TException> exceptionFunction) where TException : Exception
+        {
+            return Throws((Delegate)exceptionFunction);
+        }
+
+        public IThrowsResult Throws<T1, T2, T3, T4, T5, T6, TException>(Func<T1, T2, T3, T4, T5, T6, TException> exceptionFunction) where TException : Exception
+        {
+            return Throws((Delegate)exceptionFunction);
+        }
+
+        public IThrowsResult Throws<T1, T2, T3, T4, T5, T6, T7, TException>(Func<T1, T2, T3, T4, T5, T6, T7, TException> exceptionFunction) where TException : Exception
+        {
+            return Throws((Delegate)exceptionFunction);
+        }
+
+        public IThrowsResult Throws<T1, T2, T3, T4, T5, T6, T7, T8, TException>(Func<T1, T2, T3, T4, T5, T6, T7, T8, TException> exceptionFunction) where TException : Exception
+        {
+            return Throws((Delegate)exceptionFunction);
+        }
+
+        public IThrowsResult Throws<T1, T2, T3, T4, T5, T6, T7, T8, T9, TException>(Func<T1, T2, T3, T4, T5, T6, T7, T8, T9, TException> exceptionFunction) where TException : Exception
+        {
+            return Throws((Delegate)exceptionFunction);
+        }
+
+        public IThrowsResult Throws<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, TException>(Func<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, TException> exceptionFunction) where TException : Exception
+        {
+            return Throws((Delegate)exceptionFunction);
+        }
+
+        public IThrowsResult Throws<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, TException>(Func<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, TException> exceptionFunction) where TException : Exception
+        {
+            return Throws((Delegate)exceptionFunction);
+        }
+
+        public IThrowsResult Throws<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, TException>(Func<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, TException> exceptionFunction) where TException : Exception
+        {
+            return Throws((Delegate)exceptionFunction);
+        }
+
+        public IThrowsResult Throws<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, TException>(Func<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, TException> exceptionFunction) where TException : Exception
+        {
+            return Throws((Delegate)exceptionFunction);
+        }
+
+        public IThrowsResult Throws<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, TException>(Func<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, TException> exceptionFunction) where TException : Exception
+        {
+            return Throws((Delegate)exceptionFunction);
+        }
+
+        public IThrowsResult Throws<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, TException>(Func<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, TException> exceptionFunction) where TException : Exception
+        {
+            return Throws((Delegate)exceptionFunction);
+        }
+
+        public IThrowsResult Throws<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, TException>(Func<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, TException> exceptionFunction) where TException : Exception
+        {
+            return Throws((Delegate)exceptionFunction);
+        }
+
         public void Verifiable()
         {
             var result = MockingExtensions.RedirectMethodInvocation(_intermediateReturns, MethodBase.GetCurrentMethod().Name, Array.Empty<Type>(), Array.Empty<object>());
@@ -267,7 +377,7 @@ namespace Azure.ResourceManager.Resources.Testing
 
         public void Verifiable(string failMessage)
         {
-           var result = MockingExtensions.RedirectMethodInvocation(_intermediateReturns, MethodBase.GetCurrentMethod().Name, new[] { typeof(string) }, new object[] { failMessage });
+            var result = MockingExtensions.RedirectMethodInvocation(_intermediateReturns, MethodBase.GetCurrentMethod().Name, new[] { typeof(string) }, new object[] { failMessage });
             ((IVerifies)result).Verifiable();
         }
     }

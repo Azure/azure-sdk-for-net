@@ -36,13 +36,7 @@ namespace Azure.ResourceManager.Resources.Testing
             // tenantExtensionClient.Setup(tenant => tenant.CalculateDeploymentTemplateHashAsync(mockTemplate, default)) // using the same expression but change the type of the argument to extension client
             if (ExpressionUtilities.IsExtensionMethod(expression, out var extensionMethodInfo))
             {
-                // find the type of extension client: using pattern: $"{T}Extension"
-                // TODO -- update the pattern: $"{RPName}{T}Extension"
-                var extensionClientName = typeof(T).Name + "ExtensionClient";
-                var typeOfExtension = extensionMethodInfo.DeclaringType;
-                // get the namespace of the current SDK dynamically
-                var thisNamespace = typeOfExtension.Namespace;
-                var extensionClientType = typeOfExtension.Assembly.GetType($"{thisNamespace}.{extensionClientName}");
+                var extensionClientType = FindExtensionType(typeof(T), extensionMethodInfo);
 
                 return mock.RedirectMock(expression, extensionClientType);
             }
@@ -52,64 +46,79 @@ namespace Azure.ResourceManager.Resources.Testing
             }
         }
 
-        private static Expression ChangeType<T, R>(Expression<Func<T, R>> expression, Type newType) where T : ArmResource
+        internal static Type FindExtensionType(Type extendingResourceType, MethodInfo extensionMethodInfo)
         {
-            // we only support one parameter
-            var parameter = expression.Parameters.Single();
-            var body = expression.Body;
-            if (body is not MethodCallExpression methodCallExpression)
-            {
-                throw new InvalidOperationException("We only support methodCallExpression as the body of lambda expression for now");
-            }
-            var originalMethod = methodCallExpression.Method;
-            var originalParameterTypes = originalMethod.GetParameters().Select(p => p.ParameterType);
-            var originalArguments = methodCallExpression.Arguments;
-            // find the new method with the same name from the newType
-            var methodInfo = newType.GetMethod(originalMethod.Name, originalParameterTypes.Skip(1).ToArray());
-            // construct a new method call expression on the method with the same name from the newType
-            if (methodInfo is null)
-            {
-                throw new InvalidOperationException($"The method {originalMethod} is not found on type {newType}");
-            }
-            var instanceExpression = Expression.Parameter(newType);
-            var newMethodCallExpression = Expression.Call(instanceExpression, methodInfo, originalArguments.Skip(1));
-
-            return Expression.Lambda(newMethodCallExpression, instanceExpression);
+            // find the type of extension client: using pattern: $"{T}Extension"
+            // TODO -- update the pattern: $"{RPName}{T}Extension"
+            var extensionClientName = extendingResourceType.Name + "ExtensionClient";
+            var typeOfExtension = extensionMethodInfo.DeclaringType;
+            // get the namespace of the current SDK dynamically
+            var thisNamespace = typeOfExtension.Namespace;
+            return typeOfExtension.Assembly.GetType($"{thisNamespace}.{extensionClientName}");
         }
 
-        internal static ISetup<T, R> RedirectMock<T, R>(this Mock<T> originalMock, Expression<Func<T, R>> expression, Type extensionClientType) where T : ArmResource
+        internal static ISetup<T> RedirectMock<T>(this Mock<T> originalMock, Expression<Action<T>> expression, Type extensionClientType) where T : ArmResource
         {
-            var newExpression = ExpressionUtilities.ChangeType(expression, extensionClientType);
+            var newDelegateType = typeof(Action<>).MakeGenericType(extensionClientType);
+            var newExpression = ExpressionUtilities.ChangeType(expression, extensionClientType, newDelegateType);
+
             // create an intermediate mock - new Mock<TExtensionClient>()
-            var intermediateMock = (Mock)Activator.CreateInstance(typeof(Mock<>).MakeGenericType(extensionClientType));
-            // find the Setup(Expression<Func<T, TResult>>) method on the intermediateMock
-            var setupWithReturn = GetSetupWithReturnMethod(intermediateMock.GetType(), typeof(R));
+            var intermediateMockType = typeof(Mock<>).MakeGenericType(extensionClientType);
+            var intermediateMock = Activator.CreateInstance(intermediateMockType);
+            // find the Setup(Expression<Action<T>>) method on the intermediateMock
+            var setupWithoutReturn = GetSetupWithoutReturnMethod(intermediateMockType, newDelegateType);
 
             // call Setup on the intermediate mock object
-            var intermediateSetup = setupWithReturn.Invoke(intermediateMock, new object[] { newExpression });
-
-            // call the Setup on the original mock object to Mock the GetCachedClient method
-            // first get an instance of It.IsAny<Func<ArmClient, TExtensionClient>>
-            var funcType = typeof(Func<,>).MakeGenericType(typeof(ArmClient), extensionClientType);
-            var itIsAnyExpression = Expression.Call(isAnyMethod.MakeGenericMethod(funcType));
-
-            // construct an expression of `tenant.GetCachedClient(itIsAnyResult)`
-            var parameter = Expression.Parameter(typeof(T), "resource");
-            var methodCallExpression = Expression.Call(parameter, "GetCachedClient", new[] { extensionClientType }, itIsAnyExpression);
-            var getCachedClientExpression = Expression.Lambda(typeof(Func<,>).MakeGenericType(typeof(T), extensionClientType), methodCallExpression, parameter);
-
-            // calling originalMock.Setup(tenant => tenant.GetCachedClient(It.IsAny<Func<ArmClient, TenantResourceExtensionClient>>()))
-            setupWithReturn = GetSetupWithReturnMethod(typeof(Mock<T>), extensionClientType);
-            var getCachedClientResult = setupWithReturn.Invoke(originalMock, new object[] { getCachedClientExpression });
+            var intermediateSetup = setupWithoutReturn.Invoke(intermediateMock, new object[] { newExpression });
 
             // get intermediateMock.Object
             var intermediateMockObject = intermediateMock.GetType().GetProperty("Object", extensionClientType).GetValue(intermediateMock);
 
-            // call Returns on the getCachedClientResult
+            MockGetCachedClient(originalMock, extensionClientType, intermediateMockObject);
+
+            return new AzureVoidAdapter<T>(intermediateSetup);
+        }
+
+        internal static ISetup<T, R> RedirectMock<T, R>(this Mock<T> originalMock, Expression<Func<T, R>> expression, Type extensionClientType) where T : ArmResource
+        {
+            var newDelegateType = typeof(Func<,>).MakeGenericType(extensionClientType, typeof(R));
+            var newExpression = ExpressionUtilities.ChangeType(expression, extensionClientType, newDelegateType);
+
+            // create an intermediate mock - new Mock<TExtensionClient>()
+            var intermediateMockType = typeof(Mock<>).MakeGenericType(extensionClientType);
+            var intermediateMock = Activator.CreateInstance(intermediateMockType);
+            // find the Setup<TResult>(Expression<Func<T, TResult>>) method on the intermediateMock
+            var setupWithReturn = GetSetupWithReturnMethod(intermediateMockType, typeof(R));
+
+            // call Setup on the intermediate mock object
+            var intermediateSetup = setupWithReturn.Invoke(intermediateMock, new object[] { newExpression });
+
+            // get intermediateMock.Object
+            var intermediateMockObject = intermediateMock.GetType().GetProperty("Object", extensionClientType).GetValue(intermediateMock);
+
+            MockGetCachedClient(originalMock, extensionClientType, intermediateMockObject);
+
+            return new AzureNonVoidAdapter<T, R>(intermediateSetup);
+        }
+
+        private static void MockGetCachedClient<T>(Mock<T> originalMock, Type extensionClientType, object intermediateMockObject) where T : ArmResource
+        {
+            // first we need to construct the expression `It.IsAny<Func<ArmClient, TExtension>>()`
+            var funcType = typeof(Func<,>).MakeGenericType(typeof(ArmClient), extensionClientType);
+            var itIsAnyExpression = Expression.Call(isAnyMethod.MakeGenericMethod(funcType));
+            // second get the expression of `tenant.GetCachedClient(It.IsAny<Func<ArmClient, TExtension>>())`
+            var parameter = Expression.Parameter(typeof(T), "resource");
+            var methodCallExpression = Expression.Call(parameter, "GetCachedClient", new[] { extensionClientType }, itIsAnyExpression);
+            // then we have the lambda: `resource => resource.GetCachedClient(It.IsAny<Func<ArmClient, TExtension>>())`
+            var getCachedClientExpression = Expression.Lambda(typeof(Func<,>).MakeGenericType(typeof(T), extensionClientType), methodCallExpression, parameter);
+
+            // calling originalMock.Setup using the above lambda
+            var setupMethodWithReturn = GetSetupWithReturnMethod(typeof(Mock<T>), extensionClientType);
+            var getCachedClientResult = setupMethodWithReturn.Invoke(originalMock, new object[] { getCachedClientExpression });
+
+            // calling Returns on the above result `.Result(intermediateMock.Object)`
             var returnsMethod = getCachedClientResult.GetType().GetMethod("Returns", new[] { extensionClientType });
             returnsMethod.Invoke(getCachedClientResult, new object[] { intermediateMockObject });
-
-            return new AzureSetupAdapter<T, R>(intermediateSetup);
         }
 
         private static readonly MethodInfo isAnyMethod = typeof(It).GetMethod(nameof(It.IsAny), BindingFlags.Public | BindingFlags.Static);
@@ -118,12 +127,16 @@ namespace Azure.ResourceManager.Resources.Testing
 
         private static MethodInfo GetSetupWithReturnMethod(Type mockType, Type typeOfReturn)
         {
-            // find the Setup(Expression<Func<T, TResult>>) method on the Mock<T>
+            // find the Setup(Expression<Func<T, TResult>>) method on Mock<T>
+            // Because this method is not a generic method, we cannot simply use the `GetMethod(name, types)` method to get it
             var setupMethods = mockType.GetMethods(BindingFlags.Public | BindingFlags.Instance)
                 .Where(m => m.Name == "Setup");
-            var setupWithReturn = setupMethods.First(m => m.IsGenericMethod);
-            var method = setupWithReturn.MakeGenericMethod(typeOfReturn);
-            return method;
+            return setupMethods.First(m => m.IsGenericMethod).MakeGenericMethod(typeOfReturn);
+        }
+
+        private static MethodInfo GetSetupWithoutReturnMethod(Type mockType, Type parameterType)
+        {
+            return mockType.GetMethod("Setup", new[] { parameterType });
         }
 
         /// <summary>
