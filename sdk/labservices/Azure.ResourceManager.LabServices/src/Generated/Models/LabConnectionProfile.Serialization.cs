@@ -54,7 +54,6 @@ namespace Azure.ResourceManager.LabServices.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     webSshAccess = property.Value.GetString().ToLabVirtualMachineConnectionType();
@@ -64,7 +63,6 @@ namespace Azure.ResourceManager.LabServices.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     webRdpAccess = property.Value.GetString().ToLabVirtualMachineConnectionType();
@@ -74,7 +72,6 @@ namespace Azure.ResourceManager.LabServices.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     clientSshAccess = property.Value.GetString().ToLabVirtualMachineConnectionType();
@@ -84,7 +81,6 @@ namespace Azure.ResourceManager.LabServices.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     clientRdpAccess = property.Value.GetString().ToLabVirtualMachineConnectionType();

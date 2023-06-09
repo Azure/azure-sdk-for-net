@@ -51,7 +51,7 @@ namespace Azure.AI.TextAnalytics.Models
                 return null;
             }
             Optional<int> sentenceCount = default;
-            Optional<SummarySentencesOrder> sortBy = default;
+            Optional<ExtractiveSummarySentencesOrder> sortBy = default;
             Optional<StringIndexType> stringIndexType = default;
             Optional<string> modelVersion = default;
             Optional<bool> loggingOptOut = default;
@@ -61,7 +61,6 @@ namespace Azure.AI.TextAnalytics.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     sentenceCount = property.Value.GetInt32();
@@ -71,17 +70,15 @@ namespace Azure.AI.TextAnalytics.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    sortBy = new SummarySentencesOrder(property.Value.GetString());
+                    sortBy = new ExtractiveSummarySentencesOrder(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("stringIndexType"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     stringIndexType = new StringIndexType(property.Value.GetString());
@@ -96,7 +93,6 @@ namespace Azure.AI.TextAnalytics.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     loggingOptOut = property.Value.GetBoolean();

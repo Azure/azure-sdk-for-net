@@ -5,22 +5,59 @@
 
 #nullable disable
 
+using System;
+using System.ComponentModel;
+
 namespace Azure.Communication.JobRouter
 {
     /// <summary> Describes how the value of the label is compared to the value pass through. </summary>
-    public enum LabelOperator
+    public readonly partial struct LabelOperator : IEquatable<LabelOperator>
     {
+        private readonly string _value;
+
+        /// <summary> Initializes a new instance of <see cref="LabelOperator"/>. </summary>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public LabelOperator(string value)
+        {
+            _value = value ?? throw new ArgumentNullException(nameof(value));
+        }
+
+        private const string EqualValue = "equal";
+        private const string NotEqualValue = "notEqual";
+        private const string LessThanValue = "lessThan";
+        private const string LessThanEqualValue = "lessThanEqual";
+        private const string GreaterThanValue = "greaterThan";
+        private const string GreaterThanEqualValue = "greaterThanEqual";
+
         /// <summary> equal. </summary>
-        Equal,
+        public static LabelOperator Equal { get; } = new LabelOperator(EqualValue);
         /// <summary> notEqual. </summary>
-        NotEqual,
+        public static LabelOperator NotEqual { get; } = new LabelOperator(NotEqualValue);
         /// <summary> lessThan. </summary>
-        LessThan,
+        public static LabelOperator LessThan { get; } = new LabelOperator(LessThanValue);
         /// <summary> lessThanEqual. </summary>
-        LessThanEqual,
+        public static LabelOperator LessThanEqual { get; } = new LabelOperator(LessThanEqualValue);
         /// <summary> greaterThan. </summary>
-        GreaterThan,
+        public static LabelOperator GreaterThan { get; } = new LabelOperator(GreaterThanValue);
         /// <summary> greaterThanEqual. </summary>
-        GreaterThanEqual
+        public static LabelOperator GreaterThanEqual { get; } = new LabelOperator(GreaterThanEqualValue);
+        /// <summary> Determines if two <see cref="LabelOperator"/> values are the same. </summary>
+        public static bool operator ==(LabelOperator left, LabelOperator right) => left.Equals(right);
+        /// <summary> Determines if two <see cref="LabelOperator"/> values are not the same. </summary>
+        public static bool operator !=(LabelOperator left, LabelOperator right) => !left.Equals(right);
+        /// <summary> Converts a string to a <see cref="LabelOperator"/>. </summary>
+        public static implicit operator LabelOperator(string value) => new LabelOperator(value);
+
+        /// <inheritdoc />
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public override bool Equals(object obj) => obj is LabelOperator other && Equals(other);
+        /// <inheritdoc />
+        public bool Equals(LabelOperator other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+
+        /// <inheritdoc />
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        /// <inheritdoc />
+        public override string ToString() => _value;
     }
 }

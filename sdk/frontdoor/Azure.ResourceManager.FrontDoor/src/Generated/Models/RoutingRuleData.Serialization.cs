@@ -106,7 +106,6 @@ namespace Azure.ResourceManager.FrontDoor.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     id = new ResourceIdentifier(property.Value.GetString());
@@ -121,7 +120,6 @@ namespace Azure.ResourceManager.FrontDoor.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     type = new ResourceType(property.Value.GetString());
@@ -140,7 +138,6 @@ namespace Azure.ResourceManager.FrontDoor.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             List<WritableSubResource> array = new List<WritableSubResource>();
@@ -155,7 +152,6 @@ namespace Azure.ResourceManager.FrontDoor.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             List<FrontDoorProtocol> array = new List<FrontDoorProtocol>();
@@ -170,7 +166,6 @@ namespace Azure.ResourceManager.FrontDoor.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             List<string> array = new List<string>();
@@ -185,7 +180,6 @@ namespace Azure.ResourceManager.FrontDoor.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             enabledState = new RoutingRuleEnabledState(property0.Value.GetString());
@@ -195,7 +189,6 @@ namespace Azure.ResourceManager.FrontDoor.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             routeConfiguration = RouteConfiguration.DeserializeRouteConfiguration(property0.Value);
@@ -205,7 +198,6 @@ namespace Azure.ResourceManager.FrontDoor.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             rulesEngine = JsonSerializer.Deserialize<WritableSubResource>(property0.Value.GetRawText());
@@ -215,7 +207,6 @@ namespace Azure.ResourceManager.FrontDoor.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             webApplicationFirewallPolicyLink = JsonSerializer.Deserialize<WritableSubResource>(property0.Value.GetRawText());
@@ -225,7 +216,6 @@ namespace Azure.ResourceManager.FrontDoor.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             resourceState = new FrontDoorResourceState(property0.Value.GetString());

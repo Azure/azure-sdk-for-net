@@ -28,7 +28,6 @@ namespace Azure.ResourceManager.AppService.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     linuxRuntimeSettings = WebAppRuntimeSettings.DeserializeWebAppRuntimeSettings(property.Value);
@@ -38,7 +37,6 @@ namespace Azure.ResourceManager.AppService.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     windowsRuntimeSettings = WebAppRuntimeSettings.DeserializeWebAppRuntimeSettings(property.Value);
@@ -48,7 +46,6 @@ namespace Azure.ResourceManager.AppService.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     linuxContainerSettings = LinuxJavaContainerSettings.DeserializeLinuxJavaContainerSettings(property.Value);
@@ -58,7 +55,6 @@ namespace Azure.ResourceManager.AppService.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     windowsContainerSettings = WindowsJavaContainerSettings.DeserializeWindowsJavaContainerSettings(property.Value);

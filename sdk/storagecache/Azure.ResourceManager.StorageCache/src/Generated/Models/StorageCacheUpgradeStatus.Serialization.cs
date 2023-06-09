@@ -35,7 +35,6 @@ namespace Azure.ResourceManager.StorageCache.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     firmwareUpdateStatus = new StorageCacheFirmwareStatusType(property.Value.GetString());
@@ -45,7 +44,6 @@ namespace Azure.ResourceManager.StorageCache.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     firmwareUpdateDeadline = property.Value.GetDateTimeOffset("O");
@@ -55,7 +53,6 @@ namespace Azure.ResourceManager.StorageCache.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     lastFirmwareUpdate = property.Value.GetDateTimeOffset("O");

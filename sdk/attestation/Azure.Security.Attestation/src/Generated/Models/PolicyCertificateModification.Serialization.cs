@@ -39,7 +39,6 @@ namespace Azure.Security.Attestation
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     policyCertificate = JsonWebKey.DeserializeJsonWebKey(property.Value);

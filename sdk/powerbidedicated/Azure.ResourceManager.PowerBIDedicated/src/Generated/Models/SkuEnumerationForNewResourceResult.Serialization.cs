@@ -26,7 +26,6 @@ namespace Azure.ResourceManager.PowerBIDedicated.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<CapacitySku> array = new List<CapacitySku>();

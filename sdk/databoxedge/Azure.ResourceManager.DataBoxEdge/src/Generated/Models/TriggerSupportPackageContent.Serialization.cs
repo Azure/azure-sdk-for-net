@@ -72,7 +72,6 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
@@ -91,7 +90,6 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             minimumTimeStamp = property0.Value.GetDateTimeOffset("O");
@@ -101,7 +99,6 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             maximumTimeStamp = property0.Value.GetDateTimeOffset("O");

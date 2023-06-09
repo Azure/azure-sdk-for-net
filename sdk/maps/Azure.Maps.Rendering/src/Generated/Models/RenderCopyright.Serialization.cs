@@ -33,7 +33,6 @@ namespace Azure.Maps.Rendering
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<string> array = new List<string>();
@@ -48,7 +47,6 @@ namespace Azure.Maps.Rendering
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<RegionalCopyright> array = new List<RegionalCopyright>();

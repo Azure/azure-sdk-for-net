@@ -28,7 +28,6 @@ namespace Azure.ResourceManager.FrontDoor.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<FrontDoorWebApplicationFirewallPolicyData> array = new List<FrontDoorWebApplicationFirewallPolicyData>();

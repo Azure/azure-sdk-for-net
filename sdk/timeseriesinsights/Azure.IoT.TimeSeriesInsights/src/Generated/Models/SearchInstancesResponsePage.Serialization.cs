@@ -26,7 +26,6 @@ namespace Azure.IoT.TimeSeriesInsights
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     instances = SearchInstancesResponse.DeserializeSearchInstancesResponse(property.Value);
@@ -36,7 +35,6 @@ namespace Azure.IoT.TimeSeriesInsights
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     hierarchyNodes = SearchHierarchyNodesResponse.DeserializeSearchHierarchyNodesResponse(property.Value);

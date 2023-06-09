@@ -27,7 +27,6 @@ namespace Azure.ResourceManager.ServiceFabric.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<ClusterCodeVersionsResult> array = new List<ClusterCodeVersionsResult>();

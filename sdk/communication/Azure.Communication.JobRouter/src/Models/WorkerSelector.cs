@@ -47,15 +47,11 @@ namespace Azure.Communication.JobRouter
         /// <param name="key"> The label key to query against. </param>
         /// <param name="labelOperator"> Describes how the value of the label is compared to the value defined on the label selector. </param>
         /// <param name="value"> The value to compare against the actual label value with the given operator. </param>
-        /// <param name="ttl"> Describes how long this label selector is valid. </param>
-        /// <param name="expedite"> Pushes the job to the front of the queue as long as this selector is active. </param>
-        public WorkerSelector(string key, LabelOperator labelOperator, LabelValue value, TimeSpan? ttl = default, bool? expedite = default)
+        public WorkerSelector(string key, LabelOperator labelOperator, LabelValue value)
         {
             Key = key;
             LabelOperator = labelOperator;
             Value = value;
-            Ttl = ttl;
-            Expedite = expedite;
         }
     }
 }

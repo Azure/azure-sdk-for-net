@@ -85,7 +85,6 @@ namespace Azure.ResourceManager.Orbital
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     etag = new ETag(property.Value.GetString());
@@ -110,7 +109,6 @@ namespace Azure.ResourceManager.Orbital
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
@@ -129,7 +127,6 @@ namespace Azure.ResourceManager.Orbital
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             provisioningState = new OrbitalProvisioningState(property0.Value.GetString());
@@ -139,7 +136,6 @@ namespace Azure.ResourceManager.Orbital
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             status = new OrbitalContactStatus(property0.Value.GetString());
@@ -149,7 +145,6 @@ namespace Azure.ResourceManager.Orbital
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             reservationStartTime = property0.Value.GetDateTimeOffset("O");
@@ -159,7 +154,6 @@ namespace Azure.ResourceManager.Orbital
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             reservationEndTime = property0.Value.GetDateTimeOffset("O");
@@ -169,7 +163,6 @@ namespace Azure.ResourceManager.Orbital
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             rxStartTime = property0.Value.GetDateTimeOffset("O");
@@ -179,7 +172,6 @@ namespace Azure.ResourceManager.Orbital
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             rxEndTime = property0.Value.GetDateTimeOffset("O");
@@ -189,7 +181,6 @@ namespace Azure.ResourceManager.Orbital
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             txStartTime = property0.Value.GetDateTimeOffset("O");
@@ -199,7 +190,6 @@ namespace Azure.ResourceManager.Orbital
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             txEndTime = property0.Value.GetDateTimeOffset("O");
@@ -214,7 +204,6 @@ namespace Azure.ResourceManager.Orbital
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             maximumElevationDegrees = property0.Value.GetSingle();
@@ -224,7 +213,6 @@ namespace Azure.ResourceManager.Orbital
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             startAzimuthDegrees = property0.Value.GetSingle();
@@ -234,7 +222,6 @@ namespace Azure.ResourceManager.Orbital
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             endAzimuthDegrees = property0.Value.GetSingle();
@@ -249,7 +236,6 @@ namespace Azure.ResourceManager.Orbital
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             startElevationDegrees = property0.Value.GetSingle();
@@ -259,7 +245,6 @@ namespace Azure.ResourceManager.Orbital
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             endElevationDegrees = property0.Value.GetSingle();
@@ -269,7 +254,6 @@ namespace Azure.ResourceManager.Orbital
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             antennaConfiguration = OrbitalContactAntennaConfiguration.DeserializeOrbitalContactAntennaConfiguration(property0.Value);
@@ -279,7 +263,6 @@ namespace Azure.ResourceManager.Orbital
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             contactProfile = JsonSerializer.Deserialize<WritableSubResource>(property0.Value.GetRawText());

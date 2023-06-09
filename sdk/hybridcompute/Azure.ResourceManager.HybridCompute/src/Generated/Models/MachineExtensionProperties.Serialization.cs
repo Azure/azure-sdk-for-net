@@ -137,7 +137,6 @@ namespace Azure.ResourceManager.HybridCompute.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     enableAutomaticUpgrade = property.Value.GetBoolean();
@@ -147,7 +146,6 @@ namespace Azure.ResourceManager.HybridCompute.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     autoUpgradeMinorVersion = property.Value.GetBoolean();
@@ -157,7 +155,6 @@ namespace Azure.ResourceManager.HybridCompute.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     Dictionary<string, BinaryData> dictionary = new Dictionary<string, BinaryData>();
@@ -179,7 +176,6 @@ namespace Azure.ResourceManager.HybridCompute.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     Dictionary<string, BinaryData> dictionary = new Dictionary<string, BinaryData>();
@@ -206,7 +202,6 @@ namespace Azure.ResourceManager.HybridCompute.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     instanceView = MachineExtensionInstanceView.DeserializeMachineExtensionInstanceView(property.Value);

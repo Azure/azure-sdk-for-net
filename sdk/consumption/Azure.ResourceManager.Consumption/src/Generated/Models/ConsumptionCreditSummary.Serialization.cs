@@ -52,7 +52,6 @@ namespace Azure.ResourceManager.Consumption.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     eTag = new ETag(property.Value.GetString());
@@ -77,7 +76,6 @@ namespace Azure.ResourceManager.Consumption.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
@@ -96,7 +94,6 @@ namespace Azure.ResourceManager.Consumption.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             balanceSummary = CreditBalanceSummary.DeserializeCreditBalanceSummary(property0.Value);
@@ -106,7 +103,6 @@ namespace Azure.ResourceManager.Consumption.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             pendingCreditAdjustments = ConsumptionAmount.DeserializeConsumptionAmount(property0.Value);
@@ -116,7 +112,6 @@ namespace Azure.ResourceManager.Consumption.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             expiredCredit = ConsumptionAmount.DeserializeConsumptionAmount(property0.Value);
@@ -126,7 +121,6 @@ namespace Azure.ResourceManager.Consumption.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             pendingEligibleCharges = ConsumptionAmount.DeserializeConsumptionAmount(property0.Value);
@@ -146,7 +140,6 @@ namespace Azure.ResourceManager.Consumption.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             reseller = ConsumptionReseller.DeserializeConsumptionReseller(property0.Value);

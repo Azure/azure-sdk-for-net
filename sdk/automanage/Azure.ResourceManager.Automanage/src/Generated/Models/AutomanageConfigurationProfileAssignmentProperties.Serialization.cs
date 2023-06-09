@@ -38,7 +38,6 @@ namespace Azure.ResourceManager.Automanage.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     configurationProfile = new ResourceIdentifier(property.Value.GetString());
@@ -48,7 +47,6 @@ namespace Azure.ResourceManager.Automanage.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     targetId = new ResourceIdentifier(property.Value.GetString());

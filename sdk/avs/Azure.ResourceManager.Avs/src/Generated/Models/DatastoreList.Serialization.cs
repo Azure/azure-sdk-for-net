@@ -28,7 +28,6 @@ namespace Azure.ResourceManager.Avs.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<AvsPrivateCloudDatastoreData> array = new List<AvsPrivateCloudDatastoreData>();

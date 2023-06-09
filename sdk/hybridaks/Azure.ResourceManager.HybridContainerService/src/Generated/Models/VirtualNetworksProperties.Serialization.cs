@@ -41,6 +41,26 @@ namespace Azure.ResourceManager.HybridContainerService.Models
                 }
                 writer.WriteEndArray();
             }
+            if (Optional.IsCollectionDefined(DnsServers))
+            {
+                writer.WritePropertyName("dnsServers"u8);
+                writer.WriteStartArray();
+                foreach (var item in DnsServers)
+                {
+                    writer.WriteStringValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsDefined(Gateway))
+            {
+                writer.WritePropertyName("gateway"u8);
+                writer.WriteStringValue(Gateway);
+            }
+            if (Optional.IsDefined(IPAddressPrefix))
+            {
+                writer.WritePropertyName("ipAddressPrefix"u8);
+                writer.WriteStringValue(IPAddressPrefix);
+            }
             writer.WriteEndObject();
         }
 
@@ -54,7 +74,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
             Optional<IList<VirtualNetworksPropertiesVipPoolItem>> vipPool = default;
             Optional<IList<VirtualNetworksPropertiesVmipPoolItem>> vmipPool = default;
             Optional<IReadOnlyList<string>> dhcpServers = default;
-            Optional<IReadOnlyList<string>> dnsServers = default;
+            Optional<IList<string>> dnsServers = default;
             Optional<string> gateway = default;
             Optional<string> ipAddressPrefix = default;
             Optional<string> vlanId = default;
@@ -66,7 +86,6 @@ namespace Azure.ResourceManager.HybridContainerService.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     infraVnetProfile = VirtualNetworksPropertiesInfraVnetProfile.DeserializeVirtualNetworksPropertiesInfraVnetProfile(property.Value);
@@ -76,7 +95,6 @@ namespace Azure.ResourceManager.HybridContainerService.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<VirtualNetworksPropertiesVipPoolItem> array = new List<VirtualNetworksPropertiesVipPoolItem>();
@@ -91,7 +109,6 @@ namespace Azure.ResourceManager.HybridContainerService.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<VirtualNetworksPropertiesVmipPoolItem> array = new List<VirtualNetworksPropertiesVmipPoolItem>();
@@ -106,7 +123,6 @@ namespace Azure.ResourceManager.HybridContainerService.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<string> array = new List<string>();
@@ -121,7 +137,6 @@ namespace Azure.ResourceManager.HybridContainerService.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<string> array = new List<string>();
@@ -151,7 +166,6 @@ namespace Azure.ResourceManager.HybridContainerService.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     provisioningState = new ProvisioningState(property.Value.GetString());
@@ -161,7 +175,6 @@ namespace Azure.ResourceManager.HybridContainerService.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     status = VirtualNetworksPropertiesStatus.DeserializeVirtualNetworksPropertiesStatus(property.Value);

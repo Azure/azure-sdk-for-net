@@ -15,7 +15,7 @@ namespace Azure.Communication.CallAutomation
         /// <summary>
         /// Reason code.
         /// </summary>
-        public ReasonCode ReasonCode { get; internal set; }
+        public MediaEventReasonCode ReasonCode { get; internal set; }
 
         /// <summary> Initializes a new instance of RecognizeFailed. </summary>
         /// <param name="callConnectionId"> Call connection ID. </param>
@@ -30,7 +30,7 @@ namespace Azure.Communication.CallAutomation
             CorrelationId = correlationId;
             OperationContext = operationContext;
             ResultInformation = resultInformation;
-            ReasonCode = new ReasonCode(resultInformation.SubCode.ToString());
+            ReasonCode = new MediaEventReasonCode(resultInformation.SubCode.ToString());
         }
 
         /// <summary>

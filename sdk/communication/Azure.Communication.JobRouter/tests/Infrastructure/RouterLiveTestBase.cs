@@ -4,12 +4,14 @@
 using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 using Azure.Communication.JobRouter.Models;
 using Azure.Core.TestFramework;
+using Azure.Core.TestFramework.Models;
 using NUnit.Framework;
 
 namespace Azure.Communication.JobRouter.Tests.Infrastructure
@@ -17,6 +19,7 @@ namespace Azure.Communication.JobRouter.Tests.Infrastructure
     public class RouterLiveTestBase : RecordedTestBase<RouterTestEnvironment>
     {
         private ConcurrentDictionary<string, Stack<Task>> _testCleanupTasks;
+        private const string URIDomainRegEx = @"https://([^/?]+)";
         protected const string Delimeter = "-";
 
         public RouterLiveTestBase(bool isAsync, RecordedTestMode? mode = null) : base(isAsync, mode)
@@ -27,6 +30,7 @@ namespace Azure.Communication.JobRouter.Tests.Infrastructure
             JsonPathSanitizers.Add("$..functionKey");
             JsonPathSanitizers.Add("$..appKey");
             SanitizedHeaders.Add("x-ms-content-sha256");
+            UriRegexSanitizers.Add(new UriRegexSanitizer(URIDomainRegEx, "https://sanitized.comminication.azure.com"));
         }
 
         [SetUp]
@@ -38,7 +42,8 @@ namespace Azure.Communication.JobRouter.Tests.Infrastructure
         [TearDown]
         public async Task CleanUp()
         {
-            if (Mode != RecordedTestMode.Playback)
+            var mode = TestEnvironment.Mode ?? Mode;
+            if (mode != RecordedTestMode.Playback)
             {
                 var testName = TestContext.CurrentContext.Test.FullName;
 
@@ -55,6 +60,24 @@ namespace Azure.Communication.JobRouter.Tests.Infrastructure
                     }
                 }
             }
+        }
+
+        protected DateTimeOffset GetOrSetScheduledTimeUtc(DateTimeOffset scheduledTime)
+        {
+            var mode = TestEnvironment.Mode ?? Mode;
+            DateTimeOffset? result = null;
+
+            if (mode == RecordedTestMode.Playback)
+            {
+                var resultAsString = Recording.GetVariable("scheduled-time-utc", string.Empty);
+                result = DateTimeOffset.ParseExact(resultAsString, "O", CultureInfo.InvariantCulture);
+            }
+            else
+            {
+                Recording.SetVariable("scheduled-time-utc", scheduledTime.ToString("O"));
+            }
+
+            return result ?? scheduledTime;
         }
 
         protected RouterClient CreateRouterClientWithConnectionString()
@@ -246,7 +269,7 @@ namespace Azure.Communication.JobRouter.Tests.Infrastructure
             var input = Encoding.UTF8.GetBytes(result);
             var encoded = SHA256.Create().ComputeHash(input);
             var response = BitConverter.ToString(encoded);
-            return response;
+            return string.Join("", response.Split('-'));
         }
 
         private string ReduceToFiftyCharactersInternal(params string?[] value)

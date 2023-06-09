@@ -50,6 +50,16 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
 
         /// <summary> Is content handwritten?. </summary>
         public bool? IsHandwritten { get; }
+        /// <summary> Visually most similar font from among the set of supported font families, with fallback fonts following CSS convention (ex. &apos;Arial, sans-serif&apos;). </summary>
+        public string SimilarFontFamily { get; }
+        /// <summary> Font style. </summary>
+        public FontStyle? FontStyle { get; }
+        /// <summary> Font weight. </summary>
+        public FontWeight? FontWeight { get; }
+        /// <summary> Foreground color in #rrggbb hexadecimal format. </summary>
+        public string Color { get; }
+        /// <summary> Background color in #rrggbb hexadecimal format.. </summary>
+        public string BackgroundColor { get; }
         /// <summary> Location of the text elements in the concatenated content the style applies to. </summary>
         public IReadOnlyList<DocumentSpan> Spans { get; }
         /// <summary> Confidence of correctly identifying the style. </summary>

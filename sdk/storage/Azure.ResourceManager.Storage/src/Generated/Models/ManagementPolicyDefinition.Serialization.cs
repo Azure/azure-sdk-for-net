@@ -44,7 +44,6 @@ namespace Azure.ResourceManager.Storage.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     filters = ManagementPolicyFilter.DeserializeManagementPolicyFilter(property.Value);

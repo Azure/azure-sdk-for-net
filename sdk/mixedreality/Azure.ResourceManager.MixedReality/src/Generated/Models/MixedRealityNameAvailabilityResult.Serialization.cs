@@ -32,7 +32,6 @@ namespace Azure.ResourceManager.MixedReality.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     reason = new MixedRealityNameUnavailableReason(property.Value.GetString());

@@ -254,10 +254,6 @@ namespace Azure.Storage.DataMovement
                     _currentBytesSemaphore.Release();
                 }
             }
-            catch (OperationCanceledException)
-            {
-                // If operation cancelled, no need to log the exception. As it's logged by whoever called the cancellation (e.g. disposal)
-            }
             catch (Exception ex)
             {
                 await _invokeFailedEventHandler(ex).ConfigureAwait(false);
@@ -356,8 +352,8 @@ namespace Azure.Storage.DataMovement
         private void UpdateBytesAndRange(long bytesDownloaded)
         {
             Interlocked.Add(ref _bytesTransferred, bytesDownloaded);
-            _reportProgressInBytes(_bytesTransferred);
             Interlocked.Increment(ref _currentRangeIndex);
+            _reportProgressInBytes(bytesDownloaded);
         }
     }
 }

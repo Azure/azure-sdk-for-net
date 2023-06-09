@@ -26,7 +26,6 @@ namespace Azure.ResourceManager.ElasticSan.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<ElasticSanSkuInformation> array = new List<ElasticSanSkuInformation>();

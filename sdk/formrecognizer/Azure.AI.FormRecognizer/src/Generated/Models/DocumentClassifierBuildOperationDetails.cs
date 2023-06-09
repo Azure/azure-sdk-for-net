@@ -13,7 +13,7 @@ using Azure.Core;
 namespace Azure.AI.FormRecognizer.DocumentAnalysis
 {
     /// <summary> Get Operation response object. </summary>
-    internal partial class DocumentClassifierBuildOperationDetails : OperationDetails
+    public partial class DocumentClassifierBuildOperationDetails : OperationDetails
     {
         /// <summary> Initializes a new instance of DocumentClassifierBuildOperationDetails. </summary>
         /// <param name="operationId"> Operation ID. </param>

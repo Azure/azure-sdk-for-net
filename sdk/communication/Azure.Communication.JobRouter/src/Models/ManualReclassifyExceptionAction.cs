@@ -14,14 +14,8 @@ namespace Azure.Communication.JobRouter
     public partial class ManualReclassifyExceptionAction
     {
         /// <summary> Initializes a new instance of ManualReclassifyExceptionAction. </summary>
-        /// <param name="queueId"> Updated QueueId. </param>
-        /// <param name="priority"> Updated Priority. </param>
-        /// <param name="workerSelectors"> (Optional) Updated WorkerSelectors. </param>
-        public ManualReclassifyExceptionAction(string queueId, int priority, IEnumerable<WorkerSelector> workerSelectors = default)
-            : this(null, queueId, priority, (workerSelectors ?? Array.Empty<WorkerSelector>()).ToList())
+        public ManualReclassifyExceptionAction() : this(null, null, null, Array.Empty<WorkerSelector>().ToList())
         {
-            Argument.AssertNotNullOrWhiteSpace(queueId, nameof(queueId));
-            Argument.AssertNotNull(priority, nameof(priority));
         }
     }
 }

@@ -135,7 +135,7 @@ namespace Azure.Messaging.WebPubSub.Client.Tests
             }
             catch (SendMessageFailedException ex)
             {
-                if (ex.AckId == null)
+                if (ex.AckId != null)
                 {
                     await client.JoinGroupAsync("testGroup", ackId: ex.AckId);
                 }

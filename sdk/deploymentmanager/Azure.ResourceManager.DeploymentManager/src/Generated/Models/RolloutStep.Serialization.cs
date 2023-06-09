@@ -46,7 +46,6 @@ namespace Azure.ResourceManager.DeploymentManager.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     operationInfo = StepOperationInfo.DeserializeStepOperationInfo(property.Value);
@@ -56,7 +55,6 @@ namespace Azure.ResourceManager.DeploymentManager.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<ResourceOperation> array = new List<ResourceOperation>();
@@ -71,7 +69,6 @@ namespace Azure.ResourceManager.DeploymentManager.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<Message> array = new List<Message>();

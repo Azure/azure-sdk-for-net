@@ -43,7 +43,6 @@ namespace Azure.ResourceManager.DataFactory.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        byoaSecretAkvUrl = null;
                         continue;
                     }
                     byoaSecretAkvUrl = new Uri(property.Value.GetString());

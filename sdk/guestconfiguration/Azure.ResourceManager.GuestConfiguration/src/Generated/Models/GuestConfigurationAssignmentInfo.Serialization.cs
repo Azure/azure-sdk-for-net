@@ -42,7 +42,6 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     configuration = GuestConfigurationInfo.DeserializeGuestConfigurationInfo(property.Value);

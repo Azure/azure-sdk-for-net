@@ -33,7 +33,6 @@ namespace Azure.ResourceManager.HealthcareApis.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<HealthcareApisIotFhirDestinationData> array = new List<HealthcareApisIotFhirDestinationData>();

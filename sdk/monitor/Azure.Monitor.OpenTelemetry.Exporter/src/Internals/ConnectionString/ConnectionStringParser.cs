@@ -2,7 +2,9 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
+using Azure.Monitor.OpenTelemetry.Exporter.Internals.Diagnostics;
 
 // This alias is necessary because it will otherwise try to default to "Microsoft.Azure.Core" which doesn't exist.
 using AzureCoreConnectionString = Azure.Core.ConnectionString;
@@ -21,7 +23,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.ConnectionString
         /// <exception cref="InvalidOperationException">
         /// Any exceptions that occur while parsing the connection string will be wrapped and re-thrown.
         /// </exception>
-        public static ConnectionVars GetValues(string? connectionString)
+        public static ConnectionVars GetValues(string connectionString)
         {
             try
             {
@@ -65,7 +67,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.ConnectionString
         internal static string GetIngestionEndpoint(this AzureCoreConnectionString connectionString)
         {
             // Passing the user input values through the Uri constructor will verify that we've built a valid endpoint.
-            Uri uri;
+            Uri? uri;
 
             if (connectionString.TryGetNonRequiredValue(Constants.IngestionExplicitEndpointKey, out string? explicitEndpoint))
             {
@@ -98,7 +100,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.ConnectionString
         /// <remarks>
         /// Will also attempt to sanitize user input. Won't fail if the user typo-ed an extra period.
         /// </remarks>
-        internal static bool TryBuildUri(string prefix, string suffix, out Uri uri, string? location = null)
+        internal static bool TryBuildUri(string prefix, string suffix, [NotNullWhen(true)] out Uri? uri, string? location = null)
         {
             // Location and Suffix are user input fields and need to be sanitized (extra spaces or periods).
             char[] trimPeriod = new char[] { '.' };

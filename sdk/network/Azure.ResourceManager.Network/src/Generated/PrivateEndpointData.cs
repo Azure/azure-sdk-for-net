@@ -26,6 +26,8 @@ namespace Azure.ResourceManager.Network
             PrivateLinkServiceConnections = new ChangeTrackingList<NetworkPrivateLinkServiceConnection>();
             ManualPrivateLinkServiceConnections = new ChangeTrackingList<NetworkPrivateLinkServiceConnection>();
             CustomDnsConfigs = new ChangeTrackingList<CustomDnsConfigProperties>();
+            ApplicationSecurityGroups = new ChangeTrackingList<ApplicationSecurityGroupData>();
+            IPConfigurations = new ChangeTrackingList<PrivateEndpointIPConfiguration>();
         }
 
         /// <summary> Initializes a new instance of PrivateEndpointData. </summary>
@@ -42,7 +44,10 @@ namespace Azure.ResourceManager.Network
         /// <param name="privateLinkServiceConnections"> A grouping of information about the connection to the remote resource. </param>
         /// <param name="manualPrivateLinkServiceConnections"> A grouping of information about the connection to the remote resource. Used when the network admin does not have access to approve connections to the remote resource. </param>
         /// <param name="customDnsConfigs"> An array of custom dns configurations. </param>
-        internal PrivateEndpointData(ResourceIdentifier id, string name, ResourceType? resourceType, AzureLocation? location, IDictionary<string, string> tags, ExtendedLocation extendedLocation, ETag? etag, SubnetData subnet, IReadOnlyList<NetworkInterfaceData> networkInterfaces, NetworkProvisioningState? provisioningState, IList<NetworkPrivateLinkServiceConnection> privateLinkServiceConnections, IList<NetworkPrivateLinkServiceConnection> manualPrivateLinkServiceConnections, IList<CustomDnsConfigProperties> customDnsConfigs) : base(id, name, resourceType, location, tags)
+        /// <param name="applicationSecurityGroups"> Application security groups in which the private endpoint IP configuration is included. </param>
+        /// <param name="ipConfigurations"> A list of IP configurations of the private endpoint. This will be used to map to the First Party Service&apos;s endpoints. </param>
+        /// <param name="customNetworkInterfaceName"> The custom name of the network interface attached to the private endpoint. </param>
+        internal PrivateEndpointData(ResourceIdentifier id, string name, ResourceType? resourceType, AzureLocation? location, IDictionary<string, string> tags, ExtendedLocation extendedLocation, ETag? etag, SubnetData subnet, IReadOnlyList<NetworkInterfaceData> networkInterfaces, NetworkProvisioningState? provisioningState, IList<NetworkPrivateLinkServiceConnection> privateLinkServiceConnections, IList<NetworkPrivateLinkServiceConnection> manualPrivateLinkServiceConnections, IList<CustomDnsConfigProperties> customDnsConfigs, IList<ApplicationSecurityGroupData> applicationSecurityGroups, IList<PrivateEndpointIPConfiguration> ipConfigurations, string customNetworkInterfaceName) : base(id, name, resourceType, location, tags)
         {
             ExtendedLocation = extendedLocation;
             ETag = etag;
@@ -52,6 +57,9 @@ namespace Azure.ResourceManager.Network
             PrivateLinkServiceConnections = privateLinkServiceConnections;
             ManualPrivateLinkServiceConnections = manualPrivateLinkServiceConnections;
             CustomDnsConfigs = customDnsConfigs;
+            ApplicationSecurityGroups = applicationSecurityGroups;
+            IPConfigurations = ipConfigurations;
+            CustomNetworkInterfaceName = customNetworkInterfaceName;
         }
 
         /// <summary> The extended location of the load balancer. </summary>
@@ -70,5 +78,11 @@ namespace Azure.ResourceManager.Network
         public IList<NetworkPrivateLinkServiceConnection> ManualPrivateLinkServiceConnections { get; }
         /// <summary> An array of custom dns configurations. </summary>
         public IList<CustomDnsConfigProperties> CustomDnsConfigs { get; }
+        /// <summary> Application security groups in which the private endpoint IP configuration is included. </summary>
+        public IList<ApplicationSecurityGroupData> ApplicationSecurityGroups { get; }
+        /// <summary> A list of IP configurations of the private endpoint. This will be used to map to the First Party Service&apos;s endpoints. </summary>
+        public IList<PrivateEndpointIPConfiguration> IPConfigurations { get; }
+        /// <summary> The custom name of the network interface attached to the private endpoint. </summary>
+        public string CustomNetworkInterfaceName { get; set; }
     }
 }

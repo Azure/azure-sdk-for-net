@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
             string action = default;
             LoggingDirection direction = default;
             LoggingDetail detailLevel = default;
-            Optional<LoggingRuleHiddenPropertyPaths> hiddenPropertyPaths = default;
+            Optional<LoggingHiddenPropertyPaths> hiddenPropertyPaths = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("action"u8))
@@ -60,10 +60,9 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    hiddenPropertyPaths = LoggingRuleHiddenPropertyPaths.DeserializeLoggingRuleHiddenPropertyPaths(property.Value);
+                    hiddenPropertyPaths = LoggingHiddenPropertyPaths.DeserializeLoggingHiddenPropertyPaths(property.Value);
                     continue;
                 }
             }

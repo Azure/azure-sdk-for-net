@@ -16,17 +16,17 @@ namespace Azure.ResourceManager.Workloads.Models
         }
 
         /// <summary> Initializes a new instance of SupportedConfigurationsDiskDetails. </summary>
-        /// <param name="sku"> The disk sku. </param>
-        /// <param name="sizeGB"> The disk size in GB. </param>
+        /// <param name="sku"> The type of disk sku. For example, Standard_LRS, Standard_ZRS, Premium_LRS, Premium_ZRS. </param>
+        /// <param name="sizeInGB"> The disk size in GB. </param>
         /// <param name="minimumSupportedDiskCount"> The minimum supported disk count. </param>
         /// <param name="maximumSupportedDiskCount"> The maximum supported disk count. </param>
         /// <param name="iopsReadWrite"> The disk Iops. </param>
         /// <param name="mbpsReadWrite"> The disk provisioned throughput in MBps. </param>
         /// <param name="diskTier"> The disk tier, e.g. P10, E10. </param>
-        internal SupportedConfigurationsDiskDetails(DiskSku sku, long? sizeGB, long? minimumSupportedDiskCount, long? maximumSupportedDiskCount, long? iopsReadWrite, long? mbpsReadWrite, string diskTier)
+        internal SupportedConfigurationsDiskDetails(SapDiskSku sku, long? sizeInGB, long? minimumSupportedDiskCount, long? maximumSupportedDiskCount, long? iopsReadWrite, long? mbpsReadWrite, string diskTier)
         {
             Sku = sku;
-            SizeGB = sizeGB;
+            SizeInGB = sizeInGB;
             MinimumSupportedDiskCount = minimumSupportedDiskCount;
             MaximumSupportedDiskCount = maximumSupportedDiskCount;
             IopsReadWrite = iopsReadWrite;
@@ -34,8 +34,8 @@ namespace Azure.ResourceManager.Workloads.Models
             DiskTier = diskTier;
         }
 
-        /// <summary> The disk sku. </summary>
-        internal DiskSku Sku { get; }
+        /// <summary> The type of disk sku. For example, Standard_LRS, Standard_ZRS, Premium_LRS, Premium_ZRS. </summary>
+        internal SapDiskSku Sku { get; }
         /// <summary> Defines the disk sku name. </summary>
         public DiskDetailsDiskSkuName? SkuName
         {
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.Workloads.Models
         }
 
         /// <summary> The disk size in GB. </summary>
-        public long? SizeGB { get; }
+        public long? SizeInGB { get; }
         /// <summary> The minimum supported disk count. </summary>
         public long? MinimumSupportedDiskCount { get; }
         /// <summary> The maximum supported disk count. </summary>

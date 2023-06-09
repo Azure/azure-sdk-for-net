@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Workloads.Models
 {
-    /// <summary> Gets or sets the three tier SAP configuration. </summary>
+    /// <summary> Gets or sets the three tier SAP configuration. For prerequisites for creating the infrastructure, please see [here](https://go.microsoft.com/fwlink/?linkid=2212611&amp;clcid=0x409). </summary>
     public partial class ThreeTierConfiguration : InfrastructureConfiguration
     {
         /// <summary> Initializes a new instance of ThreeTierConfiguration. </summary>
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.Workloads.Models
         /// Please note <see cref="ThreeTierCustomResourceNames"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="ThreeTierFullResourceNames"/>.
         /// </param>
-        internal ThreeTierConfiguration(SapDeploymentType deploymentType, string appResourceGroup, NetworkConfiguration networkConfiguration, CentralServerConfiguration centralServer, ApplicationServerConfiguration applicationServer, DatabaseConfiguration databaseServer, HighAvailabilityConfiguration highAvailabilityConfig, StorageConfiguration storageConfiguration, ThreeTierCustomResourceNames customResourceNames) : base(deploymentType, appResourceGroup)
+        internal ThreeTierConfiguration(SapDeploymentType deploymentType, string appResourceGroup, NetworkConfiguration networkConfiguration, CentralServerConfiguration centralServer, ApplicationServerConfiguration applicationServer, DatabaseConfiguration databaseServer, HighAvailabilityConfiguration highAvailabilityConfig, SapStorageConfiguration storageConfiguration, ThreeTierCustomResourceNames customResourceNames) : base(deploymentType, appResourceGroup)
         {
             NetworkConfiguration = networkConfiguration;
             CentralServer = centralServer;
@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.Workloads.Models
         }
 
         /// <summary> The storage configuration. </summary>
-        internal StorageConfiguration StorageConfiguration { get; set; }
+        internal SapStorageConfiguration StorageConfiguration { get; set; }
         /// <summary>
         /// The properties of the transport directory attached to the VIS. The default for transportFileShareConfiguration is the createAndMount flow if storage configuration is missing.
         /// Please note <see cref="FileShareConfiguration"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.Workloads.Models
             set
             {
                 if (StorageConfiguration is null)
-                    StorageConfiguration = new StorageConfiguration();
+                    StorageConfiguration = new SapStorageConfiguration();
                 StorageConfiguration.TransportFileShareConfiguration = value;
             }
         }

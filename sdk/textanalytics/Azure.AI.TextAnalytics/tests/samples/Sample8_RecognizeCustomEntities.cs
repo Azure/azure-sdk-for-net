@@ -12,9 +12,11 @@ namespace Azure.AI.TextAnalytics.Samples
         [Test]
         public void RecognizeCustomEntities()
         {
+            TestEnvironment.IgnoreIfNotPublicCloud();
+
             Uri endpoint = new(TestEnvironment.StaticEndpoint);
             AzureKeyCredential credential = new(TestEnvironment.StaticApiKey);
-            TextAnalyticsClient client = new(endpoint, credential, CreateSampleOptions());
+            TextAnalyticsClient client = new(endpoint, credential, CreateSampleOptions(true));
 
             string documentA =
                 "A recent report by the Government Accountability Office (GAO) found that the dramatic increase in oil"

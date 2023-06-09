@@ -46,6 +46,11 @@ namespace Azure.ResourceManager.Monitor.Models
                 writer.WritePropertyName("outputStream"u8);
                 writer.WriteStringValue(OutputStream);
             }
+            if (Optional.IsDefined(BuiltInTransform))
+            {
+                writer.WritePropertyName("builtInTransform"u8);
+                writer.WriteStringValue(BuiltInTransform);
+            }
             writer.WriteEndObject();
         }
 
@@ -59,13 +64,13 @@ namespace Azure.ResourceManager.Monitor.Models
             Optional<IList<string>> destinations = default;
             Optional<string> transformKql = default;
             Optional<string> outputStream = default;
+            Optional<string> builtInTransform = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("streams"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<DataFlowStream> array = new List<DataFlowStream>();
@@ -80,7 +85,6 @@ namespace Azure.ResourceManager.Monitor.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<string> array = new List<string>();
@@ -101,8 +105,13 @@ namespace Azure.ResourceManager.Monitor.Models
                     outputStream = property.Value.GetString();
                     continue;
                 }
+                if (property.NameEquals("builtInTransform"u8))
+                {
+                    builtInTransform = property.Value.GetString();
+                    continue;
+                }
             }
-            return new DataFlow(Optional.ToList(streams), Optional.ToList(destinations), transformKql.Value, outputStream.Value);
+            return new DataFlow(Optional.ToList(streams), Optional.ToList(destinations), transformKql.Value, outputStream.Value, builtInTransform.Value);
         }
     }
 }

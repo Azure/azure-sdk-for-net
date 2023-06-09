@@ -24,7 +24,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
         {
             var key = azureMonitorExporterOptions.ConnectionString ?? string.Empty;
 
-            if (!_transmitters.TryGetValue(key, out AzureMonitorTransmitter transmitter))
+            if (!_transmitters.TryGetValue(key, out AzureMonitorTransmitter? transmitter))
             {
                 lock (_lockObj)
                 {

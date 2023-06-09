@@ -83,7 +83,6 @@ namespace Azure.ResourceManager.AppContainers
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     extendedLocation = ContainerAppExtendedLocation.DeserializeContainerAppExtendedLocation(property.Value);
@@ -93,7 +92,6 @@ namespace Azure.ResourceManager.AppContainers
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();
@@ -128,7 +126,6 @@ namespace Azure.ResourceManager.AppContainers
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
@@ -147,7 +144,6 @@ namespace Azure.ResourceManager.AppContainers
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             provisioningState = new ContainerAppConnectedEnvironmentProvisioningState(property0.Value.GetString());
@@ -167,7 +163,6 @@ namespace Azure.ResourceManager.AppContainers
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             staticIP = IPAddress.Parse(property0.Value.GetString());
@@ -182,7 +177,6 @@ namespace Azure.ResourceManager.AppContainers
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             customDomainConfiguration = ContainerAppCustomDomainConfiguration.DeserializeContainerAppCustomDomainConfiguration(property0.Value);

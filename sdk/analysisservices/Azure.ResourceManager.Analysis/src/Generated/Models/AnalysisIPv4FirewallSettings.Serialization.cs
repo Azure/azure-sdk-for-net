@@ -48,7 +48,6 @@ namespace Azure.ResourceManager.Analysis.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<AnalysisIPv4FirewallRule> array = new List<AnalysisIPv4FirewallRule>();
@@ -63,7 +62,6 @@ namespace Azure.ResourceManager.Analysis.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     enablePowerBIService = property.Value.GetBoolean();

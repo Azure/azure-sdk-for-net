@@ -28,7 +28,6 @@ namespace Azure.Communication.PhoneNumbers
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     phoneNumberType = new PhoneNumberType(property.Value.GetString());
@@ -38,7 +37,6 @@ namespace Azure.Communication.PhoneNumbers
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     assignmentType = new PhoneNumberAssignmentType(property.Value.GetString());
@@ -48,7 +46,6 @@ namespace Azure.Communication.PhoneNumbers
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     availableCapabilities = PhoneNumberCapabilities.DeserializePhoneNumberCapabilities(property.Value);

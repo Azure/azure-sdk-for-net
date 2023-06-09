@@ -82,7 +82,6 @@ namespace Azure.ResourceManager.Purview.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     scopeTenantId = property.Value.GetGuid();
@@ -92,7 +91,6 @@ namespace Azure.ResourceManager.Purview.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     scopeType = new PurviewAccountScopeType(property.Value.GetString());

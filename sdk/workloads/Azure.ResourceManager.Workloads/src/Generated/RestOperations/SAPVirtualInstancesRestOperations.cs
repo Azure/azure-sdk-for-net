@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Workloads
         {
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _apiVersion = apiVersion ?? "2022-11-01-preview";
+            _apiVersion = apiVersion ?? "2023-04-01";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
@@ -566,7 +566,7 @@ namespace Azure.ResourceManager.Workloads
             }
         }
 
-        internal HttpMessage CreateStopRequest(string subscriptionId, string resourceGroupName, string sapVirtualInstanceName, StopRequest body)
+        internal HttpMessage CreateStopRequest(string subscriptionId, string resourceGroupName, string sapVirtualInstanceName, SapStopContent content)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -583,12 +583,12 @@ namespace Azure.ResourceManager.Workloads
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            if (body != null)
+            if (content != null)
             {
                 request.Headers.Add("Content-Type", "application/json");
-                var content = new Utf8JsonRequestContent();
-                content.JsonWriter.WriteObjectValue(body);
-                request.Content = content;
+                var content0 = new Utf8JsonRequestContent();
+                content0.JsonWriter.WriteObjectValue(content);
+                request.Content = content0;
             }
             _userAgent.Apply(message);
             return message;
@@ -598,17 +598,17 @@ namespace Azure.ResourceManager.Workloads
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="sapVirtualInstanceName"> The name of the Virtual Instances for SAP solutions resource. </param>
-        /// <param name="body"> The Virtual Instance for SAP solutions resource stop request body. </param>
+        /// <param name="content"> The Virtual Instance for SAP solutions resource stop request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="sapVirtualInstanceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="sapVirtualInstanceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> StopAsync(string subscriptionId, string resourceGroupName, string sapVirtualInstanceName, StopRequest body = null, CancellationToken cancellationToken = default)
+        public async Task<Response> StopAsync(string subscriptionId, string resourceGroupName, string sapVirtualInstanceName, SapStopContent content = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(sapVirtualInstanceName, nameof(sapVirtualInstanceName));
 
-            using var message = CreateStopRequest(subscriptionId, resourceGroupName, sapVirtualInstanceName, body);
+            using var message = CreateStopRequest(subscriptionId, resourceGroupName, sapVirtualInstanceName, content);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -624,17 +624,17 @@ namespace Azure.ResourceManager.Workloads
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="sapVirtualInstanceName"> The name of the Virtual Instances for SAP solutions resource. </param>
-        /// <param name="body"> The Virtual Instance for SAP solutions resource stop request body. </param>
+        /// <param name="content"> The Virtual Instance for SAP solutions resource stop request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="sapVirtualInstanceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="sapVirtualInstanceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response Stop(string subscriptionId, string resourceGroupName, string sapVirtualInstanceName, StopRequest body = null, CancellationToken cancellationToken = default)
+        public Response Stop(string subscriptionId, string resourceGroupName, string sapVirtualInstanceName, SapStopContent content = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(sapVirtualInstanceName, nameof(sapVirtualInstanceName));
 
-            using var message = CreateStopRequest(subscriptionId, resourceGroupName, sapVirtualInstanceName, body);
+            using var message = CreateStopRequest(subscriptionId, resourceGroupName, sapVirtualInstanceName, content);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {

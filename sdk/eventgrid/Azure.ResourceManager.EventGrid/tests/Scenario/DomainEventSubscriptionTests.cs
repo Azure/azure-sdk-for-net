@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.EventGrid.Tests
         {
         }
 
-        private const string AzureFunctionEndpointUrl = "https://devexpfuncappdestination.azurewebsites.net/runtime/webhooks/EventGrid?functionName=EventGridTrigger1&code=an3f31ORDSQ/llPPTaUDJiEJGoebE9ha7dODRhb1nIyg/LiYLfSVCA==";
+        private const string AzureFunctionEndpointUrl = "https://devexpfuncappdestination.azurewebsites.net/runtime/webhooks/EventGrid?functionName=EventGridTrigger1&code=PASSWORDCODE";
 
         private EventGridDomainCollection DomainCollection { get; set; }
         private ResourceGroupResource ResourceGroup { get; set; }

@@ -16,8 +16,8 @@ namespace Azure.AI.AnomalyDetector
     public partial class VariableValues
     {
         /// <summary> Initializes a new instance of VariableValues. </summary>
-        /// <param name="variable"> Variable name of last detection request. </param>
-        /// <param name="timestamps"> Timestamps of last detection request. </param>
+        /// <param name="variable"> Variable name of the last detection request. </param>
+        /// <param name="timestamps"> Time stamps of the last detection request. </param>
         /// <param name="values"> Values of variables. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="variable"/>, <paramref name="timestamps"/> or <paramref name="values"/> is null. </exception>
         public VariableValues(string variable, IEnumerable<string> timestamps, IEnumerable<float> values)
@@ -31,9 +31,20 @@ namespace Azure.AI.AnomalyDetector
             Values = values.ToList();
         }
 
-        /// <summary> Variable name of last detection request. </summary>
+        /// <summary> Initializes a new instance of VariableValues. </summary>
+        /// <param name="variable"> Variable name of the last detection request. </param>
+        /// <param name="timestamps"> Time stamps of the last detection request. </param>
+        /// <param name="values"> Values of variables. </param>
+        internal VariableValues(string variable, IList<string> timestamps, IList<float> values)
+        {
+            Variable = variable;
+            Timestamps = timestamps;
+            Values = values;
+        }
+
+        /// <summary> Variable name of the last detection request. </summary>
         public string Variable { get; }
-        /// <summary> Timestamps of last detection request. </summary>
+        /// <summary> Time stamps of the last detection request. </summary>
         public IList<string> Timestamps { get; }
         /// <summary> Values of variables. </summary>
         public IList<float> Values { get; }

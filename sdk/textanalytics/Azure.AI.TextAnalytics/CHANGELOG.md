@@ -8,7 +8,31 @@
 
 > Note: The following breaking changes only apply when upgrading from the previous beta versions (5.3.0-beta.*) and do not impact stable versions.
 
-- Removed support for dynamic classification.
+- Changes to extractive summarization:
+  - Renamed the `TextAnalyticsClient.StartExtractSummary` and `TextAnalyticsClient.StartExtractSummaryAsync` methods to `TextAnalyticsClient.StartExtractiveSummarize` and `TextAnalyticsClient.StartExtractiveSummarizeAsync` respectively.
+  - Renamed the `TextAnalyticsActions.ExtractSummaryActions` property to `TextAnalyticsActions.ExtractiveSummarizeActions`.
+  - Renamed the `AnalyzeActionResult.ExtractSummaryResults` property to `AnalyzeActionResult.ExtractiveSummarizeResults`.
+  - Renamed the `ExtractSummaryAction` class to `ExtractiveSummarizeAction`.
+  - Renamed the `ExtractSummaryActionResult` class to `ExtractiveSummarizeActionResult`.
+  - Renamed the `ExtractSummaryOperation` class to `ExtractiveSummarizeOperation`.
+  - Renamed the `ExtractSummaryOptions` class to `ExtractiveSummarizeOptions`.
+  - Renamed the `ExtractSummaryResult` class to `ExtractiveSummarizeResult`.
+  - Renamed the `ExtractSummaryResultCollection` class to `ExtractiveSummarizeResultCollection`.
+  - Renamed the `SummarySentencesOrder` enum to `ExtractiveSummarySentencesOrder`.
+  - Renamed the `SummarySentence` class to `ExtractiveSummarySentence`.
+- Changes to abstractive summarization:
+  - Renamed the `TextAnalyticsClient.StartAbstractSummary` and `TextAnalyticsClient.StartAbstractSummaryAsync` methods to `TextAnalyticsClient.StartAbstractiveSummarize` and `TextAnalyticsClient.StartAbstractiveSummarizeAsync` respectively.
+  - Renamed the `TextAnalyticsActions.AbstractSummaryActions` property to `TextAnalyticsActions.AbstractiveSummarizeActions`.
+  - Renamed the `AnalyzeActionResult.AbstractSummaryResults` property to `AnalyzeActionResult.AbstractiveSummarizeResults`.
+  - Renamed the `AbstractSummaryAction` class to `AbstractiveSummarizeAction`.
+  - Renamed the `AbstractSummaryActionResult` class to `AbstractiveSummarizeActionResult`.
+  - Renamed the `AbstractSummaryOperation` class to `AbstractiveSummarizeOperation`.
+  - Renamed the `AbstractSummaryOptions` class to `AbstractiveSummarizeOptions`.
+  - Renamed the `AbstractSummaryResult` class to `AbstractiveSummarizeResult`.
+  - Renamed the `AbstractSummaryResultCollection` class to `AbstractiveSummarizeResultCollection`.
+  - Renamed the `AbstractSummaryAction` class to `AbstractiveSummaryAction`.
+  - Renamed the `SummaryContext` class to `AbstractiveSummaryContext`.
+- Removed support for dynamic classification:
   - Removed the following methods: `TextAnalyticsClient.DynamicClassify` and `TextAnalyticsClient.DynamicClassifyAsync`.
   - Removed the following methods: `TextAnalyticsClient.DynamicClassifyBatch` and `TextAnalyticsClient.DynamicClassifyBatchAsync`.
   - Removed the `DynamicClassifyDocumentResultCollection` class.
@@ -17,6 +41,8 @@
 ### Bugs Fixed
 
 ### Other Changes
+
+The client now defaults to targeting service API version `2023-04-01`.
 
 ## 5.3.0-beta.3 (2023-03-11)
 

@@ -50,7 +50,6 @@ namespace Azure.ResourceManager.Analysis.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     tier = new AnalysisSkuTier(property.Value.GetString());
@@ -60,7 +59,6 @@ namespace Azure.ResourceManager.Analysis.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     capacity = property.Value.GetInt32();

@@ -35,7 +35,7 @@
       "ResponseBody": []
     },
     {
-      "RequestUri": "https://seannsecanary.dfs.core.windows.net/test-filesystem-1961e2a7-f517-b062-ac20-988dd0a38b88/test-directory-20cb3f99-a60d-f46f-e480-233ed8cedcfc?sv=2022-11-02\u0026se=2021-08-25T19%3A05%3A30Z\u0026sr=b\u0026sp=racwdlmeop\u0026sig=Sanitized\u0026resource=directory",
+      "RequestUri": "https://seannsecanary.dfs.core.windows.net/test-filesystem-1961e2a7-f517-b062-ac20-988dd0a38b88/test-directory-20cb3f99-a60d-f46f-e480-233ed8cedcfc?sv=2023-01-03\u0026se=2021-08-25T19%3A05%3A30Z\u0026sr=b\u0026sp=racwdlmeop\u0026sig=Sanitized\u0026resource=directory",
       "RequestMethod": "PUT",
       "RequestHeaders": {
         "Accept": "application/json",

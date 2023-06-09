@@ -185,6 +185,11 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 }
                 writer.WriteEndArray();
             }
+            if (Optional.IsDefined(DiagnosticLogSettings))
+            {
+                writer.WritePropertyName("diagnosticLogSettings"u8);
+                writer.WriteObjectValue(DiagnosticLogSettings);
+            }
             if (Optional.IsDefined(DisableLocalAuth))
             {
                 writer.WritePropertyName("disableLocalAuth"u8);
@@ -195,10 +200,25 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 writer.WritePropertyName("capacity"u8);
                 writer.WriteObjectValue(Capacity);
             }
+            if (Optional.IsDefined(EnableMaterializedViews))
+            {
+                writer.WritePropertyName("enableMaterializedViews"u8);
+                writer.WriteBooleanValue(EnableMaterializedViews.Value);
+            }
             if (Optional.IsDefined(EnablePartitionMerge))
             {
                 writer.WritePropertyName("enablePartitionMerge"u8);
                 writer.WriteBooleanValue(EnablePartitionMerge.Value);
+            }
+            if (Optional.IsDefined(EnableBurstCapacity))
+            {
+                writer.WritePropertyName("enableBurstCapacity"u8);
+                writer.WriteBooleanValue(EnableBurstCapacity.Value);
+            }
+            if (Optional.IsDefined(MinimalTlsVersion))
+            {
+                writer.WritePropertyName("minimalTlsVersion"u8);
+                writer.WriteStringValue(MinimalTlsVersion.Value.ToString());
             }
             writer.WriteEndObject();
             writer.WriteEndObject();

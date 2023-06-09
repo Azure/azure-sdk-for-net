@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 using System;
@@ -17,6 +17,7 @@ namespace Azure.Messaging.ServiceBus
     public class ServiceBusClientOptions
     {
         private ServiceBusRetryOptions _retryOptions = new ServiceBusRetryOptions();
+        private TimeSpan _connectionIdleTimeout = TimeSpan.FromMinutes(1);
 
         /// <summary>
         ///   The type of protocol and transport that will be used for communicating with the Service Bus
@@ -55,6 +56,34 @@ namespace Azure.Messaging.ServiceBus
         /// </remarks>
         ///
         public Uri CustomEndpointAddress { get; set; }
+
+        /// <summary>
+        ///   The amount of time to allow a connection to have no observed traffic before considering
+        ///   it idle and eligible to close.
+        /// </summary>
+        ///
+        /// <value>The default idle timeout is 60 seconds.  The timeout must be a positive value.</value>
+        ///
+        /// <remarks>
+        ///   If a connection is closed due to being idle, the <see cref="ServiceBusClient" /> will automatically
+        ///   reopen the connection when it is needed for a network operation.  An idle connection
+        ///   being closed does not cause client errors or interfere with normal operation.
+        ///
+        ///   It is recommended to use the default value unless your application has special needs and
+        ///   you've tested the impact of changing the idle timeout.
+        /// </remarks>
+        ///
+        /// <exception cref="ArgumentOutOfRangeException">Occurs when the requested timeout is negative.</exception>
+        ///
+        public TimeSpan ConnectionIdleTimeout
+        {
+            get => _connectionIdleTimeout;
+            set
+            {
+                Argument.AssertNotNegative(value, nameof(ConnectionIdleTimeout));
+                _connectionIdleTimeout = value;
+            }
+        }
 
         /// <summary>
         /// The set of options to use for determining whether a failed operation should be retried and,
@@ -124,6 +153,7 @@ namespace Azure.Messaging.ServiceBus
                 RetryOptions = RetryOptions.Clone(),
                 EnableCrossEntityTransactions = EnableCrossEntityTransactions,
                 CustomEndpointAddress = CustomEndpointAddress,
+                ConnectionIdleTimeout = ConnectionIdleTimeout,
                 Identifier = Identifier
             };
     }

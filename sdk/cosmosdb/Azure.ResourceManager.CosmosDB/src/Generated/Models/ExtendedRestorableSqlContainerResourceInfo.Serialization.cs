@@ -35,7 +35,6 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     operationType = new CosmosDBOperationType(property.Value.GetString());
@@ -60,7 +59,6 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     container = RestorableSqlContainerPropertiesResourceContainer.DeserializeRestorableSqlContainerPropertiesResourceContainer(property.Value);

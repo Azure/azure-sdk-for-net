@@ -29,7 +29,6 @@ namespace Azure.ResourceManager.Communication.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     domain = DomainVerificationStatusRecord.DeserializeDomainVerificationStatusRecord(property.Value);
@@ -39,7 +38,6 @@ namespace Azure.ResourceManager.Communication.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     spf = DomainVerificationStatusRecord.DeserializeDomainVerificationStatusRecord(property.Value);
@@ -49,7 +47,6 @@ namespace Azure.ResourceManager.Communication.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     dkim = DomainVerificationStatusRecord.DeserializeDomainVerificationStatusRecord(property.Value);
@@ -59,7 +56,6 @@ namespace Azure.ResourceManager.Communication.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     dkiM2 = DomainVerificationStatusRecord.DeserializeDomainVerificationStatusRecord(property.Value);
@@ -69,7 +65,6 @@ namespace Azure.ResourceManager.Communication.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     dmarc = DomainVerificationStatusRecord.DeserializeDomainVerificationStatusRecord(property.Value);

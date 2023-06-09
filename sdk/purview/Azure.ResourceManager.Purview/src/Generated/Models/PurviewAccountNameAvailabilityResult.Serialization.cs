@@ -32,7 +32,6 @@ namespace Azure.ResourceManager.Purview.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     nameAvailable = property.Value.GetBoolean();
@@ -42,7 +41,6 @@ namespace Azure.ResourceManager.Purview.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     reason = new PurviewAccountNameUnavailableReason(property.Value.GetString());

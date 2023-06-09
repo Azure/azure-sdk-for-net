@@ -7,14 +7,15 @@ using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core.Pipeline;
 using Azure.Monitor.OpenTelemetry.Exporter.Internals.ConnectionString;
+using Azure.Monitor.OpenTelemetry.Exporter.Internals.Diagnostics;
 using Azure.Monitor.OpenTelemetry.Exporter.Internals.PersistentStorage;
 using Azure.Monitor.OpenTelemetry.Exporter.Internals.Platform;
 using Azure.Monitor.OpenTelemetry.Exporter.Internals.Statsbeat;
 using Azure.Monitor.OpenTelemetry.Exporter.Models;
 
 using OpenTelemetry;
-using OpenTelemetry.Extensions.PersistentStorage;
-using OpenTelemetry.Extensions.PersistentStorage.Abstractions;
+using OpenTelemetry.PersistentStorage.Abstractions;
+using OpenTelemetry.PersistentStorage.FileSystem;
 
 namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
 {
@@ -46,17 +47,17 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
 
             _transmissionStateManager = new TransmissionStateManager();
 
-            _fileBlobProvider = InitializeOfflineStorage(options, platform);
+            _fileBlobProvider = InitializeOfflineStorage(platform, _connectionVars, options.DisableOfflineStorage, options.StorageDirectory);
 
             if (_fileBlobProvider != null)
             {
-                _transmitFromStorageHandler = new TransmitFromStorageHandler(_applicationInsightsRestClient, _fileBlobProvider, _transmissionStateManager);
+                _transmitFromStorageHandler = new TransmitFromStorageHandler(_applicationInsightsRestClient, _fileBlobProvider, _transmissionStateManager, _connectionVars);
             }
 
             _statsbeat = InitializeStatsbeat(options, _connectionVars, platform);
         }
 
-        private static ConnectionVars InitializeConnectionVars(AzureMonitorExporterOptions options, IPlatform platform)
+        internal static ConnectionVars InitializeConnectionVars(AzureMonitorExporterOptions options, IPlatform platform)
         {
             if (options.ConnectionString == null)
             {
@@ -64,7 +65,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
 
                 if (!string.IsNullOrWhiteSpace(connectionString))
                 {
-                    return ConnectionStringParser.GetValues(connectionString);
+                    return ConnectionStringParser.GetValues(connectionString!);
                 }
             }
             else
@@ -100,18 +101,18 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
             return new ApplicationInsightsRestClient(new ClientDiagnostics(options), pipeline, host: connectionVars.IngestionEndpoint);
         }
 
-        private static PersistentBlobProvider? InitializeOfflineStorage(AzureMonitorExporterOptions options, IPlatform platform)
+        private static PersistentBlobProvider? InitializeOfflineStorage(IPlatform platform, ConnectionVars connectionVars, bool disableOfflineStorage, string? configuredStorageDirectory)
         {
-            if (!options.DisableOfflineStorage)
+            if (!disableOfflineStorage)
             {
                 try
                 {
-                    var storageDirectory = options.StorageDirectory
-                        ?? StorageHelper.GetDefaultStorageDirectory(platform)
-                        ?? throw new InvalidOperationException("Unable to determine offline storage directory.");
+                    var storageDirectory = StorageHelper.GetStorageDirectory(
+                        platform: platform,
+                        configuredStorageDirectory: configuredStorageDirectory,
+                        instrumentationKey: connectionVars.InstrumentationKey);
 
-                    // TODO: Fallback to default location if location provided via options does not work.
-                    AzureMonitorExporterEventSource.Log.WriteInformational("InitializedPersistentStorage", storageDirectory);
+                    AzureMonitorExporterEventSource.Log.WriteInformational("InitializedPersistentStorage", $"Data for ikey '{connectionVars.InstrumentationKey}' will be stored at: {storageDirectory}");
 
                     return new FileBlobProvider(storageDirectory);
                 }
@@ -176,7 +177,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
                 if (result == ExportResult.Failure && _fileBlobProvider != null)
                 {
                     _transmissionStateManager.EnableBackOff(httpMessage.Response);
-                    result = HttpPipelineHelper.HandleFailures(httpMessage, _fileBlobProvider);
+                    result = HttpPipelineHelper.HandleFailures(httpMessage, _fileBlobProvider, _connectionVars);
                 }
                 else
                 {

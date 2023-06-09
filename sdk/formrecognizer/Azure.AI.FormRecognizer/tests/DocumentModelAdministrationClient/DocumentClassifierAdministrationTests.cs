@@ -3,6 +3,8 @@
 
 using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
+using System.Threading;
 using Azure.Core;
 using Azure.Core.TestFramework;
 using NUnit.Framework;
@@ -36,6 +38,23 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
         }
 
         [Test]
+        public void BuildDocumentClassifierHonorsTheCancellationToken()
+        {
+            var client = CreateInstrumentedClient();
+            var source = new AzureBlobContentSource(new Uri("http://notreal.azure.com/"));
+            var documentTypes = new Dictionary<string, ClassifierDocumentTypeDetails>()
+            {
+                { string.Empty, new ClassifierDocumentTypeDetails(source) }
+            };
+            using var cancellationSource = new CancellationTokenSource();
+
+            cancellationSource.Cancel();
+
+            Assert.ThrowsAsync<TaskCanceledException>(async () => await client.BuildDocumentClassifierAsync(WaitUntil.Started, documentTypes, cancellationToken: cancellationSource.Token));
+            Assert.Throws<TaskCanceledException>(() => client.BuildDocumentClassifier(WaitUntil.Started, documentTypes, cancellationToken: cancellationSource.Token));
+        }
+
+        [Test]
         public void GetDocumentClassifierValidatesArguments()
         {
             var client = CreateInstrumentedClient();
@@ -48,6 +67,33 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
         }
 
         [Test]
+        public void GetDocumentClassifierHonorsTheCancellationToken()
+        {
+            var client = CreateInstrumentedClient();
+            using var cancellationSource = new CancellationTokenSource();
+
+            cancellationSource.Cancel();
+
+            Assert.ThrowsAsync<TaskCanceledException>(async () => await client.GetDocumentClassifierAsync("classifierId", cancellationSource.Token));
+            Assert.Throws<TaskCanceledException>(() => client.GetDocumentClassifier("classifierId", cancellationSource.Token));
+        }
+
+        [Test]
+        public void GetDocumentClassifiersHonorsTheCancellationToken()
+        {
+            var client = CreateInstrumentedClient();
+            using var cancellationSource = new CancellationTokenSource();
+
+            cancellationSource.Cancel();
+
+            var asyncEnumerator = client.GetDocumentClassifiersAsync(cancellationSource.Token).GetAsyncEnumerator();
+            var enumerator = client.GetDocumentClassifiers(cancellationSource.Token).GetEnumerator();
+
+            Assert.ThrowsAsync<TaskCanceledException>(async () => await asyncEnumerator.MoveNextAsync());
+            Assert.Throws<TaskCanceledException>(() => enumerator.MoveNext());
+        }
+
+        [Test]
         public void DeleteDocumentClassifierValidatesArguments()
         {
             var client = CreateInstrumentedClient();
@@ -57,6 +103,18 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
 
             Assert.Throws<ArgumentNullException>(() => client.DeleteDocumentClassifier(classifierId: null));
             Assert.Throws<ArgumentException>(() => client.DeleteDocumentClassifier(classifierId: string.Empty));
+        }
+
+        [Test]
+        public void DeleteDocumentClassifierHonorsTheCancellationToken()
+        {
+            var client = CreateInstrumentedClient();
+            using var cancellationSource = new CancellationTokenSource();
+
+            cancellationSource.Cancel();
+
+            Assert.ThrowsAsync<TaskCanceledException>(async () => await client.DeleteDocumentClassifierAsync("classifierId", cancellationSource.Token));
+            Assert.Throws<TaskCanceledException>(() => client.DeleteDocumentClassifier("classifierId", cancellationSource.Token));
         }
 
         /// <summary>

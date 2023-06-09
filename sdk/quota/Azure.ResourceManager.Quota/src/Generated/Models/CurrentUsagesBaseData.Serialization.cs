@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.Quota
             {
                 return null;
             }
-            Optional<UsagesProperties> properties = default;
+            Optional<QuotaUsagesProperties> properties = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
@@ -31,10 +31,9 @@ namespace Azure.ResourceManager.Quota
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    properties = UsagesProperties.DeserializeUsagesProperties(property.Value);
+                    properties = QuotaUsagesProperties.DeserializeQuotaUsagesProperties(property.Value);
                     continue;
                 }
                 if (property.NameEquals("id"u8))
@@ -56,7 +55,6 @@ namespace Azure.ResourceManager.Quota
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());

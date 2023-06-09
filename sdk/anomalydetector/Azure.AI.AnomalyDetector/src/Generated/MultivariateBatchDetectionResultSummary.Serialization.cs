@@ -28,14 +28,13 @@ namespace Azure.AI.AnomalyDetector
             {
                 if (property.NameEquals("status"u8))
                 {
-                    status = property.Value.GetString().ToMultivariateBatchDetectionStatus();
+                    status = new MultivariateBatchDetectionStatus(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("errors"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<ErrorResponse> array = new List<ErrorResponse>();
@@ -50,7 +49,6 @@ namespace Azure.AI.AnomalyDetector
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<VariableState> array = new List<VariableState>();

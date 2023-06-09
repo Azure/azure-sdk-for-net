@@ -12,7 +12,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Consumption.Models
 {
-    /// <summary> Reservation transaction resource. </summary>
+    /// <summary>
+    /// Reservation transaction resource.
+    /// Serialized Name: ReservationTransaction
+    /// </summary>
     public partial class ConsumptionReservationTransaction : ResourceData
     {
         /// <summary> Initializes a new instance of ConsumptionReservationTransaction. </summary>
@@ -26,30 +29,102 @@ namespace Azure.ResourceManager.Consumption.Models
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="transactOn"> The date of the transaction. </param>
-        /// <param name="reservationOrderId"> The reservation order ID is the identifier for a reservation purchase. Each reservation order ID represents a single purchase transaction. A reservation order contains reservations. The reservation order specifies the VM size and region for the reservations. </param>
-        /// <param name="description"> The description of the transaction. </param>
-        /// <param name="eventType"> The type of the transaction (Purchase, Cancel or Refund). </param>
-        /// <param name="quantity"> The quantity of the transaction. </param>
-        /// <param name="amount"> The charge of the transaction. </param>
-        /// <param name="currency"> The ISO currency in which the transaction is charged, for example, USD. </param>
-        /// <param name="reservationOrderName"> The name of the reservation order. </param>
-        /// <param name="purchasingEnrollment"> The purchasing enrollment. </param>
-        /// <param name="purchasingSubscriptionGuid"> The subscription guid that makes the transaction. </param>
-        /// <param name="purchasingSubscriptionName"> The subscription name that makes the transaction. </param>
-        /// <param name="armSkuName"> This is the ARM Sku name. It can be used to join with the serviceType field in additional info in usage records. </param>
-        /// <param name="term"> This is the term of the transaction. </param>
-        /// <param name="region"> The region of the transaction. </param>
-        /// <param name="accountName"> The name of the account that makes the transaction. </param>
-        /// <param name="accountOwnerEmail"> The email of the account owner that makes the transaction. </param>
-        /// <param name="departmentName"> The department name. </param>
-        /// <param name="costCenter"> The cost center of this department if it is a department and a cost center is provided. </param>
-        /// <param name="currentEnrollment"> The current enrollment. </param>
-        /// <param name="billingFrequency"> The billing frequency, which can be either one-time or recurring. </param>
-        /// <param name="billingMonth"> The billing month(yyyyMMdd), on which the event initiated. </param>
-        /// <param name="monetaryCommitment"> The monetary commitment amount at the enrollment scope. </param>
-        /// <param name="overage"> The overage amount at the enrollment scope. </param>
-        /// <param name="tags"> Resource tags. </param>
+        /// <param name="transactOn">
+        /// The date of the transaction
+        /// Serialized Name: ReservationTransaction.properties.eventDate
+        /// </param>
+        /// <param name="reservationOrderId">
+        /// The reservation order ID is the identifier for a reservation purchase. Each reservation order ID represents a single purchase transaction. A reservation order contains reservations. The reservation order specifies the VM size and region for the reservations.
+        /// Serialized Name: ReservationTransaction.properties.reservationOrderId
+        /// </param>
+        /// <param name="description">
+        /// The description of the transaction.
+        /// Serialized Name: ReservationTransaction.properties.description
+        /// </param>
+        /// <param name="eventType">
+        /// The type of the transaction (Purchase, Cancel or Refund).
+        /// Serialized Name: ReservationTransaction.properties.eventType
+        /// </param>
+        /// <param name="quantity">
+        /// The quantity of the transaction.
+        /// Serialized Name: ReservationTransaction.properties.quantity
+        /// </param>
+        /// <param name="amount">
+        /// The charge of the transaction.
+        /// Serialized Name: ReservationTransaction.properties.amount
+        /// </param>
+        /// <param name="currency">
+        /// The ISO currency in which the transaction is charged, for example, USD.
+        /// Serialized Name: ReservationTransaction.properties.currency
+        /// </param>
+        /// <param name="reservationOrderName">
+        /// The name of the reservation order.
+        /// Serialized Name: ReservationTransaction.properties.reservationOrderName
+        /// </param>
+        /// <param name="purchasingEnrollment">
+        /// The purchasing enrollment.
+        /// Serialized Name: ReservationTransaction.properties.purchasingEnrollment
+        /// </param>
+        /// <param name="purchasingSubscriptionGuid">
+        /// The subscription guid that makes the transaction.
+        /// Serialized Name: ReservationTransaction.properties.purchasingSubscriptionGuid
+        /// </param>
+        /// <param name="purchasingSubscriptionName">
+        /// The subscription name that makes the transaction.
+        /// Serialized Name: ReservationTransaction.properties.purchasingSubscriptionName
+        /// </param>
+        /// <param name="armSkuName">
+        /// This is the ARM Sku name. It can be used to join with the serviceType field in additional info in usage records.
+        /// Serialized Name: ReservationTransaction.properties.armSkuName
+        /// </param>
+        /// <param name="term">
+        /// This is the term of the transaction.
+        /// Serialized Name: ReservationTransaction.properties.term
+        /// </param>
+        /// <param name="region">
+        /// The region of the transaction.
+        /// Serialized Name: ReservationTransaction.properties.region
+        /// </param>
+        /// <param name="accountName">
+        /// The name of the account that makes the transaction.
+        /// Serialized Name: ReservationTransaction.properties.accountName
+        /// </param>
+        /// <param name="accountOwnerEmail">
+        /// The email of the account owner that makes the transaction.
+        /// Serialized Name: ReservationTransaction.properties.accountOwnerEmail
+        /// </param>
+        /// <param name="departmentName">
+        /// The department name.
+        /// Serialized Name: ReservationTransaction.properties.departmentName
+        /// </param>
+        /// <param name="costCenter">
+        /// The cost center of this department if it is a department and a cost center is provided.
+        /// Serialized Name: ReservationTransaction.properties.costCenter
+        /// </param>
+        /// <param name="currentEnrollment">
+        /// The current enrollment.
+        /// Serialized Name: ReservationTransaction.properties.currentEnrollment
+        /// </param>
+        /// <param name="billingFrequency">
+        /// The billing frequency, which can be either one-time or recurring.
+        /// Serialized Name: ReservationTransaction.properties.billingFrequency
+        /// </param>
+        /// <param name="billingMonth">
+        /// The billing month(yyyyMMdd), on which the event initiated.
+        /// Serialized Name: ReservationTransaction.properties.billingMonth
+        /// </param>
+        /// <param name="monetaryCommitment">
+        /// The monetary commitment amount at the enrollment scope.
+        /// Serialized Name: ReservationTransaction.properties.monetaryCommitment
+        /// </param>
+        /// <param name="overage">
+        /// The overage amount at the enrollment scope.
+        /// Serialized Name: ReservationTransaction.properties.overage
+        /// </param>
+        /// <param name="tags">
+        /// Resource tags.
+        /// Serialized Name: ReservationTransactionResource.tags
+        /// </param>
         internal ConsumptionReservationTransaction(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DateTimeOffset? transactOn, string reservationOrderId, string description, string eventType, decimal? quantity, decimal? amount, string currency, string reservationOrderName, string purchasingEnrollment, Guid? purchasingSubscriptionGuid, string purchasingSubscriptionName, string armSkuName, string term, string region, string accountName, string accountOwnerEmail, string departmentName, string costCenter, string currentEnrollment, string billingFrequency, int? billingMonth, decimal? monetaryCommitment, decimal? overage, IReadOnlyList<string> tags) : base(id, name, resourceType, systemData)
         {
             TransactOn = transactOn;
@@ -78,53 +153,125 @@ namespace Azure.ResourceManager.Consumption.Models
             Tags = tags;
         }
 
-        /// <summary> The date of the transaction. </summary>
+        /// <summary>
+        /// The date of the transaction
+        /// Serialized Name: ReservationTransaction.properties.eventDate
+        /// </summary>
         public DateTimeOffset? TransactOn { get; }
-        /// <summary> The reservation order ID is the identifier for a reservation purchase. Each reservation order ID represents a single purchase transaction. A reservation order contains reservations. The reservation order specifies the VM size and region for the reservations. </summary>
+        /// <summary>
+        /// The reservation order ID is the identifier for a reservation purchase. Each reservation order ID represents a single purchase transaction. A reservation order contains reservations. The reservation order specifies the VM size and region for the reservations.
+        /// Serialized Name: ReservationTransaction.properties.reservationOrderId
+        /// </summary>
         public string ReservationOrderId { get; }
-        /// <summary> The description of the transaction. </summary>
+        /// <summary>
+        /// The description of the transaction.
+        /// Serialized Name: ReservationTransaction.properties.description
+        /// </summary>
         public string Description { get; }
-        /// <summary> The type of the transaction (Purchase, Cancel or Refund). </summary>
+        /// <summary>
+        /// The type of the transaction (Purchase, Cancel or Refund).
+        /// Serialized Name: ReservationTransaction.properties.eventType
+        /// </summary>
         public string EventType { get; }
-        /// <summary> The quantity of the transaction. </summary>
+        /// <summary>
+        /// The quantity of the transaction.
+        /// Serialized Name: ReservationTransaction.properties.quantity
+        /// </summary>
         public decimal? Quantity { get; }
-        /// <summary> The charge of the transaction. </summary>
+        /// <summary>
+        /// The charge of the transaction.
+        /// Serialized Name: ReservationTransaction.properties.amount
+        /// </summary>
         public decimal? Amount { get; }
-        /// <summary> The ISO currency in which the transaction is charged, for example, USD. </summary>
+        /// <summary>
+        /// The ISO currency in which the transaction is charged, for example, USD.
+        /// Serialized Name: ReservationTransaction.properties.currency
+        /// </summary>
         public string Currency { get; }
-        /// <summary> The name of the reservation order. </summary>
+        /// <summary>
+        /// The name of the reservation order.
+        /// Serialized Name: ReservationTransaction.properties.reservationOrderName
+        /// </summary>
         public string ReservationOrderName { get; }
-        /// <summary> The purchasing enrollment. </summary>
+        /// <summary>
+        /// The purchasing enrollment.
+        /// Serialized Name: ReservationTransaction.properties.purchasingEnrollment
+        /// </summary>
         public string PurchasingEnrollment { get; }
-        /// <summary> The subscription guid that makes the transaction. </summary>
+        /// <summary>
+        /// The subscription guid that makes the transaction.
+        /// Serialized Name: ReservationTransaction.properties.purchasingSubscriptionGuid
+        /// </summary>
         public Guid? PurchasingSubscriptionGuid { get; }
-        /// <summary> The subscription name that makes the transaction. </summary>
+        /// <summary>
+        /// The subscription name that makes the transaction.
+        /// Serialized Name: ReservationTransaction.properties.purchasingSubscriptionName
+        /// </summary>
         public string PurchasingSubscriptionName { get; }
-        /// <summary> This is the ARM Sku name. It can be used to join with the serviceType field in additional info in usage records. </summary>
+        /// <summary>
+        /// This is the ARM Sku name. It can be used to join with the serviceType field in additional info in usage records.
+        /// Serialized Name: ReservationTransaction.properties.armSkuName
+        /// </summary>
         public string ArmSkuName { get; }
-        /// <summary> This is the term of the transaction. </summary>
+        /// <summary>
+        /// This is the term of the transaction.
+        /// Serialized Name: ReservationTransaction.properties.term
+        /// </summary>
         public string Term { get; }
-        /// <summary> The region of the transaction. </summary>
+        /// <summary>
+        /// The region of the transaction.
+        /// Serialized Name: ReservationTransaction.properties.region
+        /// </summary>
         public string Region { get; }
-        /// <summary> The name of the account that makes the transaction. </summary>
+        /// <summary>
+        /// The name of the account that makes the transaction.
+        /// Serialized Name: ReservationTransaction.properties.accountName
+        /// </summary>
         public string AccountName { get; }
-        /// <summary> The email of the account owner that makes the transaction. </summary>
+        /// <summary>
+        /// The email of the account owner that makes the transaction.
+        /// Serialized Name: ReservationTransaction.properties.accountOwnerEmail
+        /// </summary>
         public string AccountOwnerEmail { get; }
-        /// <summary> The department name. </summary>
+        /// <summary>
+        /// The department name.
+        /// Serialized Name: ReservationTransaction.properties.departmentName
+        /// </summary>
         public string DepartmentName { get; }
-        /// <summary> The cost center of this department if it is a department and a cost center is provided. </summary>
+        /// <summary>
+        /// The cost center of this department if it is a department and a cost center is provided.
+        /// Serialized Name: ReservationTransaction.properties.costCenter
+        /// </summary>
         public string CostCenter { get; }
-        /// <summary> The current enrollment. </summary>
+        /// <summary>
+        /// The current enrollment.
+        /// Serialized Name: ReservationTransaction.properties.currentEnrollment
+        /// </summary>
         public string CurrentEnrollment { get; }
-        /// <summary> The billing frequency, which can be either one-time or recurring. </summary>
+        /// <summary>
+        /// The billing frequency, which can be either one-time or recurring.
+        /// Serialized Name: ReservationTransaction.properties.billingFrequency
+        /// </summary>
         public string BillingFrequency { get; }
-        /// <summary> The billing month(yyyyMMdd), on which the event initiated. </summary>
+        /// <summary>
+        /// The billing month(yyyyMMdd), on which the event initiated.
+        /// Serialized Name: ReservationTransaction.properties.billingMonth
+        /// </summary>
         public int? BillingMonth { get; }
-        /// <summary> The monetary commitment amount at the enrollment scope. </summary>
+        /// <summary>
+        /// The monetary commitment amount at the enrollment scope.
+        /// Serialized Name: ReservationTransaction.properties.monetaryCommitment
+        /// </summary>
         public decimal? MonetaryCommitment { get; }
-        /// <summary> The overage amount at the enrollment scope. </summary>
+        /// <summary>
+        /// The overage amount at the enrollment scope.
+        /// Serialized Name: ReservationTransaction.properties.overage
+        /// </summary>
         public decimal? Overage { get; }
-        /// <summary> Resource tags. </summary>
+        /// <summary>
+        /// Resource tags.
+        /// Serialized Name: ReservationTransactionResource.tags
+        /// </summary>
         public IReadOnlyList<string> Tags { get; }
     }
 }

@@ -32,7 +32,6 @@ namespace Azure.ResourceManager.ManagementPartner.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     display = OperationDisplay.DeserializeOperationDisplay(property.Value);

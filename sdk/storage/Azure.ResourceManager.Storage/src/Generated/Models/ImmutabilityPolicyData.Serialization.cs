@@ -60,7 +60,6 @@ namespace Azure.ResourceManager.Storage
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     etag = new ETag(property.Value.GetString());
@@ -85,7 +84,6 @@ namespace Azure.ResourceManager.Storage
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
@@ -104,7 +102,6 @@ namespace Azure.ResourceManager.Storage
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             immutabilityPeriodSinceCreationInDays = property0.Value.GetInt32();
@@ -114,7 +111,6 @@ namespace Azure.ResourceManager.Storage
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             state = new ImmutabilityPolicyState(property0.Value.GetString());
@@ -124,7 +120,6 @@ namespace Azure.ResourceManager.Storage
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             allowProtectedAppendWrites = property0.Value.GetBoolean();
@@ -134,7 +129,6 @@ namespace Azure.ResourceManager.Storage
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             allowProtectedAppendWritesAll = property0.Value.GetBoolean();

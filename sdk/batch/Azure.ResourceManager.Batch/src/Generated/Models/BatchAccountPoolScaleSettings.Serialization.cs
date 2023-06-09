@@ -42,7 +42,6 @@ namespace Azure.ResourceManager.Batch.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     fixedScale = BatchAccountFixedScaleSettings.DeserializeBatchAccountFixedScaleSettings(property.Value);
@@ -52,7 +51,6 @@ namespace Azure.ResourceManager.Batch.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     autoScale = BatchAccountAutoScaleSettings.DeserializeBatchAccountAutoScaleSettings(property.Value);

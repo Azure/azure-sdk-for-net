@@ -45,7 +45,6 @@ namespace Azure.AI.TextAnalytics.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     parameters = CustomSingleLabelClassificationTaskParameters.DeserializeCustomSingleLabelClassificationTaskParameters(property.Value);

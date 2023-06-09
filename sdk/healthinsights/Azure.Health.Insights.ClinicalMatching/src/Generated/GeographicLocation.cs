@@ -27,6 +27,17 @@ namespace Azure.Health.Insights.ClinicalMatching
             CountryOrRegion = countryOrRegion;
         }
 
+        /// <summary> Initializes a new instance of GeographicLocation. </summary>
+        /// <param name="city"> City name. </param>
+        /// <param name="state"> State name. </param>
+        /// <param name="countryOrRegion"> Country/region name. </param>
+        internal GeographicLocation(string city, string state, string countryOrRegion)
+        {
+            City = city;
+            State = state;
+            CountryOrRegion = countryOrRegion;
+        }
+
         /// <summary> City name. </summary>
         public string City { get; set; }
         /// <summary> State name. </summary>

@@ -65,7 +65,6 @@ namespace Azure.ResourceManager.AppContainers
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
@@ -84,7 +83,6 @@ namespace Azure.ResourceManager.AppContainers
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             createdTime = property0.Value.GetDateTimeOffset("O");
@@ -94,7 +92,6 @@ namespace Azure.ResourceManager.AppContainers
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             lastActiveTime = property0.Value.GetDateTimeOffset("O");
@@ -109,7 +106,6 @@ namespace Azure.ResourceManager.AppContainers
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             template = ContainerAppTemplate.DeserializeContainerAppTemplate(property0.Value);
@@ -119,7 +115,6 @@ namespace Azure.ResourceManager.AppContainers
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             active = property0.Value.GetBoolean();
@@ -129,7 +124,6 @@ namespace Azure.ResourceManager.AppContainers
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             replicas = property0.Value.GetInt32();
@@ -139,7 +133,6 @@ namespace Azure.ResourceManager.AppContainers
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             trafficWeight = property0.Value.GetInt32();
@@ -154,7 +147,6 @@ namespace Azure.ResourceManager.AppContainers
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             healthState = new ContainerAppRevisionHealthState(property0.Value.GetString());
@@ -164,7 +156,6 @@ namespace Azure.ResourceManager.AppContainers
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             provisioningState = new ContainerAppRevisionProvisioningState(property0.Value.GetString());

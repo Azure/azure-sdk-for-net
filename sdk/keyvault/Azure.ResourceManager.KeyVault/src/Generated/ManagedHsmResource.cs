@@ -38,6 +38,8 @@ namespace Azure.ResourceManager.KeyVault
         private readonly ManagedHsmsRestOperations _managedHsmRestClient;
         private readonly ClientDiagnostics _mhsmPrivateLinkResourcesClientDiagnostics;
         private readonly MhsmPrivateLinkResourcesRestOperations _mhsmPrivateLinkResourcesRestClient;
+        private readonly ClientDiagnostics _mhsmRegionsClientDiagnostics;
+        private readonly MhsmRegionsRestOperations _mhsmRegionsRestClient;
         private readonly ManagedHsmData _data;
 
         /// <summary> Initializes a new instance of the <see cref="ManagedHsmResource"/> class for mocking. </summary>
@@ -64,6 +66,8 @@ namespace Azure.ResourceManager.KeyVault
             _managedHsmRestClient = new ManagedHsmsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, managedHsmApiVersion);
             _mhsmPrivateLinkResourcesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.KeyVault", ProviderConstants.DefaultProviderNamespace, Diagnostics);
             _mhsmPrivateLinkResourcesRestClient = new MhsmPrivateLinkResourcesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
+            _mhsmRegionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.KeyVault", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+            _mhsmRegionsRestClient = new MhsmRegionsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -394,6 +398,50 @@ namespace Azure.ResourceManager.KeyVault
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _mhsmPrivateLinkResourcesRestClient.CreateListByManagedHsmResourceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             return PageableHelpers.CreatePageable(FirstPageRequest, null, ManagedHsmPrivateLinkResourceData.DeserializeManagedHsmPrivateLinkResourceData, _mhsmPrivateLinkResourcesClientDiagnostics, Pipeline, "ManagedHsmResource.GetMHSMPrivateLinkResourcesByManagedHsmResource", "value", null, cancellationToken);
+        }
+
+        /// <summary>
+        /// The List operation gets information about the regions associated with the managed HSM Pool.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.KeyVault/managedHSMs/{name}/regions</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>MHSMRegions_ListByResource</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> An async collection of <see cref="ManagedHsmGeoReplicatedRegion" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<ManagedHsmGeoReplicatedRegion> GetMHSMRegionsByResourceAsync(CancellationToken cancellationToken = default)
+        {
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _mhsmRegionsRestClient.CreateListByResourceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _mhsmRegionsRestClient.CreateListByResourceNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, ManagedHsmGeoReplicatedRegion.DeserializeManagedHsmGeoReplicatedRegion, _mhsmRegionsClientDiagnostics, Pipeline, "ManagedHsmResource.GetMHSMRegionsByResource", "value", "nextLink", cancellationToken);
+        }
+
+        /// <summary>
+        /// The List operation gets information about the regions associated with the managed HSM Pool.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.KeyVault/managedHSMs/{name}/regions</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>MHSMRegions_ListByResource</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="ManagedHsmGeoReplicatedRegion" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<ManagedHsmGeoReplicatedRegion> GetMHSMRegionsByResource(CancellationToken cancellationToken = default)
+        {
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _mhsmRegionsRestClient.CreateListByResourceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _mhsmRegionsRestClient.CreateListByResourceNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, ManagedHsmGeoReplicatedRegion.DeserializeManagedHsmGeoReplicatedRegion, _mhsmRegionsClientDiagnostics, Pipeline, "ManagedHsmResource.GetMHSMRegionsByResource", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

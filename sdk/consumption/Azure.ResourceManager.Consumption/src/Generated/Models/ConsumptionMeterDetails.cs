@@ -7,7 +7,10 @@
 
 namespace Azure.ResourceManager.Consumption.Models
 {
-    /// <summary> The properties of the meter detail. </summary>
+    /// <summary>
+    /// The properties of the meter detail.
+    /// Serialized Name: MeterDetails
+    /// </summary>
     public partial class ConsumptionMeterDetails
     {
         /// <summary> Initializes a new instance of ConsumptionMeterDetails. </summary>
@@ -16,15 +19,42 @@ namespace Azure.ResourceManager.Consumption.Models
         }
 
         /// <summary> Initializes a new instance of ConsumptionMeterDetails. </summary>
-        /// <param name="meterName"> The name of the meter, within the given meter category. </param>
-        /// <param name="meterCategory"> The category of the meter, for example, &apos;Cloud services&apos;, &apos;Networking&apos;, etc.. </param>
-        /// <param name="meterSubCategory"> The subcategory of the meter, for example, &apos;A6 Cloud services&apos;, &apos;ExpressRoute (IXP)&apos;, etc.. </param>
-        /// <param name="unit"> The unit in which the meter consumption is charged, for example, &apos;Hours&apos;, &apos;GB&apos;, etc. </param>
-        /// <param name="meterLocation"> The location in which the Azure service is available. </param>
-        /// <param name="totalIncludedQuantity"> The total included quantity associated with the offer. </param>
-        /// <param name="pretaxStandardRate"> The pretax listing price. </param>
-        /// <param name="serviceName"> The name of the service. </param>
-        /// <param name="serviceTier"> The service tier. </param>
+        /// <param name="meterName">
+        /// The name of the meter, within the given meter category
+        /// Serialized Name: MeterDetails.meterName
+        /// </param>
+        /// <param name="meterCategory">
+        /// The category of the meter, for example, &apos;Cloud services&apos;, &apos;Networking&apos;, etc..
+        /// Serialized Name: MeterDetails.meterCategory
+        /// </param>
+        /// <param name="meterSubCategory">
+        /// The subcategory of the meter, for example, &apos;A6 Cloud services&apos;, &apos;ExpressRoute (IXP)&apos;, etc..
+        /// Serialized Name: MeterDetails.meterSubCategory
+        /// </param>
+        /// <param name="unit">
+        /// The unit in which the meter consumption is charged, for example, &apos;Hours&apos;, &apos;GB&apos;, etc.
+        /// Serialized Name: MeterDetails.unit
+        /// </param>
+        /// <param name="meterLocation">
+        /// The location in which the Azure service is available.
+        /// Serialized Name: MeterDetails.meterLocation
+        /// </param>
+        /// <param name="totalIncludedQuantity">
+        /// The total included quantity associated with the offer.
+        /// Serialized Name: MeterDetails.totalIncludedQuantity
+        /// </param>
+        /// <param name="pretaxStandardRate">
+        /// The pretax listing price.
+        /// Serialized Name: MeterDetails.pretaxStandardRate
+        /// </param>
+        /// <param name="serviceName">
+        /// The name of the service.
+        /// Serialized Name: MeterDetails.serviceName
+        /// </param>
+        /// <param name="serviceTier">
+        /// The service tier.
+        /// Serialized Name: MeterDetails.serviceTier
+        /// </param>
         internal ConsumptionMeterDetails(string meterName, string meterCategory, string meterSubCategory, string unit, string meterLocation, decimal? totalIncludedQuantity, decimal? pretaxStandardRate, string serviceName, string serviceTier)
         {
             MeterName = meterName;
@@ -38,23 +68,50 @@ namespace Azure.ResourceManager.Consumption.Models
             ServiceTier = serviceTier;
         }
 
-        /// <summary> The name of the meter, within the given meter category. </summary>
+        /// <summary>
+        /// The name of the meter, within the given meter category
+        /// Serialized Name: MeterDetails.meterName
+        /// </summary>
         public string MeterName { get; }
-        /// <summary> The category of the meter, for example, &apos;Cloud services&apos;, &apos;Networking&apos;, etc.. </summary>
+        /// <summary>
+        /// The category of the meter, for example, &apos;Cloud services&apos;, &apos;Networking&apos;, etc..
+        /// Serialized Name: MeterDetails.meterCategory
+        /// </summary>
         public string MeterCategory { get; }
-        /// <summary> The subcategory of the meter, for example, &apos;A6 Cloud services&apos;, &apos;ExpressRoute (IXP)&apos;, etc.. </summary>
+        /// <summary>
+        /// The subcategory of the meter, for example, &apos;A6 Cloud services&apos;, &apos;ExpressRoute (IXP)&apos;, etc..
+        /// Serialized Name: MeterDetails.meterSubCategory
+        /// </summary>
         public string MeterSubCategory { get; }
-        /// <summary> The unit in which the meter consumption is charged, for example, &apos;Hours&apos;, &apos;GB&apos;, etc. </summary>
+        /// <summary>
+        /// The unit in which the meter consumption is charged, for example, &apos;Hours&apos;, &apos;GB&apos;, etc.
+        /// Serialized Name: MeterDetails.unit
+        /// </summary>
         public string Unit { get; }
-        /// <summary> The location in which the Azure service is available. </summary>
+        /// <summary>
+        /// The location in which the Azure service is available.
+        /// Serialized Name: MeterDetails.meterLocation
+        /// </summary>
         public string MeterLocation { get; }
-        /// <summary> The total included quantity associated with the offer. </summary>
+        /// <summary>
+        /// The total included quantity associated with the offer.
+        /// Serialized Name: MeterDetails.totalIncludedQuantity
+        /// </summary>
         public decimal? TotalIncludedQuantity { get; }
-        /// <summary> The pretax listing price. </summary>
+        /// <summary>
+        /// The pretax listing price.
+        /// Serialized Name: MeterDetails.pretaxStandardRate
+        /// </summary>
         public decimal? PretaxStandardRate { get; }
-        /// <summary> The name of the service. </summary>
+        /// <summary>
+        /// The name of the service.
+        /// Serialized Name: MeterDetails.serviceName
+        /// </summary>
         public string ServiceName { get; }
-        /// <summary> The service tier. </summary>
+        /// <summary>
+        /// The service tier.
+        /// Serialized Name: MeterDetails.serviceTier
+        /// </summary>
         public string ServiceTier { get; }
     }
 }

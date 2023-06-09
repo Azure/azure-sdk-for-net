@@ -18,28 +18,26 @@ namespace Azure.ResourceManager.DevCenter.Models
             {
                 return null;
             }
-            Optional<ResourceRange> memory = default;
-            Optional<ResourceRange> vCpus = default;
+            Optional<DevCenterResourceRange> memory = default;
+            Optional<DevCenterResourceRange> vCpus = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("memory"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    memory = ResourceRange.DeserializeResourceRange(property.Value);
+                    memory = DevCenterResourceRange.DeserializeDevCenterResourceRange(property.Value);
                     continue;
                 }
                 if (property.NameEquals("vCPUs"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    vCpus = ResourceRange.DeserializeResourceRange(property.Value);
+                    vCpus = DevCenterResourceRange.DeserializeDevCenterResourceRange(property.Value);
                     continue;
                 }
             }

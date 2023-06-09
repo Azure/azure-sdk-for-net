@@ -26,7 +26,7 @@ stages:
               Image: windows-2022
             Linux:
               Pool: azsdk-pool-mms-ubuntu-2204-general
-              Image: MMSUbuntu22.04
+              Image: ubuntu-22.04
             Mac:
               Pool: Azure Pipelines
               Image: macos-11

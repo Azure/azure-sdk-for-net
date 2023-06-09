@@ -21,12 +21,12 @@ namespace Azure.ResourceManager.Workloads.Models
 
         /// <summary> Initializes a new instance of ThreeTierCustomResourceNames. </summary>
         /// <param name="namingPatternType"> The pattern type to be used for resource naming. </param>
-        internal ThreeTierCustomResourceNames(NamingPatternType namingPatternType)
+        internal ThreeTierCustomResourceNames(SapNamingPatternType namingPatternType)
         {
             NamingPatternType = namingPatternType;
         }
 
         /// <summary> The pattern type to be used for resource naming. </summary>
-        internal NamingPatternType NamingPatternType { get; set; }
+        internal SapNamingPatternType NamingPatternType { get; set; }
     }
 }

@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.ProviderHub
 
         private readonly ClientDiagnostics _nestedResourceTypeSecondSkuSkusClientDiagnostics;
         private readonly SkusRestOperations _nestedResourceTypeSecondSkuSkusRestClient;
-        private readonly SkuResourceData _data;
+        private readonly ResourceTypeSkuData _data;
 
         /// <summary> Initializes a new instance of the <see cref="NestedResourceTypeSecondSkuResource"/> class for mocking. </summary>
         protected NestedResourceTypeSecondSkuResource()
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.ProviderHub
         /// <summary> Initializes a new instance of the <see cref = "NestedResourceTypeSecondSkuResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal NestedResourceTypeSecondSkuResource(ArmClient client, SkuResourceData data) : this(client, data.Id)
+        internal NestedResourceTypeSecondSkuResource(ArmClient client, ResourceTypeSkuData data) : this(client, data.Id)
         {
             HasData = true;
             _data = data;
@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.ProviderHub
 
         /// <summary> Gets the data representing this Feature. </summary>
         /// <exception cref="InvalidOperationException"> Throws if there is no data loaded in the current instance. </exception>
-        public virtual SkuResourceData Data
+        public virtual ResourceTypeSkuData Data
         {
             get
             {
@@ -235,7 +235,7 @@ namespace Azure.ResourceManager.ProviderHub
         /// <param name="data"> The required body parameters supplied to the resource sku operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public virtual async Task<ArmOperation<NestedResourceTypeSecondSkuResource>> UpdateAsync(WaitUntil waitUntil, SkuResourceData data, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<NestedResourceTypeSecondSkuResource>> UpdateAsync(WaitUntil waitUntil, ResourceTypeSkuData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
 
@@ -273,7 +273,7 @@ namespace Azure.ResourceManager.ProviderHub
         /// <param name="data"> The required body parameters supplied to the resource sku operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public virtual ArmOperation<NestedResourceTypeSecondSkuResource> Update(WaitUntil waitUntil, SkuResourceData data, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<NestedResourceTypeSecondSkuResource> Update(WaitUntil waitUntil, ResourceTypeSkuData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
 

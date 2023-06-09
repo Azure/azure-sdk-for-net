@@ -46,7 +46,6 @@ namespace Azure.ResourceManager.Automanage
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
@@ -65,7 +64,6 @@ namespace Azure.ResourceManager.Automanage
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             configuration = BinaryData.FromString(property0.Value.GetRawText());

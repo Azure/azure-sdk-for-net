@@ -40,7 +40,6 @@ namespace Azure.ResourceManager.DataShare.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     durationMs = property.Value.GetInt32();
@@ -50,7 +49,6 @@ namespace Azure.ResourceManager.DataShare.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     endTime = property.Value.GetDateTimeOffset("O");
@@ -65,7 +63,6 @@ namespace Azure.ResourceManager.DataShare.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     startTime = property.Value.GetDateTimeOffset("O");
@@ -85,7 +82,6 @@ namespace Azure.ResourceManager.DataShare.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     synchronizationMode = new SynchronizationMode(property.Value.GetString());

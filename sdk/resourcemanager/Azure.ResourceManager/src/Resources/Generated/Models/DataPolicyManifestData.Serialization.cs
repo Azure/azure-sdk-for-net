@@ -54,7 +54,6 @@ namespace Azure.ResourceManager.Resources
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
@@ -73,7 +72,6 @@ namespace Azure.ResourceManager.Resources
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             List<string> array = new List<string>();
@@ -93,7 +91,6 @@ namespace Azure.ResourceManager.Resources
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             isBuiltInOnly = property0.Value.GetBoolean();
@@ -103,7 +100,6 @@ namespace Azure.ResourceManager.Resources
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             List<ResourceTypeAliases> array = new List<ResourceTypeAliases>();
@@ -118,7 +114,6 @@ namespace Azure.ResourceManager.Resources
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             List<DataPolicyManifestEffect> array = new List<DataPolicyManifestEffect>();
@@ -133,7 +128,6 @@ namespace Azure.ResourceManager.Resources
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             List<string> array = new List<string>();
@@ -157,7 +151,6 @@ namespace Azure.ResourceManager.Resources
                                 {
                                     if (property1.Value.ValueKind == JsonValueKind.Null)
                                     {
-                                        property1.ThrowNonNullablePropertyIsNull();
                                         continue;
                                     }
                                     List<string> array = new List<string>();
@@ -172,7 +165,6 @@ namespace Azure.ResourceManager.Resources
                                 {
                                     if (property1.Value.ValueKind == JsonValueKind.Null)
                                     {
-                                        property1.ThrowNonNullablePropertyIsNull();
                                         continue;
                                     }
                                     List<DataManifestCustomResourceFunctionDefinition> array = new List<DataManifestCustomResourceFunctionDefinition>();

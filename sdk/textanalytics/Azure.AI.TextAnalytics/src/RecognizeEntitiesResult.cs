@@ -17,21 +17,13 @@ namespace Azure.AI.TextAnalytics
         internal RecognizeEntitiesResult(
             string id,
             TextDocumentStatistics statistics,
-            CategorizedEntityCollection entities,
-            DetectedLanguage? detectedLanguage)
+            CategorizedEntityCollection entities)
             : base(id, statistics)
         {
             _entities = entities;
-            DetectedLanguage = detectedLanguage;
         }
 
         internal RecognizeEntitiesResult(string id, TextAnalyticsError error) : base(id, error) { }
-
-        /// <summary>
-        /// The language of the input document as detected by the service when requested to perform automatic language
-        /// detection, which is possible by specifying "auto" as the language of the input document.
-        /// </summary>
-        public DetectedLanguage? DetectedLanguage { get; }
 
         /// <summary>
         /// Gets the collection of named entities identified in the document.

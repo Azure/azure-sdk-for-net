@@ -384,10 +384,10 @@ namespace Azure.Security.KeyVault.Keys.Tests
         {
             switch (type.ToString())
             {
-#if NET461
+#if NET462
                 case KeyType.EcValue:
                 case KeyType.EcHsmValue:
-                    throw new IgnoreException("Creating JsonWebKey with ECDsa is not supported on net461.");
+                    throw new IgnoreException("Creating JsonWebKey with ECDsa is not supported on net462.");
 #else
                 case KeyType.EcValue:
                 case KeyType.EcHsmValue:

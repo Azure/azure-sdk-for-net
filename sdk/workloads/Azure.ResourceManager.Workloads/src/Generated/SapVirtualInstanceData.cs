@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.Workloads
         /// <param name="systemData"> The systemData. </param>
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
-        /// <param name="identity"> Managed service identity (user assigned identities). </param>
+        /// <param name="identity"> A pre-created user assigned identity with appropriate roles assigned. To learn more on identity and roles required, visit the ACSS how-to-guide. </param>
         /// <param name="environment"> Defines the environment type - Production/Non Production. </param>
         /// <param name="sapProduct"> Defines the SAP Product type. </param>
         /// <param name="configuration">
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.Workloads
             Errors = errors;
         }
 
-        /// <summary> Managed service identity (user assigned identities). </summary>
+        /// <summary> A pre-created user assigned identity with appropriate roles assigned. To learn more on identity and roles required, visit the ACSS how-to-guide. </summary>
         public UserAssignedServiceIdentity Identity { get; set; }
         /// <summary> Defines the environment type - Production/Non Production. </summary>
         public SapEnvironmentType Environment { get; set; }

@@ -17,21 +17,21 @@ namespace Azure.ResourceManager.Workloads.Models
 
         /// <summary> Initializes a new instance of DiskVolumeConfiguration. </summary>
         /// <param name="count"> The total number of disks required for the concerned volume. </param>
-        /// <param name="sizeGB"> The disk size in GB. </param>
+        /// <param name="sizeInGB"> The disk size in GB. </param>
         /// <param name="sku"> The disk SKU details. </param>
-        internal DiskVolumeConfiguration(long? count, long? sizeGB, DiskSku sku)
+        internal DiskVolumeConfiguration(long? count, long? sizeInGB, SapDiskSku sku)
         {
             Count = count;
-            SizeGB = sizeGB;
+            SizeInGB = sizeInGB;
             Sku = sku;
         }
 
         /// <summary> The total number of disks required for the concerned volume. </summary>
         public long? Count { get; set; }
         /// <summary> The disk size in GB. </summary>
-        public long? SizeGB { get; set; }
+        public long? SizeInGB { get; set; }
         /// <summary> The disk SKU details. </summary>
-        internal DiskSku Sku { get; set; }
+        internal SapDiskSku Sku { get; set; }
         /// <summary> Defines the disk sku name. </summary>
         public DiskDetailsDiskSkuName? SkuName
         {
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.Workloads.Models
             set
             {
                 if (Sku is null)
-                    Sku = new DiskSku();
+                    Sku = new SapDiskSku();
                 Sku.Name = value;
             }
         }

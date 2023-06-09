@@ -40,26 +40,29 @@ namespace Azure.ResourceManager.ProviderHub.Models
             {
                 return null;
             }
-            Optional<string> notificationDestination = default;
-            Optional<IList<string>> locations = default;
+            Optional<ResourceIdentifier> notificationDestination = default;
+            Optional<IList<AzureLocation>> locations = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("notificationDestination"u8))
                 {
-                    notificationDestination = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    notificationDestination = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("locations"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<string> array = new List<string>();
+                    List<AzureLocation> array = new List<AzureLocation>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(item.GetString());
+                        array.Add(new AzureLocation(item.GetString()));
                     }
                     locations = array;
                     continue;

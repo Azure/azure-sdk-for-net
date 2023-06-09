@@ -1623,7 +1623,13 @@ namespace Azure.Storage.Blobs.Specialized
                         }
                         readDestStream.Position = 0;
 
-                        ContentHasher.AssertResponseHashMatch(readDestStream, validationOptions.ChecksumAlgorithm, response.GetRawResponse());
+                        await ContentHasher.AssertResponseHashMatchInternal(
+                            readDestStream,
+                            validationOptions.ChecksumAlgorithm,
+                            response.GetRawResponse(),
+                            async,
+                            cancellationToken).ConfigureAwait(false);
+                        ;
 
                         // we've consumed the network stream to hash it; return buffered stream to the user
                         stream = readDestStream;
@@ -2884,14 +2890,7 @@ namespace Azure.Storage.Blobs.Specialized
             {
                 ClientSideDecryptor.BeginContentEncryptionKeyCaching();
             }
-            if (async)
-            {
-                return await downloader.DownloadToAsync(destination, conditions, cancellationToken).ConfigureAwait(false);
-            }
-            else
-            {
-                return downloader.DownloadTo(destination, conditions, cancellationToken);
-            }
+            return await downloader.DownloadToInternal(destination, conditions, async, cancellationToken).ConfigureAwait(false);
         }
         #endregion Parallel Download
 

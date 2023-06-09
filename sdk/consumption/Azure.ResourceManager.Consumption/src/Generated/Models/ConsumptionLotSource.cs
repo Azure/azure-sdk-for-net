@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Consumption.Models
 {
-    /// <summary> The source of the lot. </summary>
+    /// <summary>
+    /// The source of the lot.
+    /// Serialized Name: LotSource
+    /// </summary>
     public readonly partial struct ConsumptionLotSource : IEquatable<ConsumptionLotSource>
     {
         private readonly string _value;
@@ -26,11 +29,20 @@ namespace Azure.ResourceManager.Consumption.Models
         private const string PromotionalCreditValue = "PromotionalCredit";
         private const string ConsumptionCommitmentValue = "ConsumptionCommitment";
 
-        /// <summary> PurchasedCredit. </summary>
+        /// <summary>
+        /// PurchasedCredit
+        /// Serialized Name: LotSource.PurchasedCredit
+        /// </summary>
         public static ConsumptionLotSource PurchasedCredit { get; } = new ConsumptionLotSource(PurchasedCreditValue);
-        /// <summary> PromotionalCredit. </summary>
+        /// <summary>
+        /// PromotionalCredit
+        /// Serialized Name: LotSource.PromotionalCredit
+        /// </summary>
         public static ConsumptionLotSource PromotionalCredit { get; } = new ConsumptionLotSource(PromotionalCreditValue);
-        /// <summary> ConsumptionCommitment. </summary>
+        /// <summary>
+        /// ConsumptionCommitment
+        /// Serialized Name: LotSource.ConsumptionCommitment
+        /// </summary>
         public static ConsumptionLotSource ConsumptionCommitment { get; } = new ConsumptionLotSource(ConsumptionCommitmentValue);
         /// <summary> Determines if two <see cref="ConsumptionLotSource"/> values are the same. </summary>
         public static bool operator ==(ConsumptionLotSource left, ConsumptionLotSource right) => left.Equals(right);

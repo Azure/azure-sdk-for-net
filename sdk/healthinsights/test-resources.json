@@ -39,13 +39,13 @@
     "resources": [
         {
             "type": "Microsoft.CognitiveServices/accounts",
-            "apiVersion": "2017-04-18",
+            "apiVersion": "2022-12-01",
             "name": "[variables('uniqueSubDomainName')]",
             "location":"[parameters('location')]",
             "sku": {
                 "name": "S0"
             },
-            "kind": "AzureHealthInsights",
+            "kind": "HealthInsights",
             "properties": {
                 "customSubDomainName": "[variables('uniqueSubDomainName')]"
             }

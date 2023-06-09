@@ -37,7 +37,6 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     severity = new AssessmentSeverity(property.Value.GetString());
@@ -57,7 +56,6 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     isPass = new IsPass(property.Value.GetString());
@@ -72,7 +70,6 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<AssessmentResource> array = new List<AssessmentResource>();

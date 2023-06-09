@@ -26,7 +26,6 @@ namespace Azure.ResourceManager.Analysis.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<AnalysisExistingSku> array = new List<AnalysisExistingSku>();

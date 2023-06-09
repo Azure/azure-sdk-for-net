@@ -42,6 +42,8 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
         public DocumentKeyValueElement Key { get; }
         /// <summary> Field value of the key-value pair. </summary>
         public DocumentKeyValueElement Value { get; }
+        /// <summary> Common name of the key-value pair. </summary>
+        public string CommonName { get; }
         /// <summary> Confidence of correctly extracting the key-value pair. </summary>
         public float Confidence { get; }
     }

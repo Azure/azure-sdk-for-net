@@ -105,7 +105,6 @@ namespace Azure.ResourceManager.Orbital
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     etag = new ETag(property.Value.GetString());
@@ -115,7 +114,6 @@ namespace Azure.ResourceManager.Orbital
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();
@@ -150,7 +148,6 @@ namespace Azure.ResourceManager.Orbital
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
@@ -169,7 +166,6 @@ namespace Azure.ResourceManager.Orbital
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             provisioningState = new OrbitalProvisioningState(property0.Value.GetString());
@@ -179,7 +175,6 @@ namespace Azure.ResourceManager.Orbital
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             minimumViableContactDuration = property0.Value.GetTimeSpan("P");
@@ -189,7 +184,6 @@ namespace Azure.ResourceManager.Orbital
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             minimumElevationDegrees = property0.Value.GetSingle();
@@ -199,7 +193,6 @@ namespace Azure.ResourceManager.Orbital
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             autoTrackingConfiguration = property0.Value.GetString().ToAutoTrackingConfiguration();
@@ -209,7 +202,6 @@ namespace Azure.ResourceManager.Orbital
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                eventHubUri = null;
                                 continue;
                             }
                             eventHubUri = new Uri(property0.Value.GetString());
@@ -219,7 +211,6 @@ namespace Azure.ResourceManager.Orbital
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             networkConfiguration = ContactProfilesPropertiesNetworkConfiguration.DeserializeContactProfilesPropertiesNetworkConfiguration(property0.Value);
@@ -229,7 +220,6 @@ namespace Azure.ResourceManager.Orbital
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             List<OrbitalContactProfileLink> array = new List<OrbitalContactProfileLink>();

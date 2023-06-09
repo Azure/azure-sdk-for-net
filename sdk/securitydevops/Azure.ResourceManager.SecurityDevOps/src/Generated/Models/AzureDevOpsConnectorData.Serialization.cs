@@ -58,7 +58,6 @@ namespace Azure.ResourceManager.SecurityDevOps
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     properties = AzureDevOpsConnectorProperties.DeserializeAzureDevOpsConnectorProperties(property.Value);
@@ -68,7 +67,6 @@ namespace Azure.ResourceManager.SecurityDevOps
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();
@@ -103,7 +101,6 @@ namespace Azure.ResourceManager.SecurityDevOps
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());

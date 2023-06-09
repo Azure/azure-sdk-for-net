@@ -14,9 +14,4 @@
     <PackageReference Include="BenchmarkDotNet" />
     <Reference Include="System.Net.Http" Condition="'$(TargetFrameworkIdentifier)' == '.NETFramework'" />
   </ItemGroup>
-
-  <ItemGroup>
-    <Compile Include="..\..\PerfStressShared\PerfStressUtilities.cs" LinkBase="Shared" />
-  </ItemGroup>
-
 </Project>

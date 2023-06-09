@@ -31,11 +31,39 @@ namespace Azure.ResourceManager.ApplicationInsights
             return apiVersion;
         }
 
-        /// <summary> Gets a collection of ComponentLinkedStorageAccountResources in the ResourceGroupResource. </summary>
-        /// <returns> An object representing collection of ComponentLinkedStorageAccountResources and their operations over a ComponentLinkedStorageAccountResource. </returns>
-        public virtual ComponentLinkedStorageAccountCollection GetComponentLinkedStorageAccounts()
+        /// <summary> Gets a collection of ApplicationInsightsComponentResources in the ResourceGroupResource. </summary>
+        /// <returns> An object representing collection of ApplicationInsightsComponentResources and their operations over a ApplicationInsightsComponentResource. </returns>
+        public virtual ApplicationInsightsComponentCollection GetApplicationInsightsComponents()
         {
-            return GetCachedClient(Client => new ComponentLinkedStorageAccountCollection(Client, Id));
+            return GetCachedClient(Client => new ApplicationInsightsComponentCollection(Client, Id));
+        }
+
+        /// <summary> Gets a collection of WebTestResources in the ResourceGroupResource. </summary>
+        /// <returns> An object representing collection of WebTestResources and their operations over a WebTestResource. </returns>
+        public virtual WebTestCollection GetWebTests()
+        {
+            return GetCachedClient(Client => new WebTestCollection(Client, Id));
+        }
+
+        /// <summary> Gets a collection of WorkbookTemplateResources in the ResourceGroupResource. </summary>
+        /// <returns> An object representing collection of WorkbookTemplateResources and their operations over a WorkbookTemplateResource. </returns>
+        public virtual WorkbookTemplateCollection GetWorkbookTemplates()
+        {
+            return GetCachedClient(Client => new WorkbookTemplateCollection(Client, Id));
+        }
+
+        /// <summary> Gets a collection of MyWorkbookResources in the ResourceGroupResource. </summary>
+        /// <returns> An object representing collection of MyWorkbookResources and their operations over a MyWorkbookResource. </returns>
+        public virtual MyWorkbookCollection GetMyWorkbooks()
+        {
+            return GetCachedClient(Client => new MyWorkbookCollection(Client, Id));
+        }
+
+        /// <summary> Gets a collection of WorkbookResources in the ResourceGroupResource. </summary>
+        /// <returns> An object representing collection of WorkbookResources and their operations over a WorkbookResource. </returns>
+        public virtual WorkbookCollection GetWorkbooks()
+        {
+            return GetCachedClient(Client => new WorkbookCollection(Client, Id));
         }
     }
 }

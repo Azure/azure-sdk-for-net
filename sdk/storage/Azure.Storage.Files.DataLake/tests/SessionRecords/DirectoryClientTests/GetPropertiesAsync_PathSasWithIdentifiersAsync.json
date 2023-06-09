@@ -104,7 +104,7 @@
       "ResponseBody": []
     },
     {
-      "RequestUri": "https://seannse.blob.core.windows.net/test-filesystem-d90474ad-7bb3-e0d8-3cec-1d30ae2e47b6/test-directory-8b1be6c4-644a-a8e9-7587-9f4eeb912c48?sv=2022-11-02&si=lapitvconotrshxcnmsj&sr=c&sig=Sanitized",
+      "RequestUri": "https://seannse.blob.core.windows.net/test-filesystem-d90474ad-7bb3-e0d8-3cec-1d30ae2e47b6/test-directory-8b1be6c4-644a-a8e9-7587-9f4eeb912c48?sv=2023-01-03&si=lapitvconotrshxcnmsj&sr=c&sig=Sanitized",
       "RequestMethod": "HEAD",
       "RequestHeaders": {
         "Accept": "application/xml",

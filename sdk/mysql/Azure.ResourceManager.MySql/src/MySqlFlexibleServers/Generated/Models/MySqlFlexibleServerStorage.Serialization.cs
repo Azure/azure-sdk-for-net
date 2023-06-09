@@ -30,6 +30,16 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
                 writer.WritePropertyName("autoGrow"u8);
                 writer.WriteStringValue(AutoGrow.Value.ToString());
             }
+            if (Optional.IsDefined(LogOnDisk))
+            {
+                writer.WritePropertyName("logOnDisk"u8);
+                writer.WriteStringValue(LogOnDisk.Value.ToString());
+            }
+            if (Optional.IsDefined(AutoIoScaling))
+            {
+                writer.WritePropertyName("autoIoScaling"u8);
+                writer.WriteStringValue(AutoIoScaling.Value.ToString());
+            }
             writer.WriteEndObject();
         }
 
@@ -42,14 +52,15 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
             Optional<int> storageSizeGB = default;
             Optional<int> iops = default;
             Optional<MySqlFlexibleServerEnableStatusEnum> autoGrow = default;
+            Optional<MySqlFlexibleServerEnableStatusEnum> logOnDisk = default;
             Optional<string> storageSku = default;
+            Optional<MySqlFlexibleServerEnableStatusEnum> autoIoScaling = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("storageSizeGB"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     storageSizeGB = property.Value.GetInt32();
@@ -59,7 +70,6 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     iops = property.Value.GetInt32();
@@ -69,10 +79,18 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     autoGrow = new MySqlFlexibleServerEnableStatusEnum(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("logOnDisk"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    logOnDisk = new MySqlFlexibleServerEnableStatusEnum(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("storageSku"u8))
@@ -80,8 +98,17 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
                     storageSku = property.Value.GetString();
                     continue;
                 }
+                if (property.NameEquals("autoIoScaling"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    autoIoScaling = new MySqlFlexibleServerEnableStatusEnum(property.Value.GetString());
+                    continue;
+                }
             }
-            return new MySqlFlexibleServerStorage(Optional.ToNullable(storageSizeGB), Optional.ToNullable(iops), Optional.ToNullable(autoGrow), storageSku.Value);
+            return new MySqlFlexibleServerStorage(Optional.ToNullable(storageSizeGB), Optional.ToNullable(iops), Optional.ToNullable(autoGrow), Optional.ToNullable(logOnDisk), storageSku.Value, Optional.ToNullable(autoIoScaling));
         }
     }
 }
