@@ -47,8 +47,8 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <summary> The ArrayOfWafRankingType to use. </summary>
         public IList<WafRankingType> Rankings { get; }
         /// <summary> The ArrayOfWafAction to use. </summary>
-        public IList<WafAction> Actions { get; }
+        public IList<WafAction> Actions { get; set; }
         /// <summary> The ArrayOfWafRuleType to use. </summary>
-        public IList<WafRuleType> RuleTypes { get; }
+        public IList<WafRuleType> RuleTypes { get; set; }
     }
 }

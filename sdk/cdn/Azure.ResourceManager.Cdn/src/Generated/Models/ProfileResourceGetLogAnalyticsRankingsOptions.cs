@@ -46,6 +46,6 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <summary> The DateTime to use. </summary>
         public DateTimeOffset DateTimeEnd { get; }
         /// <summary> The ArrayOfString to use. </summary>
-        public IList<string> CustomDomains { get; }
+        public IList<string> CustomDomains { get; set; }
     }
 }
