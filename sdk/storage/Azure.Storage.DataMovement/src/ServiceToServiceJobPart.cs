@@ -137,7 +137,7 @@ namespace Azure.Storage.DataMovement
             await OnTransferStatusChanged(StorageTransferStatus.InProgress).ConfigureAwait(false);
 
             // Attempt to get the length, it's possible the file could
-            // not be accesible (or does not exist).
+            // not be accessible (or does not exist).
             long? fileLength = _sourceResource.Length;
             if (!fileLength.HasValue)
             {
@@ -165,7 +165,7 @@ namespace Azure.Storage.DataMovement
             {
                 await QueueChunkToChannelAsync(
                     async () =>
-                    await StartSingleCallCopy(length, false).ConfigureAwait(false))
+                    await StartSingleCallCopy(length).ConfigureAwait(false))
                     .ConfigureAwait(false);
                 return;
             }
@@ -188,7 +188,7 @@ namespace Azure.Storage.DataMovement
                 }
                 else // Sequential
                 {
-                    // Queue paritioned block task
+                    // Queue partitioned block task
                     await QueueChunkToChannelAsync(
                         async () =>
                         await PutBlockFromUri(
@@ -203,25 +203,18 @@ namespace Azure.Storage.DataMovement
             }
         }
 
-        internal async Task StartSingleCallCopy(long completeLength, bool asyncCopy)
+        internal async Task StartSingleCallCopy(long completeLength)
         {
             try
             {
                 await _destinationResource.CopyFromUriAsync(
-                        sourceResource: _sourceResource,
-                        overwrite: _createMode == StorageResourceCreateMode.Overwrite,
-                        completeLength: completeLength,
-                        cancellationToken: _cancellationToken).ConfigureAwait(false);
-                if (asyncCopy)
-                {
-                    _copyStatusHandler = GetCopyStatusController(this);
-                    await CopyStatusCheckAsync(false).ConfigureAwait(false);
-                }
-                else
-                {
-                    ReportBytesWritten(completeLength);
-                    await OnTransferStatusChanged(StorageTransferStatus.Completed).ConfigureAwait(false);
-                }
+                    sourceResource: _sourceResource,
+                    overwrite: _createMode == StorageResourceCreateMode.Overwrite,
+                    completeLength: completeLength,
+                    cancellationToken: _cancellationToken).ConfigureAwait(false);
+
+                ReportBytesWritten(completeLength);
+                await OnTransferStatusChanged(StorageTransferStatus.Completed).ConfigureAwait(false);
             }
             catch (RequestFailedException exception)
                 when (_createMode == StorageResourceCreateMode.Skip
