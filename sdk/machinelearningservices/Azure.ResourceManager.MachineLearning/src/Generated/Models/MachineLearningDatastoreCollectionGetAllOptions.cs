@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <summary> Filter down to the workspace default datastore. </summary>
         public bool? IsDefault { get; set; }
         /// <summary> Names of datastores to return. </summary>
-        public IList<string> Names { get; }
+        public IList<string> Names { get; set; }
         /// <summary> Text to search for in the datastore names. </summary>
         public string SearchText { get; set; }
         /// <summary> Order by property (createdtime | modifiedtime | name). </summary>
