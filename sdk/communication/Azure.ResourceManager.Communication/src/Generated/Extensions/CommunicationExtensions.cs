@@ -12,6 +12,7 @@ using Azure;
 using Azure.Core;
 using Azure.ResourceManager;
 using Azure.ResourceManager.Communication.Models;
+using Azure.ResourceManager.Communication.Testing;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.Communication
@@ -19,35 +20,35 @@ namespace Azure.ResourceManager.Communication
     /// <summary> A class to add extension methods to Azure.ResourceManager.Communication. </summary>
     public static partial class CommunicationExtensions
     {
-        private static ResourceGroupResourceExtensionClient GetResourceGroupResourceExtensionClient(ArmResource resource)
+        private static CommunicationResourceGroupResourceExtension GetCommunicationResourceGroupResourceExtension(ArmResource resource)
         {
             return resource.GetCachedClient(client =>
             {
-                return new ResourceGroupResourceExtensionClient(client, resource.Id);
+                return new CommunicationResourceGroupResourceExtension(client, resource.Id);
             });
         }
 
-        private static ResourceGroupResourceExtensionClient GetResourceGroupResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
+        private static CommunicationResourceGroupResourceExtension GetCommunicationResourceGroupResourceExtension(ArmClient client, ResourceIdentifier scope)
         {
             return client.GetResourceClient(() =>
             {
-                return new ResourceGroupResourceExtensionClient(client, scope);
+                return new CommunicationResourceGroupResourceExtension(client, scope);
             });
         }
 
-        private static SubscriptionResourceExtensionClient GetSubscriptionResourceExtensionClient(ArmResource resource)
+        private static CommunicationSubscriptionResourceExtension GetCommunicationSubscriptionResourceExtension(ArmResource resource)
         {
             return resource.GetCachedClient(client =>
             {
-                return new SubscriptionResourceExtensionClient(client, resource.Id);
+                return new CommunicationSubscriptionResourceExtension(client, resource.Id);
             });
         }
 
-        private static SubscriptionResourceExtensionClient GetSubscriptionResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
+        private static CommunicationSubscriptionResourceExtension GetCommunicationSubscriptionResourceExtension(ArmClient client, ResourceIdentifier scope)
         {
             return client.GetResourceClient(() =>
             {
-                return new SubscriptionResourceExtensionClient(client, scope);
+                return new CommunicationSubscriptionResourceExtension(client, scope);
             });
         }
         #region CommunicationServiceResource
@@ -131,7 +132,7 @@ namespace Azure.ResourceManager.Communication
         /// <returns> An object representing collection of CommunicationServiceResources and their operations over a CommunicationServiceResource. </returns>
         public static CommunicationServiceResourceCollection GetCommunicationServiceResources(this ResourceGroupResource resourceGroupResource)
         {
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetCommunicationServiceResources();
+            return GetCommunicationResourceGroupResourceExtension(resourceGroupResource).GetCommunicationServiceResources();
         }
 
         /// <summary>
@@ -187,7 +188,7 @@ namespace Azure.ResourceManager.Communication
         /// <returns> An object representing collection of EmailServiceResources and their operations over a EmailServiceResource. </returns>
         public static EmailServiceResourceCollection GetEmailServiceResources(this ResourceGroupResource resourceGroupResource)
         {
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetEmailServiceResources();
+            return GetCommunicationResourceGroupResourceExtension(resourceGroupResource).GetEmailServiceResources();
         }
 
         /// <summary>
@@ -259,7 +260,7 @@ namespace Azure.ResourceManager.Communication
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            return await GetSubscriptionResourceExtensionClient(subscriptionResource).CheckCommunicationNameAvailabilityAsync(content, cancellationToken).ConfigureAwait(false);
+            return await GetCommunicationSubscriptionResourceExtension(subscriptionResource).CheckCommunicationNameAvailabilityAsync(content, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -283,7 +284,7 @@ namespace Azure.ResourceManager.Communication
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).CheckCommunicationNameAvailability(content, cancellationToken);
+            return GetCommunicationSubscriptionResourceExtension(subscriptionResource).CheckCommunicationNameAvailability(content, cancellationToken);
         }
 
         /// <summary>
@@ -304,7 +305,7 @@ namespace Azure.ResourceManager.Communication
         /// <returns> An async collection of <see cref="CommunicationServiceResource" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<CommunicationServiceResource> GetCommunicationServiceResourcesAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetCommunicationServiceResourcesAsync(cancellationToken);
+            return GetCommunicationSubscriptionResourceExtension(subscriptionResource).GetCommunicationServiceResourcesAsync(cancellationToken);
         }
 
         /// <summary>
@@ -325,7 +326,7 @@ namespace Azure.ResourceManager.Communication
         /// <returns> A collection of <see cref="CommunicationServiceResource" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<CommunicationServiceResource> GetCommunicationServiceResources(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetCommunicationServiceResources(cancellationToken);
+            return GetCommunicationSubscriptionResourceExtension(subscriptionResource).GetCommunicationServiceResources(cancellationToken);
         }
 
         /// <summary>
@@ -346,7 +347,7 @@ namespace Azure.ResourceManager.Communication
         /// <returns> An async collection of <see cref="EmailServiceResource" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<EmailServiceResource> GetEmailServiceResourcesAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetEmailServiceResourcesAsync(cancellationToken);
+            return GetCommunicationSubscriptionResourceExtension(subscriptionResource).GetEmailServiceResourcesAsync(cancellationToken);
         }
 
         /// <summary>
@@ -367,7 +368,7 @@ namespace Azure.ResourceManager.Communication
         /// <returns> A collection of <see cref="EmailServiceResource" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<EmailServiceResource> GetEmailServiceResources(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetEmailServiceResources(cancellationToken);
+            return GetCommunicationSubscriptionResourceExtension(subscriptionResource).GetEmailServiceResources(cancellationToken);
         }
 
         /// <summary>
@@ -388,7 +389,7 @@ namespace Azure.ResourceManager.Communication
         /// <returns> An async collection of <see cref="string" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<string> GetVerifiedExchangeOnlineDomainsEmailServicesAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetVerifiedExchangeOnlineDomainsEmailServicesAsync(cancellationToken);
+            return GetCommunicationSubscriptionResourceExtension(subscriptionResource).GetVerifiedExchangeOnlineDomainsEmailServicesAsync(cancellationToken);
         }
 
         /// <summary>
@@ -409,7 +410,7 @@ namespace Azure.ResourceManager.Communication
         /// <returns> A collection of <see cref="string" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<string> GetVerifiedExchangeOnlineDomainsEmailServices(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetVerifiedExchangeOnlineDomainsEmailServices(cancellationToken);
+            return GetCommunicationSubscriptionResourceExtension(subscriptionResource).GetVerifiedExchangeOnlineDomainsEmailServices(cancellationToken);
         }
     }
 }

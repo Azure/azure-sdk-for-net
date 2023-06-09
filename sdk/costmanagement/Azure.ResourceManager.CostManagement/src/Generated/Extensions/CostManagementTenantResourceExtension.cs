@@ -10,757 +10,104 @@ using System.Threading;
 using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
+using Azure.Core.Pipeline;
 using Azure.ResourceManager;
+using Azure.ResourceManager.CostManagement;
 using Azure.ResourceManager.CostManagement.Models;
-using Azure.ResourceManager.CostManagement.Testing;
-using Azure.ResourceManager.Resources;
 
-namespace Azure.ResourceManager.CostManagement
+namespace Azure.ResourceManager.CostManagement.Testing
 {
-    /// <summary> A class to add extension methods to Azure.ResourceManager.CostManagement. </summary>
-    public static partial class CostManagementExtensions
+    /// <summary> A class to add extension methods to TenantResource. </summary>
+    public partial class CostManagementTenantResourceExtension : ArmResource
     {
-        private static CostManagementArmResourceExtension GetCostManagementArmResourceExtension(ArmResource resource)
+        private ClientDiagnostics _benefitUtilizationSummariesClientDiagnostics;
+        private BenefitUtilizationSummariesRestOperations _benefitUtilizationSummariesRestClient;
+        private ClientDiagnostics _billingAccountScopeClientDiagnostics;
+        private BillingAccountScopeRestOperations _billingAccountScopeRestClient;
+        private ClientDiagnostics _billingProfileScopeClientDiagnostics;
+        private BillingProfileScopeRestOperations _billingProfileScopeRestClient;
+        private ClientDiagnostics _reservationOrderScopeClientDiagnostics;
+        private ReservationOrderScopeRestOperations _reservationOrderScopeRestClient;
+        private ClientDiagnostics _reservationScopeClientDiagnostics;
+        private ReservationScopeRestOperations _reservationScopeRestClient;
+        private ClientDiagnostics _savingsPlanOrderScopeClientDiagnostics;
+        private SavingsPlanOrderScopeRestOperations _savingsPlanOrderScopeRestClient;
+        private ClientDiagnostics _savingsPlanScopeClientDiagnostics;
+        private SavingsPlanScopeRestOperations _savingsPlanScopeRestClient;
+        private ClientDiagnostics _costManagementAlertAlertsClientDiagnostics;
+        private AlertsRestOperations _costManagementAlertAlertsRestClient;
+        private ClientDiagnostics _forecastClientDiagnostics;
+        private ForecastRestOperations _forecastRestClient;
+        private ClientDiagnostics _dimensionsClientDiagnostics;
+        private DimensionsRestOperations _dimensionsRestClient;
+        private ClientDiagnostics _queryClientDiagnostics;
+        private QueryRestOperations _queryRestClient;
+        private ClientDiagnostics _generateReservationDetailsReportClientDiagnostics;
+        private GenerateReservationDetailsReportRestOperations _generateReservationDetailsReportRestClient;
+        private ClientDiagnostics _priceSheetClientDiagnostics;
+        private PriceSheetRestOperations _priceSheetRestClient;
+        private ClientDiagnostics _scheduledActionsClientDiagnostics;
+        private ScheduledActionsRestOperations _scheduledActionsRestClient;
+
+        /// <summary> Initializes a new instance of the <see cref="CostManagementTenantResourceExtension"/> class for mocking. </summary>
+        protected CostManagementTenantResourceExtension()
         {
-            return resource.GetCachedClient(client =>
-            {
-                return new CostManagementArmResourceExtension(client, resource.Id);
-            });
         }
 
-        private static CostManagementArmResourceExtension GetCostManagementArmResourceExtension(ArmClient client, ResourceIdentifier scope)
+        /// <summary> Initializes a new instance of the <see cref="CostManagementTenantResourceExtension"/> class. </summary>
+        /// <param name="client"> The client parameters to use in these operations. </param>
+        /// <param name="id"> The identifier of the resource that is the target of operations. </param>
+        internal CostManagementTenantResourceExtension(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            return client.GetResourceClient(() =>
-            {
-                return new CostManagementArmResourceExtension(client, scope);
-            });
         }
 
-        private static CostManagementTenantResourceExtension GetCostManagementTenantResourceExtension(ArmResource resource)
+        private ClientDiagnostics BenefitUtilizationSummariesClientDiagnostics => _benefitUtilizationSummariesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.CostManagement", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+        private BenefitUtilizationSummariesRestOperations BenefitUtilizationSummariesRestClient => _benefitUtilizationSummariesRestClient ??= new BenefitUtilizationSummariesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
+        private ClientDiagnostics BillingAccountScopeClientDiagnostics => _billingAccountScopeClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.CostManagement", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+        private BillingAccountScopeRestOperations BillingAccountScopeRestClient => _billingAccountScopeRestClient ??= new BillingAccountScopeRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
+        private ClientDiagnostics BillingProfileScopeClientDiagnostics => _billingProfileScopeClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.CostManagement", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+        private BillingProfileScopeRestOperations BillingProfileScopeRestClient => _billingProfileScopeRestClient ??= new BillingProfileScopeRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
+        private ClientDiagnostics ReservationOrderScopeClientDiagnostics => _reservationOrderScopeClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.CostManagement", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+        private ReservationOrderScopeRestOperations ReservationOrderScopeRestClient => _reservationOrderScopeRestClient ??= new ReservationOrderScopeRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
+        private ClientDiagnostics ReservationScopeClientDiagnostics => _reservationScopeClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.CostManagement", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+        private ReservationScopeRestOperations ReservationScopeRestClient => _reservationScopeRestClient ??= new ReservationScopeRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
+        private ClientDiagnostics SavingsPlanOrderScopeClientDiagnostics => _savingsPlanOrderScopeClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.CostManagement", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+        private SavingsPlanOrderScopeRestOperations SavingsPlanOrderScopeRestClient => _savingsPlanOrderScopeRestClient ??= new SavingsPlanOrderScopeRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
+        private ClientDiagnostics SavingsPlanScopeClientDiagnostics => _savingsPlanScopeClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.CostManagement", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+        private SavingsPlanScopeRestOperations SavingsPlanScopeRestClient => _savingsPlanScopeRestClient ??= new SavingsPlanScopeRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
+        private ClientDiagnostics CostManagementAlertAlertsClientDiagnostics => _costManagementAlertAlertsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.CostManagement", CostManagementAlertResource.ResourceType.Namespace, Diagnostics);
+        private AlertsRestOperations CostManagementAlertAlertsRestClient => _costManagementAlertAlertsRestClient ??= new AlertsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(CostManagementAlertResource.ResourceType));
+        private ClientDiagnostics ForecastClientDiagnostics => _forecastClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.CostManagement", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+        private ForecastRestOperations ForecastRestClient => _forecastRestClient ??= new ForecastRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
+        private ClientDiagnostics DimensionsClientDiagnostics => _dimensionsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.CostManagement", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+        private DimensionsRestOperations DimensionsRestClient => _dimensionsRestClient ??= new DimensionsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
+        private ClientDiagnostics QueryClientDiagnostics => _queryClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.CostManagement", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+        private QueryRestOperations QueryRestClient => _queryRestClient ??= new QueryRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
+        private ClientDiagnostics GenerateReservationDetailsReportClientDiagnostics => _generateReservationDetailsReportClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.CostManagement", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+        private GenerateReservationDetailsReportRestOperations GenerateReservationDetailsReportRestClient => _generateReservationDetailsReportRestClient ??= new GenerateReservationDetailsReportRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
+        private ClientDiagnostics PriceSheetClientDiagnostics => _priceSheetClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.CostManagement", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+        private PriceSheetRestOperations PriceSheetRestClient => _priceSheetRestClient ??= new PriceSheetRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
+        private ClientDiagnostics ScheduledActionsClientDiagnostics => _scheduledActionsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.CostManagement", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+        private ScheduledActionsRestOperations ScheduledActionsRestClient => _scheduledActionsRestClient ??= new ScheduledActionsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
+
+        private string GetApiVersionOrNull(ResourceType resourceType)
         {
-            return resource.GetCachedClient(client =>
-            {
-                return new CostManagementTenantResourceExtension(client, resource.Id);
-            });
-        }
-
-        private static CostManagementTenantResourceExtension GetCostManagementTenantResourceExtension(ArmClient client, ResourceIdentifier scope)
-        {
-            return client.GetResourceClient(() =>
-            {
-                return new CostManagementTenantResourceExtension(client, scope);
-            });
-        }
-        #region CostManagementExportResource
-        /// <summary>
-        /// Gets an object representing a <see cref="CostManagementExportResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="CostManagementExportResource.CreateResourceIdentifier" /> to create a <see cref="CostManagementExportResource" /> <see cref="ResourceIdentifier" /> from its components.
-        /// </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="CostManagementExportResource" /> object. </returns>
-        public static CostManagementExportResource GetCostManagementExportResource(this ArmClient client, ResourceIdentifier id)
-        {
-            return client.GetResourceClient(() =>
-            {
-                CostManagementExportResource.ValidateResourceId(id);
-                return new CostManagementExportResource(client, id);
-            }
-            );
-        }
-        #endregion
-
-        #region TenantsCostManagementViewsResource
-        /// <summary>
-        /// Gets an object representing a <see cref="TenantsCostManagementViewsResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="TenantsCostManagementViewsResource.CreateResourceIdentifier" /> to create a <see cref="TenantsCostManagementViewsResource" /> <see cref="ResourceIdentifier" /> from its components.
-        /// </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="TenantsCostManagementViewsResource" /> object. </returns>
-        public static TenantsCostManagementViewsResource GetTenantsCostManagementViewsResource(this ArmClient client, ResourceIdentifier id)
-        {
-            return client.GetResourceClient(() =>
-            {
-                TenantsCostManagementViewsResource.ValidateResourceId(id);
-                return new TenantsCostManagementViewsResource(client, id);
-            }
-            );
-        }
-        #endregion
-
-        #region CostManagementViewsResource
-        /// <summary>
-        /// Gets an object representing a <see cref="CostManagementViewsResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="CostManagementViewsResource.CreateResourceIdentifier" /> to create a <see cref="CostManagementViewsResource" /> <see cref="ResourceIdentifier" /> from its components.
-        /// </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="CostManagementViewsResource" /> object. </returns>
-        public static CostManagementViewsResource GetCostManagementViewsResource(this ArmClient client, ResourceIdentifier id)
-        {
-            return client.GetResourceClient(() =>
-            {
-                CostManagementViewsResource.ValidateResourceId(id);
-                return new CostManagementViewsResource(client, id);
-            }
-            );
-        }
-        #endregion
-
-        #region CostManagementAlertResource
-        /// <summary>
-        /// Gets an object representing a <see cref="CostManagementAlertResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="CostManagementAlertResource.CreateResourceIdentifier" /> to create a <see cref="CostManagementAlertResource" /> <see cref="ResourceIdentifier" /> from its components.
-        /// </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="CostManagementAlertResource" /> object. </returns>
-        public static CostManagementAlertResource GetCostManagementAlertResource(this ArmClient client, ResourceIdentifier id)
-        {
-            return client.GetResourceClient(() =>
-            {
-                CostManagementAlertResource.ValidateResourceId(id);
-                return new CostManagementAlertResource(client, id);
-            }
-            );
-        }
-        #endregion
-
-        #region TenantScheduledActionResource
-        /// <summary>
-        /// Gets an object representing a <see cref="TenantScheduledActionResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="TenantScheduledActionResource.CreateResourceIdentifier" /> to create a <see cref="TenantScheduledActionResource" /> <see cref="ResourceIdentifier" /> from its components.
-        /// </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="TenantScheduledActionResource" /> object. </returns>
-        public static TenantScheduledActionResource GetTenantScheduledActionResource(this ArmClient client, ResourceIdentifier id)
-        {
-            return client.GetResourceClient(() =>
-            {
-                TenantScheduledActionResource.ValidateResourceId(id);
-                return new TenantScheduledActionResource(client, id);
-            }
-            );
-        }
-        #endregion
-
-        #region ScheduledActionResource
-        /// <summary>
-        /// Gets an object representing a <see cref="ScheduledActionResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ScheduledActionResource.CreateResourceIdentifier" /> to create a <see cref="ScheduledActionResource" /> <see cref="ResourceIdentifier" /> from its components.
-        /// </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ScheduledActionResource" /> object. </returns>
-        public static ScheduledActionResource GetScheduledActionResource(this ArmClient client, ResourceIdentifier id)
-        {
-            return client.GetResourceClient(() =>
-            {
-                ScheduledActionResource.ValidateResourceId(id);
-                return new ScheduledActionResource(client, id);
-            }
-            );
-        }
-        #endregion
-
-        /// <summary> Gets a collection of CostManagementExportResources in the ArmResource. </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="scope"> The scope that the resource will apply against. </param>
-        /// <returns> An object representing collection of CostManagementExportResources and their operations over a CostManagementExportResource. </returns>
-        public static CostManagementExportCollection GetCostManagementExports(this ArmClient client, ResourceIdentifier scope)
-        {
-            return GetCostManagementArmResourceExtension(client, scope).GetCostManagementExports();
-        }
-
-        /// <summary>
-        /// The operation to get the export for the defined scope by export name.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/{scope}/providers/Microsoft.CostManagement/exports/{exportName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Exports_Get</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="scope"> The scope that the resource will apply against. </param>
-        /// <param name="exportName"> Export Name. </param>
-        /// <param name="expand"> May be used to expand the properties within an export. Currently only &apos;runHistory&apos; is supported and will return information for the last 10 runs of the export. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="exportName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="exportName"/> is null. </exception>
-        [ForwardsClientCalls]
-        public static async Task<Response<CostManagementExportResource>> GetCostManagementExportAsync(this ArmClient client, ResourceIdentifier scope, string exportName, string expand = null, CancellationToken cancellationToken = default)
-        {
-            return await client.GetCostManagementExports(scope).GetAsync(exportName, expand, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// The operation to get the export for the defined scope by export name.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/{scope}/providers/Microsoft.CostManagement/exports/{exportName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Exports_Get</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="scope"> The scope that the resource will apply against. </param>
-        /// <param name="exportName"> Export Name. </param>
-        /// <param name="expand"> May be used to expand the properties within an export. Currently only &apos;runHistory&apos; is supported and will return information for the last 10 runs of the export. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="exportName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="exportName"/> is null. </exception>
-        [ForwardsClientCalls]
-        public static Response<CostManagementExportResource> GetCostManagementExport(this ArmClient client, ResourceIdentifier scope, string exportName, string expand = null, CancellationToken cancellationToken = default)
-        {
-            return client.GetCostManagementExports(scope).Get(exportName, expand, cancellationToken);
-        }
-
-        /// <summary> Gets a collection of CostManagementViewsResources in the ArmResource. </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="scope"> The scope that the resource will apply against. </param>
-        /// <returns> An object representing collection of CostManagementViewsResources and their operations over a CostManagementViewsResource. </returns>
-        public static CostManagementViewsCollection GetAllCostManagementViews(this ArmClient client, ResourceIdentifier scope)
-        {
-            return GetCostManagementArmResourceExtension(client, scope).GetAllCostManagementViews();
-        }
-
-        /// <summary>
-        /// Gets the view for the defined scope by view name.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/{scope}/providers/Microsoft.CostManagement/views/{viewName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Views_GetByScope</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="scope"> The scope that the resource will apply against. </param>
-        /// <param name="viewName"> View name. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="viewName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="viewName"/> is null. </exception>
-        [ForwardsClientCalls]
-        public static async Task<Response<CostManagementViewsResource>> GetCostManagementViewsAsync(this ArmClient client, ResourceIdentifier scope, string viewName, CancellationToken cancellationToken = default)
-        {
-            return await client.GetAllCostManagementViews(scope).GetAsync(viewName, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Gets the view for the defined scope by view name.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/{scope}/providers/Microsoft.CostManagement/views/{viewName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Views_GetByScope</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="scope"> The scope that the resource will apply against. </param>
-        /// <param name="viewName"> View name. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="viewName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="viewName"/> is null. </exception>
-        [ForwardsClientCalls]
-        public static Response<CostManagementViewsResource> GetCostManagementViews(this ArmClient client, ResourceIdentifier scope, string viewName, CancellationToken cancellationToken = default)
-        {
-            return client.GetAllCostManagementViews(scope).Get(viewName, cancellationToken);
-        }
-
-        /// <summary> Gets a collection of CostManagementAlertResources in the ArmResource. </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="scope"> The scope that the resource will apply against. </param>
-        /// <returns> An object representing collection of CostManagementAlertResources and their operations over a CostManagementAlertResource. </returns>
-        public static CostManagementAlertCollection GetCostManagementAlerts(this ArmClient client, ResourceIdentifier scope)
-        {
-            return GetCostManagementArmResourceExtension(client, scope).GetCostManagementAlerts();
-        }
-
-        /// <summary>
-        /// Gets the alert for the scope by alert ID.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/{scope}/providers/Microsoft.CostManagement/alerts/{alertId}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Alerts_Get</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="scope"> The scope that the resource will apply against. </param>
-        /// <param name="alertId"> Alert ID. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="alertId"/> is null. </exception>
-        [ForwardsClientCalls]
-        public static async Task<Response<CostManagementAlertResource>> GetCostManagementAlertAsync(this ArmClient client, ResourceIdentifier scope, string alertId, CancellationToken cancellationToken = default)
-        {
-            return await client.GetCostManagementAlerts(scope).GetAsync(alertId, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Gets the alert for the scope by alert ID.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/{scope}/providers/Microsoft.CostManagement/alerts/{alertId}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Alerts_Get</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="scope"> The scope that the resource will apply against. </param>
-        /// <param name="alertId"> Alert ID. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="alertId"/> is null. </exception>
-        [ForwardsClientCalls]
-        public static Response<CostManagementAlertResource> GetCostManagementAlert(this ArmClient client, ResourceIdentifier scope, string alertId, CancellationToken cancellationToken = default)
-        {
-            return client.GetCostManagementAlerts(scope).Get(alertId, cancellationToken);
-        }
-
-        /// <summary> Gets a collection of ScheduledActionResources in the ArmResource. </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="scope"> The scope that the resource will apply against. </param>
-        /// <returns> An object representing collection of ScheduledActionResources and their operations over a ScheduledActionResource. </returns>
-        public static ScheduledActionCollection GetScheduledActions(this ArmClient client, ResourceIdentifier scope)
-        {
-            return GetCostManagementArmResourceExtension(client, scope).GetScheduledActions();
-        }
-
-        /// <summary>
-        /// Get the shared scheduled action from the given scope by name.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/{scope}/providers/Microsoft.CostManagement/scheduledActions/{name}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ScheduledActions_GetByScope</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="scope"> The scope that the resource will apply against. </param>
-        /// <param name="name"> Scheduled action name. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        [ForwardsClientCalls]
-        public static async Task<Response<ScheduledActionResource>> GetScheduledActionAsync(this ArmClient client, ResourceIdentifier scope, string name, CancellationToken cancellationToken = default)
-        {
-            return await client.GetScheduledActions(scope).GetAsync(name, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Get the shared scheduled action from the given scope by name.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/{scope}/providers/Microsoft.CostManagement/scheduledActions/{name}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ScheduledActions_GetByScope</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="scope"> The scope that the resource will apply against. </param>
-        /// <param name="name"> Scheduled action name. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        [ForwardsClientCalls]
-        public static Response<ScheduledActionResource> GetScheduledAction(this ArmClient client, ResourceIdentifier scope, string name, CancellationToken cancellationToken = default)
-        {
-            return client.GetScheduledActions(scope).Get(name, cancellationToken);
-        }
-
-        /// <summary>
-        /// List of recommendations for purchasing savings plan.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/{billingScope}/providers/Microsoft.CostManagement/benefitRecommendations</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>BenefitRecommendations_List</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="scope"> The scope that the resource will apply against. </param>
-        /// <param name="filter"> Can be used to filter benefitRecommendations by: properties/scope with allowed values [&apos;Single&apos;, &apos;Shared&apos;] and default value &apos;Shared&apos;; and properties/lookBackPeriod with allowed values [&apos;Last7Days&apos;, &apos;Last30Days&apos;, &apos;Last60Days&apos;] and default value &apos;Last60Days&apos;; properties/term with allowed values [&apos;P1Y&apos;, &apos;P3Y&apos;] and default value &apos;P3Y&apos;; properties/subscriptionId; properties/resourceGroup. </param>
-        /// <param name="orderby"> May be used to order the recommendations by: properties/armSkuName. For the savings plan, the results are in order by default. There is no need to use this clause. </param>
-        /// <param name="expand"> May be used to expand the properties by: properties/usage, properties/allRecommendationDetails. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public static AsyncPageable<BenefitRecommendationModel> GetBenefitRecommendationsAsync(this ArmClient client, ResourceIdentifier scope, string filter = null, string orderby = null, string expand = null, CancellationToken cancellationToken = default)
-        {
-            return GetCostManagementArmResourceExtension(client, scope).GetBenefitRecommendationsAsync(filter, orderby, expand, cancellationToken);
-        }
-
-        /// <summary>
-        /// List of recommendations for purchasing savings plan.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/{billingScope}/providers/Microsoft.CostManagement/benefitRecommendations</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>BenefitRecommendations_List</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="scope"> The scope that the resource will apply against. </param>
-        /// <param name="filter"> Can be used to filter benefitRecommendations by: properties/scope with allowed values [&apos;Single&apos;, &apos;Shared&apos;] and default value &apos;Shared&apos;; and properties/lookBackPeriod with allowed values [&apos;Last7Days&apos;, &apos;Last30Days&apos;, &apos;Last60Days&apos;] and default value &apos;Last60Days&apos;; properties/term with allowed values [&apos;P1Y&apos;, &apos;P3Y&apos;] and default value &apos;P3Y&apos;; properties/subscriptionId; properties/resourceGroup. </param>
-        /// <param name="orderby"> May be used to order the recommendations by: properties/armSkuName. For the savings plan, the results are in order by default. There is no need to use this clause. </param>
-        /// <param name="expand"> May be used to expand the properties by: properties/usage, properties/allRecommendationDetails. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public static Pageable<BenefitRecommendationModel> GetBenefitRecommendations(this ArmClient client, ResourceIdentifier scope, string filter = null, string orderby = null, string expand = null, CancellationToken cancellationToken = default)
-        {
-            return GetCostManagementArmResourceExtension(client, scope).GetBenefitRecommendations(filter, orderby, expand, cancellationToken);
-        }
-
-        /// <summary>
-        /// Lists the forecast charges for scope defined.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/{scope}/providers/Microsoft.CostManagement/forecast</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Forecast_Usage</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="scope"> The scope that the resource will apply against. </param>
-        /// <param name="forecastDefinition"> Parameters supplied to the CreateOrUpdate Forecast Config operation. </param>
-        /// <param name="filter"> May be used to filter forecasts by properties/usageDate (Utc time), properties/chargeType or properties/grain. The filter supports &apos;eq&apos;, &apos;lt&apos;, &apos;gt&apos;, &apos;le&apos;, &apos;ge&apos;, and &apos;and&apos;. It does not currently support &apos;ne&apos;, &apos;or&apos;, or &apos;not&apos;. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="forecastDefinition"/> is null. </exception>
-        public static async Task<Response<ForecastResult>> UsageForecastAsync(this ArmClient client, ResourceIdentifier scope, ForecastDefinition forecastDefinition, string filter = null, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(forecastDefinition, nameof(forecastDefinition));
-
-            return await GetCostManagementArmResourceExtension(client, scope).UsageForecastAsync(forecastDefinition, filter, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Lists the forecast charges for scope defined.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/{scope}/providers/Microsoft.CostManagement/forecast</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Forecast_Usage</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="scope"> The scope that the resource will apply against. </param>
-        /// <param name="forecastDefinition"> Parameters supplied to the CreateOrUpdate Forecast Config operation. </param>
-        /// <param name="filter"> May be used to filter forecasts by properties/usageDate (Utc time), properties/chargeType or properties/grain. The filter supports &apos;eq&apos;, &apos;lt&apos;, &apos;gt&apos;, &apos;le&apos;, &apos;ge&apos;, and &apos;and&apos;. It does not currently support &apos;ne&apos;, &apos;or&apos;, or &apos;not&apos;. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="forecastDefinition"/> is null. </exception>
-        public static Response<ForecastResult> UsageForecast(this ArmClient client, ResourceIdentifier scope, ForecastDefinition forecastDefinition, string filter = null, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(forecastDefinition, nameof(forecastDefinition));
-
-            return GetCostManagementArmResourceExtension(client, scope).UsageForecast(forecastDefinition, filter, cancellationToken);
-        }
-
-        /// <summary>
-        /// Lists the dimensions by the defined scope.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/{scope}/providers/Microsoft.CostManagement/dimensions</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Dimensions_List</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="scope"> The scope that the resource will apply against. </param>
-        /// <param name="filter"> May be used to filter dimensions by properties/category, properties/usageStart, properties/usageEnd. Supported operators are &apos;eq&apos;,&apos;lt&apos;, &apos;gt&apos;, &apos;le&apos;, &apos;ge&apos;. </param>
-        /// <param name="expand"> May be used to expand the properties/data within a dimension category. By default, data is not included when listing dimensions. </param>
-        /// <param name="skiptoken"> Skiptoken is only used if a previous operation returned a partial result. If a previous response contains a nextLink element, the value of the nextLink element will include a skiptoken parameter that specifies a starting point to use for subsequent calls. </param>
-        /// <param name="top"> May be used to limit the number of results to the most recent N dimension data. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public static AsyncPageable<CostManagementDimension> GetDimensionsAsync(this ArmClient client, ResourceIdentifier scope, string filter = null, string expand = null, string skiptoken = null, int? top = null, CancellationToken cancellationToken = default)
-        {
-            return GetCostManagementArmResourceExtension(client, scope).GetDimensionsAsync(filter, expand, skiptoken, top, cancellationToken);
-        }
-
-        /// <summary>
-        /// Lists the dimensions by the defined scope.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/{scope}/providers/Microsoft.CostManagement/dimensions</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Dimensions_List</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="scope"> The scope that the resource will apply against. </param>
-        /// <param name="filter"> May be used to filter dimensions by properties/category, properties/usageStart, properties/usageEnd. Supported operators are &apos;eq&apos;,&apos;lt&apos;, &apos;gt&apos;, &apos;le&apos;, &apos;ge&apos;. </param>
-        /// <param name="expand"> May be used to expand the properties/data within a dimension category. By default, data is not included when listing dimensions. </param>
-        /// <param name="skiptoken"> Skiptoken is only used if a previous operation returned a partial result. If a previous response contains a nextLink element, the value of the nextLink element will include a skiptoken parameter that specifies a starting point to use for subsequent calls. </param>
-        /// <param name="top"> May be used to limit the number of results to the most recent N dimension data. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public static Pageable<CostManagementDimension> GetDimensions(this ArmClient client, ResourceIdentifier scope, string filter = null, string expand = null, string skiptoken = null, int? top = null, CancellationToken cancellationToken = default)
-        {
-            return GetCostManagementArmResourceExtension(client, scope).GetDimensions(filter, expand, skiptoken, top, cancellationToken);
-        }
-
-        /// <summary>
-        /// Query the usage data for scope defined.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/{scope}/providers/Microsoft.CostManagement/query</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Query_Usage</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="scope"> The scope that the resource will apply against. </param>
-        /// <param name="queryDefinition"> Parameters supplied to the CreateOrUpdate Query Config operation. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="queryDefinition"/> is null. </exception>
-        public static async Task<Response<QueryResult>> UsageQueryAsync(this ArmClient client, ResourceIdentifier scope, QueryDefinition queryDefinition, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(queryDefinition, nameof(queryDefinition));
-
-            return await GetCostManagementArmResourceExtension(client, scope).UsageQueryAsync(queryDefinition, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Query the usage data for scope defined.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/{scope}/providers/Microsoft.CostManagement/query</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Query_Usage</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="scope"> The scope that the resource will apply against. </param>
-        /// <param name="queryDefinition"> Parameters supplied to the CreateOrUpdate Query Config operation. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="queryDefinition"/> is null. </exception>
-        public static Response<QueryResult> UsageQuery(this ArmClient client, ResourceIdentifier scope, QueryDefinition queryDefinition, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(queryDefinition, nameof(queryDefinition));
-
-            return GetCostManagementArmResourceExtension(client, scope).UsageQuery(queryDefinition, cancellationToken);
-        }
-
-        /// <summary>
-        /// Checks availability and correctness of the name for a scheduled action within the given scope.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/{scope}/providers/Microsoft.CostManagement/checkNameAvailability</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ScheduledActions_CheckNameAvailabilityByScope</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="scope"> The scope that the resource will apply against. </param>
-        /// <param name="checkNameAvailabilityRequest"> Scheduled action to be created or updated. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="checkNameAvailabilityRequest"/> is null. </exception>
-        public static async Task<Response<CheckNameAvailabilityResponse>> CheckNameAvailabilityByScopeScheduledActionAsync(this ArmClient client, ResourceIdentifier scope, CheckNameAvailabilityRequest checkNameAvailabilityRequest, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(checkNameAvailabilityRequest, nameof(checkNameAvailabilityRequest));
-
-            return await GetCostManagementArmResourceExtension(client, scope).CheckNameAvailabilityByScopeScheduledActionAsync(checkNameAvailabilityRequest, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Checks availability and correctness of the name for a scheduled action within the given scope.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/{scope}/providers/Microsoft.CostManagement/checkNameAvailability</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ScheduledActions_CheckNameAvailabilityByScope</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="scope"> The scope that the resource will apply against. </param>
-        /// <param name="checkNameAvailabilityRequest"> Scheduled action to be created or updated. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="checkNameAvailabilityRequest"/> is null. </exception>
-        public static Response<CheckNameAvailabilityResponse> CheckNameAvailabilityByScopeScheduledAction(this ArmClient client, ResourceIdentifier scope, CheckNameAvailabilityRequest checkNameAvailabilityRequest, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(checkNameAvailabilityRequest, nameof(checkNameAvailabilityRequest));
-
-            return GetCostManagementArmResourceExtension(client, scope).CheckNameAvailabilityByScopeScheduledAction(checkNameAvailabilityRequest, cancellationToken);
+            TryGetApiVersion(resourceType, out string apiVersion);
+            return apiVersion;
         }
 
         /// <summary> Gets a collection of TenantsCostManagementViewsResources in the TenantResource. </summary>
-        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
         /// <returns> An object representing collection of TenantsCostManagementViewsResources and their operations over a TenantsCostManagementViewsResource. </returns>
-        public static TenantsCostManagementViewsCollection GetAllTenantsCostManagementViews(this TenantResource tenantResource)
+        public virtual TenantsCostManagementViewsCollection GetAllTenantsCostManagementViews()
         {
-            return GetCostManagementTenantResourceExtension(tenantResource).GetAllTenantsCostManagementViews();
-        }
-
-        /// <summary>
-        /// Gets the view by view name.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.CostManagement/views/{viewName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Views_Get</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
-        /// <param name="viewName"> View name. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="viewName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="viewName"/> is null. </exception>
-        [ForwardsClientCalls]
-        public static async Task<Response<TenantsCostManagementViewsResource>> GetTenantsCostManagementViewsAsync(this TenantResource tenantResource, string viewName, CancellationToken cancellationToken = default)
-        {
-            return await tenantResource.GetAllTenantsCostManagementViews().GetAsync(viewName, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Gets the view by view name.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.CostManagement/views/{viewName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Views_Get</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
-        /// <param name="viewName"> View name. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="viewName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="viewName"/> is null. </exception>
-        [ForwardsClientCalls]
-        public static Response<TenantsCostManagementViewsResource> GetTenantsCostManagementViews(this TenantResource tenantResource, string viewName, CancellationToken cancellationToken = default)
-        {
-            return tenantResource.GetAllTenantsCostManagementViews().Get(viewName, cancellationToken);
+            return GetCachedClient(Client => new TenantsCostManagementViewsCollection(Client, Id));
         }
 
         /// <summary> Gets a collection of TenantScheduledActionResources in the TenantResource. </summary>
-        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
         /// <returns> An object representing collection of TenantScheduledActionResources and their operations over a TenantScheduledActionResource. </returns>
-        public static TenantScheduledActionCollection GetTenantScheduledActions(this TenantResource tenantResource)
+        public virtual TenantScheduledActionCollection GetTenantScheduledActions()
         {
-            return GetCostManagementTenantResourceExtension(tenantResource).GetTenantScheduledActions();
-        }
-
-        /// <summary>
-        /// Get the private scheduled action by name.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.CostManagement/scheduledActions/{name}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ScheduledActions_Get</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
-        /// <param name="name"> Scheduled action name. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        [ForwardsClientCalls]
-        public static async Task<Response<TenantScheduledActionResource>> GetTenantScheduledActionAsync(this TenantResource tenantResource, string name, CancellationToken cancellationToken = default)
-        {
-            return await tenantResource.GetTenantScheduledActions().GetAsync(name, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Get the private scheduled action by name.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.CostManagement/scheduledActions/{name}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ScheduledActions_Get</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
-        /// <param name="name"> Scheduled action name. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        [ForwardsClientCalls]
-        public static Response<TenantScheduledActionResource> GetTenantScheduledAction(this TenantResource tenantResource, string name, CancellationToken cancellationToken = default)
-        {
-            return tenantResource.GetTenantScheduledActions().Get(name, cancellationToken);
+            return GetCachedClient(Client => new TenantScheduledActionCollection(Client, Id));
         }
 
         /// <summary>
@@ -776,7 +123,6 @@ namespace Azure.ResourceManager.CostManagement
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
         /// <param name="billingAccountId"> Billing account ID. </param>
         /// <param name="grainParameter"> Grain. </param>
         /// <param name="filter"> Supports filtering by properties/benefitId, properties/benefitOrderId and properties/usageDate. </param>
@@ -784,11 +130,13 @@ namespace Azure.ResourceManager.CostManagement
         /// <exception cref="ArgumentException"> <paramref name="billingAccountId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="billingAccountId"/> is null. </exception>
         /// <returns> An async collection of <see cref="BenefitUtilizationSummary" /> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<BenefitUtilizationSummary> GetBenefitUtilizationSummariesByBillingAccountIdAsync(this TenantResource tenantResource, string billingAccountId, GrainParameter? grainParameter = null, string filter = null, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<BenefitUtilizationSummary> GetBenefitUtilizationSummariesByBillingAccountIdAsync(string billingAccountId, GrainParameter? grainParameter = null, string filter = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(billingAccountId, nameof(billingAccountId));
 
-            return GetCostManagementTenantResourceExtension(tenantResource).GetBenefitUtilizationSummariesByBillingAccountIdAsync(billingAccountId, grainParameter, filter, cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => BenefitUtilizationSummariesRestClient.CreateListByBillingAccountIdRequest(billingAccountId, grainParameter, filter);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => BenefitUtilizationSummariesRestClient.CreateListByBillingAccountIdNextPageRequest(nextLink, billingAccountId, grainParameter, filter);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, BenefitUtilizationSummary.DeserializeBenefitUtilizationSummary, BenefitUtilizationSummariesClientDiagnostics, Pipeline, "CostManagementTenantResourceExtension.GetBenefitUtilizationSummariesByBillingAccountId", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -804,7 +152,6 @@ namespace Azure.ResourceManager.CostManagement
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
         /// <param name="billingAccountId"> Billing account ID. </param>
         /// <param name="grainParameter"> Grain. </param>
         /// <param name="filter"> Supports filtering by properties/benefitId, properties/benefitOrderId and properties/usageDate. </param>
@@ -812,11 +159,13 @@ namespace Azure.ResourceManager.CostManagement
         /// <exception cref="ArgumentException"> <paramref name="billingAccountId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="billingAccountId"/> is null. </exception>
         /// <returns> A collection of <see cref="BenefitUtilizationSummary" /> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<BenefitUtilizationSummary> GetBenefitUtilizationSummariesByBillingAccountId(this TenantResource tenantResource, string billingAccountId, GrainParameter? grainParameter = null, string filter = null, CancellationToken cancellationToken = default)
+        public virtual Pageable<BenefitUtilizationSummary> GetBenefitUtilizationSummariesByBillingAccountId(string billingAccountId, GrainParameter? grainParameter = null, string filter = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(billingAccountId, nameof(billingAccountId));
 
-            return GetCostManagementTenantResourceExtension(tenantResource).GetBenefitUtilizationSummariesByBillingAccountId(billingAccountId, grainParameter, filter, cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => BenefitUtilizationSummariesRestClient.CreateListByBillingAccountIdRequest(billingAccountId, grainParameter, filter);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => BenefitUtilizationSummariesRestClient.CreateListByBillingAccountIdNextPageRequest(nextLink, billingAccountId, grainParameter, filter);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, BenefitUtilizationSummary.DeserializeBenefitUtilizationSummary, BenefitUtilizationSummariesClientDiagnostics, Pipeline, "CostManagementTenantResourceExtension.GetBenefitUtilizationSummariesByBillingAccountId", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -832,7 +181,6 @@ namespace Azure.ResourceManager.CostManagement
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
         /// <param name="billingAccountId"> Billing account ID. </param>
         /// <param name="billingProfileId"> Billing profile ID. </param>
         /// <param name="grainParameter"> Grain. </param>
@@ -841,12 +189,14 @@ namespace Azure.ResourceManager.CostManagement
         /// <exception cref="ArgumentException"> <paramref name="billingAccountId"/> or <paramref name="billingProfileId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="billingAccountId"/> or <paramref name="billingProfileId"/> is null. </exception>
         /// <returns> An async collection of <see cref="BenefitUtilizationSummary" /> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<BenefitUtilizationSummary> GetBenefitUtilizationSummariesByBillingProfileIdAsync(this TenantResource tenantResource, string billingAccountId, string billingProfileId, GrainParameter? grainParameter = null, string filter = null, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<BenefitUtilizationSummary> GetBenefitUtilizationSummariesByBillingProfileIdAsync(string billingAccountId, string billingProfileId, GrainParameter? grainParameter = null, string filter = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(billingAccountId, nameof(billingAccountId));
             Argument.AssertNotNullOrEmpty(billingProfileId, nameof(billingProfileId));
 
-            return GetCostManagementTenantResourceExtension(tenantResource).GetBenefitUtilizationSummariesByBillingProfileIdAsync(billingAccountId, billingProfileId, grainParameter, filter, cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => BenefitUtilizationSummariesRestClient.CreateListByBillingProfileIdRequest(billingAccountId, billingProfileId, grainParameter, filter);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => BenefitUtilizationSummariesRestClient.CreateListByBillingProfileIdNextPageRequest(nextLink, billingAccountId, billingProfileId, grainParameter, filter);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, BenefitUtilizationSummary.DeserializeBenefitUtilizationSummary, BenefitUtilizationSummariesClientDiagnostics, Pipeline, "CostManagementTenantResourceExtension.GetBenefitUtilizationSummariesByBillingProfileId", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -862,7 +212,6 @@ namespace Azure.ResourceManager.CostManagement
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
         /// <param name="billingAccountId"> Billing account ID. </param>
         /// <param name="billingProfileId"> Billing profile ID. </param>
         /// <param name="grainParameter"> Grain. </param>
@@ -871,12 +220,14 @@ namespace Azure.ResourceManager.CostManagement
         /// <exception cref="ArgumentException"> <paramref name="billingAccountId"/> or <paramref name="billingProfileId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="billingAccountId"/> or <paramref name="billingProfileId"/> is null. </exception>
         /// <returns> A collection of <see cref="BenefitUtilizationSummary" /> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<BenefitUtilizationSummary> GetBenefitUtilizationSummariesByBillingProfileId(this TenantResource tenantResource, string billingAccountId, string billingProfileId, GrainParameter? grainParameter = null, string filter = null, CancellationToken cancellationToken = default)
+        public virtual Pageable<BenefitUtilizationSummary> GetBenefitUtilizationSummariesByBillingProfileId(string billingAccountId, string billingProfileId, GrainParameter? grainParameter = null, string filter = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(billingAccountId, nameof(billingAccountId));
             Argument.AssertNotNullOrEmpty(billingProfileId, nameof(billingProfileId));
 
-            return GetCostManagementTenantResourceExtension(tenantResource).GetBenefitUtilizationSummariesByBillingProfileId(billingAccountId, billingProfileId, grainParameter, filter, cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => BenefitUtilizationSummariesRestClient.CreateListByBillingProfileIdRequest(billingAccountId, billingProfileId, grainParameter, filter);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => BenefitUtilizationSummariesRestClient.CreateListByBillingProfileIdNextPageRequest(nextLink, billingAccountId, billingProfileId, grainParameter, filter);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, BenefitUtilizationSummary.DeserializeBenefitUtilizationSummary, BenefitUtilizationSummariesClientDiagnostics, Pipeline, "CostManagementTenantResourceExtension.GetBenefitUtilizationSummariesByBillingProfileId", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -892,7 +243,6 @@ namespace Azure.ResourceManager.CostManagement
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
         /// <param name="savingsPlanOrderId"> Savings plan order ID. </param>
         /// <param name="filter"> Supports filtering by properties/usageDate. </param>
         /// <param name="grainParameter"> Grain. </param>
@@ -900,11 +250,13 @@ namespace Azure.ResourceManager.CostManagement
         /// <exception cref="ArgumentException"> <paramref name="savingsPlanOrderId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="savingsPlanOrderId"/> is null. </exception>
         /// <returns> An async collection of <see cref="BenefitUtilizationSummary" /> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<BenefitUtilizationSummary> GetBenefitUtilizationSummariesBySavingsPlanOrderAsync(this TenantResource tenantResource, string savingsPlanOrderId, string filter = null, GrainParameter? grainParameter = null, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<BenefitUtilizationSummary> GetBenefitUtilizationSummariesBySavingsPlanOrderAsync(string savingsPlanOrderId, string filter = null, GrainParameter? grainParameter = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(savingsPlanOrderId, nameof(savingsPlanOrderId));
 
-            return GetCostManagementTenantResourceExtension(tenantResource).GetBenefitUtilizationSummariesBySavingsPlanOrderAsync(savingsPlanOrderId, filter, grainParameter, cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => BenefitUtilizationSummariesRestClient.CreateListBySavingsPlanOrderRequest(savingsPlanOrderId, filter, grainParameter);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => BenefitUtilizationSummariesRestClient.CreateListBySavingsPlanOrderNextPageRequest(nextLink, savingsPlanOrderId, filter, grainParameter);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, BenefitUtilizationSummary.DeserializeBenefitUtilizationSummary, BenefitUtilizationSummariesClientDiagnostics, Pipeline, "CostManagementTenantResourceExtension.GetBenefitUtilizationSummariesBySavingsPlanOrder", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -920,7 +272,6 @@ namespace Azure.ResourceManager.CostManagement
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
         /// <param name="savingsPlanOrderId"> Savings plan order ID. </param>
         /// <param name="filter"> Supports filtering by properties/usageDate. </param>
         /// <param name="grainParameter"> Grain. </param>
@@ -928,11 +279,13 @@ namespace Azure.ResourceManager.CostManagement
         /// <exception cref="ArgumentException"> <paramref name="savingsPlanOrderId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="savingsPlanOrderId"/> is null. </exception>
         /// <returns> A collection of <see cref="BenefitUtilizationSummary" /> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<BenefitUtilizationSummary> GetBenefitUtilizationSummariesBySavingsPlanOrder(this TenantResource tenantResource, string savingsPlanOrderId, string filter = null, GrainParameter? grainParameter = null, CancellationToken cancellationToken = default)
+        public virtual Pageable<BenefitUtilizationSummary> GetBenefitUtilizationSummariesBySavingsPlanOrder(string savingsPlanOrderId, string filter = null, GrainParameter? grainParameter = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(savingsPlanOrderId, nameof(savingsPlanOrderId));
 
-            return GetCostManagementTenantResourceExtension(tenantResource).GetBenefitUtilizationSummariesBySavingsPlanOrder(savingsPlanOrderId, filter, grainParameter, cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => BenefitUtilizationSummariesRestClient.CreateListBySavingsPlanOrderRequest(savingsPlanOrderId, filter, grainParameter);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => BenefitUtilizationSummariesRestClient.CreateListBySavingsPlanOrderNextPageRequest(nextLink, savingsPlanOrderId, filter, grainParameter);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, BenefitUtilizationSummary.DeserializeBenefitUtilizationSummary, BenefitUtilizationSummariesClientDiagnostics, Pipeline, "CostManagementTenantResourceExtension.GetBenefitUtilizationSummariesBySavingsPlanOrder", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -948,7 +301,6 @@ namespace Azure.ResourceManager.CostManagement
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
         /// <param name="savingsPlanOrderId"> Savings plan order ID. </param>
         /// <param name="savingsPlanId"> Savings plan ID. </param>
         /// <param name="filter"> Supports filtering by properties/usageDate. </param>
@@ -957,12 +309,14 @@ namespace Azure.ResourceManager.CostManagement
         /// <exception cref="ArgumentException"> <paramref name="savingsPlanOrderId"/> or <paramref name="savingsPlanId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="savingsPlanOrderId"/> or <paramref name="savingsPlanId"/> is null. </exception>
         /// <returns> An async collection of <see cref="BenefitUtilizationSummary" /> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<BenefitUtilizationSummary> GetBenefitUtilizationSummariesBySavingsPlanIdAsync(this TenantResource tenantResource, string savingsPlanOrderId, string savingsPlanId, string filter = null, GrainParameter? grainParameter = null, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<BenefitUtilizationSummary> GetBenefitUtilizationSummariesBySavingsPlanIdAsync(string savingsPlanOrderId, string savingsPlanId, string filter = null, GrainParameter? grainParameter = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(savingsPlanOrderId, nameof(savingsPlanOrderId));
             Argument.AssertNotNullOrEmpty(savingsPlanId, nameof(savingsPlanId));
 
-            return GetCostManagementTenantResourceExtension(tenantResource).GetBenefitUtilizationSummariesBySavingsPlanIdAsync(savingsPlanOrderId, savingsPlanId, filter, grainParameter, cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => BenefitUtilizationSummariesRestClient.CreateListBySavingsPlanIdRequest(savingsPlanOrderId, savingsPlanId, filter, grainParameter);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => BenefitUtilizationSummariesRestClient.CreateListBySavingsPlanIdNextPageRequest(nextLink, savingsPlanOrderId, savingsPlanId, filter, grainParameter);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, BenefitUtilizationSummary.DeserializeBenefitUtilizationSummary, BenefitUtilizationSummariesClientDiagnostics, Pipeline, "CostManagementTenantResourceExtension.GetBenefitUtilizationSummariesBySavingsPlanId", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -978,7 +332,6 @@ namespace Azure.ResourceManager.CostManagement
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
         /// <param name="savingsPlanOrderId"> Savings plan order ID. </param>
         /// <param name="savingsPlanId"> Savings plan ID. </param>
         /// <param name="filter"> Supports filtering by properties/usageDate. </param>
@@ -987,12 +340,14 @@ namespace Azure.ResourceManager.CostManagement
         /// <exception cref="ArgumentException"> <paramref name="savingsPlanOrderId"/> or <paramref name="savingsPlanId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="savingsPlanOrderId"/> or <paramref name="savingsPlanId"/> is null. </exception>
         /// <returns> A collection of <see cref="BenefitUtilizationSummary" /> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<BenefitUtilizationSummary> GetBenefitUtilizationSummariesBySavingsPlanId(this TenantResource tenantResource, string savingsPlanOrderId, string savingsPlanId, string filter = null, GrainParameter? grainParameter = null, CancellationToken cancellationToken = default)
+        public virtual Pageable<BenefitUtilizationSummary> GetBenefitUtilizationSummariesBySavingsPlanId(string savingsPlanOrderId, string savingsPlanId, string filter = null, GrainParameter? grainParameter = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(savingsPlanOrderId, nameof(savingsPlanOrderId));
             Argument.AssertNotNullOrEmpty(savingsPlanId, nameof(savingsPlanId));
 
-            return GetCostManagementTenantResourceExtension(tenantResource).GetBenefitUtilizationSummariesBySavingsPlanId(savingsPlanOrderId, savingsPlanId, filter, grainParameter, cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => BenefitUtilizationSummariesRestClient.CreateListBySavingsPlanIdRequest(savingsPlanOrderId, savingsPlanId, filter, grainParameter);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => BenefitUtilizationSummariesRestClient.CreateListBySavingsPlanIdNextPageRequest(nextLink, savingsPlanOrderId, savingsPlanId, filter, grainParameter);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, BenefitUtilizationSummary.DeserializeBenefitUtilizationSummary, BenefitUtilizationSummariesClientDiagnostics, Pipeline, "CostManagementTenantResourceExtension.GetBenefitUtilizationSummariesBySavingsPlanId", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -1008,19 +363,32 @@ namespace Azure.ResourceManager.CostManagement
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="billingAccountId"> Billing account ID. </param>
         /// <param name="benefitUtilizationSummariesRequest"> Async Benefit Utilization Summary report to be created. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="billingAccountId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="billingAccountId"/> or <paramref name="benefitUtilizationSummariesRequest"/> is null. </exception>
-        public static async Task<ArmOperation<BenefitUtilizationSummariesOperationStatus>> GenerateBenefitUtilizationSummariesReportBillingAccountScopeAsync(this TenantResource tenantResource, WaitUntil waitUntil, string billingAccountId, BenefitUtilizationSummariesRequest benefitUtilizationSummariesRequest, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<BenefitUtilizationSummariesOperationStatus>> GenerateBenefitUtilizationSummariesReportBillingAccountScopeAsync(WaitUntil waitUntil, string billingAccountId, BenefitUtilizationSummariesRequest benefitUtilizationSummariesRequest, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(billingAccountId, nameof(billingAccountId));
             Argument.AssertNotNull(benefitUtilizationSummariesRequest, nameof(benefitUtilizationSummariesRequest));
 
-            return await GetCostManagementTenantResourceExtension(tenantResource).GenerateBenefitUtilizationSummariesReportBillingAccountScopeAsync(waitUntil, billingAccountId, benefitUtilizationSummariesRequest, cancellationToken).ConfigureAwait(false);
+            using var scope = BillingAccountScopeClientDiagnostics.CreateScope("CostManagementTenantResourceExtension.GenerateBenefitUtilizationSummariesReportBillingAccountScope");
+            scope.Start();
+            try
+            {
+                var response = await BillingAccountScopeRestClient.GenerateBenefitUtilizationSummariesReportAsync(billingAccountId, benefitUtilizationSummariesRequest, cancellationToken).ConfigureAwait(false);
+                var operation = new CostManagementArmOperation<BenefitUtilizationSummariesOperationStatus>(new BenefitUtilizationSummariesOperationStatusOperationSource(), BillingAccountScopeClientDiagnostics, Pipeline, BillingAccountScopeRestClient.CreateGenerateBenefitUtilizationSummariesReportRequest(billingAccountId, benefitUtilizationSummariesRequest).Request, response, OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                    await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary>
@@ -1036,19 +404,32 @@ namespace Azure.ResourceManager.CostManagement
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="billingAccountId"> Billing account ID. </param>
         /// <param name="benefitUtilizationSummariesRequest"> Async Benefit Utilization Summary report to be created. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="billingAccountId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="billingAccountId"/> or <paramref name="benefitUtilizationSummariesRequest"/> is null. </exception>
-        public static ArmOperation<BenefitUtilizationSummariesOperationStatus> GenerateBenefitUtilizationSummariesReportBillingAccountScope(this TenantResource tenantResource, WaitUntil waitUntil, string billingAccountId, BenefitUtilizationSummariesRequest benefitUtilizationSummariesRequest, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<BenefitUtilizationSummariesOperationStatus> GenerateBenefitUtilizationSummariesReportBillingAccountScope(WaitUntil waitUntil, string billingAccountId, BenefitUtilizationSummariesRequest benefitUtilizationSummariesRequest, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(billingAccountId, nameof(billingAccountId));
             Argument.AssertNotNull(benefitUtilizationSummariesRequest, nameof(benefitUtilizationSummariesRequest));
 
-            return GetCostManagementTenantResourceExtension(tenantResource).GenerateBenefitUtilizationSummariesReportBillingAccountScope(waitUntil, billingAccountId, benefitUtilizationSummariesRequest, cancellationToken);
+            using var scope = BillingAccountScopeClientDiagnostics.CreateScope("CostManagementTenantResourceExtension.GenerateBenefitUtilizationSummariesReportBillingAccountScope");
+            scope.Start();
+            try
+            {
+                var response = BillingAccountScopeRestClient.GenerateBenefitUtilizationSummariesReport(billingAccountId, benefitUtilizationSummariesRequest, cancellationToken);
+                var operation = new CostManagementArmOperation<BenefitUtilizationSummariesOperationStatus>(new BenefitUtilizationSummariesOperationStatusOperationSource(), BillingAccountScopeClientDiagnostics, Pipeline, BillingAccountScopeRestClient.CreateGenerateBenefitUtilizationSummariesReportRequest(billingAccountId, benefitUtilizationSummariesRequest).Request, response, OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                    operation.WaitForCompletion(cancellationToken);
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary>
@@ -1064,7 +445,6 @@ namespace Azure.ResourceManager.CostManagement
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="billingAccountId"> Billing account ID. </param>
         /// <param name="billingProfileId"> Billing profile ID. </param>
@@ -1072,13 +452,27 @@ namespace Azure.ResourceManager.CostManagement
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="billingAccountId"/> or <paramref name="billingProfileId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="billingAccountId"/>, <paramref name="billingProfileId"/> or <paramref name="benefitUtilizationSummariesRequest"/> is null. </exception>
-        public static async Task<ArmOperation<BenefitUtilizationSummariesOperationStatus>> GenerateBenefitUtilizationSummariesReportBillingProfileScopeAsync(this TenantResource tenantResource, WaitUntil waitUntil, string billingAccountId, string billingProfileId, BenefitUtilizationSummariesRequest benefitUtilizationSummariesRequest, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<BenefitUtilizationSummariesOperationStatus>> GenerateBenefitUtilizationSummariesReportBillingProfileScopeAsync(WaitUntil waitUntil, string billingAccountId, string billingProfileId, BenefitUtilizationSummariesRequest benefitUtilizationSummariesRequest, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(billingAccountId, nameof(billingAccountId));
             Argument.AssertNotNullOrEmpty(billingProfileId, nameof(billingProfileId));
             Argument.AssertNotNull(benefitUtilizationSummariesRequest, nameof(benefitUtilizationSummariesRequest));
 
-            return await GetCostManagementTenantResourceExtension(tenantResource).GenerateBenefitUtilizationSummariesReportBillingProfileScopeAsync(waitUntil, billingAccountId, billingProfileId, benefitUtilizationSummariesRequest, cancellationToken).ConfigureAwait(false);
+            using var scope = BillingProfileScopeClientDiagnostics.CreateScope("CostManagementTenantResourceExtension.GenerateBenefitUtilizationSummariesReportBillingProfileScope");
+            scope.Start();
+            try
+            {
+                var response = await BillingProfileScopeRestClient.GenerateBenefitUtilizationSummariesReportAsync(billingAccountId, billingProfileId, benefitUtilizationSummariesRequest, cancellationToken).ConfigureAwait(false);
+                var operation = new CostManagementArmOperation<BenefitUtilizationSummariesOperationStatus>(new BenefitUtilizationSummariesOperationStatusOperationSource(), BillingProfileScopeClientDiagnostics, Pipeline, BillingProfileScopeRestClient.CreateGenerateBenefitUtilizationSummariesReportRequest(billingAccountId, billingProfileId, benefitUtilizationSummariesRequest).Request, response, OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                    await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary>
@@ -1094,7 +488,6 @@ namespace Azure.ResourceManager.CostManagement
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="billingAccountId"> Billing account ID. </param>
         /// <param name="billingProfileId"> Billing profile ID. </param>
@@ -1102,13 +495,27 @@ namespace Azure.ResourceManager.CostManagement
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="billingAccountId"/> or <paramref name="billingProfileId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="billingAccountId"/>, <paramref name="billingProfileId"/> or <paramref name="benefitUtilizationSummariesRequest"/> is null. </exception>
-        public static ArmOperation<BenefitUtilizationSummariesOperationStatus> GenerateBenefitUtilizationSummariesReportBillingProfileScope(this TenantResource tenantResource, WaitUntil waitUntil, string billingAccountId, string billingProfileId, BenefitUtilizationSummariesRequest benefitUtilizationSummariesRequest, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<BenefitUtilizationSummariesOperationStatus> GenerateBenefitUtilizationSummariesReportBillingProfileScope(WaitUntil waitUntil, string billingAccountId, string billingProfileId, BenefitUtilizationSummariesRequest benefitUtilizationSummariesRequest, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(billingAccountId, nameof(billingAccountId));
             Argument.AssertNotNullOrEmpty(billingProfileId, nameof(billingProfileId));
             Argument.AssertNotNull(benefitUtilizationSummariesRequest, nameof(benefitUtilizationSummariesRequest));
 
-            return GetCostManagementTenantResourceExtension(tenantResource).GenerateBenefitUtilizationSummariesReportBillingProfileScope(waitUntil, billingAccountId, billingProfileId, benefitUtilizationSummariesRequest, cancellationToken);
+            using var scope = BillingProfileScopeClientDiagnostics.CreateScope("CostManagementTenantResourceExtension.GenerateBenefitUtilizationSummariesReportBillingProfileScope");
+            scope.Start();
+            try
+            {
+                var response = BillingProfileScopeRestClient.GenerateBenefitUtilizationSummariesReport(billingAccountId, billingProfileId, benefitUtilizationSummariesRequest, cancellationToken);
+                var operation = new CostManagementArmOperation<BenefitUtilizationSummariesOperationStatus>(new BenefitUtilizationSummariesOperationStatusOperationSource(), BillingProfileScopeClientDiagnostics, Pipeline, BillingProfileScopeRestClient.CreateGenerateBenefitUtilizationSummariesReportRequest(billingAccountId, billingProfileId, benefitUtilizationSummariesRequest).Request, response, OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                    operation.WaitForCompletion(cancellationToken);
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary>
@@ -1124,19 +531,32 @@ namespace Azure.ResourceManager.CostManagement
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="reservationOrderId"> Reservation Order ID. </param>
         /// <param name="benefitUtilizationSummariesRequest"> Async Benefit Utilization Summary report to be created. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="reservationOrderId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="reservationOrderId"/> or <paramref name="benefitUtilizationSummariesRequest"/> is null. </exception>
-        public static async Task<ArmOperation<BenefitUtilizationSummariesOperationStatus>> GenerateBenefitUtilizationSummariesReportReservationOrderScopeAsync(this TenantResource tenantResource, WaitUntil waitUntil, string reservationOrderId, BenefitUtilizationSummariesRequest benefitUtilizationSummariesRequest, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<BenefitUtilizationSummariesOperationStatus>> GenerateBenefitUtilizationSummariesReportReservationOrderScopeAsync(WaitUntil waitUntil, string reservationOrderId, BenefitUtilizationSummariesRequest benefitUtilizationSummariesRequest, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(reservationOrderId, nameof(reservationOrderId));
             Argument.AssertNotNull(benefitUtilizationSummariesRequest, nameof(benefitUtilizationSummariesRequest));
 
-            return await GetCostManagementTenantResourceExtension(tenantResource).GenerateBenefitUtilizationSummariesReportReservationOrderScopeAsync(waitUntil, reservationOrderId, benefitUtilizationSummariesRequest, cancellationToken).ConfigureAwait(false);
+            using var scope = ReservationOrderScopeClientDiagnostics.CreateScope("CostManagementTenantResourceExtension.GenerateBenefitUtilizationSummariesReportReservationOrderScope");
+            scope.Start();
+            try
+            {
+                var response = await ReservationOrderScopeRestClient.GenerateBenefitUtilizationSummariesReportAsync(reservationOrderId, benefitUtilizationSummariesRequest, cancellationToken).ConfigureAwait(false);
+                var operation = new CostManagementArmOperation<BenefitUtilizationSummariesOperationStatus>(new BenefitUtilizationSummariesOperationStatusOperationSource(), ReservationOrderScopeClientDiagnostics, Pipeline, ReservationOrderScopeRestClient.CreateGenerateBenefitUtilizationSummariesReportRequest(reservationOrderId, benefitUtilizationSummariesRequest).Request, response, OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                    await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary>
@@ -1152,19 +572,32 @@ namespace Azure.ResourceManager.CostManagement
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="reservationOrderId"> Reservation Order ID. </param>
         /// <param name="benefitUtilizationSummariesRequest"> Async Benefit Utilization Summary report to be created. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="reservationOrderId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="reservationOrderId"/> or <paramref name="benefitUtilizationSummariesRequest"/> is null. </exception>
-        public static ArmOperation<BenefitUtilizationSummariesOperationStatus> GenerateBenefitUtilizationSummariesReportReservationOrderScope(this TenantResource tenantResource, WaitUntil waitUntil, string reservationOrderId, BenefitUtilizationSummariesRequest benefitUtilizationSummariesRequest, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<BenefitUtilizationSummariesOperationStatus> GenerateBenefitUtilizationSummariesReportReservationOrderScope(WaitUntil waitUntil, string reservationOrderId, BenefitUtilizationSummariesRequest benefitUtilizationSummariesRequest, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(reservationOrderId, nameof(reservationOrderId));
             Argument.AssertNotNull(benefitUtilizationSummariesRequest, nameof(benefitUtilizationSummariesRequest));
 
-            return GetCostManagementTenantResourceExtension(tenantResource).GenerateBenefitUtilizationSummariesReportReservationOrderScope(waitUntil, reservationOrderId, benefitUtilizationSummariesRequest, cancellationToken);
+            using var scope = ReservationOrderScopeClientDiagnostics.CreateScope("CostManagementTenantResourceExtension.GenerateBenefitUtilizationSummariesReportReservationOrderScope");
+            scope.Start();
+            try
+            {
+                var response = ReservationOrderScopeRestClient.GenerateBenefitUtilizationSummariesReport(reservationOrderId, benefitUtilizationSummariesRequest, cancellationToken);
+                var operation = new CostManagementArmOperation<BenefitUtilizationSummariesOperationStatus>(new BenefitUtilizationSummariesOperationStatusOperationSource(), ReservationOrderScopeClientDiagnostics, Pipeline, ReservationOrderScopeRestClient.CreateGenerateBenefitUtilizationSummariesReportRequest(reservationOrderId, benefitUtilizationSummariesRequest).Request, response, OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                    operation.WaitForCompletion(cancellationToken);
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary>
@@ -1180,7 +613,6 @@ namespace Azure.ResourceManager.CostManagement
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="reservationOrderId"> Reservation Order ID. </param>
         /// <param name="reservationId"> Reservation ID. </param>
@@ -1188,13 +620,27 @@ namespace Azure.ResourceManager.CostManagement
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="reservationOrderId"/> or <paramref name="reservationId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="reservationOrderId"/>, <paramref name="reservationId"/> or <paramref name="benefitUtilizationSummariesRequest"/> is null. </exception>
-        public static async Task<ArmOperation<BenefitUtilizationSummariesOperationStatus>> GenerateBenefitUtilizationSummariesReportReservationScopeAsync(this TenantResource tenantResource, WaitUntil waitUntil, string reservationOrderId, string reservationId, BenefitUtilizationSummariesRequest benefitUtilizationSummariesRequest, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<BenefitUtilizationSummariesOperationStatus>> GenerateBenefitUtilizationSummariesReportReservationScopeAsync(WaitUntil waitUntil, string reservationOrderId, string reservationId, BenefitUtilizationSummariesRequest benefitUtilizationSummariesRequest, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(reservationOrderId, nameof(reservationOrderId));
             Argument.AssertNotNullOrEmpty(reservationId, nameof(reservationId));
             Argument.AssertNotNull(benefitUtilizationSummariesRequest, nameof(benefitUtilizationSummariesRequest));
 
-            return await GetCostManagementTenantResourceExtension(tenantResource).GenerateBenefitUtilizationSummariesReportReservationScopeAsync(waitUntil, reservationOrderId, reservationId, benefitUtilizationSummariesRequest, cancellationToken).ConfigureAwait(false);
+            using var scope = ReservationScopeClientDiagnostics.CreateScope("CostManagementTenantResourceExtension.GenerateBenefitUtilizationSummariesReportReservationScope");
+            scope.Start();
+            try
+            {
+                var response = await ReservationScopeRestClient.GenerateBenefitUtilizationSummariesReportAsync(reservationOrderId, reservationId, benefitUtilizationSummariesRequest, cancellationToken).ConfigureAwait(false);
+                var operation = new CostManagementArmOperation<BenefitUtilizationSummariesOperationStatus>(new BenefitUtilizationSummariesOperationStatusOperationSource(), ReservationScopeClientDiagnostics, Pipeline, ReservationScopeRestClient.CreateGenerateBenefitUtilizationSummariesReportRequest(reservationOrderId, reservationId, benefitUtilizationSummariesRequest).Request, response, OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                    await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary>
@@ -1210,7 +656,6 @@ namespace Azure.ResourceManager.CostManagement
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="reservationOrderId"> Reservation Order ID. </param>
         /// <param name="reservationId"> Reservation ID. </param>
@@ -1218,13 +663,27 @@ namespace Azure.ResourceManager.CostManagement
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="reservationOrderId"/> or <paramref name="reservationId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="reservationOrderId"/>, <paramref name="reservationId"/> or <paramref name="benefitUtilizationSummariesRequest"/> is null. </exception>
-        public static ArmOperation<BenefitUtilizationSummariesOperationStatus> GenerateBenefitUtilizationSummariesReportReservationScope(this TenantResource tenantResource, WaitUntil waitUntil, string reservationOrderId, string reservationId, BenefitUtilizationSummariesRequest benefitUtilizationSummariesRequest, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<BenefitUtilizationSummariesOperationStatus> GenerateBenefitUtilizationSummariesReportReservationScope(WaitUntil waitUntil, string reservationOrderId, string reservationId, BenefitUtilizationSummariesRequest benefitUtilizationSummariesRequest, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(reservationOrderId, nameof(reservationOrderId));
             Argument.AssertNotNullOrEmpty(reservationId, nameof(reservationId));
             Argument.AssertNotNull(benefitUtilizationSummariesRequest, nameof(benefitUtilizationSummariesRequest));
 
-            return GetCostManagementTenantResourceExtension(tenantResource).GenerateBenefitUtilizationSummariesReportReservationScope(waitUntil, reservationOrderId, reservationId, benefitUtilizationSummariesRequest, cancellationToken);
+            using var scope = ReservationScopeClientDiagnostics.CreateScope("CostManagementTenantResourceExtension.GenerateBenefitUtilizationSummariesReportReservationScope");
+            scope.Start();
+            try
+            {
+                var response = ReservationScopeRestClient.GenerateBenefitUtilizationSummariesReport(reservationOrderId, reservationId, benefitUtilizationSummariesRequest, cancellationToken);
+                var operation = new CostManagementArmOperation<BenefitUtilizationSummariesOperationStatus>(new BenefitUtilizationSummariesOperationStatusOperationSource(), ReservationScopeClientDiagnostics, Pipeline, ReservationScopeRestClient.CreateGenerateBenefitUtilizationSummariesReportRequest(reservationOrderId, reservationId, benefitUtilizationSummariesRequest).Request, response, OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                    operation.WaitForCompletion(cancellationToken);
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary>
@@ -1240,19 +699,32 @@ namespace Azure.ResourceManager.CostManagement
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="savingsPlanOrderId"> Savings plan order ID. </param>
         /// <param name="benefitUtilizationSummariesRequest"> Async Benefit Utilization Summary report to be created. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="savingsPlanOrderId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="savingsPlanOrderId"/> or <paramref name="benefitUtilizationSummariesRequest"/> is null. </exception>
-        public static async Task<ArmOperation<BenefitUtilizationSummariesOperationStatus>> GenerateBenefitUtilizationSummariesReportSavingsPlanOrderScopeAsync(this TenantResource tenantResource, WaitUntil waitUntil, string savingsPlanOrderId, BenefitUtilizationSummariesRequest benefitUtilizationSummariesRequest, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<BenefitUtilizationSummariesOperationStatus>> GenerateBenefitUtilizationSummariesReportSavingsPlanOrderScopeAsync(WaitUntil waitUntil, string savingsPlanOrderId, BenefitUtilizationSummariesRequest benefitUtilizationSummariesRequest, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(savingsPlanOrderId, nameof(savingsPlanOrderId));
             Argument.AssertNotNull(benefitUtilizationSummariesRequest, nameof(benefitUtilizationSummariesRequest));
 
-            return await GetCostManagementTenantResourceExtension(tenantResource).GenerateBenefitUtilizationSummariesReportSavingsPlanOrderScopeAsync(waitUntil, savingsPlanOrderId, benefitUtilizationSummariesRequest, cancellationToken).ConfigureAwait(false);
+            using var scope = SavingsPlanOrderScopeClientDiagnostics.CreateScope("CostManagementTenantResourceExtension.GenerateBenefitUtilizationSummariesReportSavingsPlanOrderScope");
+            scope.Start();
+            try
+            {
+                var response = await SavingsPlanOrderScopeRestClient.GenerateBenefitUtilizationSummariesReportAsync(savingsPlanOrderId, benefitUtilizationSummariesRequest, cancellationToken).ConfigureAwait(false);
+                var operation = new CostManagementArmOperation<BenefitUtilizationSummariesOperationStatus>(new BenefitUtilizationSummariesOperationStatusOperationSource(), SavingsPlanOrderScopeClientDiagnostics, Pipeline, SavingsPlanOrderScopeRestClient.CreateGenerateBenefitUtilizationSummariesReportRequest(savingsPlanOrderId, benefitUtilizationSummariesRequest).Request, response, OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                    await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary>
@@ -1268,19 +740,32 @@ namespace Azure.ResourceManager.CostManagement
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="savingsPlanOrderId"> Savings plan order ID. </param>
         /// <param name="benefitUtilizationSummariesRequest"> Async Benefit Utilization Summary report to be created. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="savingsPlanOrderId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="savingsPlanOrderId"/> or <paramref name="benefitUtilizationSummariesRequest"/> is null. </exception>
-        public static ArmOperation<BenefitUtilizationSummariesOperationStatus> GenerateBenefitUtilizationSummariesReportSavingsPlanOrderScope(this TenantResource tenantResource, WaitUntil waitUntil, string savingsPlanOrderId, BenefitUtilizationSummariesRequest benefitUtilizationSummariesRequest, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<BenefitUtilizationSummariesOperationStatus> GenerateBenefitUtilizationSummariesReportSavingsPlanOrderScope(WaitUntil waitUntil, string savingsPlanOrderId, BenefitUtilizationSummariesRequest benefitUtilizationSummariesRequest, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(savingsPlanOrderId, nameof(savingsPlanOrderId));
             Argument.AssertNotNull(benefitUtilizationSummariesRequest, nameof(benefitUtilizationSummariesRequest));
 
-            return GetCostManagementTenantResourceExtension(tenantResource).GenerateBenefitUtilizationSummariesReportSavingsPlanOrderScope(waitUntil, savingsPlanOrderId, benefitUtilizationSummariesRequest, cancellationToken);
+            using var scope = SavingsPlanOrderScopeClientDiagnostics.CreateScope("CostManagementTenantResourceExtension.GenerateBenefitUtilizationSummariesReportSavingsPlanOrderScope");
+            scope.Start();
+            try
+            {
+                var response = SavingsPlanOrderScopeRestClient.GenerateBenefitUtilizationSummariesReport(savingsPlanOrderId, benefitUtilizationSummariesRequest, cancellationToken);
+                var operation = new CostManagementArmOperation<BenefitUtilizationSummariesOperationStatus>(new BenefitUtilizationSummariesOperationStatusOperationSource(), SavingsPlanOrderScopeClientDiagnostics, Pipeline, SavingsPlanOrderScopeRestClient.CreateGenerateBenefitUtilizationSummariesReportRequest(savingsPlanOrderId, benefitUtilizationSummariesRequest).Request, response, OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                    operation.WaitForCompletion(cancellationToken);
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary>
@@ -1296,7 +781,6 @@ namespace Azure.ResourceManager.CostManagement
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="savingsPlanOrderId"> Savings plan order ID. </param>
         /// <param name="savingsPlanId"> Savings plan ID. </param>
@@ -1304,13 +788,27 @@ namespace Azure.ResourceManager.CostManagement
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="savingsPlanOrderId"/> or <paramref name="savingsPlanId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="savingsPlanOrderId"/>, <paramref name="savingsPlanId"/> or <paramref name="benefitUtilizationSummariesRequest"/> is null. </exception>
-        public static async Task<ArmOperation<BenefitUtilizationSummariesOperationStatus>> GenerateBenefitUtilizationSummariesReportAsyncSavingsPlanScopeAsync(this TenantResource tenantResource, WaitUntil waitUntil, string savingsPlanOrderId, string savingsPlanId, BenefitUtilizationSummariesRequest benefitUtilizationSummariesRequest, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<BenefitUtilizationSummariesOperationStatus>> GenerateBenefitUtilizationSummariesReportAsyncSavingsPlanScopeAsync(WaitUntil waitUntil, string savingsPlanOrderId, string savingsPlanId, BenefitUtilizationSummariesRequest benefitUtilizationSummariesRequest, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(savingsPlanOrderId, nameof(savingsPlanOrderId));
             Argument.AssertNotNullOrEmpty(savingsPlanId, nameof(savingsPlanId));
             Argument.AssertNotNull(benefitUtilizationSummariesRequest, nameof(benefitUtilizationSummariesRequest));
 
-            return await GetCostManagementTenantResourceExtension(tenantResource).GenerateBenefitUtilizationSummariesReportAsyncSavingsPlanScopeAsync(waitUntil, savingsPlanOrderId, savingsPlanId, benefitUtilizationSummariesRequest, cancellationToken).ConfigureAwait(false);
+            using var scope = SavingsPlanScopeClientDiagnostics.CreateScope("CostManagementTenantResourceExtension.GenerateBenefitUtilizationSummariesReportAsyncSavingsPlanScope");
+            scope.Start();
+            try
+            {
+                var response = await SavingsPlanScopeRestClient.GenerateBenefitUtilizationSummariesReportAsyncAsync(savingsPlanOrderId, savingsPlanId, benefitUtilizationSummariesRequest, cancellationToken).ConfigureAwait(false);
+                var operation = new CostManagementArmOperation<BenefitUtilizationSummariesOperationStatus>(new BenefitUtilizationSummariesOperationStatusOperationSource(), SavingsPlanScopeClientDiagnostics, Pipeline, SavingsPlanScopeRestClient.CreateGenerateBenefitUtilizationSummariesReportAsyncRequest(savingsPlanOrderId, savingsPlanId, benefitUtilizationSummariesRequest).Request, response, OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                    await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary>
@@ -1326,7 +824,6 @@ namespace Azure.ResourceManager.CostManagement
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="savingsPlanOrderId"> Savings plan order ID. </param>
         /// <param name="savingsPlanId"> Savings plan ID. </param>
@@ -1334,13 +831,27 @@ namespace Azure.ResourceManager.CostManagement
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="savingsPlanOrderId"/> or <paramref name="savingsPlanId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="savingsPlanOrderId"/>, <paramref name="savingsPlanId"/> or <paramref name="benefitUtilizationSummariesRequest"/> is null. </exception>
-        public static ArmOperation<BenefitUtilizationSummariesOperationStatus> GenerateBenefitUtilizationSummariesReportAsyncSavingsPlanScope(this TenantResource tenantResource, WaitUntil waitUntil, string savingsPlanOrderId, string savingsPlanId, BenefitUtilizationSummariesRequest benefitUtilizationSummariesRequest, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<BenefitUtilizationSummariesOperationStatus> GenerateBenefitUtilizationSummariesReportAsyncSavingsPlanScope(WaitUntil waitUntil, string savingsPlanOrderId, string savingsPlanId, BenefitUtilizationSummariesRequest benefitUtilizationSummariesRequest, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(savingsPlanOrderId, nameof(savingsPlanOrderId));
             Argument.AssertNotNullOrEmpty(savingsPlanId, nameof(savingsPlanId));
             Argument.AssertNotNull(benefitUtilizationSummariesRequest, nameof(benefitUtilizationSummariesRequest));
 
-            return GetCostManagementTenantResourceExtension(tenantResource).GenerateBenefitUtilizationSummariesReportAsyncSavingsPlanScope(waitUntil, savingsPlanOrderId, savingsPlanId, benefitUtilizationSummariesRequest, cancellationToken);
+            using var scope = SavingsPlanScopeClientDiagnostics.CreateScope("CostManagementTenantResourceExtension.GenerateBenefitUtilizationSummariesReportAsyncSavingsPlanScope");
+            scope.Start();
+            try
+            {
+                var response = SavingsPlanScopeRestClient.GenerateBenefitUtilizationSummariesReportAsync(savingsPlanOrderId, savingsPlanId, benefitUtilizationSummariesRequest, cancellationToken);
+                var operation = new CostManagementArmOperation<BenefitUtilizationSummariesOperationStatus>(new BenefitUtilizationSummariesOperationStatusOperationSource(), SavingsPlanScopeClientDiagnostics, Pipeline, SavingsPlanScopeRestClient.CreateGenerateBenefitUtilizationSummariesReportAsyncRequest(savingsPlanOrderId, savingsPlanId, benefitUtilizationSummariesRequest).Request, response, OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                    operation.WaitForCompletion(cancellationToken);
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary>
@@ -1356,18 +867,18 @@ namespace Azure.ResourceManager.CostManagement
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
         /// <param name="externalCloudProviderType"> The external cloud provider type associated with dimension/query operations. This includes &apos;externalSubscriptions&apos; for linked account and &apos;externalBillingAccounts&apos; for consolidated account. </param>
         /// <param name="externalCloudProviderId"> This can be &apos;{externalSubscriptionId}&apos; for linked account or &apos;{externalBillingAccountId}&apos; for consolidated account used with dimension/query operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="externalCloudProviderId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="externalCloudProviderId"/> is null. </exception>
         /// <returns> An async collection of <see cref="CostManagementAlertResource" /> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<CostManagementAlertResource> GetCostManagementAlertsAsync(this TenantResource tenantResource, ExternalCloudProviderType externalCloudProviderType, string externalCloudProviderId, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<CostManagementAlertResource> GetCostManagementAlertsAsync(ExternalCloudProviderType externalCloudProviderType, string externalCloudProviderId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(externalCloudProviderId, nameof(externalCloudProviderId));
 
-            return GetCostManagementTenantResourceExtension(tenantResource).GetCostManagementAlertsAsync(externalCloudProviderType, externalCloudProviderId, cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CostManagementAlertAlertsRestClient.CreateListExternalRequest(externalCloudProviderType, externalCloudProviderId);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new CostManagementAlertResource(Client, CostManagementAlertData.DeserializeCostManagementAlertData(e)), CostManagementAlertAlertsClientDiagnostics, Pipeline, "CostManagementTenantResourceExtension.GetCostManagementAlerts", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -1383,18 +894,18 @@ namespace Azure.ResourceManager.CostManagement
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
         /// <param name="externalCloudProviderType"> The external cloud provider type associated with dimension/query operations. This includes &apos;externalSubscriptions&apos; for linked account and &apos;externalBillingAccounts&apos; for consolidated account. </param>
         /// <param name="externalCloudProviderId"> This can be &apos;{externalSubscriptionId}&apos; for linked account or &apos;{externalBillingAccountId}&apos; for consolidated account used with dimension/query operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="externalCloudProviderId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="externalCloudProviderId"/> is null. </exception>
         /// <returns> A collection of <see cref="CostManagementAlertResource" /> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<CostManagementAlertResource> GetCostManagementAlerts(this TenantResource tenantResource, ExternalCloudProviderType externalCloudProviderType, string externalCloudProviderId, CancellationToken cancellationToken = default)
+        public virtual Pageable<CostManagementAlertResource> GetCostManagementAlerts(ExternalCloudProviderType externalCloudProviderType, string externalCloudProviderId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(externalCloudProviderId, nameof(externalCloudProviderId));
 
-            return GetCostManagementTenantResourceExtension(tenantResource).GetCostManagementAlerts(externalCloudProviderType, externalCloudProviderId, cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CostManagementAlertAlertsRestClient.CreateListExternalRequest(externalCloudProviderType, externalCloudProviderId);
+            return PageableHelpers.CreatePageable(FirstPageRequest, null, e => new CostManagementAlertResource(Client, CostManagementAlertData.DeserializeCostManagementAlertData(e)), CostManagementAlertAlertsClientDiagnostics, Pipeline, "CostManagementTenantResourceExtension.GetCostManagementAlerts", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -1410,7 +921,6 @@ namespace Azure.ResourceManager.CostManagement
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
         /// <param name="externalCloudProviderType"> The external cloud provider type associated with dimension/query operations. This includes &apos;externalSubscriptions&apos; for linked account and &apos;externalBillingAccounts&apos; for consolidated account. </param>
         /// <param name="externalCloudProviderId"> This can be &apos;{externalSubscriptionId}&apos; for linked account or &apos;{externalBillingAccountId}&apos; for consolidated account used with dimension/query operations. </param>
         /// <param name="forecastDefinition"> Parameters supplied to the CreateOrUpdate Forecast Config operation. </param>
@@ -1418,12 +928,23 @@ namespace Azure.ResourceManager.CostManagement
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="externalCloudProviderId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="externalCloudProviderId"/> or <paramref name="forecastDefinition"/> is null. </exception>
-        public static async Task<Response<ForecastResult>> ExternalCloudProviderUsageForecastAsync(this TenantResource tenantResource, ExternalCloudProviderType externalCloudProviderType, string externalCloudProviderId, ForecastDefinition forecastDefinition, string filter = null, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ForecastResult>> ExternalCloudProviderUsageForecastAsync(ExternalCloudProviderType externalCloudProviderType, string externalCloudProviderId, ForecastDefinition forecastDefinition, string filter = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(externalCloudProviderId, nameof(externalCloudProviderId));
             Argument.AssertNotNull(forecastDefinition, nameof(forecastDefinition));
 
-            return await GetCostManagementTenantResourceExtension(tenantResource).ExternalCloudProviderUsageForecastAsync(externalCloudProviderType, externalCloudProviderId, forecastDefinition, filter, cancellationToken).ConfigureAwait(false);
+            using var scope = ForecastClientDiagnostics.CreateScope("CostManagementTenantResourceExtension.ExternalCloudProviderUsageForecast");
+            scope.Start();
+            try
+            {
+                var response = await ForecastRestClient.ExternalCloudProviderUsageAsync(externalCloudProviderType, externalCloudProviderId, forecastDefinition, filter, cancellationToken).ConfigureAwait(false);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary>
@@ -1439,7 +960,6 @@ namespace Azure.ResourceManager.CostManagement
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
         /// <param name="externalCloudProviderType"> The external cloud provider type associated with dimension/query operations. This includes &apos;externalSubscriptions&apos; for linked account and &apos;externalBillingAccounts&apos; for consolidated account. </param>
         /// <param name="externalCloudProviderId"> This can be &apos;{externalSubscriptionId}&apos; for linked account or &apos;{externalBillingAccountId}&apos; for consolidated account used with dimension/query operations. </param>
         /// <param name="forecastDefinition"> Parameters supplied to the CreateOrUpdate Forecast Config operation. </param>
@@ -1447,12 +967,23 @@ namespace Azure.ResourceManager.CostManagement
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="externalCloudProviderId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="externalCloudProviderId"/> or <paramref name="forecastDefinition"/> is null. </exception>
-        public static Response<ForecastResult> ExternalCloudProviderUsageForecast(this TenantResource tenantResource, ExternalCloudProviderType externalCloudProviderType, string externalCloudProviderId, ForecastDefinition forecastDefinition, string filter = null, CancellationToken cancellationToken = default)
+        public virtual Response<ForecastResult> ExternalCloudProviderUsageForecast(ExternalCloudProviderType externalCloudProviderType, string externalCloudProviderId, ForecastDefinition forecastDefinition, string filter = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(externalCloudProviderId, nameof(externalCloudProviderId));
             Argument.AssertNotNull(forecastDefinition, nameof(forecastDefinition));
 
-            return GetCostManagementTenantResourceExtension(tenantResource).ExternalCloudProviderUsageForecast(externalCloudProviderType, externalCloudProviderId, forecastDefinition, filter, cancellationToken);
+            using var scope = ForecastClientDiagnostics.CreateScope("CostManagementTenantResourceExtension.ExternalCloudProviderUsageForecast");
+            scope.Start();
+            try
+            {
+                var response = ForecastRestClient.ExternalCloudProviderUsage(externalCloudProviderType, externalCloudProviderId, forecastDefinition, filter, cancellationToken);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary>
@@ -1468,16 +999,16 @@ namespace Azure.ResourceManager.CostManagement
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
         /// <param name="options"> A property bag which contains all the parameters of this method except the LRO qualifier and request context parameter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
         /// <returns> An async collection of <see cref="CostManagementDimension" /> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<CostManagementDimension> ByExternalCloudProviderTypeDimensionsAsync(this TenantResource tenantResource, TenantResourceByExternalCloudProviderTypeDimensionsOptions options, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<CostManagementDimension> ByExternalCloudProviderTypeDimensionsAsync(TenantResourceByExternalCloudProviderTypeDimensionsOptions options, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(options, nameof(options));
 
-            return GetCostManagementTenantResourceExtension(tenantResource).ByExternalCloudProviderTypeDimensionsAsync(options, cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => DimensionsRestClient.CreateByExternalCloudProviderTypeRequest(options.ExternalCloudProviderType, options.ExternalCloudProviderId, options.Filter, options.Expand, options.Skiptoken, options.Top);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, CostManagementDimension.DeserializeCostManagementDimension, DimensionsClientDiagnostics, Pipeline, "CostManagementTenantResourceExtension.ByExternalCloudProviderTypeDimensions", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -1493,16 +1024,16 @@ namespace Azure.ResourceManager.CostManagement
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
         /// <param name="options"> A property bag which contains all the parameters of this method except the LRO qualifier and request context parameter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
         /// <returns> A collection of <see cref="CostManagementDimension" /> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<CostManagementDimension> ByExternalCloudProviderTypeDimensions(this TenantResource tenantResource, TenantResourceByExternalCloudProviderTypeDimensionsOptions options, CancellationToken cancellationToken = default)
+        public virtual Pageable<CostManagementDimension> ByExternalCloudProviderTypeDimensions(TenantResourceByExternalCloudProviderTypeDimensionsOptions options, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(options, nameof(options));
 
-            return GetCostManagementTenantResourceExtension(tenantResource).ByExternalCloudProviderTypeDimensions(options, cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => DimensionsRestClient.CreateByExternalCloudProviderTypeRequest(options.ExternalCloudProviderType, options.ExternalCloudProviderId, options.Filter, options.Expand, options.Skiptoken, options.Top);
+            return PageableHelpers.CreatePageable(FirstPageRequest, null, CostManagementDimension.DeserializeCostManagementDimension, DimensionsClientDiagnostics, Pipeline, "CostManagementTenantResourceExtension.ByExternalCloudProviderTypeDimensions", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -1518,19 +1049,29 @@ namespace Azure.ResourceManager.CostManagement
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
         /// <param name="externalCloudProviderType"> The external cloud provider type associated with dimension/query operations. This includes &apos;externalSubscriptions&apos; for linked account and &apos;externalBillingAccounts&apos; for consolidated account. </param>
         /// <param name="externalCloudProviderId"> This can be &apos;{externalSubscriptionId}&apos; for linked account or &apos;{externalBillingAccountId}&apos; for consolidated account used with dimension/query operations. </param>
         /// <param name="queryDefinition"> Parameters supplied to the CreateOrUpdate Query Config operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="externalCloudProviderId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="externalCloudProviderId"/> or <paramref name="queryDefinition"/> is null. </exception>
-        public static async Task<Response<QueryResult>> UsageByExternalCloudProviderTypeQueryAsync(this TenantResource tenantResource, ExternalCloudProviderType externalCloudProviderType, string externalCloudProviderId, QueryDefinition queryDefinition, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<QueryResult>> UsageByExternalCloudProviderTypeQueryAsync(ExternalCloudProviderType externalCloudProviderType, string externalCloudProviderId, QueryDefinition queryDefinition, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(externalCloudProviderId, nameof(externalCloudProviderId));
             Argument.AssertNotNull(queryDefinition, nameof(queryDefinition));
 
-            return await GetCostManagementTenantResourceExtension(tenantResource).UsageByExternalCloudProviderTypeQueryAsync(externalCloudProviderType, externalCloudProviderId, queryDefinition, cancellationToken).ConfigureAwait(false);
+            using var scope = QueryClientDiagnostics.CreateScope("CostManagementTenantResourceExtension.UsageByExternalCloudProviderTypeQuery");
+            scope.Start();
+            try
+            {
+                var response = await QueryRestClient.UsageByExternalCloudProviderTypeAsync(externalCloudProviderType, externalCloudProviderId, queryDefinition, cancellationToken).ConfigureAwait(false);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary>
@@ -1546,19 +1087,29 @@ namespace Azure.ResourceManager.CostManagement
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
         /// <param name="externalCloudProviderType"> The external cloud provider type associated with dimension/query operations. This includes &apos;externalSubscriptions&apos; for linked account and &apos;externalBillingAccounts&apos; for consolidated account. </param>
         /// <param name="externalCloudProviderId"> This can be &apos;{externalSubscriptionId}&apos; for linked account or &apos;{externalBillingAccountId}&apos; for consolidated account used with dimension/query operations. </param>
         /// <param name="queryDefinition"> Parameters supplied to the CreateOrUpdate Query Config operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="externalCloudProviderId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="externalCloudProviderId"/> or <paramref name="queryDefinition"/> is null. </exception>
-        public static Response<QueryResult> UsageByExternalCloudProviderTypeQuery(this TenantResource tenantResource, ExternalCloudProviderType externalCloudProviderType, string externalCloudProviderId, QueryDefinition queryDefinition, CancellationToken cancellationToken = default)
+        public virtual Response<QueryResult> UsageByExternalCloudProviderTypeQuery(ExternalCloudProviderType externalCloudProviderType, string externalCloudProviderId, QueryDefinition queryDefinition, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(externalCloudProviderId, nameof(externalCloudProviderId));
             Argument.AssertNotNull(queryDefinition, nameof(queryDefinition));
 
-            return GetCostManagementTenantResourceExtension(tenantResource).UsageByExternalCloudProviderTypeQuery(externalCloudProviderType, externalCloudProviderId, queryDefinition, cancellationToken);
+            using var scope = QueryClientDiagnostics.CreateScope("CostManagementTenantResourceExtension.UsageByExternalCloudProviderTypeQuery");
+            scope.Start();
+            try
+            {
+                var response = QueryRestClient.UsageByExternalCloudProviderType(externalCloudProviderType, externalCloudProviderId, queryDefinition, cancellationToken);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary>
@@ -1574,7 +1125,6 @@ namespace Azure.ResourceManager.CostManagement
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="billingAccountId"> Enrollment ID (Legacy BillingAccount ID). </param>
         /// <param name="startDate"> Start Date. </param>
@@ -1582,13 +1132,27 @@ namespace Azure.ResourceManager.CostManagement
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="billingAccountId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="billingAccountId"/>, <paramref name="startDate"/> or <paramref name="endDate"/> is null. </exception>
-        public static async Task<ArmOperation<OperationStatus>> ByBillingAccountIdGenerateReservationDetailsReportAsync(this TenantResource tenantResource, WaitUntil waitUntil, string billingAccountId, string startDate, string endDate, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<OperationStatus>> ByBillingAccountIdGenerateReservationDetailsReportAsync(WaitUntil waitUntil, string billingAccountId, string startDate, string endDate, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(billingAccountId, nameof(billingAccountId));
             Argument.AssertNotNull(startDate, nameof(startDate));
             Argument.AssertNotNull(endDate, nameof(endDate));
 
-            return await GetCostManagementTenantResourceExtension(tenantResource).ByBillingAccountIdGenerateReservationDetailsReportAsync(waitUntil, billingAccountId, startDate, endDate, cancellationToken).ConfigureAwait(false);
+            using var scope = GenerateReservationDetailsReportClientDiagnostics.CreateScope("CostManagementTenantResourceExtension.ByBillingAccountIdGenerateReservationDetailsReport");
+            scope.Start();
+            try
+            {
+                var response = await GenerateReservationDetailsReportRestClient.ByBillingAccountIdAsync(billingAccountId, startDate, endDate, cancellationToken).ConfigureAwait(false);
+                var operation = new CostManagementArmOperation<OperationStatus>(new OperationStatusOperationSource(), GenerateReservationDetailsReportClientDiagnostics, Pipeline, GenerateReservationDetailsReportRestClient.CreateByBillingAccountIdRequest(billingAccountId, startDate, endDate).Request, response, OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                    await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary>
@@ -1604,7 +1168,6 @@ namespace Azure.ResourceManager.CostManagement
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="billingAccountId"> Enrollment ID (Legacy BillingAccount ID). </param>
         /// <param name="startDate"> Start Date. </param>
@@ -1612,13 +1175,27 @@ namespace Azure.ResourceManager.CostManagement
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="billingAccountId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="billingAccountId"/>, <paramref name="startDate"/> or <paramref name="endDate"/> is null. </exception>
-        public static ArmOperation<OperationStatus> ByBillingAccountIdGenerateReservationDetailsReport(this TenantResource tenantResource, WaitUntil waitUntil, string billingAccountId, string startDate, string endDate, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<OperationStatus> ByBillingAccountIdGenerateReservationDetailsReport(WaitUntil waitUntil, string billingAccountId, string startDate, string endDate, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(billingAccountId, nameof(billingAccountId));
             Argument.AssertNotNull(startDate, nameof(startDate));
             Argument.AssertNotNull(endDate, nameof(endDate));
 
-            return GetCostManagementTenantResourceExtension(tenantResource).ByBillingAccountIdGenerateReservationDetailsReport(waitUntil, billingAccountId, startDate, endDate, cancellationToken);
+            using var scope = GenerateReservationDetailsReportClientDiagnostics.CreateScope("CostManagementTenantResourceExtension.ByBillingAccountIdGenerateReservationDetailsReport");
+            scope.Start();
+            try
+            {
+                var response = GenerateReservationDetailsReportRestClient.ByBillingAccountId(billingAccountId, startDate, endDate, cancellationToken);
+                var operation = new CostManagementArmOperation<OperationStatus>(new OperationStatusOperationSource(), GenerateReservationDetailsReportClientDiagnostics, Pipeline, GenerateReservationDetailsReportRestClient.CreateByBillingAccountIdRequest(billingAccountId, startDate, endDate).Request, response, OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                    operation.WaitForCompletion(cancellationToken);
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary>
@@ -1634,7 +1211,6 @@ namespace Azure.ResourceManager.CostManagement
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="billingAccountId"> Billing account ID. </param>
         /// <param name="billingProfileId"> Billing profile ID. </param>
@@ -1643,14 +1219,28 @@ namespace Azure.ResourceManager.CostManagement
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="billingAccountId"/> or <paramref name="billingProfileId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="billingAccountId"/>, <paramref name="billingProfileId"/>, <paramref name="startDate"/> or <paramref name="endDate"/> is null. </exception>
-        public static async Task<ArmOperation<OperationStatus>> ByBillingProfileIdGenerateReservationDetailsReportAsync(this TenantResource tenantResource, WaitUntil waitUntil, string billingAccountId, string billingProfileId, string startDate, string endDate, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<OperationStatus>> ByBillingProfileIdGenerateReservationDetailsReportAsync(WaitUntil waitUntil, string billingAccountId, string billingProfileId, string startDate, string endDate, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(billingAccountId, nameof(billingAccountId));
             Argument.AssertNotNullOrEmpty(billingProfileId, nameof(billingProfileId));
             Argument.AssertNotNull(startDate, nameof(startDate));
             Argument.AssertNotNull(endDate, nameof(endDate));
 
-            return await GetCostManagementTenantResourceExtension(tenantResource).ByBillingProfileIdGenerateReservationDetailsReportAsync(waitUntil, billingAccountId, billingProfileId, startDate, endDate, cancellationToken).ConfigureAwait(false);
+            using var scope = GenerateReservationDetailsReportClientDiagnostics.CreateScope("CostManagementTenantResourceExtension.ByBillingProfileIdGenerateReservationDetailsReport");
+            scope.Start();
+            try
+            {
+                var response = await GenerateReservationDetailsReportRestClient.ByBillingProfileIdAsync(billingAccountId, billingProfileId, startDate, endDate, cancellationToken).ConfigureAwait(false);
+                var operation = new CostManagementArmOperation<OperationStatus>(new OperationStatusOperationSource(), GenerateReservationDetailsReportClientDiagnostics, Pipeline, GenerateReservationDetailsReportRestClient.CreateByBillingProfileIdRequest(billingAccountId, billingProfileId, startDate, endDate).Request, response, OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                    await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary>
@@ -1666,7 +1256,6 @@ namespace Azure.ResourceManager.CostManagement
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="billingAccountId"> Billing account ID. </param>
         /// <param name="billingProfileId"> Billing profile ID. </param>
@@ -1675,14 +1264,28 @@ namespace Azure.ResourceManager.CostManagement
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="billingAccountId"/> or <paramref name="billingProfileId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="billingAccountId"/>, <paramref name="billingProfileId"/>, <paramref name="startDate"/> or <paramref name="endDate"/> is null. </exception>
-        public static ArmOperation<OperationStatus> ByBillingProfileIdGenerateReservationDetailsReport(this TenantResource tenantResource, WaitUntil waitUntil, string billingAccountId, string billingProfileId, string startDate, string endDate, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<OperationStatus> ByBillingProfileIdGenerateReservationDetailsReport(WaitUntil waitUntil, string billingAccountId, string billingProfileId, string startDate, string endDate, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(billingAccountId, nameof(billingAccountId));
             Argument.AssertNotNullOrEmpty(billingProfileId, nameof(billingProfileId));
             Argument.AssertNotNull(startDate, nameof(startDate));
             Argument.AssertNotNull(endDate, nameof(endDate));
 
-            return GetCostManagementTenantResourceExtension(tenantResource).ByBillingProfileIdGenerateReservationDetailsReport(waitUntil, billingAccountId, billingProfileId, startDate, endDate, cancellationToken);
+            using var scope = GenerateReservationDetailsReportClientDiagnostics.CreateScope("CostManagementTenantResourceExtension.ByBillingProfileIdGenerateReservationDetailsReport");
+            scope.Start();
+            try
+            {
+                var response = GenerateReservationDetailsReportRestClient.ByBillingProfileId(billingAccountId, billingProfileId, startDate, endDate, cancellationToken);
+                var operation = new CostManagementArmOperation<OperationStatus>(new OperationStatusOperationSource(), GenerateReservationDetailsReportClientDiagnostics, Pipeline, GenerateReservationDetailsReportRestClient.CreateByBillingProfileIdRequest(billingAccountId, billingProfileId, startDate, endDate).Request, response, OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                    operation.WaitForCompletion(cancellationToken);
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary>
@@ -1698,7 +1301,6 @@ namespace Azure.ResourceManager.CostManagement
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="billingAccountName"> The ID that uniquely identifies a billing account. </param>
         /// <param name="billingProfileName"> The ID that uniquely identifies a billing profile. </param>
@@ -1706,13 +1308,27 @@ namespace Azure.ResourceManager.CostManagement
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="billingAccountName"/>, <paramref name="billingProfileName"/> or <paramref name="invoiceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="billingAccountName"/>, <paramref name="billingProfileName"/> or <paramref name="invoiceName"/> is null. </exception>
-        public static async Task<ArmOperation<DownloadURL>> DownloadPriceSheetAsync(this TenantResource tenantResource, WaitUntil waitUntil, string billingAccountName, string billingProfileName, string invoiceName, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<DownloadURL>> DownloadPriceSheetAsync(WaitUntil waitUntil, string billingAccountName, string billingProfileName, string invoiceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(billingAccountName, nameof(billingAccountName));
             Argument.AssertNotNullOrEmpty(billingProfileName, nameof(billingProfileName));
             Argument.AssertNotNullOrEmpty(invoiceName, nameof(invoiceName));
 
-            return await GetCostManagementTenantResourceExtension(tenantResource).DownloadPriceSheetAsync(waitUntil, billingAccountName, billingProfileName, invoiceName, cancellationToken).ConfigureAwait(false);
+            using var scope = PriceSheetClientDiagnostics.CreateScope("CostManagementTenantResourceExtension.DownloadPriceSheet");
+            scope.Start();
+            try
+            {
+                var response = await PriceSheetRestClient.DownloadAsync(billingAccountName, billingProfileName, invoiceName, cancellationToken).ConfigureAwait(false);
+                var operation = new CostManagementArmOperation<DownloadURL>(new DownloadURLOperationSource(), PriceSheetClientDiagnostics, Pipeline, PriceSheetRestClient.CreateDownloadRequest(billingAccountName, billingProfileName, invoiceName).Request, response, OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                    await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary>
@@ -1728,7 +1344,6 @@ namespace Azure.ResourceManager.CostManagement
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="billingAccountName"> The ID that uniquely identifies a billing account. </param>
         /// <param name="billingProfileName"> The ID that uniquely identifies a billing profile. </param>
@@ -1736,13 +1351,27 @@ namespace Azure.ResourceManager.CostManagement
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="billingAccountName"/>, <paramref name="billingProfileName"/> or <paramref name="invoiceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="billingAccountName"/>, <paramref name="billingProfileName"/> or <paramref name="invoiceName"/> is null. </exception>
-        public static ArmOperation<DownloadURL> DownloadPriceSheet(this TenantResource tenantResource, WaitUntil waitUntil, string billingAccountName, string billingProfileName, string invoiceName, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<DownloadURL> DownloadPriceSheet(WaitUntil waitUntil, string billingAccountName, string billingProfileName, string invoiceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(billingAccountName, nameof(billingAccountName));
             Argument.AssertNotNullOrEmpty(billingProfileName, nameof(billingProfileName));
             Argument.AssertNotNullOrEmpty(invoiceName, nameof(invoiceName));
 
-            return GetCostManagementTenantResourceExtension(tenantResource).DownloadPriceSheet(waitUntil, billingAccountName, billingProfileName, invoiceName, cancellationToken);
+            using var scope = PriceSheetClientDiagnostics.CreateScope("CostManagementTenantResourceExtension.DownloadPriceSheet");
+            scope.Start();
+            try
+            {
+                var response = PriceSheetRestClient.Download(billingAccountName, billingProfileName, invoiceName, cancellationToken);
+                var operation = new CostManagementArmOperation<DownloadURL>(new DownloadURLOperationSource(), PriceSheetClientDiagnostics, Pipeline, PriceSheetRestClient.CreateDownloadRequest(billingAccountName, billingProfileName, invoiceName).Request, response, OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                    operation.WaitForCompletion(cancellationToken);
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary>
@@ -1758,19 +1387,32 @@ namespace Azure.ResourceManager.CostManagement
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="billingAccountName"> The ID that uniquely identifies a billing account. </param>
         /// <param name="billingProfileName"> The ID that uniquely identifies a billing profile. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="billingAccountName"/> or <paramref name="billingProfileName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="billingAccountName"/> or <paramref name="billingProfileName"/> is null. </exception>
-        public static async Task<ArmOperation<DownloadURL>> DownloadByBillingProfilePriceSheetAsync(this TenantResource tenantResource, WaitUntil waitUntil, string billingAccountName, string billingProfileName, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<DownloadURL>> DownloadByBillingProfilePriceSheetAsync(WaitUntil waitUntil, string billingAccountName, string billingProfileName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(billingAccountName, nameof(billingAccountName));
             Argument.AssertNotNullOrEmpty(billingProfileName, nameof(billingProfileName));
 
-            return await GetCostManagementTenantResourceExtension(tenantResource).DownloadByBillingProfilePriceSheetAsync(waitUntil, billingAccountName, billingProfileName, cancellationToken).ConfigureAwait(false);
+            using var scope = PriceSheetClientDiagnostics.CreateScope("CostManagementTenantResourceExtension.DownloadByBillingProfilePriceSheet");
+            scope.Start();
+            try
+            {
+                var response = await PriceSheetRestClient.DownloadByBillingProfileAsync(billingAccountName, billingProfileName, cancellationToken).ConfigureAwait(false);
+                var operation = new CostManagementArmOperation<DownloadURL>(new DownloadURLOperationSource(), PriceSheetClientDiagnostics, Pipeline, PriceSheetRestClient.CreateDownloadByBillingProfileRequest(billingAccountName, billingProfileName).Request, response, OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                    await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary>
@@ -1786,19 +1428,32 @@ namespace Azure.ResourceManager.CostManagement
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="billingAccountName"> The ID that uniquely identifies a billing account. </param>
         /// <param name="billingProfileName"> The ID that uniquely identifies a billing profile. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="billingAccountName"/> or <paramref name="billingProfileName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="billingAccountName"/> or <paramref name="billingProfileName"/> is null. </exception>
-        public static ArmOperation<DownloadURL> DownloadByBillingProfilePriceSheet(this TenantResource tenantResource, WaitUntil waitUntil, string billingAccountName, string billingProfileName, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<DownloadURL> DownloadByBillingProfilePriceSheet(WaitUntil waitUntil, string billingAccountName, string billingProfileName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(billingAccountName, nameof(billingAccountName));
             Argument.AssertNotNullOrEmpty(billingProfileName, nameof(billingProfileName));
 
-            return GetCostManagementTenantResourceExtension(tenantResource).DownloadByBillingProfilePriceSheet(waitUntil, billingAccountName, billingProfileName, cancellationToken);
+            using var scope = PriceSheetClientDiagnostics.CreateScope("CostManagementTenantResourceExtension.DownloadByBillingProfilePriceSheet");
+            scope.Start();
+            try
+            {
+                var response = PriceSheetRestClient.DownloadByBillingProfile(billingAccountName, billingProfileName, cancellationToken);
+                var operation = new CostManagementArmOperation<DownloadURL>(new DownloadURLOperationSource(), PriceSheetClientDiagnostics, Pipeline, PriceSheetRestClient.CreateDownloadByBillingProfileRequest(billingAccountName, billingProfileName).Request, response, OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                    operation.WaitForCompletion(cancellationToken);
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary>
@@ -1814,15 +1469,25 @@ namespace Azure.ResourceManager.CostManagement
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
         /// <param name="checkNameAvailabilityRequest"> Scheduled action to be created or updated. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="checkNameAvailabilityRequest"/> is null. </exception>
-        public static async Task<Response<CheckNameAvailabilityResponse>> CheckNameAvailabilityScheduledActionAsync(this TenantResource tenantResource, CheckNameAvailabilityRequest checkNameAvailabilityRequest, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<CheckNameAvailabilityResponse>> CheckNameAvailabilityScheduledActionAsync(CheckNameAvailabilityRequest checkNameAvailabilityRequest, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(checkNameAvailabilityRequest, nameof(checkNameAvailabilityRequest));
 
-            return await GetCostManagementTenantResourceExtension(tenantResource).CheckNameAvailabilityScheduledActionAsync(checkNameAvailabilityRequest, cancellationToken).ConfigureAwait(false);
+            using var scope = ScheduledActionsClientDiagnostics.CreateScope("CostManagementTenantResourceExtension.CheckNameAvailabilityScheduledAction");
+            scope.Start();
+            try
+            {
+                var response = await ScheduledActionsRestClient.CheckNameAvailabilityAsync(checkNameAvailabilityRequest, cancellationToken).ConfigureAwait(false);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary>
@@ -1838,15 +1503,25 @@ namespace Azure.ResourceManager.CostManagement
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
         /// <param name="checkNameAvailabilityRequest"> Scheduled action to be created or updated. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="checkNameAvailabilityRequest"/> is null. </exception>
-        public static Response<CheckNameAvailabilityResponse> CheckNameAvailabilityScheduledAction(this TenantResource tenantResource, CheckNameAvailabilityRequest checkNameAvailabilityRequest, CancellationToken cancellationToken = default)
+        public virtual Response<CheckNameAvailabilityResponse> CheckNameAvailabilityScheduledAction(CheckNameAvailabilityRequest checkNameAvailabilityRequest, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(checkNameAvailabilityRequest, nameof(checkNameAvailabilityRequest));
 
-            return GetCostManagementTenantResourceExtension(tenantResource).CheckNameAvailabilityScheduledAction(checkNameAvailabilityRequest, cancellationToken);
+            using var scope = ScheduledActionsClientDiagnostics.CreateScope("CostManagementTenantResourceExtension.CheckNameAvailabilityScheduledAction");
+            scope.Start();
+            try
+            {
+                var response = ScheduledActionsRestClient.CheckNameAvailability(checkNameAvailabilityRequest, cancellationToken);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
     }
 }

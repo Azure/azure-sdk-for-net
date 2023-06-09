@@ -12,6 +12,7 @@ using Azure;
 using Azure.Core;
 using Azure.ResourceManager;
 using Azure.ResourceManager.DataBoxEdge.Models;
+using Azure.ResourceManager.DataBoxEdge.Testing;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.DataBoxEdge
@@ -19,35 +20,35 @@ namespace Azure.ResourceManager.DataBoxEdge
     /// <summary> A class to add extension methods to Azure.ResourceManager.DataBoxEdge. </summary>
     public static partial class DataBoxEdgeExtensions
     {
-        private static ResourceGroupResourceExtensionClient GetResourceGroupResourceExtensionClient(ArmResource resource)
+        private static DataBoxEdgeResourceGroupResourceExtension GetDataBoxEdgeResourceGroupResourceExtension(ArmResource resource)
         {
             return resource.GetCachedClient(client =>
             {
-                return new ResourceGroupResourceExtensionClient(client, resource.Id);
+                return new DataBoxEdgeResourceGroupResourceExtension(client, resource.Id);
             });
         }
 
-        private static ResourceGroupResourceExtensionClient GetResourceGroupResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
+        private static DataBoxEdgeResourceGroupResourceExtension GetDataBoxEdgeResourceGroupResourceExtension(ArmClient client, ResourceIdentifier scope)
         {
             return client.GetResourceClient(() =>
             {
-                return new ResourceGroupResourceExtensionClient(client, scope);
+                return new DataBoxEdgeResourceGroupResourceExtension(client, scope);
             });
         }
 
-        private static SubscriptionResourceExtensionClient GetSubscriptionResourceExtensionClient(ArmResource resource)
+        private static DataBoxEdgeSubscriptionResourceExtension GetDataBoxEdgeSubscriptionResourceExtension(ArmResource resource)
         {
             return resource.GetCachedClient(client =>
             {
-                return new SubscriptionResourceExtensionClient(client, resource.Id);
+                return new DataBoxEdgeSubscriptionResourceExtension(client, resource.Id);
             });
         }
 
-        private static SubscriptionResourceExtensionClient GetSubscriptionResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
+        private static DataBoxEdgeSubscriptionResourceExtension GetDataBoxEdgeSubscriptionResourceExtension(ArmClient client, ResourceIdentifier scope)
         {
             return client.GetResourceClient(() =>
             {
-                return new SubscriptionResourceExtensionClient(client, scope);
+                return new DataBoxEdgeSubscriptionResourceExtension(client, scope);
             });
         }
         #region DataBoxEdgeDeviceResource
@@ -359,7 +360,7 @@ namespace Azure.ResourceManager.DataBoxEdge
         /// <returns> An object representing collection of DataBoxEdgeDeviceResources and their operations over a DataBoxEdgeDeviceResource. </returns>
         public static DataBoxEdgeDeviceCollection GetDataBoxEdgeDevices(this ResourceGroupResource resourceGroupResource)
         {
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetDataBoxEdgeDevices();
+            return GetDataBoxEdgeResourceGroupResourceExtension(resourceGroupResource).GetDataBoxEdgeDevices();
         }
 
         /// <summary>
@@ -428,7 +429,7 @@ namespace Azure.ResourceManager.DataBoxEdge
         /// <returns> An async collection of <see cref="AvailableDataBoxEdgeSku" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<AvailableDataBoxEdgeSku> GetAvailableSkusAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetAvailableSkusAsync(cancellationToken);
+            return GetDataBoxEdgeSubscriptionResourceExtension(subscriptionResource).GetAvailableSkusAsync(cancellationToken);
         }
 
         /// <summary>
@@ -449,7 +450,7 @@ namespace Azure.ResourceManager.DataBoxEdge
         /// <returns> A collection of <see cref="AvailableDataBoxEdgeSku" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<AvailableDataBoxEdgeSku> GetAvailableSkus(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetAvailableSkus(cancellationToken);
+            return GetDataBoxEdgeSubscriptionResourceExtension(subscriptionResource).GetAvailableSkus(cancellationToken);
         }
 
         /// <summary>
@@ -471,7 +472,7 @@ namespace Azure.ResourceManager.DataBoxEdge
         /// <returns> An async collection of <see cref="DataBoxEdgeDeviceResource" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<DataBoxEdgeDeviceResource> GetDataBoxEdgeDevicesAsync(this SubscriptionResource subscriptionResource, string expand = null, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetDataBoxEdgeDevicesAsync(expand, cancellationToken);
+            return GetDataBoxEdgeSubscriptionResourceExtension(subscriptionResource).GetDataBoxEdgeDevicesAsync(expand, cancellationToken);
         }
 
         /// <summary>
@@ -493,7 +494,7 @@ namespace Azure.ResourceManager.DataBoxEdge
         /// <returns> A collection of <see cref="DataBoxEdgeDeviceResource" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<DataBoxEdgeDeviceResource> GetDataBoxEdgeDevices(this SubscriptionResource subscriptionResource, string expand = null, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetDataBoxEdgeDevices(expand, cancellationToken);
+            return GetDataBoxEdgeSubscriptionResourceExtension(subscriptionResource).GetDataBoxEdgeDevices(expand, cancellationToken);
         }
     }
 }

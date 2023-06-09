@@ -12,6 +12,7 @@ using Azure;
 using Azure.Core;
 using Azure.ResourceManager;
 using Azure.ResourceManager.CosmosDBForPostgreSql.Models;
+using Azure.ResourceManager.CosmosDBForPostgreSql.Testing;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.CosmosDBForPostgreSql
@@ -19,35 +20,35 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
     /// <summary> A class to add extension methods to Azure.ResourceManager.CosmosDBForPostgreSql. </summary>
     public static partial class CosmosDBForPostgreSqlExtensions
     {
-        private static ResourceGroupResourceExtensionClient GetResourceGroupResourceExtensionClient(ArmResource resource)
+        private static CosmosDBForPostgreSqlResourceGroupResourceExtension GetCosmosDBForPostgreSqlResourceGroupResourceExtension(ArmResource resource)
         {
             return resource.GetCachedClient(client =>
             {
-                return new ResourceGroupResourceExtensionClient(client, resource.Id);
+                return new CosmosDBForPostgreSqlResourceGroupResourceExtension(client, resource.Id);
             });
         }
 
-        private static ResourceGroupResourceExtensionClient GetResourceGroupResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
+        private static CosmosDBForPostgreSqlResourceGroupResourceExtension GetCosmosDBForPostgreSqlResourceGroupResourceExtension(ArmClient client, ResourceIdentifier scope)
         {
             return client.GetResourceClient(() =>
             {
-                return new ResourceGroupResourceExtensionClient(client, scope);
+                return new CosmosDBForPostgreSqlResourceGroupResourceExtension(client, scope);
             });
         }
 
-        private static SubscriptionResourceExtensionClient GetSubscriptionResourceExtensionClient(ArmResource resource)
+        private static CosmosDBForPostgreSqlSubscriptionResourceExtension GetCosmosDBForPostgreSqlSubscriptionResourceExtension(ArmResource resource)
         {
             return resource.GetCachedClient(client =>
             {
-                return new SubscriptionResourceExtensionClient(client, resource.Id);
+                return new CosmosDBForPostgreSqlSubscriptionResourceExtension(client, resource.Id);
             });
         }
 
-        private static SubscriptionResourceExtensionClient GetSubscriptionResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
+        private static CosmosDBForPostgreSqlSubscriptionResourceExtension GetCosmosDBForPostgreSqlSubscriptionResourceExtension(ArmClient client, ResourceIdentifier scope)
         {
             return client.GetResourceClient(() =>
             {
-                return new SubscriptionResourceExtensionClient(client, scope);
+                return new CosmosDBForPostgreSqlSubscriptionResourceExtension(client, scope);
             });
         }
         #region CosmosDBForPostgreSqlClusterResource
@@ -226,7 +227,7 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
         /// <returns> An object representing collection of CosmosDBForPostgreSqlClusterResources and their operations over a CosmosDBForPostgreSqlClusterResource. </returns>
         public static CosmosDBForPostgreSqlClusterCollection GetCosmosDBForPostgreSqlClusters(this ResourceGroupResource resourceGroupResource)
         {
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetCosmosDBForPostgreSqlClusters();
+            return GetCosmosDBForPostgreSqlResourceGroupResourceExtension(resourceGroupResource).GetCosmosDBForPostgreSqlClusters();
         }
 
         /// <summary>
@@ -295,7 +296,7 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
         /// <returns> An async collection of <see cref="CosmosDBForPostgreSqlClusterResource" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<CosmosDBForPostgreSqlClusterResource> GetCosmosDBForPostgreSqlClustersAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetCosmosDBForPostgreSqlClustersAsync(cancellationToken);
+            return GetCosmosDBForPostgreSqlSubscriptionResourceExtension(subscriptionResource).GetCosmosDBForPostgreSqlClustersAsync(cancellationToken);
         }
 
         /// <summary>
@@ -316,7 +317,7 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
         /// <returns> A collection of <see cref="CosmosDBForPostgreSqlClusterResource" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<CosmosDBForPostgreSqlClusterResource> GetCosmosDBForPostgreSqlClusters(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetCosmosDBForPostgreSqlClusters(cancellationToken);
+            return GetCosmosDBForPostgreSqlSubscriptionResourceExtension(subscriptionResource).GetCosmosDBForPostgreSqlClusters(cancellationToken);
         }
 
         /// <summary>
@@ -340,7 +341,7 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            return await GetSubscriptionResourceExtensionClient(subscriptionResource).CheckCosmosDBForPostgreSqlClusterNameAvailabilityAsync(content, cancellationToken).ConfigureAwait(false);
+            return await GetCosmosDBForPostgreSqlSubscriptionResourceExtension(subscriptionResource).CheckCosmosDBForPostgreSqlClusterNameAvailabilityAsync(content, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -364,7 +365,7 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).CheckCosmosDBForPostgreSqlClusterNameAvailability(content, cancellationToken);
+            return GetCosmosDBForPostgreSqlSubscriptionResourceExtension(subscriptionResource).CheckCosmosDBForPostgreSqlClusterNameAvailability(content, cancellationToken);
         }
     }
 }

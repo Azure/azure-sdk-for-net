@@ -12,6 +12,7 @@ using Azure;
 using Azure.Core;
 using Azure.ResourceManager;
 using Azure.ResourceManager.ContainerService.Models;
+using Azure.ResourceManager.ContainerService.Testing;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.ContainerService
@@ -19,35 +20,35 @@ namespace Azure.ResourceManager.ContainerService
     /// <summary> A class to add extension methods to Azure.ResourceManager.ContainerService. </summary>
     public static partial class ContainerServiceExtensions
     {
-        private static ResourceGroupResourceExtensionClient GetResourceGroupResourceExtensionClient(ArmResource resource)
+        private static ContainerServiceResourceGroupResourceExtension GetContainerServiceResourceGroupResourceExtension(ArmResource resource)
         {
             return resource.GetCachedClient(client =>
             {
-                return new ResourceGroupResourceExtensionClient(client, resource.Id);
+                return new ContainerServiceResourceGroupResourceExtension(client, resource.Id);
             });
         }
 
-        private static ResourceGroupResourceExtensionClient GetResourceGroupResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
+        private static ContainerServiceResourceGroupResourceExtension GetContainerServiceResourceGroupResourceExtension(ArmClient client, ResourceIdentifier scope)
         {
             return client.GetResourceClient(() =>
             {
-                return new ResourceGroupResourceExtensionClient(client, scope);
+                return new ContainerServiceResourceGroupResourceExtension(client, scope);
             });
         }
 
-        private static SubscriptionResourceExtensionClient GetSubscriptionResourceExtensionClient(ArmResource resource)
+        private static ContainerServiceSubscriptionResourceExtension GetContainerServiceSubscriptionResourceExtension(ArmResource resource)
         {
             return resource.GetCachedClient(client =>
             {
-                return new SubscriptionResourceExtensionClient(client, resource.Id);
+                return new ContainerServiceSubscriptionResourceExtension(client, resource.Id);
             });
         }
 
-        private static SubscriptionResourceExtensionClient GetSubscriptionResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
+        private static ContainerServiceSubscriptionResourceExtension GetContainerServiceSubscriptionResourceExtension(ArmClient client, ResourceIdentifier scope)
         {
             return client.GetResourceClient(() =>
             {
-                return new SubscriptionResourceExtensionClient(client, scope);
+                return new ContainerServiceSubscriptionResourceExtension(client, scope);
             });
         }
         #region OSOptionProfileResource
@@ -283,7 +284,7 @@ namespace Azure.ResourceManager.ContainerService
         /// <returns> An object representing collection of ContainerServiceManagedClusterResources and their operations over a ContainerServiceManagedClusterResource. </returns>
         public static ContainerServiceManagedClusterCollection GetContainerServiceManagedClusters(this ResourceGroupResource resourceGroupResource)
         {
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetContainerServiceManagedClusters();
+            return GetContainerServiceResourceGroupResourceExtension(resourceGroupResource).GetContainerServiceManagedClusters();
         }
 
         /// <summary>
@@ -339,7 +340,7 @@ namespace Azure.ResourceManager.ContainerService
         /// <returns> An object representing collection of AgentPoolSnapshotResources and their operations over a AgentPoolSnapshotResource. </returns>
         public static AgentPoolSnapshotCollection GetAgentPoolSnapshots(this ResourceGroupResource resourceGroupResource)
         {
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetAgentPoolSnapshots();
+            return GetContainerServiceResourceGroupResourceExtension(resourceGroupResource).GetAgentPoolSnapshots();
         }
 
         /// <summary>
@@ -395,7 +396,7 @@ namespace Azure.ResourceManager.ContainerService
         /// <returns> An object representing collection of ManagedClusterSnapshotResources and their operations over a ManagedClusterSnapshotResource. </returns>
         public static ManagedClusterSnapshotCollection GetManagedClusterSnapshots(this ResourceGroupResource resourceGroupResource)
         {
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetManagedClusterSnapshots();
+            return GetContainerServiceResourceGroupResourceExtension(resourceGroupResource).GetManagedClusterSnapshots();
         }
 
         /// <summary>
@@ -451,7 +452,7 @@ namespace Azure.ResourceManager.ContainerService
         /// <returns> An object representing collection of ContainerServiceFleetResources and their operations over a ContainerServiceFleetResource. </returns>
         public static ContainerServiceFleetCollection GetContainerServiceFleets(this ResourceGroupResource resourceGroupResource)
         {
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetContainerServiceFleets();
+            return GetContainerServiceResourceGroupResourceExtension(resourceGroupResource).GetContainerServiceFleets();
         }
 
         /// <summary>
@@ -520,7 +521,7 @@ namespace Azure.ResourceManager.ContainerService
         /// <returns> An async collection of <see cref="ContainerServiceManagedClusterResource" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<ContainerServiceManagedClusterResource> GetContainerServiceManagedClustersAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetContainerServiceManagedClustersAsync(cancellationToken);
+            return GetContainerServiceSubscriptionResourceExtension(subscriptionResource).GetContainerServiceManagedClustersAsync(cancellationToken);
         }
 
         /// <summary>
@@ -541,7 +542,7 @@ namespace Azure.ResourceManager.ContainerService
         /// <returns> A collection of <see cref="ContainerServiceManagedClusterResource" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<ContainerServiceManagedClusterResource> GetContainerServiceManagedClusters(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetContainerServiceManagedClusters(cancellationToken);
+            return GetContainerServiceSubscriptionResourceExtension(subscriptionResource).GetContainerServiceManagedClusters(cancellationToken);
         }
 
         /// <summary>
@@ -562,7 +563,7 @@ namespace Azure.ResourceManager.ContainerService
         /// <returns> An async collection of <see cref="AgentPoolSnapshotResource" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<AgentPoolSnapshotResource> GetAgentPoolSnapshotsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetAgentPoolSnapshotsAsync(cancellationToken);
+            return GetContainerServiceSubscriptionResourceExtension(subscriptionResource).GetAgentPoolSnapshotsAsync(cancellationToken);
         }
 
         /// <summary>
@@ -583,7 +584,7 @@ namespace Azure.ResourceManager.ContainerService
         /// <returns> A collection of <see cref="AgentPoolSnapshotResource" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<AgentPoolSnapshotResource> GetAgentPoolSnapshots(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetAgentPoolSnapshots(cancellationToken);
+            return GetContainerServiceSubscriptionResourceExtension(subscriptionResource).GetAgentPoolSnapshots(cancellationToken);
         }
 
         /// <summary>
@@ -604,7 +605,7 @@ namespace Azure.ResourceManager.ContainerService
         /// <returns> An async collection of <see cref="ManagedClusterSnapshotResource" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<ManagedClusterSnapshotResource> GetManagedClusterSnapshotsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetManagedClusterSnapshotsAsync(cancellationToken);
+            return GetContainerServiceSubscriptionResourceExtension(subscriptionResource).GetManagedClusterSnapshotsAsync(cancellationToken);
         }
 
         /// <summary>
@@ -625,7 +626,7 @@ namespace Azure.ResourceManager.ContainerService
         /// <returns> A collection of <see cref="ManagedClusterSnapshotResource" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<ManagedClusterSnapshotResource> GetManagedClusterSnapshots(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetManagedClusterSnapshots(cancellationToken);
+            return GetContainerServiceSubscriptionResourceExtension(subscriptionResource).GetManagedClusterSnapshots(cancellationToken);
         }
 
         /// <summary>
@@ -647,7 +648,7 @@ namespace Azure.ResourceManager.ContainerService
         /// <returns> An async collection of <see cref="ContainerServiceTrustedAccessRole" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<ContainerServiceTrustedAccessRole> GetTrustedAccessRolesAsync(this SubscriptionResource subscriptionResource, AzureLocation location, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetTrustedAccessRolesAsync(location, cancellationToken);
+            return GetContainerServiceSubscriptionResourceExtension(subscriptionResource).GetTrustedAccessRolesAsync(location, cancellationToken);
         }
 
         /// <summary>
@@ -669,7 +670,7 @@ namespace Azure.ResourceManager.ContainerService
         /// <returns> A collection of <see cref="ContainerServiceTrustedAccessRole" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<ContainerServiceTrustedAccessRole> GetTrustedAccessRoles(this SubscriptionResource subscriptionResource, AzureLocation location, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetTrustedAccessRoles(location, cancellationToken);
+            return GetContainerServiceSubscriptionResourceExtension(subscriptionResource).GetTrustedAccessRoles(location, cancellationToken);
         }
 
         /// <summary>
@@ -690,7 +691,7 @@ namespace Azure.ResourceManager.ContainerService
         /// <returns> An async collection of <see cref="ContainerServiceFleetResource" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<ContainerServiceFleetResource> GetContainerServiceFleetsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetContainerServiceFleetsAsync(cancellationToken);
+            return GetContainerServiceSubscriptionResourceExtension(subscriptionResource).GetContainerServiceFleetsAsync(cancellationToken);
         }
 
         /// <summary>
@@ -711,7 +712,7 @@ namespace Azure.ResourceManager.ContainerService
         /// <returns> A collection of <see cref="ContainerServiceFleetResource" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<ContainerServiceFleetResource> GetContainerServiceFleets(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetContainerServiceFleets(cancellationToken);
+            return GetContainerServiceSubscriptionResourceExtension(subscriptionResource).GetContainerServiceFleets(cancellationToken);
         }
     }
 }

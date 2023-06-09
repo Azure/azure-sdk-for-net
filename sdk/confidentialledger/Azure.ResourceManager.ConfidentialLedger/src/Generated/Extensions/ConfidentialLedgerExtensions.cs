@@ -12,6 +12,7 @@ using Azure;
 using Azure.Core;
 using Azure.ResourceManager;
 using Azure.ResourceManager.ConfidentialLedger.Models;
+using Azure.ResourceManager.ConfidentialLedger.Testing;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.ConfidentialLedger
@@ -19,35 +20,35 @@ namespace Azure.ResourceManager.ConfidentialLedger
     /// <summary> A class to add extension methods to Azure.ResourceManager.ConfidentialLedger. </summary>
     public static partial class ConfidentialLedgerExtensions
     {
-        private static ResourceGroupResourceExtensionClient GetResourceGroupResourceExtensionClient(ArmResource resource)
+        private static ConfidentialLedgerResourceGroupResourceExtension GetConfidentialLedgerResourceGroupResourceExtension(ArmResource resource)
         {
             return resource.GetCachedClient(client =>
             {
-                return new ResourceGroupResourceExtensionClient(client, resource.Id);
+                return new ConfidentialLedgerResourceGroupResourceExtension(client, resource.Id);
             });
         }
 
-        private static ResourceGroupResourceExtensionClient GetResourceGroupResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
+        private static ConfidentialLedgerResourceGroupResourceExtension GetConfidentialLedgerResourceGroupResourceExtension(ArmClient client, ResourceIdentifier scope)
         {
             return client.GetResourceClient(() =>
             {
-                return new ResourceGroupResourceExtensionClient(client, scope);
+                return new ConfidentialLedgerResourceGroupResourceExtension(client, scope);
             });
         }
 
-        private static SubscriptionResourceExtensionClient GetSubscriptionResourceExtensionClient(ArmResource resource)
+        private static ConfidentialLedgerSubscriptionResourceExtension GetConfidentialLedgerSubscriptionResourceExtension(ArmResource resource)
         {
             return resource.GetCachedClient(client =>
             {
-                return new SubscriptionResourceExtensionClient(client, resource.Id);
+                return new ConfidentialLedgerSubscriptionResourceExtension(client, resource.Id);
             });
         }
 
-        private static SubscriptionResourceExtensionClient GetSubscriptionResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
+        private static ConfidentialLedgerSubscriptionResourceExtension GetConfidentialLedgerSubscriptionResourceExtension(ArmClient client, ResourceIdentifier scope)
         {
             return client.GetResourceClient(() =>
             {
-                return new SubscriptionResourceExtensionClient(client, scope);
+                return new ConfidentialLedgerSubscriptionResourceExtension(client, scope);
             });
         }
         #region ConfidentialLedgerResource
@@ -74,7 +75,7 @@ namespace Azure.ResourceManager.ConfidentialLedger
         /// <returns> An object representing collection of ConfidentialLedgerResources and their operations over a ConfidentialLedgerResource. </returns>
         public static ConfidentialLedgerCollection GetConfidentialLedgers(this ResourceGroupResource resourceGroupResource)
         {
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetConfidentialLedgers();
+            return GetConfidentialLedgerResourceGroupResourceExtension(resourceGroupResource).GetConfidentialLedgers();
         }
 
         /// <summary>
@@ -146,7 +147,7 @@ namespace Azure.ResourceManager.ConfidentialLedger
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            return await GetSubscriptionResourceExtensionClient(subscriptionResource).CheckConfidentialLedgerNameAvailabilityAsync(content, cancellationToken).ConfigureAwait(false);
+            return await GetConfidentialLedgerSubscriptionResourceExtension(subscriptionResource).CheckConfidentialLedgerNameAvailabilityAsync(content, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -170,7 +171,7 @@ namespace Azure.ResourceManager.ConfidentialLedger
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).CheckConfidentialLedgerNameAvailability(content, cancellationToken);
+            return GetConfidentialLedgerSubscriptionResourceExtension(subscriptionResource).CheckConfidentialLedgerNameAvailability(content, cancellationToken);
         }
 
         /// <summary>
@@ -192,7 +193,7 @@ namespace Azure.ResourceManager.ConfidentialLedger
         /// <returns> An async collection of <see cref="ConfidentialLedgerResource" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<ConfidentialLedgerResource> GetConfidentialLedgersAsync(this SubscriptionResource subscriptionResource, string filter = null, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetConfidentialLedgersAsync(filter, cancellationToken);
+            return GetConfidentialLedgerSubscriptionResourceExtension(subscriptionResource).GetConfidentialLedgersAsync(filter, cancellationToken);
         }
 
         /// <summary>
@@ -214,7 +215,7 @@ namespace Azure.ResourceManager.ConfidentialLedger
         /// <returns> A collection of <see cref="ConfidentialLedgerResource" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<ConfidentialLedgerResource> GetConfidentialLedgers(this SubscriptionResource subscriptionResource, string filter = null, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetConfidentialLedgers(filter, cancellationToken);
+            return GetConfidentialLedgerSubscriptionResourceExtension(subscriptionResource).GetConfidentialLedgers(filter, cancellationToken);
         }
     }
 }

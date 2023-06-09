@@ -12,6 +12,7 @@ using Azure;
 using Azure.Core;
 using Azure.ResourceManager;
 using Azure.ResourceManager.AppContainers.Models;
+using Azure.ResourceManager.AppContainers.Testing;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.AppContainers
@@ -19,35 +20,35 @@ namespace Azure.ResourceManager.AppContainers
     /// <summary> A class to add extension methods to Azure.ResourceManager.AppContainers. </summary>
     public static partial class AppContainersExtensions
     {
-        private static ResourceGroupResourceExtensionClient GetResourceGroupResourceExtensionClient(ArmResource resource)
+        private static AppContainersResourceGroupResourceExtension GetAppContainersResourceGroupResourceExtension(ArmResource resource)
         {
             return resource.GetCachedClient(client =>
             {
-                return new ResourceGroupResourceExtensionClient(client, resource.Id);
+                return new AppContainersResourceGroupResourceExtension(client, resource.Id);
             });
         }
 
-        private static ResourceGroupResourceExtensionClient GetResourceGroupResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
+        private static AppContainersResourceGroupResourceExtension GetAppContainersResourceGroupResourceExtension(ArmClient client, ResourceIdentifier scope)
         {
             return client.GetResourceClient(() =>
             {
-                return new ResourceGroupResourceExtensionClient(client, scope);
+                return new AppContainersResourceGroupResourceExtension(client, scope);
             });
         }
 
-        private static SubscriptionResourceExtensionClient GetSubscriptionResourceExtensionClient(ArmResource resource)
+        private static AppContainersSubscriptionResourceExtension GetAppContainersSubscriptionResourceExtension(ArmResource resource)
         {
             return resource.GetCachedClient(client =>
             {
-                return new SubscriptionResourceExtensionClient(client, resource.Id);
+                return new AppContainersSubscriptionResourceExtension(client, resource.Id);
             });
         }
 
-        private static SubscriptionResourceExtensionClient GetSubscriptionResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
+        private static AppContainersSubscriptionResourceExtension GetAppContainersSubscriptionResourceExtension(ArmClient client, ResourceIdentifier scope)
         {
             return client.GetResourceClient(() =>
             {
-                return new SubscriptionResourceExtensionClient(client, scope);
+                return new AppContainersSubscriptionResourceExtension(client, scope);
             });
         }
         #region ContainerAppAuthConfigResource
@@ -435,7 +436,7 @@ namespace Azure.ResourceManager.AppContainers
         /// <returns> An object representing collection of ContainerAppConnectedEnvironmentResources and their operations over a ContainerAppConnectedEnvironmentResource. </returns>
         public static ContainerAppConnectedEnvironmentCollection GetContainerAppConnectedEnvironments(this ResourceGroupResource resourceGroupResource)
         {
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetContainerAppConnectedEnvironments();
+            return GetAppContainersResourceGroupResourceExtension(resourceGroupResource).GetContainerAppConnectedEnvironments();
         }
 
         /// <summary>
@@ -491,7 +492,7 @@ namespace Azure.ResourceManager.AppContainers
         /// <returns> An object representing collection of ContainerAppResources and their operations over a ContainerAppResource. </returns>
         public static ContainerAppCollection GetContainerApps(this ResourceGroupResource resourceGroupResource)
         {
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetContainerApps();
+            return GetAppContainersResourceGroupResourceExtension(resourceGroupResource).GetContainerApps();
         }
 
         /// <summary>
@@ -547,7 +548,7 @@ namespace Azure.ResourceManager.AppContainers
         /// <returns> An object representing collection of ContainerAppJobResources and their operations over a ContainerAppJobResource. </returns>
         public static ContainerAppJobCollection GetContainerAppJobs(this ResourceGroupResource resourceGroupResource)
         {
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetContainerAppJobs();
+            return GetAppContainersResourceGroupResourceExtension(resourceGroupResource).GetContainerAppJobs();
         }
 
         /// <summary>
@@ -603,7 +604,7 @@ namespace Azure.ResourceManager.AppContainers
         /// <returns> An object representing collection of ContainerAppManagedEnvironmentResources and their operations over a ContainerAppManagedEnvironmentResource. </returns>
         public static ContainerAppManagedEnvironmentCollection GetContainerAppManagedEnvironments(this ResourceGroupResource resourceGroupResource)
         {
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetContainerAppManagedEnvironments();
+            return GetAppContainersResourceGroupResourceExtension(resourceGroupResource).GetContainerAppManagedEnvironments();
         }
 
         /// <summary>
@@ -673,7 +674,7 @@ namespace Azure.ResourceManager.AppContainers
         /// <returns> An async collection of <see cref="ContainerAppAvailableWorkloadProfile" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<ContainerAppAvailableWorkloadProfile> GetAvailableWorkloadProfilesAsync(this SubscriptionResource subscriptionResource, AzureLocation location, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetAvailableWorkloadProfilesAsync(location, cancellationToken);
+            return GetAppContainersSubscriptionResourceExtension(subscriptionResource).GetAvailableWorkloadProfilesAsync(location, cancellationToken);
         }
 
         /// <summary>
@@ -695,7 +696,7 @@ namespace Azure.ResourceManager.AppContainers
         /// <returns> A collection of <see cref="ContainerAppAvailableWorkloadProfile" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<ContainerAppAvailableWorkloadProfile> GetAvailableWorkloadProfiles(this SubscriptionResource subscriptionResource, AzureLocation location, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetAvailableWorkloadProfiles(location, cancellationToken);
+            return GetAppContainersSubscriptionResourceExtension(subscriptionResource).GetAvailableWorkloadProfiles(location, cancellationToken);
         }
 
         /// <summary>
@@ -717,7 +718,7 @@ namespace Azure.ResourceManager.AppContainers
         /// <returns> An async collection of <see cref="ContainerAppBillingMeter" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<ContainerAppBillingMeter> GetBillingMetersAsync(this SubscriptionResource subscriptionResource, AzureLocation location, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetBillingMetersAsync(location, cancellationToken);
+            return GetAppContainersSubscriptionResourceExtension(subscriptionResource).GetBillingMetersAsync(location, cancellationToken);
         }
 
         /// <summary>
@@ -739,7 +740,7 @@ namespace Azure.ResourceManager.AppContainers
         /// <returns> A collection of <see cref="ContainerAppBillingMeter" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<ContainerAppBillingMeter> GetBillingMeters(this SubscriptionResource subscriptionResource, AzureLocation location, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetBillingMeters(location, cancellationToken);
+            return GetAppContainersSubscriptionResourceExtension(subscriptionResource).GetBillingMeters(location, cancellationToken);
         }
 
         /// <summary>
@@ -760,7 +761,7 @@ namespace Azure.ResourceManager.AppContainers
         /// <returns> An async collection of <see cref="ContainerAppConnectedEnvironmentResource" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<ContainerAppConnectedEnvironmentResource> GetContainerAppConnectedEnvironmentsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetContainerAppConnectedEnvironmentsAsync(cancellationToken);
+            return GetAppContainersSubscriptionResourceExtension(subscriptionResource).GetContainerAppConnectedEnvironmentsAsync(cancellationToken);
         }
 
         /// <summary>
@@ -781,7 +782,7 @@ namespace Azure.ResourceManager.AppContainers
         /// <returns> A collection of <see cref="ContainerAppConnectedEnvironmentResource" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<ContainerAppConnectedEnvironmentResource> GetContainerAppConnectedEnvironments(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetContainerAppConnectedEnvironments(cancellationToken);
+            return GetAppContainersSubscriptionResourceExtension(subscriptionResource).GetContainerAppConnectedEnvironments(cancellationToken);
         }
 
         /// <summary>
@@ -802,7 +803,7 @@ namespace Azure.ResourceManager.AppContainers
         /// <returns> An async collection of <see cref="ContainerAppResource" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<ContainerAppResource> GetContainerAppsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetContainerAppsAsync(cancellationToken);
+            return GetAppContainersSubscriptionResourceExtension(subscriptionResource).GetContainerAppsAsync(cancellationToken);
         }
 
         /// <summary>
@@ -823,7 +824,7 @@ namespace Azure.ResourceManager.AppContainers
         /// <returns> A collection of <see cref="ContainerAppResource" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<ContainerAppResource> GetContainerApps(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetContainerApps(cancellationToken);
+            return GetAppContainersSubscriptionResourceExtension(subscriptionResource).GetContainerApps(cancellationToken);
         }
 
         /// <summary>
@@ -844,7 +845,7 @@ namespace Azure.ResourceManager.AppContainers
         /// <returns> An async collection of <see cref="ContainerAppJobResource" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<ContainerAppJobResource> GetContainerAppJobsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetContainerAppJobsAsync(cancellationToken);
+            return GetAppContainersSubscriptionResourceExtension(subscriptionResource).GetContainerAppJobsAsync(cancellationToken);
         }
 
         /// <summary>
@@ -865,7 +866,7 @@ namespace Azure.ResourceManager.AppContainers
         /// <returns> A collection of <see cref="ContainerAppJobResource" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<ContainerAppJobResource> GetContainerAppJobs(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetContainerAppJobs(cancellationToken);
+            return GetAppContainersSubscriptionResourceExtension(subscriptionResource).GetContainerAppJobs(cancellationToken);
         }
 
         /// <summary>
@@ -886,7 +887,7 @@ namespace Azure.ResourceManager.AppContainers
         /// <returns> An async collection of <see cref="ContainerAppManagedEnvironmentResource" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<ContainerAppManagedEnvironmentResource> GetContainerAppManagedEnvironmentsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetContainerAppManagedEnvironmentsAsync(cancellationToken);
+            return GetAppContainersSubscriptionResourceExtension(subscriptionResource).GetContainerAppManagedEnvironmentsAsync(cancellationToken);
         }
 
         /// <summary>
@@ -907,7 +908,7 @@ namespace Azure.ResourceManager.AppContainers
         /// <returns> A collection of <see cref="ContainerAppManagedEnvironmentResource" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<ContainerAppManagedEnvironmentResource> GetContainerAppManagedEnvironments(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetContainerAppManagedEnvironments(cancellationToken);
+            return GetAppContainersSubscriptionResourceExtension(subscriptionResource).GetContainerAppManagedEnvironments(cancellationToken);
         }
     }
 }
