@@ -269,8 +269,8 @@ namespace Azure.Storage.DataMovement
                     {
                         slicedStream = await GetOffsetPartitionInternal(
                             stream,
-                            (int)0,
-                            (int)blockSize,
+                            0L,
+                            blockSize,
                             UploadArrayPool,
                             _cancellationToken).ConfigureAwait(false);
                         await _destinationResource.WriteFromStreamAsync(
@@ -339,8 +339,8 @@ namespace Azure.Storage.DataMovement
                 {
                     slicedStream = await GetOffsetPartitionInternal(
                         stream,
-                        (int)offset,
-                        (int)blockLength,
+                        offset,
+                        blockLength,
                         UploadArrayPool,
                         _cancellationToken).ConfigureAwait(false);
                     await _destinationResource.WriteFromStreamAsync(
@@ -426,8 +426,8 @@ namespace Azure.Storage.DataMovement
         /// </returns>
         private static async Task<Stream> GetOffsetPartitionInternal(
             Stream stream,
-            int offset,
-            int length,
+            long offset,
+            long length,
             ArrayPool<byte> arrayPool,
             CancellationToken cancellationToken)
         {
