@@ -58,6 +58,7 @@ ContentSafetyClient client = new ContentSafetyClient(new Uri(endpoint), new Azur
 ### Harm categories
 
 Content Safety recognizes four distinct categories of objectionable content.
+
 |Category |Description  |
 |---------|---------|
 |Hate |Hate refers to any content that attacks or uses pejorative or discriminatory language in reference to a person or identity group based on certain differentiating attributes of that group. This includes but is not limited to race, ethnicity, nationality, gender identity and expression, sexual orientation, religion, immigration status, ability status, personal appearance, and body size.|
@@ -70,6 +71,7 @@ Classification can be multi-labeled. For example, when a text sample goes throug
 ### Severity levels
 
 Every harm category the service applies also comes with a severity level rating. The severity level is meant to indicate the severity of the consequences of showing the flagged content.
+
 |Severity |Label |
 |---------|---------|
 |0 |Safe|
