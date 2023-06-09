@@ -9,23 +9,23 @@ namespace Azure.Communication.CallAutomation
         /// <summary>
         /// Indicates whether the returned event is considered successful or not.
         /// </summary>
-        public bool IsSuccessEvent { get; internal set; }
+        public bool IsSuccess { get; internal set; }
 
         /// <summary>
         /// <see cref="PlayCompleted"/> event will be returned once the play is completed successfully.
         /// </summary>
-        public PlayCompleted SuccessEvent { get; }
+        public PlayCompleted SuccessResult { get; }
 
         /// <summary>
         /// <see cref="PlayFailed"/> event will be returned once the play failed.
         /// </summary>
-        public PlayFailed FailureEvent { get; }
+        public PlayFailed FailureResult { get; }
 
-        internal PlayEventResult(bool isSuccessEvent, PlayCompleted successEvent, PlayFailed failureEvent)
+        internal PlayEventResult(bool isSuccess, PlayCompleted successResult, PlayFailed failureResult)
         {
-            IsSuccessEvent = isSuccessEvent;
-            SuccessEvent = successEvent;
-            FailureEvent = failureEvent;
+            IsSuccess = isSuccess;
+            SuccessResult = successResult;
+            FailureResult = failureResult;
         }
     }
 }

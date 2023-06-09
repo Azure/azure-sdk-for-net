@@ -116,7 +116,7 @@ namespace Azure.AI.FormRecognizer.Tests
         public async Task TrainingOperationCanPollFromNewObject()
         {
             var client = CreateFormTrainingClient(out var nonInstrumentedClient);
-            var trainingFilesUri = new Uri(TestEnvironment.BlobContainerSasUrlV2);
+            var trainingFilesUri = new Uri(TestEnvironment.BlobContainerSasUrl);
 
             var operation = await client.StartTrainingAsync(trainingFilesUri, useTrainingLabels: false);
 
@@ -149,8 +149,8 @@ namespace Azure.AI.FormRecognizer.Tests
         public async Task CopyModelOperationCanPollFromNewObject()
         {
             var client = CreateFormTrainingClient(out var nonInstrumentedClient);
-            var resourceId = TestEnvironment.TargetResourceId;
-            var region = TestEnvironment.TargetResourceRegion;
+            var resourceId = TestEnvironment.ResourceId;
+            var region = TestEnvironment.ResourceRegion;
 
             await using var trainedModel = await CreateDisposableTrainedModelAsync(useTrainingLabels: false);
             CopyAuthorization targetAuth = await client.GetCopyAuthorizationAsync(resourceId, region);

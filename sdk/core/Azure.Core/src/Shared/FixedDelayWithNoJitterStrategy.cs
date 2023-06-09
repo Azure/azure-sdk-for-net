@@ -7,6 +7,9 @@ using System;
 
 namespace Azure.Core
 {
+    /// <summary>
+    /// A delay strategy that uses a fixed delay with no jitter applied. This is used by data plane LROs.
+    /// </summary>
     internal class FixedDelayWithNoJitterStrategy : DelayStrategy
     {
         private static readonly TimeSpan DefaultDelay = TimeSpan.FromSeconds(1);

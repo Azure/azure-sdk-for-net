@@ -5,28 +5,83 @@
 
 #nullable disable
 
+using System;
+using System.ComponentModel;
+
 namespace Azure.Communication.JobRouter
 {
     /// <summary> The JobStateSelector. </summary>
-    public enum JobStateSelector
+    public readonly partial struct JobStateSelector : IEquatable<JobStateSelector>
     {
+        private readonly string _value;
+
+        /// <summary> Initializes a new instance of <see cref="JobStateSelector"/>. </summary>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public JobStateSelector(string value)
+        {
+            _value = value ?? throw new ArgumentNullException(nameof(value));
+        }
+
+        private const string AllValue = "all";
+        private const string PendingClassificationValue = "pendingClassification";
+        private const string QueuedValue = "queued";
+        private const string AssignedValue = "assigned";
+        private const string CompletedValue = "completed";
+        private const string ClosedValue = "closed";
+        private const string CancelledValue = "cancelled";
+        private const string ClassificationFailedValue = "classificationFailed";
+        private const string CreatedValue = "created";
+        private const string PendingScheduleValue = "pendingSchedule";
+        private const string ScheduledValue = "scheduled";
+        private const string ScheduleFailedValue = "scheduleFailed";
+        private const string WaitingForActivationValue = "waitingForActivation";
+        private const string ActiveValue = "active";
+
         /// <summary> all. </summary>
-        All,
+        public static JobStateSelector All { get; } = new JobStateSelector(AllValue);
         /// <summary> pendingClassification. </summary>
-        PendingClassification,
+        public static JobStateSelector PendingClassification { get; } = new JobStateSelector(PendingClassificationValue);
         /// <summary> queued. </summary>
-        Queued,
+        public static JobStateSelector Queued { get; } = new JobStateSelector(QueuedValue);
         /// <summary> assigned. </summary>
-        Assigned,
+        public static JobStateSelector Assigned { get; } = new JobStateSelector(AssignedValue);
         /// <summary> completed. </summary>
-        Completed,
+        public static JobStateSelector Completed { get; } = new JobStateSelector(CompletedValue);
         /// <summary> closed. </summary>
-        Closed,
+        public static JobStateSelector Closed { get; } = new JobStateSelector(ClosedValue);
         /// <summary> cancelled. </summary>
-        Cancelled,
+        public static JobStateSelector Cancelled { get; } = new JobStateSelector(CancelledValue);
         /// <summary> classificationFailed. </summary>
-        ClassificationFailed,
+        public static JobStateSelector ClassificationFailed { get; } = new JobStateSelector(ClassificationFailedValue);
+        /// <summary> created. </summary>
+        public static JobStateSelector Created { get; } = new JobStateSelector(CreatedValue);
+        /// <summary> pendingSchedule. </summary>
+        public static JobStateSelector PendingSchedule { get; } = new JobStateSelector(PendingScheduleValue);
+        /// <summary> scheduled. </summary>
+        public static JobStateSelector Scheduled { get; } = new JobStateSelector(ScheduledValue);
+        /// <summary> scheduleFailed. </summary>
+        public static JobStateSelector ScheduleFailed { get; } = new JobStateSelector(ScheduleFailedValue);
+        /// <summary> waitingForActivation. </summary>
+        public static JobStateSelector WaitingForActivation { get; } = new JobStateSelector(WaitingForActivationValue);
         /// <summary> active. </summary>
-        Active
+        public static JobStateSelector Active { get; } = new JobStateSelector(ActiveValue);
+        /// <summary> Determines if two <see cref="JobStateSelector"/> values are the same. </summary>
+        public static bool operator ==(JobStateSelector left, JobStateSelector right) => left.Equals(right);
+        /// <summary> Determines if two <see cref="JobStateSelector"/> values are not the same. </summary>
+        public static bool operator !=(JobStateSelector left, JobStateSelector right) => !left.Equals(right);
+        /// <summary> Converts a string to a <see cref="JobStateSelector"/>. </summary>
+        public static implicit operator JobStateSelector(string value) => new JobStateSelector(value);
+
+        /// <inheritdoc />
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public override bool Equals(object obj) => obj is JobStateSelector other && Equals(other);
+        /// <inheritdoc />
+        public bool Equals(JobStateSelector other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+
+        /// <inheritdoc />
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        /// <inheritdoc />
+        public override string ToString() => _value;
     }
 }

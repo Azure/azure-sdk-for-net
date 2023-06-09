@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
 using Azure.ResourceManager.Compute.Tests.Helpers;
@@ -41,6 +42,25 @@ namespace Azure.ResourceManager.Compute.Tests
             DiskAccessResource access2 = await access1.GetAsync();
 
             ResourceDataHelper.AssertDiskAccess(access1.Data, access2.Data);
+        }
+
+        [RecordedTest]
+        [TestCase(null)]
+        [TestCase(true)]
+        [TestCase(false)]
+        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/36714")]
+        public async Task SetTags(bool? useTagResource)
+        {
+            SetTagResourceUsage(Client, useTagResource);
+            var name = Recording.GenerateAssetName("testDA-");
+            var diskAccess = await CreateDiskAccessAsync(name);
+            var tags = new Dictionary<string, string>()
+            {
+                { "key", "value" }
+            };
+            DiskAccessResource updated = await diskAccess.SetTagsAsync(tags);
+
+            Assert.AreEqual(tags, updated.Data.Tags);
         }
     }
 }

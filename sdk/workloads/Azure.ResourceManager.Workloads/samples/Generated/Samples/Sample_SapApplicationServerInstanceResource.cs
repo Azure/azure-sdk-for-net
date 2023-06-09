@@ -172,11 +172,11 @@ namespace Azure.ResourceManager.Workloads.Samples
             SapApplicationServerInstanceResource sapApplicationServerInstance = client.GetSapApplicationServerInstanceResource(sapApplicationServerInstanceResourceId);
 
             // invoke the operation
-            StopRequest body = new StopRequest()
+            SapStopContent content = new SapStopContent()
             {
                 SoftStopTimeoutSeconds = 0,
             };
-            ArmOperation<OperationStatusResult> lro = await sapApplicationServerInstance.StopInstanceAsync(WaitUntil.Completed, body: body);
+            ArmOperation<OperationStatusResult> lro = await sapApplicationServerInstance.StopInstanceAsync(WaitUntil.Completed, content: content);
             OperationStatusResult result = lro.Value;
 
             Console.WriteLine($"Succeeded: {result}");

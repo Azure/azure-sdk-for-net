@@ -85,7 +85,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
             var client = CreateDocumentModelAdministrationClient(out var nonInstrumentedClient);
             var modelId = Recording.GenerateId();
 
-            await using var trainedModel = await CreateDisposableBuildModelAsync(modelId);
+            await using var trainedModel = await BuildDisposableDocumentModelAsync(modelId);
 
             var targetModelId = Recording.GenerateId();
             DocumentModelCopyAuthorization targetAuth = await client.GetCopyAuthorizationAsync(targetModelId);
@@ -106,7 +106,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
             var client = CreateDocumentModelAdministrationClient();
             var modelId = Recording.GenerateId();
 
-            await using var trainedModel = await CreateDisposableBuildModelAsync(modelId);
+            await using var trainedModel = await BuildDisposableDocumentModelAsync(modelId);
 
             var targetModelId = Recording.GenerateId();
             DocumentModelCopyAuthorization targetAuth = await client.GetCopyAuthorizationAsync(targetModelId);
@@ -121,12 +121,12 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
         }
 
         [RecordedTest]
-        [Ignore("Test file IRS-1040_2.pdf hasn't been uploaded to GitHub yet.")]
+        [ServiceVersion(Min = DocumentAnalysisClientOptions.ServiceVersion.V2023_02_28_Preview)]
         public async Task ClassifyDocumentOperationCanPollFromNewObject()
         {
             var client = CreateDocumentAnalysisClient(out var nonInstrumentedClient);
             var classifierId = Recording.GenerateId();
-            await using var disposableClassifier = await BuildDisposableDocumentClassifier(classifierId);
+            await using var disposableClassifier = await BuildDisposableDocumentClassifierAsync(classifierId);
             var uri = DocumentAnalysisTestEnvironment.CreateUri(TestFile.Irs1040);
 
             var operation = await client.ClassifyDocumentFromUriAsync(WaitUntil.Started, classifierId, uri);
@@ -135,10 +135,11 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
             await sameOperation.WaitForCompletionAsync();
 
             Assert.IsTrue(sameOperation.HasValue);
-            Assert.AreEqual(4, sameOperation.Value.Pages);
+            Assert.AreEqual(4, sameOperation.Value.Pages.Count);
         }
 
         [RecordedTest]
+        [ServiceVersion(Min = DocumentAnalysisClientOptions.ServiceVersion.V2023_02_28_Preview)]
         public async Task BuildClassifierOperationCanPollFromNewObject()
         {
             var client = CreateDocumentModelAdministrationClient(out var nonInstrumentedClient);
@@ -176,6 +177,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
         }
 
         [RecordedTest]
+        [ServiceVersion(Min = DocumentAnalysisClientOptions.ServiceVersion.V2023_02_28_Preview)]
         public async Task BuildClassifierOperationPercentageCompletedValue()
         {
             var client = CreateDocumentModelAdministrationClient(out var nonInstrumentedClient);

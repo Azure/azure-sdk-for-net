@@ -34,7 +34,7 @@ namespace Azure.Health.Insights.ClinicalMatching
         /// <param name="knowledgeGraphLastUpdateDate"> The date when the clinical trials knowledge graph was last updated. </param>
         internal TrialMatcherResults(IReadOnlyList<TrialMatcherPatientResult> patients, string modelVersion, DateTimeOffset? knowledgeGraphLastUpdateDate)
         {
-            Patients = patients.ToList();
+            Patients = patients;
             ModelVersion = modelVersion;
             KnowledgeGraphLastUpdateDate = knowledgeGraphLastUpdateDate;
         }

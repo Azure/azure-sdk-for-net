@@ -5,6 +5,7 @@ using System;
 using System.Buffers;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
@@ -32,40 +33,13 @@ namespace Azure.Storage.Tests
             int writeSize = 256;
             int writeCount = 9;
 
-            Mock<PooledMemoryStream> mockBuffer = new Mock<PooledMemoryStream>(MockBehavior.Strict);
-
-            mockBuffer.SetupSequence(r => r.WriteAsync(
-                It.IsAny<byte[]>(),
-                It.IsAny<int>(),
-                It.IsAny<int>(),
-                It.IsAny<CancellationToken>()))
-                    .Returns(Task.CompletedTask)
-                    .Returns(Task.CompletedTask)
-                    .Returns(Task.CompletedTask)
-                    .Returns(Task.CompletedTask)
-                    .Returns(Task.CompletedTask)
-                    .Returns(Task.CompletedTask)
-                    .Returns(Task.CompletedTask)
-                    .Returns(Task.CompletedTask)
-                    .Returns(Task.CompletedTask)
-                    .Returns(Task.CompletedTask)
-                    .Returns(Task.CompletedTask);
-
-            mockBuffer.SetupSequence(r => r.Position)
-                .Returns(0)
-                .Returns(0)
-                .Returns(256)
-                .Returns(512)
-                .Returns(768)
-                .Returns(1024)
-                .Returns(1024)
-                .Returns(0)
-                .Returns(256)
-                .Returns(512)
-                .Returns(1024)
-                .Returns(1024);
-
-            mockBuffer.Setup(r => r.Length).Returns(1024); // just need a value > 0
+            Mock<PooledMemoryStream> mockBuffer = new(
+                MockBehavior.Loose,
+                ArrayPool<byte>.Shared,
+                Constants.MB)
+            {
+                CallBase = true,
+            };
 
             StorageWriteStreamImplementation stream = new StorageWriteStreamImplementation(
                 position: 0,
@@ -88,12 +62,12 @@ namespace Azure.Storage.Tests
             await stream.FlushAsync();
 
             // Assert
-            Assert.AreEqual(3, stream.ApiCalls.Count);
-            Assert.AreEqual(s_append, stream.ApiCalls[0]);
-            Assert.AreEqual(s_append, stream.ApiCalls[1]);
-            Assert.AreEqual(s_flush, stream.ApiCalls[2]);
+            Assert.AreEqual(4, stream.ApiCalls.Count);     // 1280 bytes to write (writeSize=256 * writeCount=9)
+            Assert.AreEqual(s_append, stream.ApiCalls[0]); // first bufferSize=1024 bytes
+            Assert.AreEqual(s_append, stream.ApiCalls[1]); // next bufferSize=1024 bytes
+            Assert.AreEqual(s_append, stream.ApiCalls[2]); // remaining 256 bytes
+            Assert.AreEqual(s_flush, stream.ApiCalls[3]);
 
-            mockBuffer.Verify(r => r.Position, Times.Exactly(12));
             for (int i = 0; i < writeCount; i++)
             {
                 mockBuffer.Verify(r => r.WriteAsync(
@@ -117,32 +91,13 @@ namespace Azure.Storage.Tests
             int writeSize = 500;
             int writeCount = 5;
 
-            Mock<PooledMemoryStream> mockBuffer = new Mock<PooledMemoryStream>(MockBehavior.Strict);
-
-            mockBuffer.SetupSequence(r => r.WriteAsync(
-                It.IsAny<byte[]>(),
-                It.IsAny<int>(),
-                It.IsAny<int>(),
-                It.IsAny<CancellationToken>()))
-                    .Returns(Task.CompletedTask)
-                    .Returns(Task.CompletedTask)
-                    .Returns(Task.CompletedTask)
-                    .Returns(Task.CompletedTask)
-                    .Returns(Task.CompletedTask)
-                    .Returns(Task.CompletedTask)
-                    .Returns(Task.CompletedTask);
-
-            mockBuffer.SetupSequence(r => r.Position)
-                .Returns(0)
-                .Returns(0)
-                .Returns(500)
-                .Returns(1000)
-                .Returns(1000)
-                .Returns(476)
-                .Returns(976)
-                .Returns(976);
-
-            mockBuffer.Setup(r => r.Length).Returns(1024); // just need a value > 0
+            Mock<PooledMemoryStream> mockBuffer = new(
+                MockBehavior.Loose,
+                ArrayPool<byte>.Shared,
+                Constants.MB)
+            {
+                CallBase = true,
+            };
 
             StorageWriteStreamImplementation stream = new StorageWriteStreamImplementation(
                 position: 0,
@@ -164,12 +119,11 @@ namespace Azure.Storage.Tests
             await stream.FlushAsync();
 
             // Assert
-            Assert.AreEqual(3, stream.ApiCalls.Count);
-            Assert.AreEqual(s_append, stream.ApiCalls[0]);
-            Assert.AreEqual(s_append, stream.ApiCalls[1]);
-            Assert.AreEqual(s_flush, stream.ApiCalls[2]);
-
-            mockBuffer.Verify(r => r.Position, Times.Exactly(8));
+            Assert.AreEqual(4, stream.ApiCalls.Count);     // write 2500 bytes
+            Assert.AreEqual(s_append, stream.ApiCalls[0]); // 1024
+            Assert.AreEqual(s_append, stream.ApiCalls[1]); // 2048
+            Assert.AreEqual(s_append, stream.ApiCalls[2]); // 2500
+            Assert.AreEqual(s_flush, stream.ApiCalls[3]);
 
             mockBuffer.Verify(r => r.WriteAsync(data[0], 0, writeSize, default));
             mockBuffer.Verify(r => r.WriteAsync(data[1], 0, writeSize, default));
@@ -192,27 +146,13 @@ namespace Azure.Storage.Tests
             int writeSize = 2000;
             int writeCount = 2;
 
-            Mock<PooledMemoryStream> mockBuffer = new Mock<PooledMemoryStream>(MockBehavior.Strict);
-
-            mockBuffer.SetupSequence(r => r.WriteAsync(
-                It.IsAny<byte[]>(),
-                It.IsAny<int>(),
-                It.IsAny<int>(),
-                It.IsAny<CancellationToken>()))
-                    .Returns(Task.CompletedTask)
-                    .Returns(Task.CompletedTask)
-                    .Returns(Task.CompletedTask)
-                    .Returns(Task.CompletedTask)
-                    .Returns(Task.CompletedTask);
-
-            mockBuffer.SetupSequence(r => r.Position)
-                .Returns(0)
-                .Returns(0)
-                .Returns(0)
-                .Returns(976)
-                .Returns(976);
-
-            mockBuffer.Setup(r => r.Length).Returns(1024); // just need a value > 0
+            Mock<PooledMemoryStream> mockBuffer = new(
+                MockBehavior.Loose,
+                ArrayPool<byte>.Shared,
+                Constants.MB)
+            {
+                CallBase = true,
+            };
 
             StorageWriteStreamImplementation stream = new StorageWriteStreamImplementation(
                 position: 0,
@@ -234,13 +174,12 @@ namespace Azure.Storage.Tests
             await stream.FlushAsync();
 
             // Assert
-            Assert.AreEqual(4, stream.ApiCalls.Count);
-            Assert.AreEqual(s_append, stream.ApiCalls[0]);
-            Assert.AreEqual(s_append, stream.ApiCalls[1]);
-            Assert.AreEqual(s_append, stream.ApiCalls[2]);
-            Assert.AreEqual(s_flush, stream.ApiCalls[3]);
-
-            mockBuffer.Verify(r => r.Position, Times.Exactly(5));
+            Assert.AreEqual(5, stream.ApiCalls.Count);     // total of 4000 bytes to be written
+            Assert.AreEqual(s_append, stream.ApiCalls[0]); // 1024
+            Assert.AreEqual(s_append, stream.ApiCalls[1]); // 2048
+            Assert.AreEqual(s_append, stream.ApiCalls[2]); // 3072
+            Assert.AreEqual(s_append, stream.ApiCalls[3]); // 4000
+            Assert.AreEqual(s_flush, stream.ApiCalls[4]);
 
             mockBuffer.Verify(r => r.WriteAsync(data[0], 0, bufferSize, default));
             mockBuffer.Verify(r => r.WriteAsync(data[0], bufferSize, 976, default));
@@ -278,11 +217,11 @@ namespace Azure.Storage.Tests
                 CancellationToken cancellationToken)
             {
                 ApiCalls.Add(s_append);
+                _buffer.Clear();
                 return Task.CompletedTask;
             }
 
-            protected override Task FlushInternal(
-                UploadTransferValidationOptions validationOptions,
+            protected override Task CommitInternal(
                 bool async,
                 CancellationToken cancellationToken)
             {

@@ -5,7 +5,6 @@ Run `dotnet build /t:GenerateCode` to generate code.
 ``` yaml
 
 azure-arm: true
-generate-model-factory: false
 library-name: Monitor
 namespace: Azure.ResourceManager.Monitor
 require: https://github.com/Azure/azure-rest-api-specs/blob/fce14bf881523f16b14d8ecf325e004465cdcf56/specification/monitor/resource-manager/readme.md
@@ -78,8 +77,12 @@ override-operation-name:
   ActionGroups_PostTestNotifications: CreateNotifications
   ActionGroups_CreateNotificationsAtResourceGroupLevel: CreateNotifications
   ActionGroups_CreateNotificationsAtActionGroupResourceLevel: CreateNotifications
+  Baselines_List: GetMonitorMetricBaselines
+  Metrics_List: GetMonitorMetrics
   Metrics_ListAtSubscriptionScope: GetMonitorMetrics
   Metrics_ListAtSubscriptionScopePost: GetMonitorMetricsWithPost
+  MetricDefinitions_List: GetMonitorMetricDefinitions
+  MetricNamespaces_List: GetMonitorMetricNamespaces
 
 rename-mapping:
   AutoscaleSetting: AutoscaleSettingProperties
@@ -275,8 +278,20 @@ rename-mapping:
   MonitoringAccountDestination.accountResourceId: -|arm-id
   StorageBlobDestination: DataCollectionRuleStorageBlobDestination
   StorageTableDestination: DataCollectionRuleStorageTableDestination
-
-
+  MetricDefinition: MonitorMetricDefinition
+  AggregationType: MonitorAggregationType
+  BaselineMetadata: MonitorBaselineMetadata
+  BaselineSensitivity: MonitorBaselineSensitivity
+  MetricAvailability: MonitorMetricAvailability
+  MetricClass: MonitorMetricClass
+  MetricNamespace: MonitorMetricNamespace
+  MetricSingleDimension: MonitorMetricSingleDimension
+  NamespaceClassification: MonitorNamespaceClassification
+  ResultType: MonitorResultType
+  SingleBaseline: MonitorSingleBaseline
+  SingleMetricBaseline: MonitorSingleMetricBaseline
+  TimeSeriesBaseline: MonitorTimeSeriesBaseline
+  Unit: MonitorMetricUnit
 
 directive:
   # remove operations because they are covered in resourcemanager we no longer need to generate them here, and they are causing duplicate schemas

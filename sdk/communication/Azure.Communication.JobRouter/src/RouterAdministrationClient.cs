@@ -186,8 +186,8 @@ namespace Azure.Communication.JobRouter
                 {
                     Name = options.Name,
                     FallbackQueueId = options.FallbackQueueId,
-                    QueueSelectors = options.QueueSelectors,
-                    WorkerSelectors = options.WorkerSelectors,
+                    QueueSelectors = options.QueueSelectors ?? new List<QueueSelectorAttachment>(),
+                    WorkerSelectors = options.WorkerSelectors ?? new List<WorkerSelectorAttachment>(),
                     PrioritizationRule = options.PrioritizationRule
                 };
 
@@ -220,14 +220,68 @@ namespace Azure.Communication.JobRouter
                 {
                     Name = options.Name,
                     FallbackQueueId = options.FallbackQueueId,
-                    QueueSelectors = options.QueueSelectors,
-                    WorkerSelectors = options.WorkerSelectors,
+                    QueueSelectors = options.QueueSelectors ?? new List<QueueSelectorAttachment>(),
+                    WorkerSelectors = options.WorkerSelectors ?? new List<WorkerSelectorAttachment>(),
+                    PrioritizationRule = options.PrioritizationRule
                 };
 
                 return RestClient.UpsertClassificationPolicy(
                     id: options.ClassificationPolicyId,
                     patch: request,
                     cancellationToken: cancellationToken);
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+        }
+
+        /// <summary> Protocol method to use to remove properties from classification policy. </summary>
+        /// <param name="classificationPolicyId"> Id of the classification policy. </param>
+        /// <param name="content"> Request content payload. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
+        public virtual async Task<Response> UpdateClassificationPolicyAsync(
+            string classificationPolicyId,
+            RequestContent content,
+            RequestContext context = null)
+        {
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(RouterAdministrationClient)}.{nameof(UpdateClassificationPolicy)}");
+            scope.Start();
+            try
+            {
+                return await RestClient.UpsertClassificationPolicyAsync(
+                        id: classificationPolicyId,
+                        content: content,
+                        context: context)
+                    .ConfigureAwait(false);
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+        }
+
+        /// <summary> Protocol method to use to remove properties from classification policy. </summary>
+        /// <param name="classificationPolicyId"> Id of the classification policy. </param>
+        /// <param name="content"> Request content payload. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
+        public virtual Response UpdateClassificationPolicy(
+            string classificationPolicyId,
+            RequestContent content,
+            RequestContext context = null)
+        {
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(RouterAdministrationClient)}.{nameof(UpdateClassificationPolicy)}");
+            scope.Start();
+            try
+            {
+                return RestClient.UpsertClassificationPolicy(
+                    id: classificationPolicyId,
+                    content: content,
+                    context: context);
             }
             catch (Exception ex)
             {
@@ -533,6 +587,59 @@ namespace Azure.Communication.JobRouter
                     id: options.DistributionPolicyId,
                     patch: request,
                     cancellationToken: cancellationToken);
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+        }
+
+        /// <summary> Protocol method to use to remove properties from distribution policy. </summary>
+        /// <param name="distributionPolicyId"> Id of the distribution policy. </param>
+        /// <param name="content"> Request content payload. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
+        public virtual async Task<Response> UpdateDistributionPolicyAsync(
+            string distributionPolicyId,
+            RequestContent content,
+            RequestContext context = null)
+        {
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(RouterAdministrationClient)}.{nameof(UpdateDistributionPolicy)}");
+            scope.Start();
+            try
+            {
+                return await RestClient.UpsertDistributionPolicyAsync(
+                        id: distributionPolicyId,
+                        content: content,
+                        context: context)
+                    .ConfigureAwait(false);
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+        }
+
+        /// <summary> Protocol method to use to remove properties from distribution policy. </summary>
+        /// <param name="distributionPolicyId"> Id of the distribution policy. </param>
+        /// <param name="content"> Request content payload. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
+        public virtual Response UpdateDistributionPolicy(
+            string distributionPolicyId,
+            RequestContent content,
+            RequestContext context = null)
+        {
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(RouterAdministrationClient)}.{nameof(UpdateDistributionPolicy)}");
+            scope.Start();
+            try
+            {
+                return RestClient.UpsertDistributionPolicy(
+                    id: distributionPolicyId,
+                    content: content,
+                    context: context);
             }
             catch (Exception ex)
             {
@@ -848,6 +955,59 @@ namespace Azure.Communication.JobRouter
             }
         }
 
+        /// <summary> Protocol method to use to remove properties from exception policy. </summary>
+        /// <param name="exceptionPolicyId"> Id of the exception policy. </param>
+        /// <param name="content"> Request content payload. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
+        public virtual async Task<Response> UpdateExceptionPolicyAsync(
+            string exceptionPolicyId,
+            RequestContent content,
+            RequestContext context = null)
+        {
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(RouterAdministrationClient)}.{nameof(UpdateExceptionPolicy)}");
+            scope.Start();
+            try
+            {
+                return await RestClient.UpsertExceptionPolicyAsync(
+                        id: exceptionPolicyId,
+                        content: content,
+                        context: context)
+                    .ConfigureAwait(false);
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+        }
+
+        /// <summary> Protocol method to use to remove properties from exception policy. </summary>
+        /// <param name="exceptionPolicyId"> Id of the exception policy. </param>
+        /// <param name="content"> Request content payload. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
+        public virtual Response UpdateExceptionPolicy(
+            string exceptionPolicyId,
+            RequestContent content,
+            RequestContext context = null)
+        {
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(RouterAdministrationClient)}.{nameof(UpdateExceptionPolicy)}");
+            scope.Start();
+            try
+            {
+                return RestClient.UpsertExceptionPolicy(
+                    id: exceptionPolicyId,
+                    content: content,
+                    context: context);
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+        }
+
         /// <summary> Retrieves existing exception policies. </summary>
         /// <param name="cancellationToken"> (Optional) The cancellation token to use. </param>
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
@@ -1147,6 +1307,61 @@ namespace Azure.Communication.JobRouter
                     id: options.QueueId,
                     patch: request,
                     cancellationToken: cancellationToken);
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+        }
+
+        /// <summary> Protocol method to use to remove properties from worker. </summary>
+        /// <param name="queueId"> Id of the queue. </param>
+        /// <param name="content"> Request content payload. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
+        public virtual async Task<Response> UpdateQueueAsync(
+            string queueId,
+            RequestContent content,
+            RequestContext context = null)
+        {
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(RouterAdministrationClient)}.{nameof(UpdateQueue)}");
+            scope.Start();
+            try
+            {
+                return await RestClient.UpsertQueueAsync(
+                        id: queueId,
+                        content: content,
+                        context: context)
+                    .ConfigureAwait(false);
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+        }
+
+        /// <summary> Creates or updates a queue. </summary>
+        /// <param name="queueId"> Id of the queue. </param>
+        /// <param name="content"> Request content payload. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
+        public virtual Response UpdateQueue(
+            string queueId,
+            RequestContent content,
+            RequestContext context = null)
+        {
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(RouterAdministrationClient)}.{nameof(UpdateQueue)}");
+            scope.Start();
+            try
+            {
+                return RestClient.UpsertQueue(
+                    id: queueId,
+                    content: content,
+                    context: context);
             }
             catch (Exception ex)
             {

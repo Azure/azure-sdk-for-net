@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.ResourceHealth
         {
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _apiVersion = apiVersion ?? "2022-10-01-preview";
+            _apiVersion = apiVersion ?? "2022-10-01";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.ResourceHealth
             }
         }
 
-        internal HttpMessage CreateGetRequest(IssueNameParameter issueName)
+        internal HttpMessage CreateGetRequest(EmergingIssueNameContent issueName)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.ResourceHealth
         /// <summary> Gets Azure services&apos; emerging issues. </summary>
         /// <param name="issueName"> The name of the emerging issue. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async Task<Response<EmergingIssuesGetResultData>> GetAsync(IssueNameParameter issueName, CancellationToken cancellationToken = default)
+        public async Task<Response<ServiceEmergingIssueData>> GetAsync(EmergingIssueNameContent issueName, CancellationToken cancellationToken = default)
         {
             using var message = CreateGetRequest(issueName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -119,13 +119,13 @@ namespace Azure.ResourceManager.ResourceHealth
             {
                 case 200:
                     {
-                        EmergingIssuesGetResultData value = default;
+                        ServiceEmergingIssueData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = EmergingIssuesGetResultData.DeserializeEmergingIssuesGetResultData(document.RootElement);
+                        value = ServiceEmergingIssueData.DeserializeServiceEmergingIssueData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((EmergingIssuesGetResultData)null, message.Response);
+                    return Response.FromValue((ServiceEmergingIssueData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -134,7 +134,7 @@ namespace Azure.ResourceManager.ResourceHealth
         /// <summary> Gets Azure services&apos; emerging issues. </summary>
         /// <param name="issueName"> The name of the emerging issue. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public Response<EmergingIssuesGetResultData> Get(IssueNameParameter issueName, CancellationToken cancellationToken = default)
+        public Response<ServiceEmergingIssueData> Get(EmergingIssueNameContent issueName, CancellationToken cancellationToken = default)
         {
             using var message = CreateGetRequest(issueName);
             _pipeline.Send(message, cancellationToken);
@@ -142,13 +142,13 @@ namespace Azure.ResourceManager.ResourceHealth
             {
                 case 200:
                     {
-                        EmergingIssuesGetResultData value = default;
+                        ServiceEmergingIssueData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = EmergingIssuesGetResultData.DeserializeEmergingIssuesGetResultData(document.RootElement);
+                        value = ServiceEmergingIssueData.DeserializeServiceEmergingIssueData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((EmergingIssuesGetResultData)null, message.Response);
+                    return Response.FromValue((ServiceEmergingIssueData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }

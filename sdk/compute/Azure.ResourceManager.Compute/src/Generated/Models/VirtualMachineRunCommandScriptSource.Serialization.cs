@@ -31,6 +31,11 @@ namespace Azure.ResourceManager.Compute.Models
                 writer.WritePropertyName("commandId"u8);
                 writer.WriteStringValue(CommandId);
             }
+            if (Optional.IsDefined(ScriptUriManagedIdentity))
+            {
+                writer.WritePropertyName("scriptUriManagedIdentity"u8);
+                writer.WriteObjectValue(ScriptUriManagedIdentity);
+            }
             writer.WriteEndObject();
         }
 
@@ -43,6 +48,7 @@ namespace Azure.ResourceManager.Compute.Models
             Optional<string> script = default;
             Optional<Uri> scriptUri = default;
             Optional<string> commandId = default;
+            Optional<RunCommandManagedIdentity> scriptUriManagedIdentity = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("script"u8))
@@ -64,8 +70,17 @@ namespace Azure.ResourceManager.Compute.Models
                     commandId = property.Value.GetString();
                     continue;
                 }
+                if (property.NameEquals("scriptUriManagedIdentity"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    scriptUriManagedIdentity = RunCommandManagedIdentity.DeserializeRunCommandManagedIdentity(property.Value);
+                    continue;
+                }
             }
-            return new VirtualMachineRunCommandScriptSource(script.Value, scriptUri.Value, commandId.Value);
+            return new VirtualMachineRunCommandScriptSource(script.Value, scriptUri.Value, commandId.Value, scriptUriManagedIdentity.Value);
         }
     }
 }

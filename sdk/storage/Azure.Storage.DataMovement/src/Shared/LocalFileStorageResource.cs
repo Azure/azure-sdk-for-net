@@ -64,6 +64,7 @@ namespace Azure.Storage.DataMovement
         /// <param name="path"></param>
         public LocalFileStorageResource(string path)
         {
+            Argument.AssertNotNullOrWhiteSpace(path, nameof(path));
             _path = path;
         }
 

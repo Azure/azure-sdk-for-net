@@ -3,8 +3,10 @@
 
 using System;
 using System.Collections;
+using System.Diagnostics;
 using System.IO;
 using System.Runtime.InteropServices;
+using Azure.Monitor.OpenTelemetry.Exporter.Internals.Diagnostics;
 
 namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.Platform
 {
@@ -47,5 +49,11 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.Platform
                 return false;
             }
         }
+
+        public string GetEnvironmentUserName() => Environment.UserName;
+
+        public string GetCurrentProcessName() => Process.GetCurrentProcess().ProcessName;
+
+        public string GetApplicationBaseDirectory() => AppContext.BaseDirectory;
     }
 }

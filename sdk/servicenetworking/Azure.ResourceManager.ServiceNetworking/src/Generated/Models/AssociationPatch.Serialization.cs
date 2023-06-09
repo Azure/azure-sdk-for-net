@@ -26,11 +26,19 @@ namespace Azure.ResourceManager.ServiceNetworking.Models
                 }
                 writer.WriteEndObject();
             }
-            if (Optional.IsDefined(Properties))
+            writer.WritePropertyName("properties"u8);
+            writer.WriteStartObject();
+            if (Optional.IsDefined(AssociationType))
             {
-                writer.WritePropertyName("properties"u8);
-                writer.WriteObjectValue(Properties);
+                writer.WritePropertyName("associationType"u8);
+                writer.WriteStringValue(AssociationType.Value.ToString());
             }
+            if (Optional.IsDefined(Subnet))
+            {
+                writer.WritePropertyName("subnet"u8);
+                JsonSerializer.Serialize(writer, Subnet);
+            }
+            writer.WriteEndObject();
             writer.WriteEndObject();
         }
     }

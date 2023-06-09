@@ -2,7 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Collections.Concurrent;
+using System.Collections.Generic;
 using Azure.Monitor.OpenTelemetry.Exporter.Models;
 using OpenTelemetry;
 using OpenTelemetry.Logs;
@@ -19,14 +19,14 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests.CommonTestFramework
         /// <summary>
         /// Extension methods to simplify registering of <see cref="AzureMonitorLogExporter"/> with <see cref="MockTransmitter"/> for unit tests.
         /// </summary>
-        internal static OpenTelemetryLoggerOptions AddAzureMonitorLogExporterForTest(this OpenTelemetryLoggerOptions loggerOptions, out ConcurrentBag<TelemetryItem> telemetryItems)
+        internal static OpenTelemetryLoggerOptions AddAzureMonitorLogExporterForTest(this OpenTelemetryLoggerOptions loggerOptions, out List<TelemetryItem> telemetryItems)
         {
             if (loggerOptions == null)
             {
                 throw new ArgumentNullException(nameof(loggerOptions));
             }
 
-            telemetryItems = new ConcurrentBag<TelemetryItem>();
+            telemetryItems = new List<TelemetryItem>();
 
             return loggerOptions.AddProcessor(new SimpleLogRecordExportProcessor(new AzureMonitorLogExporter(new MockTransmitter(telemetryItems))));
         }
@@ -34,14 +34,14 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests.CommonTestFramework
         /// <summary>
         /// Extension methods to simplify registering of <see cref="AzureMonitorMetricExporter"/> with <see cref="MockTransmitter"/> for unit tests.
         /// </summary>
-        internal static MeterProviderBuilder AddAzureMonitorMetricExporterForTest(this MeterProviderBuilder builder, out ConcurrentBag<TelemetryItem> telemetryItems)
+        internal static MeterProviderBuilder AddAzureMonitorMetricExporterForTest(this MeterProviderBuilder builder, out List<TelemetryItem> telemetryItems)
         {
             if (builder == null)
             {
                 throw new ArgumentNullException(nameof(builder));
             }
 
-            telemetryItems = new ConcurrentBag<TelemetryItem>();
+            telemetryItems = new List<TelemetryItem>();
 
             return builder.AddReader(new PeriodicExportingMetricReader(new AzureMonitorMetricExporter(new MockTransmitter(telemetryItems)))
             {
@@ -52,14 +52,14 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests.CommonTestFramework
         /// <summary>
         /// Extension methods to simplify registering of <see cref="AzureMonitorMetricExporter"/> with <see cref="MockTransmitter"/> for unit tests.
         /// </summary>
-        internal static MeterProviderBuilder AddAzureMonitorMetricExporterForTest(this MeterProviderBuilder builder, out ConcurrentBag<TelemetryItem> telemetryItems, out MetricReader metricReader)
+        internal static MeterProviderBuilder AddAzureMonitorMetricExporterForTest(this MeterProviderBuilder builder, out List<TelemetryItem> telemetryItems, out MetricReader metricReader)
         {
             if (builder == null)
             {
                 throw new ArgumentNullException(nameof(builder));
             }
 
-            telemetryItems = new ConcurrentBag<TelemetryItem>();
+            telemetryItems = new List<TelemetryItem>();
 
             metricReader = new PeriodicExportingMetricReader(new AzureMonitorMetricExporter(new MockTransmitter(telemetryItems)));
 
@@ -69,14 +69,14 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests.CommonTestFramework
         /// <summary>
         /// Extension methods to simplify registering of <see cref="AzureMonitorTraceExporter"/> with <see cref="MockTransmitter"/> for unit tests.
         /// </summary>
-        internal static TracerProviderBuilder AddAzureMonitorTraceExporterForTest(this TracerProviderBuilder builder, out ConcurrentBag<TelemetryItem> telemetryItems)
+        internal static TracerProviderBuilder AddAzureMonitorTraceExporterForTest(this TracerProviderBuilder builder, out List<TelemetryItem> telemetryItems)
         {
             if (builder == null)
             {
                 throw new ArgumentNullException(nameof(builder));
             }
 
-            telemetryItems = new ConcurrentBag<TelemetryItem>();
+            telemetryItems = new List<TelemetryItem>();
 
             return builder.AddProcessor(new SimpleActivityExportProcessor(new AzureMonitorTraceExporter(new MockTransmitter(telemetryItems))));
         }

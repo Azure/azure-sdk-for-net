@@ -30,7 +30,7 @@ namespace Azure.ResourceManager
                 var nextLinkOperation = NextLinkOperationImplementation.Create(source, client.Pipeline, id);
                 // TODO: Do we need more specific OptionsNamespace, ProviderNamespace and OperationTypeName and possibly from id?
                 var clientDiagnostics = new ClientDiagnostics("Azure.ResourceManager", "Microsoft.Resources", client.Diagnostics);
-                _operation = new OperationInternal<T>(clientDiagnostics, nextLinkOperation, null, operationTypeName: null, fallbackStrategy: new ExponentialDelayStrategy());
+                _operation = new OperationInternal<T>(nextLinkOperation, clientDiagnostics, null, operationTypeName: null);
             }
             else
             {
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager
                 var nextLinkOperation = NextLinkOperationImplementation.Create(source, client.Pipeline, id);
                 // TODO: Do we need more specific OptionsNamespace, ProviderNamespace and OperationTypeName and possibly from id?
                 var clientDiagnostics = new ClientDiagnostics("Azure.ResourceManager", "Microsoft.Resources", client.Diagnostics);
-                _operation = new OperationInternal<T>(clientDiagnostics, nextLinkOperation, null, operationTypeName: null, fallbackStrategy: new ExponentialDelayStrategy());
+                _operation = new OperationInternal<T>(nextLinkOperation, clientDiagnostics, null, operationTypeName: null);
             }
         }
 
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager
         internal ArmOperation(IOperationSource<T> source, ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response, OperationFinalStateVia finalStateVia, string resourceTypeName)
         {
             var nextLinkOperation = NextLinkOperationImplementation.Create(source, pipeline, request.Method, request.Uri.ToUri(), response, finalStateVia);
-            _operation = new OperationInternal<T>(clientDiagnostics, nextLinkOperation, response, resourceTypeName, fallbackStrategy: new ExponentialDelayStrategy());
+            _operation = new OperationInternal<T>(nextLinkOperation, clientDiagnostics, response, resourceTypeName);
         }
 
         /// <inheritdoc />

@@ -37,7 +37,7 @@ namespace Azure.ResourceManager
         internal ArmOperation(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response, OperationFinalStateVia finalStateVia, string operationTypeName)
         {
             var nextLinkOperation = NextLinkOperationImplementation.Create(pipeline, request.Method, request.Uri.ToUri(), response, finalStateVia);
-            _operation = new OperationInternal(clientDiagnostics, nextLinkOperation, response, operationTypeName, fallbackStrategy: new ExponentialDelayStrategy());
+            _operation = new OperationInternal(nextLinkOperation, clientDiagnostics, response, operationTypeName);
         }
 
         /// <summary> Create an instance of the <see cref="ArmOperation"/> class from rehydration. </summary>
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager
             var nextLinkOperation = NextLinkOperationImplementation.Create(client.Pipeline, id);
             // TODO: Do we need more specific OptionsNamespace, ProviderNamespace and OperationTypeName and possibly from id?
             var clientDiagnostics = new ClientDiagnostics("Azure.ResourceManager", "Microsoft.Resources", client.Diagnostics);
-            _operation = new OperationInternal(clientDiagnostics, nextLinkOperation, null, operationTypeName: null, fallbackStrategy: new ExponentialDelayStrategy());
+            _operation = new OperationInternal(nextLinkOperation, clientDiagnostics, null, operationTypeName: null);
         }
 
         /// <inheritdoc />

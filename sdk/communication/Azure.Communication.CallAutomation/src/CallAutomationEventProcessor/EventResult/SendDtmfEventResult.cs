@@ -9,23 +9,23 @@ namespace Azure.Communication.CallAutomation
         /// <summary>
         /// Indicates whether the returned event is considered successful or not.
         /// </summary>
-        public bool IsSuccessEvent { get; internal set; }
+        public bool IsSuccess { get; internal set; }
 
         /// <summary>
         /// <see cref="SendDtmfCompleted"/> event will be returned once the dtmf tones have been sent successfully.
         /// </summary>
-        public SendDtmfCompleted SuccessEvent { get; }
+        public SendDtmfCompleted SuccessResult { get; }
 
         /// <summary>
         /// <see cref="SendDtmfFailed"/> event will be returned if send dtmf tones completed unsuccessfully.
         /// </summary>
-        public SendDtmfFailed FailureEvent { get; }
+        public SendDtmfFailed FailureResult { get; }
 
-        internal SendDtmfEventResult(bool isSuccessEvent, SendDtmfCompleted successEvent, SendDtmfFailed failureEvent)
+        internal SendDtmfEventResult(bool isSuccess, SendDtmfCompleted successResult, SendDtmfFailed failureResult)
         {
-            IsSuccessEvent = isSuccessEvent;
-            SuccessEvent = successEvent;
-            FailureEvent = failureEvent;
+            IsSuccess = isSuccess;
+            SuccessResult = successResult;
+            FailureResult = failureResult;
         }
     }
 }

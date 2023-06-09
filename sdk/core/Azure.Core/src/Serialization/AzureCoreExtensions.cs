@@ -6,6 +6,8 @@ using System.Collections.Generic;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure.Core.Dynamic;
+using Azure.Core.Json;
 using Azure.Core.Serialization;
 
 namespace Azure
@@ -56,6 +58,42 @@ namespace Azure
         {
             JsonElement element = data.ToObjectFromJson<JsonElement>();
             return element.GetObject();
+        }
+
+        /// <summary>
+        /// Return the content of the BinaryData as a dynamic type.
+        /// </summary>
+        public static dynamic ToDynamicFromJson(this BinaryData utf8Json)
+        {
+            DynamicDataOptions options = utf8Json is ResponseContent content ?
+                content.ProtocolOptions.GetDynamicOptions() :
+                DynamicDataOptions.Default;
+
+            return utf8Json.ToDynamicFromJson(options);
+        }
+
+        /// <summary>
+        /// Return the content of the BinaryData as a dynamic type.
+        /// <paramref name="propertyNamingConvention">The naming convention to use for property names in the JSON content.</paramref>
+        /// </summary>
+        public static dynamic ToDynamicFromJson(this BinaryData utf8Json, PropertyNamingConvention propertyNamingConvention)
+        {
+            DynamicDataOptions options = utf8Json is ResponseContent content ?
+                new DynamicDataOptions(content.ProtocolOptions.GetDynamicOptions()) :
+                new DynamicDataOptions(DynamicDataOptions.Default);
+
+            options.PropertyNamingConvention = propertyNamingConvention;
+
+            return utf8Json.ToDynamicFromJson(options);
+        }
+
+        /// <summary>
+        /// Return the content of the BinaryData as a dynamic type.
+        /// </summary>
+        internal static dynamic ToDynamicFromJson(this BinaryData utf8Json, DynamicDataOptions options)
+        {
+            MutableJsonDocument mdoc = MutableJsonDocument.Parse(utf8Json, DynamicData.GetSerializerOptions(options));
+            return new DynamicData(mdoc.RootElement, options);
         }
 
         private static object? GetObject(in this JsonElement element)

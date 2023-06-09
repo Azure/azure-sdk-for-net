@@ -4,6 +4,7 @@
 using System;
 using System.IO;
 using System.IO.MemoryMappedFiles;
+using System.Runtime.InteropServices.ComTypes;
 using System.Threading.Tasks;
 using Azure.Storage.DataMovement.Models.JobPlan;
 
@@ -31,6 +32,8 @@ namespace Azure.Storage.DataMovement
                 partPlanFileExists: true,
                 isFinalPart: header.IsFinalPart).ConfigureAwait(false);
 
+            jobPart.VerifyJobPartPlanHeader(header);
+
             // TODO: When enabling resume chunked upload Add each transfer to the CommitChunkHandler
             return jobPart;
         }
@@ -42,7 +45,7 @@ namespace Azure.Storage.DataMovement
             StorageResource destinationResource)
         {
             // Convert stream to job plan header
-            JobPartPlanHeader header = JobPartPlanHeader.Deserialize(planFileStream);;
+            JobPartPlanHeader header = JobPartPlanHeader.Deserialize(planFileStream);
 
             // Apply credentials to the saved transfer job path
             StorageTransferStatus jobPartStatus = header.AtomicJobStatus;
@@ -55,6 +58,8 @@ namespace Azure.Storage.DataMovement
                 partPlanFileExists: true,
                 isFinalPart: header.IsFinalPart).ConfigureAwait(false);
 
+            jobPart.VerifyJobPartPlanHeader(header);
+
             // TODO: When enabling resume chunked upload Add each transfer to the CommitChunkHandler
             return jobPart;
         }
@@ -66,7 +71,7 @@ namespace Azure.Storage.DataMovement
             StorageResource destinationResource)
         {
             // Convert stream to job plan header
-            JobPartPlanHeader header = JobPartPlanHeader.Deserialize(planFileStream);;
+            JobPartPlanHeader header = JobPartPlanHeader.Deserialize(planFileStream);
 
             // Apply credentials to the saved transfer job path
             StorageTransferStatus jobPartStatus = header.AtomicJobStatus;
@@ -78,6 +83,8 @@ namespace Azure.Storage.DataMovement
                 destinationResource: destinationResource,
                 partPlanFileExists: true,
                 isFinalPart: header.IsFinalPart).ConfigureAwait(false);
+
+            jobPart.VerifyJobPartPlanHeader(header);
 
             // TODO: When enabling resume chunked upload Add each transfer to the CommitChunkHandler
             return jobPart;
@@ -107,6 +114,8 @@ namespace Azure.Storage.DataMovement
                 partPlanFileExists: true,
                 isFinalPart: header.IsFinalPart).ConfigureAwait(false);
 
+            jobPart.VerifyJobPartPlanHeader(header);
+
             // TODO: When enabling resume chunked upload Add each transfer to the CommitChunkHandler
             return jobPart;
         }
@@ -118,7 +127,7 @@ namespace Azure.Storage.DataMovement
             StorageResourceContainer destinationResource)
         {
             // Convert stream to job plan header
-            JobPartPlanHeader header = JobPartPlanHeader.Deserialize(planFileStream);;
+            JobPartPlanHeader header = JobPartPlanHeader.Deserialize(planFileStream);
 
             // Apply credentials to the saved transfer job path
             string childSourcePath = header.SourcePath;
@@ -133,6 +142,8 @@ namespace Azure.Storage.DataMovement
                 partPlanFileExists: true,
                 isFinalPart: header.IsFinalPart).ConfigureAwait(false);
 
+            jobPart.VerifyJobPartPlanHeader(header);
+
             // TODO: When enabling resume chunked upload Add each transfer to the CommitChunkHandler
             return jobPart;
         }
@@ -144,7 +155,7 @@ namespace Azure.Storage.DataMovement
             StorageResourceContainer destinationResource)
         {
             // Convert stream to job plan header
-            JobPartPlanHeader header = JobPartPlanHeader.Deserialize(planFileStream);;
+            JobPartPlanHeader header = JobPartPlanHeader.Deserialize(planFileStream);
 
             // Apply credentials to the saved transfer job path
             string childSourcePath = header.SourcePath;
@@ -160,6 +171,8 @@ namespace Azure.Storage.DataMovement
                 destinationResource: destinationResource.GetChildStorageResource(childDestinationName),
                 partPlanFileExists: true,
                 isFinalPart: header.IsFinalPart).ConfigureAwait(false);
+
+            jobPart.VerifyJobPartPlanHeader(header);
 
             // TODO: When enabling resume chunked upload Add each transfer to the CommitChunkHandler
             return jobPart;
@@ -193,18 +206,41 @@ namespace Azure.Storage.DataMovement
                 preserveLastModifiedTime: false, // TODO: update when supported
                 checksumVerificationOption: 0); // TODO: update when supported
 
+            // Create the source Path
+            string sourcePath;
+            if (jobPart._sourceResource.CanProduceUri == ProduceUriType.ProducesUri)
+            {
+                // Remove any query or SAS that could be attach to the Uri
+                UriBuilder uriBuilder = new UriBuilder(jobPart._sourceResource.Uri.AbsoluteUri);
+                uriBuilder.Query = "";
+                sourcePath = uriBuilder.Uri.AbsoluteUri;
+            }
+            else
+            {
+                sourcePath = jobPart._sourceResource.Path;
+            }
+
+            string destinationPath;
+            if (jobPart._destinationResource.CanProduceUri == ProduceUriType.ProducesUri)
+            {
+                // Remove any query or SAS that could be attach to the Uri
+                UriBuilder uriBuilder = new UriBuilder(jobPart._destinationResource.Uri.AbsoluteUri);
+                uriBuilder.Query = "";
+                destinationPath = uriBuilder.Uri.AbsoluteUri;
+            }
+            else
+            {
+                destinationPath = jobPart._destinationResource.Path;
+            }
+
             return new JobPartPlanHeader(
                 version: DataMovementConstants.PlanFile.SchemaVersion,
                 startTime: DateTimeOffset.UtcNow, // TODO: update to job start time
                 transferId: jobPart._dataTransfer.Id,
                 partNumber: (uint)jobPart.PartNumber,
-                sourcePath: jobPart._sourceResource.CanProduceUri == ProduceUriType.ProducesUri ?
-                            jobPart._sourceResource.Uri.AbsoluteUri :
-                            jobPart._sourceResource.Path,
+                sourcePath: sourcePath,
                 sourceExtraQuery: "", // TODO: convert options to string
-                destinationPath: jobPart._destinationResource.CanProduceUri == ProduceUriType.ProducesUri ?
-                            jobPart._destinationResource.Uri.AbsoluteUri :
-                            jobPart._destinationResource.Path,
+                destinationPath: destinationPath,
                 destinationExtraQuery: "", // TODO: convert options to string
                 isFinalPart: isFinalPart,
                 forceWrite: jobPart._createMode == StorageResourceCreateMode.Overwrite, // TODO: change to enum value
@@ -245,6 +281,75 @@ namespace Azure.Storage.DataMovement
                 result = JobPartPlanHeader.Deserialize(stream);
             }
             return result;
+        }
+
+        /// <summary>
+        /// Verifies the contents of the Job Part Plan Header with the
+        /// information passed to resume the transfer.
+        /// </summary>
+        /// <param name="jobPart">The job partcontaining the resume information.</param>
+        /// <param name="header">The header which holds the state of the job when it was stopped/paused.</param>
+        internal static void VerifyJobPartPlanHeader(this JobPartInternal jobPart, JobPartPlanHeader header)
+        {
+            // Check schema version
+            string schemaVersion = header.Version;
+            if (!DataMovementConstants.PlanFile.SchemaVersion.Equals(schemaVersion))
+            {
+                throw Errors.MismatchSchemaVersionHeader(schemaVersion);
+            }
+
+            // Check transfer id
+            if (!header.TransferId.Equals(jobPart._dataTransfer.Id))
+            {
+                throw Errors.MismatchTransferId(jobPart._dataTransfer.Id, header.TransferId);
+            }
+
+            // Check source path
+            string passedSourcePath;
+            if (jobPart._sourceResource.CanProduceUri == ProduceUriType.ProducesUri)
+            {
+                // Remove any query or SAS that could be attach to the Uri
+                UriBuilder uriBuilder = new UriBuilder(jobPart._sourceResource.Uri.AbsoluteUri);
+                uriBuilder.Query = "";
+                passedSourcePath = uriBuilder.Uri.AbsoluteUri;
+            }
+            else
+            {
+                passedSourcePath = jobPart._sourceResource.Path;
+            }
+            // We only check if it starts with the path because if we're passed a container
+            // then we only need to check if the prefix matches
+            if (!header.SourcePath.StartsWith(passedSourcePath))
+            {
+                throw Errors.MismatchResumeTransferArguments(nameof(header.SourcePath), header.SourcePath, passedSourcePath);
+            }
+
+            // Check destination path
+            string passedDestinationPath;
+            if (jobPart._destinationResource.CanProduceUri == ProduceUriType.ProducesUri)
+            {
+                // Remove any query or SAS that could be attach to the Uri
+                UriBuilder uriBuilder = new UriBuilder(jobPart._destinationResource.Uri.AbsoluteUri);
+                uriBuilder.Query = "";
+                passedDestinationPath = uriBuilder.Uri.AbsoluteUri;
+            }
+            else
+            {
+                passedDestinationPath = jobPart._destinationResource.Path;
+            }
+            // We only check if it starts with the path because if we're passed a container
+            // then we only need to check if the prefix matches
+            if (!header.DestinationPath.StartsWith(passedDestinationPath))
+            {
+                throw Errors.MismatchResumeTransferArguments(nameof(header.DestinationPath), header.DestinationPath, passedDestinationPath);
+            }
+
+            // Check CreateMode / Overwrite
+            if ((header.ForceWrite && jobPart._createMode != StorageResourceCreateMode.Overwrite) ||
+                (!header.ForceWrite && jobPart._createMode == StorageResourceCreateMode.Overwrite))
+            {
+                throw Errors.MismatchResumeCreateMode(header.ForceWrite, jobPart._createMode);
+            }
         }
     }
 }

@@ -2890,14 +2890,7 @@ namespace Azure.Storage.Blobs.Specialized
             {
                 ClientSideDecryptor.BeginContentEncryptionKeyCaching();
             }
-            if (async)
-            {
-                return await downloader.DownloadToAsync(destination, conditions, cancellationToken).ConfigureAwait(false);
-            }
-            else
-            {
-                return downloader.DownloadTo(destination, conditions, cancellationToken);
-            }
+            return await downloader.DownloadToInternal(destination, conditions, async, cancellationToken).ConfigureAwait(false);
         }
         #endregion Parallel Download
 

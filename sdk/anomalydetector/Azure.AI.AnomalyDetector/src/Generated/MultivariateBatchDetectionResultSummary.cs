@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using Azure.Core;
 
 namespace Azure.AI.AnomalyDetector
@@ -43,8 +42,8 @@ namespace Azure.AI.AnomalyDetector
         internal MultivariateBatchDetectionResultSummary(MultivariateBatchDetectionStatus status, IReadOnlyList<ErrorResponse> errors, IReadOnlyList<VariableState> variableStates, MultivariateBatchDetectionOptions setupInfo)
         {
             Status = status;
-            Errors = errors.ToList();
-            VariableStates = variableStates.ToList();
+            Errors = errors;
+            VariableStates = variableStates;
             SetupInfo = setupInfo;
         }
 

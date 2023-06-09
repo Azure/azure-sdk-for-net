@@ -4,6 +4,8 @@
 
 ### Features Added
 
+- Introduced model factory `Azure.AI.OpenAI.AzureOpenAIModelFactory` for mocking.
+
 ### Breaking Changes
 
 ### Bugs Fixed

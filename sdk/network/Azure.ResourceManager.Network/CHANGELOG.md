@@ -1,8 +1,50 @@
 # Release History
 
-## 1.2.0-beta.1 (Unreleased)
+## 1.3.0-beta.2 (Unreleased)
 
 ### Features Added
+
+### Breaking Changes
+
+### Bugs Fixed
+
+### Other Changes
+
+## 1.3.0-beta.1 (2023-05-30)
+
+### Features Added
+
+- Enable the model factory feature for model mocking, more information can be found [here](https://azure.github.io/azure-sdk/dotnet_introduction.html#dotnet-mocking-factory-builder).
+
+### Other Changes
+
+- Upgraded dependent Azure.Core to 1.32.0.
+- Upgraded dependent Azure.ResourceManager to 1.6.0.
+
+## 1.2.0 (2023-04-28)
+
+### Features Added
+
+Add new resources:
+- `AdminRuleGroupResource`
+- `ApplicationGatewayWafDynamicManifestResource`
+- `BaseAdminRuleResource`
+- `ConnectivityConfigurationResource`
+- `ExpressRoutePortAuthorizationResource`
+- `ExpressRouteProviderPortResource`
+- `ManagementGroupNetworkManagerConnectionResource`
+- `NetworkGroupResource`
+- `NetworkManagerResource`
+- `NetworkManagerConnectionResource`
+- `RouteMapResource`
+- `RoutingIntentResource`
+- `ScopeConnectionResource`
+- `SecurityAdminConfigurationResource`
+- `PolicySignaturesOverridesForIdpsResource`
+- `NetworkGroupStaticMemberResource`
+- `NetworkManagerConnectionResource`
+- `CloudServiceSwapResource`
+- `VpnServerConfigurationPolicyResource`
 
 ### Breaking Changes
 
@@ -13,6 +55,9 @@
 - Fixed issue https://github.com/Azure/azure-sdk-for-net/issues/34094. Please use `EffectiveNetworkSecurityGroup.TagToIPAddresses` instead of `EffectiveNetworkSecurityGroup.TagMap`.
 
 ### Other Changes
+
+- Upgraded API version to `2022-09-01`.
+- Upgraded dependent `Azure.Core` to `1.31.0`.
 
 ## 1.1.1 (2023-02-13)
 

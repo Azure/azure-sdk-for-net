@@ -81,6 +81,7 @@ namespace Azure.AI.TextAnalytics.Tests
 
         [RecordedTest]
         [RetryOnInternalServerError]
+        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/36799")]
         public async Task RecognizeCustomEntitiesWithAADTest()
         {
             TextAnalyticsClient client = GetClient(useTokenCredential: true, useStaticResource: true);
@@ -356,25 +357,6 @@ namespace Azure.AI.TextAnalytics.Tests
 
         [RecordedTest]
         [RetryOnInternalServerError]
-        [ServiceVersion(Min = TextAnalyticsClientOptions.ServiceVersion.V2022_10_01_Preview)]
-        public async Task RecognizeCustomEntitiesBatchConvenienceWithAutoDetectedLanguageTest()
-        {
-            TextAnalyticsClient client = GetClient(useStaticResource: true);
-
-            RecognizeCustomEntitiesOperation operation = await client.StartRecognizeCustomEntitiesAsync(
-                s_englishBatchConvenienceDocuments,
-                TestEnvironment.RecognizeCustomEntitiesProjectName,
-                TestEnvironment.RecognizeCustomEntitiesDeploymentName,
-                "auto");
-            await operation.WaitForCompletionAsync();
-
-            // Take the first page.
-            RecognizeCustomEntitiesResultCollection resultCollection = operation.Value.ToEnumerableAsync().Result.FirstOrDefault();
-            ValidateBatchDocumentsResult(resultCollection, s_englishExpectedBatchOutput, isLanguageAutoDetected: true);
-        }
-
-        [RecordedTest]
-        [RetryOnInternalServerError]
         [ServiceVersion(Max = TextAnalyticsClientOptions.ServiceVersion.V3_1)]
         public void AnalyzeOperationRecognizeCustomEntitiesActionNotSupported()
         {
@@ -390,35 +372,6 @@ namespace Azure.AI.TextAnalytics.Tests
 
             NotSupportedException ex = Assert.ThrowsAsync<NotSupportedException>(async () => await client.StartAnalyzeActionsAsync(s_batchDocuments, batchActions));
             Assert.AreEqual("RecognizeCustomEntitiesAction is not available in API version v3.1. Use service API version 2022-05-01 or newer.", ex.Message);
-        }
-
-        [RecordedTest]
-        [RetryOnInternalServerError]
-        [ServiceVersion(Min = TextAnalyticsClientOptions.ServiceVersion.V2022_10_01_Preview)]
-        public async Task AnalyzeOperationRecognizeCustomEntitiesWithAutoDetectedLanguageTest()
-        {
-            TextAnalyticsClient client = GetClient(useStaticResource: true);
-            List<string> documents = s_englishBatchConvenienceDocuments;
-            Dictionary<string, List<string>> expectedOutput = s_englishExpectedBatchOutput;
-            TextAnalyticsActions actions = new()
-            {
-                RecognizeCustomEntitiesActions = new List<RecognizeCustomEntitiesAction>()
-                {
-                    new RecognizeCustomEntitiesAction(TestEnvironment.RecognizeCustomEntitiesProjectName, TestEnvironment.RecognizeCustomEntitiesDeploymentName)
-                },
-                DisplayName = "RecognizeCustomEntitiesWithAutoDetectedLanguageTest",
-            };
-
-            AnalyzeActionsOperation operation = await client.StartAnalyzeActionsAsync(documents, actions, "auto");
-            await operation.WaitForCompletionAsync();
-
-            // Take the first page.
-            AnalyzeActionsResult resultCollection = operation.Value.ToEnumerableAsync().Result.FirstOrDefault();
-            IReadOnlyCollection<RecognizeCustomEntitiesActionResult> actionResults = resultCollection.RecognizeCustomEntitiesResults;
-            Assert.IsNotNull(actionResults);
-
-            RecognizeCustomEntitiesResultCollection results = actionResults.FirstOrDefault().DocumentsResults;
-            ValidateBatchDocumentsResult(results, expectedOutput, isLanguageAutoDetected: true);
         }
 
         private RecognizeCustomEntitiesResultCollection ExtractDocumentsResultsFromResponse(AnalyzeActionsOperation analyzeActionOperation)
@@ -446,16 +399,13 @@ namespace Azure.AI.TextAnalytics.Tests
                 {
                     Assert.IsNotEmpty(entity.SubCategory);
                 }
-
-                Assert.IsNotNull(entity.Resolutions);
             }
         }
 
         private void ValidateBatchDocumentsResult(
             RecognizeCustomEntitiesResultCollection results,
             Dictionary<string, List<string>> minimumExpectedOutput,
-            bool includeStatistics = default,
-            bool isLanguageAutoDetected = default)
+            bool includeStatistics = default)
         {
             if (includeStatistics)
             {
@@ -486,21 +436,6 @@ namespace Azure.AI.TextAnalytics.Tests
                 {
                     Assert.AreEqual(0, result.Statistics.CharacterCount);
                     Assert.AreEqual(0, result.Statistics.TransactionCount);
-                }
-
-                if (isLanguageAutoDetected)
-                {
-                    Assert.IsNotNull(result.DetectedLanguage);
-                    Assert.That(result.DetectedLanguage.Value.Name, Is.Not.Null.And.Not.Empty);
-                    Assert.That(result.DetectedLanguage.Value.Iso6391Name, Is.Not.Null.And.Not.Empty);
-                    Assert.GreaterOrEqual(result.DetectedLanguage.Value.ConfidenceScore, 0.0);
-                    Assert.LessOrEqual(result.DetectedLanguage.Value.ConfidenceScore, 1.0);
-                    Assert.IsNotNull(result.DetectedLanguage.Value.Warnings);
-                    Assert.IsEmpty(result.DetectedLanguage.Value.Warnings);
-                }
-                else
-                {
-                    Assert.IsNull(result.DetectedLanguage);
                 }
 
                 ValidateInDocumentResult(result.Entities, minimumExpectedOutput[result.Id]);

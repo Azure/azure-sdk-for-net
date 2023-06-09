@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.DevCenter
             Optional<SystemData> systemData = default;
             Optional<DateTimeOffset> startDateTime = default;
             Optional<DateTimeOffset> endDateTime = default;
-            Optional<IReadOnlyList<HealthCheck>> healthChecks = default;
+            Optional<IReadOnlyList<DevCenterHealthCheck>> healthChecks = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -97,10 +97,10 @@ namespace Azure.ResourceManager.DevCenter
                             {
                                 continue;
                             }
-                            List<HealthCheck> array = new List<HealthCheck>();
+                            List<DevCenterHealthCheck> array = new List<DevCenterHealthCheck>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(HealthCheck.DeserializeHealthCheck(item));
+                                array.Add(DevCenterHealthCheck.DeserializeDevCenterHealthCheck(item));
                             }
                             healthChecks = array;
                             continue;

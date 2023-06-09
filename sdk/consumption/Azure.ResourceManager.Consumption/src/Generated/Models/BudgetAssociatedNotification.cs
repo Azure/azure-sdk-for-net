@@ -12,14 +12,29 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Consumption.Models
 {
-    /// <summary> The notification associated with a budget. </summary>
+    /// <summary>
+    /// The notification associated with a budget.
+    /// Serialized Name: Notification
+    /// </summary>
     public partial class BudgetAssociatedNotification
     {
         /// <summary> Initializes a new instance of BudgetAssociatedNotification. </summary>
-        /// <param name="isEnabled"> The notification is enabled or not. </param>
-        /// <param name="operator"> The comparison operator. </param>
-        /// <param name="threshold"> Threshold value associated with a notification. Notification is sent when the cost exceeded the threshold. It is always percent and has to be between 0 and 1000. </param>
-        /// <param name="contactEmails"> Email addresses to send the budget notification to when the threshold is exceeded. Must have at least one contact email or contact group specified at the Subscription or Resource Group scopes. All other scopes must have at least one contact email specified. </param>
+        /// <param name="isEnabled">
+        /// The notification is enabled or not.
+        /// Serialized Name: Notification.enabled
+        /// </param>
+        /// <param name="operator">
+        /// The comparison operator.
+        /// Serialized Name: Notification.operator
+        /// </param>
+        /// <param name="threshold">
+        /// Threshold value associated with a notification. Notification is sent when the cost exceeded the threshold. It is always percent and has to be between 0 and 1000.
+        /// Serialized Name: Notification.threshold
+        /// </param>
+        /// <param name="contactEmails">
+        /// Email addresses to send the budget notification to when the threshold is exceeded. Must have at least one contact email or contact group specified at the Subscription or Resource Group scopes. All other scopes must have at least one contact email specified.
+        /// Serialized Name: Notification.contactEmails
+        /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="contactEmails"/> is null. </exception>
         public BudgetAssociatedNotification(bool isEnabled, NotificationAlertTriggerType @operator, decimal threshold, IEnumerable<string> contactEmails)
         {
@@ -34,14 +49,38 @@ namespace Azure.ResourceManager.Consumption.Models
         }
 
         /// <summary> Initializes a new instance of BudgetAssociatedNotification. </summary>
-        /// <param name="isEnabled"> The notification is enabled or not. </param>
-        /// <param name="operator"> The comparison operator. </param>
-        /// <param name="threshold"> Threshold value associated with a notification. Notification is sent when the cost exceeded the threshold. It is always percent and has to be between 0 and 1000. </param>
-        /// <param name="contactEmails"> Email addresses to send the budget notification to when the threshold is exceeded. Must have at least one contact email or contact group specified at the Subscription or Resource Group scopes. All other scopes must have at least one contact email specified. </param>
-        /// <param name="contactRoles"> Contact roles to send the budget notification to when the threshold is exceeded. </param>
-        /// <param name="contactGroups"> Action groups to send the budget notification to when the threshold is exceeded. Must be provided as a fully qualified Azure resource id. Only supported at Subscription or Resource Group scopes. </param>
-        /// <param name="thresholdType"> The type of threshold. </param>
-        /// <param name="locale"> Language in which the recipient will receive the notification. </param>
+        /// <param name="isEnabled">
+        /// The notification is enabled or not.
+        /// Serialized Name: Notification.enabled
+        /// </param>
+        /// <param name="operator">
+        /// The comparison operator.
+        /// Serialized Name: Notification.operator
+        /// </param>
+        /// <param name="threshold">
+        /// Threshold value associated with a notification. Notification is sent when the cost exceeded the threshold. It is always percent and has to be between 0 and 1000.
+        /// Serialized Name: Notification.threshold
+        /// </param>
+        /// <param name="contactEmails">
+        /// Email addresses to send the budget notification to when the threshold is exceeded. Must have at least one contact email or contact group specified at the Subscription or Resource Group scopes. All other scopes must have at least one contact email specified.
+        /// Serialized Name: Notification.contactEmails
+        /// </param>
+        /// <param name="contactRoles">
+        /// Contact roles to send the budget notification to when the threshold is exceeded.
+        /// Serialized Name: Notification.contactRoles
+        /// </param>
+        /// <param name="contactGroups">
+        /// Action groups to send the budget notification to when the threshold is exceeded. Must be provided as a fully qualified Azure resource id. Only supported at Subscription or Resource Group scopes.
+        /// Serialized Name: Notification.contactGroups
+        /// </param>
+        /// <param name="thresholdType">
+        /// The type of threshold
+        /// Serialized Name: Notification.thresholdType
+        /// </param>
+        /// <param name="locale">
+        /// Language in which the recipient will receive the notification
+        /// Serialized Name: Notification.locale
+        /// </param>
         internal BudgetAssociatedNotification(bool isEnabled, NotificationAlertTriggerType @operator, decimal threshold, IList<string> contactEmails, IList<string> contactRoles, IList<string> contactGroups, NotificationThresholdType? thresholdType, RecipientNotificationLanguageCode? locale)
         {
             IsEnabled = isEnabled;
@@ -54,21 +93,45 @@ namespace Azure.ResourceManager.Consumption.Models
             Locale = locale;
         }
 
-        /// <summary> The notification is enabled or not. </summary>
+        /// <summary>
+        /// The notification is enabled or not.
+        /// Serialized Name: Notification.enabled
+        /// </summary>
         public bool IsEnabled { get; set; }
-        /// <summary> The comparison operator. </summary>
+        /// <summary>
+        /// The comparison operator.
+        /// Serialized Name: Notification.operator
+        /// </summary>
         public NotificationAlertTriggerType Operator { get; set; }
-        /// <summary> Threshold value associated with a notification. Notification is sent when the cost exceeded the threshold. It is always percent and has to be between 0 and 1000. </summary>
+        /// <summary>
+        /// Threshold value associated with a notification. Notification is sent when the cost exceeded the threshold. It is always percent and has to be between 0 and 1000.
+        /// Serialized Name: Notification.threshold
+        /// </summary>
         public decimal Threshold { get; set; }
-        /// <summary> Email addresses to send the budget notification to when the threshold is exceeded. Must have at least one contact email or contact group specified at the Subscription or Resource Group scopes. All other scopes must have at least one contact email specified. </summary>
+        /// <summary>
+        /// Email addresses to send the budget notification to when the threshold is exceeded. Must have at least one contact email or contact group specified at the Subscription or Resource Group scopes. All other scopes must have at least one contact email specified.
+        /// Serialized Name: Notification.contactEmails
+        /// </summary>
         public IList<string> ContactEmails { get; }
-        /// <summary> Contact roles to send the budget notification to when the threshold is exceeded. </summary>
+        /// <summary>
+        /// Contact roles to send the budget notification to when the threshold is exceeded.
+        /// Serialized Name: Notification.contactRoles
+        /// </summary>
         public IList<string> ContactRoles { get; }
-        /// <summary> Action groups to send the budget notification to when the threshold is exceeded. Must be provided as a fully qualified Azure resource id. Only supported at Subscription or Resource Group scopes. </summary>
+        /// <summary>
+        /// Action groups to send the budget notification to when the threshold is exceeded. Must be provided as a fully qualified Azure resource id. Only supported at Subscription or Resource Group scopes.
+        /// Serialized Name: Notification.contactGroups
+        /// </summary>
         public IList<string> ContactGroups { get; }
-        /// <summary> The type of threshold. </summary>
+        /// <summary>
+        /// The type of threshold
+        /// Serialized Name: Notification.thresholdType
+        /// </summary>
         public NotificationThresholdType? ThresholdType { get; set; }
-        /// <summary> Language in which the recipient will receive the notification. </summary>
+        /// <summary>
+        /// Language in which the recipient will receive the notification
+        /// Serialized Name: Notification.locale
+        /// </summary>
         public RecipientNotificationLanguageCode? Locale { get; set; }
     }
 }

@@ -14,33 +14,33 @@ namespace Azure.ResourceManager.Workloads.Models
     public partial class MountFileShareConfiguration : FileShareConfiguration
     {
         /// <summary> Initializes a new instance of MountFileShareConfiguration. </summary>
-        /// <param name="id"> The fileshare resource ID. </param>
+        /// <param name="fileShareId"> The fileshare resource ID. </param>
         /// <param name="privateEndpointId"> The private endpoint resource ID. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="id"/> or <paramref name="privateEndpointId"/> is null. </exception>
-        public MountFileShareConfiguration(string id, string privateEndpointId)
+        /// <exception cref="ArgumentNullException"> <paramref name="fileShareId"/> or <paramref name="privateEndpointId"/> is null. </exception>
+        public MountFileShareConfiguration(ResourceIdentifier fileShareId, ResourceIdentifier privateEndpointId)
         {
-            Argument.AssertNotNull(id, nameof(id));
+            Argument.AssertNotNull(fileShareId, nameof(fileShareId));
             Argument.AssertNotNull(privateEndpointId, nameof(privateEndpointId));
 
-            Id = id;
+            FileShareId = fileShareId;
             PrivateEndpointId = privateEndpointId;
             ConfigurationType = ConfigurationType.Mount;
         }
 
         /// <summary> Initializes a new instance of MountFileShareConfiguration. </summary>
         /// <param name="configurationType"> The type of file share config. </param>
-        /// <param name="id"> The fileshare resource ID. </param>
+        /// <param name="fileShareId"> The fileshare resource ID. </param>
         /// <param name="privateEndpointId"> The private endpoint resource ID. </param>
-        internal MountFileShareConfiguration(ConfigurationType configurationType, string id, string privateEndpointId) : base(configurationType)
+        internal MountFileShareConfiguration(ConfigurationType configurationType, ResourceIdentifier fileShareId, ResourceIdentifier privateEndpointId) : base(configurationType)
         {
-            Id = id;
+            FileShareId = fileShareId;
             PrivateEndpointId = privateEndpointId;
             ConfigurationType = configurationType;
         }
 
         /// <summary> The fileshare resource ID. </summary>
-        public string Id { get; set; }
+        public ResourceIdentifier FileShareId { get; set; }
         /// <summary> The private endpoint resource ID. </summary>
-        public string PrivateEndpointId { get; set; }
+        public ResourceIdentifier PrivateEndpointId { get; set; }
     }
 }

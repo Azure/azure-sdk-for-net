@@ -161,11 +161,11 @@ namespace Azure.ResourceManager.Workloads.Samples
             SapVirtualInstanceResource sapVirtualInstance = client.GetSapVirtualInstanceResource(sapVirtualInstanceResourceId);
 
             // invoke the operation
-            StopRequest body = new StopRequest()
+            SapStopContent content = new SapStopContent()
             {
                 SoftStopTimeoutSeconds = 0,
             };
-            ArmOperation<OperationStatusResult> lro = await sapVirtualInstance.StopAsync(WaitUntil.Completed, body: body);
+            ArmOperation<OperationStatusResult> lro = await sapVirtualInstance.StopAsync(WaitUntil.Completed, content: content);
             OperationStatusResult result = lro.Value;
 
             Console.WriteLine($"Succeeded: {result}");

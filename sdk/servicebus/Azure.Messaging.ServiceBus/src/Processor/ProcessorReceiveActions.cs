@@ -32,7 +32,7 @@ namespace Azure.Messaging.ServiceBus
         {
         }
 
-        internal ProcessorReceiveActions(ServiceBusReceivedMessage triggerMessage, ReceiverManager manager, bool autoRenewMessageLocks)
+        internal ProcessorReceiveActions(ServiceBusReceivedMessage triggerMessage, CancellationTokenSource triggerMessageLockLostCancellationSource, ReceiverManager manager, bool autoRenewMessageLocks)
         {
             _manager = manager;
 
@@ -44,7 +44,7 @@ namespace Azure.Messaging.ServiceBus
             if (_autoRenew)
             {
                 _lockRenewalCancellationSource = new CancellationTokenSource();
-                _renewalTasks[_manager.RenewMessageLockAsync(triggerMessage, _lockRenewalCancellationSource)] = default;
+                _renewalTasks[_manager.RenewMessageLockAsync(triggerMessage, _lockRenewalCancellationSource, triggerMessageLockLostCancellationSource)] = default;
             }
         }
 
@@ -119,7 +119,8 @@ namespace Azure.Messaging.ServiceBus
                 foreach (ServiceBusReceivedMessage message in messages)
                 {
                     Messages[message] = default;
-                    _renewalTasks[_manager.RenewMessageLockAsync(message, _lockRenewalCancellationSource)] = default;
+                    // Currently only the trigger message supports cancellation token for LockedUntil.
+                    _renewalTasks[_manager.RenewMessageLockAsync(message, _lockRenewalCancellationSource, null)] = default;
                 }
             }
             else

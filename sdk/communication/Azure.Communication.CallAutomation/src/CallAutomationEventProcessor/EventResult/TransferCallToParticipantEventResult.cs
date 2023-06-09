@@ -9,23 +9,23 @@ namespace Azure.Communication.CallAutomation
         /// <summary>
         /// Indicates whether the returned event is considered successful or not.
         /// </summary>
-        public bool IsSuccessEvent { get; internal set; }
+        public bool IsSuccess { get; internal set; }
 
         /// <summary>
         /// <see cref="CallTransferAccepted"/> event will be returned once the call transfer is accepted successfully.
         /// </summary>
-        public CallTransferAccepted SuccessEvent { get; }
+        public CallTransferAccepted SuccessResult { get; }
 
         /// <summary>
         /// <see cref="CallTransferFailed"/> event will be returned once the call transfer is accepted unsuccessfully.
         /// </summary>
-        public CallTransferFailed FailureEvent { get; }
+        public CallTransferFailed FailureResult { get; }
 
-        internal TransferCallToParticipantEventResult(bool isSuccessEvent, CallTransferAccepted successEvent, CallTransferFailed failureEvent)
+        internal TransferCallToParticipantEventResult(bool isSuccess, CallTransferAccepted successResult, CallTransferFailed failureResult)
         {
-            IsSuccessEvent = isSuccessEvent;
-            SuccessEvent = successEvent;
-            FailureEvent = failureEvent;
+            IsSuccess = isSuccess;
+            SuccessResult = successResult;
+            FailureResult = failureResult;
         }
     }
 }

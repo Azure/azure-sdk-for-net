@@ -21,8 +21,8 @@ namespace Azure.Security.KeyVault.Keys.Samples
         [Test]
         public void SignVerifySync()
         {
-#if NET461
-            Assert.Ignore("Using CryptographyClient with EC keys is not supported on .NET Framework 4.6.1.");
+#if NET462
+            Assert.Ignore("Using CryptographyClient with EC keys is not supported on .NET Framework 4.6.2.");
 #endif
 
             // Environment variable with the Key Vault endpoint.

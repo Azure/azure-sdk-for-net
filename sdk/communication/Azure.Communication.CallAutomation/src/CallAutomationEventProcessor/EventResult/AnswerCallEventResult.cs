@@ -9,17 +9,17 @@ namespace Azure.Communication.CallAutomation
         /// <summary>
         /// Indicates whether the returned event is considered successful or not.
         /// </summary>
-        public bool IsSuccessEvent { get; internal set; }
+        public bool IsSuccess { get; internal set; }
 
         /// <summary>
         /// <see cref="CallConnected"/> event will be returned once the call is established with AnswerCall.
         /// </summary>
-        public CallConnected SuccessEvent { get; }
+        public CallConnected SuccessResult { get; }
 
-        internal AnswerCallEventResult(bool isSuccessEvent, CallConnected successEvent)
+        internal AnswerCallEventResult(bool isSuccess, CallConnected successResult)
         {
-            IsSuccessEvent = isSuccessEvent;
-            SuccessEvent = successEvent;
+            IsSuccess = isSuccess;
+            SuccessResult = successResult;
         }
     }
 }

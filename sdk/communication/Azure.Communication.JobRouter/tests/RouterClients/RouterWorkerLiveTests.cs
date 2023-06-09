@@ -53,12 +53,11 @@ namespace Azure.Communication.JobRouter.Tests.RouterClients
                     Labels = workerLabels,
                     ChannelConfigurations = channelConfigList
                 });
+            AddForCleanup(new Task(async () => await routerClient.DeleteWorkerAsync(workerId)));
 
             Assert.NotNull(routerWorkerResponse.Value);
             AssertRegisteredWorkerIsValid(routerWorkerResponse, workerId, queueAssignmentList,
                 totalCapacity, workerLabels, channelConfigList);
-
-            AddForCleanup(new Task(async () => await routerClient.DeleteWorkerAsync(routerWorkerResponse.Value.Id)));
         }
 
         [Test]
@@ -71,10 +70,9 @@ namespace Azure.Communication.JobRouter.Tests.RouterClients
 
             var totalCapacity = 100;
             var routerWorkerResponse = await routerClient.CreateWorkerAsync(new CreateWorkerOptions(workerId, totalCapacity) {AvailableForOffers = true});
+            AddForCleanup(new Task(async () => await routerClient.DeleteWorkerAsync(workerId)));
 
             Assert.NotNull(routerWorkerResponse.Value);
-
-            AddForCleanup(new Task(async () => await routerClient.DeleteWorkerAsync(routerWorkerResponse.Value.Id)));
         }
 
         [Test]

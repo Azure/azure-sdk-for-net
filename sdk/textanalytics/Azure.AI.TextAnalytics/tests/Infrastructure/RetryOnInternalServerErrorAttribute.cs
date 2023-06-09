@@ -34,6 +34,7 @@ namespace Azure.AI.TextAnalytics.Tests.Infrastructure
 
             // A known transient issue where the server returns a successful 200 OK response status but reports an
             // internal server error in the response body for one or more text analysis tasks.
+            // TODO: https://github.com/Azure/azure-sdk-for-net/issues/35677
             bool failedToProcessTaskTransientError =
                 message.Contains("Azure.RequestFailedException")
                     && message.Contains("Failed to process task after several retry")
@@ -41,6 +42,7 @@ namespace Azure.AI.TextAnalytics.Tests.Infrastructure
                     && message.Contains("ErrorCode: InternalServerError");
 
             // A known transient issue where the server appears to be unable to process a valid text analysis task.
+            // TODO: https://github.com/Azure/azure-sdk-for-net/issues/35679
             bool invalidTaskTypeTransientError =
                 message.Contains("Azure.RequestFailedException")
                     && message.Contains("Invalid Task Type")
@@ -48,6 +50,7 @@ namespace Azure.AI.TextAnalytics.Tests.Infrastructure
                     && message.Contains("ErrorCode: InternalServerError");
 
             // A known transient issue where the server fails to process a request and does not provide more context.
+            // TODO: https://github.com/Azure/azure-sdk-for-net/issues/35678
             bool internalServerTransientError =
                 message.Contains("Azure.RequestFailedException")
                     && message.Contains("Internal Server Error.")

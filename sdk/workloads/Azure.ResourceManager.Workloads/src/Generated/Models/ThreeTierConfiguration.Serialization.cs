@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.Workloads.Models
             ApplicationServerConfiguration applicationServer = default;
             DatabaseConfiguration databaseServer = default;
             Optional<HighAvailabilityConfiguration> highAvailabilityConfig = default;
-            Optional<StorageConfiguration> storageConfiguration = default;
+            Optional<SapStorageConfiguration> storageConfiguration = default;
             Optional<ThreeTierCustomResourceNames> customResourceNames = default;
             SapDeploymentType deploymentType = default;
             string appResourceGroup = default;
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.Workloads.Models
                     {
                         continue;
                     }
-                    storageConfiguration = StorageConfiguration.DeserializeStorageConfiguration(property.Value);
+                    storageConfiguration = SapStorageConfiguration.DeserializeSapStorageConfiguration(property.Value);
                     continue;
                 }
                 if (property.NameEquals("customResourceNames"u8))

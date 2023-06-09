@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.Workloads.Models
         /// <param name="sslHostNameInCertificate"> Gets or sets the hostname(s) in the SSL certificate. </param>
         /// <param name="sslPreference"> Gets or sets certificate preference if secure communication is enabled. </param>
         /// <param name="sapSid"> Gets or sets the SAP System Identifier. </param>
-        internal HanaDBProviderInstanceProperties(string providerType, string hostname, string dbName, string sqlPort, string instanceNumber, string dbUsername, string dbPassword, Uri dbPasswordUri, Uri sslCertificateUri, string sslHostNameInCertificate, SslPreference? sslPreference, string sapSid) : base(providerType)
+        internal HanaDBProviderInstanceProperties(string providerType, string hostname, string dbName, string sqlPort, string instanceNumber, string dbUsername, string dbPassword, Uri dbPasswordUri, Uri sslCertificateUri, string sslHostNameInCertificate, SapSslPreference? sslPreference, string sapSid) : base(providerType)
         {
             Hostname = hostname;
             DBName = dbName;
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.Workloads.Models
         /// <summary> Gets or sets the hostname(s) in the SSL certificate. </summary>
         public string SslHostNameInCertificate { get; set; }
         /// <summary> Gets or sets certificate preference if secure communication is enabled. </summary>
-        public SslPreference? SslPreference { get; set; }
+        public SapSslPreference? SslPreference { get; set; }
         /// <summary> Gets or sets the SAP System Identifier. </summary>
         public string SapSid { get; set; }
     }

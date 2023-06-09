@@ -16,24 +16,18 @@ namespace Azure.ResourceManager.Sql.Models
         }
 
         /// <summary> How many &apos;top queries&apos; to return. Default is 5. </summary>
-        public int? NumberOfQueries { get; set; } = null;
-
+        public int? NumberOfQueries { get; set; }
         /// <summary> Comma separated list of databases to be included into search. All DB&apos;s are included if this parameter is not specified. </summary>
-        public string Databases { get; set; } = null;
-
+        public string Databases { get; set; }
         /// <summary> Start time for observed period. </summary>
-        public string StartTime { get; set; } = null;
-
+        public string StartTime { get; set; }
         /// <summary> End time for observed period. </summary>
-        public string EndTime { get; set; } = null;
-
+        public string EndTime { get; set; }
         /// <summary> The time step to be used to summarize the metric values. Default value is PT1H. </summary>
-        public QueryTimeGrainType? Interval { get; set; } = null;
-
+        public QueryTimeGrainType? Interval { get; set; }
         /// <summary> Aggregation function to be used, default value is &apos;sum&apos;. </summary>
-        public AggregationFunctionType? AggregationFunction { get; set; } = null;
-
+        public AggregationFunctionType? AggregationFunction { get; set; }
         /// <summary> Metric to be used for ranking top queries. Default is &apos;cpu&apos;. </summary>
-        public SqlMetricType? ObservationMetric { get; set; } = null;
+        public SqlMetricType? ObservationMetric { get; set; }
     }
 }

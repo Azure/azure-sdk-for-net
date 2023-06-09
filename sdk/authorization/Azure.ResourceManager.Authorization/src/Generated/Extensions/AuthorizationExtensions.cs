@@ -1572,6 +1572,50 @@ namespace Azure.ResourceManager.Authorization
         }
 
         /// <summary>
+        /// Get the child resources of a resource on which user has eligible access
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/{scope}/providers/Microsoft.Authorization/eligibleChildResources</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>EligibleChildResources_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="scope"> The scope that the resource will apply against. </param>
+        /// <param name="filter"> The filter to apply on the operation. Use $filter=resourceType+eq+&apos;Subscription&apos; to filter on only resource of type = &apos;Subscription&apos;. Use $filter=resourceType+eq+&apos;subscription&apos;+or+resourceType+eq+&apos;resourcegroup&apos; to filter on resource of type = &apos;Subscription&apos; or &apos;ResourceGroup&apos;. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public static AsyncPageable<EligibleChildResource> GetEligibleChildResourcesAsync(this ArmClient client, ResourceIdentifier scope, string filter = null, CancellationToken cancellationToken = default)
+        {
+            return GetArmResourceExtensionClient(client, scope).GetEligibleChildResourcesAsync(filter, cancellationToken);
+        }
+
+        /// <summary>
+        /// Get the child resources of a resource on which user has eligible access
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/{scope}/providers/Microsoft.Authorization/eligibleChildResources</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>EligibleChildResources_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="scope"> The scope that the resource will apply against. </param>
+        /// <param name="filter"> The filter to apply on the operation. Use $filter=resourceType+eq+&apos;Subscription&apos; to filter on only resource of type = &apos;Subscription&apos;. Use $filter=resourceType+eq+&apos;subscription&apos;+or+resourceType+eq+&apos;resourcegroup&apos; to filter on resource of type = &apos;Subscription&apos; or &apos;ResourceGroup&apos;. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public static Pageable<EligibleChildResource> GetEligibleChildResources(this ArmClient client, ResourceIdentifier scope, string filter = null, CancellationToken cancellationToken = default)
+        {
+            return GetArmResourceExtensionClient(client, scope).GetEligibleChildResources(filter, cancellationToken);
+        }
+
+        /// <summary>
         /// Gets all permissions the caller has for a resource group.
         /// <list type="bullet">
         /// <item>

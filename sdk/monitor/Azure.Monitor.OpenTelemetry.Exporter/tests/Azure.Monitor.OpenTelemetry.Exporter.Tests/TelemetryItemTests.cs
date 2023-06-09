@@ -45,7 +45,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             var resource = CreateTestResource();
 
             var activityTagsProcessor = TraceHelper.EnumerateActivityTags(activity);
-            var traceResource = resource.UpdateRoleNameAndInstance();
+            var traceResource = resource.CreateAzureMonitorResource();
             var telemetryItem = new TelemetryItem(activity, ref activityTagsProcessor, traceResource, "00000000-0000-0000-0000-000000000000");
 
             Assert.Equal("RemoteDependency", telemetryItem.Name);
@@ -72,7 +72,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
 
             var activityTagsProcessor = TraceHelper.EnumerateActivityTags(activity);
 
-            var traceResource = resource.UpdateRoleNameAndInstance();
+            var traceResource = resource.CreateAzureMonitorResource();
             var telemetryItem = new TelemetryItem(activity, ref activityTagsProcessor, traceResource, "00000000-0000-0000-0000-000000000000");
 
             Assert.Equal("RemoteDependency", telemetryItem.Name);
@@ -98,7 +98,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             var resource = CreateTestResource();
 
             var activityTagsProcessor = TraceHelper.EnumerateActivityTags(activity);
-            var traceResource = resource.UpdateRoleNameAndInstance();
+            var traceResource = resource.CreateAzureMonitorResource();
             var telemetryItem = new TelemetryItem(activity, ref activityTagsProcessor, traceResource, "00000000-0000-0000-0000-000000000000");
 
             Assert.Equal("RemoteDependency", telemetryItem.Name);
@@ -293,7 +293,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             var resource = CreateTestResource();
 
             var activityTagsProcessor = TraceHelper.EnumerateActivityTags(activity);
-            var traceResource = resource.UpdateRoleNameAndInstance();
+            var traceResource = resource.CreateAzureMonitorResource();
             var telemetryItem = new TelemetryItem(activity, ref activityTagsProcessor, traceResource, "00000000-0000-0000-0000-000000000000");
 
             Assert.Equal(Dns.GetHostName(), telemetryItem.Tags[ContextTagKeys.AiCloudRoleInstance.ToString()]);
@@ -313,7 +313,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             var resource = CreateTestResource(null, null, "serviceinstance");
 
             var activityTagsProcessor = TraceHelper.EnumerateActivityTags(activity);
-            var traceResource = resource.UpdateRoleNameAndInstance();
+            var traceResource = resource.CreateAzureMonitorResource();
             var telemetryItem = new TelemetryItem(activity, ref activityTagsProcessor, traceResource, "00000000-0000-0000-0000-000000000000");
 
             Assert.Equal("serviceinstance", telemetryItem.Tags[ContextTagKeys.AiCloudRoleInstance.ToString()]);

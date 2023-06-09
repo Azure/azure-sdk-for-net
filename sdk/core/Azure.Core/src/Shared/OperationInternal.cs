@@ -100,17 +100,13 @@ namespace Azure.Core
         public OperationInternal(
             ClientDiagnostics clientDiagnostics,
             IOperation operation,
-            Response? rawResponse,
+            Response rawResponse,
             string? operationTypeName = null,
             IEnumerable<KeyValuePair<string, string>>? scopeAttributes = null,
-            DelayStrategyInternal? fallbackStrategy = null)
-            : base(
-                clientDiagnostics,
-                operationTypeName ?? operation.GetType().Name,
-                scopeAttributes,
-                fallbackStrategy is ExponentialDelayStrategy ? new SequentialDelayStrategy() : (fallbackStrategy is ConstantDelayStrategy) ? new FixedDelayWithNoJitterStrategy() : null)
+            DelayStrategy? fallbackStrategy = null)
+            : base(clientDiagnostics, operationTypeName ?? operation.GetType().Name, scopeAttributes, fallbackStrategy)
         {
-            _internalOperation = new OperationInternal<VoidValue>(clientDiagnostics, new OperationToOperationOfTProxy(operation), rawResponse, operationTypeName ?? operation.GetType().Name, scopeAttributes, fallbackStrategy);
+            _internalOperation = new OperationInternal<VoidValue>(new OperationToOperationOfTProxy(operation), clientDiagnostics, rawResponse, operationTypeName ?? operation.GetType().Name, scopeAttributes, fallbackStrategy);
         }
 
         private OperationInternal(OperationState finalState, string? operationId)

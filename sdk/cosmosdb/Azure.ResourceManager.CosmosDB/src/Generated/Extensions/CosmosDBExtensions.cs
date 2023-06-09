@@ -84,6 +84,25 @@ namespace Azure.ResourceManager.CosmosDB
         }
         #endregion
 
+        #region GraphResourceGetResultResource
+        /// <summary>
+        /// Gets an object representing a <see cref="GraphResourceGetResultResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="GraphResourceGetResultResource.CreateResourceIdentifier" /> to create a <see cref="GraphResourceGetResultResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="GraphResourceGetResultResource" /> object. </returns>
+        public static GraphResourceGetResultResource GetGraphResourceGetResultResource(this ArmClient client, ResourceIdentifier id)
+        {
+            return client.GetResourceClient(() =>
+            {
+                GraphResourceGetResultResource.ValidateResourceId(id);
+                return new GraphResourceGetResultResource(client, id);
+            }
+            );
+        }
+        #endregion
+
         #region CosmosDBSqlDatabaseResource
         /// <summary>
         /// Gets an object representing a <see cref="CosmosDBSqlDatabaseResource" /> along with the instance operations that can be performed on it but with no data.
@@ -236,6 +255,25 @@ namespace Azure.ResourceManager.CosmosDB
         }
         #endregion
 
+        #region CassandraViewThroughputSettingResource
+        /// <summary>
+        /// Gets an object representing a <see cref="CassandraViewThroughputSettingResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="CassandraViewThroughputSettingResource.CreateResourceIdentifier" /> to create a <see cref="CassandraViewThroughputSettingResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="CassandraViewThroughputSettingResource" /> object. </returns>
+        public static CassandraViewThroughputSettingResource GetCassandraViewThroughputSettingResource(this ArmClient client, ResourceIdentifier id)
+        {
+            return client.GetResourceClient(() =>
+            {
+                CassandraViewThroughputSettingResource.ValidateResourceId(id);
+                return new CassandraViewThroughputSettingResource(client, id);
+            }
+            );
+        }
+        #endregion
+
         #region GremlinDatabaseThroughputSettingResource
         /// <summary>
         /// Gets an object representing a <see cref="GremlinDatabaseThroughputSettingResource" /> along with the instance operations that can be performed on it but with no data.
@@ -274,25 +312,6 @@ namespace Azure.ResourceManager.CosmosDB
         }
         #endregion
 
-        #region CosmosDBSqlContainerResource
-        /// <summary>
-        /// Gets an object representing a <see cref="CosmosDBSqlContainerResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="CosmosDBSqlContainerResource.CreateResourceIdentifier" /> to create a <see cref="CosmosDBSqlContainerResource" /> <see cref="ResourceIdentifier" /> from its components.
-        /// </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="CosmosDBSqlContainerResource" /> object. </returns>
-        public static CosmosDBSqlContainerResource GetCosmosDBSqlContainerResource(this ArmClient client, ResourceIdentifier id)
-        {
-            return client.GetResourceClient(() =>
-            {
-                CosmosDBSqlContainerResource.ValidateResourceId(id);
-                return new CosmosDBSqlContainerResource(client, id);
-            }
-            );
-        }
-        #endregion
-
         #region CosmosDBSqlClientEncryptionKeyResource
         /// <summary>
         /// Gets an object representing a <see cref="CosmosDBSqlClientEncryptionKeyResource" /> along with the instance operations that can be performed on it but with no data.
@@ -307,6 +326,25 @@ namespace Azure.ResourceManager.CosmosDB
             {
                 CosmosDBSqlClientEncryptionKeyResource.ValidateResourceId(id);
                 return new CosmosDBSqlClientEncryptionKeyResource(client, id);
+            }
+            );
+        }
+        #endregion
+
+        #region CosmosDBSqlContainerResource
+        /// <summary>
+        /// Gets an object representing a <see cref="CosmosDBSqlContainerResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="CosmosDBSqlContainerResource.CreateResourceIdentifier" /> to create a <see cref="CosmosDBSqlContainerResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="CosmosDBSqlContainerResource" /> object. </returns>
+        public static CosmosDBSqlContainerResource GetCosmosDBSqlContainerResource(this ArmClient client, ResourceIdentifier id)
+        {
+            return client.GetResourceClient(() =>
+            {
+                CosmosDBSqlContainerResource.ValidateResourceId(id);
+                return new CosmosDBSqlContainerResource(client, id);
             }
             );
         }
@@ -540,6 +578,25 @@ namespace Azure.ResourceManager.CosmosDB
         }
         #endregion
 
+        #region CassandraViewGetResultResource
+        /// <summary>
+        /// Gets an object representing a <see cref="CassandraViewGetResultResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="CassandraViewGetResultResource.CreateResourceIdentifier" /> to create a <see cref="CassandraViewGetResultResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="CassandraViewGetResultResource" /> object. </returns>
+        public static CassandraViewGetResultResource GetCassandraViewGetResultResource(this ArmClient client, ResourceIdentifier id)
+        {
+            return client.GetResourceClient(() =>
+            {
+                CassandraViewGetResultResource.ValidateResourceId(id);
+                return new CassandraViewGetResultResource(client, id);
+            }
+            );
+        }
+        #endregion
+
         #region GremlinDatabaseResource
         /// <summary>
         /// Gets an object representing a <see cref="GremlinDatabaseResource" /> along with the instance operations that can be performed on it but with no data.
@@ -597,6 +654,25 @@ namespace Azure.ResourceManager.CosmosDB
         }
         #endregion
 
+        #region DataTransferJobGetResultResource
+        /// <summary>
+        /// Gets an object representing a <see cref="DataTransferJobGetResultResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="DataTransferJobGetResultResource.CreateResourceIdentifier" /> to create a <see cref="DataTransferJobGetResultResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="DataTransferJobGetResultResource" /> object. </returns>
+        public static DataTransferJobGetResultResource GetDataTransferJobGetResultResource(this ArmClient client, ResourceIdentifier id)
+        {
+            return client.GetResourceClient(() =>
+            {
+                DataTransferJobGetResultResource.ValidateResourceId(id);
+                return new DataTransferJobGetResultResource(client, id);
+            }
+            );
+        }
+        #endregion
+
         #region CassandraClusterResource
         /// <summary>
         /// Gets an object representing a <see cref="CassandraClusterResource" /> along with the instance operations that can be performed on it but with no data.
@@ -611,6 +687,25 @@ namespace Azure.ResourceManager.CosmosDB
             {
                 CassandraClusterResource.ValidateResourceId(id);
                 return new CassandraClusterResource(client, id);
+            }
+            );
+        }
+        #endregion
+
+        #region CassandraClusterBackupResource
+        /// <summary>
+        /// Gets an object representing a <see cref="CassandraClusterBackupResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="CassandraClusterBackupResource.CreateResourceIdentifier" /> to create a <see cref="CassandraClusterBackupResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="CassandraClusterBackupResource" /> object. </returns>
+        public static CassandraClusterBackupResource GetCassandraClusterBackupResource(this ArmClient client, ResourceIdentifier id)
+        {
+            return client.GetResourceClient(() =>
+            {
+                CassandraClusterBackupResource.ValidateResourceId(id);
+                return new CassandraClusterBackupResource(client, id);
             }
             );
         }

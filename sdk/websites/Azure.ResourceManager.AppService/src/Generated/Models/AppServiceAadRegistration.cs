@@ -5,8 +5,6 @@
 
 #nullable disable
 
-using System;
-
 namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> The configuration settings of the Azure Active Directory app registration. </summary>
@@ -31,7 +29,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// More information on OpenID Connect: http://openid.net/specs/openid-connect-core-1_0.html
         /// </param>
         /// <param name="clientSecretSettingName"> The app setting name that contains the client secret of the relying party application. </param>
-        /// <param name="clientSecretCertificateThumbprint">
+        /// <param name="clientSecretCertificateThumbprintString">
         /// An alternative to the client secret, that is the thumbprint of a certificate used for signing purposes. This property acts as
         /// a replacement for the Client Secret. It is also optional.
         /// </param>
@@ -43,12 +41,12 @@ namespace Azure.ResourceManager.AppService.Models
         /// An alternative to the client secret thumbprint, that is the issuer of a certificate used for signing purposes. This property acts as
         /// a replacement for the Client Secret Certificate Thumbprint. It is also optional.
         /// </param>
-        internal AppServiceAadRegistration(string openIdIssuer, string clientId, string clientSecretSettingName, BinaryData clientSecretCertificateThumbprint, string clientSecretCertificateSubjectAlternativeName, string clientSecretCertificateIssuer)
+        internal AppServiceAadRegistration(string openIdIssuer, string clientId, string clientSecretSettingName, string clientSecretCertificateThumbprintString, string clientSecretCertificateSubjectAlternativeName, string clientSecretCertificateIssuer)
         {
             OpenIdIssuer = openIdIssuer;
             ClientId = clientId;
             ClientSecretSettingName = clientSecretSettingName;
-            ClientSecretCertificateThumbprint = clientSecretCertificateThumbprint;
+            ClientSecretCertificateThumbprintString = clientSecretCertificateThumbprintString;
             ClientSecretCertificateSubjectAlternativeName = clientSecretCertificateSubjectAlternativeName;
             ClientSecretCertificateIssuer = clientSecretCertificateIssuer;
         }
@@ -72,35 +70,8 @@ namespace Azure.ResourceManager.AppService.Models
         /// <summary>
         /// An alternative to the client secret, that is the thumbprint of a certificate used for signing purposes. This property acts as
         /// a replacement for the Client Secret. It is also optional.
-        /// <para>
-        /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formated json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
         /// </summary>
-        public BinaryData ClientSecretCertificateThumbprint { get; set; }
+        public string ClientSecretCertificateThumbprintString { get; set; }
         /// <summary>
         /// An alternative to the client secret thumbprint, that is the subject alternative name of a certificate used for signing purposes. This property acts as
         /// a replacement for the Client Secret Certificate Thumbprint. It is also optional.

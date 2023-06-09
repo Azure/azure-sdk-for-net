@@ -227,7 +227,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
             var modelId = Recording.GenerateId();
             AnalyzeDocumentOperation operation;
 
-            await using var customModel = await CreateDisposableBuildModelAsync(modelId);
+            await using var customModel = await BuildDisposableDocumentModelAsync(modelId);
 
             if (useStream)
             {
@@ -277,7 +277,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
             var modelId = Recording.GenerateId();
             AnalyzeDocumentOperation operation;
 
-            await using var customModel = await CreateDisposableBuildModelAsync(modelId, ContainerType.SelectionMarks);
+            await using var customModel = await BuildDisposableDocumentModelAsync(modelId, ContainerType.SelectionMarks);
 
             using var stream = DocumentAnalysisTestEnvironment.CreateStream(TestFile.FormSelectionMarks);
             using (Recording.DisableRequestBodyRecording())
@@ -315,7 +315,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
             var modelId = Recording.GenerateId();
             AnalyzeDocumentOperation operation;
 
-            await using var customModel = await CreateDisposableBuildModelAsync(modelId, ContainerType.MultipageFiles);
+            await using var customModel = await BuildDisposableDocumentModelAsync(modelId, ContainerType.MultipageFiles);
 
             if (useStream)
             {
@@ -371,7 +371,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
             var modelId = Recording.GenerateId();
             AnalyzeDocumentOperation operation;
 
-            await using var customModel = await CreateDisposableBuildModelAsync(modelId);
+            await using var customModel = await BuildDisposableDocumentModelAsync(modelId);
 
             if (useStream)
             {
@@ -422,7 +422,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
 
             // Use Form_<id>.<ext> files for building model.
 
-            await using var customModel = await CreateDisposableBuildModelAsync(modelId);
+            await using var customModel = await BuildDisposableDocumentModelAsync(modelId);
 
             // Attempt to recognize a different type of document: Invoice_1.pdf. This document does not contain all the labels
             // the newly built model expects.
@@ -450,7 +450,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
             var modelId = Recording.GenerateId();
             AnalyzeDocumentOperation operation;
 
-            await using var customModel = await CreateDisposableBuildModelAsync(modelId, ContainerType.TableVariableRows);
+            await using var customModel = await BuildDisposableDocumentModelAsync(modelId, ContainerType.TableVariableRows);
 
             using var stream = DocumentAnalysisTestEnvironment.CreateStream(TestFile.FormTableDynamicRows);
             using (Recording.DisableRequestBodyRecording())
@@ -474,7 +474,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
             var modelId = Recording.GenerateId();
             AnalyzeDocumentOperation operation;
 
-            await using var customModel = await CreateDisposableBuildModelAsync(modelId, ContainerType.TableFixedRows);
+            await using var customModel = await BuildDisposableDocumentModelAsync(modelId, ContainerType.TableFixedRows);
 
             using var stream = DocumentAnalysisTestEnvironment.CreateStream(TestFile.FormTableFixedRows);
             using (Recording.DisableRequestBodyRecording())
@@ -499,7 +499,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
             var modelId = Recording.GenerateId();
             AnalyzeDocumentOperation operation;
 
-            await using var customModel = await CreateDisposableBuildModelAsync(modelId);
+            await using var customModel = await BuildDisposableDocumentModelAsync(modelId);
 
             using var stream = DocumentAnalysisTestEnvironment.CreateStream(TestFile.Blank);
             using (Recording.DisableRequestBodyRecording())
@@ -537,7 +537,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
             var client = CreateDocumentAnalysisClient();
             var modelId = Recording.GenerateId();
 
-            await using var customModel = await CreateDisposableBuildModelAsync(modelId);
+            await using var customModel = await BuildDisposableDocumentModelAsync(modelId);
 
             // First 4 bytes are PDF signature, but fill the rest of the "file" with garbage.
 
@@ -554,7 +554,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
             var client = CreateDocumentAnalysisClient();
             var modelId = Recording.GenerateId();
 
-            await using var customModel = await CreateDisposableBuildModelAsync(modelId);
+            await using var customModel = await BuildDisposableDocumentModelAsync(modelId);
 
             var invalidUri = new Uri("https://idont.ex.ist");
 

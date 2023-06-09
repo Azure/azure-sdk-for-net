@@ -11,16 +11,20 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.PersistentStorage
 {
     internal static class StorageHelper
     {
-        private static string? s_defaultStorageDirectory;
-
-        internal static string GetStorageDirectory(IPlatform platform, string? configuredStorageDirectory)
+        internal static string GetStorageDirectory(IPlatform platform, string? configuredStorageDirectory, string instrumentationKey)
         {
             // get root directory
             var rootDirectory = configuredStorageDirectory
-                ?? (s_defaultStorageDirectory ??= GetDefaultStorageDirectory(platform))
+                ?? GetDefaultStorageDirectory(platform)
                 ?? throw new InvalidOperationException("Unable to determine offline storage directory.");
 
-            return rootDirectory;
+            // get unique sub directory
+            var userName = platform.GetEnvironmentUserName();
+            var processName = platform.GetCurrentProcessName();
+            var applicationDirectory = platform.GetApplicationBaseDirectory();
+            string subDirectory = HashHelper.GetSHA256Hash($"{instrumentationKey};{userName};{processName};{applicationDirectory}");
+
+            return Path.Combine(rootDirectory, subDirectory);
         }
 
         internal static string? GetDefaultStorageDirectory(IPlatform platform)
@@ -33,8 +37,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.PersistentStorage
                 if (TryCreateTelemetryDirectory(platform: platform, path: environmentVars["LOCALAPPDATA"]?.ToString(), createdDirectoryPath: out dirPath)
                     || TryCreateTelemetryDirectory(platform: platform, path: environmentVars["TEMP"]?.ToString(), createdDirectoryPath: out dirPath))
                 {
-                    s_defaultStorageDirectory = dirPath;
-                    return s_defaultStorageDirectory;
+                    return dirPath;
                 }
             }
             else
@@ -43,12 +46,11 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.PersistentStorage
                     || TryCreateTelemetryDirectory(platform: platform, path: "/var/tmp/", createdDirectoryPath: out dirPath)
                     || TryCreateTelemetryDirectory(platform: platform, path: "/tmp/", createdDirectoryPath: out dirPath))
                 {
-                    s_defaultStorageDirectory = dirPath;
-                    return s_defaultStorageDirectory;
+                    return dirPath;
                 }
             }
 
-            return s_defaultStorageDirectory;
+            return null;
         }
 
         /// <summary>

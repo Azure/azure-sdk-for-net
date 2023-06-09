@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.Workloads.Models
             }
             Optional<AzureLocation> appLocation = default;
             Optional<InfrastructureConfiguration> infrastructureConfiguration = default;
-            Optional<SoftwareConfiguration> softwareConfiguration = default;
+            Optional<SapSoftwareConfiguration> softwareConfiguration = default;
             SapConfigurationType configurationType = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.Workloads.Models
                     {
                         continue;
                     }
-                    softwareConfiguration = SoftwareConfiguration.DeserializeSoftwareConfiguration(property.Value);
+                    softwareConfiguration = SapSoftwareConfiguration.DeserializeSapSoftwareConfiguration(property.Value);
                     continue;
                 }
                 if (property.NameEquals("configurationType"u8))

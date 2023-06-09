@@ -15,6 +15,15 @@ namespace Azure.Health.Insights.ClinicalMatching
         {
         }
 
+        /// <summary> Initializes a new instance of ClinicalTrialDemographics. </summary>
+        /// <param name="acceptedSex"> Indication of the sex of people who may participate in the clinical trial. </param>
+        /// <param name="acceptedAgeRange"> A definition of the range of ages accepted by a clinical trial. Contains a minimum age and/or a maximum age. </param>
+        internal ClinicalTrialDemographics(ClinicalTrialAcceptedSex? acceptedSex, AcceptedAgeRange acceptedAgeRange)
+        {
+            AcceptedSex = acceptedSex;
+            AcceptedAgeRange = acceptedAgeRange;
+        }
+
         /// <summary> Indication of the sex of people who may participate in the clinical trial. </summary>
         public ClinicalTrialAcceptedSex? AcceptedSex { get; set; }
         /// <summary> A definition of the range of ages accepted by a clinical trial. Contains a minimum age and/or a maximum age. </summary>

@@ -66,6 +66,11 @@ namespace Azure.ResourceManager.DataBox.Models
                 writer.WritePropertyName("preferences"u8);
                 writer.WriteObjectValue(Preferences);
             }
+            if (Optional.IsDefined(ReverseShippingDetails))
+            {
+                writer.WritePropertyName("reverseShippingDetails"u8);
+                writer.WriteObjectValue(ReverseShippingDetails);
+            }
             if (Optional.IsDefined(KeyEncryptionKey))
             {
                 writer.WritePropertyName("keyEncryptionKey"u8);
@@ -88,6 +93,7 @@ namespace Azure.ResourceManager.DataBox.Models
             Optional<IDictionary<string, int>> preferredDisks = default;
             Optional<IReadOnlyList<DataBoxDiskCopyProgress>> copyProgress = default;
             Optional<IReadOnlyList<DataBoxDiskGranularCopyProgress>> granularCopyProgress = default;
+            Optional<IReadOnlyList<DataBoxDiskGranularCopyLogDetails>> granularCopyLogDetails = default;
             Optional<IReadOnlyDictionary<string, int>> disksAndSizeDetails = default;
             Optional<string> passkey = default;
             Optional<IReadOnlyList<DataBoxJobStage>> jobStages = default;
@@ -99,6 +105,7 @@ namespace Azure.ResourceManager.DataBox.Models
             Optional<IList<DataExportDetails>> dataExportDetails = default;
             DataBoxOrderType jobDetailsType = default;
             Optional<DataBoxOrderPreferences> preferences = default;
+            Optional<ReverseShippingDetails> reverseShippingDetails = default;
             Optional<IReadOnlyList<CopyLogDetails>> copyLogDetails = default;
             Optional<string> reverseShipmentLabelSasKey = default;
             Optional<string> chainOfCustodySasKey = default;
@@ -151,6 +158,20 @@ namespace Azure.ResourceManager.DataBox.Models
                         array.Add(DataBoxDiskGranularCopyProgress.DeserializeDataBoxDiskGranularCopyProgress(item));
                     }
                     granularCopyProgress = array;
+                    continue;
+                }
+                if (property.NameEquals("granularCopyLogDetails"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<DataBoxDiskGranularCopyLogDetails> array = new List<DataBoxDiskGranularCopyLogDetails>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(DataBoxDiskGranularCopyLogDetails.DeserializeDataBoxDiskGranularCopyLogDetails(item));
+                    }
+                    granularCopyLogDetails = array;
                     continue;
                 }
                 if (property.NameEquals("disksAndSizeDetails"u8))
@@ -260,6 +281,15 @@ namespace Azure.ResourceManager.DataBox.Models
                     preferences = DataBoxOrderPreferences.DeserializeDataBoxOrderPreferences(property.Value);
                     continue;
                 }
+                if (property.NameEquals("reverseShippingDetails"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    reverseShippingDetails = ReverseShippingDetails.DeserializeReverseShippingDetails(property.Value);
+                    continue;
+                }
                 if (property.NameEquals("copyLogDetails"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -353,7 +383,7 @@ namespace Azure.ResourceManager.DataBox.Models
                     continue;
                 }
             }
-            return new DataBoxDiskJobDetails(Optional.ToList(jobStages), contactDetails, shippingAddress.Value, deliveryPackage.Value, returnPackage.Value, Optional.ToList(dataImportDetails), Optional.ToList(dataExportDetails), jobDetailsType, preferences.Value, Optional.ToList(copyLogDetails), reverseShipmentLabelSasKey.Value, chainOfCustodySasKey.Value, deviceErasureDetails.Value, keyEncryptionKey.Value, Optional.ToNullable(expectedDataSizeInTerabytes), Optional.ToList(actions), lastMitigationActionOnJob.Value, dataCenterAddress.Value, Optional.ToNullable(dataCenterCode), Optional.ToDictionary(preferredDisks), Optional.ToList(copyProgress), Optional.ToList(granularCopyProgress), Optional.ToDictionary(disksAndSizeDetails), passkey.Value);
+            return new DataBoxDiskJobDetails(Optional.ToList(jobStages), contactDetails, shippingAddress.Value, deliveryPackage.Value, returnPackage.Value, Optional.ToList(dataImportDetails), Optional.ToList(dataExportDetails), jobDetailsType, preferences.Value, reverseShippingDetails.Value, Optional.ToList(copyLogDetails), reverseShipmentLabelSasKey.Value, chainOfCustodySasKey.Value, deviceErasureDetails.Value, keyEncryptionKey.Value, Optional.ToNullable(expectedDataSizeInTerabytes), Optional.ToList(actions), lastMitigationActionOnJob.Value, dataCenterAddress.Value, Optional.ToNullable(dataCenterCode), Optional.ToDictionary(preferredDisks), Optional.ToList(copyProgress), Optional.ToList(granularCopyProgress), Optional.ToList(granularCopyLogDetails), Optional.ToDictionary(disksAndSizeDetails), passkey.Value);
         }
     }
 }

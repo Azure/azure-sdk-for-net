@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.Workloads.Models
             {
                 return null;
             }
-            Optional<DiskSku> sku = default;
+            Optional<SapDiskSku> sku = default;
             Optional<long> sizeGB = default;
             Optional<long> minimumSupportedDiskCount = default;
             Optional<long> maximumSupportedDiskCount = default;
@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Workloads.Models
                     {
                         continue;
                     }
-                    sku = DiskSku.DeserializeDiskSku(property.Value);
+                    sku = SapDiskSku.DeserializeSapDiskSku(property.Value);
                     continue;
                 }
                 if (property.NameEquals("sizeGB"u8))

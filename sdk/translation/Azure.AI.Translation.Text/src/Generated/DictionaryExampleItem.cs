@@ -51,7 +51,7 @@ namespace Azure.AI.Translation.Text
         {
             NormalizedSource = normalizedSource;
             NormalizedTarget = normalizedTarget;
-            Examples = examples.ToList();
+            Examples = examples;
         }
 
         /// <summary>

@@ -28,10 +28,10 @@ namespace Azure.Storage.Blobs.Specialized
     /// operation.  Updating or deleting of existing blocks is not supported.
     /// Unlike a block blob, an append blob does not expose its block IDs.
     ///
-    /// Each block in an append blob can be a different size, up to a maximum
-    /// of 4 MB, and an append blob can include up to 50,000 blocks.  The
-    /// maximum size of an append blob is therefore slightly more than 195 GB
-    /// (4 MB X 50,000 blocks).
+    /// Each block in an append blob can be a different size.
+    /// Beginning with x-ms-version 2022-11-02, the maximum append size is 100 MB.
+    /// For previous versions, the maximum append size is 4 MB.
+    /// Append blobs can include up to 50,000 blocks.
     /// </summary>
     public class AppendBlobClient : BlobBaseClient
     {
@@ -39,7 +39,9 @@ namespace Azure.Storage.Blobs.Specialized
         /// Gets the maximum number of bytes that can be sent in a call
         /// to AppendBlock.
         /// </summary>
-        public virtual int AppendBlobMaxAppendBlockBytes => Constants.Blob.Append.MaxAppendBlockBytes;
+        public virtual int AppendBlobMaxAppendBlockBytes => ClientConfiguration.Version < BlobClientOptions.ServiceVersion.V2022_11_02
+            ? Constants.Blob.Append.Pre_2022_11_02_MaxAppendBlockBytes
+            : Constants.Blob.Append.MaxAppendBlockBytes;
 
         /// <summary>
         /// Gets the maximum number of blocks allowed in an append blob.

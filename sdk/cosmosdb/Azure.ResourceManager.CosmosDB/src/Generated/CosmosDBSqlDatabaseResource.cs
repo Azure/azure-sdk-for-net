@@ -95,59 +95,6 @@ namespace Azure.ResourceManager.CosmosDB
             return new CosmosDBSqlDatabaseThroughputSettingResource(Client, Id.AppendChildResource("throughputSettings", "default"));
         }
 
-        /// <summary> Gets a collection of CosmosDBSqlContainerResources in the CosmosDBSqlDatabase. </summary>
-        /// <returns> An object representing collection of CosmosDBSqlContainerResources and their operations over a CosmosDBSqlContainerResource. </returns>
-        public virtual CosmosDBSqlContainerCollection GetCosmosDBSqlContainers()
-        {
-            return GetCachedClient(Client => new CosmosDBSqlContainerCollection(Client, Id));
-        }
-
-        /// <summary>
-        /// Gets the SQL container under an existing Azure Cosmos DB database account.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/databaseAccounts/{accountName}/sqlDatabases/{databaseName}/containers/{containerName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>SqlResources_GetSqlContainer</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="containerName"> Cosmos DB container name. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="containerName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="containerName"/> is null. </exception>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<CosmosDBSqlContainerResource>> GetCosmosDBSqlContainerAsync(string containerName, CancellationToken cancellationToken = default)
-        {
-            return await GetCosmosDBSqlContainers().GetAsync(containerName, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Gets the SQL container under an existing Azure Cosmos DB database account.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/databaseAccounts/{accountName}/sqlDatabases/{databaseName}/containers/{containerName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>SqlResources_GetSqlContainer</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="containerName"> Cosmos DB container name. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="containerName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="containerName"/> is null. </exception>
-        [ForwardsClientCalls]
-        public virtual Response<CosmosDBSqlContainerResource> GetCosmosDBSqlContainer(string containerName, CancellationToken cancellationToken = default)
-        {
-            return GetCosmosDBSqlContainers().Get(containerName, cancellationToken);
-        }
-
         /// <summary> Gets a collection of CosmosDBSqlClientEncryptionKeyResources in the CosmosDBSqlDatabase. </summary>
         /// <returns> An object representing collection of CosmosDBSqlClientEncryptionKeyResources and their operations over a CosmosDBSqlClientEncryptionKeyResource. </returns>
         public virtual CosmosDBSqlClientEncryptionKeyCollection GetCosmosDBSqlClientEncryptionKeys()
@@ -199,6 +146,59 @@ namespace Azure.ResourceManager.CosmosDB
         public virtual Response<CosmosDBSqlClientEncryptionKeyResource> GetCosmosDBSqlClientEncryptionKey(string clientEncryptionKeyName, CancellationToken cancellationToken = default)
         {
             return GetCosmosDBSqlClientEncryptionKeys().Get(clientEncryptionKeyName, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of CosmosDBSqlContainerResources in the CosmosDBSqlDatabase. </summary>
+        /// <returns> An object representing collection of CosmosDBSqlContainerResources and their operations over a CosmosDBSqlContainerResource. </returns>
+        public virtual CosmosDBSqlContainerCollection GetCosmosDBSqlContainers()
+        {
+            return GetCachedClient(Client => new CosmosDBSqlContainerCollection(Client, Id));
+        }
+
+        /// <summary>
+        /// Gets the SQL container under an existing Azure Cosmos DB database account.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/databaseAccounts/{accountName}/sqlDatabases/{databaseName}/containers/{containerName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>SqlResources_GetSqlContainer</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="containerName"> Cosmos DB container name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="containerName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="containerName"/> is null. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<CosmosDBSqlContainerResource>> GetCosmosDBSqlContainerAsync(string containerName, CancellationToken cancellationToken = default)
+        {
+            return await GetCosmosDBSqlContainers().GetAsync(containerName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Gets the SQL container under an existing Azure Cosmos DB database account.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/databaseAccounts/{accountName}/sqlDatabases/{databaseName}/containers/{containerName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>SqlResources_GetSqlContainer</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="containerName"> Cosmos DB container name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="containerName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="containerName"/> is null. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<CosmosDBSqlContainerResource> GetCosmosDBSqlContainer(string containerName, CancellationToken cancellationToken = default)
+        {
+            return GetCosmosDBSqlContainers().Get(containerName, cancellationToken);
         }
 
         /// <summary>

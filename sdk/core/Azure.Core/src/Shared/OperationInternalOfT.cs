@@ -116,12 +116,8 @@ namespace Azure.Core
             Response? rawResponse,
             string? operationTypeName = null,
             IEnumerable<KeyValuePair<string, string>>? scopeAttributes = null,
-            DelayStrategyInternal? fallbackStrategy = null)
-            : base(
-                clientDiagnostics,
-                operationTypeName ?? operation.GetType().Name,
-                scopeAttributes,
-                fallbackStrategy is ExponentialDelayStrategy ? new SequentialDelayStrategy() : (fallbackStrategy is ConstantDelayStrategy) ? new FixedDelayWithNoJitterStrategy() : null)
+            DelayStrategy? fallbackStrategy = null)
+            : base(clientDiagnostics, operationTypeName ?? operation.GetType().Name, scopeAttributes, fallbackStrategy)
         {
             _operation = operation;
             _rawResponse = rawResponse;
@@ -284,7 +280,7 @@ namespace Azure.Core
 
                 if (!state.HasSucceeded && state.OperationFailedException == null)
                 {
-                    state = OperationState<T>.Failure(state.RawResponse, await CreateException(async, state.RawResponse).ConfigureAwait(false));
+                    state = OperationState<T>.Failure(state.RawResponse, new RequestFailedException(state.RawResponse));
                 }
 
                 asyncLock.SetValue(state);

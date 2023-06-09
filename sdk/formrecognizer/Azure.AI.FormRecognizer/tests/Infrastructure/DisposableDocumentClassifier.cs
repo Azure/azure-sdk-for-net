@@ -20,8 +20,8 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
         /// <summary>
         /// Initializes a new instance of the <see cref="DisposableDocumentClassifier"/> class.
         /// </summary>
-        /// <param name="adminClient">The client to use for deleting the classifier upon disposal.</param>
-        /// <param name="classifierId">The identifier of the classifier to delete upon disposal.</param>
+        /// <param name="client">The client to use for deleting the classifier upon disposal.</param>
+        /// <param name="value">The classifier to associate with this instance. It will be deleted upon disposal.</param>
         private DisposableDocumentClassifier(DocumentModelAdministrationClient client, DocumentClassifierDetails value)
         {
             _client = client;
@@ -32,6 +32,11 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
         /// The classifier this instance is associated with. It will be deleted upon disposal.
         /// </summary>
         public DocumentClassifierDetails Value { get; }
+
+        /// <summary>
+        /// The identifier of the classifier this instance is associated with.
+        /// </summary>
+        public string ClassifierId => Value.ClassifierId;
 
         /// <summary>
         /// Builds a classifier using the specified <see cref="DocumentModelAdministrationClient"/> and the specified set of training files. A
@@ -52,6 +57,6 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
         /// <summary>
         /// Deletes the classifier this instance is associated with.
         /// </summary>
-        public async ValueTask DisposeAsync() => await _client.DeleteDocumentClassifierAsync(Value.ClassifierId);
+        public async ValueTask DisposeAsync() => await _client.DeleteDocumentClassifierAsync(ClassifierId);
     }
 }

@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Workloads.Models
             Optional<ApplicationServerFullResourceNames> applicationServer = default;
             Optional<DatabaseServerFullResourceNames> databaseServer = default;
             Optional<SharedStorageResourceNames> sharedStorage = default;
-            NamingPatternType namingPatternType = default;
+            SapNamingPatternType namingPatternType = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("centralServer"u8))
@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.Workloads.Models
                 }
                 if (property.NameEquals("namingPatternType"u8))
                 {
-                    namingPatternType = new NamingPatternType(property.Value.GetString());
+                    namingPatternType = new SapNamingPatternType(property.Value.GetString());
                     continue;
                 }
             }

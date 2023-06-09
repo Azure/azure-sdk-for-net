@@ -7,6 +7,9 @@ using System;
 
 namespace Azure.Core
 {
+    /// <summary>
+    /// A delay strategy that uses a fixed sequence of delays with no jitter applied. This is used by management LROs.
+    /// </summary>
     internal class SequentialDelayStrategy : DelayStrategy
     {
         private static readonly TimeSpan[] _pollingSequence = new TimeSpan[]

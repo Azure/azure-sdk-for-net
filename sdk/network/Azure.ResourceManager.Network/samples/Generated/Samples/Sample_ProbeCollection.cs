@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.Network.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task GetAll_LoadBalancerProbeList()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2021-02-01/examples/LoadBalancerProbeList.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2022-09-01/examples/LoadBalancerProbeList.json
             // this example is just showing the usage of "LoadBalancerProbes_List" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.Network.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Get_LoadBalancerProbeGet()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2021-02-01/examples/LoadBalancerProbeGet.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2022-09-01/examples/LoadBalancerProbeGet.json
             // this example is just showing the usage of "LoadBalancerProbes_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.Network.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Exists_LoadBalancerProbeGet()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2021-02-01/examples/LoadBalancerProbeGet.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2022-09-01/examples/LoadBalancerProbeGet.json
             // this example is just showing the usage of "LoadBalancerProbes_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line

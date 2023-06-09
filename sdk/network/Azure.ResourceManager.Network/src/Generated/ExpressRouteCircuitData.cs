@@ -48,7 +48,9 @@ namespace Azure.ResourceManager.Network
         /// <param name="provisioningState"> The provisioning state of the express route circuit resource. </param>
         /// <param name="gatewayManagerETag"> The GatewayManager Etag. </param>
         /// <param name="globalReachEnabled"> Flag denoting global reach status. </param>
-        internal ExpressRouteCircuitData(ResourceIdentifier id, string name, ResourceType? resourceType, AzureLocation? location, IDictionary<string, string> tags, ExpressRouteCircuitSku sku, ETag? etag, bool? allowClassicOperations, string circuitProvisioningState, ServiceProviderProvisioningState? serviceProviderProvisioningState, IList<ExpressRouteCircuitAuthorizationData> authorizations, IList<ExpressRouteCircuitPeeringData> peerings, string serviceKey, string serviceProviderNotes, ExpressRouteCircuitServiceProviderProperties serviceProviderProperties, WritableSubResource expressRoutePort, float? bandwidthInGbps, int? stag, NetworkProvisioningState? provisioningState, string gatewayManagerETag, bool? globalReachEnabled) : base(id, name, resourceType, location, tags)
+        /// <param name="authorizationKey"> The authorizationKey. </param>
+        /// <param name="authorizationStatus"> The authorization status of the Circuit. </param>
+        internal ExpressRouteCircuitData(ResourceIdentifier id, string name, ResourceType? resourceType, AzureLocation? location, IDictionary<string, string> tags, ExpressRouteCircuitSku sku, ETag? etag, bool? allowClassicOperations, string circuitProvisioningState, ServiceProviderProvisioningState? serviceProviderProvisioningState, IList<ExpressRouteCircuitAuthorizationData> authorizations, IList<ExpressRouteCircuitPeeringData> peerings, string serviceKey, string serviceProviderNotes, ExpressRouteCircuitServiceProviderProperties serviceProviderProperties, WritableSubResource expressRoutePort, float? bandwidthInGbps, int? stag, NetworkProvisioningState? provisioningState, string gatewayManagerETag, bool? globalReachEnabled, string authorizationKey, string authorizationStatus) : base(id, name, resourceType, location, tags)
         {
             Sku = sku;
             ETag = etag;
@@ -66,6 +68,8 @@ namespace Azure.ResourceManager.Network
             ProvisioningState = provisioningState;
             GatewayManagerETag = gatewayManagerETag;
             GlobalReachEnabled = globalReachEnabled;
+            AuthorizationKey = authorizationKey;
+            AuthorizationStatus = authorizationStatus;
         }
 
         /// <summary> The SKU. </summary>
@@ -112,5 +116,9 @@ namespace Azure.ResourceManager.Network
         public string GatewayManagerETag { get; set; }
         /// <summary> Flag denoting global reach status. </summary>
         public bool? GlobalReachEnabled { get; set; }
+        /// <summary> The authorizationKey. </summary>
+        public string AuthorizationKey { get; set; }
+        /// <summary> The authorization status of the Circuit. </summary>
+        public string AuthorizationStatus { get; }
     }
 }

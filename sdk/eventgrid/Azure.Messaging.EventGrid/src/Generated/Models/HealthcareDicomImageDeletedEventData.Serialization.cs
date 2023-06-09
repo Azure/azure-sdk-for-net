@@ -21,6 +21,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             {
                 return null;
             }
+            Optional<string> partitionName = default;
             Optional<string> imageStudyInstanceUid = default;
             Optional<string> imageSeriesInstanceUid = default;
             Optional<string> imageSopInstanceUid = default;
@@ -28,6 +29,11 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             Optional<long> sequenceNumber = default;
             foreach (var property in element.EnumerateObject())
             {
+                if (property.NameEquals("partitionName"u8))
+                {
+                    partitionName = property.Value.GetString();
+                    continue;
+                }
                 if (property.NameEquals("imageStudyInstanceUid"u8))
                 {
                     imageStudyInstanceUid = property.Value.GetString();
@@ -58,7 +64,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                     continue;
                 }
             }
-            return new HealthcareDicomImageDeletedEventData(imageStudyInstanceUid.Value, imageSeriesInstanceUid.Value, imageSopInstanceUid.Value, serviceHostName.Value, Optional.ToNullable(sequenceNumber));
+            return new HealthcareDicomImageDeletedEventData(partitionName.Value, imageStudyInstanceUid.Value, imageSeriesInstanceUid.Value, imageSopInstanceUid.Value, serviceHostName.Value, Optional.ToNullable(sequenceNumber));
         }
 
         internal partial class HealthcareDicomImageDeletedEventDataConverter : JsonConverter<HealthcareDicomImageDeletedEventData>

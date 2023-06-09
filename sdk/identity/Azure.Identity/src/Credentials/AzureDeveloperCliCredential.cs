@@ -23,11 +23,11 @@ namespace Azure.Identity
     public class AzureDeveloperCliCredential : TokenCredential
     {
         internal const string AzdCliNotInstalled = "Azure Developer CLI could not be found.";
-        internal const string AzdNotLogIn = "Please run 'azd login' from a command prompt to authenticate before using this credential.";
+        internal const string AzdNotLogIn = "Please run 'azd auth login' from a command prompt to authenticate before using this credential.";
         internal const string WinAzdCliError = "'azd' is not recognized";
         internal const string AzdCliTimeoutError = "Azure Developer CLI authentication timed out.";
         internal const string AzdCliFailedError = "Azure Developer CLI authentication failed due to an unknown error.";
-        internal const string Troubleshoot = "Please visit https://aka.ms/azure-dev for installation instructions and then, once installed, authenticate to your Azure account using 'azd login'.";
+        internal const string Troubleshoot = "Please visit https://aka.ms/azure-dev for installation instructions and then, once installed, authenticate to your Azure account using 'azd auth login'.";
         internal const string InteractiveLoginRequired = "Azure Developer CLI could not login. Interactive login is required.";
         internal const string AzdCLIInternalError = "AzdCLIInternalError: The command failed with an unexpected error. Here is the traceback:";
         internal TimeSpan ProcessTimeout { get; private set; }
@@ -137,7 +137,7 @@ namespace Azure.Identity
                 }
 
                 bool isAADSTSError = exception.Message.Contains("AADSTS");
-                bool isLoginError = exception.Message.IndexOf("azd login", StringComparison.OrdinalIgnoreCase) != -1;
+                bool isLoginError = exception.Message.IndexOf("azd auth login", StringComparison.OrdinalIgnoreCase) != -1;
 
                 if (isLoginError && !isAADSTSError)
                 {
