@@ -91,12 +91,6 @@ namespace Azure.Core.Json
                 return true;
             }
 
-            //// Check for changes to descendants
-            //if (Changes.DescendantChanged(path, _highWaterMark))
-            //{
-
-            //}
-
             bool hasProperty = _element.TryGetProperty(name, out JsonElement element);
             if (!hasProperty)
             {

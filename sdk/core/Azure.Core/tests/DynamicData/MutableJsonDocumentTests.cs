@@ -1118,7 +1118,102 @@ namespace Azure.Core.Tests
             Assert.AreEqual(2, mdoc.RootElement.GetProperty("foo").GetInt32());
         }
 
+        [Test]
+        public void CanReflectNestedReferenceChanges()
+        {
+            MutableJsonDocument json = MutableJsonDocument.Parse(
+                """{"foo":1}""",
+                new JsonSerializerOptions() { PropertyNamingPolicy = JsonNamingPolicy.CamelCase });
+            NestedModel fooModel = new()
+            {
+                StringProperty = "a",
+                NestedProperty = new NestedModel()
+                {
+                    StringProperty = "b",
+                    NestedProperty = new NestedModel()
+                    {
+                        StringProperty = "c"
+                    }
+                }
+            };
+
+            NestedModel barModel = new()
+            {
+                StringProperty = "u",
+                NestedProperty = new NestedModel()
+                {
+                    StringProperty = "v",
+                    NestedProperty = new NestedModel()
+                    {
+                        StringProperty = "w"
+                    }
+                }
+            };
+
+            // Existing property
+            json.RootElement.SetProperty("foo", fooModel);
+
+            // New property
+            json.RootElement.SetProperty("bar", barModel);
+
+            json.RootElement.GetProperty("bar").GetProperty("stringProperty").Set("x");
+            barModel.NestedProperty.StringProperty = "y";
+            barModel.NestedProperty.NestedProperty.StringProperty = "z";
+
+            fooModel.StringProperty = "d";
+            json.RootElement.GetProperty("foo").GetProperty("nestedProperty").GetProperty("stringProperty").Set("e");
+            fooModel.NestedProperty.NestedProperty.StringProperty = "f";
+
+            Assert.AreEqual("d", json.RootElement.GetProperty("foo").GetProperty("stringProperty").GetString());
+            Assert.AreEqual("e", json.RootElement.GetProperty("foo").GetProperty("nestedProperty").GetProperty("stringProperty").GetString());
+            Assert.AreEqual("f", json.RootElement.GetProperty("foo").GetProperty("nestedProperty").GetProperty("nestedProperty").GetProperty("stringProperty").GetString());
+
+            Assert.AreEqual("x", json.RootElement.GetProperty("bar").GetProperty("stringProperty").GetString());
+            Assert.AreEqual("y", json.RootElement.GetProperty("bar").GetProperty("nestedProperty").GetProperty("stringProperty").GetString());
+            Assert.AreEqual("z", json.RootElement.GetProperty("bar").GetProperty("nestedProperty").GetProperty("nestedProperty").GetProperty("stringProperty").GetString());
+
+            NestedModel bazModel = new()
+            {
+                StringProperty = "m",
+                NestedProperty = new NestedModel()
+                {
+                    StringProperty = "n",
+                    NestedProperty = new NestedModel()
+                    {
+                        StringProperty = "o"
+                    }
+                }
+            };
+
+            // Now add a model to a model
+            fooModel.NestedProperty = bazModel;
+            barModel.NestedProperty.NestedProperty = bazModel;
+
+            fooModel.StringProperty = "g";
+
+            bazModel.NestedProperty.NestedProperty.StringProperty = "p";
+
+            Assert.AreEqual("g", json.RootElement.GetProperty("foo").GetProperty("stringProperty").GetString());
+            Assert.AreEqual("m", json.RootElement.GetProperty("foo").GetProperty("nestedProperty").GetProperty("stringProperty").GetString());
+            Assert.AreEqual("n", json.RootElement.GetProperty("foo").GetProperty("nestedProperty").GetProperty("nestedProperty").GetProperty("stringProperty").GetString());
+            Assert.AreEqual("p", json.RootElement.GetProperty("foo").GetProperty("nestedProperty").GetProperty("nestedProperty").GetProperty("stringProperty").GetProperty("stringProperty").GetString());
+
+            Assert.AreEqual("x", json.RootElement.GetProperty("bar").GetProperty("stringProperty").GetString());
+            Assert.AreEqual("y", json.RootElement.GetProperty("bar").GetProperty("nestedProperty").GetProperty("stringProperty").GetString());
+
+            Assert.AreEqual("m", json.RootElement.GetProperty("bar").GetProperty("nestedProperty").GetProperty("nestedProperty").GetProperty("stringProperty").GetString());
+            Assert.AreEqual("n", json.RootElement.GetProperty("bar").GetProperty("nestedProperty").GetProperty("nestedProperty").GetProperty("nestedProperty").GetProperty("stringProperty").GetString());
+            Assert.AreEqual("p", json.RootElement.GetProperty("bar").GetProperty("nestedProperty").GetProperty("nestedProperty").GetProperty("nestedProperty").GetProperty("nestedProperty").GetProperty("stringProperty").GetString());
+        }
+
         #region Helpers
+
+        internal class NestedModel
+        {
+            public NestedModel() { }
+            public string StringProperty { get; set; }
+            public NestedModel NestedProperty { get; set; }
+        }
 
         internal static void ValidateWriteTo(BinaryData json, MutableJsonDocument mdoc)
         {

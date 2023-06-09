@@ -97,8 +97,6 @@ namespace Azure.Core.Json
                 string propertyName = property.AddedPropertyName!;
                 string propertyPath = MutableJsonDocument.ChangeTracker.PushProperty(path, propertyName);
 
-                // TODO: Test case: add an object to an object, and make sure it gets updates
-
                 writer.WritePropertyName(propertyName);
                 WriteElement(propertyPath, highWaterMark, property.AsJsonElement(), writer);
             }
