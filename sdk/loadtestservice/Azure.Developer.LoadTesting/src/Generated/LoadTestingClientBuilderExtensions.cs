@@ -12,7 +12,7 @@ using Azure.Developer.LoadTesting;
 namespace Microsoft.Extensions.Azure
 {
     /// <summary> Extension methods to add <see cref="LoadTestAdministrationClient"/>, <see cref="LoadTestRunClient"/> to client builder. </summary>
-    public static partial class AzureLoadTestingClientBuilderExtensions
+    public static partial class LoadTestingClientBuilderExtensions
     {
         /// <summary> Registers a <see cref="LoadTestAdministrationClient"/> instance. </summary>
         /// <param name="builder"> The builder to register with. </param>
