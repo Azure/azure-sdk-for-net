@@ -13,41 +13,42 @@ using Azure.Core;
 using Azure.ResourceManager;
 using Azure.ResourceManager.Resources;
 using Azure.ResourceManager.ServiceFabric.Models;
+using Azure.ResourceManager.ServiceFabric.Testing;
 
 namespace Azure.ResourceManager.ServiceFabric
 {
     /// <summary> A class to add extension methods to Azure.ResourceManager.ServiceFabric. </summary>
     public static partial class ServiceFabricExtensions
     {
-        private static ResourceGroupResourceExtensionClient GetResourceGroupResourceExtensionClient(ArmResource resource)
+        private static ServiceFabricResourceGroupResourceExtension GetServiceFabricResourceGroupResourceExtension(ArmResource resource)
         {
             return resource.GetCachedClient(client =>
             {
-                return new ResourceGroupResourceExtensionClient(client, resource.Id);
+                return new ServiceFabricResourceGroupResourceExtension(client, resource.Id);
             });
         }
 
-        private static ResourceGroupResourceExtensionClient GetResourceGroupResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
+        private static ServiceFabricResourceGroupResourceExtension GetServiceFabricResourceGroupResourceExtension(ArmClient client, ResourceIdentifier scope)
         {
             return client.GetResourceClient(() =>
             {
-                return new ResourceGroupResourceExtensionClient(client, scope);
+                return new ServiceFabricResourceGroupResourceExtension(client, scope);
             });
         }
 
-        private static SubscriptionResourceExtensionClient GetSubscriptionResourceExtensionClient(ArmResource resource)
+        private static ServiceFabricSubscriptionResourceExtension GetServiceFabricSubscriptionResourceExtension(ArmResource resource)
         {
             return resource.GetCachedClient(client =>
             {
-                return new SubscriptionResourceExtensionClient(client, resource.Id);
+                return new ServiceFabricSubscriptionResourceExtension(client, resource.Id);
             });
         }
 
-        private static SubscriptionResourceExtensionClient GetSubscriptionResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
+        private static ServiceFabricSubscriptionResourceExtension GetServiceFabricSubscriptionResourceExtension(ArmClient client, ResourceIdentifier scope)
         {
             return client.GetResourceClient(() =>
             {
-                return new SubscriptionResourceExtensionClient(client, scope);
+                return new ServiceFabricSubscriptionResourceExtension(client, scope);
             });
         }
         #region ServiceFabricClusterResource
@@ -150,7 +151,7 @@ namespace Azure.ResourceManager.ServiceFabric
         /// <returns> An object representing collection of ServiceFabricClusterResources and their operations over a ServiceFabricClusterResource. </returns>
         public static ServiceFabricClusterCollection GetServiceFabricClusters(this ResourceGroupResource resourceGroupResource)
         {
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetServiceFabricClusters();
+            return GetServiceFabricResourceGroupResourceExtension(resourceGroupResource).GetServiceFabricClusters();
         }
 
         /// <summary>
@@ -219,7 +220,7 @@ namespace Azure.ResourceManager.ServiceFabric
         /// <returns> An async collection of <see cref="ServiceFabricClusterResource" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<ServiceFabricClusterResource> GetServiceFabricClustersAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetServiceFabricClustersAsync(cancellationToken);
+            return GetServiceFabricSubscriptionResourceExtension(subscriptionResource).GetServiceFabricClustersAsync(cancellationToken);
         }
 
         /// <summary>
@@ -240,7 +241,7 @@ namespace Azure.ResourceManager.ServiceFabric
         /// <returns> A collection of <see cref="ServiceFabricClusterResource" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<ServiceFabricClusterResource> GetServiceFabricClusters(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetServiceFabricClusters(cancellationToken);
+            return GetServiceFabricSubscriptionResourceExtension(subscriptionResource).GetServiceFabricClusters(cancellationToken);
         }
 
         /// <summary>
@@ -267,7 +268,7 @@ namespace Azure.ResourceManager.ServiceFabric
         {
             Argument.AssertNotNullOrEmpty(clusterVersion, nameof(clusterVersion));
 
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetClusterVersionsAsync(location, clusterVersion, cancellationToken);
+            return GetServiceFabricSubscriptionResourceExtension(subscriptionResource).GetClusterVersionsAsync(location, clusterVersion, cancellationToken);
         }
 
         /// <summary>
@@ -294,7 +295,7 @@ namespace Azure.ResourceManager.ServiceFabric
         {
             Argument.AssertNotNullOrEmpty(clusterVersion, nameof(clusterVersion));
 
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetClusterVersions(location, clusterVersion, cancellationToken);
+            return GetServiceFabricSubscriptionResourceExtension(subscriptionResource).GetClusterVersions(location, clusterVersion, cancellationToken);
         }
 
         /// <summary>
@@ -322,7 +323,7 @@ namespace Azure.ResourceManager.ServiceFabric
         {
             Argument.AssertNotNullOrEmpty(clusterVersion, nameof(clusterVersion));
 
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetClusterVersionsByEnvironmentAsync(location, environment, clusterVersion, cancellationToken);
+            return GetServiceFabricSubscriptionResourceExtension(subscriptionResource).GetClusterVersionsByEnvironmentAsync(location, environment, clusterVersion, cancellationToken);
         }
 
         /// <summary>
@@ -350,7 +351,7 @@ namespace Azure.ResourceManager.ServiceFabric
         {
             Argument.AssertNotNullOrEmpty(clusterVersion, nameof(clusterVersion));
 
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetClusterVersionsByEnvironment(location, environment, clusterVersion, cancellationToken);
+            return GetServiceFabricSubscriptionResourceExtension(subscriptionResource).GetClusterVersionsByEnvironment(location, environment, clusterVersion, cancellationToken);
         }
 
         /// <summary>
@@ -372,7 +373,7 @@ namespace Azure.ResourceManager.ServiceFabric
         /// <returns> An async collection of <see cref="ClusterCodeVersionsResult" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<ClusterCodeVersionsResult> GetClusterVersionsAsync(this SubscriptionResource subscriptionResource, AzureLocation location, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetClusterVersionsAsync(location, cancellationToken);
+            return GetServiceFabricSubscriptionResourceExtension(subscriptionResource).GetClusterVersionsAsync(location, cancellationToken);
         }
 
         /// <summary>
@@ -394,7 +395,7 @@ namespace Azure.ResourceManager.ServiceFabric
         /// <returns> A collection of <see cref="ClusterCodeVersionsResult" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<ClusterCodeVersionsResult> GetClusterVersions(this SubscriptionResource subscriptionResource, AzureLocation location, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetClusterVersions(location, cancellationToken);
+            return GetServiceFabricSubscriptionResourceExtension(subscriptionResource).GetClusterVersions(location, cancellationToken);
         }
 
         /// <summary>
@@ -417,7 +418,7 @@ namespace Azure.ResourceManager.ServiceFabric
         /// <returns> An async collection of <see cref="ClusterCodeVersionsResult" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<ClusterCodeVersionsResult> GetClusterVersionsByEnvironmentAsync(this SubscriptionResource subscriptionResource, AzureLocation location, ClusterVersionsEnvironment environment, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetClusterVersionsByEnvironmentAsync(location, environment, cancellationToken);
+            return GetServiceFabricSubscriptionResourceExtension(subscriptionResource).GetClusterVersionsByEnvironmentAsync(location, environment, cancellationToken);
         }
 
         /// <summary>
@@ -440,7 +441,7 @@ namespace Azure.ResourceManager.ServiceFabric
         /// <returns> A collection of <see cref="ClusterCodeVersionsResult" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<ClusterCodeVersionsResult> GetClusterVersionsByEnvironment(this SubscriptionResource subscriptionResource, AzureLocation location, ClusterVersionsEnvironment environment, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetClusterVersionsByEnvironment(location, environment, cancellationToken);
+            return GetServiceFabricSubscriptionResourceExtension(subscriptionResource).GetClusterVersionsByEnvironment(location, environment, cancellationToken);
         }
     }
 }

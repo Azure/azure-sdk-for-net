@@ -12,41 +12,42 @@ using Azure;
 using Azure.Core;
 using Azure.ResourceManager;
 using Azure.ResourceManager.Resources;
+using Azure.ResourceManager.SqlVirtualMachine.Testing;
 
 namespace Azure.ResourceManager.SqlVirtualMachine
 {
     /// <summary> A class to add extension methods to Azure.ResourceManager.SqlVirtualMachine. </summary>
     public static partial class SqlVirtualMachineExtensions
     {
-        private static ResourceGroupResourceExtensionClient GetResourceGroupResourceExtensionClient(ArmResource resource)
+        private static SqlVirtualMachineResourceGroupResourceExtension GetSqlVirtualMachineResourceGroupResourceExtension(ArmResource resource)
         {
             return resource.GetCachedClient(client =>
             {
-                return new ResourceGroupResourceExtensionClient(client, resource.Id);
+                return new SqlVirtualMachineResourceGroupResourceExtension(client, resource.Id);
             });
         }
 
-        private static ResourceGroupResourceExtensionClient GetResourceGroupResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
+        private static SqlVirtualMachineResourceGroupResourceExtension GetSqlVirtualMachineResourceGroupResourceExtension(ArmClient client, ResourceIdentifier scope)
         {
             return client.GetResourceClient(() =>
             {
-                return new ResourceGroupResourceExtensionClient(client, scope);
+                return new SqlVirtualMachineResourceGroupResourceExtension(client, scope);
             });
         }
 
-        private static SubscriptionResourceExtensionClient GetSubscriptionResourceExtensionClient(ArmResource resource)
+        private static SqlVirtualMachineSubscriptionResourceExtension GetSqlVirtualMachineSubscriptionResourceExtension(ArmResource resource)
         {
             return resource.GetCachedClient(client =>
             {
-                return new SubscriptionResourceExtensionClient(client, resource.Id);
+                return new SqlVirtualMachineSubscriptionResourceExtension(client, resource.Id);
             });
         }
 
-        private static SubscriptionResourceExtensionClient GetSubscriptionResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
+        private static SqlVirtualMachineSubscriptionResourceExtension GetSqlVirtualMachineSubscriptionResourceExtension(ArmClient client, ResourceIdentifier scope)
         {
             return client.GetResourceClient(() =>
             {
-                return new SubscriptionResourceExtensionClient(client, scope);
+                return new SqlVirtualMachineSubscriptionResourceExtension(client, scope);
             });
         }
         #region AvailabilityGroupListenerResource
@@ -111,7 +112,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine
         /// <returns> An object representing collection of SqlVmGroupResources and their operations over a SqlVmGroupResource. </returns>
         public static SqlVmGroupCollection GetSqlVmGroups(this ResourceGroupResource resourceGroupResource)
         {
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetSqlVmGroups();
+            return GetSqlVirtualMachineResourceGroupResourceExtension(resourceGroupResource).GetSqlVmGroups();
         }
 
         /// <summary>
@@ -167,7 +168,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine
         /// <returns> An object representing collection of SqlVmResources and their operations over a SqlVmResource. </returns>
         public static SqlVmCollection GetSqlVms(this ResourceGroupResource resourceGroupResource)
         {
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetSqlVms();
+            return GetSqlVirtualMachineResourceGroupResourceExtension(resourceGroupResource).GetSqlVms();
         }
 
         /// <summary>
@@ -238,7 +239,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine
         /// <returns> An async collection of <see cref="SqlVmGroupResource" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<SqlVmGroupResource> GetSqlVmGroupsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetSqlVmGroupsAsync(cancellationToken);
+            return GetSqlVirtualMachineSubscriptionResourceExtension(subscriptionResource).GetSqlVmGroupsAsync(cancellationToken);
         }
 
         /// <summary>
@@ -259,7 +260,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine
         /// <returns> A collection of <see cref="SqlVmGroupResource" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<SqlVmGroupResource> GetSqlVmGroups(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetSqlVmGroups(cancellationToken);
+            return GetSqlVirtualMachineSubscriptionResourceExtension(subscriptionResource).GetSqlVmGroups(cancellationToken);
         }
 
         /// <summary>
@@ -280,7 +281,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine
         /// <returns> An async collection of <see cref="SqlVmResource" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<SqlVmResource> GetSqlVmsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetSqlVmsAsync(cancellationToken);
+            return GetSqlVirtualMachineSubscriptionResourceExtension(subscriptionResource).GetSqlVmsAsync(cancellationToken);
         }
 
         /// <summary>
@@ -301,7 +302,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine
         /// <returns> A collection of <see cref="SqlVmResource" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<SqlVmResource> GetSqlVms(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetSqlVms(cancellationToken);
+            return GetSqlVirtualMachineSubscriptionResourceExtension(subscriptionResource).GetSqlVms(cancellationToken);
         }
     }
 }

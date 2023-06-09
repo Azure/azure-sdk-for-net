@@ -12,6 +12,7 @@ using Azure;
 using Azure.Core;
 using Azure.ResourceManager;
 using Azure.ResourceManager.RecoveryServicesSiteRecovery.Models;
+using Azure.ResourceManager.RecoveryServicesSiteRecovery.Testing;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
@@ -19,19 +20,19 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
     /// <summary> A class to add extension methods to Azure.ResourceManager.RecoveryServicesSiteRecovery. </summary>
     public static partial class RecoveryServicesSiteRecoveryExtensions
     {
-        private static ResourceGroupResourceExtensionClient GetResourceGroupResourceExtensionClient(ArmResource resource)
+        private static RecoveryServicesSiteRecoveryResourceGroupResourceExtension GetRecoveryServicesSiteRecoveryResourceGroupResourceExtension(ArmResource resource)
         {
             return resource.GetCachedClient(client =>
             {
-                return new ResourceGroupResourceExtensionClient(client, resource.Id);
+                return new RecoveryServicesSiteRecoveryResourceGroupResourceExtension(client, resource.Id);
             });
         }
 
-        private static ResourceGroupResourceExtensionClient GetResourceGroupResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
+        private static RecoveryServicesSiteRecoveryResourceGroupResourceExtension GetRecoveryServicesSiteRecoveryResourceGroupResourceExtension(ArmClient client, ResourceIdentifier scope)
         {
             return client.GetResourceClient(() =>
             {
-                return new ResourceGroupResourceExtensionClient(client, scope);
+                return new RecoveryServicesSiteRecoveryResourceGroupResourceExtension(client, scope);
             });
         }
         #region AlertResource
@@ -481,7 +482,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         {
             Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
 
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetAlerts(resourceName);
+            return GetRecoveryServicesSiteRecoveryResourceGroupResourceExtension(resourceGroupResource).GetAlerts(resourceName);
         }
 
         /// <summary>
@@ -544,7 +545,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         {
             Argument.AssertNotNullOrEmpty(virtualMachineName, nameof(virtualMachineName));
 
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetReplicationEligibilityResults(virtualMachineName);
+            return GetRecoveryServicesSiteRecoveryResourceGroupResourceExtension(resourceGroupResource).GetReplicationEligibilityResults(virtualMachineName);
         }
 
         /// <summary>
@@ -605,7 +606,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         {
             Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
 
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetEvents(resourceName);
+            return GetRecoveryServicesSiteRecoveryResourceGroupResourceExtension(resourceGroupResource).GetEvents(resourceName);
         }
 
         /// <summary>
@@ -668,7 +669,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         {
             Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
 
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetFabrics(resourceName);
+            return GetRecoveryServicesSiteRecoveryResourceGroupResourceExtension(resourceGroupResource).GetFabrics(resourceName);
         }
 
         /// <summary>
@@ -733,7 +734,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         {
             Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
 
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetJobs(resourceName);
+            return GetRecoveryServicesSiteRecoveryResourceGroupResourceExtension(resourceGroupResource).GetJobs(resourceName);
         }
 
         /// <summary>
@@ -796,7 +797,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         {
             Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
 
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetPolicies(resourceName);
+            return GetRecoveryServicesSiteRecoveryResourceGroupResourceExtension(resourceGroupResource).GetPolicies(resourceName);
         }
 
         /// <summary>
@@ -859,7 +860,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         {
             Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
 
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetReplicationProtectionIntents(resourceName);
+            return GetRecoveryServicesSiteRecoveryResourceGroupResourceExtension(resourceGroupResource).GetReplicationProtectionIntents(resourceName);
         }
 
         /// <summary>
@@ -922,7 +923,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         {
             Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
 
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetRecoveryPlans(resourceName);
+            return GetRecoveryServicesSiteRecoveryResourceGroupResourceExtension(resourceGroupResource).GetRecoveryPlans(resourceName);
         }
 
         /// <summary>
@@ -985,7 +986,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         {
             Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
 
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetVaultSettings(resourceName);
+            return GetRecoveryServicesSiteRecoveryResourceGroupResourceExtension(resourceGroupResource).GetVaultSettings(resourceName);
         }
 
         /// <summary>
@@ -1062,7 +1063,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         {
             Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
 
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetReplicationAppliancesAsync(resourceName, filter, cancellationToken);
+            return GetRecoveryServicesSiteRecoveryResourceGroupResourceExtension(resourceGroupResource).GetReplicationAppliancesAsync(resourceName, filter, cancellationToken);
         }
 
         /// <summary>
@@ -1089,7 +1090,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         {
             Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
 
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetReplicationAppliances(resourceName, filter, cancellationToken);
+            return GetRecoveryServicesSiteRecoveryResourceGroupResourceExtension(resourceGroupResource).GetReplicationAppliances(resourceName, filter, cancellationToken);
         }
 
         /// <summary>
@@ -1115,7 +1116,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         {
             Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
 
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetNetworksAsync(resourceName, cancellationToken);
+            return GetRecoveryServicesSiteRecoveryResourceGroupResourceExtension(resourceGroupResource).GetNetworksAsync(resourceName, cancellationToken);
         }
 
         /// <summary>
@@ -1141,7 +1142,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         {
             Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
 
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetNetworks(resourceName, cancellationToken);
+            return GetRecoveryServicesSiteRecoveryResourceGroupResourceExtension(resourceGroupResource).GetNetworks(resourceName, cancellationToken);
         }
 
         /// <summary>
@@ -1167,7 +1168,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         {
             Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
 
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetNetworkMappingsAsync(resourceName, cancellationToken);
+            return GetRecoveryServicesSiteRecoveryResourceGroupResourceExtension(resourceGroupResource).GetNetworkMappingsAsync(resourceName, cancellationToken);
         }
 
         /// <summary>
@@ -1193,7 +1194,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         {
             Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
 
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetNetworkMappings(resourceName, cancellationToken);
+            return GetRecoveryServicesSiteRecoveryResourceGroupResourceExtension(resourceGroupResource).GetNetworkMappings(resourceName, cancellationToken);
         }
 
         /// <summary>
@@ -1219,7 +1220,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         {
             Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
 
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetProtectionContainersAsync(resourceName, cancellationToken);
+            return GetRecoveryServicesSiteRecoveryResourceGroupResourceExtension(resourceGroupResource).GetProtectionContainersAsync(resourceName, cancellationToken);
         }
 
         /// <summary>
@@ -1245,7 +1246,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         {
             Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
 
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetProtectionContainers(resourceName, cancellationToken);
+            return GetRecoveryServicesSiteRecoveryResourceGroupResourceExtension(resourceGroupResource).GetProtectionContainers(resourceName, cancellationToken);
         }
 
         /// <summary>
@@ -1274,7 +1275,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         {
             Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
 
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetMigrationItemsAsync(resourceName, skipToken, takeToken, filter, cancellationToken);
+            return GetRecoveryServicesSiteRecoveryResourceGroupResourceExtension(resourceGroupResource).GetMigrationItemsAsync(resourceName, skipToken, takeToken, filter, cancellationToken);
         }
 
         /// <summary>
@@ -1303,7 +1304,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         {
             Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
 
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetMigrationItems(resourceName, skipToken, takeToken, filter, cancellationToken);
+            return GetRecoveryServicesSiteRecoveryResourceGroupResourceExtension(resourceGroupResource).GetMigrationItems(resourceName, skipToken, takeToken, filter, cancellationToken);
         }
 
         /// <summary>
@@ -1331,7 +1332,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         {
             Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
 
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetReplicationProtectedItemsAsync(resourceName, skipToken, filter, cancellationToken);
+            return GetRecoveryServicesSiteRecoveryResourceGroupResourceExtension(resourceGroupResource).GetReplicationProtectedItemsAsync(resourceName, skipToken, filter, cancellationToken);
         }
 
         /// <summary>
@@ -1359,7 +1360,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         {
             Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
 
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetReplicationProtectedItems(resourceName, skipToken, filter, cancellationToken);
+            return GetRecoveryServicesSiteRecoveryResourceGroupResourceExtension(resourceGroupResource).GetReplicationProtectedItems(resourceName, skipToken, filter, cancellationToken);
         }
 
         /// <summary>
@@ -1385,7 +1386,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         {
             Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
 
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetProtectionContainerMappingsAsync(resourceName, cancellationToken);
+            return GetRecoveryServicesSiteRecoveryResourceGroupResourceExtension(resourceGroupResource).GetProtectionContainerMappingsAsync(resourceName, cancellationToken);
         }
 
         /// <summary>
@@ -1411,7 +1412,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         {
             Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
 
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetProtectionContainerMappings(resourceName, cancellationToken);
+            return GetRecoveryServicesSiteRecoveryResourceGroupResourceExtension(resourceGroupResource).GetProtectionContainerMappings(resourceName, cancellationToken);
         }
 
         /// <summary>
@@ -1437,7 +1438,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         {
             Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
 
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetRecoveryServicesProvidersAsync(resourceName, cancellationToken);
+            return GetRecoveryServicesSiteRecoveryResourceGroupResourceExtension(resourceGroupResource).GetRecoveryServicesProvidersAsync(resourceName, cancellationToken);
         }
 
         /// <summary>
@@ -1463,7 +1464,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         {
             Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
 
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetRecoveryServicesProviders(resourceName, cancellationToken);
+            return GetRecoveryServicesSiteRecoveryResourceGroupResourceExtension(resourceGroupResource).GetRecoveryServicesProviders(resourceName, cancellationToken);
         }
 
         /// <summary>
@@ -1489,7 +1490,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         {
             Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
 
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetStorageClassificationsAsync(resourceName, cancellationToken);
+            return GetRecoveryServicesSiteRecoveryResourceGroupResourceExtension(resourceGroupResource).GetStorageClassificationsAsync(resourceName, cancellationToken);
         }
 
         /// <summary>
@@ -1515,7 +1516,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         {
             Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
 
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetStorageClassifications(resourceName, cancellationToken);
+            return GetRecoveryServicesSiteRecoveryResourceGroupResourceExtension(resourceGroupResource).GetStorageClassifications(resourceName, cancellationToken);
         }
 
         /// <summary>
@@ -1541,7 +1542,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         {
             Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
 
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetStorageClassificationMappingsAsync(resourceName, cancellationToken);
+            return GetRecoveryServicesSiteRecoveryResourceGroupResourceExtension(resourceGroupResource).GetStorageClassificationMappingsAsync(resourceName, cancellationToken);
         }
 
         /// <summary>
@@ -1567,7 +1568,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         {
             Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
 
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetStorageClassificationMappings(resourceName, cancellationToken);
+            return GetRecoveryServicesSiteRecoveryResourceGroupResourceExtension(resourceGroupResource).GetStorageClassificationMappings(resourceName, cancellationToken);
         }
 
         /// <summary>
@@ -1593,7 +1594,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         {
             Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
 
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetVCentersAsync(resourceName, cancellationToken);
+            return GetRecoveryServicesSiteRecoveryResourceGroupResourceExtension(resourceGroupResource).GetVCentersAsync(resourceName, cancellationToken);
         }
 
         /// <summary>
@@ -1619,7 +1620,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         {
             Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
 
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetVCenters(resourceName, cancellationToken);
+            return GetRecoveryServicesSiteRecoveryResourceGroupResourceExtension(resourceGroupResource).GetVCenters(resourceName, cancellationToken);
         }
 
         /// <summary>
@@ -1645,7 +1646,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         {
             Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
 
-            return await GetResourceGroupResourceExtensionClient(resourceGroupResource).GetSupportedOperatingSystemAsync(resourceName, instanceType, cancellationToken).ConfigureAwait(false);
+            return await GetRecoveryServicesSiteRecoveryResourceGroupResourceExtension(resourceGroupResource).GetSupportedOperatingSystemAsync(resourceName, instanceType, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -1671,7 +1672,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         {
             Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
 
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetSupportedOperatingSystem(resourceName, instanceType, cancellationToken);
+            return GetRecoveryServicesSiteRecoveryResourceGroupResourceExtension(resourceGroupResource).GetSupportedOperatingSystem(resourceName, instanceType, cancellationToken);
         }
 
         /// <summary>
@@ -1696,7 +1697,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         {
             Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
 
-            return await GetResourceGroupResourceExtensionClient(resourceGroupResource).GetReplicationVaultHealthAsync(resourceName, cancellationToken).ConfigureAwait(false);
+            return await GetRecoveryServicesSiteRecoveryResourceGroupResourceExtension(resourceGroupResource).GetReplicationVaultHealthAsync(resourceName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -1721,7 +1722,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         {
             Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
 
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetReplicationVaultHealth(resourceName, cancellationToken);
+            return GetRecoveryServicesSiteRecoveryResourceGroupResourceExtension(resourceGroupResource).GetReplicationVaultHealth(resourceName, cancellationToken);
         }
 
         /// <summary>
@@ -1747,7 +1748,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         {
             Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
 
-            return await GetResourceGroupResourceExtensionClient(resourceGroupResource).RefreshReplicationVaultHealthAsync(waitUntil, resourceName, cancellationToken).ConfigureAwait(false);
+            return await GetRecoveryServicesSiteRecoveryResourceGroupResourceExtension(resourceGroupResource).RefreshReplicationVaultHealthAsync(waitUntil, resourceName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -1773,7 +1774,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         {
             Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
 
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).RefreshReplicationVaultHealth(waitUntil, resourceName, cancellationToken);
+            return GetRecoveryServicesSiteRecoveryResourceGroupResourceExtension(resourceGroupResource).RefreshReplicationVaultHealth(waitUntil, resourceName, cancellationToken);
         }
     }
 }

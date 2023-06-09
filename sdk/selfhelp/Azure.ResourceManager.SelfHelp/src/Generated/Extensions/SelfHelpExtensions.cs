@@ -12,25 +12,26 @@ using Azure;
 using Azure.Core;
 using Azure.ResourceManager;
 using Azure.ResourceManager.SelfHelp.Models;
+using Azure.ResourceManager.SelfHelp.Testing;
 
 namespace Azure.ResourceManager.SelfHelp
 {
     /// <summary> A class to add extension methods to Azure.ResourceManager.SelfHelp. </summary>
     public static partial class SelfHelpExtensions
     {
-        private static ArmResourceExtensionClient GetArmResourceExtensionClient(ArmResource resource)
+        private static SelfHelpArmResourceExtension GetSelfHelpArmResourceExtension(ArmResource resource)
         {
             return resource.GetCachedClient(client =>
             {
-                return new ArmResourceExtensionClient(client, resource.Id);
+                return new SelfHelpArmResourceExtension(client, resource.Id);
             });
         }
 
-        private static ArmResourceExtensionClient GetArmResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
+        private static SelfHelpArmResourceExtension GetSelfHelpArmResourceExtension(ArmClient client, ResourceIdentifier scope)
         {
             return client.GetResourceClient(() =>
             {
-                return new ArmResourceExtensionClient(client, scope);
+                return new SelfHelpArmResourceExtension(client, scope);
             });
         }
         #region SelfHelpDiagnosticResource
@@ -58,7 +59,7 @@ namespace Azure.ResourceManager.SelfHelp
         /// <returns> An object representing collection of SelfHelpDiagnosticResources and their operations over a SelfHelpDiagnosticResource. </returns>
         public static SelfHelpDiagnosticCollection GetSelfHelpDiagnostics(this ArmClient client, ResourceIdentifier scope)
         {
-            return GetArmResourceExtensionClient(client, scope).GetSelfHelpDiagnostics();
+            return GetSelfHelpArmResourceExtension(client, scope).GetSelfHelpDiagnostics();
         }
 
         /// <summary>
@@ -130,7 +131,7 @@ namespace Azure.ResourceManager.SelfHelp
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public static async Task<Response<SelfHelpNameAvailabilityResult>> CheckSelfHelpNameAvailabilityAsync(this ArmClient client, ResourceIdentifier scope, SelfHelpNameAvailabilityContent content = null, CancellationToken cancellationToken = default)
         {
-            return await GetArmResourceExtensionClient(client, scope).CheckSelfHelpNameAvailabilityAsync(content, cancellationToken).ConfigureAwait(false);
+            return await GetSelfHelpArmResourceExtension(client, scope).CheckSelfHelpNameAvailabilityAsync(content, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -152,7 +153,7 @@ namespace Azure.ResourceManager.SelfHelp
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public static Response<SelfHelpNameAvailabilityResult> CheckSelfHelpNameAvailability(this ArmClient client, ResourceIdentifier scope, SelfHelpNameAvailabilityContent content = null, CancellationToken cancellationToken = default)
         {
-            return GetArmResourceExtensionClient(client, scope).CheckSelfHelpNameAvailability(content, cancellationToken);
+            return GetSelfHelpArmResourceExtension(client, scope).CheckSelfHelpNameAvailability(content, cancellationToken);
         }
 
         /// <summary>
@@ -175,7 +176,7 @@ namespace Azure.ResourceManager.SelfHelp
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public static AsyncPageable<SelfHelpSolutionMetadata> GetSelfHelpDiscoverySolutionsAsync(this ArmClient client, ResourceIdentifier scope, string filter = null, string skiptoken = null, CancellationToken cancellationToken = default)
         {
-            return GetArmResourceExtensionClient(client, scope).GetSelfHelpDiscoverySolutionsAsync(filter, skiptoken, cancellationToken);
+            return GetSelfHelpArmResourceExtension(client, scope).GetSelfHelpDiscoverySolutionsAsync(filter, skiptoken, cancellationToken);
         }
 
         /// <summary>
@@ -198,7 +199,7 @@ namespace Azure.ResourceManager.SelfHelp
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public static Pageable<SelfHelpSolutionMetadata> GetSelfHelpDiscoverySolutions(this ArmClient client, ResourceIdentifier scope, string filter = null, string skiptoken = null, CancellationToken cancellationToken = default)
         {
-            return GetArmResourceExtensionClient(client, scope).GetSelfHelpDiscoverySolutions(filter, skiptoken, cancellationToken);
+            return GetSelfHelpArmResourceExtension(client, scope).GetSelfHelpDiscoverySolutions(filter, skiptoken, cancellationToken);
         }
     }
 }

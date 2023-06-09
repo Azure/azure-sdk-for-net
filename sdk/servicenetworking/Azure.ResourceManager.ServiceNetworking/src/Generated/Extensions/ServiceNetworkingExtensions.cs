@@ -12,41 +12,42 @@ using Azure;
 using Azure.Core;
 using Azure.ResourceManager;
 using Azure.ResourceManager.Resources;
+using Azure.ResourceManager.ServiceNetworking.Testing;
 
 namespace Azure.ResourceManager.ServiceNetworking
 {
     /// <summary> A class to add extension methods to Azure.ResourceManager.ServiceNetworking. </summary>
     public static partial class ServiceNetworkingExtensions
     {
-        private static ResourceGroupResourceExtensionClient GetResourceGroupResourceExtensionClient(ArmResource resource)
+        private static ServiceNetworkingResourceGroupResourceExtension GetServiceNetworkingResourceGroupResourceExtension(ArmResource resource)
         {
             return resource.GetCachedClient(client =>
             {
-                return new ResourceGroupResourceExtensionClient(client, resource.Id);
+                return new ServiceNetworkingResourceGroupResourceExtension(client, resource.Id);
             });
         }
 
-        private static ResourceGroupResourceExtensionClient GetResourceGroupResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
+        private static ServiceNetworkingResourceGroupResourceExtension GetServiceNetworkingResourceGroupResourceExtension(ArmClient client, ResourceIdentifier scope)
         {
             return client.GetResourceClient(() =>
             {
-                return new ResourceGroupResourceExtensionClient(client, scope);
+                return new ServiceNetworkingResourceGroupResourceExtension(client, scope);
             });
         }
 
-        private static SubscriptionResourceExtensionClient GetSubscriptionResourceExtensionClient(ArmResource resource)
+        private static ServiceNetworkingSubscriptionResourceExtension GetServiceNetworkingSubscriptionResourceExtension(ArmResource resource)
         {
             return resource.GetCachedClient(client =>
             {
-                return new SubscriptionResourceExtensionClient(client, resource.Id);
+                return new ServiceNetworkingSubscriptionResourceExtension(client, resource.Id);
             });
         }
 
-        private static SubscriptionResourceExtensionClient GetSubscriptionResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
+        private static ServiceNetworkingSubscriptionResourceExtension GetServiceNetworkingSubscriptionResourceExtension(ArmClient client, ResourceIdentifier scope)
         {
             return client.GetResourceClient(() =>
             {
-                return new SubscriptionResourceExtensionClient(client, scope);
+                return new ServiceNetworkingSubscriptionResourceExtension(client, scope);
             });
         }
         #region TrafficControllerResource
@@ -111,7 +112,7 @@ namespace Azure.ResourceManager.ServiceNetworking
         /// <returns> An object representing collection of TrafficControllerResources and their operations over a TrafficControllerResource. </returns>
         public static TrafficControllerCollection GetTrafficControllers(this ResourceGroupResource resourceGroupResource)
         {
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetTrafficControllers();
+            return GetServiceNetworkingResourceGroupResourceExtension(resourceGroupResource).GetTrafficControllers();
         }
 
         /// <summary>
@@ -180,7 +181,7 @@ namespace Azure.ResourceManager.ServiceNetworking
         /// <returns> An async collection of <see cref="TrafficControllerResource" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<TrafficControllerResource> GetTrafficControllersAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetTrafficControllersAsync(cancellationToken);
+            return GetServiceNetworkingSubscriptionResourceExtension(subscriptionResource).GetTrafficControllersAsync(cancellationToken);
         }
 
         /// <summary>
@@ -201,7 +202,7 @@ namespace Azure.ResourceManager.ServiceNetworking
         /// <returns> A collection of <see cref="TrafficControllerResource" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<TrafficControllerResource> GetTrafficControllers(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetTrafficControllers(cancellationToken);
+            return GetServiceNetworkingSubscriptionResourceExtension(subscriptionResource).GetTrafficControllers(cancellationToken);
         }
     }
 }

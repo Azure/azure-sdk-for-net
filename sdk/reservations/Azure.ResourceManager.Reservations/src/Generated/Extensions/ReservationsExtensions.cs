@@ -12,6 +12,7 @@ using Azure;
 using Azure.Core;
 using Azure.ResourceManager;
 using Azure.ResourceManager.Reservations.Models;
+using Azure.ResourceManager.Reservations.Testing;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.Reservations
@@ -19,35 +20,35 @@ namespace Azure.ResourceManager.Reservations
     /// <summary> A class to add extension methods to Azure.ResourceManager.Reservations. </summary>
     public static partial class ReservationsExtensions
     {
-        private static SubscriptionResourceExtensionClient GetSubscriptionResourceExtensionClient(ArmResource resource)
+        private static ReservationsSubscriptionResourceExtension GetReservationsSubscriptionResourceExtension(ArmResource resource)
         {
             return resource.GetCachedClient(client =>
             {
-                return new SubscriptionResourceExtensionClient(client, resource.Id);
+                return new ReservationsSubscriptionResourceExtension(client, resource.Id);
             });
         }
 
-        private static SubscriptionResourceExtensionClient GetSubscriptionResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
+        private static ReservationsSubscriptionResourceExtension GetReservationsSubscriptionResourceExtension(ArmClient client, ResourceIdentifier scope)
         {
             return client.GetResourceClient(() =>
             {
-                return new SubscriptionResourceExtensionClient(client, scope);
+                return new ReservationsSubscriptionResourceExtension(client, scope);
             });
         }
 
-        private static TenantResourceExtensionClient GetTenantResourceExtensionClient(ArmResource resource)
+        private static ReservationsTenantResourceExtension GetReservationsTenantResourceExtension(ArmResource resource)
         {
             return resource.GetCachedClient(client =>
             {
-                return new TenantResourceExtensionClient(client, resource.Id);
+                return new ReservationsTenantResourceExtension(client, resource.Id);
             });
         }
 
-        private static TenantResourceExtensionClient GetTenantResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
+        private static ReservationsTenantResourceExtension GetReservationsTenantResourceExtension(ArmClient client, ResourceIdentifier scope)
         {
             return client.GetResourceClient(() =>
             {
-                return new TenantResourceExtensionClient(client, scope);
+                return new ReservationsTenantResourceExtension(client, scope);
             });
         }
         #region ReservationDetailResource
@@ -137,7 +138,7 @@ namespace Azure.ResourceManager.Reservations
         {
             Argument.AssertNotNullOrEmpty(providerId, nameof(providerId));
 
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetAllReservationQuota(providerId, location);
+            return GetReservationsSubscriptionResourceExtension(subscriptionResource).GetAllReservationQuota(providerId, location);
         }
 
         /// <summary>
@@ -203,7 +204,7 @@ namespace Azure.ResourceManager.Reservations
         {
             Argument.AssertNotNullOrEmpty(providerId, nameof(providerId));
 
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetQuotaRequestDetails(providerId, location);
+            return GetReservationsSubscriptionResourceExtension(subscriptionResource).GetQuotaRequestDetails(providerId, location);
         }
 
         /// <summary>
@@ -279,7 +280,7 @@ namespace Azure.ResourceManager.Reservations
         {
             options ??= new SubscriptionResourceGetCatalogOptions();
 
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetCatalogAsync(options, cancellationToken);
+            return GetReservationsSubscriptionResourceExtension(subscriptionResource).GetCatalogAsync(options, cancellationToken);
         }
 
         /// <summary>
@@ -303,7 +304,7 @@ namespace Azure.ResourceManager.Reservations
         {
             options ??= new SubscriptionResourceGetCatalogOptions();
 
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetCatalog(options, cancellationToken);
+            return GetReservationsSubscriptionResourceExtension(subscriptionResource).GetCatalog(options, cancellationToken);
         }
 
         /// <summary>
@@ -323,7 +324,7 @@ namespace Azure.ResourceManager.Reservations
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public static async Task<Response<AppliedReservationData>> GetAppliedReservationsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return await GetSubscriptionResourceExtensionClient(subscriptionResource).GetAppliedReservationsAsync(cancellationToken).ConfigureAwait(false);
+            return await GetReservationsSubscriptionResourceExtension(subscriptionResource).GetAppliedReservationsAsync(cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -343,7 +344,7 @@ namespace Azure.ResourceManager.Reservations
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public static Response<AppliedReservationData> GetAppliedReservations(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetAppliedReservations(cancellationToken);
+            return GetReservationsSubscriptionResourceExtension(subscriptionResource).GetAppliedReservations(cancellationToken);
         }
 
         /// <summary> Gets a collection of ReservationOrderResources in the TenantResource. </summary>
@@ -351,7 +352,7 @@ namespace Azure.ResourceManager.Reservations
         /// <returns> An object representing collection of ReservationOrderResources and their operations over a ReservationOrderResource. </returns>
         public static ReservationOrderCollection GetReservationOrders(this TenantResource tenantResource)
         {
-            return GetTenantResourceExtensionClient(tenantResource).GetReservationOrders();
+            return GetReservationsTenantResourceExtension(tenantResource).GetReservationOrders();
         }
 
         /// <summary>
@@ -421,7 +422,7 @@ namespace Azure.ResourceManager.Reservations
         {
             options ??= new TenantResourceGetReservationDetailsOptions();
 
-            return GetTenantResourceExtensionClient(tenantResource).GetReservationDetailsAsync(options, cancellationToken);
+            return GetReservationsTenantResourceExtension(tenantResource).GetReservationDetailsAsync(options, cancellationToken);
         }
 
         /// <summary>
@@ -445,7 +446,7 @@ namespace Azure.ResourceManager.Reservations
         {
             options ??= new TenantResourceGetReservationDetailsOptions();
 
-            return GetTenantResourceExtensionClient(tenantResource).GetReservationDetails(options, cancellationToken);
+            return GetReservationsTenantResourceExtension(tenantResource).GetReservationDetails(options, cancellationToken);
         }
 
         /// <summary>
@@ -469,7 +470,7 @@ namespace Azure.ResourceManager.Reservations
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            return await GetTenantResourceExtensionClient(tenantResource).CalculateReservationOrderAsync(content, cancellationToken).ConfigureAwait(false);
+            return await GetReservationsTenantResourceExtension(tenantResource).CalculateReservationOrderAsync(content, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -493,7 +494,7 @@ namespace Azure.ResourceManager.Reservations
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            return GetTenantResourceExtensionClient(tenantResource).CalculateReservationOrder(content, cancellationToken);
+            return GetReservationsTenantResourceExtension(tenantResource).CalculateReservationOrder(content, cancellationToken);
         }
 
         /// <summary>
@@ -519,7 +520,7 @@ namespace Azure.ResourceManager.Reservations
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            return await GetTenantResourceExtensionClient(tenantResource).CalculateReservationExchangeAsync(waitUntil, content, cancellationToken).ConfigureAwait(false);
+            return await GetReservationsTenantResourceExtension(tenantResource).CalculateReservationExchangeAsync(waitUntil, content, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -545,7 +546,7 @@ namespace Azure.ResourceManager.Reservations
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            return GetTenantResourceExtensionClient(tenantResource).CalculateReservationExchange(waitUntil, content, cancellationToken);
+            return GetReservationsTenantResourceExtension(tenantResource).CalculateReservationExchange(waitUntil, content, cancellationToken);
         }
 
         /// <summary>
@@ -571,7 +572,7 @@ namespace Azure.ResourceManager.Reservations
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            return await GetTenantResourceExtensionClient(tenantResource).ExchangeAsync(waitUntil, content, cancellationToken).ConfigureAwait(false);
+            return await GetReservationsTenantResourceExtension(tenantResource).ExchangeAsync(waitUntil, content, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -597,7 +598,7 @@ namespace Azure.ResourceManager.Reservations
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            return GetTenantResourceExtensionClient(tenantResource).Exchange(waitUntil, content, cancellationToken);
+            return GetReservationsTenantResourceExtension(tenantResource).Exchange(waitUntil, content, cancellationToken);
         }
     }
 }

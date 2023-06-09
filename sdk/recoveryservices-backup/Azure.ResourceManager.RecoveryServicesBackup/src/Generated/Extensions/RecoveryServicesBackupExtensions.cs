@@ -12,6 +12,7 @@ using Azure;
 using Azure.Core;
 using Azure.ResourceManager;
 using Azure.ResourceManager.RecoveryServicesBackup.Models;
+using Azure.ResourceManager.RecoveryServicesBackup.Testing;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup
@@ -19,35 +20,35 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
     /// <summary> A class to add extension methods to Azure.ResourceManager.RecoveryServicesBackup. </summary>
     public static partial class RecoveryServicesBackupExtensions
     {
-        private static ResourceGroupResourceExtensionClient GetResourceGroupResourceExtensionClient(ArmResource resource)
+        private static RecoveryServicesBackupResourceGroupResourceExtension GetRecoveryServicesBackupResourceGroupResourceExtension(ArmResource resource)
         {
             return resource.GetCachedClient(client =>
             {
-                return new ResourceGroupResourceExtensionClient(client, resource.Id);
+                return new RecoveryServicesBackupResourceGroupResourceExtension(client, resource.Id);
             });
         }
 
-        private static ResourceGroupResourceExtensionClient GetResourceGroupResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
+        private static RecoveryServicesBackupResourceGroupResourceExtension GetRecoveryServicesBackupResourceGroupResourceExtension(ArmClient client, ResourceIdentifier scope)
         {
             return client.GetResourceClient(() =>
             {
-                return new ResourceGroupResourceExtensionClient(client, scope);
+                return new RecoveryServicesBackupResourceGroupResourceExtension(client, scope);
             });
         }
 
-        private static SubscriptionResourceExtensionClient GetSubscriptionResourceExtensionClient(ArmResource resource)
+        private static RecoveryServicesBackupSubscriptionResourceExtension GetRecoveryServicesBackupSubscriptionResourceExtension(ArmResource resource)
         {
             return resource.GetCachedClient(client =>
             {
-                return new SubscriptionResourceExtensionClient(client, resource.Id);
+                return new RecoveryServicesBackupSubscriptionResourceExtension(client, resource.Id);
             });
         }
 
-        private static SubscriptionResourceExtensionClient GetSubscriptionResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
+        private static RecoveryServicesBackupSubscriptionResourceExtension GetRecoveryServicesBackupSubscriptionResourceExtension(ArmClient client, ResourceIdentifier scope)
         {
             return client.GetResourceClient(() =>
             {
-                return new SubscriptionResourceExtensionClient(client, scope);
+                return new RecoveryServicesBackupSubscriptionResourceExtension(client, scope);
             });
         }
         #region BackupResourceConfigResource
@@ -283,7 +284,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// <returns> An object representing collection of BackupResourceConfigResources and their operations over a BackupResourceConfigResource. </returns>
         public static BackupResourceConfigCollection GetBackupResourceConfigs(this ResourceGroupResource resourceGroupResource)
         {
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetBackupResourceConfigs();
+            return GetRecoveryServicesBackupResourceGroupResourceExtension(resourceGroupResource).GetBackupResourceConfigs();
         }
 
         /// <summary>
@@ -339,7 +340,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// <returns> An object representing collection of BackupProtectionIntentResources and their operations over a BackupProtectionIntentResource. </returns>
         public static BackupProtectionIntentCollection GetBackupProtectionIntents(this ResourceGroupResource resourceGroupResource)
         {
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetBackupProtectionIntents();
+            return GetRecoveryServicesBackupResourceGroupResourceExtension(resourceGroupResource).GetBackupProtectionIntents();
         }
 
         /// <summary>
@@ -401,7 +402,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// <returns> An object representing collection of BackupResourceVaultConfigResources and their operations over a BackupResourceVaultConfigResource. </returns>
         public static BackupResourceVaultConfigCollection GetBackupResourceVaultConfigs(this ResourceGroupResource resourceGroupResource)
         {
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetBackupResourceVaultConfigs();
+            return GetRecoveryServicesBackupResourceGroupResourceExtension(resourceGroupResource).GetBackupResourceVaultConfigs();
         }
 
         /// <summary>
@@ -457,7 +458,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// <returns> An object representing collection of BackupResourceEncryptionConfigExtendedResources and their operations over a BackupResourceEncryptionConfigExtendedResource. </returns>
         public static BackupResourceEncryptionConfigExtendedCollection GetBackupResourceEncryptionConfigExtendeds(this ResourceGroupResource resourceGroupResource)
         {
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetBackupResourceEncryptionConfigExtendeds();
+            return GetRecoveryServicesBackupResourceGroupResourceExtension(resourceGroupResource).GetBackupResourceEncryptionConfigExtendeds();
         }
 
         /// <summary>
@@ -513,7 +514,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// <returns> An object representing collection of BackupPrivateEndpointConnectionResources and their operations over a BackupPrivateEndpointConnectionResource. </returns>
         public static BackupPrivateEndpointConnectionCollection GetBackupPrivateEndpointConnections(this ResourceGroupResource resourceGroupResource)
         {
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetBackupPrivateEndpointConnections();
+            return GetRecoveryServicesBackupResourceGroupResourceExtension(resourceGroupResource).GetBackupPrivateEndpointConnections();
         }
 
         /// <summary>
@@ -576,7 +577,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         {
             Argument.AssertNotNullOrEmpty(vaultName, nameof(vaultName));
 
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetBackupProtectionPolicies(vaultName);
+            return GetRecoveryServicesBackupResourceGroupResourceExtension(resourceGroupResource).GetBackupProtectionPolicies(vaultName);
         }
 
         /// <summary>
@@ -641,7 +642,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         {
             Argument.AssertNotNullOrEmpty(vaultName, nameof(vaultName));
 
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetBackupJobs(vaultName);
+            return GetRecoveryServicesBackupResourceGroupResourceExtension(resourceGroupResource).GetBackupJobs(vaultName);
         }
 
         /// <summary>
@@ -704,7 +705,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         {
             Argument.AssertNotNullOrEmpty(vaultName, nameof(vaultName));
 
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetBackupEngines(vaultName);
+            return GetRecoveryServicesBackupResourceGroupResourceExtension(resourceGroupResource).GetBackupEngines(vaultName);
         }
 
         /// <summary>
@@ -766,7 +767,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// <returns> An object representing collection of BackupProtectionContainerResources and their operations over a BackupProtectionContainerResource. </returns>
         public static BackupProtectionContainerCollection GetBackupProtectionContainers(this ResourceGroupResource resourceGroupResource)
         {
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetBackupProtectionContainers();
+            return GetRecoveryServicesBackupResourceGroupResourceExtension(resourceGroupResource).GetBackupProtectionContainers();
         }
 
         /// <summary>
@@ -831,7 +832,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         {
             Argument.AssertNotNullOrEmpty(vaultName, nameof(vaultName));
 
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetResourceGuardProxies(vaultName);
+            return GetRecoveryServicesBackupResourceGroupResourceExtension(resourceGroupResource).GetResourceGuardProxies(vaultName);
         }
 
         /// <summary>
@@ -909,7 +910,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         {
             Argument.AssertNotNullOrEmpty(vaultName, nameof(vaultName));
 
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetBackupProtectionIntentsAsync(vaultName, filter, skipToken, cancellationToken);
+            return GetRecoveryServicesBackupResourceGroupResourceExtension(resourceGroupResource).GetBackupProtectionIntentsAsync(vaultName, filter, skipToken, cancellationToken);
         }
 
         /// <summary>
@@ -937,7 +938,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         {
             Argument.AssertNotNullOrEmpty(vaultName, nameof(vaultName));
 
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetBackupProtectionIntents(vaultName, filter, skipToken, cancellationToken);
+            return GetRecoveryServicesBackupResourceGroupResourceExtension(resourceGroupResource).GetBackupProtectionIntents(vaultName, filter, skipToken, cancellationToken);
         }
 
         /// <summary>
@@ -965,7 +966,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         {
             Argument.AssertNotNullOrEmpty(vaultName, nameof(vaultName));
 
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetBackupUsageSummariesAsync(vaultName, filter, skipToken, cancellationToken);
+            return GetRecoveryServicesBackupResourceGroupResourceExtension(resourceGroupResource).GetBackupUsageSummariesAsync(vaultName, filter, skipToken, cancellationToken);
         }
 
         /// <summary>
@@ -993,7 +994,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         {
             Argument.AssertNotNullOrEmpty(vaultName, nameof(vaultName));
 
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetBackupUsageSummaries(vaultName, filter, skipToken, cancellationToken);
+            return GetRecoveryServicesBackupResourceGroupResourceExtension(resourceGroupResource).GetBackupUsageSummaries(vaultName, filter, skipToken, cancellationToken);
         }
 
         /// <summary>
@@ -1019,7 +1020,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         {
             Argument.AssertNotNullOrEmpty(vaultName, nameof(vaultName));
 
-            return await GetResourceGroupResourceExtensionClient(resourceGroupResource).ExportJobAsync(vaultName, filter, cancellationToken).ConfigureAwait(false);
+            return await GetRecoveryServicesBackupResourceGroupResourceExtension(resourceGroupResource).ExportJobAsync(vaultName, filter, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -1045,7 +1046,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         {
             Argument.AssertNotNullOrEmpty(vaultName, nameof(vaultName));
 
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).ExportJob(vaultName, filter, cancellationToken);
+            return GetRecoveryServicesBackupResourceGroupResourceExtension(resourceGroupResource).ExportJob(vaultName, filter, cancellationToken);
         }
 
         /// <summary>
@@ -1073,7 +1074,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         {
             Argument.AssertNotNullOrEmpty(vaultName, nameof(vaultName));
 
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetBackupProtectedItemsAsync(vaultName, filter, skipToken, cancellationToken);
+            return GetRecoveryServicesBackupResourceGroupResourceExtension(resourceGroupResource).GetBackupProtectedItemsAsync(vaultName, filter, skipToken, cancellationToken);
         }
 
         /// <summary>
@@ -1101,7 +1102,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         {
             Argument.AssertNotNullOrEmpty(vaultName, nameof(vaultName));
 
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetBackupProtectedItems(vaultName, filter, skipToken, cancellationToken);
+            return GetRecoveryServicesBackupResourceGroupResourceExtension(resourceGroupResource).GetBackupProtectedItems(vaultName, filter, skipToken, cancellationToken);
         }
 
         /// <summary>
@@ -1130,7 +1131,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
             Argument.AssertNotNullOrEmpty(vaultName, nameof(vaultName));
             Argument.AssertNotNullOrEmpty(fabricName, nameof(fabricName));
 
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetProtectableContainersAsync(vaultName, fabricName, filter, cancellationToken);
+            return GetRecoveryServicesBackupResourceGroupResourceExtension(resourceGroupResource).GetProtectableContainersAsync(vaultName, fabricName, filter, cancellationToken);
         }
 
         /// <summary>
@@ -1159,7 +1160,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
             Argument.AssertNotNullOrEmpty(vaultName, nameof(vaultName));
             Argument.AssertNotNullOrEmpty(fabricName, nameof(fabricName));
 
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetProtectableContainers(vaultName, fabricName, filter, cancellationToken);
+            return GetRecoveryServicesBackupResourceGroupResourceExtension(resourceGroupResource).GetProtectableContainers(vaultName, fabricName, filter, cancellationToken);
         }
 
         /// <summary>
@@ -1188,7 +1189,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
             Argument.AssertNotNullOrEmpty(vaultName, nameof(vaultName));
             Argument.AssertNotNullOrEmpty(fabricName, nameof(fabricName));
 
-            return await GetResourceGroupResourceExtensionClient(resourceGroupResource).RefreshProtectionContainerAsync(vaultName, fabricName, filter, cancellationToken).ConfigureAwait(false);
+            return await GetRecoveryServicesBackupResourceGroupResourceExtension(resourceGroupResource).RefreshProtectionContainerAsync(vaultName, fabricName, filter, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -1217,7 +1218,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
             Argument.AssertNotNullOrEmpty(vaultName, nameof(vaultName));
             Argument.AssertNotNullOrEmpty(fabricName, nameof(fabricName));
 
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).RefreshProtectionContainer(vaultName, fabricName, filter, cancellationToken);
+            return GetRecoveryServicesBackupResourceGroupResourceExtension(resourceGroupResource).RefreshProtectionContainer(vaultName, fabricName, filter, cancellationToken);
         }
 
         /// <summary>
@@ -1246,7 +1247,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         {
             Argument.AssertNotNullOrEmpty(vaultName, nameof(vaultName));
 
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetBackupProtectableItemsAsync(vaultName, filter, skipToken, cancellationToken);
+            return GetRecoveryServicesBackupResourceGroupResourceExtension(resourceGroupResource).GetBackupProtectableItemsAsync(vaultName, filter, skipToken, cancellationToken);
         }
 
         /// <summary>
@@ -1275,7 +1276,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         {
             Argument.AssertNotNullOrEmpty(vaultName, nameof(vaultName));
 
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetBackupProtectableItems(vaultName, filter, skipToken, cancellationToken);
+            return GetRecoveryServicesBackupResourceGroupResourceExtension(resourceGroupResource).GetBackupProtectableItems(vaultName, filter, skipToken, cancellationToken);
         }
 
         /// <summary>
@@ -1302,7 +1303,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         {
             Argument.AssertNotNullOrEmpty(vaultName, nameof(vaultName));
 
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetBackupProtectionContainersAsync(vaultName, filter, cancellationToken);
+            return GetRecoveryServicesBackupResourceGroupResourceExtension(resourceGroupResource).GetBackupProtectionContainersAsync(vaultName, filter, cancellationToken);
         }
 
         /// <summary>
@@ -1329,7 +1330,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         {
             Argument.AssertNotNullOrEmpty(vaultName, nameof(vaultName));
 
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetBackupProtectionContainers(vaultName, filter, cancellationToken);
+            return GetRecoveryServicesBackupResourceGroupResourceExtension(resourceGroupResource).GetBackupProtectionContainers(vaultName, filter, cancellationToken);
         }
 
         /// <summary>
@@ -1356,7 +1357,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         {
             Argument.AssertNotNullOrEmpty(vaultName, nameof(vaultName));
 
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetSoftDeletedProtectionContainersAsync(vaultName, filter, cancellationToken);
+            return GetRecoveryServicesBackupResourceGroupResourceExtension(resourceGroupResource).GetSoftDeletedProtectionContainersAsync(vaultName, filter, cancellationToken);
         }
 
         /// <summary>
@@ -1383,7 +1384,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         {
             Argument.AssertNotNullOrEmpty(vaultName, nameof(vaultName));
 
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetSoftDeletedProtectionContainers(vaultName, filter, cancellationToken);
+            return GetRecoveryServicesBackupResourceGroupResourceExtension(resourceGroupResource).GetSoftDeletedProtectionContainers(vaultName, filter, cancellationToken);
         }
 
         /// <summary>
@@ -1409,7 +1410,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         {
             Argument.AssertNotNullOrEmpty(vaultName, nameof(vaultName));
 
-            return await GetResourceGroupResourceExtensionClient(resourceGroupResource).GetSecurityPinAsync(vaultName, content, cancellationToken).ConfigureAwait(false);
+            return await GetRecoveryServicesBackupResourceGroupResourceExtension(resourceGroupResource).GetSecurityPinAsync(vaultName, content, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -1435,7 +1436,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         {
             Argument.AssertNotNullOrEmpty(vaultName, nameof(vaultName));
 
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetSecurityPin(vaultName, content, cancellationToken);
+            return GetRecoveryServicesBackupResourceGroupResourceExtension(resourceGroupResource).GetSecurityPin(vaultName, content, cancellationToken);
         }
 
         /// <summary>
@@ -1463,7 +1464,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            return await GetSubscriptionResourceExtensionClient(subscriptionResource).ValidateProtectionIntentAsync(location, content, cancellationToken).ConfigureAwait(false);
+            return await GetRecoveryServicesBackupSubscriptionResourceExtension(subscriptionResource).ValidateProtectionIntentAsync(location, content, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -1491,7 +1492,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).ValidateProtectionIntent(location, content, cancellationToken);
+            return GetRecoveryServicesBackupSubscriptionResourceExtension(subscriptionResource).ValidateProtectionIntent(location, content, cancellationToken);
         }
 
         /// <summary>
@@ -1516,7 +1517,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            return await GetSubscriptionResourceExtensionClient(subscriptionResource).GetBackupStatusAsync(location, content, cancellationToken).ConfigureAwait(false);
+            return await GetRecoveryServicesBackupSubscriptionResourceExtension(subscriptionResource).GetBackupStatusAsync(location, content, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -1541,7 +1542,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetBackupStatus(location, content, cancellationToken);
+            return GetRecoveryServicesBackupSubscriptionResourceExtension(subscriptionResource).GetBackupStatus(location, content, cancellationToken);
         }
 
         /// <summary>
@@ -1566,7 +1567,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            return await GetSubscriptionResourceExtensionClient(subscriptionResource).ValidateFeatureSupportAsync(location, content, cancellationToken).ConfigureAwait(false);
+            return await GetRecoveryServicesBackupSubscriptionResourceExtension(subscriptionResource).ValidateFeatureSupportAsync(location, content, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -1591,7 +1592,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).ValidateFeatureSupport(location, content, cancellationToken);
+            return GetRecoveryServicesBackupSubscriptionResourceExtension(subscriptionResource).ValidateFeatureSupport(location, content, cancellationToken);
         }
     }
 }

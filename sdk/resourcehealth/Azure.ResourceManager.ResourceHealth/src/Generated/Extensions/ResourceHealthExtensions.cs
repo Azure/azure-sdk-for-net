@@ -12,6 +12,7 @@ using Azure;
 using Azure.Core;
 using Azure.ResourceManager;
 using Azure.ResourceManager.ResourceHealth.Models;
+using Azure.ResourceManager.ResourceHealth.Testing;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.ResourceHealth
@@ -19,67 +20,67 @@ namespace Azure.ResourceManager.ResourceHealth
     /// <summary> A class to add extension methods to Azure.ResourceManager.ResourceHealth. </summary>
     public static partial class ResourceHealthExtensions
     {
-        private static ArmResourceExtensionClient GetArmResourceExtensionClient(ArmResource resource)
+        private static ResourceHealthArmResourceExtension GetResourceHealthArmResourceExtension(ArmResource resource)
         {
             return resource.GetCachedClient(client =>
             {
-                return new ArmResourceExtensionClient(client, resource.Id);
+                return new ResourceHealthArmResourceExtension(client, resource.Id);
             });
         }
 
-        private static ArmResourceExtensionClient GetArmResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
+        private static ResourceHealthArmResourceExtension GetResourceHealthArmResourceExtension(ArmClient client, ResourceIdentifier scope)
         {
             return client.GetResourceClient(() =>
             {
-                return new ArmResourceExtensionClient(client, scope);
+                return new ResourceHealthArmResourceExtension(client, scope);
             });
         }
 
-        private static ResourceGroupResourceExtensionClient GetResourceGroupResourceExtensionClient(ArmResource resource)
+        private static ResourceHealthResourceGroupResourceExtension GetResourceHealthResourceGroupResourceExtension(ArmResource resource)
         {
             return resource.GetCachedClient(client =>
             {
-                return new ResourceGroupResourceExtensionClient(client, resource.Id);
+                return new ResourceHealthResourceGroupResourceExtension(client, resource.Id);
             });
         }
 
-        private static ResourceGroupResourceExtensionClient GetResourceGroupResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
+        private static ResourceHealthResourceGroupResourceExtension GetResourceHealthResourceGroupResourceExtension(ArmClient client, ResourceIdentifier scope)
         {
             return client.GetResourceClient(() =>
             {
-                return new ResourceGroupResourceExtensionClient(client, scope);
+                return new ResourceHealthResourceGroupResourceExtension(client, scope);
             });
         }
 
-        private static SubscriptionResourceExtensionClient GetSubscriptionResourceExtensionClient(ArmResource resource)
+        private static ResourceHealthSubscriptionResourceExtension GetResourceHealthSubscriptionResourceExtension(ArmResource resource)
         {
             return resource.GetCachedClient(client =>
             {
-                return new SubscriptionResourceExtensionClient(client, resource.Id);
+                return new ResourceHealthSubscriptionResourceExtension(client, resource.Id);
             });
         }
 
-        private static SubscriptionResourceExtensionClient GetSubscriptionResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
+        private static ResourceHealthSubscriptionResourceExtension GetResourceHealthSubscriptionResourceExtension(ArmClient client, ResourceIdentifier scope)
         {
             return client.GetResourceClient(() =>
             {
-                return new SubscriptionResourceExtensionClient(client, scope);
+                return new ResourceHealthSubscriptionResourceExtension(client, scope);
             });
         }
 
-        private static TenantResourceExtensionClient GetTenantResourceExtensionClient(ArmResource resource)
+        private static ResourceHealthTenantResourceExtension GetResourceHealthTenantResourceExtension(ArmResource resource)
         {
             return resource.GetCachedClient(client =>
             {
-                return new TenantResourceExtensionClient(client, resource.Id);
+                return new ResourceHealthTenantResourceExtension(client, resource.Id);
             });
         }
 
-        private static TenantResourceExtensionClient GetTenantResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
+        private static ResourceHealthTenantResourceExtension GetResourceHealthTenantResourceExtension(ArmClient client, ResourceIdentifier scope)
         {
             return client.GetResourceClient(() =>
             {
-                return new TenantResourceExtensionClient(client, scope);
+                return new ResourceHealthTenantResourceExtension(client, scope);
             });
         }
         #region ResourceHealthMetadataEntityResource
@@ -216,7 +217,7 @@ namespace Azure.ResourceManager.ResourceHealth
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public static async Task<Response<ResourceHealthAvailabilityStatus>> GetAvailabilityStatusAsync(this ArmClient client, ResourceIdentifier scope, string filter = null, string expand = null, CancellationToken cancellationToken = default)
         {
-            return await GetArmResourceExtensionClient(client, scope).GetAvailabilityStatusAsync(filter, expand, cancellationToken).ConfigureAwait(false);
+            return await GetResourceHealthArmResourceExtension(client, scope).GetAvailabilityStatusAsync(filter, expand, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -239,7 +240,7 @@ namespace Azure.ResourceManager.ResourceHealth
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public static Response<ResourceHealthAvailabilityStatus> GetAvailabilityStatus(this ArmClient client, ResourceIdentifier scope, string filter = null, string expand = null, CancellationToken cancellationToken = default)
         {
-            return GetArmResourceExtensionClient(client, scope).GetAvailabilityStatus(filter, expand, cancellationToken);
+            return GetResourceHealthArmResourceExtension(client, scope).GetAvailabilityStatus(filter, expand, cancellationToken);
         }
 
         /// <summary>
@@ -262,7 +263,7 @@ namespace Azure.ResourceManager.ResourceHealth
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public static AsyncPageable<ResourceHealthAvailabilityStatus> GetAvailabilityStatusesAsync(this ArmClient client, ResourceIdentifier scope, string filter = null, string expand = null, CancellationToken cancellationToken = default)
         {
-            return GetArmResourceExtensionClient(client, scope).GetAvailabilityStatusesAsync(filter, expand, cancellationToken);
+            return GetResourceHealthArmResourceExtension(client, scope).GetAvailabilityStatusesAsync(filter, expand, cancellationToken);
         }
 
         /// <summary>
@@ -285,7 +286,7 @@ namespace Azure.ResourceManager.ResourceHealth
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public static Pageable<ResourceHealthAvailabilityStatus> GetAvailabilityStatuses(this ArmClient client, ResourceIdentifier scope, string filter = null, string expand = null, CancellationToken cancellationToken = default)
         {
-            return GetArmResourceExtensionClient(client, scope).GetAvailabilityStatuses(filter, expand, cancellationToken);
+            return GetResourceHealthArmResourceExtension(client, scope).GetAvailabilityStatuses(filter, expand, cancellationToken);
         }
 
         /// <summary>
@@ -307,7 +308,7 @@ namespace Azure.ResourceManager.ResourceHealth
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public static AsyncPageable<ResourceHealthEventData> GetHealthEventsOfSingleResourceAsync(this ArmClient client, ResourceIdentifier scope, string filter = null, CancellationToken cancellationToken = default)
         {
-            return GetArmResourceExtensionClient(client, scope).GetHealthEventsOfSingleResourceAsync(filter, cancellationToken);
+            return GetResourceHealthArmResourceExtension(client, scope).GetHealthEventsOfSingleResourceAsync(filter, cancellationToken);
         }
 
         /// <summary>
@@ -329,7 +330,7 @@ namespace Azure.ResourceManager.ResourceHealth
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public static Pageable<ResourceHealthEventData> GetHealthEventsOfSingleResource(this ArmClient client, ResourceIdentifier scope, string filter = null, CancellationToken cancellationToken = default)
         {
-            return GetArmResourceExtensionClient(client, scope).GetHealthEventsOfSingleResource(filter, cancellationToken);
+            return GetResourceHealthArmResourceExtension(client, scope).GetHealthEventsOfSingleResource(filter, cancellationToken);
         }
 
         /// <summary>
@@ -352,7 +353,7 @@ namespace Azure.ResourceManager.ResourceHealth
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public static async Task<Response<ResourceHealthAvailabilityStatus>> GetAvailabilityStatusOfChildResourceAsync(this ArmClient client, ResourceIdentifier scope, string filter = null, string expand = null, CancellationToken cancellationToken = default)
         {
-            return await GetArmResourceExtensionClient(client, scope).GetAvailabilityStatusOfChildResourceAsync(filter, expand, cancellationToken).ConfigureAwait(false);
+            return await GetResourceHealthArmResourceExtension(client, scope).GetAvailabilityStatusOfChildResourceAsync(filter, expand, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -375,7 +376,7 @@ namespace Azure.ResourceManager.ResourceHealth
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public static Response<ResourceHealthAvailabilityStatus> GetAvailabilityStatusOfChildResource(this ArmClient client, ResourceIdentifier scope, string filter = null, string expand = null, CancellationToken cancellationToken = default)
         {
-            return GetArmResourceExtensionClient(client, scope).GetAvailabilityStatusOfChildResource(filter, expand, cancellationToken);
+            return GetResourceHealthArmResourceExtension(client, scope).GetAvailabilityStatusOfChildResource(filter, expand, cancellationToken);
         }
 
         /// <summary>
@@ -398,7 +399,7 @@ namespace Azure.ResourceManager.ResourceHealth
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public static AsyncPageable<ResourceHealthAvailabilityStatus> GetHistoricalAvailabilityStatusesOfChildResourceAsync(this ArmClient client, ResourceIdentifier scope, string filter = null, string expand = null, CancellationToken cancellationToken = default)
         {
-            return GetArmResourceExtensionClient(client, scope).GetHistoricalAvailabilityStatusesOfChildResourceAsync(filter, expand, cancellationToken);
+            return GetResourceHealthArmResourceExtension(client, scope).GetHistoricalAvailabilityStatusesOfChildResourceAsync(filter, expand, cancellationToken);
         }
 
         /// <summary>
@@ -421,7 +422,7 @@ namespace Azure.ResourceManager.ResourceHealth
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public static Pageable<ResourceHealthAvailabilityStatus> GetHistoricalAvailabilityStatusesOfChildResource(this ArmClient client, ResourceIdentifier scope, string filter = null, string expand = null, CancellationToken cancellationToken = default)
         {
-            return GetArmResourceExtensionClient(client, scope).GetHistoricalAvailabilityStatusesOfChildResource(filter, expand, cancellationToken);
+            return GetResourceHealthArmResourceExtension(client, scope).GetHistoricalAvailabilityStatusesOfChildResource(filter, expand, cancellationToken);
         }
 
         /// <summary>
@@ -444,7 +445,7 @@ namespace Azure.ResourceManager.ResourceHealth
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public static AsyncPageable<ResourceHealthAvailabilityStatus> GetAvailabilityStatusOfChildResourcesAsync(this ArmClient client, ResourceIdentifier scope, string filter = null, string expand = null, CancellationToken cancellationToken = default)
         {
-            return GetArmResourceExtensionClient(client, scope).GetAvailabilityStatusOfChildResourcesAsync(filter, expand, cancellationToken);
+            return GetResourceHealthArmResourceExtension(client, scope).GetAvailabilityStatusOfChildResourcesAsync(filter, expand, cancellationToken);
         }
 
         /// <summary>
@@ -467,7 +468,7 @@ namespace Azure.ResourceManager.ResourceHealth
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public static Pageable<ResourceHealthAvailabilityStatus> GetAvailabilityStatusOfChildResources(this ArmClient client, ResourceIdentifier scope, string filter = null, string expand = null, CancellationToken cancellationToken = default)
         {
-            return GetArmResourceExtensionClient(client, scope).GetAvailabilityStatusOfChildResources(filter, expand, cancellationToken);
+            return GetResourceHealthArmResourceExtension(client, scope).GetAvailabilityStatusOfChildResources(filter, expand, cancellationToken);
         }
 
         /// <summary>
@@ -490,7 +491,7 @@ namespace Azure.ResourceManager.ResourceHealth
         /// <returns> An async collection of <see cref="ResourceHealthAvailabilityStatus" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<ResourceHealthAvailabilityStatus> GetAvailabilityStatusesByResourceGroupAsync(this ResourceGroupResource resourceGroupResource, string filter = null, string expand = null, CancellationToken cancellationToken = default)
         {
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetAvailabilityStatusesByResourceGroupAsync(filter, expand, cancellationToken);
+            return GetResourceHealthResourceGroupResourceExtension(resourceGroupResource).GetAvailabilityStatusesByResourceGroupAsync(filter, expand, cancellationToken);
         }
 
         /// <summary>
@@ -513,7 +514,7 @@ namespace Azure.ResourceManager.ResourceHealth
         /// <returns> A collection of <see cref="ResourceHealthAvailabilityStatus" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<ResourceHealthAvailabilityStatus> GetAvailabilityStatusesByResourceGroup(this ResourceGroupResource resourceGroupResource, string filter = null, string expand = null, CancellationToken cancellationToken = default)
         {
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetAvailabilityStatusesByResourceGroup(filter, expand, cancellationToken);
+            return GetResourceHealthResourceGroupResourceExtension(resourceGroupResource).GetAvailabilityStatusesByResourceGroup(filter, expand, cancellationToken);
         }
 
         /// <summary> Gets a collection of ResourceHealthEventResources in the SubscriptionResource. </summary>
@@ -521,7 +522,7 @@ namespace Azure.ResourceManager.ResourceHealth
         /// <returns> An object representing collection of ResourceHealthEventResources and their operations over a ResourceHealthEventResource. </returns>
         public static ResourceHealthEventCollection GetResourceHealthEvents(this SubscriptionResource subscriptionResource)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetResourceHealthEvents();
+            return GetResourceHealthSubscriptionResourceExtension(subscriptionResource).GetResourceHealthEvents();
         }
 
         /// <summary>
@@ -596,7 +597,7 @@ namespace Azure.ResourceManager.ResourceHealth
         /// <returns> An async collection of <see cref="ResourceHealthAvailabilityStatus" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<ResourceHealthAvailabilityStatus> GetAvailabilityStatusesBySubscriptionAsync(this SubscriptionResource subscriptionResource, string filter = null, string expand = null, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetAvailabilityStatusesBySubscriptionAsync(filter, expand, cancellationToken);
+            return GetResourceHealthSubscriptionResourceExtension(subscriptionResource).GetAvailabilityStatusesBySubscriptionAsync(filter, expand, cancellationToken);
         }
 
         /// <summary>
@@ -619,7 +620,7 @@ namespace Azure.ResourceManager.ResourceHealth
         /// <returns> A collection of <see cref="ResourceHealthAvailabilityStatus" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<ResourceHealthAvailabilityStatus> GetAvailabilityStatusesBySubscription(this SubscriptionResource subscriptionResource, string filter = null, string expand = null, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetAvailabilityStatusesBySubscription(filter, expand, cancellationToken);
+            return GetResourceHealthSubscriptionResourceExtension(subscriptionResource).GetAvailabilityStatusesBySubscription(filter, expand, cancellationToken);
         }
 
         /// <summary> Gets a collection of ResourceHealthMetadataEntityResources in the TenantResource. </summary>
@@ -627,7 +628,7 @@ namespace Azure.ResourceManager.ResourceHealth
         /// <returns> An object representing collection of ResourceHealthMetadataEntityResources and their operations over a ResourceHealthMetadataEntityResource. </returns>
         public static ResourceHealthMetadataEntityCollection GetResourceHealthMetadataEntities(this TenantResource tenantResource)
         {
-            return GetTenantResourceExtensionClient(tenantResource).GetResourceHealthMetadataEntities();
+            return GetResourceHealthTenantResourceExtension(tenantResource).GetResourceHealthMetadataEntities();
         }
 
         /// <summary>
@@ -683,7 +684,7 @@ namespace Azure.ResourceManager.ResourceHealth
         /// <returns> An object representing collection of TenantResourceHealthEventResources and their operations over a TenantResourceHealthEventResource. </returns>
         public static TenantResourceHealthEventCollection GetTenantResourceHealthEvents(this TenantResource tenantResource)
         {
-            return GetTenantResourceExtensionClient(tenantResource).GetTenantResourceHealthEvents();
+            return GetResourceHealthTenantResourceExtension(tenantResource).GetTenantResourceHealthEvents();
         }
 
         /// <summary>
@@ -743,7 +744,7 @@ namespace Azure.ResourceManager.ResourceHealth
         /// <returns> An object representing collection of ServiceEmergingIssueResources and their operations over a ServiceEmergingIssueResource. </returns>
         public static ServiceEmergingIssueCollection GetServiceEmergingIssues(this TenantResource tenantResource)
         {
-            return GetTenantResourceExtensionClient(tenantResource).GetServiceEmergingIssues();
+            return GetResourceHealthTenantResourceExtension(tenantResource).GetServiceEmergingIssues();
         }
 
         /// <summary>

@@ -12,41 +12,42 @@ using Azure;
 using Azure.Core;
 using Azure.ResourceManager;
 using Azure.ResourceManager.Resources;
+using Azure.ResourceManager.SecurityDevOps.Testing;
 
 namespace Azure.ResourceManager.SecurityDevOps
 {
     /// <summary> A class to add extension methods to Azure.ResourceManager.SecurityDevOps. </summary>
     public static partial class SecurityDevOpsExtensions
     {
-        private static ResourceGroupResourceExtensionClient GetResourceGroupResourceExtensionClient(ArmResource resource)
+        private static SecurityDevOpsResourceGroupResourceExtension GetSecurityDevOpsResourceGroupResourceExtension(ArmResource resource)
         {
             return resource.GetCachedClient(client =>
             {
-                return new ResourceGroupResourceExtensionClient(client, resource.Id);
+                return new SecurityDevOpsResourceGroupResourceExtension(client, resource.Id);
             });
         }
 
-        private static ResourceGroupResourceExtensionClient GetResourceGroupResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
+        private static SecurityDevOpsResourceGroupResourceExtension GetSecurityDevOpsResourceGroupResourceExtension(ArmClient client, ResourceIdentifier scope)
         {
             return client.GetResourceClient(() =>
             {
-                return new ResourceGroupResourceExtensionClient(client, scope);
+                return new SecurityDevOpsResourceGroupResourceExtension(client, scope);
             });
         }
 
-        private static SubscriptionResourceExtensionClient GetSubscriptionResourceExtensionClient(ArmResource resource)
+        private static SecurityDevOpsSubscriptionResourceExtension GetSecurityDevOpsSubscriptionResourceExtension(ArmResource resource)
         {
             return resource.GetCachedClient(client =>
             {
-                return new SubscriptionResourceExtensionClient(client, resource.Id);
+                return new SecurityDevOpsSubscriptionResourceExtension(client, resource.Id);
             });
         }
 
-        private static SubscriptionResourceExtensionClient GetSubscriptionResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
+        private static SecurityDevOpsSubscriptionResourceExtension GetSecurityDevOpsSubscriptionResourceExtension(ArmClient client, ResourceIdentifier scope)
         {
             return client.GetResourceClient(() =>
             {
-                return new SubscriptionResourceExtensionClient(client, scope);
+                return new SecurityDevOpsSubscriptionResourceExtension(client, scope);
             });
         }
         #region AzureDevOpsConnectorResource
@@ -187,7 +188,7 @@ namespace Azure.ResourceManager.SecurityDevOps
         /// <returns> An object representing collection of AzureDevOpsConnectorResources and their operations over a AzureDevOpsConnectorResource. </returns>
         public static AzureDevOpsConnectorCollection GetAzureDevOpsConnectors(this ResourceGroupResource resourceGroupResource)
         {
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetAzureDevOpsConnectors();
+            return GetSecurityDevOpsResourceGroupResourceExtension(resourceGroupResource).GetAzureDevOpsConnectors();
         }
 
         /// <summary>
@@ -243,7 +244,7 @@ namespace Azure.ResourceManager.SecurityDevOps
         /// <returns> An object representing collection of GitHubConnectorResources and their operations over a GitHubConnectorResource. </returns>
         public static GitHubConnectorCollection GetGitHubConnectors(this ResourceGroupResource resourceGroupResource)
         {
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetGitHubConnectors();
+            return GetSecurityDevOpsResourceGroupResourceExtension(resourceGroupResource).GetGitHubConnectors();
         }
 
         /// <summary>
@@ -312,7 +313,7 @@ namespace Azure.ResourceManager.SecurityDevOps
         /// <returns> An async collection of <see cref="AzureDevOpsConnectorResource" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<AzureDevOpsConnectorResource> GetAzureDevOpsConnectorsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetAzureDevOpsConnectorsAsync(cancellationToken);
+            return GetSecurityDevOpsSubscriptionResourceExtension(subscriptionResource).GetAzureDevOpsConnectorsAsync(cancellationToken);
         }
 
         /// <summary>
@@ -333,7 +334,7 @@ namespace Azure.ResourceManager.SecurityDevOps
         /// <returns> A collection of <see cref="AzureDevOpsConnectorResource" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<AzureDevOpsConnectorResource> GetAzureDevOpsConnectors(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetAzureDevOpsConnectors(cancellationToken);
+            return GetSecurityDevOpsSubscriptionResourceExtension(subscriptionResource).GetAzureDevOpsConnectors(cancellationToken);
         }
 
         /// <summary>
@@ -354,7 +355,7 @@ namespace Azure.ResourceManager.SecurityDevOps
         /// <returns> An async collection of <see cref="GitHubConnectorResource" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<GitHubConnectorResource> GetGitHubConnectorsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetGitHubConnectorsAsync(cancellationToken);
+            return GetSecurityDevOpsSubscriptionResourceExtension(subscriptionResource).GetGitHubConnectorsAsync(cancellationToken);
         }
 
         /// <summary>
@@ -375,7 +376,7 @@ namespace Azure.ResourceManager.SecurityDevOps
         /// <returns> A collection of <see cref="GitHubConnectorResource" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<GitHubConnectorResource> GetGitHubConnectors(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetGitHubConnectors(cancellationToken);
+            return GetSecurityDevOpsSubscriptionResourceExtension(subscriptionResource).GetGitHubConnectors(cancellationToken);
         }
     }
 }

@@ -12,6 +12,7 @@ using Azure;
 using Azure.Core;
 using Azure.ResourceManager;
 using Azure.ResourceManager.Redis.Models;
+using Azure.ResourceManager.Redis.Testing;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.Redis
@@ -19,35 +20,35 @@ namespace Azure.ResourceManager.Redis
     /// <summary> A class to add extension methods to Azure.ResourceManager.Redis. </summary>
     public static partial class RedisExtensions
     {
-        private static ResourceGroupResourceExtensionClient GetResourceGroupResourceExtensionClient(ArmResource resource)
+        private static RedisResourceGroupResourceExtension GetRedisResourceGroupResourceExtension(ArmResource resource)
         {
             return resource.GetCachedClient(client =>
             {
-                return new ResourceGroupResourceExtensionClient(client, resource.Id);
+                return new RedisResourceGroupResourceExtension(client, resource.Id);
             });
         }
 
-        private static ResourceGroupResourceExtensionClient GetResourceGroupResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
+        private static RedisResourceGroupResourceExtension GetRedisResourceGroupResourceExtension(ArmClient client, ResourceIdentifier scope)
         {
             return client.GetResourceClient(() =>
             {
-                return new ResourceGroupResourceExtensionClient(client, scope);
+                return new RedisResourceGroupResourceExtension(client, scope);
             });
         }
 
-        private static SubscriptionResourceExtensionClient GetSubscriptionResourceExtensionClient(ArmResource resource)
+        private static RedisSubscriptionResourceExtension GetRedisSubscriptionResourceExtension(ArmResource resource)
         {
             return resource.GetCachedClient(client =>
             {
-                return new SubscriptionResourceExtensionClient(client, resource.Id);
+                return new RedisSubscriptionResourceExtension(client, resource.Id);
             });
         }
 
-        private static SubscriptionResourceExtensionClient GetSubscriptionResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
+        private static RedisSubscriptionResourceExtension GetRedisSubscriptionResourceExtension(ArmClient client, ResourceIdentifier scope)
         {
             return client.GetResourceClient(() =>
             {
-                return new SubscriptionResourceExtensionClient(client, scope);
+                return new RedisSubscriptionResourceExtension(client, scope);
             });
         }
         #region RedisResource
@@ -150,7 +151,7 @@ namespace Azure.ResourceManager.Redis
         /// <returns> An object representing collection of RedisResources and their operations over a RedisResource. </returns>
         public static RedisCollection GetAllRedis(this ResourceGroupResource resourceGroupResource)
         {
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetAllRedis();
+            return GetRedisResourceGroupResourceExtension(resourceGroupResource).GetAllRedis();
         }
 
         /// <summary>
@@ -222,7 +223,7 @@ namespace Azure.ResourceManager.Redis
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            return await GetSubscriptionResourceExtensionClient(subscriptionResource).CheckRedisNameAvailabilityAsync(content, cancellationToken).ConfigureAwait(false);
+            return await GetRedisSubscriptionResourceExtension(subscriptionResource).CheckRedisNameAvailabilityAsync(content, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -246,7 +247,7 @@ namespace Azure.ResourceManager.Redis
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).CheckRedisNameAvailability(content, cancellationToken);
+            return GetRedisSubscriptionResourceExtension(subscriptionResource).CheckRedisNameAvailability(content, cancellationToken);
         }
 
         /// <summary>
@@ -267,7 +268,7 @@ namespace Azure.ResourceManager.Redis
         /// <returns> An async collection of <see cref="RedisResource" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<RedisResource> GetAllRedisAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetAllRedisAsync(cancellationToken);
+            return GetRedisSubscriptionResourceExtension(subscriptionResource).GetAllRedisAsync(cancellationToken);
         }
 
         /// <summary>
@@ -288,7 +289,7 @@ namespace Azure.ResourceManager.Redis
         /// <returns> A collection of <see cref="RedisResource" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<RedisResource> GetAllRedis(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetAllRedis(cancellationToken);
+            return GetRedisSubscriptionResourceExtension(subscriptionResource).GetAllRedis(cancellationToken);
         }
 
         /// <summary>
@@ -314,7 +315,7 @@ namespace Azure.ResourceManager.Redis
         {
             Argument.AssertNotNullOrEmpty(operationId, nameof(operationId));
 
-            return await GetSubscriptionResourceExtensionClient(subscriptionResource).GetAsyncOperationStatusAsync(location, operationId, cancellationToken).ConfigureAwait(false);
+            return await GetRedisSubscriptionResourceExtension(subscriptionResource).GetAsyncOperationStatusAsync(location, operationId, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -340,7 +341,7 @@ namespace Azure.ResourceManager.Redis
         {
             Argument.AssertNotNullOrEmpty(operationId, nameof(operationId));
 
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetAsyncOperationStatus(location, operationId, cancellationToken);
+            return GetRedisSubscriptionResourceExtension(subscriptionResource).GetAsyncOperationStatus(location, operationId, cancellationToken);
         }
     }
 }
