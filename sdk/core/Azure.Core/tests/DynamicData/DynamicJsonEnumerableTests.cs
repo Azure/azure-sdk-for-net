@@ -75,14 +75,14 @@ namespace Azure.Core.Tests
         {
             dynamic json = DynamicJsonTests.GetDynamicJson("""
                 {
-                  "Zero" : 0,
-                  "One" : 1,
-                  "Two" : 2,
-                  "Three" : 3
+                  "zero" : 0,
+                  "one" : 1,
+                  "two" : 2,
+                  "three" : 3
                 }
                 """);
 
-            string[] expectedNames = new string[] { "Zero", "One", "Two", "Three" };
+            string[] expectedNames = new string[] { "zero", "one", "two", "three" };
 
             int expected = 0;
             foreach (dynamic property in json)
@@ -98,14 +98,14 @@ namespace Azure.Core.Tests
         {
             dynamic json = DynamicJsonTests.GetDynamicJson("""
                 {
-                  "Zero" : 0,
-                  "One" : 1,
-                  "Two" : 2,
-                  "Three" : 3
+                  "zero" : 0,
+                  "one" : 1,
+                  "two" : 2,
+                  "three" : 3
                 }
                 """);
 
-            string[] expectedNames = new string[] { "Zero", "One", "Two", "Three" };
+            string[] expectedNames = new string[] { "zero", "one", "two", "three" };
 
             for (int i = 0; i < 4; i++)
             {
@@ -166,6 +166,31 @@ namespace Azure.Core.Tests
 
             expected = 0;
             string[] expectedNames = new string[] { "zero", "one", "two" };
+
+            foreach (dynamic property in json.Object)
+            {
+                Assert.AreEqual(expectedNames[expected], property.Name);
+                Assert.IsTrue(expected == property.Value);
+                expected++;
+            }
+        }
+
+        [Test]
+        public void PropertyEnumeratorIncludesAddedProperties()
+        {
+            dynamic json = DynamicJsonTests.GetDynamicJson("""
+                {
+                    "object" : {   
+                        "zero" : 0,
+                        "one" : 1,
+                        "two" : 2
+                    }
+                }
+                """);
+
+            json.Object.Three = 3;
+            int expected = 0;
+            string[] expectedNames = new string[] { "zero", "one", "two", "three" };
 
             foreach (dynamic property in json.Object)
             {

@@ -34,9 +34,7 @@ namespace Azure.Core.Json
         /// <summary>
         /// Gets the type of the current JSON value.
         /// </summary>
-#pragma warning disable AZC0014 // Avoid using banned types in public API
         public JsonValueKind ValueKind
-#pragma warning restore AZC0014 // Avoid using banned types in public API
         {
             get
             {
@@ -70,13 +68,7 @@ namespace Azure.Core.Json
 
             EnsureObject();
 
-            bool hasProperty = _element.TryGetProperty(name, out JsonElement element);
-            if (!hasProperty)
-            {
-                value = default;
-                return false;
-            }
-
+            // Check for changes to this element
             var path = MutableJsonDocument.ChangeTracker.PushProperty(_path, name);
             if (Changes.TryGetChange(path, _highWaterMark, out MutableJsonChange change))
             {
@@ -85,6 +77,19 @@ namespace Azure.Core.Json
                     value = new MutableJsonElement(_root, change.AsJsonElement(), path, change.Index);
                     return true;
                 }
+            }
+
+            //// Check for changes to descendants
+            //if (Changes.DescendantChanged(path, _highWaterMark))
+            //{
+
+            //}
+
+            bool hasProperty = _element.TryGetProperty(name, out JsonElement element);
+            if (!hasProperty)
+            {
+                value = default;
+                return false;
             }
 
             value = new MutableJsonElement(_root, element, path, _highWaterMark);
@@ -762,21 +767,25 @@ namespace Azure.Core.Json
             }
 #endif
 
-            // If it's not already there, we'll add a change to this element's JsonElement instead.
-            Dictionary<string, object> dict = JsonSerializer.Deserialize<Dictionary<string, object>>(GetRawBytes(), _root.SerializerOptions)!;
-            dict[name] = value;
+            //// If it's not already there, we'll add a change to this element's JsonElement instead.
+            //Dictionary<string, object> dict = JsonSerializer.Deserialize<Dictionary<string, object>>(GetRawBytes(), _root.SerializerOptions)!;
+            //dict[name] = value;
 
-            byte[] bytes = JsonSerializer.SerializeToUtf8Bytes(dict, _root.SerializerOptions);
-            JsonElement newElement = JsonDocument.Parse(bytes).RootElement;
+            //byte[] bytes = JsonSerializer.SerializeToUtf8Bytes(dict, _root.SerializerOptions);
+            //JsonElement newElement = JsonDocument.Parse(bytes).RootElement;
 
-            int index = Changes.AddChange(_path, newElement, true);
+            //int index = Changes.AddChange(_path, newElement, true);
+
+            // It is a new property.
 
             // Make sure the object reference is stored to ensure reference semantics
             string path = MutableJsonDocument.ChangeTracker.PushProperty(_path, name);
-            Changes.AddChange(path, value, true);
+            Changes.AddChange(path, value, replacesJsonElement: true, isAddition: true);
 
-            // Element has changed, return the new valid one.
-            return new MutableJsonElement(_root, newElement, _path, index);
+            //// Element has changed, return the new valid one.
+            //return new MutableJsonElement(_root, newElement, _path, index);
+
+            return this;
         }
 
         /// <summary>
@@ -801,7 +810,7 @@ namespace Azure.Core.Json
             byte[] bytes = JsonSerializer.SerializeToUtf8Bytes(dict, _root.SerializerOptions);
             JsonElement newElement = JsonDocument.Parse(bytes).RootElement;
 
-            Changes.AddChange(_path, newElement, true);
+            Changes.AddChange(_path, newElement, true, false);
         }
 
         /// <summary>
@@ -812,7 +821,7 @@ namespace Azure.Core.Json
         {
             EnsureValid();
 
-            Changes.AddChange(_path, value, _element.ValueKind != JsonValueKind.Number);
+            Changes.AddChange(_path, value, _element.ValueKind != JsonValueKind.Number, false);
         }
 
         /// <summary>
@@ -823,7 +832,7 @@ namespace Azure.Core.Json
         {
             EnsureValid();
 
-            Changes.AddChange(_path, value, _element.ValueKind != JsonValueKind.Number);
+            Changes.AddChange(_path, value, _element.ValueKind != JsonValueKind.Number, false);
         }
 
         /// <summary>
@@ -834,7 +843,7 @@ namespace Azure.Core.Json
         {
             EnsureValid();
 
-            Changes.AddChange(_path, value, _element.ValueKind != JsonValueKind.Number);
+            Changes.AddChange(_path, value, _element.ValueKind != JsonValueKind.Number, false);
         }
 
         /// <summary>
@@ -845,7 +854,7 @@ namespace Azure.Core.Json
         {
             EnsureValid();
 
-            Changes.AddChange(_path, value, _element.ValueKind != JsonValueKind.Number);
+            Changes.AddChange(_path, value, _element.ValueKind != JsonValueKind.Number, false);
         }
 
         /// <summary>
@@ -856,7 +865,7 @@ namespace Azure.Core.Json
         {
             EnsureValid();
 
-            Changes.AddChange(_path, value, _element.ValueKind != JsonValueKind.String);
+            Changes.AddChange(_path, value, _element.ValueKind != JsonValueKind.String, false);
         }
 
         /// <summary>
@@ -869,7 +878,7 @@ namespace Azure.Core.Json
 
             Changes.AddChange(_path, value,
                 !(_element.ValueKind == JsonValueKind.True ||
-                  _element.ValueKind == JsonValueKind.False));
+                  _element.ValueKind == JsonValueKind.False), false);
         }
 
         /// <summary>
@@ -880,7 +889,7 @@ namespace Azure.Core.Json
         {
             EnsureValid();
 
-            Changes.AddChange(_path, value, _element.ValueKind != JsonValueKind.Number);
+            Changes.AddChange(_path, value, _element.ValueKind != JsonValueKind.Number, false);
         }
 
         /// <summary>
@@ -891,7 +900,7 @@ namespace Azure.Core.Json
         {
             EnsureValid();
 
-            Changes.AddChange(_path, value, _element.ValueKind != JsonValueKind.Number);
+            Changes.AddChange(_path, value, _element.ValueKind != JsonValueKind.Number, false);
         }
 
         /// <summary>
@@ -902,7 +911,7 @@ namespace Azure.Core.Json
         {
             EnsureValid();
 
-            Changes.AddChange(_path, value, _element.ValueKind != JsonValueKind.Number);
+            Changes.AddChange(_path, value, _element.ValueKind != JsonValueKind.Number, false);
         }
 
         /// <summary>
@@ -913,7 +922,7 @@ namespace Azure.Core.Json
         {
             EnsureValid();
 
-            Changes.AddChange(_path, value, _element.ValueKind != JsonValueKind.Number);
+            Changes.AddChange(_path, value, _element.ValueKind != JsonValueKind.Number, false);
         }
 
         /// <summary>
@@ -924,7 +933,7 @@ namespace Azure.Core.Json
         {
             EnsureValid();
 
-            Changes.AddChange(_path, value, _element.ValueKind != JsonValueKind.Number);
+            Changes.AddChange(_path, value, _element.ValueKind != JsonValueKind.Number, false);
         }
 
         /// <summary>
@@ -935,7 +944,7 @@ namespace Azure.Core.Json
         {
             EnsureValid();
 
-            Changes.AddChange(_path, value, _element.ValueKind != JsonValueKind.Number);
+            Changes.AddChange(_path, value, _element.ValueKind != JsonValueKind.Number, false);
         }
 
         /// <summary>
@@ -946,7 +955,7 @@ namespace Azure.Core.Json
         {
             EnsureValid();
 
-            Changes.AddChange(_path, value, _element.ValueKind != JsonValueKind.Number);
+            Changes.AddChange(_path, value, _element.ValueKind != JsonValueKind.Number, false);
         }
 
         /// <summary>
@@ -957,7 +966,7 @@ namespace Azure.Core.Json
         {
             EnsureValid();
 
-            Changes.AddChange(_path, value, _element.ValueKind != JsonValueKind.String);
+            Changes.AddChange(_path, value, _element.ValueKind != JsonValueKind.String, false);
         }
 
         /// <summary>
@@ -968,7 +977,7 @@ namespace Azure.Core.Json
         {
             EnsureValid();
 
-            Changes.AddChange(_path, value, _element.ValueKind != JsonValueKind.String);
+            Changes.AddChange(_path, value, _element.ValueKind != JsonValueKind.String, false);
         }
 
         /// <summary>
@@ -979,7 +988,7 @@ namespace Azure.Core.Json
         {
             EnsureValid();
 
-            Changes.AddChange(_path, value, _element.ValueKind != JsonValueKind.String);
+            Changes.AddChange(_path, value, _element.ValueKind != JsonValueKind.String, false);
         }
 
         /// <summary>
@@ -1050,7 +1059,7 @@ namespace Azure.Core.Json
                     Set(d.RootElement);
                     break;
                 default:
-                    Changes.AddChange(_path, value, true);
+                    Changes.AddChange(_path, value, true, false);
                     break;
             }
         }
@@ -1075,7 +1084,7 @@ namespace Azure.Core.Json
                 }
             }
 
-            Changes.AddChange(_path, element, true);
+            Changes.AddChange(_path, element, true, false);
         }
 
         /// <inheritdoc/>

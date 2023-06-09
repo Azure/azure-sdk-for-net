@@ -90,7 +90,7 @@ namespace Azure.Core.Json
                 return false;
             }
 
-            internal int AddChange(string path, object? value, bool replaceJsonElement = false)
+            internal int AddChange(string path, object? value, bool replacesJsonElement, bool isAddition)
             {
                 if (_changes == null)
                 {
@@ -99,7 +99,7 @@ namespace Azure.Core.Json
 
                 int index = _changes.Count;
 
-                _changes.Add(new MutableJsonChange(path, index, value, replaceJsonElement, _options));
+                _changes.Add(new MutableJsonChange(path, index, value, replacesJsonElement, _options, isAddition));
 
                 return index;
             }
