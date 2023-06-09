@@ -57,12 +57,18 @@ namespace Azure.Core.Json
         /// </summary>
         public MutableJsonElement GetProperty(string name)
         {
-            if (!TryGetProperty(name, out MutableJsonElement value))
+            if (!TryGetProperty(name, out object? value))
             {
                 throw new InvalidOperationException($"'{_path}' does not contain property called '{name}'");
             }
 
-            return value;
+            if (value is not MutableJsonElement element)
+            {
+                string path = MutableJsonDocument.ChangeTracker.PushProperty(_path, name);
+                throw new InvalidOperationException($"Value at '{path}' is not JSON.");
+            }
+
+            return element;
         }
 
         /// <summary>
@@ -71,20 +77,26 @@ namespace Azure.Core.Json
         /// <param name="name"></param>
         /// <param name="value">The value to assign to the element.</param>
         /// <returns></returns>
-        public bool TryGetProperty(string name, out MutableJsonElement value)
+        public bool TryGetProperty(string name, out object? value)
         {
             EnsureValid();
 
             EnsureObject();
 
             // Check for changes to this element
-            var path = MutableJsonDocument.ChangeTracker.PushProperty(_path, name);
+            string path = MutableJsonDocument.ChangeTracker.PushProperty(_path, name);
             if (Changes.TryGetChange(path, _highWaterMark, out MutableJsonChange change))
             {
                 if (change.ChangeKind == MutableJsonChangeKind.PropertyRemoval)
                 {
                     value = default;
                     return false;
+                }
+
+                if (change.ValueKind == null)
+                {
+                    value = change.Value;
+                    return true;
                 }
 
                 value = new MutableJsonElement(_root, change.AsJsonElement(), path, change.Index);
@@ -758,8 +770,13 @@ namespace Azure.Core.Json
         /// <param name="value">The value to assign to the element.</param>
         public MutableJsonElement SetProperty(string name, object value)
         {
-            if (TryGetProperty(name, out MutableJsonElement element))
+            if (TryGetProperty(name, out object? property))
             {
+                if (property is not MutableJsonElement element)
+                {
+                    throw new InvalidOperationException($"Value at '{_path}' is not JSON.");
+                }
+
                 element.Set(value);
                 return this;
             }
@@ -773,24 +790,12 @@ namespace Azure.Core.Json
             }
 #endif
 
-            //// If it's not already there, we'll add a change to this element's JsonElement instead.
-            //Dictionary<string, object> dict = JsonSerializer.Deserialize<Dictionary<string, object>>(GetRawBytes(), _root.SerializerOptions)!;
-            //dict[name] = value;
-
-            //byte[] bytes = JsonSerializer.SerializeToUtf8Bytes(dict, _root.SerializerOptions);
-            //JsonElement newElement = JsonDocument.Parse(bytes).RootElement;
-
-            //int index = Changes.AddChange(_path, newElement, true);
-
             // It is a new property.
-
-            // Make sure the object reference is stored to ensure reference semantics
             string path = MutableJsonDocument.ChangeTracker.PushProperty(_path, name);
-            // TODO: figure out the kind...
-            Changes.AddChange(path, value, kind: null, isAddition: true, addedPropertyName: name, MutableJsonChangeKind.PropertyAddition);
 
-            //// Element has changed, return the new valid one.
-            //return new MutableJsonElement(_root, newElement, _path, index);
+            // TODO: figure out the kind?
+            // TODO: Test case: ask for ValueKind on an object addition?
+            Changes.AddChange(path, value, kind: null, isAddition: true, addedPropertyName: name, MutableJsonChangeKind.PropertyAddition);
 
             return this;
         }

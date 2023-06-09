@@ -92,8 +92,13 @@ namespace Azure.Core.Dynamic
                 return _element.GetArrayLength();
             }
 
-            if (_element.TryGetProperty(name, out MutableJsonElement element))
+            if (_element.TryGetProperty(name, out object? property))
             {
+                if (property is not MutableJsonElement element)
+                {
+                    return property;
+                }
+
                 if (element.ValueKind == JsonValueKind.Null)
                 {
                     return null;
@@ -105,8 +110,13 @@ namespace Azure.Core.Dynamic
             // If the dynamic content uses a naming convention, do a second look-up.
             if (_options.PropertyNamingConvention != PropertyNamingConvention.None)
             {
-                if (_element.TryGetProperty(ApplyNamingConvention(name), out element))
+                if (_element.TryGetProperty(ApplyNamingConvention(name), out property))
                 {
+                    if (property is not MutableJsonElement element)
+                    {
+                        return property;
+                    }
+
                     if (element.ValueKind == JsonValueKind.Null)
                     {
                         return null;
@@ -135,8 +145,13 @@ namespace Azure.Core.Dynamic
             switch (index)
             {
                 case string propertyName:
-                    if (_element.TryGetProperty(propertyName, out MutableJsonElement element))
+                    if (_element.TryGetProperty(propertyName, out object? property))
                     {
+                        if (property is not MutableJsonElement element)
+                        {
+                            return property;
+                        }
+
                         if (element.ValueKind == JsonValueKind.Null)
                         {
                             return null;
@@ -180,9 +195,19 @@ namespace Azure.Core.Dynamic
                 value = ConvertType(value);
             }
 
-            if (_options.PropertyNamingConvention == PropertyNamingConvention.None ||
-                _element.TryGetProperty(name, out MutableJsonElement _))
+            if (_options.PropertyNamingConvention == PropertyNamingConvention.None)
             {
+                _element = _element.SetProperty(name, value);
+                return null;
+            }
+
+            if (_element.TryGetProperty(name, out object? property))
+            {
+                if (property is not MutableJsonElement _)
+                {
+                    throw new InvalidOperationException($"Value at '{name}' is not JSON.");
+                }
+
                 _element = _element.SetProperty(name, value);
                 return null;
             }
