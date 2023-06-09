@@ -11,7 +11,7 @@ using Azure.Core.Extensions;
 namespace Microsoft.Extensions.Azure
 {
     /// <summary> Extension methods to add <see cref="AssetsClient"/>, <see cref="AssetMappingsClient"/>, <see cref="ReceivedInvitationsClient"/>, <see cref="ReceivedSharesClient"/>, <see cref="ReceivedAssetsClient"/>, <see cref="SentSharesClient"/>, <see cref="AcceptedSentSharesClient"/>, <see cref="SentShareInvitationsClient"/>, <see cref="EmailRegistrationClient"/> to client builder. </summary>
-    public static partial class ShareClientBuilderExtensions
+    public static partial class PurviewShareClientBuilderExtensions
     {
         /// <summary> Registers a <see cref="AssetsClient"/> instance. </summary>
         /// <param name="builder"> The builder to register with. </param>

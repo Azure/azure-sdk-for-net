@@ -189,6 +189,18 @@ namespace Azure.Quantum.Jobs.Models
         public string Id { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.Quantum.Jobs.Models.TargetStatus> Targets { get { throw null; } }
     }
+    public static partial class QuantumJobModelFactory
+    {
+        public static Azure.Quantum.Jobs.Models.CostEstimate CostEstimate(string currencyCode = null, System.Collections.Generic.IEnumerable<Azure.Quantum.Jobs.Models.UsageEvent> events = null, float? estimatedTotal = default(float?)) { throw null; }
+        public static Azure.Quantum.Jobs.Models.ErrorData ErrorData(string code = null, string message = null) { throw null; }
+        public static Azure.Quantum.Jobs.Models.JobDetails JobDetails(string id = null, string name = null, string containerUri = null, string inputDataUri = null, string inputDataFormat = null, object inputParams = null, string providerId = null, string target = null, System.Collections.Generic.IDictionary<string, string> metadata = null, string outputDataUri = null, string outputDataFormat = null, Azure.Quantum.Jobs.Models.JobStatus? status = default(Azure.Quantum.Jobs.Models.JobStatus?), System.DateTimeOffset? creationTime = default(System.DateTimeOffset?), System.DateTimeOffset? beginExecutionTime = default(System.DateTimeOffset?), System.DateTimeOffset? endExecutionTime = default(System.DateTimeOffset?), System.DateTimeOffset? cancellationTime = default(System.DateTimeOffset?), Azure.Quantum.Jobs.Models.CostEstimate costEstimate = null, Azure.Quantum.Jobs.Models.ErrorData errorData = null, System.Collections.Generic.IEnumerable<string> tags = null) { throw null; }
+        public static Azure.Quantum.Jobs.Models.ProviderStatus ProviderStatus(string id = null, Azure.Quantum.Jobs.Models.ProviderAvailability? currentAvailability = default(Azure.Quantum.Jobs.Models.ProviderAvailability?), System.Collections.Generic.IEnumerable<Azure.Quantum.Jobs.Models.TargetStatus> targets = null) { throw null; }
+        public static Azure.Quantum.Jobs.Models.QuantumJobQuota QuantumJobQuota(string dimension = null, Azure.Quantum.Jobs.Models.DimensionScope? scope = default(Azure.Quantum.Jobs.Models.DimensionScope?), string providerId = null, float? utilization = default(float?), float? holds = default(float?), float? limit = default(float?), Azure.Quantum.Jobs.Models.MeterPeriod? period = default(Azure.Quantum.Jobs.Models.MeterPeriod?)) { throw null; }
+        public static Azure.Quantum.Jobs.Models.QuantumJobQuotaList QuantumJobQuotaList(System.Collections.Generic.IEnumerable<Azure.Quantum.Jobs.Models.QuantumJobQuota> value = null, string nextLink = null) { throw null; }
+        public static Azure.Quantum.Jobs.Models.SasUriResponse SasUriResponse(string sasUri = null) { throw null; }
+        public static Azure.Quantum.Jobs.Models.TargetStatus TargetStatus(string id = null, Azure.Quantum.Jobs.Models.TargetAvailability? currentAvailability = default(Azure.Quantum.Jobs.Models.TargetAvailability?), long? averageQueueTime = default(long?), string statusPage = null) { throw null; }
+        public static Azure.Quantum.Jobs.Models.UsageEvent UsageEvent(string dimensionId = null, string dimensionName = null, string measureUnit = null, float? amountBilled = default(float?), float? amountConsumed = default(float?), float? unitPrice = default(float?)) { throw null; }
+    }
     public partial class QuantumJobQuota
     {
         internal QuantumJobQuota() { }
@@ -205,18 +217,6 @@ namespace Azure.Quantum.Jobs.Models
         internal QuantumJobQuotaList() { }
         public string NextLink { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.Quantum.Jobs.Models.QuantumJobQuota> Value { get { throw null; } }
-    }
-    public static partial class QuantumModelFactory
-    {
-        public static Azure.Quantum.Jobs.Models.CostEstimate CostEstimate(string currencyCode = null, System.Collections.Generic.IEnumerable<Azure.Quantum.Jobs.Models.UsageEvent> events = null, float? estimatedTotal = default(float?)) { throw null; }
-        public static Azure.Quantum.Jobs.Models.ErrorData ErrorData(string code = null, string message = null) { throw null; }
-        public static Azure.Quantum.Jobs.Models.JobDetails JobDetails(string id = null, string name = null, string containerUri = null, string inputDataUri = null, string inputDataFormat = null, object inputParams = null, string providerId = null, string target = null, System.Collections.Generic.IDictionary<string, string> metadata = null, string outputDataUri = null, string outputDataFormat = null, Azure.Quantum.Jobs.Models.JobStatus? status = default(Azure.Quantum.Jobs.Models.JobStatus?), System.DateTimeOffset? creationTime = default(System.DateTimeOffset?), System.DateTimeOffset? beginExecutionTime = default(System.DateTimeOffset?), System.DateTimeOffset? endExecutionTime = default(System.DateTimeOffset?), System.DateTimeOffset? cancellationTime = default(System.DateTimeOffset?), Azure.Quantum.Jobs.Models.CostEstimate costEstimate = null, Azure.Quantum.Jobs.Models.ErrorData errorData = null, System.Collections.Generic.IEnumerable<string> tags = null) { throw null; }
-        public static Azure.Quantum.Jobs.Models.ProviderStatus ProviderStatus(string id = null, Azure.Quantum.Jobs.Models.ProviderAvailability? currentAvailability = default(Azure.Quantum.Jobs.Models.ProviderAvailability?), System.Collections.Generic.IEnumerable<Azure.Quantum.Jobs.Models.TargetStatus> targets = null) { throw null; }
-        public static Azure.Quantum.Jobs.Models.QuantumJobQuota QuantumJobQuota(string dimension = null, Azure.Quantum.Jobs.Models.DimensionScope? scope = default(Azure.Quantum.Jobs.Models.DimensionScope?), string providerId = null, float? utilization = default(float?), float? holds = default(float?), float? limit = default(float?), Azure.Quantum.Jobs.Models.MeterPeriod? period = default(Azure.Quantum.Jobs.Models.MeterPeriod?)) { throw null; }
-        public static Azure.Quantum.Jobs.Models.QuantumJobQuotaList QuantumJobQuotaList(System.Collections.Generic.IEnumerable<Azure.Quantum.Jobs.Models.QuantumJobQuota> value = null, string nextLink = null) { throw null; }
-        public static Azure.Quantum.Jobs.Models.SasUriResponse SasUriResponse(string sasUri = null) { throw null; }
-        public static Azure.Quantum.Jobs.Models.TargetStatus TargetStatus(string id = null, Azure.Quantum.Jobs.Models.TargetAvailability? currentAvailability = default(Azure.Quantum.Jobs.Models.TargetAvailability?), long? averageQueueTime = default(long?), string statusPage = null) { throw null; }
-        public static Azure.Quantum.Jobs.Models.UsageEvent UsageEvent(string dimensionId = null, string dimensionName = null, string measureUnit = null, float? amountBilled = default(float?), float? amountConsumed = default(float?), float? unitPrice = default(float?)) { throw null; }
     }
     public partial class SasUriResponse
     {

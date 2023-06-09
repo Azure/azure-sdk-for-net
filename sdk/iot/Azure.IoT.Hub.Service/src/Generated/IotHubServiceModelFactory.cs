@@ -12,7 +12,7 @@ using System.Linq;
 namespace Azure.IoT.Hub.Service.Models
 {
     /// <summary> Model factory for models. </summary>
-    public static partial class ServiceModelFactory
+    public static partial class IotHubServiceModelFactory
     {
         /// <summary> Initializes a new instance of ConfigurationQueriesTestResponse. </summary>
         /// <param name="targetConditionError"> The errors from running the target condition query. </param>
