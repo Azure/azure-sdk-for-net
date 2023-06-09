@@ -26,7 +26,7 @@ namespace Azure.Storage.DataMovement.Tests
         /// <summary>
         /// Upload and verify the contents of the blob
         ///
-        /// By default in this function an event arguement will be added to the options event handler
+        /// By default in this function an event argument will be added to the options event handler
         /// to detect when the upload has finished.
         /// </summary>
         /// <param name="container">The source container which will contains the source blobs</param>
@@ -69,10 +69,6 @@ namespace Azure.Storage.DataMovement.Tests
                 new BlobStorageResourceContainerOptions()
                 {
                     DirectoryPrefix = destinationBlobPrefix,
-                    ResourceOptions = new BlobStorageResourceOptions()
-                    {
-                        CopyMethod = TransferCopyMethod.SyncCopy
-                    },
                 });
 
             DataTransfer transfer = await transferManager.StartTransferAsync(sourceResource, destinationResource, options);
@@ -233,10 +229,6 @@ namespace Azure.Storage.DataMovement.Tests
                 new BlobStorageResourceContainerOptions()
                 {
                     DirectoryPrefix = dirName2,
-                    ResourceOptions = new BlobStorageResourceOptions()
-                    {
-                        CopyMethod = TransferCopyMethod.SyncCopy
-                    },
                 });
 
             TransferManagerOptions managerOptions = new TransferManagerOptions()
@@ -503,10 +495,6 @@ namespace Azure.Storage.DataMovement.Tests
                 new BlobStorageResourceContainerOptions()
                 {
                     DirectoryPrefix = destBlobPrefix,
-                    ResourceOptions = new BlobStorageResourceOptions()
-                    {
-                        CopyMethod = TransferCopyMethod.SyncCopy
-                    },
                 });
 
             // If we want a failure condition to happen
