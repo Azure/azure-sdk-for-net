@@ -80,7 +80,7 @@ namespace Azure.Communication.Chat
         /// <param name="communicationUserIdentifier"> Communication user identifier.</param>
         /// <param name="participants"> List of chat participants </param>
         /// <returns>A new <see cref="ChatMessageContent"/> instance for mocking.</returns>
-        public static ChatMessageContent ChatMessageContent(string message, string topic, CommunicationUserIdentifier communicationUserIdentifier, IReadOnlyList<ChatParticipant> participants) => new ChatMessageContent(message, topic, communicationUserIdentifier, participants);
+        public static ChatMessageContent ChatMessageContent(string message, string topic, CommunicationUserIdentifier communicationUserIdentifier, IEnumerable<ChatParticipant> participants) => new ChatMessageContent(message, topic, communicationUserIdentifier, participants);
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ChatThreadProperties"/> class.
@@ -99,7 +99,7 @@ namespace Azure.Communication.Chat
         /// <param name="chatThread"> Thread properties </param>
         /// <param name="invalidParticipants"> List of invalid participants</param>
         /// <returns>A new <see cref="CreateChatThreadResult"/> instance for mocking.</returns>
-        public static CreateChatThreadResult CreateChatThreadResult(ChatThreadProperties chatThread, IReadOnlyList<ChatError> invalidParticipants) => new CreateChatThreadResult(chatThread, invalidParticipants);
+        public static CreateChatThreadResult CreateChatThreadResult(ChatThreadProperties chatThread, IEnumerable<ChatError> invalidParticipants) => new CreateChatThreadResult(chatThread, invalidParticipants);
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ChatParticipant"/> class.

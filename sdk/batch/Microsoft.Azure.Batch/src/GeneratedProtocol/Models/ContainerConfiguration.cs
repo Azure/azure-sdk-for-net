@@ -31,28 +31,32 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// <summary>
         /// Initializes a new instance of the ContainerConfiguration class.
         /// </summary>
+        /// <param name="type">The container technology to be used.</param>
         /// <param name="containerImageNames">The collection of container Image
         /// names.</param>
         /// <param name="containerRegistries">Additional private registries
         /// from which containers can be pulled.</param>
-        public ContainerConfiguration(IList<string> containerImageNames = default(IList<string>), IList<ContainerRegistry> containerRegistries = default(IList<ContainerRegistry>))
+        public ContainerConfiguration(string type, IList<string> containerImageNames = default(IList<string>), IList<ContainerRegistry> containerRegistries = default(IList<ContainerRegistry>))
         {
+            Type = type;
             ContainerImageNames = containerImageNames;
             ContainerRegistries = containerRegistries;
             CustomInit();
-        }
-        /// <summary>
-        /// Static constructor for ContainerConfiguration class.
-        /// </summary>
-        static ContainerConfiguration()
-        {
-            Type = "dockerCompatible";
         }
 
         /// <summary>
         /// An initialization method that performs custom operations like setting defaults
         /// </summary>
         partial void CustomInit();
+
+        /// <summary>
+        /// Gets or sets the container technology to be used.
+        /// </summary>
+        /// <remarks>
+        /// Possible values include: 'dockerCompatible', 'criCompatible'
+        /// </remarks>
+        [JsonProperty(PropertyName = "type")]
+        public string Type { get; set; }
 
         /// <summary>
         /// Gets or sets the collection of container Image names.
@@ -75,11 +79,6 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// </remarks>
         [JsonProperty(PropertyName = "containerRegistries")]
         public IList<ContainerRegistry> ContainerRegistries { get; set; }
-
-        /// <summary>
-        /// </summary>
-        [JsonProperty(PropertyName = "type")]
-        public static string Type { get; private set; }
 
     }
 }

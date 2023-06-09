@@ -79,6 +79,7 @@ namespace Azure.Communication.JobRouter
             switch (message.Response.Status)
             {
                 case 200:
+                case 201:
                     {
                         RouterJob value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
@@ -111,6 +112,7 @@ namespace Azure.Communication.JobRouter
             switch (message.Response.Status)
             {
                 case 200:
+                case 201:
                     {
                         RouterJob value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
@@ -119,6 +121,95 @@ namespace Azure.Communication.JobRouter
                     }
                 default:
                     throw new RequestFailedException(message.Response);
+            }
+        }
+
+        internal HttpMessage CreateUpsertJobRequest(string id, RequestContent content, RequestContext context)
+        {
+            var message = _pipeline.CreateMessage(context, ResponseClassifier200201);
+            var request = message.Request;
+            request.Method = RequestMethod.Patch;
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw(_endpoint, false);
+            uri.AppendPath("/routing/jobs/", false);
+            uri.AppendPath(id, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            request.Headers.Add("Content-Type", "application/merge-patch+json");
+            request.Content = content;
+            return message;
+        }
+
+        /// <summary>
+        /// [Protocol Method] Creates or updates a router job.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="id"> Id of the job. </param>
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="id"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="id"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual async Task<Response> UpsertJobAsync(string id, RequestContent content, RequestContext context = null)
+        {
+            Argument.AssertNotNullOrEmpty(id, nameof(id));
+            Argument.AssertNotNull(content, nameof(content));
+
+            using var scope = ClientDiagnostics.CreateScope("JobRouter.UpsertJob");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateUpsertJobRequest(id, content, context);
+                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// [Protocol Method] Creates or updates a router job.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="id"> Id of the job. </param>
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="id"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="id"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual Response UpsertJob(string id, RequestContent content, RequestContext context = null)
+        {
+            Argument.AssertNotNullOrEmpty(id, nameof(id));
+            Argument.AssertNotNull(content, nameof(content));
+
+            using var scope = ClientDiagnostics.CreateScope("JobRouter.UpsertJob");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateUpsertJobRequest(id, content, context);
+                return _pipeline.ProcessMessage(message, context);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
             }
         }
 
@@ -612,7 +703,7 @@ namespace Azure.Communication.JobRouter
             }
         }
 
-        internal HttpMessage CreateListJobsRequest(JobStateSelector? status, string queueId, string channelId, string classificationPolicyId, DateTimeOffset? scheduledBefore, DateTimeOffset? scheduledAfter, int? maxPageSize)
+        internal HttpMessage CreateListJobsRequest(JobStateSelector? status, string queueId, string channelId, string classificationPolicyId, DateTimeOffset? scheduledBefore, DateTimeOffset? scheduledAfter, int? maxpagesize)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -622,7 +713,7 @@ namespace Azure.Communication.JobRouter
             uri.AppendPath("/routing/jobs", false);
             if (status != null)
             {
-                uri.AppendQuery("status", status.Value.ToSerialString(), true);
+                uri.AppendQuery("status", status.Value.ToString(), true);
             }
             if (queueId != null)
             {
@@ -644,9 +735,9 @@ namespace Azure.Communication.JobRouter
             {
                 uri.AppendQuery("scheduledAfter", scheduledAfter.Value, "O", true);
             }
-            if (maxPageSize != null)
+            if (maxpagesize != null)
             {
-                uri.AppendQuery("maxPageSize", maxPageSize.Value, true);
+                uri.AppendQuery("maxpagesize", maxpagesize.Value, true);
             }
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
@@ -655,17 +746,17 @@ namespace Azure.Communication.JobRouter
         }
 
         /// <summary> Retrieves list of jobs based on filter parameters. </summary>
-        /// <param name="status"> (Optional) If specified, filter jobs by status. </param>
-        /// <param name="queueId"> (Optional) If specified, filter jobs by queue. </param>
-        /// <param name="channelId"> (Optional) If specified, filter jobs by channel. </param>
-        /// <param name="classificationPolicyId"> (Optional) If specified, filter jobs by classificationPolicy. </param>
-        /// <param name="scheduledBefore"> (Optional) If specified, filter on jobs that was scheduled before or at given timestamp. Range: (-Inf, scheduledBefore]. </param>
-        /// <param name="scheduledAfter"> (Optional) If specified, filter on jobs that was scheduled at or after given value. Range: [scheduledAfter, +Inf). </param>
-        /// <param name="maxPageSize"> Number of objects to return per page. </param>
+        /// <param name="status"> If specified, filter jobs by status. </param>
+        /// <param name="queueId"> If specified, filter jobs by queue. </param>
+        /// <param name="channelId"> If specified, filter jobs by channel. </param>
+        /// <param name="classificationPolicyId"> If specified, filter jobs by classificationPolicy. </param>
+        /// <param name="scheduledBefore"> If specified, filter on jobs that was scheduled before or at given timestamp. Range: (-Inf, scheduledBefore]. </param>
+        /// <param name="scheduledAfter"> If specified, filter on jobs that was scheduled at or after given value. Range: [scheduledAfter, +Inf). </param>
+        /// <param name="maxpagesize"> Number of objects to return per page. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async Task<Response<JobCollection>> ListJobsAsync(JobStateSelector? status = null, string queueId = null, string channelId = null, string classificationPolicyId = null, DateTimeOffset? scheduledBefore = null, DateTimeOffset? scheduledAfter = null, int? maxPageSize = null, CancellationToken cancellationToken = default)
+        public async Task<Response<JobCollection>> ListJobsAsync(JobStateSelector? status = null, string queueId = null, string channelId = null, string classificationPolicyId = null, DateTimeOffset? scheduledBefore = null, DateTimeOffset? scheduledAfter = null, int? maxpagesize = null, CancellationToken cancellationToken = default)
         {
-            using var message = CreateListJobsRequest(status, queueId, channelId, classificationPolicyId, scheduledBefore, scheduledAfter, maxPageSize);
+            using var message = CreateListJobsRequest(status, queueId, channelId, classificationPolicyId, scheduledBefore, scheduledAfter, maxpagesize);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -682,17 +773,17 @@ namespace Azure.Communication.JobRouter
         }
 
         /// <summary> Retrieves list of jobs based on filter parameters. </summary>
-        /// <param name="status"> (Optional) If specified, filter jobs by status. </param>
-        /// <param name="queueId"> (Optional) If specified, filter jobs by queue. </param>
-        /// <param name="channelId"> (Optional) If specified, filter jobs by channel. </param>
-        /// <param name="classificationPolicyId"> (Optional) If specified, filter jobs by classificationPolicy. </param>
-        /// <param name="scheduledBefore"> (Optional) If specified, filter on jobs that was scheduled before or at given timestamp. Range: (-Inf, scheduledBefore]. </param>
-        /// <param name="scheduledAfter"> (Optional) If specified, filter on jobs that was scheduled at or after given value. Range: [scheduledAfter, +Inf). </param>
-        /// <param name="maxPageSize"> Number of objects to return per page. </param>
+        /// <param name="status"> If specified, filter jobs by status. </param>
+        /// <param name="queueId"> If specified, filter jobs by queue. </param>
+        /// <param name="channelId"> If specified, filter jobs by channel. </param>
+        /// <param name="classificationPolicyId"> If specified, filter jobs by classificationPolicy. </param>
+        /// <param name="scheduledBefore"> If specified, filter on jobs that was scheduled before or at given timestamp. Range: (-Inf, scheduledBefore]. </param>
+        /// <param name="scheduledAfter"> If specified, filter on jobs that was scheduled at or after given value. Range: [scheduledAfter, +Inf). </param>
+        /// <param name="maxpagesize"> Number of objects to return per page. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public Response<JobCollection> ListJobs(JobStateSelector? status = null, string queueId = null, string channelId = null, string classificationPolicyId = null, DateTimeOffset? scheduledBefore = null, DateTimeOffset? scheduledAfter = null, int? maxPageSize = null, CancellationToken cancellationToken = default)
+        public Response<JobCollection> ListJobs(JobStateSelector? status = null, string queueId = null, string channelId = null, string classificationPolicyId = null, DateTimeOffset? scheduledBefore = null, DateTimeOffset? scheduledAfter = null, int? maxpagesize = null, CancellationToken cancellationToken = default)
         {
-            using var message = CreateListJobsRequest(status, queueId, channelId, classificationPolicyId, scheduledBefore, scheduledAfter, maxPageSize);
+            using var message = CreateListJobsRequest(status, queueId, channelId, classificationPolicyId, scheduledBefore, scheduledAfter, maxpagesize);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -778,7 +869,7 @@ namespace Azure.Communication.JobRouter
             }
         }
 
-        internal HttpMessage CreateUnassignJobActionRequest(string id, string assignmentId)
+        internal HttpMessage CreateUnassignJobActionRequest(string id, string assignmentId, UnassignJobRequest unassignJobRequest)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -793,15 +884,23 @@ namespace Azure.Communication.JobRouter
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
+            if (unassignJobRequest != null)
+            {
+                request.Headers.Add("Content-Type", "application/json");
+                var content = new Utf8JsonRequestContent();
+                content.JsonWriter.WriteObjectValue(unassignJobRequest);
+                request.Content = content;
+            }
             return message;
         }
 
         /// <summary> Un-assign a job. </summary>
         /// <param name="id"> Id of the job to un-assign. </param>
         /// <param name="assignmentId"> Id of the assignment to un-assign. </param>
+        /// <param name="unassignJobRequest"> Request body for unassign route. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="id"/> or <paramref name="assignmentId"/> is null. </exception>
-        public async Task<Response<UnassignJobResult>> UnassignJobActionAsync(string id, string assignmentId, CancellationToken cancellationToken = default)
+        public async Task<Response<UnassignJobResult>> UnassignJobActionAsync(string id, string assignmentId, UnassignJobRequest unassignJobRequest = null, CancellationToken cancellationToken = default)
         {
             if (id == null)
             {
@@ -812,7 +911,7 @@ namespace Azure.Communication.JobRouter
                 throw new ArgumentNullException(nameof(assignmentId));
             }
 
-            using var message = CreateUnassignJobActionRequest(id, assignmentId);
+            using var message = CreateUnassignJobActionRequest(id, assignmentId, unassignJobRequest);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -831,9 +930,10 @@ namespace Azure.Communication.JobRouter
         /// <summary> Un-assign a job. </summary>
         /// <param name="id"> Id of the job to un-assign. </param>
         /// <param name="assignmentId"> Id of the assignment to un-assign. </param>
+        /// <param name="unassignJobRequest"> Request body for unassign route. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="id"/> or <paramref name="assignmentId"/> is null. </exception>
-        public Response<UnassignJobResult> UnassignJobAction(string id, string assignmentId, CancellationToken cancellationToken = default)
+        public Response<UnassignJobResult> UnassignJobAction(string id, string assignmentId, UnassignJobRequest unassignJobRequest = null, CancellationToken cancellationToken = default)
         {
             if (id == null)
             {
@@ -844,7 +944,7 @@ namespace Azure.Communication.JobRouter
                 throw new ArgumentNullException(nameof(assignmentId));
             }
 
-            using var message = CreateUnassignJobActionRequest(id, assignmentId);
+            using var message = CreateUnassignJobActionRequest(id, assignmentId, unassignJobRequest);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -942,7 +1042,7 @@ namespace Azure.Communication.JobRouter
             }
         }
 
-        internal HttpMessage CreateDeclineJobActionRequest(string workerId, string offerId)
+        internal HttpMessage CreateDeclineJobActionRequest(string workerId, string offerId, DeclineJobOfferRequest declineJobOfferRequest)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -957,15 +1057,23 @@ namespace Azure.Communication.JobRouter
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
+            if (declineJobOfferRequest != null)
+            {
+                request.Headers.Add("Content-Type", "application/json");
+                var content = new Utf8JsonRequestContent();
+                content.JsonWriter.WriteObjectValue(declineJobOfferRequest);
+                request.Content = content;
+            }
             return message;
         }
 
         /// <summary> Declines an offer to work on a job. </summary>
         /// <param name="workerId"> Id of the worker. </param>
         /// <param name="offerId"> Id of the offer. </param>
+        /// <param name="declineJobOfferRequest"> Request model for declining offer. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="workerId"/> or <paramref name="offerId"/> is null. </exception>
-        public async Task<Response<object>> DeclineJobActionAsync(string workerId, string offerId, CancellationToken cancellationToken = default)
+        public async Task<Response<object>> DeclineJobActionAsync(string workerId, string offerId, DeclineJobOfferRequest declineJobOfferRequest = null, CancellationToken cancellationToken = default)
         {
             if (workerId == null)
             {
@@ -976,7 +1084,7 @@ namespace Azure.Communication.JobRouter
                 throw new ArgumentNullException(nameof(offerId));
             }
 
-            using var message = CreateDeclineJobActionRequest(workerId, offerId);
+            using var message = CreateDeclineJobActionRequest(workerId, offerId, declineJobOfferRequest);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -995,9 +1103,10 @@ namespace Azure.Communication.JobRouter
         /// <summary> Declines an offer to work on a job. </summary>
         /// <param name="workerId"> Id of the worker. </param>
         /// <param name="offerId"> Id of the offer. </param>
+        /// <param name="declineJobOfferRequest"> Request model for declining offer. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="workerId"/> or <paramref name="offerId"/> is null. </exception>
-        public Response<object> DeclineJobAction(string workerId, string offerId, CancellationToken cancellationToken = default)
+        public Response<object> DeclineJobAction(string workerId, string offerId, DeclineJobOfferRequest declineJobOfferRequest = null, CancellationToken cancellationToken = default)
         {
             if (workerId == null)
             {
@@ -1008,7 +1117,7 @@ namespace Azure.Communication.JobRouter
                 throw new ArgumentNullException(nameof(offerId));
             }
 
-            using var message = CreateDeclineJobActionRequest(workerId, offerId);
+            using var message = CreateDeclineJobActionRequest(workerId, offerId, declineJobOfferRequest);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -1134,6 +1243,7 @@ namespace Azure.Communication.JobRouter
             switch (message.Response.Status)
             {
                 case 200:
+                case 201:
                     {
                         RouterWorker value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
@@ -1166,6 +1276,7 @@ namespace Azure.Communication.JobRouter
             switch (message.Response.Status)
             {
                 case 200:
+                case 201:
                     {
                         RouterWorker value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
@@ -1174,6 +1285,95 @@ namespace Azure.Communication.JobRouter
                     }
                 default:
                     throw new RequestFailedException(message.Response);
+            }
+        }
+
+        internal HttpMessage CreateUpsertWorkerRequest(string workerId, RequestContent content, RequestContext context)
+        {
+            var message = _pipeline.CreateMessage(context, ResponseClassifier200201);
+            var request = message.Request;
+            request.Method = RequestMethod.Patch;
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw(_endpoint, false);
+            uri.AppendPath("/routing/workers/", false);
+            uri.AppendPath(workerId, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            request.Headers.Add("Content-Type", "application/merge-patch+json");
+            request.Content = content;
+            return message;
+        }
+
+        /// <summary>
+        /// [Protocol Method] Creates or updates a worker.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="workerId"> Id of the worker. </param>
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="workerId"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="workerId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual async Task<Response> UpsertWorkerAsync(string workerId, RequestContent content, RequestContext context = null)
+        {
+            Argument.AssertNotNullOrEmpty(workerId, nameof(workerId));
+            Argument.AssertNotNull(content, nameof(content));
+
+            using var scope = ClientDiagnostics.CreateScope("JobRouter.UpsertWorker");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateUpsertWorkerRequest(workerId, content, context);
+                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// [Protocol Method] Creates or updates a worker.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="workerId"> Id of the worker. </param>
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="workerId"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="workerId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual Response UpsertWorker(string workerId, RequestContent content, RequestContext context = null)
+        {
+            Argument.AssertNotNullOrEmpty(workerId, nameof(workerId));
+            Argument.AssertNotNull(content, nameof(content));
+
+            using var scope = ClientDiagnostics.CreateScope("JobRouter.UpsertWorker");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateUpsertWorkerRequest(workerId, content, context);
+                return _pipeline.ProcessMessage(message, context);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
             }
         }
 
@@ -1305,7 +1505,7 @@ namespace Azure.Communication.JobRouter
             }
         }
 
-        internal HttpMessage CreateListWorkersRequest(WorkerStateSelector? status, string channelId, string queueId, bool? hasCapacity, int? maxPageSize)
+        internal HttpMessage CreateListWorkersRequest(WorkerStateSelector? status, string channelId, string queueId, bool? hasCapacity, int? maxpagesize)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -1315,7 +1515,7 @@ namespace Azure.Communication.JobRouter
             uri.AppendPath("/routing/workers", false);
             if (status != null)
             {
-                uri.AppendQuery("status", status.Value.ToSerialString(), true);
+                uri.AppendQuery("status", status.Value.ToString(), true);
             }
             if (channelId != null)
             {
@@ -1329,9 +1529,9 @@ namespace Azure.Communication.JobRouter
             {
                 uri.AppendQuery("hasCapacity", hasCapacity.Value, true);
             }
-            if (maxPageSize != null)
+            if (maxpagesize != null)
             {
-                uri.AppendQuery("maxPageSize", maxPageSize.Value, true);
+                uri.AppendQuery("maxpagesize", maxpagesize.Value, true);
             }
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
@@ -1340,18 +1540,18 @@ namespace Azure.Communication.JobRouter
         }
 
         /// <summary> Retrieves existing workers. </summary>
-        /// <param name="status"> (Optional) If specified, select workers by worker status. </param>
-        /// <param name="channelId"> (Optional) If specified, select workers who have a channel configuration with this channel. </param>
-        /// <param name="queueId"> (Optional) If specified, select workers who are assigned to this queue. </param>
+        /// <param name="status"> If specified, select workers by worker status. </param>
+        /// <param name="channelId"> If specified, select workers who have a channel configuration with this channel. </param>
+        /// <param name="queueId"> If specified, select workers who are assigned to this queue. </param>
         /// <param name="hasCapacity">
-        /// (Optional) If set to true, select only workers who have capacity for the channel specified by `channelId` or for any channel
+        /// If set to true, select only workers who have capacity for the channel specified by `channelId` or for any channel
         ///             if `channelId` not specified. If set to false, then will return all workers including workers without any capacity for jobs. Defaults to false.
         /// </param>
-        /// <param name="maxPageSize"> Number of objects to return per page. </param>
+        /// <param name="maxpagesize"> Number of objects to return per page. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async Task<Response<WorkerCollection>> ListWorkersAsync(WorkerStateSelector? status = null, string channelId = null, string queueId = null, bool? hasCapacity = null, int? maxPageSize = null, CancellationToken cancellationToken = default)
+        public async Task<Response<WorkerCollection>> ListWorkersAsync(WorkerStateSelector? status = null, string channelId = null, string queueId = null, bool? hasCapacity = null, int? maxpagesize = null, CancellationToken cancellationToken = default)
         {
-            using var message = CreateListWorkersRequest(status, channelId, queueId, hasCapacity, maxPageSize);
+            using var message = CreateListWorkersRequest(status, channelId, queueId, hasCapacity, maxpagesize);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -1368,18 +1568,18 @@ namespace Azure.Communication.JobRouter
         }
 
         /// <summary> Retrieves existing workers. </summary>
-        /// <param name="status"> (Optional) If specified, select workers by worker status. </param>
-        /// <param name="channelId"> (Optional) If specified, select workers who have a channel configuration with this channel. </param>
-        /// <param name="queueId"> (Optional) If specified, select workers who are assigned to this queue. </param>
+        /// <param name="status"> If specified, select workers by worker status. </param>
+        /// <param name="channelId"> If specified, select workers who have a channel configuration with this channel. </param>
+        /// <param name="queueId"> If specified, select workers who are assigned to this queue. </param>
         /// <param name="hasCapacity">
-        /// (Optional) If set to true, select only workers who have capacity for the channel specified by `channelId` or for any channel
+        /// If set to true, select only workers who have capacity for the channel specified by `channelId` or for any channel
         ///             if `channelId` not specified. If set to false, then will return all workers including workers without any capacity for jobs. Defaults to false.
         /// </param>
-        /// <param name="maxPageSize"> Number of objects to return per page. </param>
+        /// <param name="maxpagesize"> Number of objects to return per page. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public Response<WorkerCollection> ListWorkers(WorkerStateSelector? status = null, string channelId = null, string queueId = null, bool? hasCapacity = null, int? maxPageSize = null, CancellationToken cancellationToken = default)
+        public Response<WorkerCollection> ListWorkers(WorkerStateSelector? status = null, string channelId = null, string queueId = null, bool? hasCapacity = null, int? maxpagesize = null, CancellationToken cancellationToken = default)
         {
-            using var message = CreateListWorkersRequest(status, channelId, queueId, hasCapacity, maxPageSize);
+            using var message = CreateListWorkersRequest(status, channelId, queueId, hasCapacity, maxpagesize);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -1397,23 +1597,23 @@ namespace Azure.Communication.JobRouter
 
         /// <summary> Retrieves list of jobs based on filter parameters. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="status"> (Optional) If specified, filter jobs by status. </param>
-        /// <param name="queueId"> (Optional) If specified, filter jobs by queue. </param>
-        /// <param name="channelId"> (Optional) If specified, filter jobs by channel. </param>
-        /// <param name="classificationPolicyId"> (Optional) If specified, filter jobs by classificationPolicy. </param>
-        /// <param name="scheduledBefore"> (Optional) If specified, filter on jobs that was scheduled before or at given timestamp. Range: (-Inf, scheduledBefore]. </param>
-        /// <param name="scheduledAfter"> (Optional) If specified, filter on jobs that was scheduled at or after given value. Range: [scheduledAfter, +Inf). </param>
-        /// <param name="maxPageSize"> Number of objects to return per page. </param>
+        /// <param name="status"> If specified, filter jobs by status. </param>
+        /// <param name="queueId"> If specified, filter jobs by queue. </param>
+        /// <param name="channelId"> If specified, filter jobs by channel. </param>
+        /// <param name="classificationPolicyId"> If specified, filter jobs by classificationPolicy. </param>
+        /// <param name="scheduledBefore"> If specified, filter on jobs that was scheduled before or at given timestamp. Range: (-Inf, scheduledBefore]. </param>
+        /// <param name="scheduledAfter"> If specified, filter on jobs that was scheduled at or after given value. Range: [scheduledAfter, +Inf). </param>
+        /// <param name="maxpagesize"> Number of objects to return per page. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> is null. </exception>
-        public async Task<Response<JobCollection>> ListJobsNextPageAsync(string nextLink, JobStateSelector? status = null, string queueId = null, string channelId = null, string classificationPolicyId = null, DateTimeOffset? scheduledBefore = null, DateTimeOffset? scheduledAfter = null, int? maxPageSize = null, CancellationToken cancellationToken = default)
+        public async Task<Response<JobCollection>> ListJobsNextPageAsync(string nextLink, JobStateSelector? status = null, string queueId = null, string channelId = null, string classificationPolicyId = null, DateTimeOffset? scheduledBefore = null, DateTimeOffset? scheduledAfter = null, int? maxpagesize = null, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {
                 throw new ArgumentNullException(nameof(nextLink));
             }
 
-            using var message = CreateListJobsNextPageRequest(nextLink, status, queueId, channelId, classificationPolicyId, scheduledBefore, scheduledAfter, maxPageSize);
+            using var message = CreateListJobsNextPageRequest(nextLink, status, queueId, channelId, classificationPolicyId, scheduledBefore, scheduledAfter, maxpagesize);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -1431,23 +1631,23 @@ namespace Azure.Communication.JobRouter
 
         /// <summary> Retrieves list of jobs based on filter parameters. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="status"> (Optional) If specified, filter jobs by status. </param>
-        /// <param name="queueId"> (Optional) If specified, filter jobs by queue. </param>
-        /// <param name="channelId"> (Optional) If specified, filter jobs by channel. </param>
-        /// <param name="classificationPolicyId"> (Optional) If specified, filter jobs by classificationPolicy. </param>
-        /// <param name="scheduledBefore"> (Optional) If specified, filter on jobs that was scheduled before or at given timestamp. Range: (-Inf, scheduledBefore]. </param>
-        /// <param name="scheduledAfter"> (Optional) If specified, filter on jobs that was scheduled at or after given value. Range: [scheduledAfter, +Inf). </param>
-        /// <param name="maxPageSize"> Number of objects to return per page. </param>
+        /// <param name="status"> If specified, filter jobs by status. </param>
+        /// <param name="queueId"> If specified, filter jobs by queue. </param>
+        /// <param name="channelId"> If specified, filter jobs by channel. </param>
+        /// <param name="classificationPolicyId"> If specified, filter jobs by classificationPolicy. </param>
+        /// <param name="scheduledBefore"> If specified, filter on jobs that was scheduled before or at given timestamp. Range: (-Inf, scheduledBefore]. </param>
+        /// <param name="scheduledAfter"> If specified, filter on jobs that was scheduled at or after given value. Range: [scheduledAfter, +Inf). </param>
+        /// <param name="maxpagesize"> Number of objects to return per page. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> is null. </exception>
-        public Response<JobCollection> ListJobsNextPage(string nextLink, JobStateSelector? status = null, string queueId = null, string channelId = null, string classificationPolicyId = null, DateTimeOffset? scheduledBefore = null, DateTimeOffset? scheduledAfter = null, int? maxPageSize = null, CancellationToken cancellationToken = default)
+        public Response<JobCollection> ListJobsNextPage(string nextLink, JobStateSelector? status = null, string queueId = null, string channelId = null, string classificationPolicyId = null, DateTimeOffset? scheduledBefore = null, DateTimeOffset? scheduledAfter = null, int? maxpagesize = null, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {
                 throw new ArgumentNullException(nameof(nextLink));
             }
 
-            using var message = CreateListJobsNextPageRequest(nextLink, status, queueId, channelId, classificationPolicyId, scheduledBefore, scheduledAfter, maxPageSize);
+            using var message = CreateListJobsNextPageRequest(nextLink, status, queueId, channelId, classificationPolicyId, scheduledBefore, scheduledAfter, maxpagesize);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -1465,24 +1665,24 @@ namespace Azure.Communication.JobRouter
 
         /// <summary> Retrieves existing workers. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="status"> (Optional) If specified, select workers by worker status. </param>
-        /// <param name="channelId"> (Optional) If specified, select workers who have a channel configuration with this channel. </param>
-        /// <param name="queueId"> (Optional) If specified, select workers who are assigned to this queue. </param>
+        /// <param name="status"> If specified, select workers by worker status. </param>
+        /// <param name="channelId"> If specified, select workers who have a channel configuration with this channel. </param>
+        /// <param name="queueId"> If specified, select workers who are assigned to this queue. </param>
         /// <param name="hasCapacity">
-        /// (Optional) If set to true, select only workers who have capacity for the channel specified by `channelId` or for any channel
+        /// If set to true, select only workers who have capacity for the channel specified by `channelId` or for any channel
         ///             if `channelId` not specified. If set to false, then will return all workers including workers without any capacity for jobs. Defaults to false.
         /// </param>
-        /// <param name="maxPageSize"> Number of objects to return per page. </param>
+        /// <param name="maxpagesize"> Number of objects to return per page. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> is null. </exception>
-        public async Task<Response<WorkerCollection>> ListWorkersNextPageAsync(string nextLink, WorkerStateSelector? status = null, string channelId = null, string queueId = null, bool? hasCapacity = null, int? maxPageSize = null, CancellationToken cancellationToken = default)
+        public async Task<Response<WorkerCollection>> ListWorkersNextPageAsync(string nextLink, WorkerStateSelector? status = null, string channelId = null, string queueId = null, bool? hasCapacity = null, int? maxpagesize = null, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {
                 throw new ArgumentNullException(nameof(nextLink));
             }
 
-            using var message = CreateListWorkersNextPageRequest(nextLink, status, channelId, queueId, hasCapacity, maxPageSize);
+            using var message = CreateListWorkersNextPageRequest(nextLink, status, channelId, queueId, hasCapacity, maxpagesize);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -1500,24 +1700,24 @@ namespace Azure.Communication.JobRouter
 
         /// <summary> Retrieves existing workers. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="status"> (Optional) If specified, select workers by worker status. </param>
-        /// <param name="channelId"> (Optional) If specified, select workers who have a channel configuration with this channel. </param>
-        /// <param name="queueId"> (Optional) If specified, select workers who are assigned to this queue. </param>
+        /// <param name="status"> If specified, select workers by worker status. </param>
+        /// <param name="channelId"> If specified, select workers who have a channel configuration with this channel. </param>
+        /// <param name="queueId"> If specified, select workers who are assigned to this queue. </param>
         /// <param name="hasCapacity">
-        /// (Optional) If set to true, select only workers who have capacity for the channel specified by `channelId` or for any channel
+        /// If set to true, select only workers who have capacity for the channel specified by `channelId` or for any channel
         ///             if `channelId` not specified. If set to false, then will return all workers including workers without any capacity for jobs. Defaults to false.
         /// </param>
-        /// <param name="maxPageSize"> Number of objects to return per page. </param>
+        /// <param name="maxpagesize"> Number of objects to return per page. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> is null. </exception>
-        public Response<WorkerCollection> ListWorkersNextPage(string nextLink, WorkerStateSelector? status = null, string channelId = null, string queueId = null, bool? hasCapacity = null, int? maxPageSize = null, CancellationToken cancellationToken = default)
+        public Response<WorkerCollection> ListWorkersNextPage(string nextLink, WorkerStateSelector? status = null, string channelId = null, string queueId = null, bool? hasCapacity = null, int? maxpagesize = null, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {
                 throw new ArgumentNullException(nameof(nextLink));
             }
 
-            using var message = CreateListWorkersNextPageRequest(nextLink, status, channelId, queueId, hasCapacity, maxPageSize);
+            using var message = CreateListWorkersNextPageRequest(nextLink, status, channelId, queueId, hasCapacity, maxpagesize);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -1532,5 +1732,8 @@ namespace Azure.Communication.JobRouter
                     throw new RequestFailedException(message.Response);
             }
         }
+
+        private static ResponseClassifier _responseClassifier200201;
+        private static ResponseClassifier ResponseClassifier200201 => _responseClassifier200201 ??= new StatusCodeClassifier(stackalloc ushort[] { 200, 201 });
     }
 }
