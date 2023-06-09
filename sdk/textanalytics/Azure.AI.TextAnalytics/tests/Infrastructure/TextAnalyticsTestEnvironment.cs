@@ -11,13 +11,13 @@ namespace Azure.AI.TextAnalytics.Tests
 {
     public class TextAnalyticsTestEnvironment: TestEnvironment
     {
-        public string Endpoint => GetRecordedVariable("TEXT_ANALYTICS_ENDPOINT");
-        public string ApiKey => GetRecordedVariable("TEXT_ANALYTICS_API_KEY", options => options.IsSecret());
+        public string Endpoint => GetRecordedVariable("TEXTANALYTICS_ENDPOINT");
+        public string ApiKey => GetRecordedVariable("TEXTANALYTICS_API_KEY", options => options.IsSecret());
 
         // The following variables refer to the static test resource, which is
         // used to test the custom text analysis features.
-        public string StaticEndpoint => GetRecordedVariable("TEXT_ANALYTICS_STATIC_ENDPOINT");
-        public string StaticApiKey => GetRecordedVariable("TEXT_ANALYTICS_STATIC_API_KEY", options => options.IsSecret());
+        public string StaticEndpoint => GetRecordedVariable("TEXTANALYTICS_STATIC_ENDPOINT");
+        public string StaticApiKey => GetRecordedVariable("TEXTANALYTICS_STATIC_API_KEY", options => options.IsSecret());
         public string SingleClassificationProjectName => GetRecordedVariable("TEXTANALYTICS_SINGLE_CATEGORY_CLASSIFY_PROJECT_NAME");
         public string SingleClassificationDeploymentName => GetRecordedVariable("TEXTANALYTICS_SINGLE_CATEGORY_CLASSIFY_DEPLOYMENT_NAME");
         public string MultiClassificationProjectName => GetRecordedVariable("TEXTANALYTICS_MULTI_CATEGORY_CLASSIFY_PROJECT_NAME");
@@ -67,8 +67,9 @@ namespace Azure.AI.TextAnalytics.Tests
                 TextAnalyticsClient clientWithAzureKeyCredential = new(endpoint, azureKeyCredential, options);
                 await clientWithAzureKeyCredential.DetectLanguageAsync("Ready!");
 
-                TextAnalyticsClient clientWithTokenCredential = new(endpoint, Credential, options);
-                await clientWithTokenCredential.DetectLanguageAsync("Ready!");
+                // TODO: https://github.com/Azure/azure-sdk-for-net/issues/36799
+                // TextAnalyticsClient clientWithTokenCredential = new(endpoint, Credential, options);
+                // await clientWithTokenCredential.DetectLanguageAsync("Ready!");
             }
             catch (RequestFailedException e) when (e.Status == 401)
             {

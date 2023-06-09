@@ -31,14 +31,6 @@ namespace Azure.Storage.DataMovement.Tests
         {
         }
 
-        public enum TransferType
-        {
-            Upload,
-            Download,
-            AsyncCopy,
-            SyncCopy
-        }
-
         private async Task AssertDirectorySourceAndDestinationAsync(
             TransferType transferType,
             StorageResourceContainer sourceResource,
@@ -535,8 +527,11 @@ namespace Azure.Storage.DataMovement.Tests
                 Argument.AssertNotNull(destinationContainer, nameof(destinationContainer));
                 BlobStorageResourceContainerOptions options = new BlobStorageResourceContainerOptions()
                 {
-                    CopyMethod = transferType == TransferType.SyncCopy ? TransferCopyMethod.SyncCopy : TransferCopyMethod.AsyncCopy,
-                    DirectoryPrefix = GetNewBlobDirectoryName()
+                    DirectoryPrefix = GetNewBlobDirectoryName(),
+                    ResourceOptions = new BlobStorageResourceOptions()
+                    {
+                        CopyMethod = transferType == TransferType.SyncCopy ? TransferCopyMethod.SyncCopy : TransferCopyMethod.AsyncCopy,
+                    }
                 };
                 SourceResource ??= await CreateBlobDirectorySourceResourceAsync(
                     size: size,

@@ -38,6 +38,7 @@ namespace Azure.Storage.DataMovement
                   errorHandling: job._errorHandling,
                   createMode: job._createMode,
                   checkpointer: job._checkpointer,
+                  progressTracker: job._progressTracker,
                   arrayPool: job.UploadArrayPool,
                   isFinalPart: isFinalPart,
                   jobPartEventHandler: job.GetJobPartStatus(),
@@ -68,6 +69,7 @@ namespace Azure.Storage.DataMovement
                   errorHandling: job._errorHandling,
                   createMode: job._createMode,
                   checkpointer: job._checkpointer,
+                  progressTracker: job._progressTracker,
                   arrayPool: job.UploadArrayPool,
                   isFinalPart: isFinalPart,
                   jobPartEventHandler: job.GetJobPartStatus(),
@@ -283,6 +285,7 @@ namespace Azure.Storage.DataMovement
                     expectedLength: totalLength).ConfigureAwait(false);
                 if (successfulCopy)
                 {
+                    ReportBytesWritten(downloadLength);
                     // Queue the work to end the download
                     await QueueChunkToChannelAsync(
                         async () =>

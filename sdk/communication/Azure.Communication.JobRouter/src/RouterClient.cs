@@ -686,7 +686,7 @@ using Azure.Core.Pipeline;
                             classificationPolicyId: options?.ClassificationPolicyId,
                             scheduledBefore: options?.ScheduledBefore,
                             scheduledAfter: options?.ScheduledAfter,
-                            maxPageSize: maxPageSize,
+                            maxpagesize: maxPageSize,
                             cancellationToken: cancellationToken)
                         .ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
@@ -715,7 +715,7 @@ using Azure.Core.Pipeline;
                             classificationPolicyId: options?.ClassificationPolicyId,
                             scheduledBefore: options?.ScheduledBefore,
                             scheduledAfter: options?.ScheduledAfter,
-                            maxPageSize: maxPageSize,
+                            maxpagesize: maxPageSize,
                             cancellationToken: cancellationToken)
                         .ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
@@ -752,7 +752,7 @@ using Azure.Core.Pipeline;
                         classificationPolicyId: options?.ClassificationPolicyId,
                         scheduledBefore: options?.ScheduledBefore,
                         scheduledAfter: options?.ScheduledAfter,
-                        maxPageSize: maxPageSize,
+                        maxpagesize: maxPageSize,
                         cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
@@ -780,7 +780,7 @@ using Azure.Core.Pipeline;
                             classificationPolicyId: options?.ClassificationPolicyId,
                             scheduledBefore: options?.ScheduledBefore,
                             scheduledAfter: options?.ScheduledAfter,
-                            maxPageSize: maxPageSize,
+                            maxpagesize: maxPageSize,
                             cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
@@ -1319,7 +1319,7 @@ using Azure.Core.Pipeline;
                         channelId: options?.ChannelId,
                         queueId: options?.QueueId,
                         hasCapacity: options?.HasCapacity,
-                        maxPageSize: maxPageSize,
+                        maxpagesize: maxPageSize,
                         cancellationToken:  cancellationToken)
                         .ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
@@ -1346,7 +1346,7 @@ using Azure.Core.Pipeline;
                             channelId: options?.ChannelId,
                             queueId: options?.QueueId,
                             hasCapacity: options?.HasCapacity,
-                            maxPageSize: maxPageSize,
+                            maxpagesize: maxPageSize,
                             cancellationToken: cancellationToken)
                         .ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
@@ -1381,7 +1381,7 @@ using Azure.Core.Pipeline;
                         channelId: options?.ChannelId,
                         queueId: options?.QueueId,
                         hasCapacity: options?.HasCapacity,
-                        maxPageSize: maxPageSize,
+                        maxpagesize: maxPageSize,
                         cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
@@ -1407,7 +1407,7 @@ using Azure.Core.Pipeline;
                             channelId: options?.ChannelId,
                             queueId: options?.QueueId,
                             hasCapacity: options?.HasCapacity,
-                            maxPageSize: maxPageSize,
+                            maxpagesize: maxPageSize,
                             cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }

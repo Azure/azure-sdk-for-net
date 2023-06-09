@@ -15,10 +15,14 @@ namespace Azure.Communication.Rooms
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Role))
+            if (Role != null)
             {
                 writer.WritePropertyName("role"u8);
                 writer.WriteStringValue(Role.Value.ToString());
+            }
+            else
+            {
+                writer.WriteNull("role");
             }
             writer.WriteEndObject();
         }
