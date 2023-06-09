@@ -8,10 +8,9 @@ Run `dotnet build /t:GenerateCode` to generate code.
 
 ``` yaml
 azure-arm: true
-generate-model-factory: false
 library-name: Compute
 namespace: Azure.ResourceManager.Compute
-require: https://github.com/Azure/azure-rest-api-specs/blob/b06a6f45e472dd07c2e0dab06b1e52dfe2684c88/specification/compute/resource-manager/readme.md
+require: https://github.com/Azure/azure-rest-api-specs/blob/a2140e7ff0a6c28df501b16c51fe85b762a386fc/specification/compute/resource-manager/readme.md
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
 skip-csproj: true
@@ -120,8 +119,8 @@ prepend-rp-prefix:
 - PublicIPAddressSkuTier
 - StatusLevelTypes
 
-#mgmt-debug:
-#    show-serialized-names: true
+# mgmt-debug:
+#   show-serialized-names: true
 
 rename-mapping:
   DiskSecurityTypes.ConfidentialVM_VMGuestStateOnlyEncryptedWithPlatformKey: ConfidentialVmGuestStateOnlyEncryptedWithPlatformKey
@@ -263,6 +262,8 @@ rename-mapping:
   SecurityPostureReference: ComputeSecurityPostureReference
   RestorePointSourceVmStorageProfile.dataDisks: DataDiskList
   SecurityPostureReference.id: -|arm-id
+  CommunityGalleryImage.properties.identifier: ImageIdentifier
+  GalleryTargetExtendedLocation.storageAccountType: GalleryStorageAccountType
 
 directive:
 # copy the systemData from common-types here so that it will be automatically replaced

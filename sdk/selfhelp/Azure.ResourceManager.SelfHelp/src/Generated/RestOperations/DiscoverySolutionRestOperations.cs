@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.SelfHelp
         {
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _apiVersion = apiVersion ?? "2023-01-01-preview";
+            _apiVersion = apiVersion ?? "2023-06-01";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.SelfHelp
         /// <param name="skiptoken"> Skiptoken is only used if a previous operation returned a partial result. If a previous response contains a nextLink element, the value of the nextLink element will include a skiptoken parameter that specifies a starting point to use for subsequent calls. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="scope"/> is null. </exception>
-        public async Task<Response<DiscoveryResponse>> ListAsync(string scope, string filter = null, string skiptoken = null, CancellationToken cancellationToken = default)
+        public async Task<Response<SelfHelpDiscoverySolutionResult>> ListAsync(string scope, string filter = null, string skiptoken = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(scope, nameof(scope));
 
@@ -78,9 +78,9 @@ namespace Azure.ResourceManager.SelfHelp
             {
                 case 200:
                     {
-                        DiscoveryResponse value = default;
+                        SelfHelpDiscoverySolutionResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = DiscoveryResponse.DeserializeDiscoveryResponse(document.RootElement);
+                        value = SelfHelpDiscoverySolutionResult.DeserializeSelfHelpDiscoverySolutionResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.SelfHelp
         /// <param name="skiptoken"> Skiptoken is only used if a previous operation returned a partial result. If a previous response contains a nextLink element, the value of the nextLink element will include a skiptoken parameter that specifies a starting point to use for subsequent calls. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="scope"/> is null. </exception>
-        public Response<DiscoveryResponse> List(string scope, string filter = null, string skiptoken = null, CancellationToken cancellationToken = default)
+        public Response<SelfHelpDiscoverySolutionResult> List(string scope, string filter = null, string skiptoken = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(scope, nameof(scope));
 
@@ -104,9 +104,9 @@ namespace Azure.ResourceManager.SelfHelp
             {
                 case 200:
                     {
-                        DiscoveryResponse value = default;
+                        SelfHelpDiscoverySolutionResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = DiscoveryResponse.DeserializeDiscoveryResponse(document.RootElement);
+                        value = SelfHelpDiscoverySolutionResult.DeserializeSelfHelpDiscoverySolutionResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.SelfHelp
         /// <param name="skiptoken"> Skiptoken is only used if a previous operation returned a partial result. If a previous response contains a nextLink element, the value of the nextLink element will include a skiptoken parameter that specifies a starting point to use for subsequent calls. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="scope"/> is null. </exception>
-        public async Task<Response<DiscoveryResponse>> ListNextPageAsync(string nextLink, string scope, string filter = null, string skiptoken = null, CancellationToken cancellationToken = default)
+        public async Task<Response<SelfHelpDiscoverySolutionResult>> ListNextPageAsync(string nextLink, string scope, string filter = null, string skiptoken = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNull(scope, nameof(scope));
@@ -146,9 +146,9 @@ namespace Azure.ResourceManager.SelfHelp
             {
                 case 200:
                     {
-                        DiscoveryResponse value = default;
+                        SelfHelpDiscoverySolutionResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = DiscoveryResponse.DeserializeDiscoveryResponse(document.RootElement);
+                        value = SelfHelpDiscoverySolutionResult.DeserializeSelfHelpDiscoverySolutionResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -163,7 +163,7 @@ namespace Azure.ResourceManager.SelfHelp
         /// <param name="skiptoken"> Skiptoken is only used if a previous operation returned a partial result. If a previous response contains a nextLink element, the value of the nextLink element will include a skiptoken parameter that specifies a starting point to use for subsequent calls. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="scope"/> is null. </exception>
-        public Response<DiscoveryResponse> ListNextPage(string nextLink, string scope, string filter = null, string skiptoken = null, CancellationToken cancellationToken = default)
+        public Response<SelfHelpDiscoverySolutionResult> ListNextPage(string nextLink, string scope, string filter = null, string skiptoken = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNull(scope, nameof(scope));
@@ -174,9 +174,9 @@ namespace Azure.ResourceManager.SelfHelp
             {
                 case 200:
                     {
-                        DiscoveryResponse value = default;
+                        SelfHelpDiscoverySolutionResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = DiscoveryResponse.DeserializeDiscoveryResponse(document.RootElement);
+                        value = SelfHelpDiscoverySolutionResult.DeserializeSelfHelpDiscoverySolutionResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

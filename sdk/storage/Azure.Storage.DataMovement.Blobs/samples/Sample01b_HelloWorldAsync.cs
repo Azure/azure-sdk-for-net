@@ -908,8 +908,6 @@ namespace Azure.Storage.DataMovement.Blobs.Samples
                 //StorageResource rehydratedSourceResource = BlockBlobStorageResource.
 
                 // Resuming when you want to add updated credentials (e.g. a new SAS or something)
-
-
                 DataTransfer resumedTransfer = await transferManager.ResumeTransferAsync(
                     transferId: dataTransfer.Id,
                     sourceResource: sourceResource,

@@ -88,7 +88,6 @@ namespace Azure.Storage.DataMovement.Blobs
                     client,
                     length,
                     _options.ToAppendBlobStorageResourceOptions());
-                ;
             }
             else if (type == BlobType.Page)
             {

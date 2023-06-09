@@ -17,6 +17,13 @@ namespace Azure.Communication.Chat
             User = identifier;
         }
 
+        internal ChatParticipant(CommunicationIdentifier user, string displayName, DateTimeOffset? shareHistoryTime)
+        {
+            User = user;
+            DisplayName = displayName;
+            ShareHistoryTime = shareHistoryTime;
+        }
+
         internal ChatParticipant(ChatParticipantInternal chatParticipantInternal)
         {
             User = CommunicationIdentifierSerializer.Deserialize(chatParticipantInternal.CommunicationIdentifier);
