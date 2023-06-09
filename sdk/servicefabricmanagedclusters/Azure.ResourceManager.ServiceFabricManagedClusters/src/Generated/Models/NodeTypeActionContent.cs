@@ -28,7 +28,6 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
             Nodes = (IList<string>)nodes;
         }
 
-
         /// <summary> List of node names from the node type. </summary>
         public IList<string> Nodes { get; }
         /// <summary> Force the action to go through. </summary>

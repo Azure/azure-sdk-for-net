@@ -280,8 +280,18 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
             }
             if (Optional.IsDefined(VmSharedGalleryImageId))
             {
-                writer.WritePropertyName("VmSharedGalleryImageId"u8);
+                writer.WritePropertyName("vmSharedGalleryImageId"u8);
                 writer.WriteStringValue(VmSharedGalleryImageId);
+            }
+            if (Optional.IsDefined(NatGatewayId))
+            {
+                writer.WritePropertyName("natGatewayId"u8);
+                writer.WriteStringValue(NatGatewayId);
+            }
+            if (Optional.IsDefined(VmImagePlan))
+            {
+                writer.WritePropertyName("vmImagePlan"u8);
+                writer.WriteObjectValue(VmImagePlan);
             }
             writer.WriteEndObject();
             writer.WriteEndObject();
@@ -340,6 +350,8 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
             Optional<bool> secureBootEnabled = default;
             Optional<bool> enableNodePublicIP = default;
             Optional<ResourceIdentifier> vmSharedGalleryImageId = default;
+            Optional<ResourceIdentifier> natGatewayId = default;
+            Optional<VmImagePlan> vmImagePlan = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("sku"u8))
@@ -771,7 +783,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
                             enableNodePublicIP = property0.Value.GetBoolean();
                             continue;
                         }
-                        if (property0.NameEquals("VmSharedGalleryImageId"u8))
+                        if (property0.NameEquals("vmSharedGalleryImageId"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -780,11 +792,29 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
                             vmSharedGalleryImageId = new ResourceIdentifier(property0.Value.GetString());
                             continue;
                         }
+                        if (property0.NameEquals("natGatewayId"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            natGatewayId = new ResourceIdentifier(property0.Value.GetString());
+                            continue;
+                        }
+                        if (property0.NameEquals("vmImagePlan"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            vmImagePlan = VmImagePlan.DeserializeVmImagePlan(property0.Value);
+                            continue;
+                        }
                     }
                     continue;
                 }
             }
-            return new ServiceFabricManagedNodeTypeData(id, name, type, systemData.Value, sku.Value, Optional.ToNullable(isPrimary), Optional.ToNullable(vmInstanceCount), Optional.ToNullable(dataDiskSizeGB), Optional.ToNullable(dataDiskType), dataDiskLetter.Value, Optional.ToDictionary(placementProperties), Optional.ToDictionary(capacities), applicationPorts.Value, ephemeralPorts.Value, vmSize.Value, vmImagePublisher.Value, vmImageOffer.Value, vmImageSku.Value, vmImageVersion.Value, Optional.ToList(vmSecrets), Optional.ToList(vmExtensions), vmManagedIdentity.Value, Optional.ToNullable(isStateless), Optional.ToNullable(multiplePlacementGroups), Optional.ToList(frontendConfigurations), Optional.ToList(networkSecurityRules), Optional.ToList(additionalDataDisks), Optional.ToNullable(enableEncryptionAtHost), Optional.ToNullable(provisioningState), Optional.ToNullable(enableAcceleratedNetworking), Optional.ToNullable(useDefaultPublicLoadBalancer), Optional.ToNullable(useTempDataDisk), Optional.ToNullable(enableOverProvisioning), Optional.ToList(zones), Optional.ToNullable(isSpotVm), hostGroupId.Value, Optional.ToNullable(useEphemeralOSDisk), spotRestoreTimeout.Value, Optional.ToNullable(evictionPolicy), vmImageResourceId.Value, subnetId.Value, Optional.ToList(vmSetupActions), Optional.ToNullable(securityType), Optional.ToNullable(secureBootEnabled), Optional.ToNullable(enableNodePublicIP), vmSharedGalleryImageId.Value, Optional.ToDictionary(tags));
+            return new ServiceFabricManagedNodeTypeData(id, name, type, systemData.Value, sku.Value, Optional.ToNullable(isPrimary), Optional.ToNullable(vmInstanceCount), Optional.ToNullable(dataDiskSizeGB), Optional.ToNullable(dataDiskType), dataDiskLetter.Value, Optional.ToDictionary(placementProperties), Optional.ToDictionary(capacities), applicationPorts.Value, ephemeralPorts.Value, vmSize.Value, vmImagePublisher.Value, vmImageOffer.Value, vmImageSku.Value, vmImageVersion.Value, Optional.ToList(vmSecrets), Optional.ToList(vmExtensions), vmManagedIdentity.Value, Optional.ToNullable(isStateless), Optional.ToNullable(multiplePlacementGroups), Optional.ToList(frontendConfigurations), Optional.ToList(networkSecurityRules), Optional.ToList(additionalDataDisks), Optional.ToNullable(enableEncryptionAtHost), Optional.ToNullable(provisioningState), Optional.ToNullable(enableAcceleratedNetworking), Optional.ToNullable(useDefaultPublicLoadBalancer), Optional.ToNullable(useTempDataDisk), Optional.ToNullable(enableOverProvisioning), Optional.ToList(zones), Optional.ToNullable(isSpotVm), hostGroupId.Value, Optional.ToNullable(useEphemeralOSDisk), spotRestoreTimeout.Value, Optional.ToNullable(evictionPolicy), vmImageResourceId.Value, subnetId.Value, Optional.ToList(vmSetupActions), Optional.ToNullable(securityType), Optional.ToNullable(secureBootEnabled), Optional.ToNullable(enableNodePublicIP), vmSharedGalleryImageId.Value, natGatewayId.Value, vmImagePlan.Value, Optional.ToDictionary(tags));
         }
     }
 }

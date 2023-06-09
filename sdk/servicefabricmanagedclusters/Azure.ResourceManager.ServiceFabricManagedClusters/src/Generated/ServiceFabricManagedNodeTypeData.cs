@@ -80,8 +80,10 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
         /// <param name="secureBootEnabled"> Specifies whether secure boot should be enabled on the nodeType. Can only be used with TrustedLaunch SecurityType. </param>
         /// <param name="enableNodePublicIP"> Specifies whether each node is allocated its own public IP address. This is only supported on secondary node types with custom Load Balancers. </param>
         /// <param name="vmSharedGalleryImageId"> Indicates the resource id of the vm shared galleries image. This parameter is used for custom vm image. </param>
+        /// <param name="natGatewayId"> Specifies the resource id of a NAT Gateway to attach to the subnet of this node type. Node type must use custom load balancer. </param>
+        /// <param name="vmImagePlan"> Specifies information about the marketplace image used to create the virtual machine. This element is only used for marketplace images. Before you can use a marketplace image from an API, you must enable the image for programmatic use. In the Azure portal, find the marketplace image that you want to use and then click Want to deploy programmatically, Get Started -&gt;. Enter any required information and then click Save. </param>
         /// <param name="tags"> Azure resource tags. </param>
-        internal ServiceFabricManagedNodeTypeData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, NodeTypeSku sku, bool? isPrimary, int? vmInstanceCount, int? dataDiskSizeInGB, ServiceFabricManagedDataDiskType? dataDiskType, string dataDiskLetter, IDictionary<string, string> placementProperties, IDictionary<string, string> capacities, EndpointRangeDescription applicationPorts, EndpointRangeDescription ephemeralPorts, string vmSize, string vmImagePublisher, string vmImageOffer, string vmImageSku, string vmImageVersion, IList<NodeTypeVaultSecretGroup> vmSecrets, IList<NodeTypeVmssExtension> vmExtensions, VmManagedIdentity vmManagedIdentity, bool? isStateless, bool? hasMultiplePlacementGroups, IList<NodeTypeFrontendConfiguration> frontendConfigurations, IList<ServiceFabricManagedNetworkSecurityRule> networkSecurityRules, IList<NodeTypeVmssDataDisk> additionalDataDisks, bool? isEncryptionAtHostEnabled, ServiceFabricManagedResourceProvisioningState? provisioningState, bool? isAcceleratedNetworkingEnabled, bool? useDefaultPublicLoadBalancer, bool? useTempDataDisk, bool? isOverProvisioningEnabled, IList<string> zones, bool? isSpotVm, string hostGroupId, bool? useEphemeralOSDisk, string spotRestoreTimeout, EvictionPolicyType? evictionPolicy, ResourceIdentifier vmImageResourceId, ResourceIdentifier subnetId, IList<VmSetupAction> vmSetupActions, SecurityType? securityType, bool? secureBootEnabled, bool? enableNodePublicIP, ResourceIdentifier vmSharedGalleryImageId, IDictionary<string, string> tags) : base(id, name, resourceType, systemData)
+        internal ServiceFabricManagedNodeTypeData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, NodeTypeSku sku, bool? isPrimary, int? vmInstanceCount, int? dataDiskSizeInGB, ServiceFabricManagedDataDiskType? dataDiskType, string dataDiskLetter, IDictionary<string, string> placementProperties, IDictionary<string, string> capacities, EndpointRangeDescription applicationPorts, EndpointRangeDescription ephemeralPorts, string vmSize, string vmImagePublisher, string vmImageOffer, string vmImageSku, string vmImageVersion, IList<NodeTypeVaultSecretGroup> vmSecrets, IList<NodeTypeVmssExtension> vmExtensions, VmManagedIdentity vmManagedIdentity, bool? isStateless, bool? hasMultiplePlacementGroups, IList<NodeTypeFrontendConfiguration> frontendConfigurations, IList<ServiceFabricManagedNetworkSecurityRule> networkSecurityRules, IList<NodeTypeVmssDataDisk> additionalDataDisks, bool? isEncryptionAtHostEnabled, ServiceFabricManagedResourceProvisioningState? provisioningState, bool? isAcceleratedNetworkingEnabled, bool? useDefaultPublicLoadBalancer, bool? useTempDataDisk, bool? isOverProvisioningEnabled, IList<string> zones, bool? isSpotVm, string hostGroupId, bool? useEphemeralOSDisk, string spotRestoreTimeout, EvictionPolicyType? evictionPolicy, ResourceIdentifier vmImageResourceId, ResourceIdentifier subnetId, IList<VmSetupAction> vmSetupActions, SecurityType? securityType, bool? secureBootEnabled, bool? enableNodePublicIP, ResourceIdentifier vmSharedGalleryImageId, ResourceIdentifier natGatewayId, VmImagePlan vmImagePlan, IDictionary<string, string> tags) : base(id, name, resourceType, systemData)
         {
             Sku = sku;
             IsPrimary = isPrimary;
@@ -125,6 +127,8 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
             SecureBootEnabled = secureBootEnabled;
             EnableNodePublicIP = enableNodePublicIP;
             VmSharedGalleryImageId = vmSharedGalleryImageId;
+            NatGatewayId = natGatewayId;
+            VmImagePlan = vmImagePlan;
             Tags = tags;
         }
 
@@ -223,6 +227,10 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
         public bool? EnableNodePublicIP { get; set; }
         /// <summary> Indicates the resource id of the vm shared galleries image. This parameter is used for custom vm image. </summary>
         public ResourceIdentifier VmSharedGalleryImageId { get; set; }
+        /// <summary> Specifies the resource id of a NAT Gateway to attach to the subnet of this node type. Node type must use custom load balancer. </summary>
+        public ResourceIdentifier NatGatewayId { get; set; }
+        /// <summary> Specifies information about the marketplace image used to create the virtual machine. This element is only used for marketplace images. Before you can use a marketplace image from an API, you must enable the image for programmatic use. In the Azure portal, find the marketplace image that you want to use and then click Want to deploy programmatically, Get Started -&gt;. Enter any required information and then click Save. </summary>
+        public VmImagePlan VmImagePlan { get; set; }
         /// <summary> Azure resource tags. </summary>
         public IDictionary<string, string> Tags { get; }
     }
