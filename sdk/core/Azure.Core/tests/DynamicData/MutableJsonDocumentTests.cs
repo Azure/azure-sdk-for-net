@@ -846,13 +846,14 @@ namespace Azure.Core.Tests
             Assert.AreEqual("hi", mdoc.RootElement.GetIndexElement(1).GetProperty("Bar").GetString());
 
             // Make a structural change to json[0] but not json[1]
-            mdoc.RootElement.GetIndexElement(0).Set(new
-            {
-                Foo = new
+            mdoc.RootElement.GetIndexElement(0).Set(MutableJsonDocument.Parse("""
                 {
-                    A = 7
+                    "Foo":
+                    {
+                        "A": 7
+                    }
                 }
-            });
+                """));
 
             // We should be able to get the value of A without being tripped up by earlier changes.
             // We should also be able to get the value of json[1] without it having been invalidated.

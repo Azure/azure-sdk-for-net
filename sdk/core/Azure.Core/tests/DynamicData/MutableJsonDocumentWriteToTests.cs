@@ -452,7 +452,7 @@ namespace Azure.Core.Tests
 
             MutableJsonDocumentTests.ValidateWriteTo(expected, mdoc);
 
-            mdoc.RootElement.GetProperty("Bar").Set(new int[] { 0, 1, 2, 3 });
+            mdoc.RootElement.GetProperty("Bar").Set(MutableJsonDocument.Parse("""[0, 1, 2, 3]"""));
             mdoc.RootElement.GetProperty("Bar").GetIndexElement(3).Set(4);
 
             expected = """
@@ -517,7 +517,7 @@ namespace Azure.Core.Tests
 
             // Mutate a value
             string name = mdoc.RootElement.EnumerateObject().First().Name;
-            var value = mdoc.RootElement.EnumerateObject().First().Value;
+            MutableJsonElement value = mdoc.RootElement.EnumerateObject().First().Value;
             mdoc.RootElement.GetProperty(name).Set(value);
 
             // Validate after changes.

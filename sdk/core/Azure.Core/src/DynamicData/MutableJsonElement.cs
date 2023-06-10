@@ -1128,7 +1128,7 @@ namespace Azure.Core.Json
                     break;
                 case MutableJsonElement e:
                     e.EnsureValid();
-                    Changes.AddChange(_path, e, kind: null, false);
+                    Changes.AddChange(_path, e, e.ValueKind, false);
                     break;
                 case MutableJsonDocument d:
                     Set(d.RootElement);
