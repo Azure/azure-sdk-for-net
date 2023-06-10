@@ -51,15 +51,10 @@ namespace Azure.Core.Json
 
                 bool changed = false;
 
-                if (path.Length > 0)
-                {
-                    path += Delimiter;
-                }
-
                 for (int i = _changes!.Count - 1; i > highWaterMark; i--)
                 {
-                    var c = _changes[i];
-                    if (c.Path.StartsWith(path, StringComparison.Ordinal))
+                    MutableJsonChange c = _changes[i];
+                    if (c.IsDescendant(path))
                     {
                         return true;
                     }
@@ -90,7 +85,7 @@ namespace Azure.Core.Json
                 return false;
             }
 
-            internal int AddChange(string path, object? value, bool replaceJsonElement = false)
+            internal int AddChange(string path, object? value, string? addedPropertyName = null, MutableJsonChangeKind changeKind = MutableJsonChangeKind.PropertyValue)
             {
                 if (_changes == null)
                 {
@@ -99,9 +94,53 @@ namespace Azure.Core.Json
 
                 int index = _changes.Count;
 
-                _changes.Add(new MutableJsonChange(path, index, value, replaceJsonElement, _options));
+                _changes.Add(new MutableJsonChange(path,index, value, _options, changeKind, addedPropertyName));
 
                 return index;
+            }
+
+            internal List<MutableJsonChange> GetAddedProperties(string path, int highWaterMark)
+            {
+                List<MutableJsonChange> added = new();
+
+                if (_changes == null)
+                {
+                    return added;
+                }
+
+                for (int i = _changes!.Count - 1; i > highWaterMark; i--)
+                {
+                    MutableJsonChange c = _changes[i];
+                    if (c.IsDirectDescendant(path) &&
+                        c.ChangeKind == MutableJsonChangeKind.PropertyAddition)
+                    {
+                        added.Add(c);
+                    }
+                }
+
+                return added;
+            }
+
+            internal List<MutableJsonChange> GetRemovedProperties(string path, int highWaterMark)
+            {
+                List<MutableJsonChange> removed = new();
+
+                if (_changes == null)
+                {
+                    return removed;
+                }
+
+                for (int i = _changes!.Count - 1; i > highWaterMark; i--)
+                {
+                    MutableJsonChange c = _changes[i];
+                    if (c.IsDirectDescendant(path) &&
+                        c.ChangeKind == MutableJsonChangeKind.PropertyRemoval)
+                    {
+                        removed.Add(c);
+                    }
+                }
+
+                return removed;
             }
 
             internal static string PushIndex(string path, int index)
