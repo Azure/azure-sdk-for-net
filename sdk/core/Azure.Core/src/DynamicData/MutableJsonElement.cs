@@ -18,6 +18,7 @@ namespace Azure.Core.Json
     {
         private readonly MutableJsonDocument _root;
         private readonly JsonElement _element;
+        private readonly object? _referenceValue;
         private readonly string _path;
         private readonly int _highWaterMark;
 
@@ -29,23 +30,28 @@ namespace Azure.Core.Json
             _root = root;
             _path = path;
             _highWaterMark = highWaterMark;
+            _referenceValue = default;
+        }
+
+        internal MutableJsonElement(MutableJsonDocument root, object? referenceValue, string path, int highWaterMark = -1)
+        {
+            _element = default;
+            _root = root;
+            _path = path;
+            _highWaterMark = highWaterMark;
+            _referenceValue = referenceValue;
         }
 
         /// <summary>
         /// Gets the type of the current JSON value.
         /// </summary>
-        public JsonValueKind ValueKind
+        public JsonValueKind? ValueKind
         {
             get
             {
                 if (Changes.TryGetChange(_path, _highWaterMark, out MutableJsonChange change))
                 {
-                    if (change.ValueKind == null)
-                    {
-                        throw new NotImplementedException("Still need to handle change.Kind == null");
-                    }
-
-                    return change.ValueKind.Value;
+                    return change.ValueKind;
                 }
 
                 return _element.ValueKind;
@@ -57,18 +63,12 @@ namespace Azure.Core.Json
         /// </summary>
         public MutableJsonElement GetProperty(string name)
         {
-            if (!TryGetProperty(name, out object? value))
+            if (!TryGetProperty(name, out MutableJsonElement value))
             {
                 throw new InvalidOperationException($"'{_path}' does not contain property called '{name}'");
             }
 
-            if (value is not MutableJsonElement element)
-            {
-                string path = MutableJsonDocument.ChangeTracker.PushProperty(_path, name);
-                throw new InvalidOperationException($"Value at '{path}' is not JSON.");
-            }
-
-            return element;
+            return value;
         }
 
         /// <summary>
@@ -77,7 +77,7 @@ namespace Azure.Core.Json
         /// <param name="name"></param>
         /// <param name="value">The value to assign to the element.</param>
         /// <returns></returns>
-        public bool TryGetProperty(string name, out object? value)
+        public bool TryGetProperty(string name, out MutableJsonElement value)
         {
             EnsureValid();
 
@@ -95,7 +95,7 @@ namespace Azure.Core.Json
 
                 if (change.ValueKind == null)
                 {
-                    value = change.Value;
+                    value = new MutableJsonElement(_root, change.Value, path, _highWaterMark);
                     return true;
                 }
 
@@ -739,6 +739,16 @@ namespace Azure.Core.Json
             return value;
         }
 
+        public object? GetObject()
+        {
+            if (ValueKind != null)
+            {
+                throw new InvalidOperationException($"Expected an reference type but was '{_element.ValueKind}'.");
+            }
+
+            return _referenceValue;
+        }
+
         /// <summary>
         /// Gets an enumerator to enumerate the values in the JSON array represented by this MutableJsonElement.
         /// </summary>
@@ -770,11 +780,11 @@ namespace Azure.Core.Json
         /// <param name="value">The value to assign to the element.</param>
         public MutableJsonElement SetProperty(string name, object value)
         {
-            if (TryGetProperty(name, out object? property))
+            if (TryGetProperty(name, out MutableJsonElement element))
             {
-                if (property is not MutableJsonElement element)
+                if (element.ValueKind == null)
                 {
-                    throw new InvalidOperationException($"Value at '{_path}' is not JSON.");
+                    throw new InvalidOperationException($"Cannot set property on {name}.");
                 }
 
                 element.Set(value);
