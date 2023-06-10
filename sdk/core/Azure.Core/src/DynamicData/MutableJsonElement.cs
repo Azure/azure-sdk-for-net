@@ -809,11 +809,6 @@ namespace Azure.Core.Json
         {
             if (TryGetProperty(name, out MutableJsonElement element))
             {
-                if (element.ValueKind == null)
-                {
-                    throw new InvalidOperationException($"Cannot set property on {name}.");
-                }
-
                 element.Set(value);
                 return this;
             }
