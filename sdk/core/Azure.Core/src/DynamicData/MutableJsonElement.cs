@@ -863,6 +863,7 @@ namespace Azure.Core.Json
                 bool b => b ? JsonValueKind.True : JsonValueKind.False,
                 DateTime => JsonValueKind.String,
                 DateTimeOffset => JsonValueKind.String,
+                Guid => JsonValueKind.String,
                 null => JsonValueKind.Null,
                 JsonElement e => e.ValueKind,
                 _ => null,
