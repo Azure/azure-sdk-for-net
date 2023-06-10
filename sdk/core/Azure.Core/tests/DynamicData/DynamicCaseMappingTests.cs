@@ -180,10 +180,10 @@ namespace Azure.Core.Tests
 
             value.camel = 1;
             value.Pascal = "hi";
-            value.parentCamel = new { };
+            value.parentCamel = new BinaryData("""{}""").ToDynamicFromJson();
             value.parentCamel.nestedCamel = true;
             value.parentCamel.NestedPascal = false;
-            value.ParentPascal = new { };
+            value.ParentPascal = new BinaryData("""{}""").ToDynamicFromJson();
             value.ParentPascal.nestedCamel = "a";
             value.ParentPascal.NestedPascal = "b";
 
@@ -203,10 +203,10 @@ namespace Azure.Core.Tests
 
             value.camel = 1;
             value.Pascal = "hi";
-            value.parentCamel = new { };
+            value.parentCamel = new BinaryData("""{}""").ToDynamicFromJson(options);
             value.parentCamel.nestedCamel = true;
             value.parentCamel.NestedPascal = false;
-            value.ParentPascal = new { };
+            value.ParentPascal = new BinaryData("""{}""").ToDynamicFromJson(options);
             value.ParentPascal.nestedCamel = "a";
             value.ParentPascal.NestedPascal = "b";
 
@@ -443,12 +443,11 @@ namespace Azure.Core.Tests
             };
 
             // Show they can be accessed with PascalCase
-            Assert.AreEqual(3, (int)value.Foo.A);
-            Assert.AreEqual(4, (int)value.Bar.B);
+            Assert.AreEqual(3, value.Foo.A);
+            Assert.AreEqual(4, value.Bar.B);
 
             // And that they serialized to camelCase
-            Assert.AreEqual("""{"a":3}""", value.Foo.ToString());
-            Assert.AreEqual("""{"b":4}""", value.Bar.ToString());
+            Assert.AreEqual("""{"foo":{"a":3},"bar":{"b":4}}""", value.ToString());
         }
 
         [Test]
@@ -481,14 +480,13 @@ namespace Azure.Core.Tests
             };
 
             // Show what happens with PascalCase
-            Assert.AreEqual(3, (int)value.Foo.A);
+            Assert.AreEqual(3, value.Foo.A);
             Assert.AreEqual("orig", (string)value.foo);
-            Assert.AreEqual(4, (int)value.Bar.B);
+            Assert.AreEqual(4, value.Bar.B);
             Assert.IsNull(value.bar);
 
             // And that they serialized to PascalCase
-            Assert.AreEqual("""{"A":3}""", value.Foo.ToString());
-            Assert.AreEqual("""{"B":4}""", value.Bar.ToString());
+            Assert.AreEqual("""{"foo":"orig","Bar":{"B":4},"Foo":{"A":3}}""", value.ToString());
         }
     }
 }

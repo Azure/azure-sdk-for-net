@@ -95,6 +95,33 @@ namespace Azure.Core.Json
 
                 if (change.ValueKind == null)
                 {
+                    // special cases
+                    if (change.Value is MutableJsonElement mje)
+                    {
+                        value = mje;
+                        return true;
+                    }
+
+                    if (change.Value is MutableJsonDocument mdoc)
+                    {
+                        value = mdoc.RootElement;
+                        return true;
+                    }
+
+                    if (change.Value is JsonDocument jdoc)
+                    {
+                        // TODO: does this preserve the changelist?
+                        value = new MutableJsonDocument(jdoc, _root.SerializerOptions).RootElement;
+                        return true;
+                    }
+
+                    if (change.Value is JsonElement je)
+                    {
+                        JsonDocument doc = JsonDocument.Parse(JsonSerializer.Serialize(je));
+                        value = new MutableJsonDocument(doc, _root.SerializerOptions).RootElement;
+                        return true;
+                    }
+
                     value = new MutableJsonElement(_root, change.Value, path, _highWaterMark);
                     return true;
                 }
@@ -802,12 +829,24 @@ namespace Azure.Core.Json
 
             // It is a new property.
             string path = MutableJsonDocument.ChangeTracker.PushProperty(_path, name);
-
-            // TODO: figure out the kind?
-            // TODO: Test case: ask for ValueKind on an object addition?
-            Changes.AddChange(path, value, kind: null, isAddition: true, addedPropertyName: name, MutableJsonChangeKind.PropertyAddition);
+            Changes.AddChange(path, value, kind: GetKind(value), isAddition: true, addedPropertyName: name, MutableJsonChangeKind.PropertyAddition);
 
             return this;
+        }
+
+        private JsonValueKind? GetKind(object? value)
+        {
+            // TODO: complete this list
+            return value switch
+            {
+                double => JsonValueKind.Number,
+                int => JsonValueKind.Number,
+                string => JsonValueKind.String,
+                bool b => b ? JsonValueKind.True : JsonValueKind.False,
+                DateTime => JsonValueKind.String,
+                DateTimeOffset => JsonValueKind.String,
+                _ => null,
+            };
         }
 
         /// <summary>
