@@ -72,13 +72,6 @@ namespace Azure.Core.Json
 
             EnsureObject();
 
-            bool hasProperty = _element.TryGetProperty(name, out JsonElement element);
-            if (!hasProperty)
-            {
-                value = default;
-                return false;
-            }
-
             // Check for changes to this element
             var path = MutableJsonDocument.ChangeTracker.PushProperty(_path, name);
             if (Changes.TryGetChange(path, _highWaterMark, out MutableJsonChange change))
@@ -91,6 +84,13 @@ namespace Azure.Core.Json
 
                 value = new MutableJsonElement(_root, change.GetSerializedValue(), path, change.Index);
                 return true;
+            }
+
+            bool hasProperty = _element.TryGetProperty(name, out JsonElement element);
+            if (!hasProperty)
+            {
+                value = default;
+                return false;
             }
 
             value = new MutableJsonElement(_root, element, path, _highWaterMark);

@@ -73,7 +73,7 @@ namespace Azure.Core.Json
 
                 for (int i = _changes!.Count - 1; i > lastAppliedChange; i--)
                 {
-                    var c = _changes[i];
+                    MutableJsonChange c = _changes[i];
                     if (c.Path == path)
                     {
                         change = c;
@@ -94,7 +94,7 @@ namespace Azure.Core.Json
 
                 int index = _changes.Count;
 
-                _changes.Add(new MutableJsonChange(path,index, value, _options, changeKind, addedPropertyName));
+                _changes.Add(new MutableJsonChange(path, index, value, _options, changeKind, addedPropertyName));
 
                 return index;
             }
