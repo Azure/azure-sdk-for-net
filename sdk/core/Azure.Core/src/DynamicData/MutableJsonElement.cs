@@ -111,15 +111,13 @@ namespace Azure.Core.Json
 
                     if (change.Value is JsonDocument jdoc)
                     {
-                        // TODO: does this preserve the changelist?
-                        value = new MutableJsonDocument(jdoc, _root.SerializerOptions).RootElement;
+                        value = new MutableJsonElement(_root, jdoc.RootElement, path, _highWaterMark);
                         return true;
                     }
 
                     if (change.Value is JsonElement je)
                     {
-                        JsonDocument doc = JsonDocument.Parse(JsonSerializer.Serialize(je));
-                        value = new MutableJsonDocument(doc, _root.SerializerOptions).RootElement;
+                        value = new MutableJsonElement(_root, je, path, _highWaterMark);
                         return true;
                     }
 
@@ -866,6 +864,7 @@ namespace Azure.Core.Json
                 DateTime => JsonValueKind.String,
                 DateTimeOffset => JsonValueKind.String,
                 null => JsonValueKind.Null,
+                JsonElement e => e.ValueKind,
                 _ => null,
             };
         }
@@ -1135,6 +1134,9 @@ namespace Azure.Core.Json
                     break;
                 case JsonDocument d:
                     Set(d.RootElement);
+                    break;
+                case JsonElement e:
+                    Changes.AddChange(_path, value, e.ValueKind, false);
                     break;
                 case null:
                     Changes.AddChange(_path, value, JsonValueKind.Null, false);

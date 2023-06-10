@@ -165,6 +165,11 @@ namespace Azure.Core.Dynamic
                 case int arrayIndex:
                     MutableJsonElement arrayElement = _element.GetIndexElement(arrayIndex);
 
+                    if (arrayElement.ValueKind == null)
+                    {
+                        return arrayElement.GetObject();
+                    }
+
                     if (arrayElement.ValueKind == JsonValueKind.Null)
                     {
                         return null;
@@ -225,7 +230,7 @@ namespace Azure.Core.Dynamic
         private object ConvertType(object value)
         {
             byte[] bytes = JsonSerializer.SerializeToUtf8Bytes(value, _serializerOptions);
-            return JsonDocument.Parse(bytes);
+            return JsonDocument.Parse(bytes).RootElement;
         }
 
         private object? SetViaIndexer(object index, object value)
