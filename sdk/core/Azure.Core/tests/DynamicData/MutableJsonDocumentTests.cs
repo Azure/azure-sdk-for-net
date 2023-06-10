@@ -778,7 +778,7 @@ namespace Azure.Core.Tests
             MutableJsonDocument mdoc = MutableJsonDocument.Parse(json);
 
             // a's path points to "0.Foo.A"
-            var a = mdoc.RootElement.GetIndexElement(0).GetProperty("Foo").GetProperty("A");
+            MutableJsonElement a = mdoc.RootElement.GetIndexElement(0).GetProperty("Foo").GetProperty("A");
 
             // resets json to equivalent of "[ 5 ]"
             mdoc.RootElement.GetIndexElement(0).Set(5);
@@ -794,13 +794,14 @@ namespace Azure.Core.Tests
             Assert.Throws<InvalidOperationException>(() => mdoc.RootElement.GetIndexElement(0).Set(a));
 
             // Reset json[0] to an object
-            mdoc.RootElement.GetIndexElement(0).Set(new
-            {
-                Foo = new
+            MutableJsonDocument update = MutableJsonDocument.Parse("""
                 {
-                    A = 7
+                  "Foo" : {
+                    "A": 7
+                    }
                 }
-            });
+                """);
+            mdoc.RootElement.GetIndexElement(0).Set(update);
 
             // We should be able to get the value of A without being tripped up
             // by earlier changes.

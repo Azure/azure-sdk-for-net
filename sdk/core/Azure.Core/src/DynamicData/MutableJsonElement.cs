@@ -4,6 +4,7 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Globalization;
 using System.IO;
 using System.Text;
 using System.Text.Json;
@@ -165,10 +166,34 @@ namespace Azure.Core.Json
 
             if (Changes.TryGetChange(path, _highWaterMark, out MutableJsonChange change))
             {
-                //if (change.ReplacesJsonElement)
-                //{
+                if (change.ValueKind == null)
+                {
+                    // special cases
+                    if (change.Value is MutableJsonElement mje)
+                    {
+                        return mje;
+                    }
+
+                    if (change.Value is MutableJsonDocument mdoc)
+                    {
+                        return mdoc.RootElement;
+                    }
+
+                    if (change.Value is JsonDocument jdoc)
+                    {
+                        return new MutableJsonDocument(jdoc, _root.SerializerOptions).RootElement;
+                    }
+
+                    if (change.Value is JsonElement je)
+                    {
+                        JsonDocument doc = JsonDocument.Parse(JsonSerializer.Serialize(je));
+                        return new MutableJsonDocument(doc, _root.SerializerOptions).RootElement;
+                    }
+
+                    return new MutableJsonElement(_root, change.Value, path, _highWaterMark);
+                }
+
                 return new MutableJsonElement(_root, change.AsJsonElement(), path, change.Index);
-                //}
             }
 
             return new MutableJsonElement(_root, _element[index], path, _highWaterMark);
@@ -840,6 +865,7 @@ namespace Azure.Core.Json
                 bool b => b ? JsonValueKind.True : JsonValueKind.False,
                 DateTime => JsonValueKind.String,
                 DateTimeOffset => JsonValueKind.String,
+                null => JsonValueKind.Null,
                 _ => null,
             };
         }
@@ -1101,7 +1127,8 @@ namespace Azure.Core.Json
                     Set(g);
                     break;
                 case MutableJsonElement e:
-                    Set(e);
+                    e.EnsureValid();
+                    Changes.AddChange(_path, e, kind: null, false);
                     break;
                 case MutableJsonDocument d:
                     Set(d.RootElement);
@@ -1109,35 +1136,13 @@ namespace Azure.Core.Json
                 case JsonDocument d:
                     Set(d.RootElement);
                     break;
+                case null:
+                    Changes.AddChange(_path, value, JsonValueKind.Null, false);
+                    break;
                 default:
-                    // TODO: how do we get the kind?
-                    // For now, kind == null means "I don't know yet"
                     Changes.AddChange(_path, value, kind: null, false);
                     break;
             }
-        }
-
-        /// <summary>
-        /// Sets the value of this element to the passed-in value.
-        /// </summary>
-        /// <param name="value">The value to assign to the element.</param>
-        public void Set(MutableJsonElement value)
-        {
-            EnsureValid();
-
-            value.EnsureValid();
-
-            JsonElement element = value._element;
-
-            if (Changes.TryGetChange(value._path, value._highWaterMark, out MutableJsonChange change))
-            {
-                //if (change.ReplacesJsonElement)
-                //{
-                element = change.AsJsonElement();
-                //}
-            }
-
-            Changes.AddChange(_path, element, JsonValueKind.Object, false);
         }
 
         /// <inheritdoc/>

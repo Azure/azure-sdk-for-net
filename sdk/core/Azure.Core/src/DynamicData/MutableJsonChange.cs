@@ -72,6 +72,13 @@ namespace Azure.Core.Json
                 return element;
             }
 
+            if (Value is MutableJsonElement mje)
+            {
+                return mje.GetJsonElement();
+            }
+
+            // TODO: Handle other special cases, e.g. JsonDocument and MJD?
+
             // TODO: If it is a MutableJsonDocument, we need to account for changes
             // TODO: What if it is an object that changes after assignment?
 
