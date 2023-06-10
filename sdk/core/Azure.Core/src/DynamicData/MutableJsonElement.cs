@@ -2,7 +2,6 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Text;
@@ -72,8 +71,7 @@ namespace Azure.Core.Json
 
             EnsureObject();
 
-            // Check for changes to this element
-            var path = MutableJsonDocument.ChangeTracker.PushProperty(_path, name);
+            string path = MutableJsonDocument.ChangeTracker.PushProperty(_path, name);
             if (Changes.TryGetChange(path, _highWaterMark, out MutableJsonChange change))
             {
                 if (change.ChangeKind == MutableJsonChangeKind.PropertyRemoval)
@@ -117,8 +115,7 @@ namespace Azure.Core.Json
 
             EnsureArray();
 
-            var path = MutableJsonDocument.ChangeTracker.PushIndex(_path, index);
-
+            string path = MutableJsonDocument.ChangeTracker.PushIndex(_path, index);
             if (Changes.TryGetChange(path, _highWaterMark, out MutableJsonChange change))
             {
                 return new MutableJsonElement(_root, change.GetSerializedValue(), path, change.Index);
@@ -767,7 +764,7 @@ namespace Azure.Core.Json
 
             // It is a new property.
             string path = MutableJsonDocument.ChangeTracker.PushProperty(_path, name);
-            Changes.AddChange(path, value, name, MutableJsonChangeKind.PropertyAddition);
+            Changes.AddChange(path, value, MutableJsonChangeKind.PropertyAddition, name);
             return this;
         }
 

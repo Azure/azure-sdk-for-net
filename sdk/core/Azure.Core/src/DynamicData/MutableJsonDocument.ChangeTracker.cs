@@ -85,7 +85,7 @@ namespace Azure.Core.Json
                 return false;
             }
 
-            internal int AddChange(string path, object? value, string? addedPropertyName = null, MutableJsonChangeKind changeKind = MutableJsonChangeKind.PropertyValue)
+            internal int AddChange(string path, object? value, MutableJsonChangeKind changeKind = MutableJsonChangeKind.PropertyValue, string? addedPropertyName = null)
             {
                 if (_changes == null)
                 {
