@@ -29,6 +29,11 @@ namespace Azure.Core.Json
             {
                 _serializedValue = element;
             }
+
+            if (value is JsonDocument doc)
+            {
+                _serializedValue = doc.RootElement;
+            }
         }
 
         public string Path { get; }
@@ -48,6 +53,12 @@ namespace Azure.Core.Json
             if (_serializedValue != null)
             {
                 return _serializedValue.Value;
+            }
+
+            if (Value is MutableJsonElement mje)
+            {
+                // Keep reference semantics for MutableJsonElements
+                return mje.GetJsonElement();
             }
 
             byte[] bytes = JsonSerializer.SerializeToUtf8Bytes(Value, _serializerOptions);

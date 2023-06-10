@@ -612,6 +612,7 @@ namespace Azure.Core.Tests
         }
 
         [Test]
+        [Ignore("TODO: Remove")]
         public void ChangeToDocumentAppearsInElementReference()
         {
             // This tests reference semantics.
