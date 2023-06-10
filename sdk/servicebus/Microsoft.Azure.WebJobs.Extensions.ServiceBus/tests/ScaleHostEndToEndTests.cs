@@ -177,7 +177,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.ServiceBus.Tests
                 }
 
                 return scaledOut;
-            });
+            }, pollingInterval: 2000, timeout: 180000, throwWhenDebugging: true);
         }
     }
 }
