@@ -906,13 +906,14 @@ namespace Azure.Core.Tests
             Assert.AreEqual(5, mdoc.RootElement.GetProperty("ArrayProperty").GetIndexElement(0).GetInt32());
 
             // Reset json[0] to an object
-            mdoc.RootElement.GetProperty("ArrayProperty").GetIndexElement(0).Set(new
-            {
-                Foo = new
+            mdoc.RootElement.GetProperty("ArrayProperty").GetIndexElement(0).Set(
+                MutableJsonDocument.Parse("""
                 {
-                    A = 7
+                    "Foo" : {
+                        "A": 7
+                    }
                 }
-            });
+                """));
 
             // We should be able to get the value of A without being tripped up
             // by earlier changes.
@@ -993,10 +994,11 @@ namespace Azure.Core.Tests
 
             Assert.AreEqual("hi", mdoc.RootElement.GetProperty("Foo").GetString());
 
-            mdoc.RootElement.GetProperty("Foo").Set(new
+            mdoc.RootElement.GetProperty("Foo").Set(MutableJsonDocument.Parse("""
             {
-                Bar = 6
-            });
+                "Bar": 6
+            }
+            """));
 
             Assert.AreEqual(6, mdoc.RootElement.GetProperty("Foo").GetProperty("Bar").GetInt32());
 
@@ -1019,7 +1021,7 @@ namespace Azure.Core.Tests
 
             Assert.AreEqual("hi", mdoc.RootElement.GetIndexElement(0).GetProperty("Foo").GetString());
 
-            mdoc.RootElement.GetIndexElement(0).GetProperty("Foo").Set(new int[] { 1, 2, 3 });
+            mdoc.RootElement.GetIndexElement(0).GetProperty("Foo").Set(MutableJsonDocument.Parse("""[1, 2, 3]"""));
 
             Assert.AreEqual(1, mdoc.RootElement.GetIndexElement(0).GetProperty("Foo").GetIndexElement(0).GetInt32());
             Assert.AreEqual(2, mdoc.RootElement.GetIndexElement(0).GetProperty("Foo").GetIndexElement(1).GetInt32());
