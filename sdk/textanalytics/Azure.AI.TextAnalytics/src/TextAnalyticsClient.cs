@@ -2365,6 +2365,10 @@ namespace Azure.AI.TextAnalytics
         /// <remarks>
         /// This method is only available for <see cref="TextAnalyticsClientOptions.ServiceVersion.V2023_04_01"/>, and newer.
         /// </remarks>
+        /// <param name="waitUntil">
+        /// <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service;
+        /// <see cref="WaitUntil.Started"/> if it should return after starting the operation.
+        /// </param>
         /// <param name="documents">The documents to analyze.</param>
         /// <param name="language">The language that the documents are written in.</param>
         /// <param name="options">The additional <see cref="AbstractiveSummarizeOptions"/> used to configure the operation.</param>
@@ -2378,14 +2382,15 @@ namespace Azure.AI.TextAnalytics
         /// <exception cref="RequestFailedException">The service returned a non-success status code.</exception>
         /// <exception cref="ArgumentException"><paramref name="documents"/> is an empty collection.</exception>
         /// <exception cref="ArgumentNullException"><paramref name="documents"/> is null.</exception>
-        public virtual AbstractiveSummarizeOperation StartAbstractiveSummarize(
+        public virtual AbstractiveSummarizeOperation AbstractiveSummarize(
+            WaitUntil waitUntil,
             IEnumerable<string> documents,
             string language = default,
             AbstractiveSummarizeOptions options = default,
             CancellationToken cancellationToken = default)
         {
             options?.CheckSupported(ServiceVersion);
-            return _serviceClient.StartAbstractiveSummarize(documents, language, options, cancellationToken);
+            return _serviceClient.AbstractiveSummarize(waitUntil, documents, language, options, cancellationToken);
         }
 
         /// <summary>
@@ -2399,6 +2404,10 @@ namespace Azure.AI.TextAnalytics
         /// <remarks>
         /// This method is only available for <see cref="TextAnalyticsClientOptions.ServiceVersion.V2023_04_01"/>, and newer.
         /// </remarks>
+        /// <param name="waitUntil">
+        /// <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service;
+        /// <see cref="WaitUntil.Started"/> if it should return after starting the operation.
+        /// </param>
         /// <param name="documents">The documents to analyze.</param>
         /// <param name="options">The additional <see cref="AbstractiveSummarizeOptions"/> used to configure the operation.</param>
         /// <param name="cancellationToken">The <see cref="CancellationToken"/> controlling the lifetime of the request.</param>
@@ -2411,13 +2420,14 @@ namespace Azure.AI.TextAnalytics
         /// <exception cref="RequestFailedException">The service returned a non-success status code.</exception>
         /// <exception cref="ArgumentException"><paramref name="documents"/> is an empty collection.</exception>
         /// <exception cref="ArgumentNullException"><paramref name="documents"/> is null.</exception>
-        public virtual AbstractiveSummarizeOperation StartAbstractiveSummarize(
+        public virtual AbstractiveSummarizeOperation AbstractiveSummarize(
+            WaitUntil waitUntil,
             IEnumerable<TextDocumentInput> documents,
             AbstractiveSummarizeOptions options = default,
             CancellationToken cancellationToken = default)
         {
             options?.CheckSupported(ServiceVersion);
-            return _serviceClient.StartAbstractiveSummarize(documents, options, cancellationToken);
+            return _serviceClient.AbstractiveSummarize(waitUntil, documents, options, cancellationToken);
         }
 
         /// <summary>
@@ -2431,6 +2441,10 @@ namespace Azure.AI.TextAnalytics
         /// <remarks>
         /// This method is only available for <see cref="TextAnalyticsClientOptions.ServiceVersion.V2023_04_01"/>, and newer.
         /// </remarks>
+        /// <param name="waitUntil">
+        /// <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service;
+        /// <see cref="WaitUntil.Started"/> if it should return after starting the operation.
+        /// </param>
         /// <param name="documents">The documents to analyze.</param>
         /// <param name="language">The language that the documents are written in.</param>
         /// <param name="options">The additional <see cref="AbstractiveSummarizeOptions"/> used to configure the operation.</param>
@@ -2444,14 +2458,15 @@ namespace Azure.AI.TextAnalytics
         /// <exception cref="RequestFailedException">The service returned a non-success status code.</exception>
         /// <exception cref="ArgumentException"><paramref name="documents"/> is an empty collection.</exception>
         /// <exception cref="ArgumentNullException"><paramref name="documents"/> is null.</exception>
-        public virtual async Task<AbstractiveSummarizeOperation> StartAbstractiveSummarizeAsync(
+        public virtual async Task<AbstractiveSummarizeOperation> AbstractiveSummarizeAsync(
+            WaitUntil waitUntil,
             IEnumerable<string> documents,
             string language = default,
             AbstractiveSummarizeOptions options = default,
             CancellationToken cancellationToken = default)
         {
             options?.CheckSupported(ServiceVersion);
-            return await _serviceClient.StartAbstractiveSummarizeAsync(documents, language, options, cancellationToken).ConfigureAwait(false);
+            return await _serviceClient.AbstractiveSummarizeAsync(waitUntil, documents, language, options, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -2465,6 +2480,10 @@ namespace Azure.AI.TextAnalytics
         /// <remarks>
         /// This method is only available for <see cref="TextAnalyticsClientOptions.ServiceVersion.V2023_04_01"/>, and newer.
         /// </remarks>
+        /// <param name="waitUntil">
+        /// <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service;
+        /// <see cref="WaitUntil.Started"/> if it should return after starting the operation.
+        /// </param>
         /// <param name="documents">The documents to analyze.</param>
         /// <param name="options">The additional <see cref="AbstractiveSummarizeOptions"/> used to configure the operation.</param>
         /// <param name="cancellationToken">The <see cref="CancellationToken"/> controlling the lifetime of the request.</param>
@@ -2477,13 +2496,14 @@ namespace Azure.AI.TextAnalytics
         /// <exception cref="RequestFailedException">The service returned a non-success status code.</exception>
         /// <exception cref="ArgumentException"><paramref name="documents"/> is an empty collection.</exception>
         /// <exception cref="ArgumentNullException"><paramref name="documents"/> is null.</exception>
-        public virtual async Task<AbstractiveSummarizeOperation> StartAbstractiveSummarizeAsync(
+        public virtual async Task<AbstractiveSummarizeOperation> AbstractiveSummarizeAsync(
+            WaitUntil waitUntil,
             IEnumerable<TextDocumentInput> documents,
             AbstractiveSummarizeOptions options = default,
             CancellationToken cancellationToken = default)
         {
             options?.CheckSupported(ServiceVersion);
-            return await _serviceClient.StartAbstractiveSummarizeAsync(documents, options, cancellationToken).ConfigureAwait(false);
+            return await _serviceClient.AbstractiveSummarizeAsync(waitUntil, documents, options, cancellationToken).ConfigureAwait(false);
         }
 
         #endregion
