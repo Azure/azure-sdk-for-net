@@ -51,13 +51,12 @@ namespace Azure.Communication.JobRouter.Tests.Samples
             WaitTimeExceptionTrigger trigger = new WaitTimeExceptionTrigger(TimeSpan.FromSeconds(30)); // triggered after 5 minutes
 
             // define exception action
-            ManualReclassifyExceptionAction action = new ManualReclassifyExceptionAction(
-                queueId: fallbackQueueId,
-                priority: 100,
-                workerSelectors: new List<WorkerSelector>()
-                {
-                    new WorkerSelector("HandleEscalation", LabelOperator.Equal, new LabelValue(true))
-                });
+            ManualReclassifyExceptionAction action = new ManualReclassifyExceptionAction
+            {
+                QueueId = fallbackQueueId,
+                Priority = 100,
+                WorkerSelectors = { new WorkerSelector("HandleEscalation", LabelOperator.Equal, new LabelValue(true)) }
+            };
 
             string exceptionPolicyId = "execption-policy-id";
             Response<ExceptionPolicy> exceptionPolicy = await routerAdministrationClient.CreateExceptionPolicyAsync(new CreateExceptionPolicyOptions(

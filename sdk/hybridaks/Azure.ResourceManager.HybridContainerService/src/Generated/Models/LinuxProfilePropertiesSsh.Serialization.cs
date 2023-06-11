@@ -42,7 +42,6 @@ namespace Azure.ResourceManager.HybridContainerService.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<LinuxProfilePropertiesSshPublicKeysItem> array = new List<LinuxProfilePropertiesSshPublicKeysItem>();

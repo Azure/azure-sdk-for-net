@@ -26,7 +26,6 @@ namespace Azure.Maps.Search.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     topLeftPoint = LatLongPairAbbreviated.DeserializeLatLongPairAbbreviated(property.Value);
@@ -36,7 +35,6 @@ namespace Azure.Maps.Search.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     btmRightPoint = LatLongPairAbbreviated.DeserializeLatLongPairAbbreviated(property.Value);

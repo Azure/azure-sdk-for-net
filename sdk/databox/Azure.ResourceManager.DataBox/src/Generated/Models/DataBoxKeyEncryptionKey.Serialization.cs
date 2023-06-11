@@ -57,7 +57,6 @@ namespace Azure.ResourceManager.DataBox.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     identityProperties = DataBoxManagedIdentity.DeserializeDataBoxManagedIdentity(property.Value);
@@ -67,7 +66,6 @@ namespace Azure.ResourceManager.DataBox.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        kekUrl = null;
                         continue;
                     }
                     kekUrl = new Uri(property.Value.GetString());
@@ -77,7 +75,6 @@ namespace Azure.ResourceManager.DataBox.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     kekVaultResourceId = new ResourceIdentifier(property.Value.GetString());

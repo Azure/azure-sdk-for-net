@@ -148,6 +148,59 @@ namespace Azure.ResourceManager.CosmosDB
             return GetCassandraTables().Get(tableName, cancellationToken);
         }
 
+        /// <summary> Gets a collection of CassandraViewGetResultResources in the CassandraKeyspace. </summary>
+        /// <returns> An object representing collection of CassandraViewGetResultResources and their operations over a CassandraViewGetResultResource. </returns>
+        public virtual CassandraViewGetResultCollection GetCassandraViewGetResults()
+        {
+            return GetCachedClient(Client => new CassandraViewGetResultCollection(Client, Id));
+        }
+
+        /// <summary>
+        /// Gets the Cassandra view under an existing Azure Cosmos DB database account.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/databaseAccounts/{accountName}/cassandraKeyspaces/{keyspaceName}/views/{viewName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>CassandraResources_GetCassandraView</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="viewName"> Cosmos DB view name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="viewName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="viewName"/> is null. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<CassandraViewGetResultResource>> GetCassandraViewGetResultAsync(string viewName, CancellationToken cancellationToken = default)
+        {
+            return await GetCassandraViewGetResults().GetAsync(viewName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Gets the Cassandra view under an existing Azure Cosmos DB database account.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/databaseAccounts/{accountName}/cassandraKeyspaces/{keyspaceName}/views/{viewName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>CassandraResources_GetCassandraView</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="viewName"> Cosmos DB view name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="viewName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="viewName"/> is null. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<CassandraViewGetResultResource> GetCassandraViewGetResult(string viewName, CancellationToken cancellationToken = default)
+        {
+            return GetCassandraViewGetResults().Get(viewName, cancellationToken);
+        }
+
         /// <summary>
         /// Gets the Cassandra keyspaces under an existing Azure Cosmos DB database account with the provided name.
         /// <list type="bullet">

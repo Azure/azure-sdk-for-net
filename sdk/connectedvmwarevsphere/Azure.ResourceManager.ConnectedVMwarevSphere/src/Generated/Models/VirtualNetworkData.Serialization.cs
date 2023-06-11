@@ -91,7 +91,6 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     extendedLocation = JsonSerializer.Deserialize<ExtendedLocation>(property.Value.GetRawText());
@@ -106,7 +105,6 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();
@@ -141,7 +139,6 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
@@ -190,7 +187,6 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             List<ResourceStatus> array = new List<ResourceStatus>();

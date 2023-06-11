@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.Workloads.Models
         /// <param name="virtualMachineConfiguration"> Gets or sets the virtual machine configuration. </param>
         /// <param name="instanceCount"> The number of app server instances. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subnetId"/> or <paramref name="virtualMachineConfiguration"/> is null. </exception>
-        public ApplicationServerConfiguration(ResourceIdentifier subnetId, VirtualMachineConfiguration virtualMachineConfiguration, long instanceCount)
+        public ApplicationServerConfiguration(ResourceIdentifier subnetId, SapVirtualMachineConfiguration virtualMachineConfiguration, long instanceCount)
         {
             Argument.AssertNotNull(subnetId, nameof(subnetId));
             Argument.AssertNotNull(virtualMachineConfiguration, nameof(virtualMachineConfiguration));
@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.Workloads.Models
         /// <summary> The subnet id. </summary>
         public ResourceIdentifier SubnetId { get; set; }
         /// <summary> Gets or sets the virtual machine configuration. </summary>
-        public VirtualMachineConfiguration VirtualMachineConfiguration { get; set; }
+        public SapVirtualMachineConfiguration VirtualMachineConfiguration { get; set; }
         /// <summary> The number of app server instances. </summary>
         public long InstanceCount { get; set; }
     }

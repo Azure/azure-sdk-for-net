@@ -25,11 +25,6 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 writer.WritePropertyName("componentId"u8);
                 writer.WriteStringValue(ComponentId);
             }
-            if (Optional.IsDefined(Readiness))
-            {
-                writer.WritePropertyName("readiness"u8);
-                writer.WriteStringValue(Readiness.Value.ToString());
-            }
             writer.WriteEndObject();
         }
 
@@ -41,7 +36,6 @@ namespace Azure.ResourceManager.ProviderHub.Models
             }
             Optional<string> serviceId = default;
             Optional<string> componentId = default;
-            Optional<Readiness> readiness = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("serviceId"u8))
@@ -54,18 +48,8 @@ namespace Azure.ResourceManager.ProviderHub.Models
                     componentId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("readiness"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    readiness = new Readiness(property.Value.GetString());
-                    continue;
-                }
             }
-            return new ServiceTreeInfo(serviceId.Value, componentId.Value, Optional.ToNullable(readiness));
+            return new ServiceTreeInfo(serviceId.Value, componentId.Value);
         }
     }
 }

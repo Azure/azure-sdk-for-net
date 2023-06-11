@@ -32,7 +32,6 @@ namespace Azure.ResourceManager.Sql.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<ManagedInstanceEndpointDetail> array = new List<ManagedInstanceEndpointDetail>();

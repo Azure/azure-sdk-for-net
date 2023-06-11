@@ -1,11 +1,30 @@
 # Release History
 
-## 1.1.0-beta.9 (Unreleased)
+## 1.2.0-beta.1 (Unreleased)
+
+### Features Added
+
+### Breaking Changes
+
+### Bugs Fixed
+
+### Other Changes
+
+## 1.1.0 (2023-05-09)
+
+- General availability release of `ContainerRegistryContentClient`.
+
+### Breaking Changes
+
+- Added sanity check for manifest size at download time:  if the manifest is bigger than 4MB, `RequestFailedException` will be thrown.
+
+## 1.1.0-beta.9 (2023-04-11)
 
 ### Features Added
 
 - Added a `DownloadStreaming()` method to `ContainerRegistryContentClient`.  This method returns a network stream in the returned result that the caller must dispose after use.
 - Added overloads to the `DownloadBlobTo()` method that take a file path instead of a Stream.
+- Exceptions returned from service methods will now have the ErrorCode value populated when it is available in the service's error response.
 
 ### Breaking Changes
 

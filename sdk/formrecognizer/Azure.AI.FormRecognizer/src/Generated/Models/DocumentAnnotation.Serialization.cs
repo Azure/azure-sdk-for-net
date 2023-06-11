@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.AI.FormRecognizer.DocumentAnalysis
 {
-    internal partial class DocumentAnnotation
+    public partial class DocumentAnnotation
     {
         internal static DocumentAnnotation DeserializeDocumentAnnotation(JsonElement element)
         {

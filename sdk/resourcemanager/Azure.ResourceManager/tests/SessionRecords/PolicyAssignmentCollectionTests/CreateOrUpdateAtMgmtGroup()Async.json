@@ -53,7 +53,7 @@
       }
     },
     {
-      "RequestUri": "https://management.azure.com/providers/Microsoft.Management/managementGroups/TestMgmtGroup/providers/Microsoft.Authorization/policyAssignments/polAssign-7889?api-version=2020-09-01",
+      "RequestUri": "https://management.azure.com/providers/Microsoft.Management/managementGroups/TestMgmtGroup/providers/Microsoft.Authorization/policyAssignments/polAssign-7889?api-version=2022-06-01",
       "RequestMethod": "PUT",
       "RequestHeaders": {
         "Accept": "application/json",

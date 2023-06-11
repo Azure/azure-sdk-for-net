@@ -42,7 +42,6 @@ namespace Azure.ResourceManager.AppContainers.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     table = ContainerAppDiagnosticDataTableResult.DeserializeContainerAppDiagnosticDataTableResult(property.Value);
@@ -52,7 +51,6 @@ namespace Azure.ResourceManager.AppContainers.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     renderingProperties = ContainerAppDiagnosticRendering.DeserializeContainerAppDiagnosticRendering(property.Value);

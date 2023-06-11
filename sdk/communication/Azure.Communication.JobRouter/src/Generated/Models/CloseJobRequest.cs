@@ -32,7 +32,7 @@ namespace Azure.Communication.JobRouter
         /// If provided, worker capacity is released along with a JobClosedEvent notification at a future time.
         /// </summary>
         public DateTimeOffset? CloseTime { get; set; }
-        /// <summary> (Optional) A note that will be appended to the jobs&apos; Notes collection with th current timestamp. </summary>
+        /// <summary> (Optional) A note that will be appended to the jobs&apos; Notes collection with the current timestamp. </summary>
         public string Note { get; set; }
     }
 }

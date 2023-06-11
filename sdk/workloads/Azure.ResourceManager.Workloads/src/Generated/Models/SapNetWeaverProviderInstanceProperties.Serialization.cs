@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.Workloads.Models
             Optional<string> sapClientId = default;
             Optional<string> sapPortNumber = default;
             Optional<Uri> sslCertificateUri = default;
-            Optional<SslPreference> sslPreference = default;
+            Optional<SapSslPreference> sslPreference = default;
             string providerType = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -121,7 +121,6 @@ namespace Azure.ResourceManager.Workloads.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<string> array = new List<string>();
@@ -146,7 +145,6 @@ namespace Azure.ResourceManager.Workloads.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        sapPasswordUri = null;
                         continue;
                     }
                     sapPasswordUri = new Uri(property.Value.GetString());
@@ -166,7 +164,6 @@ namespace Azure.ResourceManager.Workloads.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        sslCertificateUri = null;
                         continue;
                     }
                     sslCertificateUri = new Uri(property.Value.GetString());
@@ -176,10 +173,9 @@ namespace Azure.ResourceManager.Workloads.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    sslPreference = new SslPreference(property.Value.GetString());
+                    sslPreference = new SapSslPreference(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("providerType"u8))

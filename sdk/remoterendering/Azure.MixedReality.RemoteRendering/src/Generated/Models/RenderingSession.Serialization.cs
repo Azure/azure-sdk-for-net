@@ -41,7 +41,6 @@ namespace Azure.MixedReality.RemoteRendering
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     arrInspectorPort = property.Value.GetInt32();
@@ -51,7 +50,6 @@ namespace Azure.MixedReality.RemoteRendering
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     handshakePort = property.Value.GetInt32();
@@ -61,7 +59,6 @@ namespace Azure.MixedReality.RemoteRendering
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     elapsedTimeMinutes = property.Value.GetInt32();
@@ -76,7 +73,6 @@ namespace Azure.MixedReality.RemoteRendering
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     maxLeaseTimeMinutes = property.Value.GetInt32();
@@ -96,7 +92,6 @@ namespace Azure.MixedReality.RemoteRendering
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     teraflops = property.Value.GetSingle();
@@ -116,7 +111,6 @@ namespace Azure.MixedReality.RemoteRendering
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     creationTime = property.Value.GetDateTimeOffset("O");

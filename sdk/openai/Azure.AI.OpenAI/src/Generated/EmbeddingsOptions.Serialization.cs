@@ -6,20 +6,33 @@
 #nullable disable
 
 using System.Text.Json;
-using Azure;
 using Azure.Core;
 
 namespace Azure.AI.OpenAI
 {
     public partial class EmbeddingsOptions : IUtf8JsonSerializable
     {
-
-        /// <summary> Deserializes the model from a raw response. </summary>
-        /// <param name="response"> The response to deserialize the model from. </param>
-        internal static EmbeddingsOptions FromResponse(Response response)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
-            using var document = JsonDocument.Parse(response.Content);
-            return DeserializeEmbeddingsOptions(document.RootElement);
+            writer.WriteStartObject();
+            if (Optional.IsDefined(User))
+            {
+                writer.WritePropertyName("user"u8);
+                writer.WriteStringValue(User);
+            }
+            if (Optional.IsDefined(InternalNonAzureModelName))
+            {
+                writer.WritePropertyName("model"u8);
+                writer.WriteStringValue(InternalNonAzureModelName);
+            }
+            writer.WritePropertyName("input"u8);
+            writer.WriteStartArray();
+            foreach (var item in Input)
+            {
+                writer.WriteStringValue(item);
+            }
+            writer.WriteEndArray();
+            writer.WriteEndObject();
         }
 
         /// <summary> Convert into a Utf8JsonRequestContent. </summary>

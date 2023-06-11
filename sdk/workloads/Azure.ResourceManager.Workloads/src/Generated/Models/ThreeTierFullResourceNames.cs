@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.Workloads.Models
         /// <summary> Initializes a new instance of ThreeTierFullResourceNames. </summary>
         public ThreeTierFullResourceNames()
         {
-            NamingPatternType = NamingPatternType.FullResourceName;
+            NamingPatternType = SapNamingPatternType.FullResourceName;
         }
 
         /// <summary> Initializes a new instance of ThreeTierFullResourceNames. </summary>
@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Workloads.Models
         /// <param name="applicationServer"> The full resource names object for application layer resources. The number of entries in this list should be equal to the number VMs to be created for application layer. </param>
         /// <param name="databaseServer"> The full resource names object for database layer resources. The number of entries in this list should be equal to the number VMs to be created for database layer. </param>
         /// <param name="sharedStorage"> The resource names object for shared storage. </param>
-        internal ThreeTierFullResourceNames(NamingPatternType namingPatternType, CentralServerFullResourceNames centralServer, ApplicationServerFullResourceNames applicationServer, DatabaseServerFullResourceNames databaseServer, SharedStorageResourceNames sharedStorage) : base(namingPatternType)
+        internal ThreeTierFullResourceNames(SapNamingPatternType namingPatternType, CentralServerFullResourceNames centralServer, ApplicationServerFullResourceNames applicationServer, DatabaseServerFullResourceNames databaseServer, SharedStorageResourceNames sharedStorage) : base(namingPatternType)
         {
             CentralServer = centralServer;
             ApplicationServer = applicationServer;

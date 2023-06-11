@@ -52,7 +52,6 @@ namespace Azure.ResourceManager.AppConfiguration
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
@@ -71,7 +70,6 @@ namespace Azure.ResourceManager.AppConfiguration
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             configurationStoreId = new ResourceIdentifier(property0.Value.GetString());
@@ -81,7 +79,6 @@ namespace Azure.ResourceManager.AppConfiguration
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             location = new AzureLocation(property0.Value.GetString());
@@ -91,7 +88,6 @@ namespace Azure.ResourceManager.AppConfiguration
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             deletionDate = property0.Value.GetDateTimeOffset("O");
@@ -101,7 +97,6 @@ namespace Azure.ResourceManager.AppConfiguration
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             scheduledPurgeDate = property0.Value.GetDateTimeOffset("O");
@@ -111,7 +106,6 @@ namespace Azure.ResourceManager.AppConfiguration
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             Dictionary<string, string> dictionary = new Dictionary<string, string>();
@@ -126,7 +120,6 @@ namespace Azure.ResourceManager.AppConfiguration
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             purgeProtectionEnabled = property0.Value.GetBoolean();

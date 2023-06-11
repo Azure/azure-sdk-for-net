@@ -49,7 +49,6 @@ namespace Azure.ResourceManager.Consumption.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     etag = new ETag(property.Value.GetString());
@@ -59,7 +58,6 @@ namespace Azure.ResourceManager.Consumption.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();
@@ -89,7 +87,6 @@ namespace Azure.ResourceManager.Consumption.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
@@ -123,7 +120,6 @@ namespace Azure.ResourceManager.Consumption.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             reservedHours = property0.Value.GetDecimal();
@@ -133,7 +129,6 @@ namespace Azure.ResourceManager.Consumption.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             usageDate = property0.Value.GetDateTimeOffset("O");
@@ -143,7 +138,6 @@ namespace Azure.ResourceManager.Consumption.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             usedHours = property0.Value.GetDecimal();
@@ -153,7 +147,6 @@ namespace Azure.ResourceManager.Consumption.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             minUtilizationPercentage = property0.Value.GetDecimal();
@@ -163,7 +156,6 @@ namespace Azure.ResourceManager.Consumption.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             avgUtilizationPercentage = property0.Value.GetDecimal();
@@ -173,7 +165,6 @@ namespace Azure.ResourceManager.Consumption.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             maxUtilizationPercentage = property0.Value.GetDecimal();
@@ -188,7 +179,6 @@ namespace Azure.ResourceManager.Consumption.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             purchasedQuantity = property0.Value.GetDecimal();
@@ -198,7 +188,6 @@ namespace Azure.ResourceManager.Consumption.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             remainingQuantity = property0.Value.GetDecimal();
@@ -208,7 +197,6 @@ namespace Azure.ResourceManager.Consumption.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             totalReservedQuantity = property0.Value.GetDecimal();
@@ -218,7 +206,6 @@ namespace Azure.ResourceManager.Consumption.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             usedQuantity = property0.Value.GetDecimal();
@@ -228,7 +215,6 @@ namespace Azure.ResourceManager.Consumption.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             utilizedPercentage = property0.Value.GetDecimal();

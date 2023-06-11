@@ -72,7 +72,6 @@ namespace Azure.ResourceManager.ArcScVmm.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     memoryMB = property.Value.GetInt32();
@@ -82,7 +81,6 @@ namespace Azure.ResourceManager.ArcScVmm.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     cpuCount = property.Value.GetInt32();
@@ -92,7 +90,6 @@ namespace Azure.ResourceManager.ArcScVmm.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     limitCpuForMigration = new LimitCpuForMigration(property.Value.GetString());
@@ -102,7 +99,6 @@ namespace Azure.ResourceManager.ArcScVmm.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     dynamicMemoryEnabled = new DynamicMemoryEnabled(property.Value.GetString());
@@ -112,7 +108,6 @@ namespace Azure.ResourceManager.ArcScVmm.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     dynamicMemoryMaxMB = property.Value.GetInt32();
@@ -122,7 +117,6 @@ namespace Azure.ResourceManager.ArcScVmm.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     dynamicMemoryMinMB = property.Value.GetInt32();

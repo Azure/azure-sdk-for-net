@@ -42,7 +42,6 @@ namespace Azure.ResourceManager.StorageCache.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     activeDirectory = StorageCacheActiveDirectorySettings.DeserializeStorageCacheActiveDirectorySettings(property.Value);
@@ -52,7 +51,6 @@ namespace Azure.ResourceManager.StorageCache.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     usernameDownload = StorageCacheUsernameDownloadSettings.DeserializeStorageCacheUsernameDownloadSettings(property.Value);

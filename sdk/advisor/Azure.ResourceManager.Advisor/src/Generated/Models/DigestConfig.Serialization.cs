@@ -82,7 +82,6 @@ namespace Azure.ResourceManager.Advisor.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     frequency = property.Value.GetInt32();
@@ -92,7 +91,6 @@ namespace Azure.ResourceManager.Advisor.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<Category> array = new List<Category>();
@@ -112,7 +110,6 @@ namespace Azure.ResourceManager.Advisor.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     state = new DigestConfigState(property.Value.GetString());

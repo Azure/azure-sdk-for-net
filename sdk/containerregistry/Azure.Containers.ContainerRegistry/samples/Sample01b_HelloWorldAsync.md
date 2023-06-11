@@ -46,5 +46,6 @@ try
 catch (RequestFailedException ex) when (ex.Status == 404)
 {
     Console.WriteLine("Repository wasn't found.");
+    Console.WriteLine($"Service error: {ex.Message}.");
 }
 ```

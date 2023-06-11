@@ -46,7 +46,9 @@
     "sdk/objectanchors/*/api/*.cs",
     "sdk/purview/*/api/*.cs",
     "sdk/remoterendering/*/api/*.cs",
-    "sdk/videoanalyzer/*/api/*.cs"
+    "sdk/videoanalyzer/*/api/*.cs",
+    "sdk/newrelicobservability/*/api/*.cs",
+    "sdk/paloaltonetworks.ngfw/*/api/*.cs"
   ],
   // cspell is not case sensitive
   // Sort words alphabetically to make this list easier to use
@@ -69,6 +71,7 @@
     "fhir",
     "finalizer",
     "finalizers",
+    "hnsw",
     "illumos",
     "interventional",
     "ints",
@@ -99,6 +102,7 @@
     "unformattable",
     "unhold",
     "uninstrumented",
+    "vcpus",
     "vmss",
     "vnet",
     "westus",
@@ -276,6 +280,25 @@
       ]
     },
     {
+      "filename": "**/sdk/consumption/**/*",
+      "words": [
+        "payg"
+      ]
+    },
+    {
+      "filename": "**/sdk/cosmosdbforpostgresql/**/*",
+      "words": [
+        "Citus"
+      ]
+    },
+    {
+      "filename": "**/sdk/costmanagement/**/*",
+      "words": [
+        "ahub",
+        "kpis"
+      ]
+    },
+    {
       "filename": "**/sdk/customer-insights/**/*.cs",
       "words": [
         "kpis"
@@ -302,6 +325,13 @@
       "filename": "**/sdk/datadog/**/*.cs",
       "words": [
         "liftr"
+      ]
+    },
+    {
+      "filename": "**/sdk/newrelic/**/*.cs",
+      "words": [
+        "liftr",
+        "payg"
       ]
     },
     {
@@ -423,6 +453,8 @@
     {
       "filename": "**/sdk/formrecognizer/**/*.cs",
       "words": [
+        "Upca",
+        "Upce",
         "ZhHant"
       ]
     },
@@ -561,7 +593,30 @@
         "Vnets",
         "Vxlan",
         "WAFV",
-        "Wans"
+        "Wans",
+        "Idps",
+        "idps",
+        "Ocsp",
+        "Afri",
+        "Apac",
+        "Latam"
+      ]
+    },
+    {
+      "filename": "**/sdk/networkcloud/**/*.cs",
+      "words": [
+        "Reimage",
+        "Uncordon",
+        "Uncordoned",
+        "Ipam",
+        "Virtio",
+        "nics",
+        "Lldp",
+        "Nics",
+        "Dpdk",
+        "Sriov",
+        "Sata",
+        "Uefi"
       ]
     },
     {
@@ -596,6 +651,14 @@
       ]
     },
     {
+      "filename": "**/sdk/managednetworkfabric/**/*.cs",
+      "words": [
+        "evpn",
+        "mbps",
+        "gshut"
+      ]
+    },
+    {
       "filename": "**/sdk/mediaservices/**/*.cs",
       "words": [
         "cabac",
@@ -610,7 +673,8 @@
     {
       "filename": "**/sdk/mysql/**/*.cs",
       "words": [
-        "byok"
+        "byok",
+        "gtid"
       ]
     },
     {
@@ -705,6 +769,12 @@
       "words": [
         "checkin",
         "regionality"
+      ]
+    },
+    {
+      "filename": "**/sdk/qumulo/**/*",
+      "words": [
+      	"qumulo"
       ]
     },
     {

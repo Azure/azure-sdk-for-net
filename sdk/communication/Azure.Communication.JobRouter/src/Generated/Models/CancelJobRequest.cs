@@ -15,7 +15,7 @@ namespace Azure.Communication.JobRouter
         {
         }
 
-        /// <summary> (Optional) A note that will be appended to the jobs&apos; Notes collection with th current timestamp. </summary>
+        /// <summary> (Optional) A note that will be appended to the jobs&apos; Notes collection with the current timestamp. </summary>
         public string Note { get; set; }
         /// <summary>
         /// Indicates the outcome of the job, populate this field with your own custom values.

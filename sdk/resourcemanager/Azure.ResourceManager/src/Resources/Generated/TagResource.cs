@@ -173,7 +173,7 @@ namespace Azure.ResourceManager.Resources
             try
             {
                 var response = await _tagResourceTagsRestClient.DeleteAtScopeAsync(Id.Parent, cancellationToken).ConfigureAwait(false);
-                var operation = new ResourcesArmOperation(_tagResourceTagsClientDiagnostics, Pipeline, _tagResourceTagsRestClient.CreateDeleteAtScopeRequest(Id.Parent).Request, response, OperationFinalStateVia.Location);
+                var operation = new ResourcesArmOperation(_tagResourceTagsClientDiagnostics, Pipeline, _tagResourceTagsRestClient.CreateDeleteAtScopeRequest(Id.Parent).Request, response, OperationFinalStateVia.Location, skipApiVersionOverride: true);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -207,7 +207,7 @@ namespace Azure.ResourceManager.Resources
             try
             {
                 var response = _tagResourceTagsRestClient.DeleteAtScope(Id.Parent, cancellationToken);
-                var operation = new ResourcesArmOperation(_tagResourceTagsClientDiagnostics, Pipeline, _tagResourceTagsRestClient.CreateDeleteAtScopeRequest(Id.Parent).Request, response, OperationFinalStateVia.Location);
+                var operation = new ResourcesArmOperation(_tagResourceTagsClientDiagnostics, Pipeline, _tagResourceTagsRestClient.CreateDeleteAtScopeRequest(Id.Parent).Request, response, OperationFinalStateVia.Location, skipApiVersionOverride: true);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
@@ -245,7 +245,7 @@ namespace Azure.ResourceManager.Resources
             try
             {
                 var response = await _tagResourceTagsRestClient.UpdateAtScopeAsync(Id.Parent, patch, cancellationToken).ConfigureAwait(false);
-                var operation = new ResourcesArmOperation<TagResource>(new TagResourceOperationSource(Client), _tagResourceTagsClientDiagnostics, Pipeline, _tagResourceTagsRestClient.CreateUpdateAtScopeRequest(Id.Parent, patch).Request, response, OperationFinalStateVia.Location);
+                var operation = new ResourcesArmOperation<TagResource>(new TagResourceOperationSource(Client), _tagResourceTagsClientDiagnostics, Pipeline, _tagResourceTagsRestClient.CreateUpdateAtScopeRequest(Id.Parent, patch).Request, response, OperationFinalStateVia.Location, skipApiVersionOverride: true);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -283,7 +283,7 @@ namespace Azure.ResourceManager.Resources
             try
             {
                 var response = _tagResourceTagsRestClient.UpdateAtScope(Id.Parent, patch, cancellationToken);
-                var operation = new ResourcesArmOperation<TagResource>(new TagResourceOperationSource(Client), _tagResourceTagsClientDiagnostics, Pipeline, _tagResourceTagsRestClient.CreateUpdateAtScopeRequest(Id.Parent, patch).Request, response, OperationFinalStateVia.Location);
+                var operation = new ResourcesArmOperation<TagResource>(new TagResourceOperationSource(Client), _tagResourceTagsClientDiagnostics, Pipeline, _tagResourceTagsRestClient.CreateUpdateAtScopeRequest(Id.Parent, patch).Request, response, OperationFinalStateVia.Location, skipApiVersionOverride: true);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -321,7 +321,7 @@ namespace Azure.ResourceManager.Resources
             try
             {
                 var response = await _tagResourceTagsRestClient.CreateOrUpdateAtScopeAsync(Id.Parent, data, cancellationToken).ConfigureAwait(false);
-                var operation = new ResourcesArmOperation<TagResource>(new TagResourceOperationSource(Client), _tagResourceTagsClientDiagnostics, Pipeline, _tagResourceTagsRestClient.CreateCreateOrUpdateAtScopeRequest(Id.Parent, data).Request, response, OperationFinalStateVia.Location);
+                var operation = new ResourcesArmOperation<TagResource>(new TagResourceOperationSource(Client), _tagResourceTagsClientDiagnostics, Pipeline, _tagResourceTagsRestClient.CreateCreateOrUpdateAtScopeRequest(Id.Parent, data).Request, response, OperationFinalStateVia.Location, skipApiVersionOverride: true);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -359,7 +359,7 @@ namespace Azure.ResourceManager.Resources
             try
             {
                 var response = _tagResourceTagsRestClient.CreateOrUpdateAtScope(Id.Parent, data, cancellationToken);
-                var operation = new ResourcesArmOperation<TagResource>(new TagResourceOperationSource(Client), _tagResourceTagsClientDiagnostics, Pipeline, _tagResourceTagsRestClient.CreateCreateOrUpdateAtScopeRequest(Id.Parent, data).Request, response, OperationFinalStateVia.Location);
+                var operation = new ResourcesArmOperation<TagResource>(new TagResourceOperationSource(Client), _tagResourceTagsClientDiagnostics, Pipeline, _tagResourceTagsRestClient.CreateCreateOrUpdateAtScopeRequest(Id.Parent, data).Request, response, OperationFinalStateVia.Location, skipApiVersionOverride: true);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

@@ -113,7 +113,6 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();
@@ -148,7 +147,6 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
@@ -187,7 +185,6 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             autoUpgradeMinorVersion = property0.Value.GetBoolean();
@@ -197,7 +194,6 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             settings = BinaryData.FromString(property0.Value.GetRawText());
@@ -207,7 +203,6 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             protectedSettings = BinaryData.FromString(property0.Value.GetRawText());
@@ -222,7 +217,6 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             instanceView = MachineExtensionPropertiesInstanceView.DeserializeMachineExtensionPropertiesInstanceView(property0.Value);

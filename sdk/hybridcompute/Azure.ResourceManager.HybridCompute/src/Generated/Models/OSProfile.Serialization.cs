@@ -48,7 +48,6 @@ namespace Azure.ResourceManager.HybridCompute.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     windowsConfiguration = OSProfileWindowsConfiguration.DeserializeOSProfileWindowsConfiguration(property.Value);
@@ -58,7 +57,6 @@ namespace Azure.ResourceManager.HybridCompute.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     linuxConfiguration = OSProfileLinuxConfiguration.DeserializeOSProfileLinuxConfiguration(property.Value);

@@ -24,6 +24,7 @@ namespace Azure.Communication.CallAutomation
 
             CallLocator = callLocator;
             AudioChannelParticipantOrdering = new ChangeTrackingList<CommunicationIdentifierModel>();
+            ChannelAffinity = new ChangeTrackingList<ChannelAffinityInternal>();
         }
 
         /// <summary> The call locator. </summary>
@@ -43,6 +44,13 @@ namespace Azure.Communication.CallAutomation
         /// first audio was detected.  Channel to participant mapping details can be found in the metadata of the recording.
         /// </summary>
         public IList<CommunicationIdentifierModel> AudioChannelParticipantOrdering { get; }
+        /// <summary>
+        /// The channel affinity of call recording
+        /// When &apos;recordingChannelType&apos; is set to &apos;unmixed&apos;, if channelAffinity is not specified, &apos;channel&apos; will be automatically assigned.
+        /// Channel-Participant mapping details can be found in the metadata of the recording.
+        /// ///
+        /// </summary>
+        public IList<ChannelAffinityInternal> ChannelAffinity { get; }
         /// <summary> Optional property to specify location where recording will be stored. </summary>
         public ExternalStorageInternal ExternalStorage { get; set; }
     }

@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.Network.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Get_ExpressRoutePortGet()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2021-02-01/examples/ExpressRoutePortGet.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2022-09-01/examples/ExpressRoutePortGet.json
             // this example is just showing the usage of "ExpressRoutePorts_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.Network.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Exists_ExpressRoutePortGet()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2021-02-01/examples/ExpressRoutePortGet.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2022-09-01/examples/ExpressRoutePortGet.json
             // this example is just showing the usage of "ExpressRoutePorts_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.Network.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task CreateOrUpdate_ExpressRoutePortCreate()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2021-02-01/examples/ExpressRoutePortCreate.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2022-09-01/examples/ExpressRoutePortCreate.json
             // this example is just showing the usage of "ExpressRoutePorts_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -113,6 +113,7 @@ namespace Azure.ResourceManager.Network.Samples
                 PeeringLocation = "peeringLocationName",
                 BandwidthInGbps = 100,
                 Encapsulation = ExpressRoutePortsEncapsulation.QinQ,
+                BillingType = ExpressRoutePortsBillingType.UnlimitedData,
                 Location = new AzureLocation("westus"),
             };
             ArmOperation<ExpressRoutePortResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, expressRoutePortName, data);
@@ -130,7 +131,7 @@ namespace Azure.ResourceManager.Network.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task CreateOrUpdate_ExpressRoutePortUpdateLink()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2021-02-01/examples/ExpressRoutePortUpdateLink.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2022-09-01/examples/ExpressRoutePortUpdateLink.json
             // this example is just showing the usage of "ExpressRoutePorts_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -163,6 +164,7 @@ AdminState = ExpressRouteLinkAdminState.Enabled,
 Name = "link1",
 }
 },
+                BillingType = ExpressRoutePortsBillingType.UnlimitedData,
                 Location = new AzureLocation("westus"),
             };
             ArmOperation<ExpressRoutePortResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, expressRoutePortName, data);
@@ -180,7 +182,7 @@ Name = "link1",
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task GetAll_ExpressRoutePortListByResourceGroup()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2021-02-01/examples/ExpressRoutePortListByResourceGroup.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2022-09-01/examples/ExpressRoutePortListByResourceGroup.json
             // this example is just showing the usage of "ExpressRoutePorts_ListByResourceGroup" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line

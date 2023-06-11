@@ -48,7 +48,6 @@ namespace Azure.AI.TextAnalytics
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     conditionality = property.Value.GetString().ToEntityConditionality();
@@ -58,7 +57,6 @@ namespace Azure.AI.TextAnalytics
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     certainty = property.Value.GetString().ToEntityCertainty();
@@ -68,7 +66,6 @@ namespace Azure.AI.TextAnalytics
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     association = property.Value.GetString().ToEntityAssociation();

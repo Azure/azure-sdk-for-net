@@ -27,6 +27,18 @@ namespace Azure.Messaging.ServiceBus.Tests
     public class AmqpConnectionScopeTests
     {
         /// <summary>
+        ///   Verifies functionality of the constructor.
+        /// </summary>
+        ///
+        [Test]
+        public void ConstructorValidatesTheIdleTimeout()
+        {
+            var endpoint = new Uri("amqp://some.place.com");
+            var credential = new Mock<ServiceBusTokenCredential>(Mock.Of<TokenCredential>());
+            Assert.That(() => new AmqpConnectionScope(endpoint, endpoint, credential.Object, ServiceBusTransportType.AmqpTcp, null, false, default, TimeSpan.FromMilliseconds(-1)), Throws.InstanceOf<ArgumentOutOfRangeException>());
+        }
+
+        /// <summary>
         ///   Verifies functionality of the <see cref="AmqpConnectionScope.CalculateLinkAuthorizationRefreshInterval" />
         ///   method.
         /// </summary>
@@ -146,7 +158,7 @@ namespace Azure.Messaging.ServiceBus.Tests
             var cancellationSource = new CancellationTokenSource();
             var mockSession = new AmqpSession(mockConnection, new AmqpSessionSettings(), Mock.Of<ILinkFactory>());
 
-            var mockScope = new Mock<AmqpConnectionScope>(endpoint, endpoint, credential.Object, ServiceBusTransportType.AmqpTcp, null, false, default)
+            var mockScope = new Mock<AmqpConnectionScope>(endpoint, endpoint, credential.Object, ServiceBusTransportType.AmqpTcp, null, false, default, default)
             {
                 CallBase = true,
             };
@@ -214,7 +226,7 @@ namespace Azure.Messaging.ServiceBus.Tests
             var cancellationSource = new CancellationTokenSource();
             var mockSession = new AmqpSession(mockConnection, new AmqpSessionSettings(), Mock.Of<ILinkFactory>());
 
-            var mockScope = new Mock<AmqpConnectionScope>(endpoint, endpoint, credential.Object, ServiceBusTransportType.AmqpTcp, null, false, default)
+            var mockScope = new Mock<AmqpConnectionScope>(endpoint, endpoint, credential.Object, ServiceBusTransportType.AmqpTcp, null, false, default, default)
             {
                 CallBase = true,
             };
@@ -355,7 +367,7 @@ namespace Azure.Messaging.ServiceBus.Tests
                 Uri customConnectionEndpoint,
                 ServiceBusTokenCredential credential,
                 ServiceBusTransportType transport,
-                IWebProxy proxy) : base(serviceEndpoint, customConnectionEndpoint, credential, transport, proxy, false, default)
+                IWebProxy proxy) : base(serviceEndpoint, customConnectionEndpoint, credential, transport, proxy, false, default, default)
             {
                 MockConnection = new Mock<AmqpConnection>(new MockTransport(), CreateMockAmqpSettings(), new AmqpConnectionSettings());
             }

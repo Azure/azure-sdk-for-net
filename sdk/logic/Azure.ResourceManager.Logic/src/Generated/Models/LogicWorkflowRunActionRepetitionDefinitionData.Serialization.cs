@@ -130,7 +130,6 @@ namespace Azure.ResourceManager.Logic
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();
@@ -165,7 +164,6 @@ namespace Azure.ResourceManager.Logic
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
@@ -184,7 +182,6 @@ namespace Azure.ResourceManager.Logic
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             startTime = property0.Value.GetDateTimeOffset("O");
@@ -194,7 +191,6 @@ namespace Azure.ResourceManager.Logic
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             endTime = property0.Value.GetDateTimeOffset("O");
@@ -204,7 +200,6 @@ namespace Azure.ResourceManager.Logic
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             correlation = LogicWorkflowRunActionCorrelation.DeserializeLogicWorkflowRunActionCorrelation(property0.Value);
@@ -214,7 +209,6 @@ namespace Azure.ResourceManager.Logic
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             status = new LogicWorkflowStatus(property0.Value.GetString());
@@ -229,7 +223,6 @@ namespace Azure.ResourceManager.Logic
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             error = BinaryData.FromString(property0.Value.GetRawText());
@@ -239,7 +232,6 @@ namespace Azure.ResourceManager.Logic
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             trackingId = property0.Value.GetGuid();
@@ -249,7 +241,6 @@ namespace Azure.ResourceManager.Logic
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             inputs = BinaryData.FromString(property0.Value.GetRawText());
@@ -259,7 +250,6 @@ namespace Azure.ResourceManager.Logic
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             inputsLink = LogicContentLink.DeserializeLogicContentLink(property0.Value);
@@ -269,7 +259,6 @@ namespace Azure.ResourceManager.Logic
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             outputs = BinaryData.FromString(property0.Value.GetRawText());
@@ -279,7 +268,6 @@ namespace Azure.ResourceManager.Logic
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             outputsLink = LogicContentLink.DeserializeLogicContentLink(property0.Value);
@@ -289,7 +277,6 @@ namespace Azure.ResourceManager.Logic
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             trackedProperties = BinaryData.FromString(property0.Value.GetRawText());
@@ -299,7 +286,6 @@ namespace Azure.ResourceManager.Logic
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             List<LogicWorkRetryHistory> array = new List<LogicWorkRetryHistory>();
@@ -314,7 +300,6 @@ namespace Azure.ResourceManager.Logic
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             iterationCount = property0.Value.GetInt32();
@@ -324,7 +309,6 @@ namespace Azure.ResourceManager.Logic
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             List<LogicWorkflowRepetitionIndex> array = new List<LogicWorkflowRepetitionIndex>();

@@ -11,7 +11,7 @@ using System.ComponentModel;
 namespace Azure.AI.FormRecognizer.DocumentAnalysis
 {
     /// <summary> Font style. </summary>
-    internal readonly partial struct FontStyle : IEquatable<FontStyle>
+    public readonly partial struct FontStyle : IEquatable<FontStyle>
     {
         private readonly string _value;
 

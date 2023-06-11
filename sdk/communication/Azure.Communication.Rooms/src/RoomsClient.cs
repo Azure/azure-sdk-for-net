@@ -4,10 +4,8 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Net;
 using System.Threading;
 using System.Threading.Tasks;
-using System.Xml.Linq;
 using Azure.Communication.Pipeline;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -22,6 +20,8 @@ namespace Azure.Communication.Rooms
         private readonly ClientDiagnostics _clientDiagnostics;
 
         internal RoomsRestClient RoomsServiceClient { get; }
+
+        internal ParticipantsRestClient ParticipantsServiceClient { get; }
 
         #region public constructors - all arguments need null check
 
@@ -50,12 +50,12 @@ namespace Azure.Communication.Rooms
         /// Initializes a new instance of the <see cref="RoomsClient"/> class.
         /// </summary>
         /// <param name="endpoint"></param>
-        /// <param name="keyCredential"></param>
+        /// <param name="credential"></param>
         /// <param name="options"></param>
-        public RoomsClient(Uri endpoint, AzureKeyCredential keyCredential, RoomsClientOptions options = default)
+        public RoomsClient(Uri endpoint, AzureKeyCredential credential, RoomsClientOptions options = default)
             : this(
                 Argument.CheckNotNull(endpoint, nameof(endpoint)).AbsoluteUri,
-                Argument.CheckNotNull(keyCredential, nameof(keyCredential)),
+                Argument.CheckNotNull(credential, nameof(credential)),
                 options ?? new RoomsClientOptions())
         { }
 
@@ -63,12 +63,12 @@ namespace Azure.Communication.Rooms
         /// Initializes a new instance of the <see cref="RoomsClient"/> class.
         /// </summary>
         /// <param name="endpoint"></param>
-        /// <param name="tokenCredential"></param>
+        /// <param name="credential"></param>
         /// <param name="options"></param>
-        public RoomsClient(Uri endpoint, TokenCredential tokenCredential, RoomsClientOptions options = default)
+        public RoomsClient(Uri endpoint, TokenCredential credential, RoomsClientOptions options = default)
             : this(
                 Argument.CheckNotNull(endpoint, nameof(endpoint)).AbsoluteUri,
-                Argument.CheckNotNull(tokenCredential, nameof(tokenCredential)),
+                Argument.CheckNotNull(credential, nameof(credential)),
                 options ?? new RoomsClientOptions())
         { }
 
@@ -91,7 +91,8 @@ namespace Azure.Communication.Rooms
         private RoomsClient(string endpoint, HttpPipeline httpPipeline, RoomsClientOptions options)
         {
             _clientDiagnostics = new ClientDiagnostics(options);
-            RoomsServiceClient = new RoomsRestClient(_clientDiagnostics, httpPipeline, endpoint, options.ApiVersion);
+            RoomsServiceClient = new RoomsRestClient(_clientDiagnostics, httpPipeline, new Uri(endpoint), options.ApiVersion);
+            ParticipantsServiceClient = new ParticipantsRestClient(_clientDiagnostics, httpPipeline, new Uri(endpoint), options.ApiVersion);
         }
         #endregion
 
@@ -109,11 +110,10 @@ namespace Azure.Communication.Rooms
         /// </summary>
         /// <param name="validFrom"></param>
         /// <param name="validUntil"></param>
-        /// <param name="roomJoinPolicy"></param>
         /// <param name="participants"></param>
         /// <param name="cancellationToken"></param>
         /// <returns>A <see cref="Task{TResult}"/> representing the result of the asynchronous operation.</returns>
-        public virtual async Task<Response<CommunicationRoom>> CreateRoomAsync(DateTimeOffset? validFrom = default, DateTimeOffset? validUntil = default, RoomJoinPolicy? roomJoinPolicy = default, IEnumerable<RoomParticipant> participants = default, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<CommunicationRoom>> CreateRoomAsync(DateTimeOffset? validFrom = default, DateTimeOffset? validUntil = default, IEnumerable<RoomParticipant> participants = null, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(RoomsClient)}.{nameof(CreateRoom)}");
             scope.Start();
@@ -121,9 +121,8 @@ namespace Azure.Communication.Rooms
             {
                 Guid repeatabilityRequestId = Guid.NewGuid();
                 DateTimeOffset repeatabilityFirstSent = DateTimeOffset.UtcNow;
-                Response<RoomModelInternal> createRoomResponseInternal =
-                    await RoomsServiceClient.CreateRoomAsync(repeatabilityRequestId, repeatabilityFirstSent, validFrom, validUntil, roomJoinPolicy, participants == null ? null : participants.Select(x => x.ToRoomParticipantInternal()), cancellationToken).ConfigureAwait(false);
-                return Response.FromValue(new CommunicationRoom(createRoomResponseInternal.Value), createRoomResponseInternal.GetRawResponse());
+                var participantDictionary = ConvertRoomParticipantsToDictionaryForAddOrUpdate(participants);
+                return await RoomsServiceClient.CreateAsync(repeatabilityRequestId, repeatabilityFirstSent, validFrom, validUntil, participantDictionary, cancellationToken).ConfigureAwait(false);
             }
             catch (Exception ex)
             {
@@ -137,10 +136,9 @@ namespace Azure.Communication.Rooms
         /// </summary>
         /// <param name="validFrom"></param>
         /// <param name="validUntil"></param>
-        /// <param name="roomJoinPolicy"></param>
         /// <param name="participants"></param>
         /// <param name="cancellationToken"></param>
-        public virtual Response<CommunicationRoom> CreateRoom(DateTimeOffset? validFrom = default, DateTimeOffset? validUntil = default, RoomJoinPolicy? roomJoinPolicy = default, IEnumerable<RoomParticipant> participants = default, CancellationToken cancellationToken = default)
+        public virtual Response<CommunicationRoom> CreateRoom(DateTimeOffset? validFrom = default, DateTimeOffset? validUntil = default, IEnumerable<RoomParticipant> participants = null, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(RoomsClient)}.{nameof(CreateRoom)}");
             scope.Start();
@@ -148,9 +146,8 @@ namespace Azure.Communication.Rooms
             {
                 Guid repeatabilityRequestId = Guid.NewGuid();
                 DateTimeOffset repeatabilityFirstSent = DateTimeOffset.UtcNow;
-                Response<RoomModelInternal> createRoomResponseInternal =
-                     RoomsServiceClient.CreateRoom(repeatabilityRequestId, repeatabilityFirstSent, validFrom, validUntil, roomJoinPolicy, participants == null ? null : participants.Select(x => x.ToRoomParticipantInternal()), cancellationToken);
-                return Response.FromValue(new CommunicationRoom(createRoomResponseInternal.Value), createRoomResponseInternal.GetRawResponse());
+                var participantDictionary = ConvertRoomParticipantsToDictionaryForAddOrUpdate(participants);
+                return RoomsServiceClient.Create(repeatabilityRequestId, repeatabilityFirstSent, validFrom, validUntil, participantDictionary, cancellationToken);
             }
             catch (Exception ex)
             {
@@ -165,19 +162,15 @@ namespace Azure.Communication.Rooms
         /// <param name="roomId"></param>
         /// <param name="validFrom"></param>
         /// <param name="validUntil"></param>
-        /// <param name="roomJoinPolicy"></param>
-        /// <param name="participants"></param>
         /// <param name="cancellationToken"></param>
         /// <returns>A <see cref="Task{TResult}"/> representing the result of the asynchronous operation.</returns>
-        public virtual async Task<Response<CommunicationRoom>> UpdateRoomAsync(string roomId, DateTimeOffset? validFrom = default, DateTimeOffset? validUntil = default, RoomJoinPolicy? roomJoinPolicy = default, IEnumerable<RoomParticipant> participants = default, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<CommunicationRoom>> UpdateRoomAsync(string roomId, DateTimeOffset? validFrom = default, DateTimeOffset? validUntil = default, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(RoomsClient)}.{nameof(UpdateRoom)}");
             scope.Start();
             try
             {
-                Response<RoomModelInternal> updateRoomResponseInternal =
-                    await RoomsServiceClient.UpdateRoomAsync(roomId, validFrom, validUntil, roomJoinPolicy, participants == null ? null : participants.Select(x => x.ToRoomParticipantInternal()), cancellationToken).ConfigureAwait(false);
-                return Response.FromValue(new CommunicationRoom(updateRoomResponseInternal.Value), updateRoomResponseInternal.GetRawResponse());
+                return await RoomsServiceClient.UpdateAsync(roomId, validFrom, validUntil, cancellationToken).ConfigureAwait(false);
             }
             catch (Exception ex)
             {
@@ -192,19 +185,15 @@ namespace Azure.Communication.Rooms
         /// <param name="roomId"></param>
         /// <param name="validFrom"></param>
         /// <param name="validUntil"></param>
-        /// <param name="roomJoinPolicy"></param>
-        /// <param name="participants"></param>
         /// <param name="cancellationToken"></param>
         /// <exception cref="ArgumentNullException"> <paramref name="roomId"/> is null. </exception>
-        public virtual Response<CommunicationRoom> UpdateRoom(string roomId, DateTimeOffset? validFrom = default, DateTimeOffset? validUntil = default, RoomJoinPolicy? roomJoinPolicy = default, IEnumerable<RoomParticipant> participants = default, CancellationToken cancellationToken = default)
+        public virtual Response<CommunicationRoom> UpdateRoom(string roomId, DateTimeOffset? validFrom = default, DateTimeOffset? validUntil = default, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(RoomsClient)}.{nameof(UpdateRoom)}");
             scope.Start();
             try
             {
-                Response<RoomModelInternal> updateRoomResponseInternal =
-                    RoomsServiceClient.UpdateRoom(roomId, validFrom, validUntil, roomJoinPolicy, participants == null ? null : participants.Select(x => x.ToRoomParticipantInternal()), cancellationToken);
-                return Response.FromValue(new CommunicationRoom(updateRoomResponseInternal.Value), updateRoomResponseInternal.GetRawResponse());
+                return RoomsServiceClient.Update(roomId, validFrom, validUntil, cancellationToken);
             }
             catch (Exception ex)
             {
@@ -225,9 +214,7 @@ namespace Azure.Communication.Rooms
             scope.Start();
             try
             {
-                Response<RoomModelInternal> getRoomResponseInternal =
-                    await RoomsServiceClient.GetRoomAsync(roomId, cancellationToken).ConfigureAwait(false);
-                return Response.FromValue(new CommunicationRoom(getRoomResponseInternal.Value), getRoomResponseInternal.GetRawResponse());
+                return await RoomsServiceClient.GetAsync(roomId, cancellationToken).ConfigureAwait(false);
             }
             catch (Exception ex)
             {
@@ -237,7 +224,7 @@ namespace Azure.Communication.Rooms
         }
 
         /// <summary>
-        /// Gets a room.
+        /// Gets a room by id.
         /// </summary>
         /// <param name="roomId"></param>
         /// <param name="cancellationToken"></param>
@@ -248,15 +235,98 @@ namespace Azure.Communication.Rooms
             scope.Start();
             try
             {
-                Response<RoomModelInternal> getRoomResponseInternal =
-                    RoomsServiceClient.GetRoom(roomId, cancellationToken);
-                return Response.FromValue(new CommunicationRoom(getRoomResponseInternal.Value), getRoomResponseInternal.GetRawResponse());
+                return RoomsServiceClient.Get(roomId, cancellationToken);
             }
             catch (Exception ex)
             {
                 scope.Failed(ex);
                 throw;
             }
+        }
+
+        /// <summary>
+        /// Gets all rooms asynchronously.
+        /// </summary>
+        /// <param name="cancellationToken"></param>
+        /// <returns>A <see cref="Task{TResult}"/> representing the result of the asynchronous operation.</returns>
+        /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
+        public virtual AsyncPageable<CommunicationRoom> GetRoomsAsync(CancellationToken cancellationToken = default)
+        {
+            async Task<Page<CommunicationRoom>> FirstPageFunc(int? pageSizeHint)
+            {
+                using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(RoomsClient)}.{nameof(GetRooms)}");
+                scope.Start();
+                try
+                {
+                    Response<RoomsCollection> getRoomsResponse = await RoomsServiceClient.ListAsync(cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(getRoomsResponse.Value.Value, getRoomsResponse.Value.NextLink, getRoomsResponse.GetRawResponse());
+                }
+                catch (Exception ex)
+                {
+                    scope.Failed(ex);
+                    throw;
+                }
+            }
+
+            async Task<Page<CommunicationRoom>> NextPageFunc(string nextLink, int? pageSizeHint)
+            {
+                using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(RoomsClient)}.{nameof(GetRooms)}");
+                scope.Start();
+                try
+                {
+                    Response<RoomsCollection> getRoomsResponse = await RoomsServiceClient.ListNextPageAsync(nextLink, cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(getRoomsResponse.Value.Value, getRoomsResponse.Value.NextLink, getRoomsResponse.GetRawResponse());
+                }
+                catch (Exception ex)
+                {
+                    scope.Failed(ex);
+                    throw;
+                }
+            }
+
+            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+        }
+
+        /// <summary>
+        /// Gets all rooms.
+        /// </summary>
+        /// <param name="cancellationToken"></param>
+        /// <returns>A <see cref="Task{TResult}"/> representing the result of the asynchronous operation.</returns>
+        /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
+        public virtual Pageable<CommunicationRoom> GetRooms(CancellationToken cancellationToken = default)
+        {
+            Page<CommunicationRoom> FirstPageFunc(int? pageSizeHint)
+            {
+                using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(RoomsClient)}.{nameof(GetRooms)}");
+                scope.Start();
+                try
+                {
+                    Response<RoomsCollection> getRoomsResponse = RoomsServiceClient.List(cancellationToken);
+                    return Page.FromValues(getRoomsResponse.Value.Value, getRoomsResponse.Value.NextLink, getRoomsResponse.GetRawResponse());
+                }
+                catch (Exception ex)
+                {
+                    scope.Failed(ex);
+                    throw;
+                }
+            }
+
+            Page<CommunicationRoom> NextPageFunc(string nextLink, int? pageSizeHint)
+            {
+                using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(RoomsClient)}.{nameof(GetRooms)}");
+                scope.Start();
+                try
+                {
+                    Response<RoomsCollection> getParticipantsResponse = RoomsServiceClient.ListNextPage(nextLink, cancellationToken);
+                    return Page.FromValues(getParticipantsResponse.Value.Value, getParticipantsResponse.Value.NextLink, getParticipantsResponse.GetRawResponse());
+                }
+                catch (Exception ex)
+                {
+                    scope.Failed(ex);
+                    throw;
+                }
+            }
+            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
         }
 
         /// <summary>
@@ -271,7 +341,7 @@ namespace Azure.Communication.Rooms
             scope.Start();
             try
             {
-                return await RoomsServiceClient.DeleteRoomAsync(roomId, cancellationToken).ConfigureAwait(false);
+                return await RoomsServiceClient.DeleteAsync(roomId, cancellationToken).ConfigureAwait(false);
             }
             catch (Exception ex)
             {
@@ -292,7 +362,7 @@ namespace Azure.Communication.Rooms
             scope.Start();
             try
             {
-                return RoomsServiceClient.DeleteRoom(roomId, cancellationToken);
+                return RoomsServiceClient.Delete(roomId, cancellationToken);
             }
             catch (Exception ex)
             {
@@ -304,170 +374,131 @@ namespace Azure.Communication.Rooms
         #region Participants Operations
 
         /// <summary>
-        /// Gets room participants asynchronously.
+        /// Gets the room participants asynchronously.
         /// </summary>
         /// <param name="roomId"></param>
         /// <param name="cancellationToken"></param>
         /// <returns>A <see cref="Task{TResult}"/> representing the result of the asynchronous operation.</returns>
-        public virtual async Task<Response<ParticipantsCollection>> GetParticipantsAsync(string roomId, CancellationToken cancellationToken = default)
+        /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
+        public virtual AsyncPageable<RoomParticipant> GetParticipantsAsync(string roomId, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(RoomsClient)}.{nameof(GetParticipants)}");
-            scope.Start();
-            try
+            async Task<Page<RoomParticipant>> FirstPageFunc(int? pageSizeHint)
             {
-                Response<ParticipantsCollectionInternal> getParticipantsResponseInternal =
-                    await RoomsServiceClient.GetParticipantsAsync(roomId, cancellationToken).ConfigureAwait(false);
-                return Response.FromValue(new ParticipantsCollection(getParticipantsResponseInternal.Value.Participants), getParticipantsResponseInternal.GetRawResponse());
+                using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(RoomsClient)}.{nameof(GetParticipants)}");
+                scope.Start();
+                try
+                {
+                    Response<ParticipantsCollection> getParticipantsResponse = await ParticipantsServiceClient.ListAsync(roomId, cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(getParticipantsResponse.Value.Value, getParticipantsResponse.Value.NextLink, getParticipantsResponse.GetRawResponse());
+                }
+                catch (Exception ex)
+                {
+                    scope.Failed(ex);
+                    throw;
+                }
             }
-            catch (Exception ex)
+
+            async Task<Page<RoomParticipant>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                scope.Failed(ex);
-                throw;
+                using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(RoomsClient)}.{nameof(GetParticipants)}");
+                scope.Start();
+                try
+                {
+                    Response<ParticipantsCollection> getParticipantsResponse = await ParticipantsServiceClient.ListNextPageAsync(nextLink, roomId, cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(getParticipantsResponse.Value.Value, getParticipantsResponse.Value.NextLink, getParticipantsResponse.GetRawResponse());
+                }
+                catch (Exception ex)
+                {
+                    scope.Failed(ex);
+                    throw;
+                }
             }
+
+            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
         }
 
         /// <summary>
-        /// Gets a room participants.
+        /// Gets the room participants.
         /// </summary>
         /// <param name="roomId"></param>
         /// <param name="cancellationToken"></param>
         /// <exception cref="ArgumentNullException"> <paramref name="roomId"/> is null. </exception>
-        public virtual Response<ParticipantsCollection> GetParticipants(string roomId, CancellationToken cancellationToken = default)
+        /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
+        public virtual Pageable<RoomParticipant> GetParticipants(string roomId, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(RoomsClient)}.{nameof(GetParticipants)}");
-            scope.Start();
-            try
+            Page<RoomParticipant> FirstPageFunc(int? pageSizeHint)
             {
-                Response<ParticipantsCollectionInternal> getParticipantsResponseInternal =
-                    RoomsServiceClient.GetParticipants(roomId, cancellationToken);
-                return Response.FromValue(new ParticipantsCollection(getParticipantsResponseInternal.Value.Participants), getParticipantsResponseInternal.GetRawResponse());
-            }
-            catch (Exception ex)
-            {
-                scope.Failed(ex);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Add Participants to a Room asynchronously
-        /// </summary>
-        /// <param name="roomId"></param>
-        /// <param name="participants"></param>
-        /// <param name="cancellationToken"></param>
-        /// <returns>A <see cref="Task{TResult}"/> representing the result of the asynchronous operation.</returns>
-        public virtual async Task<Response> AddParticipantsAsync(string roomId, IEnumerable<RoomParticipant> participants = default, CancellationToken cancellationToken = default)
-        {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(RoomsClient)}.{nameof(AddParticipants)}");
-            scope.Start();
-            try
-            {
-                Response<ParticipantsCollectionInternal> addParticipantsResponseInternal =
-                    await RoomsServiceClient.AddParticipantsAsync(roomId, participants.Select(x => x.ToRoomParticipantInternal()), cancellationToken).ConfigureAwait(false);
-
-                return addParticipantsResponseInternal.GetRawResponse();
-            }
-            catch (Exception ex)
-            {
-                scope.Failed(ex);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Add Participants to a Room
-        /// </summary>
-        /// <param name="roomId"></param>
-        /// <param name="participants"></param>
-        /// <param name="cancellationToken"></param>
-        public virtual Response AddParticipants(string roomId, IEnumerable<RoomParticipant> participants = default, CancellationToken cancellationToken = default)
-        {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(RoomsClient)}.{nameof(AddParticipants)}");
-            scope.Start();
-            try
-            {
-                Response<ParticipantsCollectionInternal> addParticipantsResponseInternal =
-                    RoomsServiceClient.AddParticipants(roomId, participants.Select(x => x.ToRoomParticipantInternal()), cancellationToken);
-
-                return addParticipantsResponseInternal.GetRawResponse();
-            }
-            catch (Exception ex)
-            {
-                scope.Failed(ex);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Update Participants in a Room asynchronously
-        /// </summary>
-        /// <param name="roomId"></param>
-        /// <param name="participants"></param>
-        /// <param name="cancellationToken"></param>
-        /// <returns>A <see cref="Task{TResult}"/> representing the result of the asynchronous operation.</returns>
-        public virtual async Task<Response> UpdateParticipantsAsync(string roomId, IEnumerable<RoomParticipant> participants = default, CancellationToken cancellationToken = default)
-        {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(RoomsClient)}.{nameof(UpdateParticipants)}");
-            scope.Start();
-            try
-            {
-                Response<ParticipantsCollectionInternal> updateParticipantsResponseInternal =
-                    await RoomsServiceClient.UpdateParticipantsAsync(roomId, participants.Select(x => x.ToRoomParticipantInternal()), cancellationToken).ConfigureAwait(false);
-
-                return updateParticipantsResponseInternal.GetRawResponse();
-            }
-            catch (Exception ex)
-            {
-                scope.Failed(ex);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Update Participants in a Room
-        /// </summary>
-        /// <param name="roomId"></param>
-        /// <param name="participants"></param>
-        /// <param name="cancellationToken"></param>
-        public virtual Response UpdateParticipants(string roomId, IEnumerable<RoomParticipant> participants = default, CancellationToken cancellationToken = default)
-        {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(RoomsClient)}.{nameof(UpdateParticipants)}");
-            scope.Start();
-            try
-            {
-                Response<ParticipantsCollectionInternal> updateParticipantsResponseInternal =
-                     RoomsServiceClient.UpdateParticipants(roomId, participants.Select(x => x.ToRoomParticipantInternal()), cancellationToken);
-                return updateParticipantsResponseInternal.GetRawResponse();
-            }
-            catch (Exception ex)
-            {
-                scope.Failed(ex);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Remove room participants.
-        /// </summary>
-        /// <param name="roomId"></param>
-        /// <param name="communicationIdentifiers"></param>
-        /// <param name="cancellationToken"></param>
-        public virtual Response RemoveParticipants(string roomId, IEnumerable<CommunicationIdentifier> communicationIdentifiers, CancellationToken cancellationToken = default)
-        {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(RoomsClient)}.{nameof(RemoveParticipants)}");
-            scope.Start();
-            try
-            {
-                List<RoomParticipantInternal> participants = new List<RoomParticipantInternal>();
-                foreach (var communicationIdentifier in communicationIdentifiers)
+                using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(RoomsClient)}.{nameof(GetParticipants)}");
+                scope.Start();
+                try
                 {
-                    var participant = new RoomParticipant(communicationIdentifier);
-                    participants.Add(participant.ToRoomParticipantInternal());
+                    Response<ParticipantsCollection> getParticipantsResponse = ParticipantsServiceClient.List(roomId, cancellationToken);
+                    return Page.FromValues(getParticipantsResponse.Value.Value, getParticipantsResponse.Value.NextLink, getParticipantsResponse.GetRawResponse());
                 }
+                catch (Exception ex)
+                {
+                    scope.Failed(ex);
+                    throw;
+                }
+            }
 
-                Response<ParticipantsCollectionInternal> removeParticipantsResponse =
-                RoomsServiceClient.RemoveParticipants(roomId, participants, cancellationToken);
-                return removeParticipantsResponse.GetRawResponse();
+            Page<RoomParticipant> NextPageFunc(string nextLink, int? pageSizeHint)
+            {
+                using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(RoomsClient)}.{nameof(GetParticipants)}");
+                scope.Start();
+                try
+                {
+                    Response<ParticipantsCollection> getParticipantsResponse = ParticipantsServiceClient.ListNextPage(nextLink, roomId, cancellationToken);
+                    return Page.FromValues(getParticipantsResponse.Value.Value, getParticipantsResponse.Value.NextLink, getParticipantsResponse.GetRawResponse());
+                }
+                catch (Exception ex)
+                {
+                    scope.Failed(ex);
+                    throw;
+                }
+            }
+            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+        }
+
+        /// <summary>
+        /// Add or update participants in a room asynchronously.
+        /// </summary>
+        /// <param name="roomId"></param>
+        /// <param name="participants"></param>
+        /// <param name="cancellationToken"></param>
+        /// <returns>A <see cref="Task{TResult}"/> representing the result of the asynchronous operation.</returns>
+        public virtual async Task<Response> AddOrUpdateParticipantsAsync(string roomId, IEnumerable<RoomParticipant> participants, CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(RoomsClient)}.{nameof(AddOrUpdateParticipants)}");
+            scope.Start();
+            try
+            {
+                var participantDictionary = ConvertRoomParticipantsToDictionaryForAddOrUpdate(participants);
+                Response<object> addOrUpdateParticipantResponse = await ParticipantsServiceClient.UpdateAsync(roomId, participantDictionary, cancellationToken).ConfigureAwait(false);
+                return addOrUpdateParticipantResponse.GetRawResponse();
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Add or update participants in a room.
+        /// </summary>
+        /// <param name="roomId"></param>
+        /// <param name="participants"></param>
+        /// <param name="cancellationToken"></param>
+        public virtual Response AddOrUpdateParticipants(string roomId, IEnumerable<RoomParticipant> participants, CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(RoomsClient)}.{nameof(AddOrUpdateParticipants)}");
+            scope.Start();
+            try
+            {
+                var participantDictionary = ConvertRoomParticipantsToDictionaryForAddOrUpdate(participants);
+                Response<object> addOrUpdateParticipantResponse = ParticipantsServiceClient.Update(roomId, participantDictionary, cancellationToken);
+                return addOrUpdateParticipantResponse.GetRawResponse();
             }
             catch (Exception ex)
             {
@@ -480,30 +511,72 @@ namespace Azure.Communication.Rooms
         /// Delete room participants async.
         /// </summary>
         /// <param name="roomId"></param>
-        /// <param name="communicationIdentifiers"></param>
+        /// <param name="participantIdentifiers"></param>
         /// <param name="cancellationToken"></param>
-        public virtual async Task<Response> RemoveParticipantsAsync(string roomId, IEnumerable<CommunicationIdentifier> communicationIdentifiers, CancellationToken cancellationToken = default)
+        public virtual async Task<Response> RemoveParticipantsAsync(string roomId, IEnumerable<CommunicationIdentifier> participantIdentifiers, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(RoomsClient)}.{nameof(RemoveParticipants)}");
             scope.Start();
             try
             {
-                List<RoomParticipantInternal> participants = new List<RoomParticipantInternal>();
-                foreach (var communicationIdentifier in communicationIdentifiers)
-                {
-                    var participant = new RoomParticipant(communicationIdentifier);
-                    participants.Add(participant.ToRoomParticipantInternal());
-                }
-
-                Response<ParticipantsCollectionInternal> removeParticipantsResponse =
-                await RoomsServiceClient.RemoveParticipantsAsync(roomId, participants, cancellationToken).ConfigureAwait(false);
-                return removeParticipantsResponse.GetRawResponse();
+                var participantDictionary = ConvertCommunicationIdentifiersToDictionaryForRemove(participantIdentifiers);
+                Response<object> removeParticipantResponse = await ParticipantsServiceClient.UpdateAsync(roomId, participantDictionary, cancellationToken).ConfigureAwait(false);
+                return removeParticipantResponse.GetRawResponse();
             }
             catch (Exception ex)
             {
                 scope.Failed(ex);
                 throw;
             }
+        }
+
+        /// <summary>
+        /// Remove room participants.
+        /// </summary>
+        /// <param name="roomId"></param>
+        /// <param name="participantIdentifiers"></param>
+        /// <param name="cancellationToken"></param>
+        public virtual Response RemoveParticipants(string roomId, IEnumerable<CommunicationIdentifier> participantIdentifiers, CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(RoomsClient)}.{nameof(RemoveParticipants)}");
+            scope.Start();
+            try
+            {
+                var participantDictionary = ConvertCommunicationIdentifiersToDictionaryForRemove(participantIdentifiers);
+                Response<object> removeParticipantResponse = ParticipantsServiceClient.Update(roomId, participantDictionary, cancellationToken);
+                return removeParticipantResponse.GetRawResponse();
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+        }
+
+#nullable enable
+        private static Dictionary<string, ParticipantProperties?> ConvertRoomParticipantsToDictionaryForAddOrUpdate(IEnumerable<RoomParticipant>? participants)
+        {
+            var participantDictionary = new Dictionary<string, ParticipantProperties?>() { };
+#nullable disable
+            participants?.ToList().ForEach(participant =>
+            {
+                participantDictionary.Add(participant.CommunicationIdentifier.RawId, new ParticipantProperties() { Role = participant.Role });
+            });
+
+            return participantDictionary;
+        }
+
+#nullable enable
+        private static Dictionary<string, ParticipantProperties?> ConvertCommunicationIdentifiersToDictionaryForRemove(IEnumerable<CommunicationIdentifier>? identifiers)
+        {
+            var participantDictionary = new Dictionary<string, ParticipantProperties?>() { };
+#nullable disable
+            identifiers?.ToList().ForEach(identifier =>
+            {
+                participantDictionary.Add(identifier.RawId, null);
+            });
+
+            return participantDictionary;
         }
 
         #endregion

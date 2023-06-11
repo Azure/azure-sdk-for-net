@@ -37,7 +37,6 @@ namespace Azure.ResourceManager.DeploymentManager.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     artifacts = ServiceUnitArtifacts.DeserializeServiceUnitArtifacts(property.Value);

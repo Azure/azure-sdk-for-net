@@ -15,6 +15,11 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
+            if (Optional.IsDefined(PublicNetworkAccess))
+            {
+                writer.WritePropertyName("publicNetworkAccess"u8);
+                writer.WriteStringValue(PublicNetworkAccess.Value.ToString());
+            }
             if (Optional.IsDefined(DelegatedSubnetResourceId))
             {
                 writer.WritePropertyName("delegatedSubnetResourceId"u8);
@@ -43,7 +48,6 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     publicNetworkAccess = new MySqlFlexibleServerEnableStatusEnum(property.Value.GetString());
@@ -53,7 +57,6 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     delegatedSubnetResourceId = new ResourceIdentifier(property.Value.GetString());
@@ -63,7 +66,6 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     privateDnsZoneResourceId = new ResourceIdentifier(property.Value.GetString());

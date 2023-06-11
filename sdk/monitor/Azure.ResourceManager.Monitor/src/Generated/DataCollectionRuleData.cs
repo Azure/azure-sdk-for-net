@@ -35,6 +35,7 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
         /// <param name="kind"> The kind of the resource. </param>
+        /// <param name="identity"> Managed service identity of the resource. </param>
         /// <param name="etag"> Resource entity tag (ETag). </param>
         /// <param name="description"> Description of the data collection rule. </param>
         /// <param name="immutableId"> The immutable ID of this data collection rule. This property is READ-ONLY. </param>
@@ -48,9 +49,10 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="destinations"> The specification of destinations. </param>
         /// <param name="dataFlows"> The specification of data flows. </param>
         /// <param name="provisioningState"> The resource provisioning state. </param>
-        internal DataCollectionRuleData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, DataCollectionRuleResourceKind? kind, ETag? etag, string description, string immutableId, ResourceIdentifier dataCollectionEndpointId, DataCollectionRuleMetadata metadata, IDictionary<string, DataStreamDeclaration> streamDeclarations, DataCollectionRuleDataSources dataSources, DataCollectionRuleDestinations destinations, IList<DataFlow> dataFlows, DataCollectionRuleProvisioningState? provisioningState) : base(id, name, resourceType, systemData, tags, location)
+        internal DataCollectionRuleData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, DataCollectionRuleResourceKind? kind, ManagedServiceIdentity identity, ETag? etag, string description, string immutableId, ResourceIdentifier dataCollectionEndpointId, DataCollectionRuleMetadata metadata, IDictionary<string, DataStreamDeclaration> streamDeclarations, DataCollectionRuleDataSources dataSources, DataCollectionRuleDestinations destinations, IList<DataFlow> dataFlows, DataCollectionRuleProvisioningState? provisioningState) : base(id, name, resourceType, systemData, tags, location)
         {
             Kind = kind;
+            Identity = identity;
             ETag = etag;
             Description = description;
             ImmutableId = immutableId;
@@ -65,6 +67,8 @@ namespace Azure.ResourceManager.Monitor
 
         /// <summary> The kind of the resource. </summary>
         public DataCollectionRuleResourceKind? Kind { get; set; }
+        /// <summary> Managed service identity of the resource. </summary>
+        public ManagedServiceIdentity Identity { get; set; }
         /// <summary> Resource entity tag (ETag). </summary>
         public ETag? ETag { get; }
         /// <summary> Description of the data collection rule. </summary>
@@ -74,13 +78,7 @@ namespace Azure.ResourceManager.Monitor
         /// <summary> The resource ID of the data collection endpoint that this rule can be used with. </summary>
         public ResourceIdentifier DataCollectionEndpointId { get; set; }
         /// <summary> Metadata about the resource. </summary>
-        internal DataCollectionRuleMetadata Metadata { get; }
-        /// <summary> Azure offering managing this resource on-behalf-of customer. </summary>
-        public string MetadataProvisionedBy
-        {
-            get => Metadata?.ProvisionedBy;
-        }
-
+        public DataCollectionRuleMetadata Metadata { get; }
         /// <summary> Declaration of custom streams used in this rule. </summary>
         public IDictionary<string, DataStreamDeclaration> StreamDeclarations { get; }
         /// <summary>

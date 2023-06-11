@@ -67,7 +67,6 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             encoding = new StreamAnalyticsDataSerializationEncoding(property0.Value.GetString());

@@ -26,6 +26,19 @@ namespace Azure.Health.Insights.ClinicalMatching
             Metadata = metadata;
         }
 
+        /// <summary> Initializes a new instance of ClinicalTrialDetails. </summary>
+        /// <param name="id"> A given identifier for the clinical trial. Has to be unique within a list of clinical trials. </param>
+        /// <param name="eligibilityCriteriaText"> The eligibility criteria of the clinical trial (inclusion and exclusion), given as text. </param>
+        /// <param name="demographics"> Demographic criteria for a clinical trial. </param>
+        /// <param name="metadata"> Trial data which is of interest to the potential participant. </param>
+        internal ClinicalTrialDetails(string id, string eligibilityCriteriaText, ClinicalTrialDemographics demographics, ClinicalTrialMetadata metadata)
+        {
+            Id = id;
+            EligibilityCriteriaText = eligibilityCriteriaText;
+            Demographics = demographics;
+            Metadata = metadata;
+        }
+
         /// <summary> A given identifier for the clinical trial. Has to be unique within a list of clinical trials. </summary>
         public string Id { get; }
         /// <summary> The eligibility criteria of the clinical trial (inclusion and exclusion), given as text. </summary>

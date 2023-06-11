@@ -27,7 +27,6 @@ namespace Azure.ResourceManager.ContainerService.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<ContainerServicePrivateEndpointConnectionData> array = new List<ContainerServicePrivateEndpointConnectionData>();

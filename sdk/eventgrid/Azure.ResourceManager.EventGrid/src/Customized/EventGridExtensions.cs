@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.EventGrid
             var parentPart = scope.Parent.SubstringAfterProviderNamespace();
             var resourceTypeName = (string.IsNullOrEmpty(parentPart) ? string.Empty : $"{parentPart}/") + scope.ResourceType.GetLastType();
 
-            return GetExtensionClient(resourceGroupResource).GetEventTypesAsync(scope.ResourceType.Namespace, resourceTypeName, scope.Name, cancellationToken);
+            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetEventTypesAsync(scope.ResourceType.Namespace, resourceTypeName, scope.Name, cancellationToken);
         }
 
         /// <summary>
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.EventGrid
             var parentPart = scope.Parent.SubstringAfterProviderNamespace();
             var resourceTypeName = (string.IsNullOrEmpty(parentPart) ? string.Empty : $"{parentPart}/") + scope.ResourceType.GetLastType();
 
-            return GetExtensionClient(resourceGroupResource).GetEventTypes(scope.ResourceType.Namespace, resourceTypeName, scope.Name, cancellationToken);
+            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetEventTypes(scope.ResourceType.Namespace, resourceTypeName, scope.Name, cancellationToken);
         }
 
         /// <summary>
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.EventGrid
         {
             Argument.AssertNotNullOrEmpty(topicTypeName, nameof(topicTypeName));
 
-            return GetExtensionClient(subscriptionResource).GetGlobalEventSubscriptionsDataForTopicTypeAsync(topicTypeName, filter, top, cancellationToken);
+            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetGlobalEventSubscriptionsDataForTopicTypeAsync(topicTypeName, filter, top, cancellationToken);
         }
 
         /// <summary>
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.EventGrid
         {
             Argument.AssertNotNullOrEmpty(topicTypeName, nameof(topicTypeName));
 
-            return GetExtensionClient(subscriptionResource).GetGlobalEventSubscriptionsDataForTopicType(topicTypeName, filter, top, cancellationToken);
+            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetGlobalEventSubscriptionsDataForTopicType(topicTypeName, filter, top, cancellationToken);
         }
 
         /// <summary>
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.EventGrid
         /// <returns> An async collection of <see cref="EventGridSubscriptionData" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<EventGridSubscriptionData> GetRegionalEventSubscriptionsDataAsync(this SubscriptionResource subscriptionResource, AzureLocation location, string filter = null, int? top = null, CancellationToken cancellationToken = default)
         {
-            return GetExtensionClient(subscriptionResource).GetRegionalEventSubscriptionsDataAsync(location, filter, top, cancellationToken);
+            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetRegionalEventSubscriptionsDataAsync(location, filter, top, cancellationToken);
         }
 
         /// <summary>
@@ -176,7 +176,7 @@ namespace Azure.ResourceManager.EventGrid
         /// <returns> A collection of <see cref="EventGridSubscriptionData" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<EventGridSubscriptionData> GetRegionalEventSubscriptionsData(this SubscriptionResource subscriptionResource, AzureLocation location, string filter = null, int? top = null, CancellationToken cancellationToken = default)
         {
-            return GetExtensionClient(subscriptionResource).GetRegionalEventSubscriptionsData(location, filter, top, cancellationToken);
+            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetRegionalEventSubscriptionsData(location, filter, top, cancellationToken);
         }
 
         /// <summary>
@@ -205,7 +205,7 @@ namespace Azure.ResourceManager.EventGrid
         {
             Argument.AssertNotNullOrEmpty(topicTypeName, nameof(topicTypeName));
 
-            return GetExtensionClient(subscriptionResource).GetRegionalEventSubscriptionsDataForTopicTypeAsync(location, topicTypeName, filter, top, cancellationToken);
+            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetRegionalEventSubscriptionsDataForTopicTypeAsync(location, topicTypeName, filter, top, cancellationToken);
         }
 
         /// <summary>
@@ -234,7 +234,7 @@ namespace Azure.ResourceManager.EventGrid
         {
             Argument.AssertNotNullOrEmpty(topicTypeName, nameof(topicTypeName));
 
-            return GetExtensionClient(subscriptionResource).GetRegionalEventSubscriptionsDataForTopicType(location, topicTypeName, filter, top, cancellationToken);
+            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetRegionalEventSubscriptionsDataForTopicType(location, topicTypeName, filter, top, cancellationToken);
         }
 
         /// <summary>
@@ -262,7 +262,7 @@ namespace Azure.ResourceManager.EventGrid
         {
             Argument.AssertNotNullOrEmpty(topicTypeName, nameof(topicTypeName));
 
-            return GetExtensionClient(resourceGroupResource).GetGlobalEventSubscriptionsDataForTopicTypeAsync(topicTypeName, filter, top, cancellationToken);
+            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetGlobalEventSubscriptionsDataForTopicTypeAsync(topicTypeName, filter, top, cancellationToken);
         }
 
         /// <summary>
@@ -290,7 +290,7 @@ namespace Azure.ResourceManager.EventGrid
         {
             Argument.AssertNotNullOrEmpty(topicTypeName, nameof(topicTypeName));
 
-            return GetExtensionClient(resourceGroupResource).GetGlobalEventSubscriptionsDataForTopicType(topicTypeName, filter, top, cancellationToken);
+            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetGlobalEventSubscriptionsDataForTopicType(topicTypeName, filter, top, cancellationToken);
         }
 
         /// <summary>
@@ -314,7 +314,7 @@ namespace Azure.ResourceManager.EventGrid
         /// <returns> An async collection of <see cref="EventGridSubscriptionData" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<EventGridSubscriptionData> GetRegionalEventSubscriptionsDataAsync(this ResourceGroupResource resourceGroupResource, AzureLocation location, string filter = null, int? top = null, CancellationToken cancellationToken = default)
         {
-            return GetExtensionClient(resourceGroupResource).GetRegionalEventSubscriptionsDataAsync(location, filter, top, cancellationToken);
+            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetRegionalEventSubscriptionsDataAsync(location, filter, top, cancellationToken);
         }
 
         /// <summary>
@@ -338,7 +338,7 @@ namespace Azure.ResourceManager.EventGrid
         /// <returns> A collection of <see cref="EventGridSubscriptionData" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<EventGridSubscriptionData> GetRegionalEventSubscriptionsData(this ResourceGroupResource resourceGroupResource, AzureLocation location, string filter = null, int? top = null, CancellationToken cancellationToken = default)
         {
-            return GetExtensionClient(resourceGroupResource).GetRegionalEventSubscriptionsData(location, filter, top, cancellationToken);
+            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetRegionalEventSubscriptionsData(location, filter, top, cancellationToken);
         }
 
         /// <summary>
@@ -367,7 +367,7 @@ namespace Azure.ResourceManager.EventGrid
         {
             Argument.AssertNotNullOrEmpty(topicTypeName, nameof(topicTypeName));
 
-            return GetExtensionClient(resourceGroupResource).GetRegionalEventSubscriptionsDataForTopicTypeAsync(location, topicTypeName, filter, top, cancellationToken);
+            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetRegionalEventSubscriptionsDataForTopicTypeAsync(location, topicTypeName, filter, top, cancellationToken);
         }
 
         /// <summary>
@@ -396,7 +396,7 @@ namespace Azure.ResourceManager.EventGrid
         {
             Argument.AssertNotNullOrEmpty(topicTypeName, nameof(topicTypeName));
 
-            return GetExtensionClient(resourceGroupResource).GetRegionalEventSubscriptionsDataForTopicType(location, topicTypeName, filter, top, cancellationToken);
+            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetRegionalEventSubscriptionsDataForTopicType(location, topicTypeName, filter, top, cancellationToken);
         }
     }
 }

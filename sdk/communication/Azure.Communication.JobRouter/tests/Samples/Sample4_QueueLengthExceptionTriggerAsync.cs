@@ -57,13 +57,15 @@ namespace Azure.Communication.JobRouter.Tests.Samples
             QueueLengthExceptionTrigger trigger = new QueueLengthExceptionTrigger(10);
 
             // --- define action
-            ManualReclassifyExceptionAction action = new ManualReclassifyExceptionAction(
-                queueId: backupJobQueueId,
-                priority: 10,
-                workerSelectors: new List<WorkerSelector>()
+            ManualReclassifyExceptionAction action = new ManualReclassifyExceptionAction
+            {
+                QueueId = backupJobQueueId,
+                Priority = 10,
+                WorkerSelectors =
                 {
                     new WorkerSelector("ExceptionTriggered", LabelOperator.Equal, new LabelValue(true))
-                });
+                }
+            };
 
             Response<ExceptionPolicy> exceptionPolicy = await routerAdministrationClient.CreateExceptionPolicyAsync(new CreateExceptionPolicyOptions(
                 exceptionPolicyId: exceptionPolicyId,

@@ -42,7 +42,6 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     azureBlobSource = AzureBlobContentSource.DeserializeAzureBlobContentSource(property.Value);
@@ -52,7 +51,6 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     azureBlobFileListSource = DocumentAnalysis.AzureBlobFileListSource.DeserializeAzureBlobFileListSource(property.Value);

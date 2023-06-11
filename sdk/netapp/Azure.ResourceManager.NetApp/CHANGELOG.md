@@ -1,6 +1,27 @@
 # Release History
 
-## 1.1.0-beta.1 (Unreleased)
+## 1.2.0-beta.2 (Unreleased)
+
+### Features Added
+
+### Breaking Changes
+
+### Bugs Fixed
+
+### Other Changes
+
+## 1.2.0-beta.1 (2023-05-30)
+
+### Features Added
+
+- Enable the model factory feature for model mocking, more information can be found [here](https://azure.github.io/azure-sdk/dotnet_introduction.html#dotnet-mocking-factory-builder).
+
+### Other Changes
+
+- Upgraded dependent Azure.Core to 1.32.0.
+- Upgraded dependent Azure.ResourceManager to 1.6.0.
+
+## 1.1.0 (2023-04-04)
 
 ### Features Added
 - Updated to support ANF api-version 2022-09-01
@@ -16,10 +37,6 @@
 ### Breaking Changes
 - `NetAppVault` is no longer needed scheduled for deprecation
 - `VaultId` is not longer needed it has been deprecated from `NetAppVolumeBackupConfiguration` in api-version 2022-09-01, but will continue to be supported in pervious api-verisons, 2022-05-01 and older
-### Bugs Fixed
-
-### Other Changes
-
 ## 1.0.1 (2023-02-15)
 
 ### Other Changes

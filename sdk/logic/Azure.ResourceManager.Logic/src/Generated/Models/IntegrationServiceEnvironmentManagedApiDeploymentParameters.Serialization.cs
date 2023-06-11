@@ -36,7 +36,6 @@ namespace Azure.ResourceManager.Logic.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     contentLinkDefinition = LogicContentLink.DeserializeLogicContentLink(property.Value);

@@ -7,11 +7,9 @@ using System.ComponentModel;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
-using System.Net;
 using System.Reflection;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
-using System.Web;
 using Azure.Core.TestFramework.Models;
 using Castle.DynamicProxy;
 using NUnit.Framework;
@@ -36,6 +34,10 @@ namespace Azure.Core.TestFramework
             (char)21, (char)22, (char)23, (char)24, (char)25, (char)26, (char)27, (char)28, (char)29, (char)30,
             (char)31, ':', '*', '?', '\\', '/'
         });
+
+        private static readonly object s_syncLock = new();
+
+        private static bool s_ranTestProxyValidation;
 
         private TestProxy _proxy;
 
@@ -449,6 +451,11 @@ namespace Azure.Core.TestFramework
             if (Recording != null)
             {
                 await Recording.DisposeAsync(save);
+
+                if (Mode == RecordedTestMode.Record && save)
+                {
+                    AssertTestProxyToolIsInstalled();
+                }
             }
 
             _proxy?.CheckForErrors();
@@ -511,6 +518,76 @@ namespace Azure.Core.TestFramework
                 return Task.Delay(playbackDelayMilliseconds.Value);
             }
             return Task.CompletedTask;
+        }
+
+        private void AssertTestProxyToolIsInstalled()
+        {
+            if (s_ranTestProxyValidation ||
+                TestEnvironment.GlobalIsRunningInCI ||
+                !TestEnvironment.IsWindows ||
+                AssetsJsonPath == null)
+            {
+                return;
+            }
+
+            lock (s_syncLock)
+            {
+                if (s_ranTestProxyValidation)
+                {
+                    return;
+                }
+
+                s_ranTestProxyValidation = true;
+
+                try
+                {
+                    if (IsTestProxyToolInstalled())
+                    {
+                        return;
+                    }
+
+                    string path = Path.Combine(
+                        TestEnvironment.RepositoryRoot,
+                        "eng",
+                        "scripts",
+                        "Install-TestProxyTool.ps1");
+
+                    var processInfo = new ProcessStartInfo("pwsh.exe", path)
+                    {
+                        UseShellExecute = true
+                    };
+
+                    var process = Process.Start(processInfo);
+
+                    if (process != null)
+                    {
+                        process.WaitForExit();
+                    }
+                }
+                catch (Exception)
+                {
+                    // Ignore
+                }
+            }
+        }
+
+        private bool IsTestProxyToolInstalled()
+        {
+            var processInfo = new ProcessStartInfo("dotnet.exe", "tool list --global")
+            {
+                RedirectStandardOutput = true,
+                UseShellExecute = false
+            };
+
+            var process = Process.Start(processInfo);
+            var output = process.StandardOutput.ReadToEnd();
+
+            if (process != null)
+            {
+                process.WaitForExit();
+            }
+
+            return output != null && output.Contains("azure.sdk.tools.testproxy");
         }
 
         protected TestRetryHelper TestRetryHelper => new TestRetryHelper(Mode == RecordedTestMode.Playback);

@@ -28,7 +28,6 @@ namespace Azure.ResourceManager.Search.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<SearchPrivateEndpointConnectionData> array = new List<SearchPrivateEndpointConnectionData>();

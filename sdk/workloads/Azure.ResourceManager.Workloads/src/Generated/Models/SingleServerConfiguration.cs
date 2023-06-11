@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Workloads.Models
 {
-    /// <summary> Gets or sets the single server configuration. </summary>
+    /// <summary> Gets or sets the single server configuration. For prerequisites for creating the infrastructure, please see [here](https://go.microsoft.com/fwlink/?linkid=2212611&amp;clcid=0x409). </summary>
     public partial class SingleServerConfiguration : InfrastructureConfiguration
     {
         /// <summary> Initializes a new instance of SingleServerConfiguration. </summary>
@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.Workloads.Models
         /// <param name="subnetId"> The subnet id. </param>
         /// <param name="virtualMachineConfiguration"> Gets or sets the virtual machine configuration. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="appResourceGroup"/>, <paramref name="subnetId"/> or <paramref name="virtualMachineConfiguration"/> is null. </exception>
-        public SingleServerConfiguration(string appResourceGroup, ResourceIdentifier subnetId, VirtualMachineConfiguration virtualMachineConfiguration) : base(appResourceGroup)
+        public SingleServerConfiguration(string appResourceGroup, ResourceIdentifier subnetId, SapVirtualMachineConfiguration virtualMachineConfiguration) : base(appResourceGroup)
         {
             Argument.AssertNotNull(appResourceGroup, nameof(appResourceGroup));
             Argument.AssertNotNull(subnetId, nameof(subnetId));
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.Workloads.Models
         /// Please note <see cref="SingleServerCustomResourceNames"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="SingleServerFullResourceNames"/>.
         /// </param>
-        internal SingleServerConfiguration(SapDeploymentType deploymentType, string appResourceGroup, NetworkConfiguration networkConfiguration, SapDatabaseType? databaseType, ResourceIdentifier subnetId, VirtualMachineConfiguration virtualMachineConfiguration, DiskConfiguration dbDiskConfiguration, SingleServerCustomResourceNames customResourceNames) : base(deploymentType, appResourceGroup)
+        internal SingleServerConfiguration(SapDeploymentType deploymentType, string appResourceGroup, NetworkConfiguration networkConfiguration, SapDatabaseType? databaseType, ResourceIdentifier subnetId, SapVirtualMachineConfiguration virtualMachineConfiguration, DiskConfiguration dbDiskConfiguration, SingleServerCustomResourceNames customResourceNames) : base(deploymentType, appResourceGroup)
         {
             NetworkConfiguration = networkConfiguration;
             DatabaseType = databaseType;
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.Workloads.Models
         /// <summary> The subnet id. </summary>
         public ResourceIdentifier SubnetId { get; set; }
         /// <summary> Gets or sets the virtual machine configuration. </summary>
-        public VirtualMachineConfiguration VirtualMachineConfiguration { get; set; }
+        public SapVirtualMachineConfiguration VirtualMachineConfiguration { get; set; }
         /// <summary> Gets or sets the disk configuration. </summary>
         internal DiskConfiguration DBDiskConfiguration { get; set; }
         /// <summary> The disk configuration for the db volume. For HANA, Required volumes are: [&apos;hana/data&apos;, &apos;hana/log&apos;, hana/shared&apos;, &apos;usr/sap&apos;, &apos;os&apos;], Optional volume : [&apos;backup&apos;]. </summary>

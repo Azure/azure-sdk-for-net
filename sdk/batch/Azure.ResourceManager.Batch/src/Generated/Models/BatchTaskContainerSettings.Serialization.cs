@@ -61,7 +61,6 @@ namespace Azure.ResourceManager.Batch.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     registry = BatchVmContainerRegistry.DeserializeBatchVmContainerRegistry(property.Value);
@@ -71,7 +70,6 @@ namespace Azure.ResourceManager.Batch.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     workingDirectory = property.Value.GetString().ToBatchContainerWorkingDirectory();

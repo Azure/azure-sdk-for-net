@@ -94,7 +94,6 @@ namespace Azure.ResourceManager.FrontDoor.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             certificateType = new FrontDoorEndpointConnectionCertificateType(property0.Value.GetString());
@@ -116,7 +115,6 @@ namespace Azure.ResourceManager.FrontDoor.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             vault = JsonSerializer.Deserialize<WritableSubResource>(property0.Value.GetRawText());

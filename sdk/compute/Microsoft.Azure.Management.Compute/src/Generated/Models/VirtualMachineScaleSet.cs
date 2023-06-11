@@ -78,11 +78,10 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// placement group.</param>
         /// <param name="proximityPlacementGroup">Specifies information about
         /// the proximity placement group that the virtual machine scale set
-        /// should be assigned to. &lt;br&gt;&lt;br&gt;Minimum api-version:
-        /// 2018-04-01.</param>
+        /// should be assigned to. Minimum api-version: 2018-04-01.</param>
         /// <param name="hostGroup">Specifies information about the dedicated
-        /// host group that the virtual machine scale set resides in.
-        /// &lt;br&gt;&lt;br&gt;Minimum api-version: 2020-06-01.</param>
+        /// host group that the virtual machine scale set resides in. Minimum
+        /// api-version: 2020-06-01.</param>
         /// <param name="additionalCapabilities">Specifies additional
         /// capabilities enabled or disabled on the Virtual Machines in the
         /// Virtual Machine Scale Set. For instance: whether the Virtual
@@ -100,8 +99,8 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// mixing Spot and Regular priority VMs within the same VMSS Flex
         /// instance.</param>
         /// <param name="timeCreated">Specifies the time at which the Virtual
-        /// Machine Scale Set resource was created.&lt;br&gt;&lt;br&gt;Minimum
-        /// api-version: 2021-11-01.</param>
+        /// Machine Scale Set resource was created. Minimum api-version:
+        /// 2021-11-01.</param>
         /// <param name="constrainedMaximumCapacity">Optional property which
         /// must either be set to True or omitted.</param>
         /// <param name="identity">The identity of the virtual machine scale
@@ -240,16 +239,14 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// <summary>
         /// Gets or sets specifies information about the proximity placement
         /// group that the virtual machine scale set should be assigned to.
-        /// &amp;lt;br&amp;gt;&amp;lt;br&amp;gt;Minimum api-version:
-        /// 2018-04-01.
+        /// Minimum api-version: 2018-04-01.
         /// </summary>
         [JsonProperty(PropertyName = "properties.proximityPlacementGroup")]
         public SubResource ProximityPlacementGroup { get; set; }
 
         /// <summary>
         /// Gets or sets specifies information about the dedicated host group
-        /// that the virtual machine scale set resides in.
-        /// &amp;lt;br&amp;gt;&amp;lt;br&amp;gt;Minimum api-version:
+        /// that the virtual machine scale set resides in. Minimum api-version:
         /// 2020-06-01.
         /// </summary>
         [JsonProperty(PropertyName = "properties.hostGroup")]
@@ -295,8 +292,7 @@ namespace Microsoft.Azure.Management.Compute.Models
 
         /// <summary>
         /// Gets specifies the time at which the Virtual Machine Scale Set
-        /// resource was created.&amp;lt;br&amp;gt;&amp;lt;br&amp;gt;Minimum
-        /// api-version: 2021-11-01.
+        /// resource was created. Minimum api-version: 2021-11-01.
         /// </summary>
         [JsonProperty(PropertyName = "properties.timeCreated")]
         public System.DateTime? TimeCreated { get; private set; }

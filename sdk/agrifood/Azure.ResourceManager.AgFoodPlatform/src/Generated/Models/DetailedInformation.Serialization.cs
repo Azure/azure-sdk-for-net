@@ -35,7 +35,6 @@ namespace Azure.ResourceManager.AgFoodPlatform.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<string> array = new List<string>();
@@ -50,7 +49,6 @@ namespace Azure.ResourceManager.AgFoodPlatform.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<string> array = new List<string>();
@@ -65,7 +63,6 @@ namespace Azure.ResourceManager.AgFoodPlatform.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     unitsSupported = UnitSystemsInfo.DeserializeUnitSystemsInfo(property.Value);
@@ -75,7 +72,6 @@ namespace Azure.ResourceManager.AgFoodPlatform.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<string> array = new List<string>();

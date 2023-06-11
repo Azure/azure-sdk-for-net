@@ -5,12 +5,11 @@ Run `dotnet build /t:GenerateCode` to generate code.
 ``` yaml
 
 azure-arm: true
-generate-model-factory: false
 csharp: true
 library-name: HybridContainerService
 namespace: Azure.ResourceManager.HybridContainerService
-require: https://github.com/Azure/azure-rest-api-specs/blob/efd99bbe6035c8569d7f00c6ac0051dbaa5ac5e6/specification/hybridaks/resource-manager/readme.md
-tag: package-2022-05-01-preview
+require: https://github.com/Azure/azure-rest-api-specs/blob/844b06b77ca841a151a6aa2a459f126e277f3c77/specification/hybridaks/resource-manager/readme.md
+# tag: package-preview-2022-09
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
 skip-csproj: true

@@ -11,11 +11,9 @@ using Azure.Core.Pipeline;
 using Azure.Core.TestFramework;
 
 using Azure.Monitor.OpenTelemetry.Exporter.Internals;
-using Azure.Monitor.OpenTelemetry.Exporter.Internals.PersistentStorage;
 using Azure.Monitor.OpenTelemetry.Exporter.Models;
-
-using OpenTelemetry.Extensions.PersistentStorage.Abstractions;
-
+using Azure.Monitor.OpenTelemetry.Exporter.Tests.CommonTestFramework;
+using OpenTelemetry.PersistentStorage.Abstractions;
 using Xunit;
 
 namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
@@ -239,11 +237,11 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             AzureMonitorExporterOptions options = new AzureMonitorExporterOptions
             {
                 ConnectionString = $"InstrumentationKey={testIkey};IngestionEndpoint={testEndpoint}",
-                StorageDirectory = StorageHelper.GetDefaultStorageDirectory() + "\\test",
+                StorageDirectory = "C:\\test",
                 Transport = mockTransport,
                 EnableStatsbeat = false, // disabled in tests.
             };
-            AzureMonitorTransmitter transmitter = new AzureMonitorTransmitter(options);
+            AzureMonitorTransmitter transmitter = new AzureMonitorTransmitter(options, new MockPlatform());
 
             // Overwrite storage with mock
             transmitter._fileBlobProvider = new MockFileProvider();
@@ -270,8 +268,8 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
 
         private static TelemetryItem CreateTelemetryItem(Activity activity)
         {
-            var monitorTags = TraceHelper.EnumerateActivityTags(activity);
-            return new TelemetryItem(activity, ref monitorTags, null, string.Empty);
+            var activityTagsProcessor = TraceHelper.EnumerateActivityTags(activity);
+            return new TelemetryItem(activity, ref activityTagsProcessor, null, string.Empty);
         }
 
         private class MockFileProvider : PersistentBlobProvider

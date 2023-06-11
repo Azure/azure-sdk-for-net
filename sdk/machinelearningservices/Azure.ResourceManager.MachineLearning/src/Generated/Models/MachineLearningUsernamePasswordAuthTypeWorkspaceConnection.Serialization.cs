@@ -63,7 +63,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     credentials = MachineLearningWorkspaceConnectionUsernamePassword.DeserializeMachineLearningWorkspaceConnectionUsernamePassword(property.Value);
@@ -78,7 +77,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     category = new MachineLearningConnectionCategory(property.Value.GetString());
@@ -98,7 +96,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     valueFormat = new MachineLearningValueFormat(property.Value.GetString());

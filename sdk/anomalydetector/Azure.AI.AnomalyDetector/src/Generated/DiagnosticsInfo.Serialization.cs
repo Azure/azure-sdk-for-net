@@ -49,7 +49,6 @@ namespace Azure.AI.AnomalyDetector
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     modelState = ModelState.DeserializeModelState(property.Value);
@@ -59,7 +58,6 @@ namespace Azure.AI.AnomalyDetector
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<VariableState> array = new List<VariableState>();
@@ -71,7 +69,7 @@ namespace Azure.AI.AnomalyDetector
                     continue;
                 }
             }
-            return new DiagnosticsInfo(modelState, Optional.ToList(variableStates));
+            return new DiagnosticsInfo(modelState.Value, Optional.ToList(variableStates));
         }
 
         /// <summary> Deserializes the model from a raw response. </summary>

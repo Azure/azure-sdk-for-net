@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Consumption.Models
 {
-    /// <summary> The category of the budget, whether the budget tracks cost or usage. </summary>
+    /// <summary>
+    /// The category of the budget, whether the budget tracks cost or usage.
+    /// Serialized Name: CategoryType
+    /// </summary>
     public readonly partial struct BudgetCategory : IEquatable<BudgetCategory>
     {
         private readonly string _value;
@@ -24,7 +27,10 @@ namespace Azure.ResourceManager.Consumption.Models
 
         private const string CostValue = "Cost";
 
-        /// <summary> Cost. </summary>
+        /// <summary>
+        /// Cost
+        /// Serialized Name: CategoryType.Cost
+        /// </summary>
         public static BudgetCategory Cost { get; } = new BudgetCategory(CostValue);
         /// <summary> Determines if two <see cref="BudgetCategory"/> values are the same. </summary>
         public static bool operator ==(BudgetCategory left, BudgetCategory right) => left.Equals(right);

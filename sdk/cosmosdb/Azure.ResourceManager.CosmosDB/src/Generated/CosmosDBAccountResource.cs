@@ -133,6 +133,59 @@ namespace Azure.ResourceManager.CosmosDB
                 throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
         }
 
+        /// <summary> Gets a collection of GraphResourceGetResultResources in the CosmosDBAccount. </summary>
+        /// <returns> An object representing collection of GraphResourceGetResultResources and their operations over a GraphResourceGetResultResource. </returns>
+        public virtual GraphResourceGetResultCollection GetGraphResourceGetResults()
+        {
+            return GetCachedClient(Client => new GraphResourceGetResultCollection(Client, Id));
+        }
+
+        /// <summary>
+        /// Gets the Graph resource under an existing Azure Cosmos DB database account with the provided name.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/databaseAccounts/{accountName}/graphs/{graphName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>GraphResources_GetGraph</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="graphName"> Cosmos DB graph resource name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="graphName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="graphName"/> is null. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<GraphResourceGetResultResource>> GetGraphResourceGetResultAsync(string graphName, CancellationToken cancellationToken = default)
+        {
+            return await GetGraphResourceGetResults().GetAsync(graphName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Gets the Graph resource under an existing Azure Cosmos DB database account with the provided name.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/databaseAccounts/{accountName}/graphs/{graphName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>GraphResources_GetGraph</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="graphName"> Cosmos DB graph resource name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="graphName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="graphName"/> is null. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<GraphResourceGetResultResource> GetGraphResourceGetResult(string graphName, CancellationToken cancellationToken = default)
+        {
+            return GetGraphResourceGetResults().Get(graphName, cancellationToken);
+        }
+
         /// <summary> Gets a collection of CosmosDBSqlDatabaseResources in the CosmosDBAccount. </summary>
         /// <returns> An object representing collection of CosmosDBSqlDatabaseResources and their operations over a CosmosDBSqlDatabaseResource. </returns>
         public virtual CosmosDBSqlDatabaseCollection GetCosmosDBSqlDatabases()
@@ -608,6 +661,59 @@ namespace Azure.ResourceManager.CosmosDB
         public virtual Response<GremlinDatabaseResource> GetGremlinDatabase(string databaseName, CancellationToken cancellationToken = default)
         {
             return GetGremlinDatabases().Get(databaseName, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of DataTransferJobGetResultResources in the CosmosDBAccount. </summary>
+        /// <returns> An object representing collection of DataTransferJobGetResultResources and their operations over a DataTransferJobGetResultResource. </returns>
+        public virtual DataTransferJobGetResultCollection GetDataTransferJobGetResults()
+        {
+            return GetCachedClient(Client => new DataTransferJobGetResultCollection(Client, Id));
+        }
+
+        /// <summary>
+        /// Get a Data Transfer Job.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/databaseAccounts/{accountName}/dataTransferJobs/{jobName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>DataTransferJobs_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="jobName"> Name of the Data Transfer Job. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="jobName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="jobName"/> is null. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<DataTransferJobGetResultResource>> GetDataTransferJobGetResultAsync(string jobName, CancellationToken cancellationToken = default)
+        {
+            return await GetDataTransferJobGetResults().GetAsync(jobName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Get a Data Transfer Job.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/databaseAccounts/{accountName}/dataTransferJobs/{jobName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>DataTransferJobs_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="jobName"> Name of the Data Transfer Job. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="jobName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="jobName"/> is null. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<DataTransferJobGetResultResource> GetDataTransferJobGetResult(string jobName, CancellationToken cancellationToken = default)
+        {
+            return GetDataTransferJobGetResults().Get(jobName, cancellationToken);
         }
 
         /// <summary> Gets a collection of CosmosDBPrivateEndpointConnectionResources in the CosmosDBAccount. </summary>

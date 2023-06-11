@@ -1,6 +1,6 @@
 # Release History
 
-## 1.0.0-beta.10 (Unreleased)
+## 1.0.0-beta.13 (Unreleased)
 
 ### Features Added
 
@@ -8,10 +8,45 @@
 
 ### Bugs Fixed
 
-- Fixed an issue of when using ILogger to log an Exception a custom message would override the exception message.
-  ([#33860](https://github.com/Azure/azure-sdk-for-net/pull/33860))
+### Other Changes
+
+## 1.0.0-beta.12 (2023-06-06)
+
+### Features Added
+
+* Add support for Authenticated User Id.
+  ([#36509](https://github.com/Azure/azure-sdk-for-net/pull/36509))
+* Add `db.name` to custom properties.
+  ([#36389](https://github.com/Azure/azure-sdk-for-net/pull/36389))
+ 
+### Bugs Fixed
+
+* Fixed an issue which resulted in standard metrics getting exported to backends other than Azure Monitor, when Azure Monitor metric exporter was used with other exporters such as otlp side by side.
+  ([#36369](https://github.com/Azure/azure-sdk-for-net/pull/36369))
 
 ### Other Changes
+
+* Removed `_OTELRESOURCE_` export from Logs and Metrics.
+  ([#36430](https://github.com/Azure/azure-sdk-for-net/pull/36430))
+
+## 1.0.0-beta.11 (2023-05-09)
+
+### Features Added
+
+* [Resource](https://github.com/open-telemetry/opentelemetry-specification/blob/main/specification/resource/sdk.md) attributes will now be exported as custom dimensions on Metric telemetry with the name `_OTELRESOURCE_`. This Metric will be included in every batch of telemetry items sent to the ingestion service. ([#36063](https://github.com/Azure/azure-sdk-for-net/pull/36063))
+
+### Other Changes
+
+* Update OpenTelemetry dependencies
+  ([#35664](https://github.com/Azure/azure-sdk-for-net/pull/35664))
+  - OpenTelemetry.PersistentStorage.FileSystem 1.0.0-beta2
+
+## 1.0.0-beta.10 (2023-04-11)
+
+### Bugs Fixed
+
+- Fixed an issue of when using ILogger to log an Exception a custom message would override the exception message.
+  ([#33860](https://github.com/Azure/azure-sdk-for-net/pull/33860))
 
 ## 1.0.0-beta.9 (2023-03-14)
 

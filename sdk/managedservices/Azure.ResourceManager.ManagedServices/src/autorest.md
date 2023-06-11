@@ -5,7 +5,6 @@ Run `dotnet build /t:GenerateCode` to generate code.
 ``` yaml
 
 azure-arm: true
-generate-model-factory: false
 csharp: true
 library-name: ManagedServices
 namespace: Azure.ResourceManager.ManagedServices
@@ -73,6 +72,7 @@ rename-rules:
   Etag: ETag|etag
 
 directive:
+  - remove-operation: OperationsWithScope_List # this is an operation that lists all the RestApis in a scope. We have one operation to list operations on the tenant level in resourcemanager, therefore this operation should be here
   - remove-operation: MarketplaceRegistrationDefinitionsWithoutScope_List
   - remove-operation: MarketplaceRegistrationDefinitionsWithoutScope_Get
   - from: managedservices.json

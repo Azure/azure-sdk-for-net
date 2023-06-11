@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.Analysis.Models
         public static AnalysisManagedMode Zero { get; } = new AnalysisManagedMode(ZeroValue);
         /// <summary> 1. </summary>
         public static AnalysisManagedMode One { get; } = new AnalysisManagedMode(OneValue);
+
+        internal int ToSerialInt32() => _value;
+
         /// <summary> Determines if two <see cref="AnalysisManagedMode"/> values are the same. </summary>
         public static bool operator ==(AnalysisManagedMode left, AnalysisManagedMode right) => left.Equals(right);
         /// <summary> Determines if two <see cref="AnalysisManagedMode"/> values are not the same. </summary>

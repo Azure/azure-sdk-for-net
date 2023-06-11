@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.Workloads.Models
             Optional<NetworkConfiguration> networkConfiguration = default;
             Optional<SapDatabaseType> databaseType = default;
             ResourceIdentifier subnetId = default;
-            VirtualMachineConfiguration virtualMachineConfiguration = default;
+            SapVirtualMachineConfiguration virtualMachineConfiguration = default;
             Optional<DiskConfiguration> dbDiskConfiguration = default;
             Optional<SingleServerCustomResourceNames> customResourceNames = default;
             SapDeploymentType deploymentType = default;
@@ -66,7 +66,6 @@ namespace Azure.ResourceManager.Workloads.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     networkConfiguration = NetworkConfiguration.DeserializeNetworkConfiguration(property.Value);
@@ -76,7 +75,6 @@ namespace Azure.ResourceManager.Workloads.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     databaseType = new SapDatabaseType(property.Value.GetString());
@@ -89,14 +87,13 @@ namespace Azure.ResourceManager.Workloads.Models
                 }
                 if (property.NameEquals("virtualMachineConfiguration"u8))
                 {
-                    virtualMachineConfiguration = VirtualMachineConfiguration.DeserializeVirtualMachineConfiguration(property.Value);
+                    virtualMachineConfiguration = SapVirtualMachineConfiguration.DeserializeSapVirtualMachineConfiguration(property.Value);
                     continue;
                 }
                 if (property.NameEquals("dbDiskConfiguration"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     dbDiskConfiguration = DiskConfiguration.DeserializeDiskConfiguration(property.Value);
@@ -106,7 +103,6 @@ namespace Azure.ResourceManager.Workloads.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     customResourceNames = SingleServerCustomResourceNames.DeserializeSingleServerCustomResourceNames(property.Value);

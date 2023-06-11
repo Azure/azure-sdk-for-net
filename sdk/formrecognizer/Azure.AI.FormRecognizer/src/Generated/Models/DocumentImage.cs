@@ -11,7 +11,7 @@ using Azure.Core;
 namespace Azure.AI.FormRecognizer.DocumentAnalysis
 {
     /// <summary> An image object detected in the page. </summary>
-    internal partial class DocumentImage
+    public partial class DocumentImage
     {
         /// <summary> Initializes a new instance of DocumentImage. </summary>
         /// <param name="span"> Location of the image in the reading order concatenated content. </param>
@@ -37,9 +37,6 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
             PageNumber = pageNumber;
             Confidence = confidence;
         }
-
-        /// <summary> Bounding polygon of the image. </summary>
-        public IReadOnlyList<float> Polygon { get; }
         /// <summary> Location of the image in the reading order concatenated content. </summary>
         public DocumentSpan Span { get; }
         /// <summary> 1-based page number of the page that contains the image. </summary>

@@ -90,7 +90,7 @@ namespace Azure.Monitor.Query
         ///
         /// Response&lt;MetricsQueryResult&gt; results = await client.QueryResourceAsync(
         ///     resourceId,
-        ///     new[] { &quot;SuccessfulCalls&quot;, &quot;TotalCalls&quot; }
+        ///     new[] { &quot;Query Success Rate&quot;, &quot;Query Count&quot; }
         /// );
         ///
         /// foreach (MetricResult metric in results.Value.Metrics)
@@ -151,7 +151,7 @@ namespace Azure.Monitor.Query
         ///
         /// Response&lt;MetricsQueryResult&gt; results = await client.QueryResourceAsync(
         ///     resourceId,
-        ///     new[] { &quot;SuccessfulCalls&quot;, &quot;TotalCalls&quot; }
+        ///     new[] { &quot;Query Success Rate&quot;, &quot;Query Count&quot; }
         /// );
         ///
         /// foreach (MetricResult metric in results.Value.Metrics)

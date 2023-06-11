@@ -204,7 +204,7 @@
       "ResponseBody": "﻿<?xml version=\"1.0\" encoding=\"utf-8\"?><EnumerationResults ServiceEndpoint=\"https://seanmcccanary3.file.core.windows.net/\" ShareName=\"test-share-2ac50ca8-e24e-dcb8-0570-2003637657e0\" DirectoryPath=\"directory\"><Entries><File><Name>!'();[]@&amp;%=+$,#äÄöÖüÜß;</Name><Properties><Content-Length>1024</Content-Length></Properties></File></Entries><NextMarker /></EnumerationResults>"
     },
     {
-      "RequestUri": "https://seanmcccanary3.file.core.windows.net/test-share-2ac50ca8-e24e-dcb8-0570-2003637657e0/directory/%21%27%28%29%3B%5B%5D%40%26%25%3D%2B%24%2C%23äÄöÖüÜß%3B?sv=2022-11-02&st=2021-01-26T18%3A47%3A21Z&se=2021-01-26T20%3A47%3A21Z&sr=f&sp=rcwd&sig=Sanitized",
+      "RequestUri": "https://seanmcccanary3.file.core.windows.net/test-share-2ac50ca8-e24e-dcb8-0570-2003637657e0/directory/%21%27%28%29%3B%5B%5D%40%26%25%3D%2B%24%2C%23äÄöÖüÜß%3B?sv=2023-01-03&st=2021-01-26T18%3A47%3A21Z&se=2021-01-26T20%3A47%3A21Z&sr=f&sp=rcwd&sig=Sanitized",
       "RequestMethod": "HEAD",
       "RequestHeaders": {
         "Accept": "application/xml",

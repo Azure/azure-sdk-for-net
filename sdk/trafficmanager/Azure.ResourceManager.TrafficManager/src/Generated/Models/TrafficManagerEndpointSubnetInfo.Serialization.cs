@@ -49,7 +49,6 @@ namespace Azure.ResourceManager.TrafficManager.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     first = IPAddress.Parse(property.Value.GetString());
@@ -59,7 +58,6 @@ namespace Azure.ResourceManager.TrafficManager.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     last = IPAddress.Parse(property.Value.GetString());
@@ -69,7 +67,6 @@ namespace Azure.ResourceManager.TrafficManager.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     scope = property.Value.GetInt32();

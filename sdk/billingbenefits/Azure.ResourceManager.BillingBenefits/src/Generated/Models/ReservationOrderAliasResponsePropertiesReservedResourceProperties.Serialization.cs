@@ -36,7 +36,6 @@ namespace Azure.ResourceManager.BillingBenefits.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     instanceFlexibility = new BillingBenefitsInstanceFlexibility(property.Value.GetString());

@@ -37,7 +37,6 @@ namespace Azure.ResourceManager.Resources.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     properties = ArmDeploymentOperationProperties.DeserializeArmDeploymentOperationProperties(property.Value);
