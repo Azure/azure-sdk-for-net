@@ -9,7 +9,7 @@ using Azure.Core.Serialization;
 
 namespace Azure.Core.Tests.ModelSerializationTests
 {
-    public class Animal : IUtf8JsonSerializable, IAzureModelInternal
+    public class Animal : IUtf8JsonSerializable, IModelSerializable
     {
         private Dictionary<string, BinaryData> RawData { get; set; } = new Dictionary<string, BinaryData>();
 
@@ -128,15 +128,9 @@ namespace Azure.Core.Tests.ModelSerializationTests
             this.RawData = model.RawData;
         }
 
-        void IAzureModelInternal.Serialize(Utf8JsonWriter writer, SerializableOptions options)
+        void IModelSerializable.Serialize(Utf8JsonWriter writer, SerializableOptions options)
         {
             ((IUtf8JsonSerializable)this).Write(writer, options ?? new SerializableOptions());
-        }
-
-        void IAzureModelInternal.Deserialize(ref Utf8JsonReader reader, SerializableOptions options)
-        {
-            var model = DeserializeAnimal(JsonDocument.ParseValue(ref reader).RootElement, options);
-            CopyModel(model);
         }
         #endregion
     }

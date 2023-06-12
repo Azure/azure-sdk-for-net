@@ -12,7 +12,7 @@ using Azure.Core.Serialization;
 namespace Azure.Core.Tests.ModelSerializationTests
 {
     [JsonConverter(typeof(DogListPropertyConverter))]
-    public class DogListProperty : Animal, IAzureModelInternal, IUtf8JsonSerializable
+    public class DogListProperty : Animal, IModelSerializable, IUtf8JsonSerializable
     {
         private Dictionary<string, BinaryData> RawData { get; set; } = new Dictionary<string, BinaryData>();
         public IList<string> FoodConsumed { get; private set; }

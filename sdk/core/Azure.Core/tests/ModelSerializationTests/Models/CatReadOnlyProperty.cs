@@ -9,7 +9,7 @@ using Azure.Core.Serialization;
 
 namespace Azure.Core.Tests.ModelSerializationTests
 {
-    public class CatReadOnlyProperty : Animal, IAzureModelInternal, IUtf8JsonSerializable
+    public class CatReadOnlyProperty : Animal, IModelSerializable, IUtf8JsonSerializable
     {
         private Dictionary<string, BinaryData> RawData { get; set; } = new Dictionary<string, BinaryData>();
 

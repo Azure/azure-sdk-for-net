@@ -6,7 +6,9 @@ namespace Azure
     /// <summary>
     /// TODO
     /// </summary>
-    public interface IAzureModel
+#pragma warning disable AZC0012 // Avoid single word type names
+    public interface IModel
+#pragma warning restore AZC0012 // Avoid single word type names
     {
     }
 }

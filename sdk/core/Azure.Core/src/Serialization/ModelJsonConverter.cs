@@ -13,7 +13,7 @@ namespace Azure.Core.Serialization
     /// .
     /// </summary>
 #pragma warning disable AZC0014 // Avoid using banned types in public API
-    public class ModelJsonConverter : JsonConverter<IAzureModel>
+    public class ModelJsonConverter : JsonConverter<IModel>
 #pragma warning restore AZC0014 // Avoid using banned types in public API
     {
         /// <summary>
@@ -43,7 +43,7 @@ namespace Azure.Core.Serialization
         /// <returns></returns>
         public override bool CanConvert(Type typeToConvert)
         {
-            return typeToConvert.GetInterfaces().Any(i => i.Equals(typeof(IAzureModelInternal))) &&
+            return typeToConvert.GetInterfaces().Any(i => i.Equals(typeof(IModelSerializable))) &&
                 !Attribute.IsDefined(typeToConvert, typeof(JsonConverterAttribute));
         }
 
@@ -56,14 +56,14 @@ namespace Azure.Core.Serialization
         /// <returns></returns>
         /// <exception cref="NotSupportedException"></exception>
 #pragma warning disable AZC0014 // Avoid using banned types in public API
-        public override IAzureModel Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
+        public override IModel Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
 #pragma warning restore AZC0014 // Avoid using banned types in public API
         {
             var method = typeToConvert.GetMethod($"Deserialize{typeToConvert.Name}", BindingFlags.NonPublic | BindingFlags.Static);
             if (method is null)
                 throw new NotSupportedException($"{typeToConvert.Name} does not have a deserialize method defined.");
 
-            var model = method.Invoke(null, new object[] { JsonDocument.ParseValue(ref reader).RootElement, ConvertOptions(options) }) as IAzureModel;
+            var model = method.Invoke(null, new object[] { JsonDocument.ParseValue(ref reader).RootElement, ConvertOptions(options) }) as IModel;
             if (model is null)
                 throw new InvalidOperationException($"Unexpected error when deserializing {typeToConvert.Name}.");
 
@@ -77,10 +77,10 @@ namespace Azure.Core.Serialization
         /// <param name="value"></param>
         /// <param name="options"></param>
 #pragma warning disable AZC0014 // Avoid using banned types in public API
-        public override void Write(Utf8JsonWriter writer, IAzureModel value, JsonSerializerOptions options)
+        public override void Write(Utf8JsonWriter writer, IModel value, JsonSerializerOptions options)
 #pragma warning restore AZC0014 // Avoid using banned types in public API
         {
-            ((IAzureModelInternal)value).Serialize(writer, ConvertOptions(options));
+            ((IModelSerializable)value).Serialize(writer, ConvertOptions(options));
         }
 
         private SerializableOptions ConvertOptions(JsonSerializerOptions options)
