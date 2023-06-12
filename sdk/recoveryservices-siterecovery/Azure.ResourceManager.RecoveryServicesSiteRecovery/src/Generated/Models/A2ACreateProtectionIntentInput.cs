@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         public string RecoveryAvailabilityZone { get; set; }
         /// <summary> A value indicating whether the auto update is enabled. </summary>
         public AgentAutoUpdateStatus? AgentAutoUpdateStatus { get; set; }
-        /// <summary> A value indicating the authentication type for automation account. The default value is &quot;RunAsAccount&quot;. </summary>
+        /// <summary> A value indicating the authentication type for automation account. The default value is "RunAsAccount". </summary>
         public AutomationAccountAuthenticationType? AutomationAccountAuthenticationType { get; set; }
         /// <summary> The automation account arm id. </summary>
         public string AutomationAccountArmId { get; set; }

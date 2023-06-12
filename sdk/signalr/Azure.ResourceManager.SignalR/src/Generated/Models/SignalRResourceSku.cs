@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.SignalR.Models
         /// Allowed values: Standard_S1, Free_F1
         /// </param>
         /// <param name="tier">
-        /// Optional tier of this particular SKU. &apos;Standard&apos; or &apos;Free&apos;. 
+        /// Optional tier of this particular SKU. 'Standard' or 'Free'. 
         /// 
         /// `Basic` is deprecated, use `Standard` instead.
         /// </param>
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.SignalR.Models
         /// </summary>
         public string Name { get; set; }
         /// <summary>
-        /// Optional tier of this particular SKU. &apos;Standard&apos; or &apos;Free&apos;. 
+        /// Optional tier of this particular SKU. 'Standard' or 'Free'. 
         /// 
         /// `Basic` is deprecated, use `Standard` instead.
         /// </summary>

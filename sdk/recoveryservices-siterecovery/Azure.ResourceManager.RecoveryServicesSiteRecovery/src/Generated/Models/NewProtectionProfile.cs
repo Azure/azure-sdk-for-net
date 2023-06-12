@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     {
         /// <summary> Initializes a new instance of NewProtectionProfile. </summary>
         /// <param name="policyName"> The protection profile input. </param>
-        /// <param name="multiVmSyncStatus"> A value indicating whether multi-VM sync has to be enabled. Value should be &apos;Enabled&apos; or &apos;Disabled&apos;. </param>
+        /// <param name="multiVmSyncStatus"> A value indicating whether multi-VM sync has to be enabled. Value should be 'Enabled' or 'Disabled'. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="policyName"/> is null. </exception>
         public NewProtectionProfile(string policyName, SetMultiVmSyncStatus multiVmSyncStatus)
         {
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <param name="recoveryPointHistory"> The duration in minutes until which the recovery points need to be stored. </param>
         /// <param name="crashConsistentFrequencyInMinutes"> The crash consistent snapshot frequency (in minutes). </param>
         /// <param name="appConsistentFrequencyInMinutes"> The app consistent snapshot frequency (in minutes). </param>
-        /// <param name="multiVmSyncStatus"> A value indicating whether multi-VM sync has to be enabled. Value should be &apos;Enabled&apos; or &apos;Disabled&apos;. </param>
+        /// <param name="multiVmSyncStatus"> A value indicating whether multi-VM sync has to be enabled. Value should be 'Enabled' or 'Disabled'. </param>
         internal NewProtectionProfile(string resourceType, string policyName, int? recoveryPointHistory, int? crashConsistentFrequencyInMinutes, int? appConsistentFrequencyInMinutes, SetMultiVmSyncStatus multiVmSyncStatus) : base(resourceType)
         {
             PolicyName = policyName;
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         public int? CrashConsistentFrequencyInMinutes { get; set; }
         /// <summary> The app consistent snapshot frequency (in minutes). </summary>
         public int? AppConsistentFrequencyInMinutes { get; set; }
-        /// <summary> A value indicating whether multi-VM sync has to be enabled. Value should be &apos;Enabled&apos; or &apos;Disabled&apos;. </summary>
+        /// <summary> A value indicating whether multi-VM sync has to be enabled. Value should be 'Enabled' or 'Disabled'. </summary>
         public SetMultiVmSyncStatus MultiVmSyncStatus { get; set; }
     }
 }
