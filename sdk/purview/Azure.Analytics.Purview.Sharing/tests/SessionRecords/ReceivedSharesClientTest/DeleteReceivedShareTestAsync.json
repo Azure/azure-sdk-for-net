@@ -1,7 +1,7 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://myaccountname.purview.azure.com/share/receivedShares/83ef9b20-1bb5-4b18-a84e-4a1d80f6f92c?api-version=2023-05-30-preview",
+      "RequestUri": "https://myaccountname.purview.azure.com/share/receivedShares/098d6c8e-165f-4cf1-9653-79f6a7f99048?api-version=2023-05-30-preview",
       "RequestMethod": "DELETE",
       "RequestHeaders": {
         "Accept": "application/json",

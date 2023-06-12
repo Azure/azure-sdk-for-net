@@ -1,7 +1,7 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://myaccountname.purview.azure.com/share/sentShares/0e5153ac-f311-42c7-9082-736dc0024aa7?api-version=2023-05-30-preview",
+      "RequestUri": "https://myaccountname.purview.azure.com/share/sentShares/3fa235b9-4368-4827-8100-745042c14771?api-version=2023-05-30-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
@@ -50,7 +50,7 @@
           "senderTenantName": "Microsoft"
         },
         "shareKind": "InPlace",
-        "id": "0e5153ac-f311-42c7-9082-736dc0024aa7",
+        "id": "3fa235b9-4368-4827-8100-745042c14771",
         "type": "SentShare"
       }
     },
@@ -105,7 +105,7 @@
               "senderTenantName": "Microsoft"
             },
             "shareKind": "InPlace",
-            "id": "0e5153ac-f311-42c7-9082-736dc0024aa7",
+            "id": "3fa235b9-4368-4827-8100-745042c14771",
             "type": "SentShare"
           },
           {

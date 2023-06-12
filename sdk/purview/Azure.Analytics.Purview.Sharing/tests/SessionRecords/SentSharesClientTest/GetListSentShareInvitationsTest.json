@@ -1,7 +1,7 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://myaccountname.purview.azure.com/share/sentShares/0e5153ac-f311-42c7-9082-736dc0024aa7/sentShareInvitations/89a11270-46f0-405a-a7b8-aa93255f11c7?api-version=2023-05-30-preview",
+      "RequestUri": "https://myaccountname.purview.azure.com/share/sentShares/3fa235b9-4368-4827-8100-745042c14771/sentShareInvitations/e0162694-c77e-4f47-94f9-d876a1252021?api-version=2023-05-30-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
@@ -33,12 +33,12 @@
           "state": "Succeeded"
         },
         "invitationKind": "Service",
-        "id": "89a11270-46f0-405a-a7b8-aa93255f11c7",
+        "id": "e0162694-c77e-4f47-94f9-d876a1252021",
         "type": "sentShares/sentShareInvitations"
       }
     },
     {
-      "RequestUri": "https://myaccountname.purview.azure.com/share/sentShares/0e5153ac-f311-42c7-9082-736dc0024aa7/sentShareInvitations?api-version=2023-05-30-preview",
+      "RequestUri": "https://myaccountname.purview.azure.com/share/sentShares/3fa235b9-4368-4827-8100-745042c14771/sentShareInvitations?api-version=2023-05-30-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
@@ -71,7 +71,7 @@
               "state": "Succeeded"
             },
             "invitationKind": "Service",
-            "id": "89a11270-46f0-405a-a7b8-aa93255f11c7",
+            "id": "e0162694-c77e-4f47-94f9-d876a1252021",
             "type": "sentShares/sentShareInvitations"
           }
         ]
