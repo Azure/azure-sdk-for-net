@@ -5,7 +5,6 @@ using System;
 using System.Text.Json;
 using System.Linq;
 using System.Collections.Generic;
-using System.Text.Json.Serialization;
 
 namespace Azure.Core.Dynamic
 {
@@ -20,10 +19,22 @@ namespace Azure.Core.Dynamic
             DateTimeFormat = "o";
         }
 
+        public DynamicDataOptions() { }
+
+        /// <summary>
+        /// Copy constructor
+        /// </summary>
+        /// <param name="options"></param>
+        public DynamicDataOptions(DynamicDataOptions options)
+        {
+            PropertyNamingConvention = options.PropertyNamingConvention;
+            DateTimeHandling = options.DateTimeHandling;
+        }
+
         /// <summary>
         /// Gets or sets an object that specifies how dynamic property names will be mapped to member names in the data buffer.
         /// </summary>
-        public DynamicCaseMapping CaseMapping { get; set; }
+        public PropertyNamingConvention PropertyNamingConvention { get; set; }
 
         /// <summary>
         /// </summary>

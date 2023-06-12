@@ -11,6 +11,7 @@ using System.Reflection;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using Azure.Core.Json;
+using Azure.Core.Serialization;
 
 namespace Azure.Core.Dynamic
 {
@@ -37,7 +38,43 @@ namespace Azure.Core.Dynamic
         {
             _element = element;
             _options = options;
-            _serializerOptions = DynamicDataOptions.ToSerializerOptions(options);
+            _serializerOptions = GetSerializerOptions(options);
+        }
+
+        internal static JsonSerializerOptions GetSerializerOptions(DynamicDataOptions options)
+        {
+            JsonSerializerOptions serializerOptions = new()
+            {
+                Converters =
+                {
+                    new DefaultTimeSpanConverter()
+                }
+            };
+
+            switch (options.PropertyNamingConvention)
+            {
+                case PropertyNamingConvention.CamelCase:
+                    serializerOptions.PropertyNamingPolicy = JsonNamingPolicy.CamelCase;
+                    break;
+                case PropertyNamingConvention.None:
+                default:
+                    break;
+            }
+
+            switch (options.DateTimeHandling)
+            {
+                case DynamicDateTimeHandling.UnixTime:
+                    serializerOptions.Converters.Add(new UnixTimeDateTimeConverter());
+                    serializerOptions.Converters.Add(new UnixTimeDateTimeOffsetConverter());
+                    break;
+                case DynamicDateTimeHandling.Rfc3339:
+                default:
+                    serializerOptions.Converters.Add(new Rfc3339DateTimeConverter());
+                    serializerOptions.Converters.Add(new Rfc3339DateTimeOffsetConverter());
+                    break;
+            }
+
+            return serializerOptions;
         }
 
         internal void WriteTo(Stream stream)
@@ -65,11 +102,10 @@ namespace Azure.Core.Dynamic
                 return new DynamicData(element, _options);
             }
 
-            // If we're using the PascalToCamel mapping and the strict name lookup
-            // failed, do a second lookup with a camelCase name as well.
-            if (_options.CaseMapping == DynamicCaseMapping.PascalToCamel && char.IsUpper(name[0]))
+            // If the dynamic content uses a naming convention, do a second look-up.
+            if (_options.PropertyNamingConvention != PropertyNamingConvention.None)
             {
-                if (_element.TryGetProperty(ConvertToCamelCase(name), out element))
+                if (_element.TryGetProperty(ApplyNamingConvention(name), out element))
                 {
                     if (element.ValueKind == JsonValueKind.Null)
                     {
@@ -84,7 +120,15 @@ namespace Azure.Core.Dynamic
             return null;
         }
 
-        private static string ConvertToCamelCase(string value) => JsonNamingPolicy.CamelCase.ConvertName(value);
+        private string ApplyNamingConvention(string value)
+        {
+            return _options.PropertyNamingConvention switch
+            {
+                PropertyNamingConvention.None => value,
+                PropertyNamingConvention.CamelCase => JsonNamingPolicy.CamelCase.ConvertName(value),
+                _ => throw new NotSupportedException($"Unknown value for DynamicDataOptions.PropertyNamingConvention: '{_options.PropertyNamingConvention}'."),
+            };
+        }
 
         private object? GetViaIndexer(object index)
         {
@@ -136,12 +180,15 @@ namespace Azure.Core.Dynamic
                 value = ConvertType(value);
             }
 
-            if (_options.CaseMapping == DynamicCaseMapping.PascalToCamel)
+            if (_options.PropertyNamingConvention == PropertyNamingConvention.None ||
+                _element.TryGetProperty(name, out MutableJsonElement _))
             {
-                name = ConvertToCamelCase(name);
+                _element = _element.SetProperty(name, value);
+                return null;
             }
 
-            _element = _element.SetProperty(name, value);
+            // The dynamic content uses a naming convention.  Set with that name.
+            _element = _element.SetProperty(ApplyNamingConvention(name), value);
 
             // Binding machinery expects the call site signature to return an object
             return null;
@@ -336,7 +383,7 @@ namespace Azure.Core.Dynamic
             public override DynamicData Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
                 JsonDocument document = JsonDocument.ParseValue(ref reader);
-                return new DynamicData(new MutableJsonDocument(document, options).RootElement, DynamicDataOptions.FromSerializerOptions(options));
+                return new DynamicData(new MutableJsonDocument(document, options).RootElement, DynamicDataOptions.Default);
             }
 
             public override void Write(Utf8JsonWriter writer, DynamicData value, JsonSerializerOptions options)

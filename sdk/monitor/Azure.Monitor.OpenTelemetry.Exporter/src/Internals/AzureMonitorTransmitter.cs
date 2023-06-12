@@ -7,6 +7,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core.Pipeline;
 using Azure.Monitor.OpenTelemetry.Exporter.Internals.ConnectionString;
+using Azure.Monitor.OpenTelemetry.Exporter.Internals.Diagnostics;
 using Azure.Monitor.OpenTelemetry.Exporter.Internals.PersistentStorage;
 using Azure.Monitor.OpenTelemetry.Exporter.Internals.Platform;
 using Azure.Monitor.OpenTelemetry.Exporter.Internals.Statsbeat;

@@ -3,6 +3,7 @@
 
 using System;
 using Azure.Core.Dynamic;
+using Azure.Core.Serialization;
 using Microsoft.CSharp.RuntimeBinder;
 using NUnit.Framework;
 
@@ -32,7 +33,7 @@ namespace Azure.Core.Tests.Public
                     "message": "Hi",
                     "number" : 5
                 }
-                """).ToDynamicFromJson(DynamicCaseMapping.PascalToCamel);
+                """).ToDynamicFromJson(PropertyNamingConvention.CamelCase);
 
             Assert.AreEqual(new SampleModel("Hi", 5), (SampleModel)data);
         }

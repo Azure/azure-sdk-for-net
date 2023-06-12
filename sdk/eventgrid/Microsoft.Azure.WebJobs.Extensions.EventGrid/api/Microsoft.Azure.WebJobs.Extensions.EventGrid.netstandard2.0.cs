@@ -5,6 +5,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.EventGrid
     public sealed partial class EventGridAttribute : System.Attribute
     {
         public EventGridAttribute() { }
+        public string Connection { get { throw null; } set { } }
         [Microsoft.Azure.WebJobs.Description.AppSettingAttribute]
         public string TopicEndpointUri { get { throw null; } set { } }
         [Microsoft.Azure.WebJobs.Description.AppSettingAttribute]

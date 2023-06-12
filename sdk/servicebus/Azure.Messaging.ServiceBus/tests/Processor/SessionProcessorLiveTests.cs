@@ -890,6 +890,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
                     await Task.Delay(lockDuration.Add(lockDuration));
                     var lockedUntil = args.SessionLockedUntil;
                     Assert.AreEqual(lockedUntil, args.SessionLockedUntil);
+                    Assert.IsTrue(args.SessionLockCancellationToken.IsCancellationRequested);
                     try
                     {
                         await args.CompleteMessageAsync(message, args.CancellationToken);

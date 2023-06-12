@@ -220,7 +220,10 @@ namespace Azure.Storage.DataMovement.Tests
                 destination.Container,
                 new BlobStorageResourceContainerOptions()
                 {
-                    CopyMethod = copyMethod
+                    ResourceOptions = new BlobStorageResourceOptions()
+                    {
+                        CopyMethod = copyMethod
+                    }
                 });
 
             // Act / Assert
@@ -302,7 +305,10 @@ namespace Azure.Storage.DataMovement.Tests
                 destinationResource = new BlobStorageResourceContainer(destinationContainer.Container,
                     new BlobStorageResourceContainerOptions()
                     {
-                        CopyMethod = transferType == TransferType.AsyncCopy ? TransferCopyMethod.AsyncCopy : TransferCopyMethod.SyncCopy
+                        ResourceOptions = new BlobStorageResourceOptions()
+                        {
+                            CopyMethod = transferType == TransferType.AsyncCopy ? TransferCopyMethod.AsyncCopy : TransferCopyMethod.SyncCopy,
+                        }
                     });
             }
 
