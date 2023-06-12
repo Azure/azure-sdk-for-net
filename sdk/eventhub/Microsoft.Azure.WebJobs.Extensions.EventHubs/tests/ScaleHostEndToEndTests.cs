@@ -54,11 +54,13 @@ namespace Microsoft.Azure.WebJobs.Extensions.ServiceBus.Tests
         }
 
         [Test]
-        [Ignore("Consistently failing in CI; awaiting investigation")]
+        //[Ignore("Consistently failing in CI; awaiting investigation")]
         [TestCase(false)]
         [TestCase(true)]
         public async Task ScaleHostEndToEndTest(bool tbsEnabled)
         {
+            TestContext.WriteLine($"Entering ScaleHostEndToEndTest({tbsEnabled})..");
+
             string hostJson =
             @"{
                 ""azureWebJobs"" : {
@@ -169,50 +171,65 @@ namespace Microsoft.Azure.WebJobs.Extensions.ServiceBus.Tests
             var blobCheckpointStoreInternal2 = new BlobCheckpointStoreInternal(blobContainerClient, Function2Name, loggerProvider.CreateLogger("Test"));
             await blobCheckpointStoreInternal2.CreateIfNotExistsAsync(CancellationToken.None);
 
-            await TestHelpers.Await(async () =>
+            TestContext.WriteLine("Starting awaiting scale votes..");
+
+            try
             {
-                IScaleStatusProvider scaleStatusProvider = scaleHost.Services.GetService<IScaleStatusProvider>();
-
-                var scaleStatus = await scaleStatusProvider.GetScaleStatusAsync(new ScaleStatusContext());
-
-                bool scaledOut = false;
-                if (!tbsEnabled)
+                await TestHelpers.Await(async () =>
                 {
-                    scaledOut = scaleStatus.Vote == ScaleVote.ScaleOut && scaleStatus.TargetWorkerCount == null
-                     && scaleStatus.FunctionScaleStatuses[Function1Name].Vote == ScaleVote.ScaleOut
-                     && scaleStatus.FunctionScaleStatuses[Function2Name].Vote == ScaleVote.ScaleOut;
+                    IScaleStatusProvider scaleStatusProvider = scaleHost.Services.GetService<IScaleStatusProvider>();
 
-                    if (scaledOut)
-                    {
-                        var logMessages = loggerProvider.GetAllLogMessages().Select(p => p.FormattedMessage).ToArray();
-                        Assert.Contains("2 scale monitors to sample", logMessages);
-                    }
-                }
-                else
-                {
-                    scaledOut = scaleStatus.Vote == ScaleVote.ScaleOut && scaleStatus.TargetWorkerCount == 2
-                     && scaleStatus.FunctionTargetScalerResults[Function1Name].TargetWorkerCount == 2
-                     && scaleStatus.FunctionTargetScalerResults[Function2Name].TargetWorkerCount == 2;
+                    var scaleStatus = await scaleStatusProvider.GetScaleStatusAsync(new ScaleStatusContext());
 
-                    if (scaledOut)
-                    {
-                        var logMessages = loggerProvider.GetAllLogMessages().Select(p => p.FormattedMessage).ToArray();
-                        Assert.Contains("2 target scalers to sample", logMessages);
-                    }
-                }
-
-                if (scaledOut)
-                {
-                    var logMessages = loggerProvider.GetAllLogMessages().Select(p => p.FormattedMessage).ToArray();
-                    Assert.IsNotEmpty(logMessages.Where(x => x.StartsWith("Runtime scale monitoring is enabled.")));
+                    bool scaledOut = false;
                     if (!tbsEnabled)
                     {
-                        Assert.Contains("Scaling out based on votes", logMessages);
-                    }
-                }
+                        scaledOut = scaleStatus.Vote == ScaleVote.ScaleOut && scaleStatus.TargetWorkerCount == null
+                         && scaleStatus.FunctionScaleStatuses[Function1Name].Vote == ScaleVote.ScaleOut
+                         && scaleStatus.FunctionScaleStatuses[Function2Name].Vote == ScaleVote.ScaleOut;
 
-                return scaledOut;
-            }, pollingInterval: 2000, timeout: 180000, throwWhenDebugging: true);
+                        if (scaledOut)
+                        {
+                            var logMessages = loggerProvider.GetAllLogMessages().Select(p => p.FormattedMessage).ToArray();
+                            Assert.Contains("2 scale monitors to sample", logMessages);
+                        }
+                    }
+                    else
+                    {
+                        scaledOut = scaleStatus.Vote == ScaleVote.ScaleOut && scaleStatus.TargetWorkerCount == 2
+                         && scaleStatus.FunctionTargetScalerResults[Function1Name].TargetWorkerCount == 2
+                         && scaleStatus.FunctionTargetScalerResults[Function2Name].TargetWorkerCount == 2;
+
+                        if (scaledOut)
+                        {
+                            var logMessages = loggerProvider.GetAllLogMessages().Select(p => p.FormattedMessage).ToArray();
+                            Assert.Contains("2 target scalers to sample", logMessages);
+                        }
+                    }
+
+                    if (scaledOut)
+                    {
+                        var logMessages = loggerProvider.GetAllLogMessages().Select(p => p.FormattedMessage).ToArray();
+                        Assert.IsNotEmpty(logMessages.Where(x => x.StartsWith("Runtime scale monitoring is enabled.")));
+                        if (!tbsEnabled)
+                        {
+                            Assert.Contains("Scaling out based on votes", logMessages);
+                        }
+                    }
+
+                    return scaledOut;
+                }, pollingInterval: 2000, timeout: 180000, throwWhenDebugging: true);
+            }
+            catch (Exception)
+            {
+                // Write scale logs to the output:
+                var logMessages = loggerProvider.GetAllLogMessages().Where(x => x.Category.Contains("Scale")).Select(p => p.FormattedMessage).ToArray();
+                foreach (var logMessage in logMessages)
+                {
+                    TestContext.WriteLine(logMessage);
+                }
+                throw;
+            }
         }
     }
 }
