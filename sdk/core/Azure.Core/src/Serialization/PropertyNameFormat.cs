@@ -11,7 +11,7 @@ namespace Azure.Core.Serialization
         /// <summary>
         /// No format is specified for property names.
         /// </summary>
-        Unspecified = 0,
+        None = 0,
 
         /// <summary>
         /// Indicates that content uses a camel-case format for property names.

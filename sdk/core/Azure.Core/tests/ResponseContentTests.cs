@@ -21,7 +21,7 @@ namespace Azure.Core.Tests
             ResponseContent content = response.Content as ResponseContent;
 
             Assert.IsNotNull(content);
-            Assert.AreEqual(content.ProtocolOptions.ResponseContentPropertyNameFormat, PropertyNameFormat.Unspecified);
+            Assert.AreEqual(content.ProtocolOptions.ResponseContentPropertyNameFormat, PropertyNameFormat.None);
         }
 
         [Test]

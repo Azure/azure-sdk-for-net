@@ -1133,7 +1133,7 @@ namespace Azure.Core.Serialization
     }
     public enum PropertyNameFormat
     {
-        Unspecified = 0,
+        None = 0,
         CamelCase = 1,
     }
     public partial class ProtocolMethodOptions

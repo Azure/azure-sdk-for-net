@@ -216,7 +216,7 @@ namespace Azure.Core.Samples
 
             #region Snippet:AzureCoreSetPropertyWithoutCaseMappingPerInstance
             Response response = client.GetWidget();
-            dynamic widget = response.Content.ToDynamicFromJson(PropertyNameFormat.Unspecified);
+            dynamic widget = response.Content.ToDynamicFromJson(PropertyNameFormat.None);
 
             widget.details.IPAddress = "127.0.0.1";
             // JSON is `{ "details" : { "IPAddress" : "127.0.0.1" } }`

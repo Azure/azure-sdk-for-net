@@ -48,7 +48,7 @@ namespace Azure.Core.Dynamic
                 case PropertyNameFormat.CamelCase:
                     serializerOptions.PropertyNamingPolicy = JsonNamingPolicy.CamelCase;
                     break;
-                case PropertyNameFormat.Unspecified:
+                case PropertyNameFormat.None:
                 default:
                     break;
             }
