@@ -262,6 +262,17 @@ var sentShareClient = new SentSharesClient(endPoint, credential);
 Operation operation = await sentShareClient.DeleteSentShareAsync(WaitUntil.Completed, "sentShareId");
 ```
 
+### List share resources
+
+```C# Snippet:ShareResourcesClientExample_ListShareResources
+var credential = new DefaultAzureCredential();
+var endPoint = "https://my-account-name.purview.azure.com/share";
+var shareResourcesClient = new ShareResourcesClient(endPoint, credential);
+
+Response operation = await shareResourcesClient.GetAllShareResourcesAsync().ToEnumerableAsync();
+```
+
+
 ## Troubleshooting
 
 ### Setting up console logging

@@ -24,13 +24,13 @@ internal class Sample14_ListShareResources : ShareResourcesClientTestBase
 #if SNIPPET
             var credential = new DefaultAzureCredential();
             var endPoint = "https://my-account-name.purview.azure.com/share";
-            var receivedSharesClient = new ReceivedSharesClient(endPoint, credential);
+            var shareResourcesClient = new ShareResourcesClient(endPoint, credential);
 #else
         var shareResourcesClient = GetShareResourcesClient();
 #endif
 
 #if SNIPPET
-            Response operation = await receivedSharesClient.GetReceivedShareAsync("receivedShareId");
+            Response operation = await shareResourcesClient.GetAllShareResourcesAsync().ToEnumerableAsync();
 #else
         List<BinaryData> shareResources = await shareResourcesClient.GetAllShareResourcesAsync().ToEnumerableAsync();
 #endif
