@@ -150,7 +150,7 @@ namespace Azure.Core.Dynamic
 
             public override bool CanConvert(Type typeToConvert)
             {
-                return !AllowList.IsAllowedType(typeToConvert, out _);
+                return !AllowList.IsAllowedType(typeToConvert);
             }
 
             public override JsonConverter CreateConverter(Type typeToConvert, JsonSerializerOptions options)

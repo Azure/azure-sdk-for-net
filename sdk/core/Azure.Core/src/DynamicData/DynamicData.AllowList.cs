@@ -22,35 +22,26 @@ namespace Azure.Core.Dynamic
                     return;
                 }
 
-                if (!IsAllowedType(value.GetType(), out bool needsValueCheck))
+                if (!IsAllowedType(value.GetType()))
                 {
                     throw new NotSupportedException($"Type is not currently supported: '{value.GetType()}'.");
                 }
-
-                if (needsValueCheck && !IsAllowedValue(value))
-                {
-                    throw new NotSupportedException($"Type contains unsupported object types: '{value.GetType()}'.");
-                }
             }
 
-            #region Allowed types
-            public static bool IsAllowedType(Type type, out bool needsValueCheck)
+            public static bool IsAllowedType(Type type)
             {
-                if (IsAllowedKnownType(type, out needsValueCheck))
+                if (IsAllowedKnownType(type))
                 {
                     return true;
                 }
 
-                return IsAllowedPocoType(type, new HashSet<Type>(), out needsValueCheck);
+                return IsAllowedPocoType(type, new HashSet<Type>());
             }
 
-            private static bool IsAllowedKnownType(Type type, out bool needsValueCheck)
+            private static bool IsAllowedKnownType(Type type)
             {
-                needsValueCheck = false;
-
                 if (type == typeof(object))
                 {
-                    needsValueCheck = true;
                     return true;
                 }
 
@@ -61,9 +52,9 @@ namespace Azure.Core.Dynamic
                     type == typeof(MutableJsonDocument) ||
                     type == typeof(MutableJsonElement) ||
                     type == typeof(DynamicData) ||
-                    IsAllowedArrayType(type, out needsValueCheck) ||
-                    IsAllowedCollectionType(type, out needsValueCheck) ||
-                    IsAllowedEnumerableType(type, out needsValueCheck);
+                    IsAllowedArrayType(type) ||
+                    IsAllowedCollectionType(type) ||
+                    IsAllowedEnumerableType(type);
             }
 
             private static bool IsAllowedPrimitive(Type type)
@@ -80,30 +71,26 @@ namespace Azure.Core.Dynamic
                     type == typeof(ETag);
             }
 
-            private static bool IsAllowedArrayType(Type type, out bool needsValueCheck)
+            private static bool IsAllowedArrayType(Type type)
             {
-                needsValueCheck = false;
-
                 if (!type.IsArray)
                 {
                     return false;
                 }
 
                 Type? elementType = type.GetElementType();
-                return elementType != null && IsAllowedType(elementType, out needsValueCheck);
+                return elementType != null && IsAllowedType(elementType);
             }
 
-            private static bool IsAllowedCollectionType(Type type, out bool needsValueCheck)
+            private static bool IsAllowedCollectionType(Type type)
             {
                 return
-                    IsAllowedListType(type, out needsValueCheck) ||
-                    IsAllowedDictionaryType(type, out needsValueCheck);
+                    IsAllowedListType(type) ||
+                    IsAllowedDictionaryType(type);
             }
 
-            private static bool IsAllowedListType(Type type, out bool needsValueCheck)
+            private static bool IsAllowedListType(Type type)
             {
-                needsValueCheck = false;
-
                 if (!type.IsGenericType)
                 {
                     return false;
@@ -115,13 +102,11 @@ namespace Azure.Core.Dynamic
                 }
 
                 Type[] types = type.GetGenericArguments();
-                return IsAllowedType(types[0], out needsValueCheck);
+                return IsAllowedType(types[0]);
             }
 
-            private static bool IsAllowedDictionaryType(Type type, out bool needsValueCheck)
+            private static bool IsAllowedDictionaryType(Type type)
             {
-                needsValueCheck = false;
-
                 if (!type.IsGenericType)
                 {
                     return false;
@@ -130,11 +115,8 @@ namespace Azure.Core.Dynamic
                 if (type.GetGenericTypeDefinition() == typeof(Dictionary<,>))
                 {
                     Type[] types = type.GetGenericArguments();
-                    bool firstArgNeedsCheck, secondArgNeedsCheck;
-                    if (IsAllowedType(types[0], out firstArgNeedsCheck) &&
-                        IsAllowedType(types[1], out secondArgNeedsCheck))
+                    if (IsAllowedType(types[0]) && IsAllowedType(types[1]))
                     {
-                        needsValueCheck = firstArgNeedsCheck || secondArgNeedsCheck;
                         return true;
                     }
                 }
@@ -142,10 +124,8 @@ namespace Azure.Core.Dynamic
                 return false;
             }
 
-            private static bool IsAllowedEnumerableType(Type type, out bool needsValueCheck)
+            private static bool IsAllowedEnumerableType(Type type)
             {
-                needsValueCheck = false;
-
                 if (!type.IsGenericType)
                 {
                     return false;
@@ -162,13 +142,11 @@ namespace Azure.Core.Dynamic
                 }
 
                 Type[] types = type.GetGenericArguments();
-                return IsAllowedType(types[0], out needsValueCheck);
+                return IsAllowedType(types[0]);
             }
 
-            private static bool IsAllowedPocoType(Type type, HashSet<Type> ancestorTypes, out bool needsValueCheck)
+            private static bool IsAllowedPocoType(Type type, HashSet<Type> ancestorTypes)
             {
-                needsValueCheck = false;
-
                 if (!HasPublicParameterlessConstructor(type) && !IsAnonymousType(type))
                 {
                     return false;
@@ -186,7 +164,7 @@ namespace Azure.Core.Dynamic
                         return false;
                     }
 
-                    if (IsAllowedKnownType(property.PropertyType, out needsValueCheck))
+                    if (IsAllowedKnownType(property.PropertyType))
                     {
                         continue;
                     }
@@ -199,7 +177,7 @@ namespace Azure.Core.Dynamic
 
                     // Recurse
                     ancestorTypes.Add(type);
-                    if (!IsAllowedPocoType(property.PropertyType, ancestorTypes, out needsValueCheck))
+                    if (!IsAllowedPocoType(property.PropertyType, ancestorTypes))
                     {
                         return false;
                     }
@@ -219,155 +197,6 @@ namespace Azure.Core.Dynamic
                     type.Namespace == null &&
                     Attribute.IsDefined(type, typeof(CompilerGeneratedAttribute), false);
             }
-
-            #endregion
-
-            #region Allowed values
-
-            private static bool IsAllowedValue<T>(T value)
-            {
-                // If we got here, T must have a generic type holding an object somewhere in
-                // the type graph, or a POCO with a property of that description.
-
-                if (value == null)
-                {
-                    return true;
-                }
-
-                // GetType() should not return object. This is the base case for recursion.
-                Type type = value.GetType();
-                if (IsAllowedPrimitive(type))
-                {
-                    return true;
-                }
-
-                if (IsAllowedKnownType(type, out _))
-                {
-                    return IsAllowedKnownValue(value);
-                }
-
-                return IsAllowedPocoValue(value);
-            }
-
-            private static bool IsAllowedKnownValue<T>(T value)
-            {
-                return
-                    IsAllowedArrayValue(value) ||
-                    IsAllowedCollectionValue(value) ||
-                    IsAllowedEnumerableValue(value);
-            }
-
-            private static bool IsAllowedArrayValue<T>(T value)
-            {
-                Type type = typeof(T);
-
-                if (!type.IsArray)
-                {
-                    return false;
-                }
-
-                throw new NotImplementedException();
-            }
-
-            private static bool IsAllowedCollectionValue<T>(T value)
-            {
-                return IsAllowedListValue(value) || IsAllowedDictionaryValue(value);
-            }
-
-            private static bool IsAllowedListValue<T>(T value)
-            {
-                if (value == null)
-                {
-                    return true;
-                }
-
-                if (value is not IList list)
-                {
-                    return false;
-                }
-
-                return IsAllowedEnumerableValue(list);
-            }
-
-            private static bool IsAllowedDictionaryValue<T>(T value)
-            {
-                if (value == null)
-                {
-                    return true;
-                }
-
-                if (value is not IDictionary dictionary)
-                {
-                    return false;
-                }
-
-                if (!IsAllowedEnumerableValue(dictionary.Keys))
-                {
-                    return false;
-                }
-
-                if (!IsAllowedEnumerableValue(dictionary.Values))
-                {
-                    return false;
-                }
-
-                return true;
-            }
-
-            private static bool IsAllowedEnumerableValue<T>(T value)
-            {
-                if (value == null)
-                {
-                    return true;
-                }
-
-                if (value is not IEnumerable enumerable)
-                {
-                    return false;
-                }
-
-                foreach (var item in enumerable)
-                {
-                    if (!IsAllowedValue(item))
-                    {
-                        return false;
-                    }
-                }
-
-                return true;
-            }
-
-            private static bool IsAllowedPocoValue<T>(T value)
-            {
-                if (value is null)
-                {
-                    return true;
-                }
-
-                Type type = value.GetType();
-                if (!IsAllowedPocoType(type, new HashSet<Type>(), out bool needsValueCheck))
-                {
-                    return false;
-                }
-
-                if (!needsValueCheck)
-                {
-                    return true;
-                }
-
-                foreach (PropertyInfo property in type.GetProperties())
-                {
-                    object? propertyValue = property.GetValue(value);
-                    if (!IsAllowedValue(propertyValue))
-                    {
-                        return false;
-                    }
-                }
-
-                return true;
-            }
-
-            #endregion
         }
     }
 }

@@ -70,10 +70,19 @@ namespace Azure.Core.Tests.Public
         {
             dynamic json = JsonDataTestHelpers.CreateEmpty();
             dynamic anotherJson = JsonDataTestHelpers.CreateEmpty();
+
             json.a = anotherJson;
+
+            // DynamicData uses value semantics, so this has no effect on the parent
             anotherJson.b = 2;
 
-            Assert.AreEqual(json.ToString(), "{\"a\":{\"b\":2}}");
+            Assert.AreEqual("{\"a\":{}}", json.ToString());
+            Assert.AreEqual("{\"b\":2}", anotherJson.ToString());
+
+            // Value can still be updated on the object directly
+            json.a.b = 2;
+
+            Assert.AreEqual("{\"a\":{\"b\":2}}", json.ToString());
         }
 
         [Test]
