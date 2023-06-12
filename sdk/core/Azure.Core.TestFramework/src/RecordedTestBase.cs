@@ -49,7 +49,7 @@ namespace Azure.Core.TestFramework
 
         public const string SanitizeValue = "Sanitized";
         public const string AssetsJson = "assets.json";
-        public string AssetsJsonPath { get; set; }
+        public virtual string AssetsJsonPath { get; }
 
         /// <summary>
         /// The list of JSON path sanitizers to use when sanitizing a JSON request or response body.
