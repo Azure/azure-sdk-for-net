@@ -61,7 +61,7 @@ namespace Azure.Health.Insights.ClinicalMatching
                     continue;
                 }
             }
-            return new ContactDetails(name.Value, email.Value, phone.Value);
+            return new ContactDetails(name, email, phone);
         }
 
         /// <summary> Deserializes the model from a raw response. </summary>

@@ -29,13 +29,27 @@ namespace Azure.Health.Insights.ClinicalMatching
             }
             if (Optional.IsDefined(StudyType))
             {
-                writer.WritePropertyName("studyType"u8);
-                writer.WriteStringValue(StudyType.Value.ToString());
+                if (StudyType != null)
+                {
+                    writer.WritePropertyName("studyType"u8);
+                    writer.WriteStringValue(StudyType.Value.ToString());
+                }
+                else
+                {
+                    writer.WriteNull("studyType");
+                }
             }
             if (Optional.IsDefined(RecruitmentStatus))
             {
-                writer.WritePropertyName("recruitmentStatus"u8);
-                writer.WriteStringValue(RecruitmentStatus.Value.ToString());
+                if (RecruitmentStatus != null)
+                {
+                    writer.WritePropertyName("recruitmentStatus"u8);
+                    writer.WriteStringValue(RecruitmentStatus.Value.ToString());
+                }
+                else
+                {
+                    writer.WriteNull("recruitmentStatus");
+                }
             }
             writer.WritePropertyName("conditions"u8);
             writer.WriteStartArray();
@@ -84,8 +98,8 @@ namespace Azure.Health.Insights.ClinicalMatching
                 return null;
             }
             Optional<IList<ClinicalTrialPhase>> phases = default;
-            Optional<ClinicalTrialStudyType> studyType = default;
-            Optional<ClinicalTrialRecruitmentStatus> recruitmentStatus = default;
+            Optional<ClinicalTrialStudyType?> studyType = default;
+            Optional<ClinicalTrialRecruitmentStatus?> recruitmentStatus = default;
             IList<string> conditions = default;
             Optional<IList<string>> sponsors = default;
             Optional<IList<ContactDetails>> contacts = default;
@@ -110,6 +124,7 @@ namespace Azure.Health.Insights.ClinicalMatching
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        studyType = null;
                         continue;
                     }
                     studyType = new ClinicalTrialStudyType(property.Value.GetString());
@@ -119,6 +134,7 @@ namespace Azure.Health.Insights.ClinicalMatching
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        recruitmentStatus = null;
                         continue;
                     }
                     recruitmentStatus = new ClinicalTrialRecruitmentStatus(property.Value.GetString());

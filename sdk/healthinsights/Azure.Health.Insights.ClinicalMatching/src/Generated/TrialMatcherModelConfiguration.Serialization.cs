@@ -17,13 +17,27 @@ namespace Azure.Health.Insights.ClinicalMatching
             writer.WriteStartObject();
             if (Optional.IsDefined(Verbose))
             {
-                writer.WritePropertyName("verbose"u8);
-                writer.WriteBooleanValue(Verbose.Value);
+                if (Verbose != null)
+                {
+                    writer.WritePropertyName("verbose"u8);
+                    writer.WriteBooleanValue(Verbose.Value);
+                }
+                else
+                {
+                    writer.WriteNull("verbose");
+                }
             }
             if (Optional.IsDefined(IncludeEvidence))
             {
-                writer.WritePropertyName("includeEvidence"u8);
-                writer.WriteBooleanValue(IncludeEvidence.Value);
+                if (IncludeEvidence != null)
+                {
+                    writer.WritePropertyName("includeEvidence"u8);
+                    writer.WriteBooleanValue(IncludeEvidence.Value);
+                }
+                else
+                {
+                    writer.WriteNull("includeEvidence");
+                }
             }
             writer.WritePropertyName("clinicalTrials"u8);
             writer.WriteObjectValue(ClinicalTrials);
