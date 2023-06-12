@@ -416,7 +416,7 @@ namespace Azure.Core.Tests
         [Test]
         public void CanMapToCamelViaResponseContentOptions()
         {
-            ProtocolMethodOptions options = new() { ResponseContentConvention = PropertyNamingConvention.CamelCase };
+            ProtocolMethodOptions options = new() { ResponseContentPropertyNameFormat = PropertyNamingConvention.CamelCase };
             dynamic value = new ResponseContent("""{"foo": null}""", options).ToDynamicFromJson();
 
             // Existing property

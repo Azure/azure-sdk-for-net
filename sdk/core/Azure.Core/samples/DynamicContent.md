@@ -28,11 +28,11 @@ string name = widget.name;
 By default, properties on dynamic content use exact name matches to lookup and set new properties in the content data.
 
 To use [C# naming conventions](https://learn.microsoft.com/dotnet/csharp/fundamentals/coding-style/coding-conventions#naming-conventions) with dynamic content,
-set `options.ProtocolMethods.ResponseContentConvention` to `PropertyNamingConvention.CamelCase` on the client's options.  This will enable PascalCase C# property names to get and set camelCase JSON members.
+set `options.ProtocolMethods.ResponseContentPropertyNameFormat` to `PropertyNamingConvention.CamelCase` on the client's options.  This will enable PascalCase C# property names to get and set camelCase JSON members.
 
 ```C# Snippet:AzureCoreGetDynamicJsonPropertyPascalCase
 WidgetsClientOptions options = new WidgetsClientOptions();
-options.ProtocolMethods.ResponseContentConvention = PropertyNamingConvention.CamelCase;
+options.ProtocolMethods.ResponseContentPropertyNameFormat = PropertyNamingConvention.CamelCase;
 
 WidgetsClient client = new WidgetsClient(new Uri("https://example.azure.com"), new DefaultAzureCredential(), options);
 

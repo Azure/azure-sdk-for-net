@@ -1144,7 +1144,8 @@ namespace Azure.Core.Serialization
     public partial class ProtocolMethodOptions
     {
         internal ProtocolMethodOptions() { }
-        public Azure.Core.Serialization.PropertyNamingConvention ResponseContentConvention { get { throw null; } set { } }
+        public string ResponseContentDateTimeFormat { get { throw null; } set { } }
+        public Azure.Core.Serialization.PropertyNamingConvention ResponseContentPropertyNameFormat { get { throw null; } set { } }
     }
 }
 namespace Azure.Messaging

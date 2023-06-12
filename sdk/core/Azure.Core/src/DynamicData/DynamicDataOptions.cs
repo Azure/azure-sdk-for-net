@@ -9,9 +9,6 @@ using Azure.Core.Serialization;
 
 namespace Azure.Core.Dynamic
 {
-    /// <summary>
-    /// Provides options to be used with <see cref="DynamicData"/>.
-    /// </summary>
     internal class DynamicDataOptions
     {
         public DynamicDataOptions()
@@ -30,13 +27,8 @@ namespace Azure.Core.Dynamic
             DateTimeFormat = options.DateTimeFormat;
         }
 
-        /// <summary>
-        /// Gets or sets an object that specifies how dynamic property names will be mapped to member names in the data buffer.
-        /// </summary>
         public PropertyNamingConvention PropertyNamingConvention { get; set; }
 
-        /// <summary>
-        /// </summary>
         public string DateTimeFormat { get; set; }
 
         internal static JsonSerializerOptions ToSerializerOptions(DynamicDataOptions options)
