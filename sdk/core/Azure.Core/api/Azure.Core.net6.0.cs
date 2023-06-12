@@ -92,6 +92,9 @@ namespace Azure
         public static bool operator !=(Azure.HttpRange left, Azure.HttpRange right) { throw null; }
         public override string ToString() { throw null; }
     }
+    public partial interface IModel
+    {
+    }
     public partial class JsonPatchDocument
     {
         public JsonPatchDocument() { }
@@ -1122,9 +1125,6 @@ namespace Azure.Core.Serialization
     {
         string? ConvertMemberName(System.Reflection.MemberInfo member);
     }
-    public partial interface IModelSerializable
-    {
-    }
     public partial class JsonObjectSerializer : Azure.Core.Serialization.ObjectSerializer, Azure.Core.Serialization.IMemberNameConverter
     {
         public JsonObjectSerializer() { }
@@ -1138,14 +1138,14 @@ namespace Azure.Core.Serialization
         public override System.Threading.Tasks.ValueTask SerializeAsync(System.IO.Stream stream, object? value, System.Type inputType, System.Threading.CancellationToken cancellationToken) { throw null; }
         public override System.Threading.Tasks.ValueTask<System.BinaryData> SerializeAsync(object? value, System.Type? inputType = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
-    public partial class ModelJsonConverter : System.Text.Json.Serialization.JsonConverter<Azure.Core.Serialization.IModelSerializable>
+    public partial class ModelJsonConverter : System.Text.Json.Serialization.JsonConverter<Azure.IModel>
     {
         public ModelJsonConverter() { }
         public ModelJsonConverter(bool ignoreAdditionalProperties) { }
         public bool IgnoreAdditionalProperties { get { throw null; } }
         public override bool CanConvert(System.Type typeToConvert) { throw null; }
-        public override Azure.Core.Serialization.IModelSerializable Read(ref System.Text.Json.Utf8JsonReader reader, System.Type typeToConvert, System.Text.Json.JsonSerializerOptions options) { throw null; }
-        public override void Write(System.Text.Json.Utf8JsonWriter writer, Azure.Core.Serialization.IModelSerializable value, System.Text.Json.JsonSerializerOptions options) { }
+        public override Azure.IModel Read(ref System.Text.Json.Utf8JsonReader reader, System.Type typeToConvert, System.Text.Json.JsonSerializerOptions options) { throw null; }
+        public override void Write(System.Text.Json.Utf8JsonWriter writer, Azure.IModel value, System.Text.Json.JsonSerializerOptions options) { }
     }
     public abstract partial class ObjectSerializer
     {
