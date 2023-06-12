@@ -71,7 +71,7 @@
                 },
                 "storeKind": "AdlsGen2Account",
                 "storeReference": {
-                  "referenceName": "/subscriptions/0f3dcfc3-18f8-4099-b381-8353e19d43a7/resourcegroups/ads-dev-shared/providers/Microsoft.Storage/storageAccounts/rlandaetasdkprovideradls",
+                  "referenceName": "/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/testResourceGroup/providers/Microsoft.Storage/storageAccounts/providerTestStorageAccount",
                   "type": "ArmResourceReference"
                 }
               },
