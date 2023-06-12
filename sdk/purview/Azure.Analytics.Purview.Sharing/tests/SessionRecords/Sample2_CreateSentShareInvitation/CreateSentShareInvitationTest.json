@@ -1,7 +1,7 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://myaccountname.purview.azure.com/share/sentShares/fe11781e-9a7d-488d-bd22-cc2c95536e96/sentShareInvitations/4ae8a8dc-0662-4027-960e-92b4778fc5ff?api-version=2023-05-30-preview",
+      "RequestUri": "https://myaccountname.purview.azure.com/share/sentShares/016eb068-ddaa-41be-8804-8bef566663a5/sentShareInvitations/4ae8a8dc-0662-4027-960e-92b4778fc5ff?api-version=2023-05-30-preview",
       "RequestMethod": "PUT",
       "RequestHeaders": {
         "Accept": "application/json",
