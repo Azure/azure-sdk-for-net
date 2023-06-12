@@ -92,7 +92,7 @@
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/fb9e7fe1-af44-47ef-852d-2d086a069327/resourceGroups/resourceGroupName6106/providers/Microsoft.Network/trafficmanagerprofiles/profileName8758?api-version=2022-04-01-preview",
+      "RequestUri": "https://management.azure.com/subscriptions/fb9e7fe1-af44-47ef-852d-2d086a069327/resourceGroups/resourceGroupName6106/providers/Microsoft.Network/trafficmanagerprofiles/profileName8758?api-version=2022-04-01",
       "RequestMethod": "PUT",
       "RequestHeaders": {
         "Accept": "application/json",
@@ -255,7 +255,7 @@
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/fb9e7fe1-af44-47ef-852d-2d086a069327/resourceGroups/dialtone-traffic-manager/providers/Microsoft.Network/trafficmanagerprofiles/az-int-int-msftmetrics?api-version=2022-04-01-preview",
+      "RequestUri": "https://management.azure.com/subscriptions/fb9e7fe1-af44-47ef-852d-2d086a069327/resourceGroups/dialtone-traffic-manager/providers/Microsoft.Network/trafficmanagerprofiles/az-int-int-msftmetrics?api-version=2022-04-01",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
@@ -353,7 +353,7 @@
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/fb9e7fe1-af44-47ef-852d-2d086a069327/resourceGroups/dialtone-traffic-manager/providers/Microsoft.Network/trafficmanagerprofiles/az-int-int-msftmetrics/heatMaps/default?api-version=2022-04-01-preview",
+      "RequestUri": "https://management.azure.com/subscriptions/fb9e7fe1-af44-47ef-852d-2d086a069327/resourceGroups/dialtone-traffic-manager/providers/Microsoft.Network/trafficmanagerprofiles/az-int-int-msftmetrics/heatMaps/default?api-version=2022-04-01",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
@@ -8750,7 +8750,7 @@
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/fb9e7fe1-af44-47ef-852d-2d086a069327/resourceGroups/resourceGroupName6106/providers/Microsoft.Network/trafficmanagerprofiles/profileName8758?api-version=2022-04-01-preview",
+      "RequestUri": "https://management.azure.com/subscriptions/fb9e7fe1-af44-47ef-852d-2d086a069327/resourceGroups/resourceGroupName6106/providers/Microsoft.Network/trafficmanagerprofiles/profileName8758?api-version=2022-04-01",
       "RequestMethod": "DELETE",
       "RequestHeaders": {
         "Accept": "application/json",
