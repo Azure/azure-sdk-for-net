@@ -948,13 +948,21 @@ namespace Azure.Core.Tests
         }
 
         [Test]
-        public void NewObjectPropertiesCanBeAssignedWithObjectIndirectly()
+        public void NewObjectPropertiesCannotBeAssignedViaReferences()
         {
             dynamic json = DynamicJsonTests.GetDynamicJson("{}");
             dynamic anotherJson = DynamicJsonTests.GetDynamicJson("{}");
 
             json.a = anotherJson;
+
+            // DynamicData uses value semantics, so this has no effect on the parent
             anotherJson.b = 2;
+
+            Assert.AreEqual("{\"a\":{}}", json.ToString());
+            Assert.AreEqual("{\"b\":2}", anotherJson.ToString());
+
+            // Value can still be updated on the object directly
+            json.a.b = 2;
 
             Assert.AreEqual("{\"a\":{\"b\":2}}", json.ToString());
         }
@@ -1130,8 +1138,8 @@ namespace Azure.Core.Tests
             yield return new object[] { 1, "1" };
             yield return new object[] { 1.0, "1" };
 #if NETCOREAPP
-            yield return new object[] {1.1D, "1.1"};
-            yield return new object[] {1.1F, "1.1"};
+            yield return new object[] { 1.1D, "1.1" };
+            yield return new object[] { 1.1F, "1.1" };
 #else
             yield return new object[] { 1.1D, "1.1000000000000001" };
             yield return new object[] { 1.1F, "1.10000002" };

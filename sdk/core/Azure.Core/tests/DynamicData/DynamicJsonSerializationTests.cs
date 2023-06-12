@@ -291,7 +291,7 @@ namespace Azure.Core.Tests
         }
 
         [Test]
-        public void ModelAssignmentRespectsReferenceSemantics()
+        public void ModelAssignmentRespectsValueSemantics()
         {
             dynamic json = BinaryData.FromString("""{"foo":1}""").ToDynamicFromJson(PropertyNamingConvention.CamelCase);
 
@@ -316,15 +316,27 @@ namespace Azure.Core.Tests
             model.StringProperty = "b";
             model.ObjectProperty = 2;
 
+            Assert.AreEqual("a", (string)json.Foo.StringProperty);
+            Assert.AreEqual(1, (int)json.Foo.ObjectProperty);
+
+            Assert.AreEqual("a", (string)json.Bar.StringProperty);
+            Assert.AreEqual(1, (int)json.Bar.ObjectProperty);
+
+            json.Foo.StringProperty = "b";
+            json.Foo.ObjectProperty = 2;
+
+            json.Bar.StringProperty = "c";
+            json.Bar.ObjectProperty = 3;
+
             Assert.AreEqual("b", (string)json.Foo.StringProperty);
             Assert.AreEqual(2, (int)json.Foo.ObjectProperty);
 
-            Assert.AreEqual("b", (string)json.Bar.StringProperty);
-            Assert.AreEqual(2, (int)json.Bar.ObjectProperty);
+            Assert.AreEqual("c", (string)json.Bar.StringProperty);
+            Assert.AreEqual(3, (int)json.Bar.ObjectProperty);
         }
 
         [Test]
-        public void ModelAssignmentRespectsReferenceSemanticsAndThrowsWithNewUnallowedValue()
+        public void ModelAssignmentRespectsValueSemanticsAndThrowsWithNewUnallowedValue()
         {
             dynamic json = BinaryData.FromString("""{"foo":1}""").ToDynamicFromJson(PropertyNamingConvention.CamelCase);
 
@@ -349,18 +361,20 @@ namespace Azure.Core.Tests
             model.StringProperty = "b";
             model.ObjectProperty = BinaryData.FromString("no");
 
+            Assert.AreEqual("a", (string)json.Foo.StringProperty);
+            Assert.AreEqual(1, (int)json.Foo.ObjectProperty);
+
+            Assert.AreEqual("a", (string)json.Bar.StringProperty);
+            Assert.AreEqual(1, (int)json.Bar.ObjectProperty);
+
+            json.Foo.StringProperty = "b";
+            json.Bar.StringProperty = "c";
+
             Assert.AreEqual("b", (string)json.Foo.StringProperty);
-            Assert.Throws<NotSupportedException>(() => { int i = (int)json.Foo.ObjectProperty; });
+            Assert.AreEqual("c", (string)json.Bar.StringProperty);
 
-            Assert.AreEqual("b", (string)json.Bar.StringProperty);
-            Assert.Throws<NotSupportedException>(() => { int i = (int)json.Bar.ObjectProperty; });
-
-            Assert.Throws<NotSupportedException>(() =>
-            {
-                using MemoryStream stream = new();
-                using Utf8JsonWriter writer = new(stream);
-                json.WriteTo(writer);
-            });
+            Assert.Throws<NotSupportedException>(() => { json.Foo.ObjectProperty = BinaryData.FromString("no"); });
+            Assert.Throws<NotSupportedException>(() => { json.Bar.ObjectProperty = BinaryData.FromString("no"); });
         }
 
         [Test]

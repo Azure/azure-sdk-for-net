@@ -764,7 +764,7 @@ namespace Azure.Core.Json
 
             // It is a new property.
             string path = MutableJsonDocument.ChangeTracker.PushProperty(_path, name);
-            Changes.AddChange(path, value, MutableJsonChangeKind.PropertyAddition, name);
+            Changes.AddChange(path, GetSerializedValue(value), MutableJsonChangeKind.PropertyAddition, name);
             return this;
         }
 
@@ -1022,29 +1022,41 @@ namespace Azure.Core.Json
                 case Guid g:
                     Set(g);
                     break;
-                case MutableJsonElement mje:
-                    mje.EnsureValid();
-                    Changes.AddChange(_path, mje);
-                    break;
-                case MutableJsonDocument d:
-                    Set(d.RootElement);
-                    break;
-                case JsonElement:
-                    Changes.AddChange(_path, value);
-                    break;
-                case JsonDocument d:
-                    Set(d.RootElement);
-                    break;
                 case null:
                     Changes.AddChange(_path, null);
                     break;
                 default:
-                    // If it's not a special type, we'll serialize it on assignment.
-                    byte[] bytes = JsonSerializer.SerializeToUtf8Bytes(value, _root.SerializerOptions);
-                    JsonElement e = JsonDocument.Parse(bytes).RootElement;
-                    Changes.AddChange(_path, e);
+                    Changes.AddChange(_path, GetSerializedValue(value));
                     break;
             }
+        }
+
+        private object GetSerializedValue(object value)
+        {
+            if (value is MutableJsonDocument mjd)
+            {
+                return mjd.RootElement;
+            }
+
+            if (value is MutableJsonElement mje)
+            {
+                mje.EnsureValid();
+                return mje;
+            }
+
+            if (value is JsonDocument doc)
+            {
+                return doc.RootElement;
+            }
+
+            if (value is JsonElement element)
+            {
+                return element;
+            }
+
+            // If it's not a special type, we'll serialize it on assignment.
+            byte[] bytes = JsonSerializer.SerializeToUtf8Bytes(value, _root.SerializerOptions);
+            return JsonDocument.Parse(bytes).RootElement;
         }
 
         /// <inheritdoc/>
