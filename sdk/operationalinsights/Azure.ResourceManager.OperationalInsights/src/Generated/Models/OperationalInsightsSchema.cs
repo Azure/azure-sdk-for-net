@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.OperationalInsights.Models
 {
-    /// <summary> Table&apos;s schema. </summary>
+    /// <summary> Table's schema. </summary>
     public partial class OperationalInsightsSchema
     {
         /// <summary> Initializes a new instance of OperationalInsightsSchema. </summary>
@@ -31,8 +31,8 @@ namespace Azure.ResourceManager.OperationalInsights.Models
         /// <param name="standardColumns"> A list of table standard columns. </param>
         /// <param name="categories"> Table category. </param>
         /// <param name="labels"> Table labels. </param>
-        /// <param name="source"> Table&apos;s creator. </param>
-        /// <param name="tableType"> Table&apos;s creator. </param>
+        /// <param name="source"> Table's creator. </param>
+        /// <param name="tableType"> Table's creator. </param>
         /// <param name="tableSubType"> The subtype describes what APIs can be used to interact with the table, and what features are available against it. </param>
         /// <param name="solutions"> List of solutions the table is affiliated with. </param>
         internal OperationalInsightsSchema(string name, string displayName, string description, IList<OperationalInsightsColumn> columns, IReadOnlyList<OperationalInsightsColumn> standardColumns, IReadOnlyList<string> categories, IReadOnlyList<string> labels, OperationalInsightsTableCreator? source, OperationalInsightsTableType? tableType, OperationalInsightsTableSubType? tableSubType, IReadOnlyList<string> solutions)
@@ -64,9 +64,9 @@ namespace Azure.ResourceManager.OperationalInsights.Models
         public IReadOnlyList<string> Categories { get; }
         /// <summary> Table labels. </summary>
         public IReadOnlyList<string> Labels { get; }
-        /// <summary> Table&apos;s creator. </summary>
+        /// <summary> Table's creator. </summary>
         public OperationalInsightsTableCreator? Source { get; }
-        /// <summary> Table&apos;s creator. </summary>
+        /// <summary> Table's creator. </summary>
         public OperationalInsightsTableType? TableType { get; }
         /// <summary> The subtype describes what APIs can be used to interact with the table, and what features are available against it. </summary>
         public OperationalInsightsTableSubType? TableSubType { get; }

@@ -230,7 +230,7 @@ namespace Azure.ResourceManager.NetworkCloud
         }
 
         /// <summary>
-        /// Cordon the provided bare metal machine&apos;s Kubernetes node.
+        /// Cordon the provided bare metal machine's Kubernetes node.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -265,7 +265,7 @@ namespace Azure.ResourceManager.NetworkCloud
         }
 
         /// <summary>
-        /// Cordon the provided bare metal machine&apos;s Kubernetes node.
+        /// Cordon the provided bare metal machine's Kubernetes node.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -872,7 +872,7 @@ namespace Azure.ResourceManager.NetworkCloud
         }
 
         /// <summary>
-        /// Uncordon the provided bare metal machine&apos;s Kubernetes node.
+        /// Uncordon the provided bare metal machine's Kubernetes node.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -906,7 +906,7 @@ namespace Azure.ResourceManager.NetworkCloud
         }
 
         /// <summary>
-        /// Uncordon the provided bare metal machine&apos;s Kubernetes node.
+        /// Uncordon the provided bare metal machine's Kubernetes node.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
