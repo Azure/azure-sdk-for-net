@@ -54,7 +54,7 @@ namespace Azure.AI.Translation.Text
                     continue;
                 }
             }
-            return new TranslatedTextItem(detectedLanguage.Value, translations, sourceText.Value);
+            return new TranslatedTextItem(detectedLanguage, translations, sourceText);
         }
 
         /// <summary> Deserializes the model from a raw response. </summary>

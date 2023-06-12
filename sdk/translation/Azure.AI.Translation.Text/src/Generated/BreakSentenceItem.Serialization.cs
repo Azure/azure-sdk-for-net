@@ -44,7 +44,7 @@ namespace Azure.AI.Translation.Text
                     continue;
                 }
             }
-            return new BreakSentenceItem(detectedLanguage.Value, sentLen);
+            return new BreakSentenceItem(detectedLanguage, sentLen);
         }
 
         /// <summary> Deserializes the model from a raw response. </summary>
