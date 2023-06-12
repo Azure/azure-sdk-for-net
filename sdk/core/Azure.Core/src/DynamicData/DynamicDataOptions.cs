@@ -1,10 +1,11 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System;
-using System.Text.Json;
-using System.Linq;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text.Json;
+using System.Text.Json.Serialization;
+using Azure.Core.Serialization;
 
 namespace Azure.Core.Dynamic
 {
@@ -19,8 +20,6 @@ namespace Azure.Core.Dynamic
             DateTimeFormat = "o";
         }
 
-        public DynamicDataOptions() { }
-
         /// <summary>
         /// Copy constructor
         /// </summary>
@@ -28,7 +27,7 @@ namespace Azure.Core.Dynamic
         public DynamicDataOptions(DynamicDataOptions options)
         {
             PropertyNamingConvention = options.PropertyNamingConvention;
-            DateTimeHandling = options.DateTimeHandling;
+            DateTimeFormat = options.DateTimeFormat;
         }
 
         /// <summary>
@@ -52,12 +51,12 @@ namespace Azure.Core.Dynamic
                 }
             };
 
-            switch (options.CaseMapping)
+            switch (options.PropertyNamingConvention)
             {
-                case DynamicCaseMapping.PascalToCamel:
+                case PropertyNamingConvention.CamelCase:
                     serializerOptions.PropertyNamingPolicy = JsonNamingPolicy.CamelCase;
                     break;
-                case DynamicCaseMapping.None:
+                case PropertyNamingConvention.None:
                 default:
                     break;
             }
@@ -67,7 +66,7 @@ namespace Azure.Core.Dynamic
 
         internal static DynamicDataOptions FromSerializerOptions(JsonSerializerOptions options)
         {
-            DynamicDataOptions value = new DynamicDataOptions();
+            DynamicDataOptions value = new();
 
             IEnumerable<JsonConverter> dtcs = options.Converters.Where(c => c.GetType() == typeof(DynamicData.DynamicDateTimeConverter));
             if (dtcs.FirstOrDefault() != null)
@@ -78,7 +77,7 @@ namespace Azure.Core.Dynamic
 
             if (options.PropertyNamingPolicy == JsonNamingPolicy.CamelCase)
             {
-                value.CaseMapping = DynamicCaseMapping.PascalToCamel;
+                value.PropertyNamingConvention = PropertyNamingConvention.CamelCase;
             }
 
             return value;

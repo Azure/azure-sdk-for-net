@@ -67,9 +67,9 @@ namespace Azure
         {
             DynamicDataOptions options = utf8Json is ResponseContent content ?
                 content.ProtocolOptions.GetDynamicOptions() :
-                DynamicDataOptions.Default;
+                new DynamicDataOptions();
 
-            return utf8Json.ToDynamicFromJson(DynamicDataOptions.Default);
+            return utf8Json.ToDynamicFromJson(options);
         }
 
         /// <summary>
@@ -80,7 +80,7 @@ namespace Azure
         {
             DynamicDataOptions options = utf8Json is ResponseContent content ?
                 new DynamicDataOptions(content.ProtocolOptions.GetDynamicOptions()) :
-                new DynamicDataOptions(DynamicDataOptions.Default);
+                new DynamicDataOptions();
 
             options.PropertyNamingConvention = propertyNamingConvention;
 			options.DateTimeFormat = dateTimeFormat;

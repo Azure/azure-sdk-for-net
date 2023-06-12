@@ -22,7 +22,7 @@ namespace Azure.Core.Serialization
         /// in the content data.  Setting this value has the effect of establishing a naming
         /// convention that will be used with dynamic response content when accessing the content
         /// data. If needed, it can be overridden per instance by passing different options to
-        /// <see cref="AzureCoreExtensions.ToDynamicFromJson(BinaryData, PropertyNamingConvention)"/>.
+        /// <see cref="AzureCoreExtensions.ToDynamicFromJson(BinaryData, PropertyNamingConvention, string)"/>.
         ///
         /// Naming conventions can be used with <see cref="RequestContent"/> as well by
         /// calling the <see cref="RequestContent.Create(object, PropertyNamingConvention)"/>
@@ -32,9 +32,9 @@ namespace Azure.Core.Serialization
 
         internal DynamicDataOptions GetDynamicOptions()
         {
-            DynamicDataOptions options = new DynamicDataOptions()
+            DynamicDataOptions options = new()
             {
-                DateTimeHandling = DynamicDateTimeHandling.Rfc3339
+                DateTimeFormat = "o"
             };
 
             options.PropertyNamingConvention = ResponseContentConvention;

@@ -38,43 +38,7 @@ namespace Azure.Core.Dynamic
         {
             _element = element;
             _options = options;
-            _serializerOptions = GetSerializerOptions(options);
-        }
-
-        internal static JsonSerializerOptions GetSerializerOptions(DynamicDataOptions options)
-        {
-            JsonSerializerOptions serializerOptions = new()
-            {
-                Converters =
-                {
-                    new DefaultTimeSpanConverter()
-                }
-            };
-
-            switch (options.PropertyNamingConvention)
-            {
-                case PropertyNamingConvention.CamelCase:
-                    serializerOptions.PropertyNamingPolicy = JsonNamingPolicy.CamelCase;
-                    break;
-                case PropertyNamingConvention.None:
-                default:
-                    break;
-            }
-
-            switch (options.DateTimeHandling)
-            {
-                case DynamicDateTimeHandling.UnixTime:
-                    serializerOptions.Converters.Add(new UnixTimeDateTimeConverter());
-                    serializerOptions.Converters.Add(new UnixTimeDateTimeOffsetConverter());
-                    break;
-                case DynamicDateTimeHandling.Rfc3339:
-                default:
-                    serializerOptions.Converters.Add(new Rfc3339DateTimeConverter());
-                    serializerOptions.Converters.Add(new Rfc3339DateTimeOffsetConverter());
-                    break;
-            }
-
-            return serializerOptions;
+            _serializerOptions = DynamicDataOptions.ToSerializerOptions(options);
         }
 
         internal void WriteTo(Stream stream)
@@ -383,7 +347,7 @@ namespace Azure.Core.Dynamic
             public override DynamicData Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
                 JsonDocument document = JsonDocument.ParseValue(ref reader);
-                return new DynamicData(new MutableJsonDocument(document, options).RootElement, DynamicDataOptions.Default);
+                return new DynamicData(new MutableJsonDocument(document, options).RootElement, DynamicDataOptions.FromSerializerOptions(options));
             }
 
             public override void Write(Utf8JsonWriter writer, DynamicData value, JsonSerializerOptions options)
