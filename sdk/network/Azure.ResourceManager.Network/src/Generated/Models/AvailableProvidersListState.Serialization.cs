@@ -8,12 +8,13 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Network.Models
 {
     public partial class AvailableProvidersListState
     {
-        internal static AvailableProvidersListState DeserializeAvailableProvidersListState(JsonElement element)
+        internal static AvailableProvidersListState DeserializeAvailableProvidersListState(JsonElement element, Core.Serialization.SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

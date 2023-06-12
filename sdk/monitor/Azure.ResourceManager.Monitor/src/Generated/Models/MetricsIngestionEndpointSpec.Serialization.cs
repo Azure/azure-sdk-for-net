@@ -7,18 +7,21 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
-    internal partial class MetricsIngestionEndpointSpec : IUtf8JsonSerializable
+    internal partial class MetricsIngestionEndpointSpec : IUtf8JsonSerializable, Core.IModelSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((Core.IModelSerializable)this).Serialize(writer, new Core.Serialization.SerializableOptions());
+
+        void Core.IModelSerializable.Serialize(Utf8JsonWriter writer, Core.Serialization.SerializableOptions options)
         {
             writer.WriteStartObject();
             writer.WriteEndObject();
         }
 
-        internal static MetricsIngestionEndpointSpec DeserializeMetricsIngestionEndpointSpec(JsonElement element)
+        internal static MetricsIngestionEndpointSpec DeserializeMetricsIngestionEndpointSpec(JsonElement element, Core.Serialization.SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

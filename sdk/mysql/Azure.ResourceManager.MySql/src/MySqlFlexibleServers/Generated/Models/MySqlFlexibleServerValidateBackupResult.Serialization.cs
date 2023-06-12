@@ -7,12 +7,13 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.MySql.FlexibleServers.Models
 {
     public partial class MySqlFlexibleServerValidateBackupResult
     {
-        internal static MySqlFlexibleServerValidateBackupResult DeserializeMySqlFlexibleServerValidateBackupResult(JsonElement element)
+        internal static MySqlFlexibleServerValidateBackupResult DeserializeMySqlFlexibleServerValidateBackupResult(JsonElement element, Core.Serialization.SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

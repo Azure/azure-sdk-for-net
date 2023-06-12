@@ -7,10 +7,42 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.AI.MetricsAdvisor.Models
 {
-    internal partial class ChangeThresholdConditionPatch : IUtf8JsonSerializable
+    internal partial class ChangeThresholdConditionPatch : IUtf8JsonSerializable, Core.IModelSerializable
     {
+
+        void Core.IModelSerializable.Serialize(Utf8JsonWriter writer, Core.Serialization.SerializableOptions options)
+        {
+            writer.WriteStartObject();
+            if (Optional.IsDefined(ChangePercentage))
+            {
+                writer.WritePropertyName("changePercentage"u8);
+                writer.WriteNumberValue(ChangePercentage.Value);
+            }
+            if (Optional.IsDefined(ShiftPoint))
+            {
+                writer.WritePropertyName("shiftPoint"u8);
+                writer.WriteNumberValue(ShiftPoint.Value);
+            }
+            if (Optional.IsDefined(WithinRange))
+            {
+                writer.WritePropertyName("withinRange"u8);
+                writer.WriteBooleanValue(WithinRange.Value);
+            }
+            if (Optional.IsDefined(AnomalyDetectorDirection))
+            {
+                writer.WritePropertyName("anomalyDetectorDirection"u8);
+                writer.WriteStringValue(AnomalyDetectorDirection.Value.ToString());
+            }
+            if (Optional.IsDefined(SuppressCondition))
+            {
+                writer.WritePropertyName("suppressCondition"u8);
+                writer.WriteObjectValue(SuppressCondition);
+            }
+            writer.WriteEndObject();
+        }
     }
 }

@@ -7,11 +7,91 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.AI.OpenAI
 {
-    public partial class ChatCompletionsOptions : IUtf8JsonSerializable
+    public partial class ChatCompletionsOptions : IUtf8JsonSerializable, IModelSerializable
     {
+
+        void IModelSerializable.Serialize(Utf8JsonWriter writer, SerializableOptions options)
+        {
+            writer.WriteStartObject();
+            writer.WritePropertyName("messages"u8);
+            writer.WriteStartArray();
+            foreach (var item in Messages)
+            {
+                writer.WriteObjectValue(item);
+            }
+            writer.WriteEndArray();
+            if (Optional.IsDefined(MaxTokens))
+            {
+                writer.WritePropertyName("max_tokens"u8);
+                writer.WriteNumberValue(MaxTokens.Value);
+            }
+            if (Optional.IsDefined(Temperature))
+            {
+                writer.WritePropertyName("temperature"u8);
+                writer.WriteNumberValue(Temperature.Value);
+            }
+            if (Optional.IsDefined(NucleusSamplingFactor))
+            {
+                writer.WritePropertyName("top_p"u8);
+                writer.WriteNumberValue(NucleusSamplingFactor.Value);
+            }
+            if (Optional.IsCollectionDefined(InternalStringKeyedTokenSelectionBiases))
+            {
+                writer.WritePropertyName("logit_bias"u8);
+                writer.WriteStartObject();
+                foreach (var item in InternalStringKeyedTokenSelectionBiases)
+                {
+                    writer.WritePropertyName(item.Key);
+                    writer.WriteNumberValue(item.Value);
+                }
+                writer.WriteEndObject();
+            }
+            if (Optional.IsDefined(User))
+            {
+                writer.WritePropertyName("user"u8);
+                writer.WriteStringValue(User);
+            }
+            if (Optional.IsDefined(ChoiceCount))
+            {
+                writer.WritePropertyName("n"u8);
+                writer.WriteNumberValue(ChoiceCount.Value);
+            }
+            if (Optional.IsCollectionDefined(StopSequences))
+            {
+                writer.WritePropertyName("stop"u8);
+                writer.WriteStartArray();
+                foreach (var item in StopSequences)
+                {
+                    writer.WriteStringValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsDefined(PresencePenalty))
+            {
+                writer.WritePropertyName("presence_penalty"u8);
+                writer.WriteNumberValue(PresencePenalty.Value);
+            }
+            if (Optional.IsDefined(FrequencyPenalty))
+            {
+                writer.WritePropertyName("frequency_penalty"u8);
+                writer.WriteNumberValue(FrequencyPenalty.Value);
+            }
+            if (Optional.IsDefined(InternalShouldStreamResponse))
+            {
+                writer.WritePropertyName("stream"u8);
+                writer.WriteBooleanValue(InternalShouldStreamResponse.Value);
+            }
+            if (Optional.IsDefined(InternalNonAzureModelName))
+            {
+                writer.WritePropertyName("model"u8);
+                writer.WriteStringValue(InternalNonAzureModelName);
+            }
+            writer.WriteEndObject();
+        }
 
         /// <summary> Convert into a Utf8JsonRequestContent. </summary>
         internal virtual RequestContent ToRequestContent()

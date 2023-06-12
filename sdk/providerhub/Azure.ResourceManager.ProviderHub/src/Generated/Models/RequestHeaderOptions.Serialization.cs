@@ -7,12 +7,15 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.ProviderHub.Models
 {
-    internal partial class RequestHeaderOptions : IUtf8JsonSerializable
+    internal partial class RequestHeaderOptions : IUtf8JsonSerializable, Core.IModelSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((Core.IModelSerializable)this).Serialize(writer, new Core.Serialization.SerializableOptions());
+
+        void Core.IModelSerializable.Serialize(Utf8JsonWriter writer, Core.Serialization.SerializableOptions options)
         {
             writer.WriteStartObject();
             if (Optional.IsDefined(OptInHeaders))
@@ -23,7 +26,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
             writer.WriteEndObject();
         }
 
-        internal static RequestHeaderOptions DeserializeRequestHeaderOptions(JsonElement element)
+        internal static RequestHeaderOptions DeserializeRequestHeaderOptions(JsonElement element, Core.Serialization.SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

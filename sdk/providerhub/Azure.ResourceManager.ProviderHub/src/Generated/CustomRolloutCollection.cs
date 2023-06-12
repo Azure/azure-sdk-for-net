@@ -227,7 +227,7 @@ namespace Azure.ResourceManager.ProviderHub
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _customRolloutRestClient.CreateListByProviderRegistrationRequest(Id.SubscriptionId, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _customRolloutRestClient.CreateListByProviderRegistrationNextPageRequest(nextLink, Id.SubscriptionId, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new CustomRolloutResource(Client, CustomRolloutData.DeserializeCustomRolloutData(e)), _customRolloutClientDiagnostics, Pipeline, "CustomRolloutCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, (e, o) => new CustomRolloutResource(Client, CustomRolloutData.DeserializeCustomRolloutData(e)), _customRolloutClientDiagnostics, Pipeline, "CustomRolloutCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -249,7 +249,7 @@ namespace Azure.ResourceManager.ProviderHub
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _customRolloutRestClient.CreateListByProviderRegistrationRequest(Id.SubscriptionId, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _customRolloutRestClient.CreateListByProviderRegistrationNextPageRequest(nextLink, Id.SubscriptionId, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new CustomRolloutResource(Client, CustomRolloutData.DeserializeCustomRolloutData(e)), _customRolloutClientDiagnostics, Pipeline, "CustomRolloutCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, (e, o) => new CustomRolloutResource(Client, CustomRolloutData.DeserializeCustomRolloutData(e)), _customRolloutClientDiagnostics, Pipeline, "CustomRolloutCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

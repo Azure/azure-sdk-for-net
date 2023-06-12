@@ -8,13 +8,14 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.NetworkCloud;
 
 namespace Azure.ResourceManager.NetworkCloud.Models
 {
     internal partial class ClusterManagerList
     {
-        internal static ClusterManagerList DeserializeClusterManagerList(JsonElement element)
+        internal static ClusterManagerList DeserializeClusterManagerList(JsonElement element, Core.Serialization.SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

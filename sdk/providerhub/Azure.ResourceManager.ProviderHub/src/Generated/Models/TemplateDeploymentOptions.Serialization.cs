@@ -8,12 +8,15 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.ProviderHub.Models
 {
-    public partial class TemplateDeploymentOptions : IUtf8JsonSerializable
+    public partial class TemplateDeploymentOptions : IUtf8JsonSerializable, Core.IModelSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((Core.IModelSerializable)this).Serialize(writer, new Core.Serialization.SerializableOptions());
+
+        void Core.IModelSerializable.Serialize(Utf8JsonWriter writer, Core.Serialization.SerializableOptions options)
         {
             writer.WriteStartObject();
             if (Optional.IsDefined(IsPreflightSupported))
@@ -34,7 +37,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
             writer.WriteEndObject();
         }
 
-        internal static TemplateDeploymentOptions DeserializeTemplateDeploymentOptions(JsonElement element)
+        internal static TemplateDeploymentOptions DeserializeTemplateDeploymentOptions(JsonElement element, Core.Serialization.SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

@@ -9,14 +9,17 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.NetApp.Models;
 
 namespace Azure.ResourceManager.NetApp
 {
-    public partial class NetAppBackupPolicyData : IUtf8JsonSerializable
+    public partial class NetAppBackupPolicyData : IUtf8JsonSerializable, Core.IModelSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((Core.IModelSerializable)this).Serialize(writer, new Core.Serialization.SerializableOptions());
+
+        void Core.IModelSerializable.Serialize(Utf8JsonWriter writer, Core.Serialization.SerializableOptions options)
         {
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(Tags))
@@ -58,7 +61,7 @@ namespace Azure.ResourceManager.NetApp
             writer.WriteEndObject();
         }
 
-        internal static NetAppBackupPolicyData DeserializeNetAppBackupPolicyData(JsonElement element)
+        internal static NetAppBackupPolicyData DeserializeNetAppBackupPolicyData(JsonElement element, Core.Serialization.SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

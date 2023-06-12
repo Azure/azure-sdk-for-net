@@ -8,12 +8,13 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.NewRelicObservability.Models
 {
     public partial class NewRelicMetricsStatusResult
     {
-        internal static NewRelicMetricsStatusResult DeserializeNewRelicMetricsStatusResult(JsonElement element)
+        internal static NewRelicMetricsStatusResult DeserializeNewRelicMetricsStatusResult(JsonElement element, Core.Serialization.SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

@@ -228,7 +228,7 @@ namespace Azure.ResourceManager.NetworkCloud
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _clusterManagerRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _clusterManagerRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ClusterManagerResource(Client, ClusterManagerData.DeserializeClusterManagerData(e)), _clusterManagerClientDiagnostics, Pipeline, "ClusterManagerCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, (e, o) => new ClusterManagerResource(Client, ClusterManagerData.DeserializeClusterManagerData(e)), _clusterManagerClientDiagnostics, Pipeline, "ClusterManagerCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -250,7 +250,7 @@ namespace Azure.ResourceManager.NetworkCloud
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _clusterManagerRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _clusterManagerRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ClusterManagerResource(Client, ClusterManagerData.DeserializeClusterManagerData(e)), _clusterManagerClientDiagnostics, Pipeline, "ClusterManagerCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, (e, o) => new ClusterManagerResource(Client, ClusterManagerData.DeserializeClusterManagerData(e)), _clusterManagerClientDiagnostics, Pipeline, "ClusterManagerCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

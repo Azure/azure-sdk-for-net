@@ -228,7 +228,7 @@ namespace Azure.ResourceManager.NetworkCloud
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _trunkedNetworkRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _trunkedNetworkRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new TrunkedNetworkResource(Client, TrunkedNetworkData.DeserializeTrunkedNetworkData(e)), _trunkedNetworkClientDiagnostics, Pipeline, "TrunkedNetworkCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, (e, o) => new TrunkedNetworkResource(Client, TrunkedNetworkData.DeserializeTrunkedNetworkData(e)), _trunkedNetworkClientDiagnostics, Pipeline, "TrunkedNetworkCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -250,7 +250,7 @@ namespace Azure.ResourceManager.NetworkCloud
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _trunkedNetworkRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _trunkedNetworkRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new TrunkedNetworkResource(Client, TrunkedNetworkData.DeserializeTrunkedNetworkData(e)), _trunkedNetworkClientDiagnostics, Pipeline, "TrunkedNetworkCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, (e, o) => new TrunkedNetworkResource(Client, TrunkedNetworkData.DeserializeTrunkedNetworkData(e)), _trunkedNetworkClientDiagnostics, Pipeline, "TrunkedNetworkCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

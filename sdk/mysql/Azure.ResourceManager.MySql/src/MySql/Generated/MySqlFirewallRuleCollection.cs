@@ -226,7 +226,7 @@ namespace Azure.ResourceManager.MySql
         public virtual AsyncPageable<MySqlFirewallRuleResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _mySqlFirewallRuleFirewallRulesRestClient.CreateListByServerRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new MySqlFirewallRuleResource(Client, MySqlFirewallRuleData.DeserializeMySqlFirewallRuleData(e)), _mySqlFirewallRuleFirewallRulesClientDiagnostics, Pipeline, "MySqlFirewallRuleCollection.GetAll", "value", null, cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, (e, o) => new MySqlFirewallRuleResource(Client, MySqlFirewallRuleData.DeserializeMySqlFirewallRuleData(e)), _mySqlFirewallRuleFirewallRulesClientDiagnostics, Pipeline, "MySqlFirewallRuleCollection.GetAll", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -247,7 +247,7 @@ namespace Azure.ResourceManager.MySql
         public virtual Pageable<MySqlFirewallRuleResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _mySqlFirewallRuleFirewallRulesRestClient.CreateListByServerRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, null, e => new MySqlFirewallRuleResource(Client, MySqlFirewallRuleData.DeserializeMySqlFirewallRuleData(e)), _mySqlFirewallRuleFirewallRulesClientDiagnostics, Pipeline, "MySqlFirewallRuleCollection.GetAll", "value", null, cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, null, (e, o) => new MySqlFirewallRuleResource(Client, MySqlFirewallRuleData.DeserializeMySqlFirewallRuleData(e)), _mySqlFirewallRuleFirewallRulesClientDiagnostics, Pipeline, "MySqlFirewallRuleCollection.GetAll", "value", null, cancellationToken);
         }
 
         /// <summary>

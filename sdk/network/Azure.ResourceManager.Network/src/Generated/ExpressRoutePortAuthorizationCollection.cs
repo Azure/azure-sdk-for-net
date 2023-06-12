@@ -227,7 +227,7 @@ namespace Azure.ResourceManager.Network
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _expressRoutePortAuthorizationRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _expressRoutePortAuthorizationRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ExpressRoutePortAuthorizationResource(Client, ExpressRoutePortAuthorizationData.DeserializeExpressRoutePortAuthorizationData(e)), _expressRoutePortAuthorizationClientDiagnostics, Pipeline, "ExpressRoutePortAuthorizationCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, (e, o) => new ExpressRoutePortAuthorizationResource(Client, ExpressRoutePortAuthorizationData.DeserializeExpressRoutePortAuthorizationData(e)), _expressRoutePortAuthorizationClientDiagnostics, Pipeline, "ExpressRoutePortAuthorizationCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -249,7 +249,7 @@ namespace Azure.ResourceManager.Network
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _expressRoutePortAuthorizationRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _expressRoutePortAuthorizationRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ExpressRoutePortAuthorizationResource(Client, ExpressRoutePortAuthorizationData.DeserializeExpressRoutePortAuthorizationData(e)), _expressRoutePortAuthorizationClientDiagnostics, Pipeline, "ExpressRoutePortAuthorizationCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, (e, o) => new ExpressRoutePortAuthorizationResource(Client, ExpressRoutePortAuthorizationData.DeserializeExpressRoutePortAuthorizationData(e)), _expressRoutePortAuthorizationClientDiagnostics, Pipeline, "ExpressRoutePortAuthorizationCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

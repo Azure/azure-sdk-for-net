@@ -7,12 +7,13 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.NewRelicObservability.Models
 {
     public partial class NewRelicObservabilityAppServiceInfo
     {
-        internal static NewRelicObservabilityAppServiceInfo DeserializeNewRelicObservabilityAppServiceInfo(JsonElement element)
+        internal static NewRelicObservabilityAppServiceInfo DeserializeNewRelicObservabilityAppServiceInfo(JsonElement element, Core.Serialization.SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

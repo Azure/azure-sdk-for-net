@@ -7,12 +7,13 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.NetworkCloud.Models
 {
     public partial class HardwareInventoryNetworkInterface
     {
-        internal static HardwareInventoryNetworkInterface DeserializeHardwareInventoryNetworkInterface(JsonElement element)
+        internal static HardwareInventoryNetworkInterface DeserializeHardwareInventoryNetworkInterface(JsonElement element, Core.Serialization.SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

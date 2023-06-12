@@ -227,7 +227,7 @@ namespace Azure.ResourceManager.NetworkCloud
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _bareMetalMachineKeySetRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _bareMetalMachineKeySetRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new BareMetalMachineKeySetResource(Client, BareMetalMachineKeySetData.DeserializeBareMetalMachineKeySetData(e)), _bareMetalMachineKeySetClientDiagnostics, Pipeline, "BareMetalMachineKeySetCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, (e, o) => new BareMetalMachineKeySetResource(Client, BareMetalMachineKeySetData.DeserializeBareMetalMachineKeySetData(e)), _bareMetalMachineKeySetClientDiagnostics, Pipeline, "BareMetalMachineKeySetCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -249,7 +249,7 @@ namespace Azure.ResourceManager.NetworkCloud
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _bareMetalMachineKeySetRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _bareMetalMachineKeySetRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new BareMetalMachineKeySetResource(Client, BareMetalMachineKeySetData.DeserializeBareMetalMachineKeySetData(e)), _bareMetalMachineKeySetClientDiagnostics, Pipeline, "BareMetalMachineKeySetCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, (e, o) => new BareMetalMachineKeySetResource(Client, BareMetalMachineKeySetData.DeserializeBareMetalMachineKeySetData(e)), _bareMetalMachineKeySetClientDiagnostics, Pipeline, "BareMetalMachineKeySetCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

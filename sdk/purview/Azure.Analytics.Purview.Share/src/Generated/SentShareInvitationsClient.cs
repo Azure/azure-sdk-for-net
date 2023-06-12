@@ -312,7 +312,7 @@ namespace Azure.Analytics.Purview.Share
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetSentShareInvitationsRequest(sentShareName, skipToken, filter, orderby, context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetSentShareInvitationsNextPageRequest(nextLink, sentShareName, skipToken, filter, orderby, context);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "SentShareInvitationsClient.GetSentShareInvitations", "value", "nextLink", context);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, (e, o) => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "SentShareInvitationsClient.GetSentShareInvitations", "value", "nextLink", context);
         }
 
         /// <summary>
@@ -341,7 +341,7 @@ namespace Azure.Analytics.Purview.Share
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetSentShareInvitationsRequest(sentShareName, skipToken, filter, orderby, context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetSentShareInvitationsNextPageRequest(nextLink, sentShareName, skipToken, filter, orderby, context);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "SentShareInvitationsClient.GetSentShareInvitations", "value", "nextLink", context);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, (e, o) => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "SentShareInvitationsClient.GetSentShareInvitations", "value", "nextLink", context);
         }
 
         internal HttpMessage CreateGetSentShareInvitationsRequest(string sentShareName, string skipToken, string filter, string orderby, RequestContext context)

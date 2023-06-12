@@ -8,13 +8,14 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.NetworkCloud;
 
 namespace Azure.ResourceManager.NetworkCloud.Models
 {
     internal partial class BareMetalMachineList
     {
-        internal static BareMetalMachineList DeserializeBareMetalMachineList(JsonElement element)
+        internal static BareMetalMachineList DeserializeBareMetalMachineList(JsonElement element, Core.Serialization.SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

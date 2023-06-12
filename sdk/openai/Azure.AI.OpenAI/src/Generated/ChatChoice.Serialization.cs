@@ -8,12 +8,13 @@
 using System.Text.Json;
 using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.AI.OpenAI
 {
     public partial class ChatChoice
     {
-        internal static ChatChoice DeserializeChatChoice(JsonElement element)
+        internal static ChatChoice DeserializeChatChoice(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

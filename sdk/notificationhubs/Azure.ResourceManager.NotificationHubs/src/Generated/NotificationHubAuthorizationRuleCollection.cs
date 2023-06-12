@@ -228,7 +228,7 @@ namespace Azure.ResourceManager.NotificationHubs
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _notificationHubAuthorizationRuleNotificationHubsRestClient.CreateListAuthorizationRulesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _notificationHubAuthorizationRuleNotificationHubsRestClient.CreateListAuthorizationRulesNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new NotificationHubAuthorizationRuleResource(Client, NotificationHubAuthorizationRuleData.DeserializeNotificationHubAuthorizationRuleData(e)), _notificationHubAuthorizationRuleNotificationHubsClientDiagnostics, Pipeline, "NotificationHubAuthorizationRuleCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, (e, o) => new NotificationHubAuthorizationRuleResource(Client, NotificationHubAuthorizationRuleData.DeserializeNotificationHubAuthorizationRuleData(e)), _notificationHubAuthorizationRuleNotificationHubsClientDiagnostics, Pipeline, "NotificationHubAuthorizationRuleCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -250,7 +250,7 @@ namespace Azure.ResourceManager.NotificationHubs
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _notificationHubAuthorizationRuleNotificationHubsRestClient.CreateListAuthorizationRulesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _notificationHubAuthorizationRuleNotificationHubsRestClient.CreateListAuthorizationRulesNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new NotificationHubAuthorizationRuleResource(Client, NotificationHubAuthorizationRuleData.DeserializeNotificationHubAuthorizationRuleData(e)), _notificationHubAuthorizationRuleNotificationHubsClientDiagnostics, Pipeline, "NotificationHubAuthorizationRuleCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, (e, o) => new NotificationHubAuthorizationRuleResource(Client, NotificationHubAuthorizationRuleData.DeserializeNotificationHubAuthorizationRuleData(e)), _notificationHubAuthorizationRuleNotificationHubsClientDiagnostics, Pipeline, "NotificationHubAuthorizationRuleCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

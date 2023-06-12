@@ -9,14 +9,17 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Monitor.Models;
 
 namespace Azure.ResourceManager.Monitor
 {
-    public partial class MonitorWorkspaceResourceData : IUtf8JsonSerializable
+    public partial class MonitorWorkspaceResourceData : IUtf8JsonSerializable, Core.IModelSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((Core.IModelSerializable)this).Serialize(writer, new Core.Serialization.SerializableOptions());
+
+        void Core.IModelSerializable.Serialize(Utf8JsonWriter writer, Core.Serialization.SerializableOptions options)
         {
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(Tags))
@@ -38,7 +41,7 @@ namespace Azure.ResourceManager.Monitor
             writer.WriteEndObject();
         }
 
-        internal static MonitorWorkspaceResourceData DeserializeMonitorWorkspaceResourceData(JsonElement element)
+        internal static MonitorWorkspaceResourceData DeserializeMonitorWorkspaceResourceData(JsonElement element, Core.Serialization.SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

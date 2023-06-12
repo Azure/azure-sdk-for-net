@@ -7,12 +7,13 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.NetworkCloud.Models
 {
     public partial class ClusterAvailableVersion
     {
-        internal static ClusterAvailableVersion DeserializeClusterAvailableVersion(JsonElement element)
+        internal static ClusterAvailableVersion DeserializeClusterAvailableVersion(JsonElement element, Core.Serialization.SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

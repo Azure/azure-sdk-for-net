@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.MySql
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => _mySqlQueryTextQueryTextsRestClient.CreateListByServerRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, queryIds);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _mySqlQueryTextQueryTextsRestClient.CreateListByServerNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, queryIds);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new MySqlQueryTextResource(Client, MySqlQueryTextData.DeserializeMySqlQueryTextData(e)), _mySqlQueryTextQueryTextsClientDiagnostics, Pipeline, "MySqlQueryTextCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, (e, o) => new MySqlQueryTextResource(Client, MySqlQueryTextData.DeserializeMySqlQueryTextData(e)), _mySqlQueryTextQueryTextsClientDiagnostics, Pipeline, "MySqlQueryTextCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -174,7 +174,7 @@ namespace Azure.ResourceManager.MySql
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => _mySqlQueryTextQueryTextsRestClient.CreateListByServerRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, queryIds);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _mySqlQueryTextQueryTextsRestClient.CreateListByServerNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, queryIds);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new MySqlQueryTextResource(Client, MySqlQueryTextData.DeserializeMySqlQueryTextData(e)), _mySqlQueryTextQueryTextsClientDiagnostics, Pipeline, "MySqlQueryTextCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, (e, o) => new MySqlQueryTextResource(Client, MySqlQueryTextData.DeserializeMySqlQueryTextData(e)), _mySqlQueryTextQueryTextsClientDiagnostics, Pipeline, "MySqlQueryTextCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

@@ -232,7 +232,7 @@ namespace Azure.ResourceManager.PrivateDns
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _virtualNetworkLinkRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, top);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _virtualNetworkLinkRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, top);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new VirtualNetworkLinkResource(Client, VirtualNetworkLinkData.DeserializeVirtualNetworkLinkData(e)), _virtualNetworkLinkClientDiagnostics, Pipeline, "VirtualNetworkLinkCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, (e, o) => new VirtualNetworkLinkResource(Client, VirtualNetworkLinkData.DeserializeVirtualNetworkLinkData(e)), _virtualNetworkLinkClientDiagnostics, Pipeline, "VirtualNetworkLinkCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -255,7 +255,7 @@ namespace Azure.ResourceManager.PrivateDns
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _virtualNetworkLinkRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, top);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _virtualNetworkLinkRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, top);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new VirtualNetworkLinkResource(Client, VirtualNetworkLinkData.DeserializeVirtualNetworkLinkData(e)), _virtualNetworkLinkClientDiagnostics, Pipeline, "VirtualNetworkLinkCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, (e, o) => new VirtualNetworkLinkResource(Client, VirtualNetworkLinkData.DeserializeVirtualNetworkLinkData(e)), _virtualNetworkLinkClientDiagnostics, Pipeline, "VirtualNetworkLinkCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

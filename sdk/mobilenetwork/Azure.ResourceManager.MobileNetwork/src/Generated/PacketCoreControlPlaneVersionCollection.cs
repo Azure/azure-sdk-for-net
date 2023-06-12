@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.MobileNetwork
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _packetCoreControlPlaneVersionRestClient.CreateListRequest();
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _packetCoreControlPlaneVersionRestClient.CreateListNextPageRequest(nextLink);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new PacketCoreControlPlaneVersionResource(Client, PacketCoreControlPlaneVersionData.DeserializePacketCoreControlPlaneVersionData(e)), _packetCoreControlPlaneVersionClientDiagnostics, Pipeline, "PacketCoreControlPlaneVersionCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, (e, o) => new PacketCoreControlPlaneVersionResource(Client, PacketCoreControlPlaneVersionData.DeserializePacketCoreControlPlaneVersionData(e)), _packetCoreControlPlaneVersionClientDiagnostics, Pipeline, "PacketCoreControlPlaneVersionCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -168,7 +168,7 @@ namespace Azure.ResourceManager.MobileNetwork
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _packetCoreControlPlaneVersionRestClient.CreateListRequest();
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _packetCoreControlPlaneVersionRestClient.CreateListNextPageRequest(nextLink);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new PacketCoreControlPlaneVersionResource(Client, PacketCoreControlPlaneVersionData.DeserializePacketCoreControlPlaneVersionData(e)), _packetCoreControlPlaneVersionClientDiagnostics, Pipeline, "PacketCoreControlPlaneVersionCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, (e, o) => new PacketCoreControlPlaneVersionResource(Client, PacketCoreControlPlaneVersionData.DeserializePacketCoreControlPlaneVersionData(e)), _packetCoreControlPlaneVersionClientDiagnostics, Pipeline, "PacketCoreControlPlaneVersionCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

@@ -228,7 +228,7 @@ namespace Azure.ResourceManager.Peering
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _peerAsnRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _peerAsnRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new PeerAsnResource(Client, PeerAsnData.DeserializePeerAsnData(e)), _peerAsnClientDiagnostics, Pipeline, "PeerAsnCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, (e, o) => new PeerAsnResource(Client, PeerAsnData.DeserializePeerAsnData(e)), _peerAsnClientDiagnostics, Pipeline, "PeerAsnCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -250,7 +250,7 @@ namespace Azure.ResourceManager.Peering
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _peerAsnRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _peerAsnRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new PeerAsnResource(Client, PeerAsnData.DeserializePeerAsnData(e)), _peerAsnClientDiagnostics, Pipeline, "PeerAsnCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, (e, o) => new PeerAsnResource(Client, PeerAsnData.DeserializePeerAsnData(e)), _peerAsnClientDiagnostics, Pipeline, "PeerAsnCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

@@ -8,14 +8,17 @@
 using System;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.MySql.Models;
 
 namespace Azure.ResourceManager.MySql
 {
-    public partial class MySqlServerKeyData : IUtf8JsonSerializable
+    public partial class MySqlServerKeyData : IUtf8JsonSerializable, Core.IModelSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((Core.IModelSerializable)this).Serialize(writer, new Core.Serialization.SerializableOptions());
+
+        void Core.IModelSerializable.Serialize(Utf8JsonWriter writer, Core.Serialization.SerializableOptions options)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
@@ -34,7 +37,7 @@ namespace Azure.ResourceManager.MySql
             writer.WriteEndObject();
         }
 
-        internal static MySqlServerKeyData DeserializeMySqlServerKeyData(JsonElement element)
+        internal static MySqlServerKeyData DeserializeMySqlServerKeyData(JsonElement element, Core.Serialization.SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

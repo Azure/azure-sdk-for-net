@@ -7,12 +7,15 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.MySql.FlexibleServers.Models
 {
-    public partial class MySqlFlexibleServerStorage : IUtf8JsonSerializable
+    public partial class MySqlFlexibleServerStorage : IUtf8JsonSerializable, Core.IModelSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((Core.IModelSerializable)this).Serialize(writer, new Core.Serialization.SerializableOptions());
+
+        void Core.IModelSerializable.Serialize(Utf8JsonWriter writer, Core.Serialization.SerializableOptions options)
         {
             writer.WriteStartObject();
             if (Optional.IsDefined(StorageSizeInGB))
@@ -43,7 +46,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
             writer.WriteEndObject();
         }
 
-        internal static MySqlFlexibleServerStorage DeserializeMySqlFlexibleServerStorage(JsonElement element)
+        internal static MySqlFlexibleServerStorage DeserializeMySqlFlexibleServerStorage(JsonElement element, Core.Serialization.SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

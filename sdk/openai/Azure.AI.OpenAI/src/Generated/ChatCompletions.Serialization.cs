@@ -9,12 +9,13 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.AI.OpenAI
 {
     public partial class ChatCompletions
     {
-        internal static ChatCompletions DeserializeChatCompletions(JsonElement element)
+        internal static ChatCompletions DeserializeChatCompletions(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

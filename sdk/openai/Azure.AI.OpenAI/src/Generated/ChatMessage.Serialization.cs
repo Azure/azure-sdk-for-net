@@ -8,12 +8,15 @@
 using System.Text.Json;
 using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.AI.OpenAI
 {
-    public partial class ChatMessage : IUtf8JsonSerializable
+    public partial class ChatMessage : IUtf8JsonSerializable, IModelSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelSerializable)this).Serialize(writer, new SerializableOptions());
+
+        void IModelSerializable.Serialize(Utf8JsonWriter writer, SerializableOptions options)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("role"u8);
@@ -26,7 +29,7 @@ namespace Azure.AI.OpenAI
             writer.WriteEndObject();
         }
 
-        internal static ChatMessage DeserializeChatMessage(JsonElement element)
+        internal static ChatMessage DeserializeChatMessage(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

@@ -9,12 +9,13 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.AI.OpenAI
 {
     public partial class CompletionsLogProbabilityModel
     {
-        internal static CompletionsLogProbabilityModel DeserializeCompletionsLogProbabilityModel(JsonElement element)
+        internal static CompletionsLogProbabilityModel DeserializeCompletionsLogProbabilityModel(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

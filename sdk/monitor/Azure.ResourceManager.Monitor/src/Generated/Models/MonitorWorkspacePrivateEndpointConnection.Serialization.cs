@@ -8,6 +8,7 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Resources.Models;
 
@@ -15,7 +16,7 @@ namespace Azure.ResourceManager.Monitor.Models
 {
     public partial class MonitorWorkspacePrivateEndpointConnection
     {
-        internal static MonitorWorkspacePrivateEndpointConnection DeserializeMonitorWorkspacePrivateEndpointConnection(JsonElement element)
+        internal static MonitorWorkspacePrivateEndpointConnection DeserializeMonitorWorkspacePrivateEndpointConnection(JsonElement element, Core.Serialization.SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

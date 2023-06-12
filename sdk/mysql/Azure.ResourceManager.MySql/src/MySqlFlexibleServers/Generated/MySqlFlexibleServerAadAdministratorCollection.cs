@@ -216,7 +216,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _mySqlFlexibleServerAadAdministratorAzureADAdministratorsRestClient.CreateListByServerRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _mySqlFlexibleServerAadAdministratorAzureADAdministratorsRestClient.CreateListByServerNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new MySqlFlexibleServerAadAdministratorResource(Client, MySqlFlexibleServerAadAdministratorData.DeserializeMySqlFlexibleServerAadAdministratorData(e)), _mySqlFlexibleServerAadAdministratorAzureADAdministratorsClientDiagnostics, Pipeline, "MySqlFlexibleServerAadAdministratorCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, (e, o) => new MySqlFlexibleServerAadAdministratorResource(Client, MySqlFlexibleServerAadAdministratorData.DeserializeMySqlFlexibleServerAadAdministratorData(e)), _mySqlFlexibleServerAadAdministratorAzureADAdministratorsClientDiagnostics, Pipeline, "MySqlFlexibleServerAadAdministratorCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -238,7 +238,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _mySqlFlexibleServerAadAdministratorAzureADAdministratorsRestClient.CreateListByServerRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _mySqlFlexibleServerAadAdministratorAzureADAdministratorsRestClient.CreateListByServerNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new MySqlFlexibleServerAadAdministratorResource(Client, MySqlFlexibleServerAadAdministratorData.DeserializeMySqlFlexibleServerAadAdministratorData(e)), _mySqlFlexibleServerAadAdministratorAzureADAdministratorsClientDiagnostics, Pipeline, "MySqlFlexibleServerAadAdministratorCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, (e, o) => new MySqlFlexibleServerAadAdministratorResource(Client, MySqlFlexibleServerAadAdministratorData.DeserializeMySqlFlexibleServerAadAdministratorData(e)), _mySqlFlexibleServerAadAdministratorAzureADAdministratorsClientDiagnostics, Pipeline, "MySqlFlexibleServerAadAdministratorCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

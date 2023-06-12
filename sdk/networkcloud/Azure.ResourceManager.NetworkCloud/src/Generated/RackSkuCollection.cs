@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.NetworkCloud
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _rackSkuRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _rackSkuRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new RackSkuResource(Client, RackSkuData.DeserializeRackSkuData(e)), _rackSkuClientDiagnostics, Pipeline, "RackSkuCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, (e, o) => new RackSkuResource(Client, RackSkuData.DeserializeRackSkuData(e)), _rackSkuClientDiagnostics, Pipeline, "RackSkuCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -168,7 +168,7 @@ namespace Azure.ResourceManager.NetworkCloud
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _rackSkuRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _rackSkuRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new RackSkuResource(Client, RackSkuData.DeserializeRackSkuData(e)), _rackSkuClientDiagnostics, Pipeline, "RackSkuCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, (e, o) => new RackSkuResource(Client, RackSkuData.DeserializeRackSkuData(e)), _rackSkuClientDiagnostics, Pipeline, "RackSkuCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

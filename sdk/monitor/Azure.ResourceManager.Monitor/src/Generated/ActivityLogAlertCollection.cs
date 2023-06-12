@@ -228,7 +228,7 @@ namespace Azure.ResourceManager.Monitor
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _activityLogAlertRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _activityLogAlertRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ActivityLogAlertResource(Client, ActivityLogAlertData.DeserializeActivityLogAlertData(e)), _activityLogAlertClientDiagnostics, Pipeline, "ActivityLogAlertCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, (e, o) => new ActivityLogAlertResource(Client, ActivityLogAlertData.DeserializeActivityLogAlertData(e)), _activityLogAlertClientDiagnostics, Pipeline, "ActivityLogAlertCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -250,7 +250,7 @@ namespace Azure.ResourceManager.Monitor
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _activityLogAlertRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _activityLogAlertRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ActivityLogAlertResource(Client, ActivityLogAlertData.DeserializeActivityLogAlertData(e)), _activityLogAlertClientDiagnostics, Pipeline, "ActivityLogAlertCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, (e, o) => new ActivityLogAlertResource(Client, ActivityLogAlertData.DeserializeActivityLogAlertData(e)), _activityLogAlertClientDiagnostics, Pipeline, "ActivityLogAlertCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

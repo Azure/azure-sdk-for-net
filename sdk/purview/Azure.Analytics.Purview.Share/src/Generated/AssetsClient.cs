@@ -160,7 +160,7 @@ namespace Azure.Analytics.Purview.Share
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetAssetsRequest(sentShareName, skipToken, filter, orderby, context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetAssetsNextPageRequest(nextLink, sentShareName, skipToken, filter, orderby, context);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "AssetsClient.GetAssets", "value", "nextLink", context);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, (e, o) => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "AssetsClient.GetAssets", "value", "nextLink", context);
         }
 
         /// <summary>
@@ -189,7 +189,7 @@ namespace Azure.Analytics.Purview.Share
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetAssetsRequest(sentShareName, skipToken, filter, orderby, context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetAssetsNextPageRequest(nextLink, sentShareName, skipToken, filter, orderby, context);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "AssetsClient.GetAssets", "value", "nextLink", context);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, (e, o) => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "AssetsClient.GetAssets", "value", "nextLink", context);
         }
 
         /// <summary>

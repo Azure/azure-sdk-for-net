@@ -8,12 +8,13 @@
 using System;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.NetworkCloud.Models
 {
     public partial class HardwareValidationStatus
     {
-        internal static HardwareValidationStatus DeserializeHardwareValidationStatus(JsonElement element)
+        internal static HardwareValidationStatus DeserializeHardwareValidationStatus(JsonElement element, Core.Serialization.SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

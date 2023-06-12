@@ -8,12 +8,13 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.NetworkCloud.Models
 {
     public partial class MachineSkuSlot
     {
-        internal static MachineSkuSlot DeserializeMachineSkuSlot(JsonElement element)
+        internal static MachineSkuSlot DeserializeMachineSkuSlot(JsonElement element, Core.Serialization.SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

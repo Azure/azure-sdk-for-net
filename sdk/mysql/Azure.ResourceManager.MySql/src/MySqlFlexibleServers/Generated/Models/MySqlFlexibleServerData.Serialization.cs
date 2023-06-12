@@ -9,14 +9,17 @@ using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.MySql.FlexibleServers.Models;
 
 namespace Azure.ResourceManager.MySql.FlexibleServers
 {
-    public partial class MySqlFlexibleServerData : IUtf8JsonSerializable
+    public partial class MySqlFlexibleServerData : IUtf8JsonSerializable, Core.IModelSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((Core.IModelSerializable)this).Serialize(writer, new Core.Serialization.SerializableOptions());
+
+        void Core.IModelSerializable.Serialize(Utf8JsonWriter writer, Core.Serialization.SerializableOptions options)
         {
             writer.WriteStartObject();
             if (Optional.IsDefined(Identity))
@@ -118,7 +121,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
             writer.WriteEndObject();
         }
 
-        internal static MySqlFlexibleServerData DeserializeMySqlFlexibleServerData(JsonElement element)
+        internal static MySqlFlexibleServerData DeserializeMySqlFlexibleServerData(JsonElement element, Core.Serialization.SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

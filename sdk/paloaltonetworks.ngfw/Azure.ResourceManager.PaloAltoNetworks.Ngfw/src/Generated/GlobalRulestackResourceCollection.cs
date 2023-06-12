@@ -228,7 +228,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _globalRulestackResourceGlobalRulestackRestClient.CreateListRequest();
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _globalRulestackResourceGlobalRulestackRestClient.CreateListNextPageRequest(nextLink);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new GlobalRulestackResource(Client, GlobalRulestackResourceData.DeserializeGlobalRulestackResourceData(e)), _globalRulestackResourceGlobalRulestackClientDiagnostics, Pipeline, "GlobalRulestackResourceCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, (e, o) => new GlobalRulestackResource(Client, GlobalRulestackResourceData.DeserializeGlobalRulestackResourceData(e)), _globalRulestackResourceGlobalRulestackClientDiagnostics, Pipeline, "GlobalRulestackResourceCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -250,7 +250,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _globalRulestackResourceGlobalRulestackRestClient.CreateListRequest();
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _globalRulestackResourceGlobalRulestackRestClient.CreateListNextPageRequest(nextLink);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new GlobalRulestackResource(Client, GlobalRulestackResourceData.DeserializeGlobalRulestackResourceData(e)), _globalRulestackResourceGlobalRulestackClientDiagnostics, Pipeline, "GlobalRulestackResourceCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, (e, o) => new GlobalRulestackResource(Client, GlobalRulestackResourceData.DeserializeGlobalRulestackResourceData(e)), _globalRulestackResourceGlobalRulestackClientDiagnostics, Pipeline, "GlobalRulestackResourceCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.NetworkCloud
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _storageApplianceRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _storageApplianceRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new StorageApplianceResource(Client, StorageApplianceData.DeserializeStorageApplianceData(e)), _storageApplianceClientDiagnostics, Pipeline, "StorageApplianceCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, (e, o) => new StorageApplianceResource(Client, StorageApplianceData.DeserializeStorageApplianceData(e)), _storageApplianceClientDiagnostics, Pipeline, "StorageApplianceCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -168,7 +168,7 @@ namespace Azure.ResourceManager.NetworkCloud
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _storageApplianceRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _storageApplianceRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new StorageApplianceResource(Client, StorageApplianceData.DeserializeStorageApplianceData(e)), _storageApplianceClientDiagnostics, Pipeline, "StorageApplianceCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, (e, o) => new StorageApplianceResource(Client, StorageApplianceData.DeserializeStorageApplianceData(e)), _storageApplianceClientDiagnostics, Pipeline, "StorageApplianceCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

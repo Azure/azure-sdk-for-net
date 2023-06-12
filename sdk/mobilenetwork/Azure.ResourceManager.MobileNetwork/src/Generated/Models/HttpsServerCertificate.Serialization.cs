@@ -8,12 +8,15 @@
 using System;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.MobileNetwork.Models
 {
-    public partial class HttpsServerCertificate : IUtf8JsonSerializable
+    public partial class HttpsServerCertificate : IUtf8JsonSerializable, Core.IModelSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((Core.IModelSerializable)this).Serialize(writer, new Core.Serialization.SerializableOptions());
+
+        void Core.IModelSerializable.Serialize(Utf8JsonWriter writer, Core.Serialization.SerializableOptions options)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("certificateUrl"u8);
@@ -21,7 +24,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
             writer.WriteEndObject();
         }
 
-        internal static HttpsServerCertificate DeserializeHttpsServerCertificate(JsonElement element)
+        internal static HttpsServerCertificate DeserializeHttpsServerCertificate(JsonElement element, Core.Serialization.SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

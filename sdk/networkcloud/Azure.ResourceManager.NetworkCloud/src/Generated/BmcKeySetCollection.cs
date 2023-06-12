@@ -227,7 +227,7 @@ namespace Azure.ResourceManager.NetworkCloud
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _bmcKeySetRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _bmcKeySetRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new BmcKeySetResource(Client, BmcKeySetData.DeserializeBmcKeySetData(e)), _bmcKeySetClientDiagnostics, Pipeline, "BmcKeySetCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, (e, o) => new BmcKeySetResource(Client, BmcKeySetData.DeserializeBmcKeySetData(e)), _bmcKeySetClientDiagnostics, Pipeline, "BmcKeySetCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -249,7 +249,7 @@ namespace Azure.ResourceManager.NetworkCloud
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _bmcKeySetRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _bmcKeySetRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new BmcKeySetResource(Client, BmcKeySetData.DeserializeBmcKeySetData(e)), _bmcKeySetClientDiagnostics, Pipeline, "BmcKeySetCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, (e, o) => new BmcKeySetResource(Client, BmcKeySetData.DeserializeBmcKeySetData(e)), _bmcKeySetClientDiagnostics, Pipeline, "BmcKeySetCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

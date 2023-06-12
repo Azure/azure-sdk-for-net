@@ -7,12 +7,13 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.NetworkCloud.Models
 {
     public partial class StorageApplianceSkuSlot
     {
-        internal static StorageApplianceSkuSlot DeserializeStorageApplianceSkuSlot(JsonElement element)
+        internal static StorageApplianceSkuSlot DeserializeStorageApplianceSkuSlot(JsonElement element, Core.Serialization.SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

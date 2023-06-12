@@ -145,7 +145,7 @@ namespace Azure.ResourceManager.Network
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _vpnSiteLinkRestClient.CreateListByVpnSiteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _vpnSiteLinkRestClient.CreateListByVpnSiteNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new VpnSiteLinkResource(Client, VpnSiteLinkData.DeserializeVpnSiteLinkData(e)), _vpnSiteLinkClientDiagnostics, Pipeline, "VpnSiteLinkCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, (e, o) => new VpnSiteLinkResource(Client, VpnSiteLinkData.DeserializeVpnSiteLinkData(e)), _vpnSiteLinkClientDiagnostics, Pipeline, "VpnSiteLinkCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -167,7 +167,7 @@ namespace Azure.ResourceManager.Network
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _vpnSiteLinkRestClient.CreateListByVpnSiteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _vpnSiteLinkRestClient.CreateListByVpnSiteNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new VpnSiteLinkResource(Client, VpnSiteLinkData.DeserializeVpnSiteLinkData(e)), _vpnSiteLinkClientDiagnostics, Pipeline, "VpnSiteLinkCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, (e, o) => new VpnSiteLinkResource(Client, VpnSiteLinkData.DeserializeVpnSiteLinkData(e)), _vpnSiteLinkClientDiagnostics, Pipeline, "VpnSiteLinkCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

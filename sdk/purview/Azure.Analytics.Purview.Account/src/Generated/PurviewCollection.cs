@@ -319,7 +319,7 @@ namespace Azure.Analytics.Purview.Account
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetChildCollectionNamesRequest(skipToken, context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetChildCollectionNamesNextPageRequest(nextLink, skipToken, context);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "PurviewCollection.GetChildCollectionNames", "value", "nextLink", context);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, (e, o) => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "PurviewCollection.GetChildCollectionNames", "value", "nextLink", context);
         }
 
         /// <summary>
@@ -341,7 +341,7 @@ namespace Azure.Analytics.Purview.Account
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetChildCollectionNamesRequest(skipToken, context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetChildCollectionNamesNextPageRequest(nextLink, skipToken, context);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "PurviewCollection.GetChildCollectionNames", "value", "nextLink", context);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, (e, o) => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "PurviewCollection.GetChildCollectionNames", "value", "nextLink", context);
         }
 
         internal HttpMessage CreateGetCollectionRequest(RequestContext context)

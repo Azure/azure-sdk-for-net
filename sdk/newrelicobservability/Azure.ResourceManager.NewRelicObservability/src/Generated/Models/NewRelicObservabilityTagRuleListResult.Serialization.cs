@@ -9,13 +9,14 @@ using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.NewRelicObservability;
 
 namespace Azure.ResourceManager.NewRelicObservability.Models
 {
     internal partial class NewRelicObservabilityTagRuleListResult
     {
-        internal static NewRelicObservabilityTagRuleListResult DeserializeNewRelicObservabilityTagRuleListResult(JsonElement element)
+        internal static NewRelicObservabilityTagRuleListResult DeserializeNewRelicObservabilityTagRuleListResult(JsonElement element, Core.Serialization.SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

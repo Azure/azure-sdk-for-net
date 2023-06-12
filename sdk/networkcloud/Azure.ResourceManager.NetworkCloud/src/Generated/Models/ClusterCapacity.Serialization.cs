@@ -7,12 +7,13 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.NetworkCloud.Models
 {
     public partial class ClusterCapacity
     {
-        internal static ClusterCapacity DeserializeClusterCapacity(JsonElement element)
+        internal static ClusterCapacity DeserializeClusterCapacity(JsonElement element, Core.Serialization.SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

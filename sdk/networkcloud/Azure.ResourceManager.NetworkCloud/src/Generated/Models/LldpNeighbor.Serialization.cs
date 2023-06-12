@@ -7,12 +7,13 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.NetworkCloud.Models
 {
     public partial class LldpNeighbor
     {
-        internal static LldpNeighbor DeserializeLldpNeighbor(JsonElement element)
+        internal static LldpNeighbor DeserializeLldpNeighbor(JsonElement element, Core.Serialization.SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
