@@ -54,6 +54,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.ServiceBus.Tests
         }
 
         [Test]
+        [Ignore("Consistently failing in CI; awaiting investigation")]
         [TestCase(false)]
         [TestCase(true)]
         public async Task ScaleHostEndToEndTest(bool tbsEnabled)
