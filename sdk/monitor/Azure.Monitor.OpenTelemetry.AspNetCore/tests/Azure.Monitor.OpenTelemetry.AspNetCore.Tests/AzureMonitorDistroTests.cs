@@ -51,14 +51,15 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Tests
 
             await app.DisposeAsync();
 
-            var data = ParseContent<ParsedData>(transport.Requests);
-            Assert.Equal(15, data.Count);
+            var data = ParseJsonRequestContent<ParsedData>(transport.Requests);
+            Assert.Equal(15, data.Count); // Total telemetry items
 
-            var summary = data.GroupBy(x => x.name).Select(x => new SummaryData { Name = x.Key, Count = x.Count() }).OrderBy(x => x.Name).ToList();
-            Assert.Equivalent(new SummaryData { Name = "Message", Count = 8 }, summary[0]);
-            Assert.Equivalent(new SummaryData { Name = "Metric", Count = 5 }, summary[1]);
-            Assert.Equivalent(new SummaryData { Name = "RemoteDependency", Count = 1 }, summary[2]);
-            Assert.Equivalent(new SummaryData { Name = "Request", Count = 1 }, summary[3]);
+            var summary = data.GroupBy(x => x.name).ToDictionary(x => x.Key!, x => x.Count());
+            Assert.Equal(4, summary.Count()); // Total unique telemetry items
+            Assert.Equal(8, summary["Message"]); // Count of telemetry items
+            Assert.Equal(5, summary["Metric"]);
+            Assert.Equal(1, summary["RemoteDependency"]);
+            Assert.Equal(1, summary["Request"]);
         }
 
         private void WaitForRequest(MockTransport transport)
@@ -72,7 +73,7 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Tests
                 timeout: TimeSpan.FromSeconds(10));
         }
 
-        private static List<T> ParseContent<T>(List<MockRequest> requests)
+        private static List<T> ParseJsonRequestContent<T>(List<MockRequest> requests)
         {
             var returnData = new List<T>();
 
@@ -105,12 +106,6 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Tests
         private class ParsedData
         {
             public string? name { get; set; }
-        }
-
-        private class SummaryData
-        {
-            public string? Name { get; set; }
-            public int? Count { get; set; }
         }
     }
 }
